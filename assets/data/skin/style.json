@@ -1,0 +1,242 @@
+{
+  "com.badlogic.gdx.graphics.Color": {
+    "white": {
+      "r": 1,
+      "g": 1,
+      "b": 1,
+      "a": 1
+    },
+    "black": {
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 1
+    },
+    "red": {
+      "r": 1,
+      "g": 0,
+      "b": 0,
+      "a": 1
+    },
+    "green": {
+      "r": 0,
+      "g": 1,
+      "b": 0,
+      "a": 1
+    },
+    "blue": {
+      "r": 0,
+      "g": 0,
+      "b": 1,
+      "a": 1
+    },
+    "black25": {
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 0.25
+    }
+  },
+  "com.badlogic.gdx.graphics.g2d.BitmapFont": {
+    "default": {
+      "file": "data/skin/fonts/SfArchery64black.fnt"
+    },
+    "tusj64black": {
+      "file": "data/skin/fonts/FffTusj64black.fnt"
+    },
+    "tusj64white": {
+      "file": "data/skin/fonts/FffTusj64white.fnt"
+    },
+    "tusj32black": {
+      "file": "data/skin/fonts/FffTusj32black.fnt"
+    },
+    "tusj32white": {
+      "file": "data/skin/fonts/FffTusj32white.fnt"
+    },
+    "archery64black": {
+      "file": "data/skin/fonts/SfArchery64black.fnt"
+    },
+    "archery64white": {
+      "file": "data/skin/fonts/SfArchery64white.fnt"
+    },
+    "archery32black": {
+      "file": "data/skin/fonts/SfArchery32black.fnt"
+    },
+    "archery32white": {
+      "file": "data/skin/fonts/SfArchery32white.fnt"
+    },
+    "archery16black": {
+      "file": "data/skin/fonts/SfArchery16black.fnt"
+    },
+    "archery16white": {
+      "file": "data/skin/fonts/SfArchery16white.fnt"
+    },
+    "madness64black": {
+      "file": "data/skin/fonts/BelligerentMadness64black.fnt"
+    },
+    "madness64white": {
+      "file": "data/skin/fonts/BelligerentMadness64white.fnt"
+    },
+    "madness32black": {
+      "file": "data/skin/fonts/BelligerentMadness32black.fnt"
+    },
+    "madness32white": {
+      "file": "data/skin/fonts/BelligerentMadness32white.fnt"
+    },
+    "action64black": {
+      "file": "data/skin/fonts/ActionManShaded64black.fnt"
+    },
+    "action64white": {
+      "file": "data/skin/fonts/ActionManShaded64white.fnt"
+    },
+    "action32black": {
+      "file": "data/skin/fonts/ActionManShaded32black.fnt"
+    },
+    "action32white": {
+      "file": "data/skin/fonts/ActionManShaded32white.fnt"
+    }
+  },
+  "com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle": {
+    "default": {
+      "font": "archery64white"
+    },
+    "tusj64black": {
+      "font": "tusj64black"
+    },
+    "tusj64white": {
+      "font": "tusj64white"
+    },
+    "tusj32black": {
+      "font": "tusj32black"
+    },
+    "tusj32white": {
+      "font": "tusj32white"
+    },
+    "archery64black": {
+      "font": "archery64black"
+    },
+    "archery64white": {
+      "font": "archery64white"
+    },
+    "archery32black": {
+      "font": "archery32black"
+    },
+    "archery32white": {
+      "font": "archery32white"
+    },
+    "archery16black": {
+      "font": "archery16black"
+    },
+    "action32black": {
+      "font": "action32black"
+    },
+    "action32white": {
+      "font": "action32white"
+    },
+    "action64black": {
+      "font": "action64black"
+    },
+    "small_tinted": {
+      "font": "archery32white",
+      "background": "back"
+    },
+    "16_tinted": {
+      "font": "archery16white",
+      "background": "back"
+    }
+  },
+  "com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {
+    "default": {
+      "font": "archery32black",
+      "up": "button.up",
+      "down": "button.down"
+    },
+    "tower": {
+      "font": "archery32black",
+      "up": "button.up",
+      "down": "button.down"
+    },
+    "towerControls": {
+      "font": "archery16black",
+      "up": "button.up",
+      "down": "button.down"
+    },
+    "green-button": {
+      "font": "archery32white",
+      "up": "green-up",
+      "down": "green-down"
+    },
+    "main-menu1": {
+      "font": "archery32black",
+      "up": "button-up1",
+      "down": "button-down1"
+    },
+    "main-menu2": {
+      "font": "archery32black",
+      "up": "button-up2",
+      "down": "button-down2"
+    },
+    "main-menu3": {
+      "font": "archery32black",
+      "up": "button-up3",
+      "down": "button-down3"
+    },
+    "main-menu4": {
+      "font": "archery32black",
+      "up": "button-up4",
+      "down": "button-down4"
+    }
+  },
+  "com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle": {
+    "default": {
+      "up": "button.up",
+      "down": "button.down"
+    },
+    "angel": {
+      "up": "angel",
+      "down": "angel"
+    },
+    "demon": {
+      "up": "demon",
+      "down": "demon"
+    },
+    "tower-primary": {
+      "up": "tower-primary",
+      "over": "tower-primary"
+    },
+    "tower-cannon": {
+      "up": "tower-cannon",
+      "over": "tower-cannon"
+    },
+    "tower-stun": {
+      "up": "tower-stun",
+      "over": "tower-stun"
+    },
+    "tower-special": {
+      "up": "tower-special",
+      "over": "tower-special"
+    },
+    "sell-button": {
+      "up": "sell-button-up",
+      "down": "sell-button-down"
+    },
+    "upgrade-button": {
+      "up": "upgrade-button-up",
+      "down": "upgrade-button-down"
+    },
+    "close-button": {
+      "up": "close-button-up",
+      "down": "close-button-down"
+    }
+  },
+  "com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle": {
+    "default": {
+      "titleFont": "default",
+      "background": "button-up4"
+    },
+    "menu": {
+      "titleFont": "default",
+      "background": "button-up4"
+    }
+  }
+}

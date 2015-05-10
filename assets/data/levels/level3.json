@@ -1,0 +1,80 @@
+{
+  "class": "java.util.LinkedList",
+  "waves": [
+    {
+      "class": "java.util.LinkedList",
+      "enemies": [
+        {
+          "class": "java.lang.String",
+          "name": "EnemyWarrior"
+        },
+        {
+          "class": "java.lang.String",
+          "name": "EnemyWarrior"
+        },
+        {
+          "class": "java.lang.String",
+          "name": "EnemyWarrior"
+        },
+        {
+          "class": "java.lang.String",
+          "name": "EnemyWarrior"
+        }
+      ]
+    },
+    {
+      "class": "java.util.LinkedList",
+      "enemies": [
+        {
+          "class": "java.lang.String",
+          "name": "EnemyWarrior"
+        },
+        {
+          "class": "java.lang.String",
+          "name": "EnemyWarrior"
+        },
+        {
+          "class": "java.lang.String",
+          "name": "EnemyWarrior"
+        },
+        {
+          "class": "java.lang.String",
+          "name": "EnemyWarrior"
+        },
+        {
+          "class": "java.lang.String",
+          "name": "EnemyWarrior"
+        }
+      ]
+    },
+    {
+      "class": "java.util.LinkedList",
+      "enemies": [
+        {
+          "class": "java.lang.String",
+          "name": "EnemyWarrior"
+        },
+        {
+          "class": "java.lang.String",
+          "name": "EnemyWarrior"
+        },
+        {
+          "class": "java.lang.String",
+          "name": "EnemyWarrior"
+        },
+        {
+          "class": "java.lang.String",
+          "name": "EnemyWarrior"
+        },
+        {
+          "class": "java.lang.String",
+          "name": "EnemyWarrior"
+        },
+        {
+          "class": "java.lang.String",
+          "name": "EnemyWarrior"
+        }
+      ]
+    }
+  ]
+}
