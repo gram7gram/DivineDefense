@@ -4,8 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import ua.gram.DDGame;
+import ua.gram.controller.stage.LevelSelectStage;
 import ua.gram.view.AbstractScreen;
-import ua.gram.view.stage.LevelSelectStage;
 
 /**
  * Created by Gram on 16/1.

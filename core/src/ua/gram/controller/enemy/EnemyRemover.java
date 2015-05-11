@@ -2,7 +2,7 @@ package ua.gram.controller.enemy;
 
 import com.badlogic.gdx.Gdx;
 import ua.gram.DDGame;
-import ua.gram.view.stage.group.EnemyGroup;
+import ua.gram.view.group.EnemyGroup;
 
 /**
  * <pre>

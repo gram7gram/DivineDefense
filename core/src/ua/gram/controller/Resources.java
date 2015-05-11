@@ -1,10 +1,8 @@
 package ua.gram.controller;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -21,9 +19,6 @@ import ua.gram.view.screen.ErrorScreen;
  */
 public class Resources implements Disposable {
 
-    private final DDGame game;
-    private final Skin skin;
-    private final AssetManager manager;
     public static final String TOWERS_ATLAS = "data/images/towers.atlas";
     public static final String ENEMIES_ATLAS = "data/images/enemies.atlas";
     public static final String SKIN_FILE = "data/skin/style.json";
@@ -35,6 +30,9 @@ public class Resources implements Disposable {
     public static final String LASER_MIDDLE_OVER = "data/images/misc/laser/middle_over.png";
     public static final String LASER_END_BACK = "data/images/misc/laser/end_back.png";
     public static final String LASER_END_OVER = "data/images/misc/laser/end_over.png";
+    private final DDGame game;
+    private final Skin skin;
+    private final AssetManager manager;
 
     public Resources(DDGame game) {
         this.game = game;
@@ -62,7 +60,7 @@ public class Resources implements Disposable {
     public Skin loadSkin(String file) {
         String atlas = file.substring(0, file.lastIndexOf(".")) + ".atlas";
         try {
-            manager.load(atlas, TextureAtlas.class);
+//            manager.load(atlas, TextureAtlas.class);
             manager.load(file, Skin.class, new SkinLoader.SkinParameter(atlas));
             manager.finishLoading();
         } catch (GdxRuntimeException e) {

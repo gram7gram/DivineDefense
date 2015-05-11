@@ -1,4 +1,4 @@
-package ua.gram.view.stage;
+package ua.gram.controller.stage;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -6,10 +6,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import ua.gram.DDGame;
 import ua.gram.controller.tower.TowerShop;
 import ua.gram.model.Level;
-import ua.gram.view.stage.group.GameUIGroup;
-import ua.gram.view.stage.window.DefeatWindow;
-import ua.gram.view.stage.window.PauseWindow;
-import ua.gram.view.stage.window.VictoryWindow;
+import ua.gram.view.group.GameUIGroup;
+import ua.gram.view.window.DefeatWindow;
+import ua.gram.view.window.PauseWindow;
+import ua.gram.view.window.VictoryWindow;
 
 /**
  * FIXME Change stats representation.

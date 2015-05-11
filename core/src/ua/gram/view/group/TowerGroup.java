@@ -1,17 +1,13 @@
-package ua.gram.view.stage.group;
+package ua.gram.view.group;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import ua.gram.DDGame;
 import ua.gram.model.actor.ProgressBar;
 import ua.gram.model.actor.Range;
 import ua.gram.model.actor.Tower;
-import ua.gram.model.actor.weapon.Weapon;
-import ua.gram.view.stage.GameBattleStage;
-
-import javax.print.attribute.IntegerSyntax;
-import java.util.HashMap;
-import java.util.LinkedList;
+import ua.gram.model.actor.Weapon;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -28,13 +24,25 @@ public class TowerGroup extends Group {
         this.weapon = weapon;
         this.range = range;
         this.controls = controls;
+        this.addActor(range);
         this.addActor(tower);
         this.addActor(weapon);
-        this.addActor(range);
         this.addActor(controls);
         this.addActor(bar);
+        tower.setWeapon(weapon);
+        weapon.setVisible(false);
         this.setDebug(DDGame.DEBUG);
         Gdx.app.log("INFO", "Group for " + tower + " is OK");
+    }
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        if (!DDGame.PAUSE) {
+            for (Actor actor : this.getChildren()) {
+                actor.setZIndex(tower.getZIndex());
+            }
+        }
     }
 
     public void toggleControls() {

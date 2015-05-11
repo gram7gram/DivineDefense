@@ -1,4 +1,4 @@
-package ua.gram.view.stage.window;
+package ua.gram.view.window;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -7,8 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import ua.gram.DDGame;
+import ua.gram.controller.stage.GameUIStage;
 import ua.gram.view.screen.MainMenuScreen;
-import ua.gram.view.stage.GameUIStage;
 
 /**
  * <pre>

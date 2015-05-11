@@ -1,27 +1,26 @@
 package ua.gram.model;
 
 import com.badlogic.gdx.Gdx;
-
-import java.util.ArrayList;
-
 import ua.gram.DDGame;
 import ua.gram.controller.enemy.EnemySpawner;
+import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.model.actor.Enemy;
 import ua.gram.model.map.Map;
-import ua.gram.view.stage.GameBattleStage;
+
+import java.util.ArrayList;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
 public class Level {
 
+    private final Wave wave;
+    public boolean isCleared;
+    public int currentLevel;
     private Map map;
     private DDGame game;
     private EnemySpawner spawner;
     private GameBattleStage stage_battle;
-    private final Wave wave;
-    public boolean isCleared;
-    public int currentLevel;
 
     /**
      * <pre>
@@ -87,12 +86,12 @@ public class Level {
         return wave;
     }
 
-    public void setStage(GameBattleStage stage) {
-        this.stage_battle = stage;
-    }
-
     public GameBattleStage getStage() {
         return stage_battle;
+    }
+
+    public void setStage(GameBattleStage stage) {
+        this.stage_battle = stage;
     }
 
 }

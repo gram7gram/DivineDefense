@@ -25,7 +25,7 @@ public class DesktopLauncher {
         config.fullscreen = false;
         config.foregroundFPS = 0;
         config.backgroundFPS = 0;
-        config.x = -1;
+        config.x = 20;
         config.y = -1;
         config.title = "Divine Defense";
         config.addIcon("logo_min128.png", Files.FileType.Internal);//osx

@@ -1,6 +1,7 @@
-package ua.gram.view.stage.group;
+package ua.gram.view.group;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import ua.gram.DDGame;
 import ua.gram.model.actor.Enemy;
@@ -22,6 +23,16 @@ public class EnemyGroup extends Group {
         this.addActor(bar);
         this.setDebug(DDGame.DEBUG);
         Gdx.app.log("INFO", "Group for " + enemy + " is OK");
+    }
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        if (!DDGame.PAUSE) {
+            for (Actor actor : this.getChildren()) {
+                actor.setZIndex(enemy.getZIndex());
+            }
+        }
     }
 
     public Enemy getEnemy() {

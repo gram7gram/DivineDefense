@@ -1,4 +1,4 @@
-package ua.gram.view.stage;
+package ua.gram.controller.stage;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;

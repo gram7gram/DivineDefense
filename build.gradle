@@ -16,7 +16,7 @@ allprojects {
     version = '1.0'
     ext {
         appName = 'Divine Defense'
-        gdxVersion = '1.5.5'
+        gdxVersion = '1.6.0'
         roboVMVersion = '1.0.0'
     }
 

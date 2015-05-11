@@ -7,15 +7,15 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import ua.gram.DDGame;
 import ua.gram.controller.Resources;
-import ua.gram.view.stage.group.TowerGroup;
+import ua.gram.view.group.TowerGroup;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
 public class Range extends Actor {
 
-    private TowerGroup group;
     private final Sprite range;
+    private TowerGroup group;
     private float radius;
 
     public Range(Resources resources) {

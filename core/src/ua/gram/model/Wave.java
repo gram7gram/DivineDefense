@@ -1,26 +1,25 @@
 package ua.gram.model;
 
 import com.badlogic.gdx.Gdx;
-
-import java.util.ArrayList;
-
 import ua.gram.controller.enemy.EnemySpawner;
 import ua.gram.model.actor.Enemy;
 import ua.gram.model.actor.enemy.*;
+
+import java.util.ArrayList;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
 public class Wave {
 
-    private final Level level;
-    private final ArrayList<ArrayList<Class<? extends Enemy>>> waves;
-    private EnemySpawner spawner;
-    private ArrayList<Class<? extends Enemy>> enemies;
     public static float countdown;
     public static int maxWaves;
     public static int currentWave;
+    private final Level level;
+    private final ArrayList<ArrayList<Class<? extends Enemy>>> waves;
     public boolean isStarted;
+    private EnemySpawner spawner;
+    private ArrayList<Class<? extends Enemy>> enemies;
 
     public Wave(Level level, ArrayList<ArrayList<Class<? extends Enemy>>> waves) {
         this.level = level;
@@ -51,11 +50,14 @@ public class Wave {
         enemies1.add(EnemySoldier.class);
         enemies1.add(EnemySoldierArmored.class);
         enemies1.add(EnemySoldier.class);
+        enemies1.add(EnemyRunner.class);
         enemies1.add(EnemySoldierArmored.class);
         enemies1.add(EnemySoldierArmored.class);
         enemies1.add(EnemySoldierArmored.class);
+        enemies1.add(EnemyRunner.class);
         enemies1.add(EnemySoldierArmored.class);
         enemies1.add(EnemySoldier.class);
+        enemies1.add(EnemyRunner.class);
 
         ArrayList<Class<? extends Enemy>> enemies2 = new ArrayList<Class<? extends Enemy>>();
         enemies2.add(EnemyRunner.class);

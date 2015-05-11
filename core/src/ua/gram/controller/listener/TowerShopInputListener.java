@@ -5,9 +5,9 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import ua.gram.DDGame;
+import ua.gram.controller.stage.GameBattleStage;
+import ua.gram.controller.stage.GameUIStage;
 import ua.gram.controller.tower.TowerShop;
-import ua.gram.view.stage.GameBattleStage;
-import ua.gram.view.stage.GameUIStage;
 
 /**
  * @author Gram <gram7gram@gmail.com>

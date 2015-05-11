@@ -1,4 +1,4 @@
-package ua.gram.view.stage;
+package ua.gram.controller.stage;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import ua.gram.DDGame;
 import ua.gram.model.Player;
-import ua.gram.view.stage.group.ConfirmationGroup;
+import ua.gram.view.group.ConfirmationGroup;
 
 /**
  * <pre>
@@ -23,10 +23,10 @@ import ua.gram.view.stage.group.ConfirmationGroup;
 public class FractionStage extends Stage {
 
     private final Group fractions;
-    private ConfirmationGroup confirmationGroup;
     private final DDGame game;
     private final Button angelButton;
     private final Button demonButton;
+    private ConfirmationGroup confirmationGroup;
 
     public FractionStage(final DDGame game) {
         super(game.getViewport(), game.getBatch());

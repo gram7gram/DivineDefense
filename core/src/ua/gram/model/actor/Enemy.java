@@ -8,11 +8,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import ua.gram.DDGame;
-import ua.gram.controller.enemy.EnemySpawner;
 import ua.gram.controller.enemy.EnemyAnimationController;
 import ua.gram.controller.enemy.EnemyRemover;
-import ua.gram.view.stage.GameBattleStage;
-import ua.gram.view.stage.group.EnemyGroup;
+import ua.gram.controller.enemy.EnemySpawner;
+import ua.gram.controller.stage.GameBattleStage;
+import ua.gram.view.group.EnemyGroup;
 
 /**
  * TODO Make 8 directional texture region for enemy to smooth moving
@@ -21,27 +21,28 @@ import ua.gram.view.stage.group.EnemyGroup;
  */
 public abstract class Enemy extends Actor {
 
+    public final int reward;
+    public final float defaultHealth;
+    public final float defaultSpeed;
+    public final float defaultArmor;
+    public final byte animationWidth = 40;
+    public final byte animationHeight = 60;
     private final DDGame game;
+    private final Vector2 centerPosition;
+    public float health;
+    public float speed;
+    public float armor;
+    public boolean isStunned;
+    public boolean isAffected;
+    public boolean isDead;//Prevent Towers from shooting if true
+    public float stateTime = 0;
+    private GameBattleStage stage_battle;
     private EnemyAnimationController enemyAnimation;
     private EnemySpawner spawner;
     private EnemyGroup group;
     private TextureRegion currentFrame;
     private Animation animation;
     private Vector2 direction;
-    public float health;
-    public float speed;
-    public float armor;
-    public final int reward;
-    public final float defaultHealth;
-    public final float defaultSpeed;
-    public final float defaultArmor;
-    public boolean isStunned;
-    public boolean isAffected;
-    public boolean isDead;//Prevent Towers from shooting if true
-    public float stateTime = 0;
-
-    public final byte animationWidth = 40;
-    public final byte animationHeight = 60;
 
     public Enemy(DDGame game, float[] stats) {
         this.game = game;
@@ -55,6 +56,7 @@ public abstract class Enemy extends Actor {
         isStunned = false;
         isAffected = false;
         isDead = false;
+        centerPosition = Vector2.Zero;
     }
 
     @Override
@@ -74,6 +76,7 @@ public abstract class Enemy extends Actor {
             if (this.health <= 0) {
                 die();
             } else {
+                stage_battle.updateActorIndex(this);
                 if (isStunned && !isAffected) {
                     isAffected = true;
                     this.speed /= 2f;
@@ -84,7 +87,6 @@ public abstract class Enemy extends Actor {
                     Gdx.app.log("INFO", this + " is unstunned");
                 }
             }
-            this.setZIndex((int) (this.getY() / DDGame.TILEHEIGHT));
         }
     }
 
@@ -104,10 +106,6 @@ public abstract class Enemy extends Actor {
         return enemyAnimation;
     }
 
-    public void setAnimationController(EnemyAnimationController enemyAnimation) {
-        this.enemyAnimation = enemyAnimation;
-    }
-
     public Vector2 getDirection() {
         return direction;
     }
@@ -118,6 +116,10 @@ public abstract class Enemy extends Actor {
 
     public EnemyAnimationController getAnimationController() {
         return enemyAnimation;
+    }
+
+    public void setAnimationController(EnemyAnimationController enemyAnimation) {
+        this.enemyAnimation = enemyAnimation;
     }
 
     public Animation getAnimation() {
@@ -139,12 +141,21 @@ public abstract class Enemy extends Actor {
 
     public Vector2 getCenterPoint() {
         return new Vector2(
-                this.getX() + this.getWidth() / 2f,
-                this.getY() + this.getHeight() / 2f
+                this.getX() + (this.getWidth() / 2f),
+                this.getY() + (this.getHeight() / 2f)
         );
+//        centerPosition.set(
+//                this.getX() + (this.getWidth() / 2f),
+//                this.getY() + (this.getHeight() / 2f)
+//        );
+//        return centerPosition;
     }
 
     public void setGroup(EnemyGroup group) {
         this.group = group;
+    }
+
+    public void setBattleStage(GameBattleStage stage_battle) {
+        this.stage_battle = stage_battle;
     }
 }

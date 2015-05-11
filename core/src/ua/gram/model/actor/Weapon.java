@@ -1,10 +1,12 @@
-package ua.gram.model.actor.weapon;
+package ua.gram.model.actor;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import ua.gram.DDGame;
 
 /**
- * Created by gram on 5/3/15.
+ *
+ * @author Gram <gram7gram@gmail.com>
  */
 public abstract class Weapon extends Actor {
 
@@ -13,6 +15,12 @@ public abstract class Weapon extends Actor {
     public Weapon(Vector2 position1, Vector2 position2) {
         this.position1 = position1;
         this.position2 = position2;
+    }
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        if (!DDGame.PAUSE) this.toFront();
     }
 
     public void updatePosition(Vector2 towerPosition, Vector2 targetPosition) {
@@ -26,5 +34,10 @@ public abstract class Weapon extends Actor {
 
     public Vector2 getTargetPosition() {
         return position2;
+    }
+
+    public void reset() {
+        position1 = Vector2.Zero;
+        position2 = Vector2.Zero;
     }
 }

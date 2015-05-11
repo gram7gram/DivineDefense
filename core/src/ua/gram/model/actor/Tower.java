@@ -6,17 +6,14 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.GdxRuntimeException;
 import ua.gram.DDGame;
 import ua.gram.controller.pool.animation.AnimationController.Types;
+import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.controller.tower.TowerAnimationController;
 import ua.gram.controller.tower.TowerLevelAnimationContainer;
-import ua.gram.model.actor.weapon.Weapon;
-import ua.gram.view.stage.GameBattleStage;
-import ua.gram.view.stage.group.TowerGroup;
+import ua.gram.view.group.TowerGroup;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,20 +27,13 @@ import java.util.List;
  */
 public abstract class Tower extends Actor {
 
-    protected DDGame game;
-    public final float build_delay = 2;
     public static final float SELL_RATIO = .6f;
     public static final byte MAX_TOWER_LEVEL = 4;
     public static final byte MAX_POWER_LEVEL = 4;
+    public final float build_delay = 2;
     protected final int animationWidth = 40;
     protected final int animationHeight = 60;
-    protected GameBattleStage stage_battle;
-    protected TextureRegion currentFrame;
-    protected TowerAnimationController controller;
-    protected TowerLevelAnimationContainer container;
-    protected Animation animation;
-    protected Weapon weapon;
-    private float stateTime;
+    private final Vector2 centerPosition;
     public float damage;
     public float range;
     public float rate;
@@ -53,6 +43,17 @@ public abstract class Tower extends Actor {
     public Strategy strategy;
     public boolean isActive;
     public boolean isBuilding;
+    public float countBuilding = 0;
+    protected DDGame game;
+    protected GameBattleStage stage_battle;
+    protected TextureRegion currentFrame;
+    protected TowerAnimationController controller;
+    protected TowerLevelAnimationContainer container;
+    protected Animation animation;
+    protected Weapon weapon;
+    private float stateTime;
+    private ArrayList<Enemy> victims;
+    private float count = 0;
 
     public Tower(DDGame game, float[] stats) {
         this.game = game;
@@ -67,6 +68,7 @@ public abstract class Tower extends Actor {
         isBuilding = false;
         this.setSize(animationWidth, animationHeight);
         this.setBounds(getX(), getY(), animationWidth, animationHeight);
+        centerPosition = Vector2.Zero;
     }
 
     @Override
@@ -84,31 +86,15 @@ public abstract class Tower extends Actor {
             batch.draw(currentFrame, this.getX(), this.getY());
     }
 
-    private float count = 0;
-    public float countBuilding = 0;
-
     @Override
     public void act(float delta) {
         super.act(delta);
         if (!DDGame.PAUSE) {
-            if (isActive) {
-                if (count >= this.rate) {
-                    count = 0;
-                    ArrayList<Enemy> victims = scan();
-                    if (!victims.isEmpty()) {
-                        attack(chooseTargets(victims));
-                    } else {
-                        weapon.setVisible(false);
-                    }
-                } else {
-                    count += delta;
-                }
-            } else if (isBuilding) {
+            if (isBuilding) {
                 if (countBuilding >= build_delay) {
                     countBuilding = 0;
                     isBuilding = false;
                     isActive = true;
-                    this.setZIndex(stage_battle.getIndexByActor(this));
                     this.addListener(new ClickListener() {
                         @Override
                         public void clicked(InputEvent event, float x, float y) {
@@ -119,33 +105,44 @@ public abstract class Tower extends Actor {
                 } else {
                     countBuilding += delta;
                 }
+            } else if (isActive) {
+                if (count >= this.rate) {
+                    count = 0;
+                    victims = scan();
+                    if (!victims.isEmpty()) {
+                        attack(chooseTargets(victims));
+                    } else {
+                        weapon.setVisible(false);
+                        weapon.reset();
+                    }
+                } else {
+                    count += delta;
+                    if (victims != null && !victims.isEmpty() && weapon.isVisible()) {
+                        weapon.updatePosition(this.getCenterPoint(), victims.get(0).getCenterPoint());
+                    }
+                }
             }
         }
     }
 
     public void attack(List<Enemy> victims) {
         for (Enemy victim : victims) {
-            weapon.updatePosition(this.getCenterPoint(), victim.getCenterPoint());
             weapon.setVisible(true);
+            weapon.toFront();
+            weapon.updatePosition(this.getCenterPoint(), victim.getCenterPoint());
             victim.receiveDamage(this.damage);
-            Gdx.app.log("INFO", this + " attacked " + victim + "@" + victim.hashCode());
+//            Gdx.app.log("INFO", this + " attacked " + victim + "@" + victim.hashCode());
         }
     }
-
-    private boolean hasWeapon = false;
 
     /**
      * Grab Enemies in range.
      */
     private ArrayList<Enemy> scan() {
-        if (!hasWeapon) {
-            stage_battle.addActor(weapon);
-            hasWeapon = true;
-        }
         ArrayList<Enemy> targets = new ArrayList<Enemy>();
         for (Enemy enemy : stage_battle.getEnemiesOnMap()) {
             if (isInRange(enemy) && enemy.health > 0) {
-                Gdx.app.log("INFO", enemy + "@" + enemy.hashCode() + " is in range");
+//                Gdx.app.log("INFO", enemy + "@" + enemy.hashCode() + " is in range");
                 targets.add(enemy);
             }
         }
@@ -155,17 +152,17 @@ public abstract class Tower extends Actor {
     /**
      * Choose Enemies according to Tower level and strategy.
      *
-     * @param victims - potential targets in range
-     * @return - actual targets
+     * @param victims potential targets in range
+     * @return actual targets
      */
     private List<Enemy> chooseTargets(ArrayList<Enemy> victims) {
         List<Enemy> targets = new ArrayList<Enemy>();
         switch (this.strategy) {
             case STRONGEST:
-                Collections.sort(victims, new EnemyMaxHealthComparator());
+                Collections.sort(victims, new EnemyHealthComparator(EnemyHealthComparator.MAX));
                 break;
             case WEAKEST:
-                Collections.sort(victims, new EnemyMinHealthComparator());
+                Collections.sort(victims, new EnemyHealthComparator(EnemyHealthComparator.MIN));
                 break;
             case NEAREST:
                 Collections.sort(victims, new EnemyDistanceComparator(this));
@@ -174,8 +171,6 @@ public abstract class Tower extends Actor {
                 byte index = victims.size() > 1 ? (byte) (Math.random() * (victims.size())) : 0;
                 targets.add(victims.get(index));
                 return targets;
-            default:
-                throw new UnsupportedOperationException("Target choosing for Random is not yet implemented");
         }
         if (this.getTowerLevel() > 1 && victims.size() > 1) {
             targets = victims.subList(0, victims.size() > this.getTowerLevel() ? this.getTowerLevel() : victims.size());
@@ -202,12 +197,8 @@ public abstract class Tower extends Actor {
         this.setLevelAnimationContainer(tower_lvl);
         changeAnimation(Types.BUILD);
         game.getPlayer().chargeCoins(30);
-        //update range
+        //update range radius
         Gdx.app.log("INFO", this + " is upgraded to " + tower_lvl + " level");
-    }
-
-    public void setStrategy(Strategy strategy) {
-        this.strategy = strategy;
     }
 
     /**
@@ -216,14 +207,18 @@ public abstract class Tower extends Actor {
      * @param type desired animation type
      */
     public void changeAnimation(Types type) {
-        Gdx.app.log("INFO", "Tower animation changed to: " + tower_lvl + "x" + type.name());
+        Gdx.app.log("INFO", "Tower animation changed to: " + tower_lvl + "_" + type.name());
         type = Types.IDLE;//remove
         this.setLevelAnimationContainer(tower_lvl);
-        setAnimation(container.getAnimation(type));
+        this.setAnimation(container.getAnimation(type));
     }
 
     public Weapon getWeapon() {
         return weapon;
+    }
+
+    public void setWeapon(Weapon weapon) {
+        this.weapon = weapon;
     }
 
     public float getDamage() {
@@ -258,6 +253,10 @@ public abstract class Tower extends Actor {
         return strategy;
     }
 
+    public void setStrategy(Strategy strategy) {
+        this.strategy = strategy;
+    }
+
     public TowerAnimationController getController() {
         return controller;
     }
@@ -266,43 +265,41 @@ public abstract class Tower extends Actor {
         this.controller = controller;
     }
 
+    public Animation getAnimation() {
+        return animation;
+    }
+
     public void setAnimation(Animation animation) {
         this.animation = animation;
     }
 
-    public Animation getAnimation() {
-        return animation;
-
-    }
-
     public Vector2 getCenterPoint() {
-        return new Vector2(
-                this.getX() + this.getWidth() / 2f,
-                this.getY() + this.getHeight() / 2f
+        centerPosition.set(
+                this.getX() + (this.getWidth() / 2f),
+                this.getY() + (this.getHeight() / 2f)
         );
+        return centerPosition;
     }
 
     public void setLevelAnimationContainer(int level) {
         container = controller.getLevelAnimationContainer(level);
     }
 
+    public enum Strategy {NEAREST, RANDOM, WEAKEST, STRONGEST}
 
-    public enum Strategy {
+    private class EnemyHealthComparator implements Comparator<Enemy> {
 
-        NEAREST, RANDOM, WEAKEST, STRONGEST
-    }
+        public static final int MAX = 1;
+        public static final int MIN = -1;
+        private final int type;
 
-    private class EnemyMaxHealthComparator implements Comparator<Enemy> {
-        @Override
-        public int compare(Enemy enemy1, Enemy enemy2) {
-            return (int) (enemy1.health - enemy2.health);
+        public EnemyHealthComparator(int type) {
+            this.type = type;
         }
-    }
 
-    private class EnemyMinHealthComparator implements Comparator<Enemy> {
         @Override
         public int compare(Enemy enemy1, Enemy enemy2) {
-            return (int) (enemy2.health - enemy1.health);
+            return (int) ((enemy1.health - enemy2.health) * type);
         }
     }
 

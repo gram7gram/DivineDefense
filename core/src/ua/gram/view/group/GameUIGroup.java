@@ -1,7 +1,6 @@
-package ua.gram.view.stage.group;
+package ua.gram.view.group;
 
 import com.badlogic.gdx.Gdx;
-import ua.gram.view.AbstractGroup;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -9,9 +8,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import ua.gram.DDGame;
+import ua.gram.controller.stage.GameUIStage;
 import ua.gram.model.Level;
 import ua.gram.model.Wave;
-import ua.gram.view.stage.GameUIStage;
+import ua.gram.view.AbstractGroup;
 
 /**
  * @author Gram <gram7gram@gmail.com>

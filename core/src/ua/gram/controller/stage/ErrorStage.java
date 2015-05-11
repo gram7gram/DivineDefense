@@ -1,4 +1,4 @@
-package ua.gram.view.stage;
+package ua.gram.controller.stage;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;

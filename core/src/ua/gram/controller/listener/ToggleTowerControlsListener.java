@@ -2,12 +2,13 @@ package ua.gram.controller.listener;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.model.actor.Tower;
-import ua.gram.view.stage.GameBattleStage;
-import ua.gram.view.stage.group.TowerControlsGroup;
-import ua.gram.view.stage.group.TowerGroup;
+import ua.gram.view.group.TowerControlsGroup;
+import ua.gram.view.group.TowerGroup;
 
 /**
  * Handles tower controls: if they are visible and player
@@ -18,27 +19,31 @@ import ua.gram.view.stage.group.TowerGroup;
  */
 public class ToggleTowerControlsListener extends ClickListener {
 
-    private final GameBattleStage stage;
+    private final GameBattleStage stage_battle;
 
     public ToggleTowerControlsListener(GameBattleStage stage) {
-        this.stage = stage;
+        this.stage_battle = stage;
     }
 
     @Override
     public void clicked(InputEvent event, float x, float y) {
         super.clicked(event, x, y);
-        if (stage.hasTowersOnMap()) {
-            for (Actor actor : stage.getTowers().getChildren()) {
-                if (actor instanceof TowerGroup) {
-                    TowerGroup group = ((TowerGroup) actor);
-                    TowerControlsGroup controls = group.getControls();
-                    Tower tower = group.getTower();
-                    if (controls.isVisible()
-                            && !contains(controls.getUpgradeBut(), x, y)
-                            && !contains(controls.getSellBut(), x, y)
-                            && !contains(tower, x, y)) {
-                        controls.setVisible(false);
-                        Gdx.app.log("INFO", "Controls are hidden by stage");
+        if (stage_battle.hasTowersOnMap()) {
+            for (Group group : stage_battle.getIndexes()) {
+                if (group.hasChildren()) {
+                    for (Actor actor : group.getChildren()) {
+                        if (actor instanceof TowerGroup) {
+                            TowerGroup towerGroup = ((TowerGroup) actor);
+                            TowerControlsGroup controls = towerGroup.getControls();
+                            Tower tower = towerGroup.getTower();
+                            if (controls.isVisible()
+                                    && !contains(controls.getUpgradeBut(), x, y)
+                                    && !contains(controls.getSellBut(), x, y)
+                                    && !contains(tower, x, y)) {
+                                controls.setVisible(false);
+                                Gdx.app.log("INFO", "Controls are hidden by stage");
+                            }
+                        }
                     }
                 }
             }

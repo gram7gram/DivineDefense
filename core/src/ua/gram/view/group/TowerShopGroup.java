@@ -1,18 +1,18 @@
-package ua.gram.view.stage.group;
+package ua.gram.view.group;
 
-import ua.gram.view.AbstractGroup;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import ua.gram.DDGame;
-import ua.gram.controller.tower.TowerShop;
 import ua.gram.controller.listener.TowerShopInputListener;
+import ua.gram.controller.stage.GameUIStage;
+import ua.gram.controller.tower.TowerShop;
 import ua.gram.model.actor.tower.TowerCannon;
 import ua.gram.model.actor.tower.TowerPrimary;
 import ua.gram.model.actor.tower.TowerSpecial;
 import ua.gram.model.actor.tower.TowerStun;
-import ua.gram.view.stage.GameUIStage;
+import ua.gram.view.AbstractGroup;
 
 /**
  * @author Gram <gram7gram@gmail.com>

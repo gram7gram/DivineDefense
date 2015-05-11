@@ -3,28 +3,22 @@ package ua.gram.controller.enemy;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Action;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.utils.Pool;
+import ua.gram.DDGame;
+import ua.gram.controller.Resources;
+import ua.gram.controller.pool.EnemyPool;
+import ua.gram.controller.stage.GameBattleStage;
+import ua.gram.model.Level;
+import ua.gram.model.actor.Enemy;
+import ua.gram.model.actor.HealthBar;
+import ua.gram.model.actor.enemy.*;
+import ua.gram.view.group.EnemyGroup;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
-
-import ua.gram.DDGame;
-import ua.gram.controller.Resources;
-import ua.gram.model.Level;
-import ua.gram.model.actor.Enemy;
-import ua.gram.model.actor.enemy.EnemySoldierArmored;
-import ua.gram.model.actor.enemy.EnemyRunner;
-import ua.gram.model.actor.enemy.EnemySummoner;
-import ua.gram.model.actor.enemy.EnemyWarrior;
-import ua.gram.controller.pool.EnemyPool;
-import ua.gram.model.actor.enemy.EnemySoldier;
-import ua.gram.view.stage.GameBattleStage;
-import ua.gram.model.actor.HealthBar;
-import ua.gram.view.stage.group.EnemyGroup;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -111,34 +105,36 @@ public class EnemySpawner {
                 level.getMap().getSpawn().getPosition().y * DDGame.TILEHEIGHT
         );
         enemy.setSpawner(this);
-        EnemyGroup group = new EnemyGroup(enemy, new HealthBar(game.getResources().getSkin(), enemy));
-        group.getEnemy().setGroup(group);
-        setActionPath(group, path);
-        group.setVisible(true);
-        stage_battle.getEnemies().addActor(group);
-//        stage_battle.updateZIndexes(stage_battle.getEnemies());
+        EnemyGroup enemyGroup = new EnemyGroup(
+                enemy,
+                new HealthBar(
+                        game.getResources().getSkin(),
+                        enemy)
+        );
+        enemyGroup.getEnemy().setGroup(enemyGroup);
+        setActionPath(enemyGroup, path);
+        enemyGroup.setVisible(true);
+        stage_battle.updateZIndexes(enemyGroup);
     }
 
     /**
      * <pre>
      * Sets the Actions for Enemy to do to walk the path
      *
-     * TODO Spawn the Enemy outside the screen
-     * TODO Additional Action to get inside the screen at the start.
-     *
-     * FIX Bigger speed - slower walk of Enemy
-     * FIX Merge Enemyanimations in one atlas and image
+     * FIXME Bigger speed - slower walk of Enemy
+     * FIXME Merge Enemy animations in one atlas and image
      * </pre>
      *
      * @param path - list of directions
      */
     private void setActionPath(EnemyGroup group, ArrayList<Vector2> path) {
         Enemy enemy = group.getEnemy();
+        enemy.setBattleStage(stage_battle);
         enemy.setAnimationController(new EnemyAnimationController(game.getResources().getAtlas(Resources.ENEMIES_ATLAS), enemy));
         enemy.setAnimation(enemy.getAnimationController().getUpAnimation());
         SequenceAction pathToGo = new SequenceAction();
         pathToGo.addAction(Actions.show());//spawns enemy
-        Vector2 prevDir = new Vector2();
+        Vector2 prevDir = Vector2.Zero;
         for (final Vector2 dir : path) {
             Action action;
             if (!dir.equals(prevDir)) {
@@ -221,4 +217,7 @@ public class EnemySpawner {
         Gdx.app.log("INFO", enemy + "@" + enemy.hashCode() + " is set free");
     }
 
+    public GameBattleStage getStage_battle() {
+        return stage_battle;
+    }
 }

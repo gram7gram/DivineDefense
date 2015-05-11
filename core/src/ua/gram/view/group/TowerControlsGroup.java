@@ -1,14 +1,12 @@
-package ua.gram.view.stage.group;
+package ua.gram.view.group;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import ua.gram.view.AbstractGroup;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import ua.gram.DDGame;
 import ua.gram.controller.tower.TowerShop;
 import ua.gram.model.actor.Tower;
+import ua.gram.view.AbstractGroup;
 
 /**
  * <pre>

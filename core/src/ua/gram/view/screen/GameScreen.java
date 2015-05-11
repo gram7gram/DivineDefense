@@ -5,10 +5,10 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import ua.gram.DDGame;
+import ua.gram.controller.stage.GameBattleStage;
+import ua.gram.controller.stage.GameUIStage;
 import ua.gram.model.Level;
 import ua.gram.view.AbstractScreen;
-import ua.gram.view.stage.GameBattleStage;
-import ua.gram.view.stage.GameUIStage;
 
 /**
  * @author Gram <gram7gram@gmail.com>

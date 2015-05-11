@@ -1,4 +1,4 @@
-package ua.gram.view.stage.group;
+package ua.gram.view.group;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -7,12 +7,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
-import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import ua.gram.DDGame;
 import ua.gram.model.Player;
 import ua.gram.view.screen.MainMenuScreen;
-import ua.gram.view.stage.window.ConfirmationWindow;
+import ua.gram.view.window.ConfirmationWindow;
 
 /**
  * @author Gram <gram7gram@gmail.com>

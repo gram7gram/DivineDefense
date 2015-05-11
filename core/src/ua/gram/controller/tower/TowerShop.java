@@ -1,28 +1,27 @@
 package ua.gram.controller.tower;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Pool;
 import ua.gram.DDGame;
 import ua.gram.controller.pool.TowerPool;
 import ua.gram.controller.pool.animation.AnimationController;
+import ua.gram.controller.stage.GameBattleStage;
+import ua.gram.controller.stage.GameUIStage;
 import ua.gram.model.actor.ProgressBar;
 import ua.gram.model.actor.Range;
 import ua.gram.model.actor.Tower;
-
-import static ua.gram.model.actor.Tower.SELL_RATIO;
-
 import ua.gram.model.actor.tower.TowerCannon;
 import ua.gram.model.actor.tower.TowerPrimary;
 import ua.gram.model.actor.tower.TowerSpecial;
 import ua.gram.model.actor.tower.TowerStun;
-import ua.gram.view.stage.GameBattleStage;
-import ua.gram.view.stage.GameUIStage;
-import ua.gram.view.stage.group.TowerControlsGroup;
-import ua.gram.view.stage.group.TowerGroup;
-import ua.gram.view.stage.group.TowerShopGroup;
+import ua.gram.model.actor.weapon.Laser;
+import ua.gram.view.group.TowerControlsGroup;
+import ua.gram.view.group.TowerGroup;
+import ua.gram.view.group.TowerShopGroup;
+
+import static ua.gram.model.actor.Tower.SELL_RATIO;
 
 /**
  * @author gram
@@ -103,25 +102,24 @@ public class TowerShop {
         game.getPlayer().chargeCoins(tower.getCost());
         tower.setStageBattle(stage_battle);
         tower.setTouchable(Touchable.enabled);
-        final TowerGroup group = new TowerGroup(
+        TowerGroup towerGroup = new TowerGroup(
                 tower,
-                tower.getWeapon(),
+                new Laser(game.getResources(), Color.RED),
                 new Range(game.getResources()),
                 new TowerControlsGroup(game.getSkin(), this),
                 new ProgressBar(game.getSkin(), tower)
         );
-        group.getControls().setGroup(group);
-        group.getRange().setGroup(group);
-        group.setVisible(true);
-        stage_battle.getTowers().addActor(group);
-        stage_battle.updateZIndexes(group.getTower());
+        towerGroup.getControls().setGroup(towerGroup);
+        towerGroup.getRange().setGroup(towerGroup);
+        towerGroup.setVisible(true);
+        stage_battle.updateZIndexes(towerGroup);
         tower.isBuilding = true;
         Gdx.app.log("INFO", tower + " is building...");
     }
 
     /**
      * Removes tower from stage and frees it to pool.
-     * Only if dragging is canceled.
+     * Only if dragging is aborted.
      *
      * @param tower descendant of the Tower
      */

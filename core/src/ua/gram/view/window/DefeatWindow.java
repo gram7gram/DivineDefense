@@ -1,4 +1,4 @@
-package ua.gram.view.stage.window;
+package ua.gram.view.window;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -8,8 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import ua.gram.DDGame;
 import ua.gram.controller.listener.ContinueListener;
 import ua.gram.controller.listener.RestartListener;
+import ua.gram.controller.stage.GameUIStage;
 import ua.gram.model.Player;
-import ua.gram.view.stage.GameUIStage;
 
 /**
  * @author Gram <gram7gram@gmail.com>
