@@ -28,6 +28,10 @@ public class Laser extends Weapon {
         this(resources, color, Vector2.Zero, Vector2.Zero);
     }
 
+    public Laser(Resources resources, Color color, Vector2 towerPos) {
+        this(resources, color, towerPos, Vector2.Zero);
+    }
+
     public Laser(Resources resources, Color color, Vector2 from, Vector2 to) {
         super(from, to);
         this.color_back = color;

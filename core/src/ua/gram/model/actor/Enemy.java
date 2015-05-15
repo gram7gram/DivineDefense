@@ -12,7 +12,7 @@ import ua.gram.controller.enemy.EnemyAnimationController;
 import ua.gram.controller.enemy.EnemyRemover;
 import ua.gram.controller.enemy.EnemySpawner;
 import ua.gram.controller.stage.GameBattleStage;
-import ua.gram.view.group.EnemyGroup;
+import ua.gram.model.group.EnemyGroup;
 
 /**
  * TODO Make 8 directional texture region for enemy to smooth moving
@@ -28,7 +28,7 @@ public abstract class Enemy extends Actor {
     public final byte animationWidth = 40;
     public final byte animationHeight = 60;
     private final DDGame game;
-    private final Vector2 centerPosition;
+    //    private final Vector2 centerPosition;
     public float health;
     public float speed;
     public float armor;
@@ -56,7 +56,7 @@ public abstract class Enemy extends Actor {
         isStunned = false;
         isAffected = false;
         isDead = false;
-        centerPosition = Vector2.Zero;
+//        centerPosition = Vector2.Zero;
     }
 
     @Override
@@ -91,7 +91,7 @@ public abstract class Enemy extends Actor {
     }
 
     public void die() {
-        this.addAction(Actions.run(new EnemyRemover(game, spawner, group) {
+        this.addAction(Actions.run(new EnemyRemover(spawner, group) {
             @Override
             public void customAction() {
                 Enemy enemy = group.getEnemy();

@@ -6,14 +6,12 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import ua.gram.DDGame;
 import ua.gram.controller.pool.animation.AnimationController.Types;
 import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.controller.tower.TowerAnimationController;
 import ua.gram.controller.tower.TowerLevelAnimationContainer;
-import ua.gram.view.group.TowerGroup;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,7 +31,6 @@ public abstract class Tower extends Actor {
     public final float build_delay = 2;
     protected final int animationWidth = 40;
     protected final int animationHeight = 60;
-    private final Vector2 centerPosition;
     public float damage;
     public float range;
     public float rate;
@@ -68,7 +65,6 @@ public abstract class Tower extends Actor {
         isBuilding = false;
         this.setSize(animationWidth, animationHeight);
         this.setBounds(getX(), getY(), animationWidth, animationHeight);
-        centerPosition = Vector2.Zero;
     }
 
     @Override
@@ -95,13 +91,8 @@ public abstract class Tower extends Actor {
                     countBuilding = 0;
                     isBuilding = false;
                     isActive = true;
-                    this.addListener(new ClickListener() {
-                        @Override
-                        public void clicked(InputEvent event, float x, float y) {
-                            ((TowerGroup) getParent()).toggleControls();
-                        }
-                    });
-                    Gdx.app.log("INFO", this.getClass().getSimpleName() + " is builded");
+                    this.setTouchable(Touchable.enabled);
+                    Gdx.app.log("INFO", this + " is builded");
                 } else {
                     countBuilding += delta;
                 }
@@ -118,7 +109,7 @@ public abstract class Tower extends Actor {
                 } else {
                     count += delta;
                     if (victims != null && !victims.isEmpty() && weapon.isVisible()) {
-                        weapon.updatePosition(this.getCenterPoint(), victims.get(0).getCenterPoint());
+                        weapon.updateTargetPosition(victims.get(0).getCenterPoint());
                     }
                 }
             }
@@ -129,7 +120,7 @@ public abstract class Tower extends Actor {
         for (Enemy victim : victims) {
             weapon.setVisible(true);
             weapon.toFront();
-            weapon.updatePosition(this.getCenterPoint(), victim.getCenterPoint());
+            weapon.updateTargetPosition(victim.getCenterPoint());
             victim.receiveDamage(this.damage);
 //            Gdx.app.log("INFO", this + " attacked " + victim + "@" + victim.hashCode());
         }
@@ -274,11 +265,10 @@ public abstract class Tower extends Actor {
     }
 
     public Vector2 getCenterPoint() {
-        centerPosition.set(
+        return new Vector2(
                 this.getX() + (this.getWidth() / 2f),
                 this.getY() + (this.getHeight() / 2f)
         );
-        return centerPosition;
     }
 
     public void setLevelAnimationContainer(int level) {

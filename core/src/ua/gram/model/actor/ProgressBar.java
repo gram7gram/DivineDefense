@@ -20,7 +20,10 @@ public class ProgressBar extends Actor {
     public ProgressBar(Skin skin, Tower tower) {
         this.tower = tower;
         progressBar = new NinePatchDrawable(
-                new NinePatch(skin.getRegion("healthBar100"), 0, 0, 0, 0));
+                new NinePatch(
+                        skin.getRegion("healthBar100"),
+                        0, 0, 0, 0)
+        );
         this.setDebug(DDGame.DEBUG);
         this.setTouchable(Touchable.disabled);
         this.setSize(tower.getWidth(), 3);

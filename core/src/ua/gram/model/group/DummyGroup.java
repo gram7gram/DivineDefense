@@ -1,4 +1,4 @@
-package ua.gram.view.group;
+package ua.gram.model.group;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;

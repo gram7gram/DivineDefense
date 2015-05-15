@@ -23,9 +23,11 @@ public abstract class Weapon extends Actor {
         if (!DDGame.PAUSE) this.toFront();
     }
 
-    public void updatePosition(Vector2 towerPosition, Vector2 targetPosition) {
-        position1 = towerPosition;
-        position2 = targetPosition;
+    public void updateTargetPosition(Vector2 targetPosition) {
+        position2.set(
+                targetPosition.x,
+                targetPosition.y
+        );
     }
 
     public Vector2 getTowerPosition() {

@@ -6,9 +6,11 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import ua.gram.controller.stage.GameBattleStage;
+import ua.gram.controller.stage.GameUIStage;
+import ua.gram.model.actor.Range;
 import ua.gram.model.actor.Tower;
-import ua.gram.view.group.TowerControlsGroup;
-import ua.gram.view.group.TowerGroup;
+import ua.gram.model.group.TowerControlsGroup;
+import ua.gram.model.group.TowerGroup;
 
 /**
  * Handles tower controls: if they are visible and player
@@ -20,9 +22,11 @@ import ua.gram.view.group.TowerGroup;
 public class ToggleTowerControlsListener extends ClickListener {
 
     private final GameBattleStage stage_battle;
+    private final GameUIStage stage_ui;
 
-    public ToggleTowerControlsListener(GameBattleStage stage) {
+    public ToggleTowerControlsListener(GameBattleStage stage, GameUIStage stage_ui) {
         this.stage_battle = stage;
+        this.stage_ui = stage_ui;
     }
 
     @Override
@@ -34,14 +38,26 @@ public class ToggleTowerControlsListener extends ClickListener {
                     for (Actor actor : group.getChildren()) {
                         if (actor instanceof TowerGroup) {
                             TowerGroup towerGroup = ((TowerGroup) actor);
-                            TowerControlsGroup controls = towerGroup.getControls();
+                            TowerControlsGroup controls = stage_ui.getTowerControls();
                             Tower tower = towerGroup.getTower();
+                            Range range = stage_battle.getRange();
                             if (controls.isVisible()
                                     && !contains(controls.getUpgradeBut(), x, y)
-                                    && !contains(controls.getSellBut(), x, y)
-                                    && !contains(tower, x, y)) {
+                                    && !contains(controls.getSellBut(), x, y)) {
                                 controls.setVisible(false);
+                                range.setVisible(false);
                                 Gdx.app.log("INFO", "Controls are hidden by stage");
+                                return;
+                            } else if (!controls.isVisible()
+                                    && contains(tower, x, y)) {
+                                controls.setGroup(towerGroup);
+                                controls.setVisible(!controls.isVisible());
+                                controls.toFront();
+                                range.setTower(tower);
+                                range.toBack();
+                                range.setVisible(controls.isVisible());
+                                Gdx.app.log("INFO", "Tower controls are "
+                                        + (controls.isVisible() ? "" : "in") + "visible");
                             }
                         }
                     }

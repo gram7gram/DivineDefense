@@ -10,21 +10,21 @@ import ua.gram.controller.pool.animation.AnimationController;
 import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.controller.stage.GameUIStage;
 import ua.gram.model.actor.ProgressBar;
-import ua.gram.model.actor.Range;
 import ua.gram.model.actor.Tower;
 import ua.gram.model.actor.tower.TowerCannon;
 import ua.gram.model.actor.tower.TowerPrimary;
 import ua.gram.model.actor.tower.TowerSpecial;
 import ua.gram.model.actor.tower.TowerStun;
 import ua.gram.model.actor.weapon.Laser;
-import ua.gram.view.group.TowerControlsGroup;
-import ua.gram.view.group.TowerGroup;
-import ua.gram.view.group.TowerShopGroup;
+import ua.gram.model.group.TowerControlsGroup;
+import ua.gram.model.group.TowerGroup;
+import ua.gram.model.group.TowerShopGroup;
 
 import static ua.gram.model.actor.Tower.SELL_RATIO;
 
 /**
- * @author gram
+ *
+ * @author Gram <gram7gram@gmail.com>
  */
 public class TowerShop {
 
@@ -36,30 +36,28 @@ public class TowerShop {
     private final Pool<Tower> poolCannon;
     private final Pool<Tower> poolStun;
     private final Pool<Tower> poolSpecial;
-    private final byte capacity = 5;
 
     @SuppressWarnings("unchecked")
-    public TowerShop(DDGame game, GameUIStage stage_ui) {
+    public TowerShop(DDGame game, GameBattleStage stage_battle, GameUIStage stage_ui) {
         this.game = game;
         this.stage_ui = stage_ui;
-        this.stage_battle = stage_ui.getBattleStage();
-        poolPrimary = new TowerPool(game, capacity, DDGame.MAX, TowerPrimary.class);
-        poolCannon = new TowerPool(game, capacity, DDGame.MAX, TowerCannon.class);
-        poolStun = new TowerPool(game, capacity, DDGame.MAX, TowerStun.class);
-        poolSpecial = new TowerPool(game, capacity, DDGame.MAX, TowerSpecial.class);
-        towerShopGroup = new TowerShopGroup(game, stage_ui, this);
+        this.stage_battle = stage_battle;
+        poolPrimary = new TowerPool(game, 5, DDGame.MAX, TowerPrimary.class);
+        poolCannon = new TowerPool(game, 5, DDGame.MAX, TowerCannon.class);
+        poolStun = new TowerPool(game, 5, DDGame.MAX, TowerStun.class);
+        poolSpecial = new TowerPool(game, 5, DDGame.MAX, TowerSpecial.class);
+        towerShopGroup = new TowerShopGroup(game, this);
+        stage_ui.setTowerControls(new TowerControlsGroup(game.getResources().getSkin(), this));
         Gdx.app.log("INFO", "TowerShop is OK");
     }
 
     /**
-     * <pre>
      * Gets the tower from the pool, according to type.
      * Does not charge tower cost from player.
-     * </pre>
      *
      * @param type descendant of the Tower
-     * @param x    initial appear point
-     * @param y    initial appear point
+     * @param x initial appear point
+     * @param y initial appear point
      * @return tower, obtained from pool
      * @throws CloneNotSupportedException
      */
@@ -86,14 +84,12 @@ public class TowerShop {
     }
 
     /**
-     * <pre>
      * Puts the tower on the stage.
      * Adds listener to tower and charges tower cost from player.
-     * </pre>
      *
-     * @param tower
-     * @param x
-     * @param y
+     * @param tower will be build on the stage
+     * @param x x-axis of the tower
+     * @param y y-axis of the tower
      */
     public void build(Tower tower, float x, float y) {
         tower.remove();
@@ -101,16 +97,12 @@ public class TowerShop {
         tower.setPosition(x, y);
         game.getPlayer().chargeCoins(tower.getCost());
         tower.setStageBattle(stage_battle);
-        tower.setTouchable(Touchable.enabled);
         TowerGroup towerGroup = new TowerGroup(
                 tower,
-                new Laser(game.getResources(), Color.RED),
-                new Range(game.getResources()),
-                new TowerControlsGroup(game.getSkin(), this),
-                new ProgressBar(game.getSkin(), tower)
+                new Laser(game.getResources(), Color.RED, tower.getCenterPoint()),
+                new ProgressBar(game.getResources().getSkin(), tower)
         );
-        towerGroup.getControls().setGroup(towerGroup);
-        towerGroup.getRange().setGroup(towerGroup);
+        tower.setTouchable(Touchable.disabled);
         towerGroup.setVisible(true);
         stage_battle.updateZIndexes(towerGroup);
         tower.isBuilding = true;
@@ -181,4 +173,11 @@ public class TowerShop {
         return towerShopGroup;
     }
 
+    public GameBattleStage getStageBattle() {
+        return stage_battle;
+    }
+
+    public GameUIStage getStageUi() {
+        return stage_ui;
+    }
 }

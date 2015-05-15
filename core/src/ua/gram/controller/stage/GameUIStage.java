@@ -6,7 +6,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import ua.gram.DDGame;
 import ua.gram.controller.tower.TowerShop;
 import ua.gram.model.Level;
-import ua.gram.view.group.GameUIGroup;
+import ua.gram.model.group.GameUIGroup;
+import ua.gram.model.group.TowerControlsGroup;
 import ua.gram.view.window.DefeatWindow;
 import ua.gram.view.window.PauseWindow;
 import ua.gram.view.window.VictoryWindow;
@@ -19,32 +20,29 @@ import ua.gram.view.window.VictoryWindow;
 public class GameUIStage extends Stage {
 
     private final DDGame game;
-    private final TowerShop towerShop;
-    private final GameBattleStage stage_battle;
-    private final GameUIGroup gameControlsGroup;
+    private final GameUIGroup gameUIGroup;
     private final Level level;
     private final PauseWindow pauseWindow;
     private final VictoryWindow victoryWindow;
     private final DefeatWindow defeatWindow;
+    private TowerShop towerShop;
+    private GameBattleStage stage_battle;
+    private TowerControlsGroup towerControls;
 
-    public GameUIStage(DDGame game, GameBattleStage stage_battle, Level level) {
+    public GameUIStage(DDGame game, Level level) {
         super(game.getViewport(), game.getBatch());
         this.setDebugAll(DDGame.DEBUG);
-        this.stage_battle = stage_battle;
         this.game = game;
         this.level = level;
-        gameControlsGroup = new GameUIGroup(game, this, level);
-        towerShop = new TowerShop(game, this);
+        gameUIGroup = new GameUIGroup(game, this, level);
         victoryWindow = new VictoryWindow(game);
         pauseWindow = new PauseWindow(game, "menu", this);
         defeatWindow = new DefeatWindow(game, this);
-        gameControlsGroup.setVisible(true);
+        gameUIGroup.setVisible(true);
         victoryWindow.setVisible(false);
         pauseWindow.setVisible(false);
         defeatWindow.setVisible(false);
-        towerShop.getTowerShopGroup().setVisible(true);
-        this.addActor(towerShop.getTowerShopGroup());
-        this.addActor(gameControlsGroup);
+        this.addActor(gameUIGroup);
         this.addActor(victoryWindow);
         this.addActor(pauseWindow);
         this.addActor(defeatWindow);
@@ -60,11 +58,11 @@ public class GameUIStage extends Stage {
         DDGame.PAUSE = !DDGame.PAUSE;
         Gdx.app.log("INFO", "Pause: " + DDGame.PAUSE);
         window.setVisible(!window.isVisible());
-        gameControlsGroup.setVisible(!window.isVisible());
+        gameUIGroup.setVisible(!window.isVisible());
         towerShop.getTowerShopGroup().setVisible(!window.isVisible());
 //	float duration = .2f;
 //	window.addAction(window.isVisible() ? Actions.alpha(0, duration) : Actions.alpha(1, duration));
-//	gameControlsGroup.addAction(window.isVisible() ? Actions.alpha(1, duration) : Actions.alpha(0, duration));
+//	gameUIGroup.addAction(window.isVisible() ? Actions.alpha(1, duration) : Actions.alpha(0, duration));
 //	towerShopGroup.addAction(window.isVisible() ? Actions.alpha(1, duration) : Actions.alpha(0, duration));
         if (window instanceof DefeatWindow && window.isVisible()) {
             ((DefeatWindow) window).update();
@@ -72,9 +70,10 @@ public class GameUIStage extends Stage {
         Gdx.app.log("INFO", window.getClass().getSimpleName() + " is " + (window.isVisible() ? "" : "in") + "visible");
     }
 
+
     /**
      * <pre>
-     * Checks if Player is Dead or Victorious
+     * Checks if Player is Dead or Victorious.
      *
      * TODO Show options for Player, if he is dead:
      * 		Ressurect with max health: *** gems
@@ -114,8 +113,25 @@ public class GameUIStage extends Stage {
                 && !defeatWindow.isVisible();
     }
 
+    public TowerControlsGroup getTowerControls() {
+        return towerControls;
+    }
+
+    public void setTowerControls(TowerControlsGroup towerControls) {
+        this.towerControls = towerControls;
+        towerControls.setVisible(false);
+        this.addActor(towerControls);
+    }
+
     public GameBattleStage getBattleStage() {
         return stage_battle;
+    }
+
+    public void setBattleStage(GameBattleStage stage_battle) {
+        this.stage_battle = stage_battle;
+        towerShop = new TowerShop(game, stage_battle, this);
+        towerShop.getTowerShopGroup().setVisible(true);
+        this.addActor(towerShop.getTowerShopGroup());
     }
 
     public Level getLevel() {
@@ -126,8 +142,7 @@ public class GameUIStage extends Stage {
         return pauseWindow;
     }
 
-    public GameUIGroup getGameControlsGroup() {
-        return gameControlsGroup;
+    public GameUIGroup getGameUIGroup() {
+        return gameUIGroup;
     }
-
 }

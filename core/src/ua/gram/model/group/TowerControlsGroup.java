@@ -1,4 +1,4 @@
-package ua.gram.view.group;
+package ua.gram.model.group;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -38,6 +38,7 @@ public class TowerControlsGroup extends AbstractGroup {
 
     public void setGroup(final TowerGroup group) {
         final Tower tower = group.getTower();
+        final TowerControlsGroup controls = this;
         sellBut.setSize(butHeight, butHeight);
         sellBut.setPosition(
                 tower.getX() - sellBut.getWidth() - gap,
@@ -47,8 +48,9 @@ public class TowerControlsGroup extends AbstractGroup {
         sellBut.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                controls.setVisible(false);
+                shop.getStageBattle().getRange().setVisible(false);
                 shop.sell(group);
-                group.toggleControls();
             }
         });
         upgradeBut.setSize(butHeight, butHeight);
@@ -60,11 +62,11 @@ public class TowerControlsGroup extends AbstractGroup {
         upgradeBut.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                controls.setVisible(false);
+                shop.getStageBattle().getRange().setVisible(false);
                 tower.upgrade();
-                group.toggleControls();
             }
         });
-        this.setVisible(false);
         this.addActor(sellBut);
         this.addActor(upgradeBut);
     }

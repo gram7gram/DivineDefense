@@ -14,7 +14,7 @@ import ua.gram.model.Level;
 import ua.gram.model.actor.Enemy;
 import ua.gram.model.actor.HealthBar;
 import ua.gram.model.actor.enemy.*;
-import ua.gram.view.group.EnemyGroup;
+import ua.gram.model.group.EnemyGroup;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -157,7 +157,7 @@ public class EnemySpawner {
         pathToGo.addAction(
                 Actions.parallel(
                         Actions.hide(),
-                        Actions.run(new EnemyRemover(game, this, group) {
+                        Actions.run(new EnemyRemover(this, group) {
                             @Override
                             public void customAction() {
                                 Gdx.app.log("INFO", "Enemy reached the Base");

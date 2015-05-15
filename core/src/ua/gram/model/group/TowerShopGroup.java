@@ -1,4 +1,4 @@
-package ua.gram.view.group;
+package ua.gram.model.group;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import ua.gram.DDGame;
 import ua.gram.controller.listener.TowerShopInputListener;
+import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.controller.stage.GameUIStage;
 import ua.gram.controller.tower.TowerShop;
 import ua.gram.model.actor.tower.TowerCannon;
@@ -29,9 +30,11 @@ public class TowerShopGroup extends AbstractGroup {
     private final Button towerSpecialBut;
     private final Button towerCannonBut;
 
-    public TowerShopGroup(DDGame game, GameUIStage stage, TowerShop shop) {
+    public TowerShopGroup(DDGame game, TowerShop shop) {
         super();
         this.game = game;
+        GameBattleStage stage_battle = shop.getStageBattle();
+        GameUIStage stage_ui = shop.getStageUi();
 
         towerPrimaryBut = new Button(game.getSkin(), "tower-primary");
         towerPrimaryBut.setVisible(true);
@@ -80,10 +83,10 @@ public class TowerShopGroup extends AbstractGroup {
                 towerSpecialBut.getY()
         );
 
-        towerPrimaryBut.addListener(new TowerShopInputListener(shop, stage, TowerPrimary.class));
-        towerCannonBut.addListener(new TowerShopInputListener(shop, stage, TowerCannon.class));
-        towerStunBut.addListener(new TowerShopInputListener(shop, stage, TowerStun.class));
-        towerSpecialBut.addListener(new TowerShopInputListener(shop, stage, TowerSpecial.class));
+        towerPrimaryBut.addListener(new TowerShopInputListener(shop, stage_battle, stage_ui, TowerPrimary.class));
+        towerCannonBut.addListener(new TowerShopInputListener(shop, stage_battle, stage_ui, TowerCannon.class));
+        towerStunBut.addListener(new TowerShopInputListener(shop, stage_battle, stage_ui, TowerStun.class));
+        towerSpecialBut.addListener(new TowerShopInputListener(shop, stage_battle, stage_ui, TowerSpecial.class));
 
         this.addActor(towerPrimaryBut);
         this.addActor(towerPrimaryLabel);

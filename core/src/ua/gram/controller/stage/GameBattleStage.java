@@ -8,9 +8,10 @@ import ua.gram.DDGame;
 import ua.gram.controller.listener.ToggleTowerControlsListener;
 import ua.gram.model.Level;
 import ua.gram.model.actor.Enemy;
+import ua.gram.model.actor.Range;
 import ua.gram.model.actor.Tower;
-import ua.gram.view.group.EnemyGroup;
-import ua.gram.view.group.TowerGroup;
+import ua.gram.model.group.EnemyGroup;
+import ua.gram.model.group.TowerGroup;
 
 import java.util.ArrayList;
 
@@ -23,7 +24,9 @@ import java.util.ArrayList;
 public class GameBattleStage extends Stage {
 
     private final Level level;
+    private GameUIStage stage_ui;
     private volatile ArrayList<Group> indexes;
+    private Range range;
 
     public GameBattleStage(DDGame game, Level level) {
         super(game.getViewport(), game.getBatch());
@@ -34,6 +37,9 @@ public class GameBattleStage extends Stage {
             indexes.add(group);
             this.addActor(group);
         }
+        range = new Range(game.getResources());
+        range.setVisible(false);
+        this.addActor(range);
         this.setDebugAll(DDGame.DEBUG);
         Gdx.app.log("INFO", indexes.size() + " indexes are OK");
         Gdx.app.log("INFO", "BattleStage is OK");
@@ -46,7 +52,7 @@ public class GameBattleStage extends Stage {
             if (level.getStage() == null) {
                 level.setStage(this);
                 level.createSpawner();
-                this.addListener(new ToggleTowerControlsListener(this));
+                this.addListener(new ToggleTowerControlsListener(this, stage_ui));
             }
             level.update(delta);
         }
@@ -198,6 +204,9 @@ public class GameBattleStage extends Stage {
         return true;
     }
 
+    public Range getRange() {
+        return range;
+    }
 
     public ArrayList<Group> getIndexes() {
         return indexes;
@@ -209,5 +218,9 @@ public class GameBattleStage extends Stage {
             enemy.getParent().remove();
             indexes.get(index).addActor(enemy.getParent());
         }
+    }
+
+    public void setUIStage(GameUIStage stage_ui) {
+        this.stage_ui = stage_ui;
     }
 }

@@ -24,7 +24,9 @@ public class GameScreen extends AbstractScreen {
         renderer = new OrthogonalTiledMapRenderer(level.getMap().getTiledMap());
         renderer.setView(game.getCamera());
         stage_battle = new GameBattleStage(game, level);
-        stage_ui = new GameUIStage(game, stage_battle, level);
+        stage_ui = new GameUIStage(game, level);
+        stage_battle.setUIStage(stage_ui);
+        stage_ui.setBattleStage(stage_battle);
         Gdx.app.log("INFO", "Screen set to GameScreen");
     }
 

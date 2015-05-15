@@ -8,6 +8,7 @@ import ua.gram.DDGame;
 import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.controller.stage.GameUIStage;
 import ua.gram.controller.tower.TowerShop;
+import ua.gram.model.actor.Tower;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -21,11 +22,14 @@ public class TowerShopInputListener extends ClickListener {
     private final TowerShop shop;
     private ua.gram.model.actor.Tower tower;
 
-    public TowerShopInputListener(TowerShop shop, GameUIStage stage_ui, Class<? extends ua.gram.model.actor.Tower> type) {
+    public TowerShopInputListener(TowerShop shop,
+                                  GameBattleStage stage_battle,
+                                  GameUIStage stage_ui,
+                                  Class<? extends Tower> type) {
         this.shop = shop;
         this.type = type;
         this.stage_ui = stage_ui;
-        this.stage_battle = stage_ui.getBattleStage();
+        this.stage_battle = stage_battle;
         this.layer = stage_battle.getLevel().getMap().getLayer();
     }
 
@@ -80,7 +84,7 @@ public class TowerShopInputListener extends ClickListener {
             shop.build(tower, X, Y);
             if (!stage_ui.getLevel().getWave().isStarted) {
                 stage_ui.getLevel().getWave().nextWave();
-                stage_ui.getGameControlsGroup().getCounterBut().setVisible(false);
+                stage_ui.getGameUIGroup().getCounterBut().setVisible(false);
             }
         } else {
             shop.release(tower);

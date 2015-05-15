@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import ua.gram.DDGame;
 import ua.gram.model.Player;
-import ua.gram.view.group.ConfirmationGroup;
+import ua.gram.model.group.ConfirmationGroup;
 
 /**
  * <pre>
