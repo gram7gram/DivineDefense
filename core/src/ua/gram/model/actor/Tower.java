@@ -31,6 +31,7 @@ public abstract class Tower extends Actor {
     public final float build_delay = 2;
     protected final int animationWidth = 40;
     protected final int animationHeight = 60;
+    private final StatusIcon aim;
     public float damage;
     public float range;
     public float rate;
@@ -49,8 +50,9 @@ public abstract class Tower extends Actor {
     protected Animation animation;
     protected Weapon weapon;
     private float stateTime;
-    private ArrayList<Enemy> victims;
     private float count = 0;
+    private int targetIndex = -1;
+    private Enemy victim;
 
     public Tower(DDGame game, float[] stats) {
         this.game = game;
@@ -65,6 +67,7 @@ public abstract class Tower extends Actor {
         isBuilding = false;
         this.setSize(animationWidth, animationHeight);
         this.setBounds(getX(), getY(), animationWidth, animationHeight);
+        aim = new StatusIcon(game.getResources());
     }
 
     @Override
@@ -78,20 +81,24 @@ public abstract class Tower extends Actor {
                 //Prevent too soon rendering.
             }
         }
-        if (currentFrame != null)
+        if (currentFrame != null) {
             batch.draw(currentFrame, this.getX(), this.getY());
+        }
     }
 
     @Override
     public void act(float delta) {
         super.act(delta);
         if (!DDGame.PAUSE) {
+            this.setOrigin(this.getX() + this.getWidth() / 2f, this.getY() + this.getHeight() * 1.5f / 2f);
             if (isBuilding) {
                 if (countBuilding >= build_delay) {
                     countBuilding = 0;
                     isBuilding = false;
                     isActive = true;
                     this.setTouchable(Touchable.enabled);
+                    stage_battle.addActor(aim);
+                    weapon.setSource(this);
                     Gdx.app.log("INFO", this + " is builded");
                 } else {
                     countBuilding += delta;
@@ -99,30 +106,45 @@ public abstract class Tower extends Actor {
             } else if (isActive) {
                 if (count >= this.rate) {
                     count = 0;
-                    victims = scan();
-                    if (!victims.isEmpty()) {
-                        attack(chooseTargets(victims));
+                    if (victim == null) {
+                        ArrayList<Enemy> targets = scan();
+                        if (!targets.isEmpty()) {
+                            List<Enemy> victims = chooseVictims(targets);
+                            if (!victims.isEmpty()) {
+                                int index = ++targetIndex <= victims.size() - 1 ? targetIndex : 0;
+                                victim = victims.get(index % 2 == 0 && index != 0 ? index : victims.size() - 1 - index);
+                                if (victim != null && isInRange(victim)) {
+                                    victim.isAttacked = true;
+                                    aim.setEnemy(victim);
+                                    weapon.setTarget(victim);
+                                    aim.setVisible(true);
+                                    weapon.setVisible(true);
+                                    weapon.toFront();
+                                    victim.receiveDamage(this.damage);
+                                }
+                            } else if (victim != null) {
+                                victim.isAttacked = false;
+                            } else {
+                                Gdx.app.error("ERROR", "Could not choose targets!");
+                            }
+                        }
+//                    } else if (!isInRange(victim) && victim.isAttacked) {
+//                        victim.isAttacked = false;
+//                        victim = null;
+//                        aim.setVisible(false);
+//                        weapon.setTarget(null);
+//                        weapon.setVisible(false);
                     } else {
+                        victim.isAttacked = false;
+                        victim = null;
+                        aim.setVisible(false);
+                        weapon.setTarget(null);
                         weapon.setVisible(false);
-                        weapon.reset();
                     }
                 } else {
                     count += delta;
-                    if (victims != null && !victims.isEmpty() && weapon.isVisible()) {
-                        weapon.updateTargetPosition(victims.get(0).getCenterPoint());
-                    }
                 }
             }
-        }
-    }
-
-    public void attack(List<Enemy> victims) {
-        for (Enemy victim : victims) {
-            weapon.setVisible(true);
-            weapon.toFront();
-            weapon.updateTargetPosition(victim.getCenterPoint());
-            victim.receiveDamage(this.damage);
-//            Gdx.app.log("INFO", this + " attacked " + victim + "@" + victim.hashCode());
         }
     }
 
@@ -143,11 +165,11 @@ public abstract class Tower extends Actor {
     /**
      * Choose Enemies according to Tower level and strategy.
      *
-     * @param victims potential targets in range
-     * @return actual targets
+     * @param victims potential victims in range
+     * @return actual victims
      */
-    private List<Enemy> chooseTargets(ArrayList<Enemy> victims) {
-        List<Enemy> targets = new ArrayList<Enemy>();
+    private List<Enemy> chooseVictims(ArrayList<Enemy> victims) {
+        List<Enemy> enemyTargets = new ArrayList<Enemy>();
         switch (this.strategy) {
             case STRONGEST:
                 Collections.sort(victims, new EnemyHealthComparator(EnemyHealthComparator.MAX));
@@ -160,21 +182,22 @@ public abstract class Tower extends Actor {
                 break;
             case RANDOM:
                 byte index = victims.size() > 1 ? (byte) (Math.random() * (victims.size())) : 0;
-                targets.add(victims.get(index));
-                return targets;
+                enemyTargets.add(victims.get(index));
+                return enemyTargets;
         }
         if (this.getTowerLevel() > 1 && victims.size() > 1) {
-            targets = victims.subList(0, victims.size() > this.getTowerLevel() ? this.getTowerLevel() : victims.size());
+            enemyTargets = victims.subList(0, victims.size() > this.getTowerLevel() ? this.getTowerLevel() : victims.size());
         } else {
-            targets.add(victims.get(0));
+            enemyTargets.add(victims.get(0));
         }
-        return targets;
+        return enemyTargets;
     }
 
     private boolean isInRange(Enemy enemy) {
         Vector2 enemyPos = new Vector2(enemy.getX() + enemy.getWidth() / 2f, enemy.getY() + enemy.getHeight() / 2f);
         Vector2 towerPos = new Vector2(this.getX() + this.getWidth() / 2f, this.getY() + this.getHeight() / 2f);
-        return enemyPos.dst(towerPos) <= this.range * DDGame.TILEHEIGHT;
+        float distance = enemyPos.dst(towerPos);
+        return distance <= this.range * DDGame.TILEHEIGHT;
     }
 
     /**
@@ -275,7 +298,10 @@ public abstract class Tower extends Actor {
         container = controller.getLevelAnimationContainer(level);
     }
 
-    public enum Strategy {NEAREST, RANDOM, WEAKEST, STRONGEST}
+    public enum Strategy {
+
+        NEAREST, RANDOM, WEAKEST, STRONGEST
+    }
 
     private class EnemyHealthComparator implements Comparator<Enemy> {
 

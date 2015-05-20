@@ -49,15 +49,17 @@ public class ToggleTowerControlsListener extends ClickListener {
                                 Gdx.app.log("INFO", "Controls are hidden by stage");
                                 return;
                             } else if (!controls.isVisible()
-                                    && contains(tower, x, y)) {
+                                    && contains(tower, x, y)
+                                    && tower.isActive) {
                                 controls.setGroup(towerGroup);
-                                controls.setVisible(!controls.isVisible());
-                                controls.toFront();
+                                controls.setVisible(true);
+                                range.setVisible(true);
                                 range.setTower(tower);
                                 range.toBack();
-                                range.setVisible(controls.isVisible());
+                                controls.toFront();
                                 Gdx.app.log("INFO", "Tower controls are "
                                         + (controls.isVisible() ? "" : "in") + "visible");
+                                return;
                             }
                         }
                     }
@@ -74,7 +76,6 @@ public class ToggleTowerControlsListener extends ClickListener {
      * @param yCord y coordinate of the pointer
      * @return true if (x,y) is in the actor's bounds
      */
-
     private boolean contains(Actor actor, float xCord, float yCord) {
         return (xCord > actor.getX()
                 && xCord < actor.getX() + actor.getWidth()

@@ -254,3 +254,28 @@ green-up
   orig: 98, 98
   offset: 0, 0
   index: -1
+
+../images/misc/aim.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+aim
+  rotate: false
+  xy: 0, 0
+  size: 10, 10
+  orig: 10, 10
+  offset: 0, 0
+  index: -1
+
+window.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+window-pretty
+  rotate: false
+  xy: 1, 1
+  size: 98, 98
+  split: 33, 32, 34, 33
+  orig: 98, 98
+  offset: 0, 0
+  index: -1

@@ -1,14 +1,13 @@
 package ua.gram.view.screen;
 
 import com.badlogic.gdx.Gdx;
-
-import java.util.Arrays;
-
 import ua.gram.DDGame;
 import ua.gram.controller.Resources;
 import ua.gram.controller.factory.LevelFactory;
 import ua.gram.model.Level;
 import ua.gram.view.AbstractLoadingScreen;
+
+import java.util.Arrays;
 
 /**
  * <pre>
@@ -44,6 +43,7 @@ public class LevelLoadingScreen extends AbstractLoadingScreen {
         game.getResources().loadTexture(Resources.LASER_END_BACK);
         game.getResources().loadTexture(Resources.LASER_END_OVER);
         game.getResources().loadTexture(Resources.RANGE_TEXTURE);
+        game.getResources().loadTexture(Resources.AIM_ICON);
     }
 
     @Override

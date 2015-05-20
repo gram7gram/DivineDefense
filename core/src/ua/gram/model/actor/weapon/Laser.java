@@ -7,8 +7,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import ua.gram.DDGame;
 import ua.gram.controller.Resources;
+import ua.gram.model.actor.Enemy;
+import ua.gram.model.actor.Tower;
 import ua.gram.model.actor.Weapon;
-
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -24,16 +25,8 @@ public class Laser extends Weapon {
     private final Sprite end_back;
     private final Sprite end_over;
 
-    public Laser(Resources resources, Color color) {
-        this(resources, color, Vector2.Zero, Vector2.Zero);
-    }
-
-    public Laser(Resources resources, Color color, Vector2 towerPos) {
-        this(resources, color, towerPos, Vector2.Zero);
-    }
-
-    public Laser(Resources resources, Color color, Vector2 from, Vector2 to) {
-        super(from, to);
+    public Laser(Resources resources, Color color, Tower tower, Enemy enemy) {
+        super(tower, enemy);
         this.color_back = color;
         this.color_over = Color.WHITE;
         this.start_back = new Sprite(resources.getTexture(Resources.LASER_START_BACK));
@@ -45,53 +38,65 @@ public class Laser extends Weapon {
     }
 
     @Override
-    public void draw(Batch batch, float parentAlpha) {
-        super.draw(batch, parentAlpha);
-        if (!DDGame.PAUSE) {
-            batch.end();// actual drawing is done on end(); if we do not end, we contaminate previous rendering.
-            batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE);
-            batch.begin();
+    public void update() {
+        Vector2 towerPos = new Vector2(tower.getOriginX(), tower.getOriginY());
+        Vector2 targetPos = new Vector2(target.getOriginX(), target.getOriginY());
 
-            start_back.setColor(color_back);
-            start_over.setColor(color_over);
-            middle_back.setColor(color_back);
-            middle_over.setColor(color_over);
-            end_back.setColor(color_back);
-            end_over.setColor(color_over);
+        float dist = towerPos.dst(targetPos);
+        middle_back.setSize(middle_back.getWidth(), dist - target.getHeight() / 2f);
+        middle_over.setSize(middle_back.getWidth(), dist - target.getHeight() / 2f);
 
-            middle_back.setSize(middle_back.getWidth(), position1.dst(position2));
-            middle_over.setSize(middle_back.getWidth(), position1.dst(position2));
+        start_back.setOrigin(start_back.getWidth() / 2f, start_back.getHeight() / 2f);
+        start_over.setOrigin(start_back.getWidth() / 2f, start_back.getHeight() / 2f);
+        middle_back.setOrigin(middle_back.getWidth() / 2f, -start_back.getHeight() / 2f);
+        middle_over.setOrigin(middle_over.getWidth() / 2f, -start_back.getHeight() / 2f);
+        end_back.setOrigin(middle_back.getWidth() / 2f, -start_back.getHeight() / 2f - middle_back.getHeight());
+        end_over.setOrigin(middle_over.getWidth() / 2f, -start_back.getHeight() / 2f - middle_over.getHeight());
 
-            start_back.setPosition(position1.x, position1.y);
-            start_over.setPosition(position1.x, position1.y);
-            middle_back.setPosition(start_back.getX(), start_back.getY() + start_back.getHeight());
-            middle_over.setPosition(start_back.getX(), start_back.getY() + start_back.getHeight());
-            end_back.setPosition(start_back.getX(), start_back.getY() + start_back.getHeight() + middle_back.getHeight());
-            end_over.setPosition(start_back.getX(), start_back.getY() + start_back.getHeight() + middle_back.getHeight());
+        start_back.setPosition(tower.getOriginX() - start_back.getWidth() / 2f, tower.getOriginY() - start_back.getHeight() / 2f);
+        start_over.setPosition(tower.getOriginX() - start_back.getWidth() / 2f, tower.getOriginY() - start_back.getHeight() / 2f);
+        middle_back.setPosition(start_back.getX(), start_back.getY() + start_back.getHeight());
+        middle_over.setPosition(start_back.getX(), start_back.getY() + start_back.getHeight());
+        end_back.setPosition(start_back.getX(), start_back.getY() + start_back.getHeight() + middle_back.getHeight());
+        end_over.setPosition(start_back.getX(), start_back.getY() + start_back.getHeight() + middle_back.getHeight());
 
-            start_back.setOrigin(start_back.getWidth() / 2, 0);
-            start_over.setOrigin(start_back.getWidth() / 2, 0);
-            middle_back.setOrigin(middle_back.getWidth() / 2, -start_back.getHeight());
-            middle_over.setOrigin(middle_over.getWidth() / 2, -start_back.getHeight());
-            end_back.setOrigin(middle_back.getWidth() / 2, -start_back.getHeight() - middle_back.getHeight());
-            end_over.setOrigin(middle_over.getWidth() / 2, -start_back.getHeight() - middle_over.getHeight());
+        float degrees = towerPos.sub(targetPos).angle() + 90;
+        start_back.setRotation(degrees);
+        start_over.setRotation(degrees);
+        middle_back.setRotation(degrees);
+        middle_over.setRotation(degrees);
+        end_back.setRotation(degrees);
+        end_over.setRotation(degrees);
 
-            float degrees = position1.angle(position2);
-            start_back.setRotation(degrees);
-            start_over.setRotation(degrees);
-            middle_back.setRotation(degrees);
-            middle_over.setRotation(degrees);
-            end_back.setRotation(degrees);
-            end_over.setRotation(degrees);
+        start_back.setColor(color_back);
+        start_over.setColor(color_over);
+        middle_back.setColor(DDGame.DEBUG ? Color.BLUE : color_back);
+        middle_over.setColor(color_over);
+        end_back.setColor(color_back);
+        end_over.setColor(color_over);
 
-            start_back.draw(batch);
-            start_over.draw(batch);
-            middle_back.draw(batch);
-            middle_over.draw(batch);
-            end_back.draw(batch);
-            end_over.draw(batch);
+        this.setSize(
+                start_back.getWidth(),
+                start_back.getHeight() + middle_back.getHeight() + end_back.getWidth()
+        );
+        this.setOrigin(start_back.getWidth() / 2f, start_back.getHeight() / 2f);
+        this.setPosition(start_back.getX(), start_back.getY());
+        this.setRotation(degrees);
+    }
 
-            batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-        }
+    @Override
+    public void render(Batch batch) {
+        batch.end();// actual drawing is done on end(); if we do not end, we contaminate previous rendering.
+        batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE);
+        batch.begin();
+
+        start_back.draw(batch);
+        start_over.draw(batch);
+        middle_back.draw(batch);
+        middle_over.draw(batch);
+        end_back.draw(batch);
+        end_over.draw(batch);
+
+        batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
     }
 }

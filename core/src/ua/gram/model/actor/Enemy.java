@@ -28,11 +28,11 @@ public abstract class Enemy extends Actor {
     public final byte animationWidth = 40;
     public final byte animationHeight = 60;
     private final DDGame game;
-    //    private final Vector2 centerPosition;
     public float health;
     public float speed;
     public float armor;
     public boolean isStunned;
+    public boolean isAttacked;
     public boolean isAffected;
     public boolean isDead;//Prevent Towers from shooting if true
     public float stateTime = 0;
@@ -56,7 +56,7 @@ public abstract class Enemy extends Actor {
         isStunned = false;
         isAffected = false;
         isDead = false;
-//        centerPosition = Vector2.Zero;
+        isAttacked = false;
     }
 
     @Override
@@ -73,6 +73,7 @@ public abstract class Enemy extends Actor {
     public void act(float delta) {
         super.act(delta);
         if (!DDGame.PAUSE) {
+            this.setOrigin(this.getX() + this.getWidth() / 2f, this.getY() + this.getHeight() * .9f / 2f);
             if (this.health <= 0) {
                 die();
             } else {
@@ -144,11 +145,6 @@ public abstract class Enemy extends Actor {
                 this.getX() + (this.getWidth() / 2f),
                 this.getY() + (this.getHeight() / 2f)
         );
-//        centerPosition.set(
-//                this.getX() + (this.getWidth() / 2f),
-//                this.getY() + (this.getHeight() / 2f)
-//        );
-//        return centerPosition;
     }
 
     public void setGroup(EnemyGroup group) {

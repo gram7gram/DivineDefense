@@ -23,7 +23,6 @@ import ua.gram.model.group.TowerShopGroup;
 import static ua.gram.model.actor.Tower.SELL_RATIO;
 
 /**
- *
  * @author Gram <gram7gram@gmail.com>
  */
 public class TowerShop {
@@ -56,8 +55,8 @@ public class TowerShop {
      * Does not charge tower cost from player.
      *
      * @param type descendant of the Tower
-     * @param x initial appear point
-     * @param y initial appear point
+     * @param x    initial appear point
+     * @param y    initial appear point
      * @return tower, obtained from pool
      * @throws CloneNotSupportedException
      */
@@ -88,8 +87,8 @@ public class TowerShop {
      * Adds listener to tower and charges tower cost from player.
      *
      * @param tower will be build on the stage
-     * @param x x-axis of the tower
-     * @param y y-axis of the tower
+     * @param x     x-axis of the tower
+     * @param y     y-axis of the tower
      */
     public void build(Tower tower, float x, float y) {
         tower.remove();
@@ -99,11 +98,12 @@ public class TowerShop {
         tower.setStageBattle(stage_battle);
         TowerGroup towerGroup = new TowerGroup(
                 tower,
-                new Laser(game.getResources(), Color.RED, tower.getCenterPoint()),
+                new Laser(game.getResources(), Color.RED, tower, null),
                 new ProgressBar(game.getResources().getSkin(), tower)
         );
         tower.setTouchable(Touchable.disabled);
         towerGroup.setVisible(true);
+        tower.setOrigin(tower.getX() + 20, tower.getY() + 42);
         stage_battle.updateZIndexes(towerGroup);
         tower.isBuilding = true;
         Gdx.app.log("INFO", tower + " is building...");

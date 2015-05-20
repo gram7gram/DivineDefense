@@ -12,8 +12,8 @@ import ua.gram.DDGame;
  */
 public class ConfirmationWindow extends Window {
 
-    public ConfirmationWindow(Skin skin) {
-        super("", skin, "default");
+    public ConfirmationWindow(Skin skin, String style) {
+        super("", skin, style);
         this.setSize(480, 250);
         this.setPosition((DDGame.WORLD_WIDTH - this.getWidth()) / 2f, (DDGame.WORLD_HEIGHT - this.getHeight()) / 2f);
         this.setMovable(false);

@@ -240,6 +240,10 @@
     "menu": {
       "titleFont": "default",
       "background": "button-up4"
+    },
+    "pretty": {
+      "titleFont": "default",
+      "background": "window-pretty"
     }
   }
 }

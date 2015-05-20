@@ -15,6 +15,8 @@ import ua.gram.DDGame;
 import ua.gram.view.screen.ErrorScreen;
 
 /**
+ * TODO Merge resources in one big file.
+ *
  * @author Gram <gram7gram@gmail.com>
  */
 public class Resources implements Disposable {
@@ -30,6 +32,13 @@ public class Resources implements Disposable {
     public static final String LASER_MIDDLE_OVER = "data/images/misc/laser/middle_over.png";
     public static final String LASER_END_BACK = "data/images/misc/laser/end_back.png";
     public static final String LASER_END_OVER = "data/images/misc/laser/end_over.png";
+    public static final String LIGHTNING_START_BACK = "data/images/misc/lightning/start_back.png";
+    public static final String LIGHTNING_START_OVER = "data/images/misc/lightning/start_over.png";
+    public static final String LIGHTNING_NODE_BACK = "data/images/misc/lightning/node_back.png";
+    public static final String LIGHTNING_NODE_OVER = "data/images/misc/lightning/node_over.png";
+    public static final String LIGHTNING_END_BACK = "data/images/misc/lightning/end_back.png";
+    public static final String LIGHTNING_END_OVER = "data/images/misc/lightning/end_over.png";
+    public static final String AIM_ICON = "data/images/misc/aim.png";
     private final DDGame game;
     private final Skin skin;
     private final AssetManager manager;
@@ -45,66 +54,91 @@ public class Resources implements Disposable {
         loadFont("SfArchery", 32, "white"); //button labels
         loadFont("SfArchery", 16, "black"); //button labels
         loadFont("FffTusj", 64, "white");//Big labels
-//	loadFont("BelligerentMadness", 32, "black"); //some phrases?
+//	    loadFont("BelligerentMadness", 32, "black"); //some phrases?
     }
 
     /**
-     * <pre>
      * Loads the JSON and corresponding Atlas files to AssetManager.
      * Atlas should be named same as the Json file: style.json and style.atlas.
-     * </pre>
+     * Names are accessible through static Strings in Resources class.
+     * Will display ErrorScreen it was not able to load skin.
      *
      * @param file - name of the Json
-     * @return - new Skin, build with Json and Atlas
+     * @return - new Skin, build with Json and Atlas, that matches Json file without extension
      */
     public Skin loadSkin(String file) {
         String atlas = file.substring(0, file.lastIndexOf(".")) + ".atlas";
         try {
-//            manager.load(atlas, TextureAtlas.class);
             manager.load(file, Skin.class, new SkinLoader.SkinParameter(atlas));
             manager.finishLoading();
         } catch (GdxRuntimeException e) {
-            game.createCamera();
-            game.createViewport();
-            game.createBatch();
+            if (game.getBatch() == null) createVisualComponents();
             game.setScreen(new ErrorScreen(game, "Could not load skin " + file, e));
         }
         return manager.get(file, Skin.class);
     }
 
+    /**
+     * Loads fonts with specified name in lowercase: fontName+size+color.fnt.
+     * Will display ErrorScreen it was not able to load font.
+     *
+     * @param fontName general font name
+     * @param size     desired font size
+     * @param color    desired font color
+     */
     public void loadFont(String fontName, int size, String color) {
         try {
             manager.load("data/skin/fonts/" + fontName + size + color + ".fnt", BitmapFont.class);
         } catch (GdxRuntimeException e) {
+            if (game.getBatch() == null) createVisualComponents();
             game.setScreen(new ErrorScreen(game, "Could not load font: " + fontName, e));
         }
     }
 
+    /**
+     * Load tiled map for specified level.
+     * Will display ErrorScreen it was not able to load map.
+     *
+     * @param level level number [1..n]
+     */
     public void loadMap(int level) {
         try {
             manager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
             manager.load("data/levels/maps/level" + level + ".tmx", TiledMap.class);
         } catch (GdxRuntimeException e) {
+            if (game.getBatch() == null) createVisualComponents();
             game.setScreen(new ErrorScreen(game, "Could not load map for level: " + level, e));
         }
     }
 
-    public boolean isMapLoaded(byte level) {
-        return manager.isLoaded("data/levels/maps/level" + level + ".tmx", TiledMap.class);
-    }
-
+    /**
+     * Load TextureAtlas for specified name.
+     * Names are accessible through static Strings in Resources class.
+     * Will display ErrorScreen it was not able to load map.
+     *
+     * @param file atlas location
+     */
     public void loadAtlas(String file) {
         try {
             manager.load(file, TextureAtlas.class);
         } catch (GdxRuntimeException e) {
+            if (game.getBatch() == null) createVisualComponents();
             game.setScreen(new ErrorScreen(game, "Not loaded: " + file, e));
         }
     }
 
+    /**
+     * Load Texture for specified filename.
+     * Names are accessible through static Strings in Resources class.
+     * Will display ErrorScreen it was not able to load map.
+     *
+     * @param file texture location
+     */
     public void loadTexture(String file) {
         try {
             manager.load(file, Texture.class);
         } catch (GdxRuntimeException e) {
+            if (game.getBatch() == null) createVisualComponents();
             game.setScreen(new ErrorScreen(game, "Not loaded: " + file, e));
         }
     }
@@ -121,10 +155,6 @@ public class Resources implements Disposable {
         return manager.get("data/levels/maps/level" + level + ".tmx", TiledMap.class);
     }
 
-    public boolean isAtlasLoaded(String file) {
-        return manager.isLoaded(file, TextureAtlas.class);
-    }
-
     public TextureAtlas getAtlas(String file) {
         return manager.get(file, TextureAtlas.class);
     }
@@ -133,9 +163,19 @@ public class Resources implements Disposable {
         return manager.get(file, Texture.class);
     }
 
+    /**
+     * If there was an error in loading the resources, and DDGame did not create
+     * nor Camera, nor Viewport, nor Batch - this method will create them for you,
+     * so that you are able to display ErrorScreen and did not terminate the application.
+     */
+    private void createVisualComponents() {
+        game.createCamera();
+        game.createViewport();
+        game.createBatch();
+    }
+
     @Override
     public void dispose() {
         manager.dispose();
-        skin.dispose();
     }
 }

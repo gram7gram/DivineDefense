@@ -13,7 +13,8 @@ public class EnemySoldier extends Enemy implements Cloneable, Pool.Poolable {
     public EnemySoldier(DDGame game, float[] stats) {
         super(game, stats);
         this.setSize(animationWidth, animationHeight);
-        this.setBounds(getX(), getY(), animationWidth, animationHeight);
+        this.setBounds(this.getX(), this.getY(), animationWidth, animationHeight);
+        this.setOrigin(this.getWidth() / 2f, this.getHeight() * .9f / 2f);
     }
 
     @Override

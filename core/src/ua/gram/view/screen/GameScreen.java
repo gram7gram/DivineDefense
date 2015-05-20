@@ -21,6 +21,7 @@ public class GameScreen extends AbstractScreen {
 
     public GameScreen(DDGame game, Level level) {
         super(game);
+        DDGame.PAUSE = false;
         renderer = new OrthogonalTiledMapRenderer(level.getMap().getTiledMap());
         renderer.setView(game.getCamera());
         stage_battle = new GameBattleStage(game, level);

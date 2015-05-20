@@ -107,9 +107,7 @@ public class EnemySpawner {
         enemy.setSpawner(this);
         EnemyGroup enemyGroup = new EnemyGroup(
                 enemy,
-                new HealthBar(
-                        game.getResources().getSkin(),
-                        enemy)
+                new HealthBar(game.getResources().getSkin(), enemy)
         );
         enemyGroup.getEnemy().setGroup(enemyGroup);
         setActionPath(enemyGroup, path);

@@ -28,7 +28,7 @@ public class EnemyGroup extends Group {
         return enemy;
     }
 
-    public HealthBar getBar() {
+    public HealthBar getHealthBar() {
         return bar;
     }
 }

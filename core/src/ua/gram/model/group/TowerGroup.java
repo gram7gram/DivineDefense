@@ -23,6 +23,7 @@ public class TowerGroup extends Group {
         this.addActor(bar);
         tower.setWeapon(weapon);
         weapon.setVisible(false);
+        weapon.toFront();
         this.setDebug(DDGame.DEBUG);
         Gdx.app.log("INFO", "Group for " + tower + " is OK");
     }

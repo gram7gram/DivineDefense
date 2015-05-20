@@ -1,5 +1,6 @@
 package ua.gram;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
@@ -9,15 +10,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import ua.gram.controller.Resources;
 import ua.gram.controller.security.SecurityHandler;
 import ua.gram.model.Player;
 import ua.gram.view.screen.ErrorScreen;
 import ua.gram.view.screen.LaunchLoadingScreen;
-
-import java.io.File;
-import java.io.FileReader;
-
-import ua.gram.controller.Resources;
 
 /**
  * <pre>
@@ -48,8 +45,8 @@ public class DDGame extends Game {
     public static int MAP_WIDTH;
     public static int MAP_HEIGHT;
     public static int MAX;
-    private byte gameSpeed = 1;
     private final SecurityHandler security;
+    private byte gameSpeed = 1;
     private Resources resources;
     private SpriteBatch batch;
     private OrthographicCamera camera;
@@ -66,6 +63,7 @@ public class DDGame extends Game {
         Gdx.app.log("INFO", "Visit https://github.com/gram7gram/DivineDefense to view sources");
         Gdx.input.setCatchMenuKey(true);
         Gdx.input.setCatchBackKey(true);
+        Gdx.app.setLogLevel(Application.LOG_NONE);
         WORLD_WIDTH = Gdx.graphics.getWidth();
         WORLD_HEIGHT = Gdx.graphics.getHeight();
         MAX = WORLD_HEIGHT * WORLD_WIDTH / TILEHEIGHT;
