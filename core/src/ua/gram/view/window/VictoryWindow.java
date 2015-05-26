@@ -21,13 +21,13 @@ import ua.gram.view.screen.LevelLoadingScreen;
 public class VictoryWindow extends Window {
 
     public VictoryWindow(final DDGame game) {
-        super("", game.getSkin(), "menu");
+        super("", game.getResources().getSkin(), "default");
         this.setPosition(DDGame.WORLD_WIDTH / 4f, DDGame.WORLD_HEIGHT / 3f);
         this.setSize(DDGame.WORLD_WIDTH / 2f, DDGame.WORLD_HEIGHT / 3f);
         this.setVisible(true);
         this.setMovable(false);
 
-        Button nextLevel = new TextButton("NEXT LEVEL", game.getSkin(), "default");
+        Button nextLevel = new TextButton("NEXT LEVEL", game.getResources().getSkin(), "default");
         nextLevel.setSize(100, 40);
         nextLevel.setVisible(true);
         nextLevel.addListener(new ClickListener() {

@@ -27,7 +27,7 @@ public abstract class Weapon extends Actor {
     @Override
     public void act(float delta) {
         super.act(delta);
-        if (!DDGame.PAUSE && target != null) update();
+        if (!DDGame.PAUSE && target != null) update(delta);
     }
 
     /**
@@ -41,13 +41,12 @@ public abstract class Weapon extends Actor {
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         if (!DDGame.PAUSE && target != null) render(batch);
-
     }
 
     /**
      * Update your weapon here.
      */
-    public abstract void update();
+    public abstract void update(float delta);
 
     /**
      * Draw your weapon here.

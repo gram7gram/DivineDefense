@@ -1,5 +1,6 @@
 package ua.gram.controller;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
@@ -16,37 +17,36 @@ import ua.gram.view.screen.ErrorScreen;
 
 /**
  * TODO Merge resources in one big file.
+ * NOTE Sprites should not be present in TextureAtlas: lock, weapon etc.
  *
  * @author Gram <gram7gram@gmail.com>
  */
 public class Resources implements Disposable {
 
-    public static final String TOWERS_ATLAS = "data/images/towers.atlas";
-    public static final String ENEMIES_ATLAS = "data/images/enemies.atlas";
     public static final String SKIN_FILE = "data/skin/style.json";
-    public static final String LOCK_IMAGE = "data/images/misc/lock.png";
-    public static final String RANGE_TEXTURE = "data/images/misc/range.png";
-    public static final String LASER_START_BACK = "data/images/misc/laser/start_back.png";
-    public static final String LASER_START_OVER = "data/images/misc/laser/start_over.png";
-    public static final String LASER_MIDDLE_BACK = "data/images/misc/laser/middle_back.png";
-    public static final String LASER_MIDDLE_OVER = "data/images/misc/laser/middle_over.png";
-    public static final String LASER_END_BACK = "data/images/misc/laser/end_back.png";
-    public static final String LASER_END_OVER = "data/images/misc/laser/end_over.png";
-    public static final String LIGHTNING_START_BACK = "data/images/misc/lightning/start_back.png";
-    public static final String LIGHTNING_START_OVER = "data/images/misc/lightning/start_over.png";
-    public static final String LIGHTNING_NODE_BACK = "data/images/misc/lightning/node_back.png";
-    public static final String LIGHTNING_NODE_OVER = "data/images/misc/lightning/node_over.png";
-    public static final String LIGHTNING_END_BACK = "data/images/misc/lightning/end_back.png";
-    public static final String LIGHTNING_END_OVER = "data/images/misc/lightning/end_over.png";
-    public static final String AIM_ICON = "data/images/misc/aim.png";
+    public static final String BACKGROUND_TEXTURE = "data/images/misc/background.jpg";
+    public static final String WEAPON_START_BACK = "data/images/misc/start_back.png";
+    public static final String WEAPON_START_OVER = "data/images/misc/start_over.png";
+    public static final String WEAPON_MIDDLE_BACK = "data/images/misc/middle_back.png";
+    public static final String WEAPON_MIDDLE_OVER = "data/images/misc/middle_over.png";
+    public static final String WEAPON_END_BACK = "data/images/misc/end_back.png";
+    public static final String WEAPON_END_OVER = "data/images/misc/end_over.png";
+    public static final String RANGE_TEXTURE = "data/images/misc/enemy_range.png";
+    public static final String LOCK_TEXTURE = "data/images/misc/fraction_lock.png";
+    public static final String AIM_TEXTURE = "data/images/misc/enemy_aim.png";
     private final DDGame game;
-    private final Skin skin;
     private final AssetManager manager;
+    private Skin skin;
 
     public Resources(DDGame game) {
         this.game = game;
         manager = new AssetManager();
-        skin = loadSkin(SKIN_FILE);
+        try {
+            skin = loadSkin(SKIN_FILE);
+        } catch (GdxRuntimeException e) {
+            Gdx.app.error("ERROR", "Could not load skin!" + "\nDue to: " + e);
+            System.exit(1);//Gdx.app.exit() does not do it's job!...
+        }
     }
 
     public void loadBasicFiles() {
@@ -54,7 +54,6 @@ public class Resources implements Disposable {
         loadFont("SfArchery", 32, "white"); //button labels
         loadFont("SfArchery", 16, "black"); //button labels
         loadFont("FffTusj", 64, "white");//Big labels
-//	    loadFont("BelligerentMadness", 32, "black"); //some phrases?
     }
 
     /**
@@ -66,15 +65,10 @@ public class Resources implements Disposable {
      * @param file - name of the Json
      * @return - new Skin, build with Json and Atlas, that matches Json file without extension
      */
-    public Skin loadSkin(String file) {
+    public Skin loadSkin(String file) throws GdxRuntimeException {
         String atlas = file.substring(0, file.lastIndexOf(".")) + ".atlas";
-        try {
-            manager.load(file, Skin.class, new SkinLoader.SkinParameter(atlas));
-            manager.finishLoading();
-        } catch (GdxRuntimeException e) {
-            if (game.getBatch() == null) createVisualComponents();
-            game.setScreen(new ErrorScreen(game, "Could not load skin " + file, e));
-        }
+        manager.load(file, Skin.class, new SkinLoader.SkinParameter(atlas));
+        manager.finishLoading();
         return manager.get(file, Skin.class);
     }
 
@@ -90,7 +84,7 @@ public class Resources implements Disposable {
         try {
             manager.load("data/skin/fonts/" + fontName + size + color + ".fnt", BitmapFont.class);
         } catch (GdxRuntimeException e) {
-            if (game.getBatch() == null) createVisualComponents();
+            if (game.getCamera() == null) createDisplayComponents();
             game.setScreen(new ErrorScreen(game, "Could not load font: " + fontName, e));
         }
     }
@@ -104,9 +98,9 @@ public class Resources implements Disposable {
     public void loadMap(int level) {
         try {
             manager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
-            manager.load("data/levels/maps/level" + level + ".tmx", TiledMap.class);
+            manager.load("data/levels/maps/level" + level + "@60.tmx", TiledMap.class);
         } catch (GdxRuntimeException e) {
-            if (game.getBatch() == null) createVisualComponents();
+            if (game.getCamera() == null) createDisplayComponents();
             game.setScreen(new ErrorScreen(game, "Could not load map for level: " + level, e));
         }
     }
@@ -122,7 +116,7 @@ public class Resources implements Disposable {
         try {
             manager.load(file, TextureAtlas.class);
         } catch (GdxRuntimeException e) {
-            if (game.getBatch() == null) createVisualComponents();
+            if (game.getCamera() == null) createDisplayComponents();
             game.setScreen(new ErrorScreen(game, "Not loaded: " + file, e));
         }
     }
@@ -138,7 +132,7 @@ public class Resources implements Disposable {
         try {
             manager.load(file, Texture.class);
         } catch (GdxRuntimeException e) {
-            if (game.getBatch() == null) createVisualComponents();
+            if (game.getCamera() == null) createDisplayComponents();
             game.setScreen(new ErrorScreen(game, "Not loaded: " + file, e));
         }
     }
@@ -152,15 +146,15 @@ public class Resources implements Disposable {
     }
 
     public TiledMap getMap(int level) {
-        return manager.get("data/levels/maps/level" + level + ".tmx", TiledMap.class);
-    }
-
-    public TextureAtlas getAtlas(String file) {
-        return manager.get(file, TextureAtlas.class);
+        return manager.get("data/levels/maps/level" + level + "@60.tmx", TiledMap.class);
     }
 
     public Texture getTexture(String file) {
         return manager.get(file, Texture.class);
+    }
+
+    public Texture getAtlasRegion(String region) {
+        return skin.getRegion(region).getTexture();
     }
 
     /**
@@ -168,7 +162,7 @@ public class Resources implements Disposable {
      * nor Camera, nor Viewport, nor Batch - this method will create them for you,
      * so that you are able to display ErrorScreen and did not terminate the application.
      */
-    private void createVisualComponents() {
+    private void createDisplayComponents() {
         game.createCamera();
         game.createViewport();
         game.createBatch();

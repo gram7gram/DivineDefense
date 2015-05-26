@@ -38,8 +38,8 @@ public class TowerShopInputListener extends ClickListener {
      */
     @Override
     public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-        float X = event.getStageX() - event.getStageX() % DDGame.TILEHEIGHT;
-        float Y = event.getStageY() - event.getStageY() % DDGame.TILEHEIGHT;
+        float X = event.getStageX() - event.getStageX() % DDGame.TILE_HEIGHT;
+        float Y = event.getStageY() - event.getStageY() % DDGame.TILE_HEIGHT;
         try {
             tower = shop.preorder(type, X, Y);
             return true;
@@ -57,9 +57,9 @@ public class TowerShopInputListener extends ClickListener {
      */
     @Override
     public void touchDragged(InputEvent event, float x, float y, int pointer) {
-        float X = event.getStageX() - event.getStageX() % DDGame.TILEHEIGHT;
-        float Y = event.getStageY() - event.getStageY() % DDGame.TILEHEIGHT;
-        if (!layer.getCell((int) (X / DDGame.TILEHEIGHT), (int) (Y / DDGame.TILEHEIGHT))
+        float X = event.getStageX() - event.getStageX() % DDGame.TILE_HEIGHT;
+        float Y = event.getStageY() - event.getStageY() % DDGame.TILE_HEIGHT;
+        if (!layer.getCell((int) (X / DDGame.TILE_HEIGHT), (int) (Y / DDGame.TILE_HEIGHT))
                 .getTile().getProperties().containsKey("walkable")
                 && stage_battle.isPositionEmpty(X, Y)) {
             tower.setPosition(X, Y);
@@ -76,9 +76,9 @@ public class TowerShopInputListener extends ClickListener {
      */
     @Override
     public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-        float X = event.getStageX() - event.getStageX() % DDGame.TILEHEIGHT;
-        float Y = event.getStageY() - event.getStageY() % DDGame.TILEHEIGHT;
-        if (!layer.getCell((int) (X / DDGame.TILEHEIGHT), (int) (Y / DDGame.TILEHEIGHT))
+        float X = event.getStageX() - event.getStageX() % DDGame.TILE_HEIGHT;
+        float Y = event.getStageY() - event.getStageY() % DDGame.TILE_HEIGHT;
+        if (!layer.getCell((int) (X / DDGame.TILE_HEIGHT), (int) (Y / DDGame.TILE_HEIGHT))
                 .getTile().getProperties().containsKey("walkable")
                 && stage_battle.isPositionEmpty(X, Y)) {
             shop.build(tower, X, Y);

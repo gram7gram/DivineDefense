@@ -14,7 +14,7 @@ import ua.gram.view.screen.MainMenuScreen;
 public abstract class AbstractLoadingScreen extends AbstractScreen {
 
     public LoadingStage stage_ui;
-    public byte progress;
+    public int progress;
 
     public AbstractLoadingScreen(DDGame game) {
         super(game);
@@ -44,10 +44,8 @@ public abstract class AbstractLoadingScreen extends AbstractScreen {
     }
 
     /**
-     * <pre>
      * Executes only if AssetManager finishes loading the resources,
      * required for the following Screen ancestor.
-     * </pre>
      */
     public void doAction() {
         stage_ui.update(progress);

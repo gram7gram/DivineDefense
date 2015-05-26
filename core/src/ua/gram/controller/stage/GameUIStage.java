@@ -36,7 +36,7 @@ public class GameUIStage extends Stage {
         this.level = level;
         gameUIGroup = new GameUIGroup(game, this, level);
         victoryWindow = new VictoryWindow(game);
-        pauseWindow = new PauseWindow(game, "menu", this);
+        pauseWindow = new PauseWindow(game, this);
         defeatWindow = new DefeatWindow(game, this);
         gameUIGroup.setVisible(true);
         victoryWindow.setVisible(false);
@@ -46,24 +46,23 @@ public class GameUIStage extends Stage {
         this.addActor(victoryWindow);
         this.addActor(pauseWindow);
         this.addActor(defeatWindow);
-        Gdx.app.log("INFO", "Game controls are OK");
+        Gdx.app.log("INFO", "GameUIStage is OK");
     }
 
     /**
      * Hides/Shows the window, shows/hides other ui elements.
      *
-     * @param window window to show/hide
+     * @param window show/hide this
      */
     public void toggleWindow(Window window) {
-        DDGame.PAUSE = !DDGame.PAUSE;
         Gdx.app.log("INFO", "Pause: " + DDGame.PAUSE);
         window.setVisible(!window.isVisible());
         gameUIGroup.setVisible(!window.isVisible());
         towerShop.getTowerShopGroup().setVisible(!window.isVisible());
-//	float duration = .2f;
-//	window.addAction(window.isVisible() ? Actions.alpha(0, duration) : Actions.alpha(1, duration));
-//	gameUIGroup.addAction(window.isVisible() ? Actions.alpha(1, duration) : Actions.alpha(0, duration));
-//	towerShopGroup.addAction(window.isVisible() ? Actions.alpha(1, duration) : Actions.alpha(0, duration));
+//    	float duration = .2f;
+//    	window.addAction(window.isVisible() ? Actions.alpha(0, duration) : Actions.alpha(1, duration));
+//    	gameUIGroup.addAction(window.isVisible() ? Actions.alpha(1, duration) : Actions.alpha(0, duration));
+//    	towerShopGroup.addAction(window.isVisible() ? Actions.alpha(1, duration) : Actions.alpha(0, duration));
         if (window instanceof DefeatWindow && window.isVisible()) {
             ((DefeatWindow) window).update();
         }
@@ -72,30 +71,23 @@ public class GameUIStage extends Stage {
 
 
     /**
-     * <pre>
      * Checks if Player is Dead or Victorious.
-     *
-     * TODO Show options for Player, if he is dead:
-     * 		Ressurect with max health: *** gems
-     * 		Ressurect with 2 health: ** gems
-     * 		Restart: Free.
-     *
      * FIXME Window is displayed at the moment the last wave has started
-     * </pre>
      *
      * @param delta
      */
     @Override
     public void act(float delta) {
-        super.act(delta);
         if (!DDGame.PAUSE) {
+            super.act(delta);
             if (isDefeated()) {
                 Gdx.app.log("INFO", "Player is dead");
-//                stage_battle.clear();
+                DDGame.PAUSE = true;
                 toggleWindow(defeatWindow);
             } else if (isVictorious()) {
                 Gdx.app.log("INFO", "Player is victorious");
                 stage_battle.clear();
+                DDGame.PAUSE = true;
                 toggleWindow(victoryWindow);
             }
         }

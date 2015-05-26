@@ -1,14 +1,14 @@
 package ua.gram.controller.factory;
 
-import java.util.ArrayList;
-
 import ua.gram.model.Level;
 import ua.gram.model.actor.Enemy;
+
+import java.util.ArrayList;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class LevelFactory implements AbstractFactory<Level> {
+public class LevelFactory implements Factory<Level> {
 
     public ArrayList<ArrayList<Class<? extends Enemy>>> waves;
 

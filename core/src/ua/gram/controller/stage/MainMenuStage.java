@@ -10,7 +10,8 @@ import ua.gram.DDGame;
 import ua.gram.view.screen.LevelSelectScreen;
 
 /**
- * Created by Gram on 9/1.
+ *
+ * @author Gram <gram7gram@gmail.com>
  */
 public class MainMenuStage extends Stage {
 
@@ -23,7 +24,7 @@ public class MainMenuStage extends Stage {
         short butWidth = 300;
         byte gap = 5;
 
-        Button quitBut = new TextButton("Q", game.getSkin(), "default");
+        Button quitBut = new TextButton("Q", game.getResources().getSkin(), "default");
         quitBut.setSize(butHeight * .75f, butHeight * .75f);
         quitBut.setPosition(width - quitBut.getWidth() - gap, height - quitBut.getHeight() - gap);
         quitBut.setVisible(true);
@@ -33,7 +34,7 @@ public class MainMenuStage extends Stage {
                 Gdx.app.exit();
             }
         });
-        Button continueBut = new TextButton("CONTINUE", game.getSkin(), "main-menu1");
+        Button continueBut = new TextButton("CONTINUE", game.getResources().getSkin(), "pretty-button");
         continueBut.setPosition(width / 4f - butWidth / 2f, height / 2f + butHeight / 2f + gap);
         continueBut.setSize(butWidth, butHeight);
         continueBut.setVisible(true);
@@ -43,7 +44,7 @@ public class MainMenuStage extends Stage {
                 game.setScreen(new LevelSelectScreen(game));
             }
         });
-        Button aboutBut = new TextButton("ABOUT", game.getSkin(), "main-menu2");
+        Button aboutBut = new TextButton("ABOUT", game.getResources().getSkin(), "pretty-button");
         aboutBut.setPosition(width / 4f - butWidth / 2f, height / 2f - butHeight / 2f);
         aboutBut.setSize(butWidth, butHeight);
         aboutBut.setVisible(true);
@@ -54,7 +55,7 @@ public class MainMenuStage extends Stage {
 //                game.setScreen(new AboutScreen(game));
             }
         });
-        Button settingsBut = new TextButton("SETTINGS", game.getSkin(), "main-menu3");
+        Button settingsBut = new TextButton("SETTINGS", game.getResources().getSkin(), "pretty-button");
         settingsBut.setPosition(width / 4f - butWidth / 2f, height / 2f - butHeight * 3 / 2f - gap);
         settingsBut.setSize(butWidth, butHeight);
         settingsBut.setVisible(true);

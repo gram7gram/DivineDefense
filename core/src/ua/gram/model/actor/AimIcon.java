@@ -10,13 +10,13 @@ import ua.gram.controller.Resources;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class StatusIcon extends Actor {
+public class AimIcon extends Actor {
 
     private final Sprite aim;
     private Enemy enemy;
 
-    public StatusIcon(Resources resources) {
-        aim = new Sprite(resources.getTexture(Resources.AIM_ICON));
+    public AimIcon(Resources resources) {
+        aim = new Sprite(resources.getTexture(Resources.AIM_TEXTURE));
         this.setVisible(false);
         this.setTouchable(Touchable.disabled);
         this.setSize(aim.getWidth(), aim.getHeight());

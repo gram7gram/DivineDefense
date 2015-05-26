@@ -2,14 +2,20 @@ package ua.gram.controller.factory;
 
 import com.badlogic.gdx.Gdx;
 import ua.gram.DDGame;
-import ua.gram.model.Player;
+import ua.gram.model.actor.Tower;
+import ua.gram.model.actor.tower.TowerCannon;
+import ua.gram.model.actor.tower.TowerPrimary;
+import ua.gram.model.actor.tower.TowerSpecial;
+import ua.gram.model.actor.tower.TowerStun;
 
 import java.util.ArrayList;
 
 /**
+ * TODO Configure prototypes.get(index) according to the fraction.
+ *
  * @author Gram <gram7gram@gmail.com>
  */
-public class TowerFactory implements AbstractFactory<ua.gram.model.actor.Tower> {
+public class TowerFactory implements Factory<Tower> {
 
     private DDGame game;
     private ArrayList<TowerPrototype> prototypes;
@@ -19,8 +25,8 @@ public class TowerFactory implements AbstractFactory<ua.gram.model.actor.Tower> 
     }
 
     @Override
-    public ua.gram.model.actor.Tower create(Class<? extends ua.gram.model.actor.Tower> type) {
-        TowerPrototype tower = prototypes.get(Player.PLAYER_FRACTION.equals("Angels") ? 0 : 1);
+    public Tower create(Class<? extends Tower> type) {
+        TowerPrototype tower = prototypes.get(0);
         float[] stats = new float[]{
                 tower.tower_lvl,
                 tower.upgrade_lvl,
@@ -29,15 +35,15 @@ public class TowerFactory implements AbstractFactory<ua.gram.model.actor.Tower> 
                 tower.rate,
                 tower.cost
         };
-        ua.gram.model.actor.Tower towerType = null;
-        if (type.equals(ua.gram.model.actor.tower.TowerPrimary.class)) {
-            towerType = new ua.gram.model.actor.tower.TowerPrimary(game, stats);
-        } else if (type.equals(ua.gram.model.actor.tower.TowerCannon.class)) {
-            towerType = new ua.gram.model.actor.tower.TowerCannon(game, stats);
-        } else if (type.equals(ua.gram.model.actor.tower.TowerStun.class)) {
-            towerType = new ua.gram.model.actor.tower.TowerStun(game, stats);
-        } else if (type.equals(ua.gram.model.actor.tower.TowerSpecial.class)) {
-            towerType = new ua.gram.model.actor.tower.TowerSpecial(game, stats);
+        Tower towerType;
+        if (type.equals(TowerPrimary.class)) {
+            towerType = new TowerPrimary(game, stats);
+        } else if (type.equals(TowerCannon.class)) {
+            towerType = new TowerCannon(game, stats);
+        } else if (type.equals(TowerStun.class)) {
+            towerType = new TowerStun(game, stats);
+        } else if (type.equals(TowerSpecial.class)) {
+            towerType = new TowerSpecial(game, stats);
         } else {
             throw new NullPointerException("Factory couldn't create: " + type.getSimpleName());
         }

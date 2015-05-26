@@ -16,10 +16,10 @@ public abstract class AbstractScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        render_ui(delta);
         if (!DDGame.PAUSE) {
             render_other(delta);
         }
+        render_ui(delta);
     }
 
     /**

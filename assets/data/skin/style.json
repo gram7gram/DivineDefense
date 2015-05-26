@@ -12,24 +12,6 @@
       "b": 0,
       "a": 1
     },
-    "red": {
-      "r": 1,
-      "g": 0,
-      "b": 0,
-      "a": 1
-    },
-    "green": {
-      "r": 0,
-      "g": 1,
-      "b": 0,
-      "a": 1
-    },
-    "blue": {
-      "r": 0,
-      "g": 0,
-      "b": 1,
-      "a": 1
-    },
     "black25": {
       "r": 0,
       "g": 0,
@@ -70,18 +52,6 @@
     },
     "archery16white": {
       "file": "data/skin/fonts/SfArchery16white.fnt"
-    },
-    "madness64black": {
-      "file": "data/skin/fonts/BelligerentMadness64black.fnt"
-    },
-    "madness64white": {
-      "file": "data/skin/fonts/BelligerentMadness64white.fnt"
-    },
-    "madness32black": {
-      "file": "data/skin/fonts/BelligerentMadness32black.fnt"
-    },
-    "madness32white": {
-      "file": "data/skin/fonts/BelligerentMadness32white.fnt"
     },
     "action64black": {
       "file": "data/skin/fonts/ActionManShaded64black.fnt"
@@ -141,107 +111,79 @@
     },
     "small_tinted": {
       "font": "archery32white",
-      "background": "back"
+      "background": "label-background-0.25"
     },
     "16_tinted": {
       "font": "archery16white",
-      "background": "back"
+      "background": "label-background-0.25"
     }
   },
   "com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {
     "default": {
       "font": "archery32black",
-      "up": "button.up",
-      "down": "button.down"
+      "up": "button-default-up",
+      "down": "button-default-down"
     },
     "tower": {
       "font": "archery32black",
-      "up": "button.up",
-      "down": "button.down"
-    },
-    "towerControls": {
-      "font": "archery16black",
-      "up": "button.up",
-      "down": "button.down"
+      "up": "button-default-up",
+      "down": "button-default-down"
     },
     "green-button": {
       "font": "archery32white",
-      "up": "green-up",
-      "down": "green-down"
+      "up": "button-green-up",
+      "down": "button-green-down"
     },
-    "main-menu1": {
+    "pretty-button": {
       "font": "archery32black",
-      "up": "button-up1",
-      "down": "button-down1"
-    },
-    "main-menu2": {
-      "font": "archery32black",
-      "up": "button-up2",
-      "down": "button-down2"
-    },
-    "main-menu3": {
-      "font": "archery32black",
-      "up": "button-up3",
-      "down": "button-down3"
-    },
-    "main-menu4": {
-      "font": "archery32black",
-      "up": "button-up4",
-      "down": "button-down4"
+      "up": "button-pretty-up",
+      "down": "button-pretty-down"
     }
   },
   "com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle": {
     "default": {
-      "up": "button.up",
-      "down": "button.down"
+      "up": "button-default-up",
+      "down": "button-default-down"
     },
     "angel": {
-      "up": "angel",
-      "down": "angel"
+      "up": "button-angel-up",
+      "down": "button-angel-up"
     },
     "demon": {
-      "up": "demon",
-      "down": "demon"
+      "up": "button-demon-up",
+      "down": "button-demon-up"
     },
-    "tower-primary": {
-      "up": "tower-primary",
-      "over": "tower-primary"
+    "shopitem-tower-primary": {
+      "up": "shopitem-tower-primary",
+      "over": "shopitem-tower-primary"
     },
-    "tower-cannon": {
-      "up": "tower-cannon",
-      "over": "tower-cannon"
+    "shopitem-tower-cannon": {
+      "up": "shopitem-tower-cannon",
+      "over": "shopitem-tower-cannon"
     },
-    "tower-stun": {
-      "up": "tower-stun",
-      "over": "tower-stun"
+    "shopitem-tower-stun": {
+      "up": "shopitem-tower-stun",
+      "over": "shopitem-tower-stun"
     },
-    "tower-special": {
-      "up": "tower-special",
-      "over": "tower-special"
+    "shopitem-tower-special": {
+      "up": "shopitem-tower-special",
+      "over": "shopitem-tower-special"
     },
     "sell-button": {
-      "up": "sell-button-up",
-      "down": "sell-button-down"
+      "up": "button-sell-up",
+      "down": "button-sell-down"
     },
     "upgrade-button": {
-      "up": "upgrade-button-up",
-      "down": "upgrade-button-down"
+      "up": "button-upgrade-up",
+      "down": "button-upgrade-down"
     },
     "close-button": {
-      "up": "close-button-up",
-      "down": "close-button-down"
+      "up": "button-close-up",
+      "down": "button-close-down"
     }
   },
   "com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle": {
     "default": {
-      "titleFont": "default",
-      "background": "button-up4"
-    },
-    "menu": {
-      "titleFont": "default",
-      "background": "button-up4"
-    },
-    "pretty": {
       "titleFont": "default",
       "background": "window-pretty"
     }

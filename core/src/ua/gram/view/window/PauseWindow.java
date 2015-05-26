@@ -11,17 +11,13 @@ import ua.gram.controller.stage.GameUIStage;
 import ua.gram.view.screen.MainMenuScreen;
 
 /**
- * <pre>
- * TODO Remove Pause window title
- * TODO Enable/Disable sound
- * </pre>
  *
  * @author Gram <gram7gram@gmail.com>
  */
 public class PauseWindow extends Window {
 
-    public PauseWindow(final DDGame game, String styleName, final GameUIStage stage_ui) {
-        super("", game.getSkin(), styleName);
+    public PauseWindow(final DDGame game, final GameUIStage stage_ui) {
+        super("", game.getResources().getSkin(), "default");
 
         final byte butHeight = 60;
 
@@ -30,25 +26,26 @@ public class PauseWindow extends Window {
         this.setVisible(true);
         this.setMovable(false);
 
-        Button continueBut = new TextButton("C", game.getSkin(), "default");
+        Button continueBut = new TextButton("C", game.getResources().getSkin(), "default");
         continueBut.setVisible(true);
         continueBut.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                DDGame.PAUSE = false;
                 stage_ui.toggleWindow(stage_ui.getPauseWindow());
             }
         });
 
-        Button soundBut = new TextButton("S", game.getSkin(), "default");
+        Button soundBut = new TextButton("S", game.getResources().getSkin(), "default");
         soundBut.setVisible(true);
         soundBut.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
+                //TODO Toggle sounds
             }
         });
 
-        Button menuBut = new TextButton("M", game.getSkin(), "default");
+        Button menuBut = new TextButton("M", game.getResources().getSkin(), "default");
         menuBut.setVisible(true);
         menuBut.addListener(new ClickListener() {
             @Override

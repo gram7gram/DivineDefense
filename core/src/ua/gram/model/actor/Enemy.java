@@ -25,9 +25,8 @@ public abstract class Enemy extends Actor {
     public final float defaultHealth;
     public final float defaultSpeed;
     public final float defaultArmor;
-    public final byte animationWidth = 40;
-    public final byte animationHeight = 60;
-    private final DDGame game;
+    public final byte animationWidth = 60;
+    public final byte animationHeight = 90;
     public float health;
     public float speed;
     public float armor;
@@ -36,6 +35,7 @@ public abstract class Enemy extends Actor {
     public boolean isAffected;
     public boolean isDead;//Prevent Towers from shooting if true
     public float stateTime = 0;
+    protected DDGame game;
     private GameBattleStage stage_battle;
     private EnemyAnimationController enemyAnimation;
     private EnemySpawner spawner;

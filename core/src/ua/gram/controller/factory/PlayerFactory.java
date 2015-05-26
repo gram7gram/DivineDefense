@@ -6,7 +6,7 @@ import ua.gram.model.actor.Tower;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class PlayerFactory implements AbstractFactory<Player> {
+public class PlayerFactory implements Factory<Player> {
 
     public String id;
     public byte health;
@@ -21,6 +21,23 @@ public class PlayerFactory implements AbstractFactory<Player> {
     public int unlockedTowerCannon;
     public int unlockedTowerStun;
     public int unlockedTowerSpecial;
+
+    public static Player defaults() {
+        Player player = new Player();
+        player.setCoins(1000);
+        player.setGems(7);
+        player.setHealth(10);
+        Player.DEFAULT_HEALTH = 10;
+        Player.TOWER_PRIMARY_STRATEGY = Tower.Strategy.STRONGEST;
+        Player.TOWER_CANNON_STRATEGY = Tower.Strategy.STRONGEST;
+        Player.TOWER_STUN_STRATEGY = Tower.Strategy.STRONGEST;
+        Player.TOWER_SPECIAL_STRATEGY = Tower.Strategy.STRONGEST;
+        Player.UNLOCKED_TOWER_PRIMARY = 1;
+        Player.UNLOCKED_TOWER_CANNON = 1;
+        Player.UNLOCKED_TOWER_STUN = 1;
+        Player.UNLOCKED_TOWER_SPECIAL = 1;
+        return player;
+    }
 
     @Override
     public Player create(Class<? extends Player> type) {
@@ -38,23 +55,6 @@ public class PlayerFactory implements AbstractFactory<Player> {
         Player.UNLOCKED_TOWER_CANNON = unlockedTowerCannon;
         Player.UNLOCKED_TOWER_STUN = unlockedTowerStun;
         Player.UNLOCKED_TOWER_SPECIAL = unlockedTowerSpecial;
-        return player;
-    }
-
-    public static Player defaults() {
-        Player player = new Player();
-        player.setCoins(1000);
-        player.setGems(7);
-        player.setHealth(10);
-        Player.DEFAULT_HEALTH = 10;
-        Player.TOWER_PRIMARY_STRATEGY = Tower.Strategy.STRONGEST;
-        Player.TOWER_CANNON_STRATEGY = Tower.Strategy.STRONGEST;
-        Player.TOWER_STUN_STRATEGY = Tower.Strategy.STRONGEST;
-        Player.TOWER_SPECIAL_STRATEGY = Tower.Strategy.STRONGEST;
-        Player.UNLOCKED_TOWER_PRIMARY = 1;
-        Player.UNLOCKED_TOWER_CANNON = 1;
-        Player.UNLOCKED_TOWER_STUN = 1;
-        Player.UNLOCKED_TOWER_SPECIAL = 1;
         return player;
     }
 }

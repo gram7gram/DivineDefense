@@ -29,16 +29,16 @@ public class Laser extends Weapon {
         super(tower, enemy);
         this.color_back = color;
         this.color_over = Color.WHITE;
-        this.start_back = new Sprite(resources.getTexture(Resources.LASER_START_BACK));
-        this.start_over = new Sprite(resources.getTexture(Resources.LASER_START_OVER));
-        this.middle_back = new Sprite(resources.getTexture(Resources.LASER_MIDDLE_BACK));
-        this.middle_over = new Sprite(resources.getTexture(Resources.LASER_MIDDLE_OVER));
-        this.end_back = new Sprite(resources.getTexture(Resources.LASER_END_BACK));
-        this.end_over = new Sprite(resources.getTexture(Resources.LASER_END_OVER));
+        this.start_back = new Sprite(resources.getTexture(Resources.WEAPON_START_BACK));
+        this.start_over = new Sprite(resources.getTexture(Resources.WEAPON_START_OVER));
+        this.middle_back = new Sprite(resources.getTexture(Resources.WEAPON_MIDDLE_BACK));
+        this.middle_over = new Sprite(resources.getTexture(Resources.WEAPON_MIDDLE_OVER));
+        this.end_back = new Sprite(resources.getTexture(Resources.WEAPON_END_BACK));
+        this.end_over = new Sprite(resources.getTexture(Resources.WEAPON_END_OVER));
     }
 
     @Override
-    public void update() {
+    public void update(float delta) {
         Vector2 towerPos = new Vector2(tower.getOriginX(), tower.getOriginY());
         Vector2 targetPos = new Vector2(target.getOriginX(), target.getOriginY());
 

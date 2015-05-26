@@ -12,11 +12,7 @@ import ua.gram.model.Player;
 import ua.gram.model.group.ConfirmationGroup;
 
 /**
- * <pre>
- * TODO Create Unlock FRACTION dialog
- * TODO Do not show confirmation dialog if player is not new one.
  * NOTE Demon button is disabled
- * </pre>
  *
  * @author Gram <gram7gram@gmail.com>
  */
@@ -24,8 +20,7 @@ public class FractionStage extends Stage {
 
     private final Group fractions;
     private final DDGame game;
-    private final Button angelButton;
-    private final Button demonButton;
+    private final Button option1;
     private ConfirmationGroup confirmationGroup;
 
     public FractionStage(final DDGame game) {
@@ -33,43 +28,39 @@ public class FractionStage extends Stage {
         this.setDebugAll(DDGame.DEBUG);
         this.game = game;
 
-        angelButton = new Button(game.getSkin(), "angel");
-        angelButton.setPosition(0, 0);
-        angelButton.setVisible(true);
-        angelButton.setSize(DDGame.WORLD_WIDTH / 2, DDGame.WORLD_HEIGHT);
-        angelButton.setTouchable(Touchable.enabled);
-        angelButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                Player.PLAYER_FRACTION = DDGame.ANGEL;
-                Player.SYSTEM_FRACTION = DDGame.DEMON;
-                if (confirmationGroup == null) {
-                    createDialog();
-                }
-                displayConfirmation();
-            }
-        });
-
-        demonButton = new Button(game.getSkin(), "demon");
-        demonButton.setPosition(DDGame.WORLD_WIDTH / 2, 0);
-        demonButton.setVisible(true);
-        demonButton.setSize(DDGame.WORLD_WIDTH / 2, DDGame.WORLD_HEIGHT);
-        demonButton.setTouchable(Touchable.disabled);
-        demonButton.addListener(new ClickListener() {
+        option1 = new Button(game.getResources().getSkin(), "demon");
+        option1.setPosition(0, 0);
+        option1.setVisible(true);
+        option1.setSize(DDGame.WORLD_WIDTH / 2, DDGame.WORLD_HEIGHT);
+        option1.setTouchable(Touchable.disabled);
+        option1.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Player.PLAYER_FRACTION = DDGame.DEMON;
                 Player.SYSTEM_FRACTION = DDGame.ANGEL;
-                if (confirmationGroup == null) {
-                    createDialog();
-                }
+                if (confirmationGroup == null) createDialog();
+                displayConfirmation();
+            }
+        });
+
+        Button option2 = new Button(game.getResources().getSkin(), "angel");
+        option2.setPosition(DDGame.WORLD_WIDTH / 2, 0);
+        option2.setVisible(true);
+        option2.setSize(DDGame.WORLD_WIDTH / 2, DDGame.WORLD_HEIGHT);
+        option2.setTouchable(Touchable.enabled);
+        option2.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Player.PLAYER_FRACTION = DDGame.ANGEL;
+                Player.SYSTEM_FRACTION = DDGame.DEMON;
+                if (confirmationGroup == null) createDialog();
                 displayConfirmation();
             }
         });
 
         fractions = new Group();
-        fractions.addActor(angelButton);
-        fractions.addActor(demonButton);
+        fractions.addActor(option1);
+        fractions.addActor(option2);
 
         this.addActor(fractions);
     }
@@ -94,12 +85,8 @@ public class FractionStage extends Stage {
         Gdx.app.log("INFO", "Confirmation window is " + (confirmationGroup.isVisible() ? "" : "in") + "visible");
     }
 
-    public Button getAngelButton() {
-        return angelButton;
-    }
-
     public Button getDemonButton() {
-        return demonButton;
+        return option1;
     }
 
     public ConfirmationGroup getGroup() {

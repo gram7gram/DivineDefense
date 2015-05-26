@@ -1,12 +1,13 @@
 package ua.gram.view.screen;
 
 import ua.gram.DDGame;
+import ua.gram.controller.Resources;
 import ua.gram.controller.factory.PlayerFactory;
-import ua.gram.model.Player;
 import ua.gram.view.AbstractLoadingScreen;
 
 /**
- * TODO Add animation instead of loading label (will increase launch speed)
+ * Loads main resources into memory, but not all. Also creates essential dislay elements: camera, viewport and batch.
+ * FIXME Add animation instead of loading label (will increase launch speed)
  *
  * @author Gram <gram7gram@gmail.com>
  */
@@ -18,14 +19,14 @@ public class LaunchLoadingScreen extends AbstractLoadingScreen {
 
     @Override
     public void show() {
+//        game.getSecurity().checkSum();
+        game.setPlayer(PlayerFactory.defaults());//game.getSecurity().load(game))
         game.getResources().loadBasicFiles();
+        game.getResources().loadTexture(Resources.BACKGROUND_TEXTURE);
+        game.getResources().loadTexture(Resources.LOCK_TEXTURE);
         game.createCamera();
         game.createBatch();
         game.createViewport();
-        if (!DDGame.DEBUG) {
-            game.getSecurity().checkSum();
-        }
-        game.setPlayer(PlayerFactory.defaults());//game.getSecurity().load(game));
         super.show();
     }
 

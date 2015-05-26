@@ -20,16 +20,16 @@ public class ErrorStage extends Stage {
         super(game.getViewport(), game.getBatch());
         this.setDebugAll(DDGame.DEBUG);
         byte gap = 5;
-
-        Label errorLabel = new Label("ERROR", game.getSkin(), "tusj64white");
+        Gdx.app.error("ERROR", error);
+        Label errorLabel = new Label("ERROR", game.getResources().getSkin(), "tusj64white");
         errorLabel.setPosition((DDGame.WORLD_WIDTH - errorLabel.getWidth()) / 2f, DDGame.WORLD_HEIGHT / 2f + 20);
         errorLabel.setVisible(true);
 
-        final Label thrownErrorLabel = new Label(error, game.getSkin(), "archery32white");
+        final Label thrownErrorLabel = new Label(error, game.getResources().getSkin(), "archery32white");
         thrownErrorLabel.setPosition((DDGame.WORLD_WIDTH - thrownErrorLabel.getWidth()) / 2f, (DDGame.WORLD_HEIGHT - thrownErrorLabel.getHeight()) / 2f);
         thrownErrorLabel.setVisible(true);
 
-        Button reportBut = new TextButton("REPORT", game.getSkin(), "default");
+        Button reportBut = new TextButton("REPORT", game.getResources().getSkin(), "default");
         reportBut.setVisible(true);
         reportBut.setSize(200, 60);
         reportBut.setPosition(DDGame.WORLD_WIDTH / 2f - reportBut.getWidth() - gap, DDGame.WORLD_HEIGHT / 2f - reportBut.getHeight() - 50);
@@ -43,7 +43,7 @@ public class ErrorStage extends Stage {
             }
         });
 
-        Button errorBut = new TextButton("EXIT", game.getSkin(), "default");
+        Button errorBut = new TextButton("EXIT", game.getResources().getSkin(), "default");
         errorBut.setVisible(true);
         errorBut.setSize(200, 60);
         errorBut.setPosition(DDGame.WORLD_WIDTH / 2f + gap, DDGame.WORLD_HEIGHT / 2f - errorBut.getHeight() - 50);

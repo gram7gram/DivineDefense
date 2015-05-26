@@ -2,13 +2,15 @@ package ua.gram.controller.factory;
 
 import com.badlogic.gdx.Gdx;
 import ua.gram.DDGame;
+import ua.gram.model.actor.Enemy;
+import ua.gram.model.actor.enemy.*;
 
 import java.util.ArrayList;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class EnemyFactory implements AbstractFactory<ua.gram.model.actor.Enemy> {
+public class EnemyFactory implements Factory<Enemy> {
 
     private ArrayList<EnemyPrototype> prototypes;
     private DDGame game;
@@ -18,7 +20,7 @@ public class EnemyFactory implements AbstractFactory<ua.gram.model.actor.Enemy> 
     }
 
     @Override
-    public ua.gram.model.actor.Enemy create(Class<? extends ua.gram.model.actor.Enemy> type) {
+    public Enemy create(Class<? extends Enemy> type) {
         EnemyPrototype enemy = prototypes.get(0);
         float[] stats = new float[]{
                 enemy.health,
@@ -26,17 +28,17 @@ public class EnemyFactory implements AbstractFactory<ua.gram.model.actor.Enemy> 
                 enemy.armor,
                 enemy.reward
         };
-        ua.gram.model.actor.Enemy enemyType = null;
-        if (type.equals(ua.gram.model.actor.enemy.EnemyWarrior.class)) {
-            enemyType = new ua.gram.model.actor.enemy.EnemyWarrior(game, stats);
-        } else if (type.equals(ua.gram.model.actor.enemy.EnemySoldier.class)) {
-            enemyType = new ua.gram.model.actor.enemy.EnemySoldier(this.game, stats);
-        } else if (type.equals(ua.gram.model.actor.enemy.EnemySoldierArmored.class)) {
-            enemyType = new ua.gram.model.actor.enemy.EnemySoldierArmored(this.game, stats);
-        } else if (type.equals(ua.gram.model.actor.enemy.EnemySummoner.class)) {
-            enemyType = new ua.gram.model.actor.enemy.EnemySummoner(this.game, stats);
-        } else if (type.equals(ua.gram.model.actor.enemy.EnemyRunner.class)) {
-            enemyType = new ua.gram.model.actor.enemy.EnemyRunner(this.game, stats);
+        Enemy enemyType;
+        if (type.equals(EnemyWarrior.class)) {
+            enemyType = new EnemyWarrior(game, stats);
+        } else if (type.equals(EnemySoldier.class)) {
+            enemyType = new EnemySoldier(this.game, stats);
+        } else if (type.equals(EnemySoldierArmored.class)) {
+            enemyType = new EnemySoldierArmored(this.game, stats);
+        } else if (type.equals(EnemySummoner.class)) {
+            enemyType = new EnemySummoner(this.game, stats);
+        } else if (type.equals(EnemyRunner.class)) {
+            enemyType = new EnemyRunner(this.game, stats);
         } else {
             throw new NullPointerException("Enemy factory couldn't create: " + type.getSimpleName());
         }

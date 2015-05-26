@@ -32,6 +32,7 @@ public class ContinueListener extends ClickListener {
     public void clicked(InputEvent event, float x, float y) {
         game.getPlayer().chargeGems(amountGems);
         game.getPlayer().setHealth(amountHealth);
+        DDGame.PAUSE = false;
         stage_ui.toggleWindow(window);
     }
 

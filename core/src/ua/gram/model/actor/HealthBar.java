@@ -28,17 +28,17 @@ public class HealthBar extends Actor {
         this.enemy = enemy;
         maxHealth = enemy.health;
         loadingBar100 = new NinePatchDrawable(
-                new NinePatch(skin.getRegion("healthBar100"), 0, 0, 0, 0));
+                new NinePatch(skin.getRegion("health-bar-100"), 0, 0, 0, 0));
         loadingBar60 = new NinePatchDrawable(
-                new NinePatch(skin.getRegion("healthBar60"), 0, 0, 0, 0));
+                new NinePatch(skin.getRegion("health-bar-50"), 0, 0, 0, 0));
         loadingBar30 = new NinePatchDrawable(
-                new NinePatch(skin.getRegion("healthBar30"), 0, 0, 0, 0));
+                new NinePatch(skin.getRegion("health-bar-30"), 0, 0, 0, 0));
+        this.setDebug(DDGame.DEBUG);
         this.setTouchable(Touchable.disabled);
-        this.setSize(DDGame.TILEHEIGHT - 10, 3);
+        this.setSize(DDGame.TILE_HEIGHT - 10, 3);
         this.setPosition(enemy.getX() + 5, enemy.getY() + enemy.getHeight() + 2);
         this.setBounds(this.getX(), this.getY(), this.getWidth(), this.getHeight());
         maxWidth = this.getWidth();
-        this.setDebug(DDGame.DEBUG);
     }
 
     @Override
@@ -65,9 +65,13 @@ public class HealthBar extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        if (currentHealth > 0) {
+        if (this.isVisible() && currentHealth > 0) {
             loadingBar.draw(batch, this.getX(), this.getY(), (currentHealth / maxHealth) * maxWidth, this.getHeight());
         }
+    }
+
+    public Enemy getParentEnemy() {
+        return enemy;
     }
 
 }

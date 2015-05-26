@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 /**
  * Contains major game objects, like towers and enemies.
- * TODO For each tile row - own Z-index
+ * TODO Check for occupied cells if tower is build.
  *
  * @author Gram <gram7gram@gmail.com>
  */
@@ -47,8 +47,8 @@ public class GameBattleStage extends Stage {
 
     @Override
     public void act(float delta) {
-        super.act(delta);
         if (!DDGame.PAUSE) {
+            super.act(delta);
             if (level.getStage() == null) {
                 level.setStage(this);
                 level.createSpawner();
@@ -68,7 +68,7 @@ public class GameBattleStage extends Stage {
     public void updateZIndexes(Group newGroup) {
         for (Actor actor : newGroup.getChildren()) {
             if (actor instanceof Enemy || actor instanceof Tower) {
-                int index = (int) (DDGame.MAP_HEIGHT - (actor.getY()) / DDGame.TILEHEIGHT) - 1;
+                int index = (int) (DDGame.MAP_HEIGHT - (actor.getY()) / DDGame.TILE_HEIGHT) - 1;
                 indexes.get(index).addActor(newGroup);
                 Gdx.app.log("INFO", actor.getClass().getSimpleName() + " added to " + index + " index");
                 break;
@@ -106,7 +106,8 @@ public class GameBattleStage extends Stage {
     }
 
     /**
-     * If there is at least one instance of EnemyGroup in corresponding Group, true is returned.
+     * If there is at least one instance of EnemyGroup in
+     * corresponding Group, true is returned.
      *
      * @return true - at least one Enemy
      */
@@ -213,7 +214,7 @@ public class GameBattleStage extends Stage {
     }
 
     public void updateActorIndex(Enemy enemy) {
-        int index = (int) (DDGame.MAP_HEIGHT - (enemy.getY()) / DDGame.TILEHEIGHT) - 1;
+        int index = (int) (DDGame.MAP_HEIGHT - (enemy.getY()) / DDGame.TILE_HEIGHT) - 1;
         if (index != enemy.getParent().getZIndex()) {
             enemy.getParent().remove();
             indexes.get(index).addActor(enemy.getParent());

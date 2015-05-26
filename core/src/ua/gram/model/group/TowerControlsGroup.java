@@ -1,12 +1,13 @@
 package ua.gram.model.group;
 
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import ua.gram.DDGame;
 import ua.gram.controller.tower.TowerShop;
 import ua.gram.model.actor.Tower;
-import ua.gram.view.AbstractGroup;
 
 /**
  * <pre>
@@ -16,7 +17,7 @@ import ua.gram.view.AbstractGroup;
  *
  * @author Gram <gram7gram@gmail.com>
  */
-public class TowerControlsGroup extends AbstractGroup {
+public class TowerControlsGroup extends Group {
 
     private final Button sellBut;
     private final Button upgradeBut;
@@ -27,7 +28,6 @@ public class TowerControlsGroup extends AbstractGroup {
         this.shop = shop;
         sellBut = new Button(skin, "sell-button");
         upgradeBut = new Button(skin, "upgrade-button");
-        butHeight = 45;
     }
 
     @Override
@@ -39,6 +39,9 @@ public class TowerControlsGroup extends AbstractGroup {
     public void setGroup(final TowerGroup group) {
         final Tower tower = group.getTower();
         final TowerControlsGroup controls = this;
+        float butHeight = DDGame.DEFAULT_BUTTON_HEIGHT * .75f;
+        byte gap = 5;
+
         sellBut.setSize(butHeight, butHeight);
         sellBut.setPosition(
                 tower.getX() - sellBut.getWidth() - gap,

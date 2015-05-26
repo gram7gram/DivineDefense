@@ -2,7 +2,6 @@ package ua.gram.view.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -23,13 +22,15 @@ public class FractionScreen extends AbstractScreen {
 
     private final FractionStage stage_ui;
     private final Sprite lockImage;
+    private final Sprite background;
     private final SpriteBatch batch;
 
     public FractionScreen(DDGame game) {
         super(game);
         stage_ui = new FractionStage(game);
         batch = game.getBatch();
-        lockImage = new Sprite(new Texture(Resources.LOCK_IMAGE));
+        lockImage = new Sprite(game.getResources().getTexture(Resources.LOCK_TEXTURE));
+        background = new Sprite(game.getResources().getTexture(Resources.BACKGROUND_TEXTURE));
         Gdx.app.log("INFO", "Screen set to FractionScreen");
     }
 
@@ -41,6 +42,8 @@ public class FractionScreen extends AbstractScreen {
                 demon.getX() + demon.getWidth() / 2f - lockImage.getWidth() / 2f,
                 demon.getY() + demon.getHeight() / 2f - lockImage.getHeight() / 2f
         );
+        background.setSize(DDGame.WORLD_WIDTH, DDGame.WORLD_HEIGHT);
+        background.setPosition(0, 0);
     }
 
     @Override
@@ -48,6 +51,9 @@ public class FractionScreen extends AbstractScreen {
         Gdx.gl.glClearColor(0, 111 / 255f, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
         stage_ui.act(delta);
+        batch.begin();
+        background.draw(batch);
+        batch.end();
         stage_ui.draw();
         batch.begin();
         if (stage_ui.getGroup() == null || !stage_ui.getGroup().isVisible()) {
@@ -68,5 +74,6 @@ public class FractionScreen extends AbstractScreen {
 
     @Override
     public void dispose() {
+        lockImage.getTexture().dispose();
     }
 }

@@ -17,8 +17,8 @@ public class ErrorScreen extends AbstractScreen {
     public ErrorScreen(DDGame game, String error, Exception e) {
         super(game);
         Gdx.app.error("ERROR", error);
-        Gdx.app.log("INFO", "Screen set to ErrorScreen");
         stage_ui = new ErrorStage(game, error, e);
+        Gdx.app.log("INFO", "Screen set to ErrorScreen");
     }
 
     @Override

@@ -33,16 +33,16 @@ public class Range extends Actor {
         if (!DDGame.PAUSE && tower != null) {
             this.toBack();
             range.setSize(
-                    radius * 2 * DDGame.TILEHEIGHT,
-                    radius * 2 * DDGame.TILEHEIGHT
+                    radius * 2 * DDGame.TILE_HEIGHT,
+                    radius * 2 * DDGame.TILE_HEIGHT
             );
             range.setBounds(
                     range.getX(), range.getY(),
                     range.getWidth(), range.getHeight()
             );
             range.setPosition(
-                    tower.getX() + tower.getWidth() / 2f - radius * DDGame.TILEHEIGHT,
-                    tower.getY() + 15 - radius * DDGame.TILEHEIGHT
+                    tower.getX() + tower.getWidth() / 2f - radius * DDGame.TILE_HEIGHT,
+                    tower.getY() + 15 - radius * DDGame.TILE_HEIGHT
             );
         }
     }

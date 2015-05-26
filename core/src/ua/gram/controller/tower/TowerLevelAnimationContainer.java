@@ -15,12 +15,12 @@ public class TowerLevelAnimationContainer {
 //    private Animation buildAnimation = null;
 //    private Animation sellAnimation = null;
 
-    public TowerLevelAnimationContainer(TowerAnimationController towerAnimation, int level, int animationWidth, int animationHeight) {
+    public TowerLevelAnimationContainer(TowerAnimationController towerAnimation, int level) {
         idleAnimation = new Animation(
                 TowerAnimationController.DELAY,
                 towerAnimation.setAnimationRegion(
                         AnimationController.Types.IDLE,
-                        level, animationWidth, animationHeight)
+                        level)
         );
         idleAnimation.setPlayMode(Animation.PlayMode.LOOP);
     }

@@ -4,27 +4,32 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Pool;
 import ua.gram.DDGame;
 import ua.gram.controller.factory.TowerFactory;
+import ua.gram.model.actor.Tower;
+import ua.gram.model.actor.tower.TowerCannon;
+import ua.gram.model.actor.tower.TowerPrimary;
+import ua.gram.model.actor.tower.TowerSpecial;
+import ua.gram.model.actor.tower.TowerStun;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class TowerPool<T extends ua.gram.model.actor.Tower> extends Pool<ua.gram.model.actor.Tower> {
+public class TowerPool<T extends Tower> extends Pool<Tower> {
 
     private final Class<? extends ua.gram.model.actor.Tower> type;
-    private final String towerFilesDir = "data/world/towers/";
     private final TowerFactory container;
 
-    public TowerPool(DDGame game, int capacity, int max, Class<? extends ua.gram.model.actor.Tower> type) {
+    public TowerPool(DDGame game, int capacity, int max, Class<? extends Tower> type) {
         super(capacity, max);
         this.type = type;
         String file = "";
-        if (type.equals(ua.gram.model.actor.tower.TowerPrimary.class)) {
+        String towerFilesDir = "data/world/towers/";
+        if (type.equals(TowerPrimary.class)) {
             file = towerFilesDir + "primary.json";
-        } else if (type.equals(ua.gram.model.actor.tower.TowerCannon.class)) {
+        } else if (type.equals(TowerCannon.class)) {
             file = towerFilesDir + "cannon.json";
-        } else if (type.equals(ua.gram.model.actor.tower.TowerStun.class)) {
+        } else if (type.equals(TowerStun.class)) {
             file = towerFilesDir + "stun.json";
-        } else if (type.equals(ua.gram.model.actor.tower.TowerSpecial.class)) {
+        } else if (type.equals(TowerSpecial.class)) {
             file = towerFilesDir + "special.json";
         } else {
             throw new NullPointerException("Couldn't get configuration for: " + type.getSimpleName());

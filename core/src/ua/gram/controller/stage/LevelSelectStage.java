@@ -10,9 +10,7 @@ import ua.gram.DDGame;
 import ua.gram.view.screen.LevelLoadingScreen;
 
 /**
- * TODO Add stars
- *
- * @author Gram
+ * @author Gram <gram7gram@gmail.com>
  */
 public class LevelSelectStage extends Stage {
 
@@ -23,7 +21,7 @@ public class LevelSelectStage extends Stage {
         this.setDebugAll(DDGame.DEBUG);
         this.game = game;
 
-        Button level1But = new TextButton("1", game.getSkin(), "default");
+        Button level1But = new TextButton("1", game.getResources().getSkin(), "default");
         level1But.setVisible(true);
         level1But.setSize(150, 150);
         level1But.setPosition(60, 165);

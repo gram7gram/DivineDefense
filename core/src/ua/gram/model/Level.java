@@ -23,14 +23,12 @@ public class Level {
     private GameBattleStage stage_battle;
 
     /**
-     * <pre>
      * Is created using Factory!
      * Holds the Map, Wave and EnemySpawner objects.
      * For successful creation of the Level object, follow the order:
      * 	Level level = new Level(...)
      * 	level.create(...)
      * 	level.createSpawner()
-     * </pre>
      */
     public Level(ArrayList<ArrayList<Class<? extends Enemy>>> waves) {
         wave = new Wave(this, waves);

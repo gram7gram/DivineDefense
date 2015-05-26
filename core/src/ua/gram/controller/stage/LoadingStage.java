@@ -5,7 +5,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import ua.gram.DDGame;
 
 /**
- * Created by Gram on 15/1.
+ *
+ * @author Gram <gram7gram@gmail.com>
  */
 public class LoadingStage extends Stage {
 
@@ -14,7 +15,7 @@ public class LoadingStage extends Stage {
     public LoadingStage(DDGame game) {
         super(game.getViewport(), game.getBatch());
         this.setDebugAll(DDGame.DEBUG);
-        label = new Label("Loading: 0%", game.getSkin(), "action64black");
+        label = new Label("Loading: 0%", game.getResources().getSkin(), "action64black");
         label.setPosition(
                 DDGame.WORLD_WIDTH / 2 - label.getWidth() / 2,
                 DDGame.WORLD_HEIGHT / 2 - label.getHeight() / 2
@@ -22,7 +23,7 @@ public class LoadingStage extends Stage {
         this.addActor(label);
     }
 
-    public void update(byte progress) {
+    public void update(int progress) {
         label.setText("Loading: " + progress + "%");
     }
 }

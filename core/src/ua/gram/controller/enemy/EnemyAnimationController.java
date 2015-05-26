@@ -1,8 +1,8 @@
 package ua.gram.controller.enemy;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import ua.gram.controller.pool.animation.AnimationController.Types;
 import ua.gram.controller.pool.animation.EnemyAnimationPool;
 import ua.gram.model.Player;
@@ -14,7 +14,7 @@ import ua.gram.model.actor.Enemy;
 public class EnemyAnimationController {
 
     public static final float DELAY = 1 / 10f;
-    private final TextureAtlas atlas;
+    private final Skin skin;
     private final Enemy enemy;
     private final Animation upAnimation;
     private final Animation downAnimation;
@@ -25,23 +25,22 @@ public class EnemyAnimationController {
     private EnemyAnimationPool upPool;
     private EnemyAnimationPool downPool;
 
-    public EnemyAnimationController(TextureAtlas atlas, Enemy enemy) {
-        this.atlas = atlas;
+    public EnemyAnimationController(Skin skin, Enemy enemy) {
+        this.skin = skin;
         this.enemy = enemy;
-        int animationWidth = (int) enemy.getWidth();
-        int animationHeight = (int) enemy.getHeight();
-        upPool = new EnemyAnimationPool(setAnimationRegion(Types.UP, animationWidth, animationHeight));
-        leftPool = new EnemyAnimationPool(setAnimationRegion(Types.LEFT, animationWidth, animationHeight));
-        rightPool = new EnemyAnimationPool(setAnimationRegion(Types.RIGHT, animationWidth, animationHeight));
-        downPool = new EnemyAnimationPool(setAnimationRegion(Types.DOWN, animationWidth, animationHeight));
+        upPool = new EnemyAnimationPool(setAnimationRegion(Types.UP));
+        leftPool = new EnemyAnimationPool(setAnimationRegion(Types.LEFT));
+        rightPool = new EnemyAnimationPool(setAnimationRegion(Types.RIGHT));
+        downPool = new EnemyAnimationPool(setAnimationRegion(Types.DOWN));
         upAnimation = upPool.obtain();
         leftAnimation = leftPool.obtain();
         rightAnimation = rightPool.obtain();
         downAnimation = downPool.obtain();
     }
 
-    public TextureRegion[] setAnimationRegion(Types animationType, int animationWidth, int animationHeight) {
-        String region = enemy.getClass().getSimpleName() + "_" + Player.SYSTEM_FRACTION;
+    public TextureRegion[] setAnimationRegion(Types animationType) {
+        String region = enemy.getClass().getSimpleName()
+                + "_" + Player.SYSTEM_FRACTION;
         switch (animationType) {
             case LEFT:
                 region += "_Left";
@@ -58,13 +57,13 @@ public class EnemyAnimationController {
             case DEAD:
                 region += "_Dead";
                 break;
-            case CLEAR:
-                region += "_Clear";
+            case SPAWN:
+                region += "_Spawn";
                 break;
             default:
                 throw new NullPointerException("Unknown Enemy Animation id: " + animationType);
         }
-        TextureRegion[][] regions = atlas.findRegion(region).split(animationWidth, animationHeight);
+        TextureRegion[][] regions = skin.getRegion(region).split(enemy.animationWidth, enemy.animationHeight);
         return regions[0];
     }
 

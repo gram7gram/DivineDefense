@@ -50,7 +50,8 @@ public class GameScreen extends AbstractScreen {
     }
 
     /**
-     * act() is placed in separated method due to stage_battle should not be updated is game is paused.
+     * act() is placed in separated method due to stage_battle
+     * should not be updated if game is paused.
      *
      * @param delta
      */

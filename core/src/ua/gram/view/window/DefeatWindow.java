@@ -22,34 +22,34 @@ public class DefeatWindow extends Window {
     private final Button optionPurchase;
 
     public DefeatWindow(DDGame game, final GameUIStage stage_ui) {
-        super("", game.getSkin(), "menu");
+        super("", game.getResources().getSkin(), "default");
         this.game = game;
         this.setSize(650, 380);
         this.setPosition(DDGame.WORLD_WIDTH / 2f - this.getWidth() / 2f, DDGame.WORLD_HEIGHT / 2f - this.getHeight() / 2f);
         this.setVisible(true);
         this.setMovable(false);
 
-        Label title1 = new Label("You were defeated...", game.getSkin(), "tusj64black");
-        Label title2 = new Label("Get the revenge and be victorious:", game.getSkin(), "archery32black");
-        Label header1 = new Label("Restart", game.getSkin(), "archery16black");
-        Label header2 = new Label("Continue", game.getSkin(), "archery16black");
-        Label header3 = new Label("Continue", game.getSkin(), "archery16black");
+        Label title1 = new Label("You were defeated...", game.getResources().getSkin(), "tusj64black");
+        Label title2 = new Label("Get the revenge and be victorious:", game.getResources().getSkin(), "archery32black");
+        Label header1 = new Label("Restart", game.getResources().getSkin(), "archery16black");
+        Label header2 = new Label("Continue", game.getResources().getSkin(), "archery16black");
+        Label header3 = new Label("Continue", game.getResources().getSkin(), "archery16black");
 
-        Button option1 = new Button(game.getSkin(), "default");
+        Button option1 = new Button(game.getResources().getSkin(), "default");
         option1.setSize(160, 200);
         option1.addListener(new RestartListener(game, 1));
 
-        option2 = new Button(game.getSkin(), "default");
+        option2 = new Button(game.getResources().getSkin(), "default");
         option2.setSize(160, 200);
         option2.addListener(new ContinueListener(game, 3, 2, this, stage_ui));
         option2.setDisabled(game.getPlayer().getGems() < 2);
 
-        option3 = new Button(game.getSkin(), "default");
+        option3 = new Button(game.getResources().getSkin(), "default");
         option3.setSize(160, 200);
         option3.addListener(new ContinueListener(game, Player.DEFAULT_HEALTH, 3, this, stage_ui));
         option3.setDisabled(game.getPlayer().getGems() < 3);
 
-        optionPurchase = new TextButton("BUY", game.getSkin(), "default");
+        optionPurchase = new TextButton("BUY", game.getResources().getSkin(), "default");
         optionPurchase.setSize(100, 40);
 //        option3.addListener(new MarketScreen);
 

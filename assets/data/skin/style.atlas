@@ -3,279 +3,455 @@ style.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-back
+button-demon-up
   rotate: false
-  xy: 1, 1
-  size: 9, 9
-  split: 4, 4, 4, 4
-  orig: 9, 9
+  xy: 0, 1183
+  size: 400, 390
+  orig: 400, 390
   offset: 0, 0
   index: -1
-button.down
+button-angel-up
   rotate: false
-  xy: 12, 1
-  size: 9, 9
-  split: 2, 1, 2, 1
-  orig: 9, 9
+  xy: 0, 793
+  size: 400, 390
+  orig: 400, 390
   offset: 0, 0
   index: -1
-button.up
+TowerPrimary_Angel_Lvl2_Idle
   rotate: false
-  xy: 23, 1
-  size: 9, 9
-  split: 1, 2, 1, 2
-  orig: 9, 9
+  xy: 400, 1483
+  size: 540, 90
+  orig: 540, 90
   offset: 0, 0
   index: -1
-
-
-demon.png
-format: RGBA8888
-filter: Nearest,Nearest
-repeat: none
-demon
+EnemyWarrior_Demon_Up
   rotate: false
-  xy: 0, 0
-  size: 500, 661
-  orig: 500, 661
+  xy: 400, 1393
+  size: 540, 90
+  orig: 540, 90
   offset: 0, 0
   index: -1
-
-angel.png
-format: RGBA8888
-filter: Nearest,Nearest
-repeat: none
-angel
+EnemyRunner_Demon_Down
   rotate: false
-  xy: 0, 0
-  size: 500, 661
-  orig: 500, 661
+  xy: 940, 1483
+  size: 540, 90
+  orig: 540, 90
   offset: 0, 0
   index: -1
-
-bar.png
-format: RGBA8888
-filter: Nearest,Nearest
-repeat: none
-healthBar100
+EnemySoldier_Demon_Right
   rotate: false
-  xy: 0, 0
-  size: 1, 1
-  orig: 1, 1
+  xy: 400, 1303
+  size: 540, 90
+  orig: 540, 90
   offset: 0, 0
   index: -1
-healthBar60
+TowerPrimary_Angel_Lvl3_Idle
   rotate: false
-  xy: 1, 0
-  size: 1, 1
-  orig: 1, 1
+  xy: 940, 1393
+  size: 540, 90
+  orig: 540, 90
   offset: 0, 0
   index: -1
-healthBar30
+TowerStun_Angel_Lvl4_Idle
   rotate: false
-  xy: 2, 0
-  size: 1, 1
-  orig: 1, 1
+  xy: 1480, 1483
+  size: 540, 90
+  orig: 540, 90
   offset: 0, 0
   index: -1
-
-shopItems.png
-format: RGBA8888
-filter: Nearest,Nearest
-repeat: none
-tower-primary
+TowerStun_Angel_Lvl3_Idle
   rotate: false
-  xy: 0, 0
-  size: 60, 60
-  orig: 60, 60
+  xy: 400, 1213
+  size: 540, 90
+  orig: 540, 90
   offset: 0, 0
   index: -1
-tower-cannon
+EnemySoldier_Demon_Up
   rotate: false
-  xy: 60, 0
-  size: 60, 60
-  orig: 60, 60
+  xy: 940, 1303
+  size: 540, 90
+  orig: 540, 90
   offset: 0, 0
   index: -1
-tower-stun
+EnemySoldierArmored_Demon_Up
   rotate: false
-  xy: 120, 0
-  size: 60, 60
-  orig: 60, 60
+  xy: 1480, 1393
+  size: 540, 90
+  orig: 540, 90
   offset: 0, 0
   index: -1
-tower-special
+TowerSpecial_Angel_Lvl3_Idle
   rotate: false
-  xy: 180, 0
-  size: 60, 60
-  orig: 60, 60
+  xy: 400, 1123
+  size: 540, 90
+  orig: 540, 90
   offset: 0, 0
   index: -1
-
-sell_button.png
-format: RGBA8888
-filter: Nearest,Nearest
-repeat: none
-sell-button-up
+EnemyWarrior_Demon_Left
   rotate: false
-  xy: 0, 0
-  size: 45, 45
-  orig: 45, 45
+  xy: 940, 1213
+  size: 540, 90
+  orig: 540, 90
   offset: 0, 0
   index: -1
-sell-button-down
+EnemyRunner_Demon_Right
   rotate: false
-  xy: 45, 0
-  size: 45, 45
-  orig: 45, 45
+  xy: 1480, 1303
+  size: 540, 90
+  orig: 540, 90
   offset: 0, 0
   index: -1
-
-upgrade_button.png
-format: RGBA8888
-filter: Nearest,Nearest
-repeat: none
-upgrade-button-up
+EnemySummoner_Demon_Up
   rotate: false
-  xy: 0, 0
-  size: 45, 45
-  orig: 45, 45
+  xy: 400, 1033
+  size: 540, 90
+  orig: 540, 90
   offset: 0, 0
   index: -1
-upgrade-button-down
+TowerCannon_Angel_Lvl2_Idle
   rotate: false
-  xy: 45, 0
-  size: 45, 45
-  orig: 45, 45
+  xy: 940, 1123
+  size: 540, 90
+  orig: 540, 90
   offset: 0, 0
   index: -1
-
-close_but.png
-format: RGBA8888
-filter: Nearest,Nearest
-repeat: none
-close-button-up
+EnemySoldier_Demon_Down
   rotate: false
-  xy: 0, 0
-  size: 80, 80
-  orig: 80, 80
+  xy: 1480, 1213
+  size: 540, 90
+  orig: 540, 90
   offset: 0, 0
   index: -1
-close-button-down
+EnemySoldierArmored_Demon_Right
   rotate: false
-  xy: 80, 0
-  size: 80, 80
-  orig: 80, 80
+  xy: 400, 943
+  size: 540, 90
+  orig: 540, 90
   offset: 0, 0
   index: -1
-
-
-button.png
-format: RGBA8888
-filter: Nearest,Nearest
-repeat: none
-button-up2
+TowerCannon_Angel_Lvl4_Idle
   rotate: false
-  xy: 0, 0
-  size: 98, 98
-  split: 29, 29, 27, 30
-  orig: 98, 98
+  xy: 940, 1033
+  size: 540, 90
+  orig: 540, 90
   offset: 0, 0
   index: -1
-button-down3
+EnemyWarrior_Demon_Right
   rotate: false
-  xy: 98, 0
-  size: 98, 98
-  split: 29, 27, 27, 31
-  orig: 98, 98
+  xy: 1480, 1123
+  size: 540, 90
+  orig: 540, 90
   offset: 0, 0
   index: -1
-button-down1
+EnemySummoner_Demon_Left
   rotate: false
-  xy: 196, 0
-  size: 98, 98
-  split: 32, 30, 32, 32
-  orig: 98, 98
+  xy: 400, 853
+  size: 540, 90
+  orig: 540, 90
   offset: 0, 0
   index: -1
-button-up3
+TowerPrimary_Angel_Lvl1_Idle
   rotate: false
-  xy: 294, 0
-  size: 98, 98
-  split: 28, 27, 27, 29
-  orig: 98, 98
+  xy: 940, 943
+  size: 540, 90
+  orig: 540, 90
   offset: 0, 0
   index: -1
-button-down2
+TowerCannon_Angel_Lvl3_Idle
   rotate: false
-  xy: 392, 0
-  size: 98, 98
-  split: 30, 27, 29, 31
-  orig: 98, 98
+  xy: 1480, 1033
+  size: 540, 90
+  orig: 540, 90
   offset: 0, 0
   index: -1
-button-up1
+EnemySummoner_Demon_Right_Summon
   rotate: false
-  xy: 490, 0
-  size: 98, 98
-  split: 30, 30, 23, 30
-  orig: 98, 98
+  xy: 940, 853
+  size: 540, 90
+  orig: 540, 90
   offset: 0, 0
   index: -1
-button-down4
+TowerStun_Angel_Lvl1_Idle
   rotate: false
-  xy: 588, 0
-  size: 98, 98
-  split: 31, 32, 30, 27
-  orig: 98, 98
+  xy: 1480, 943
+  size: 540, 90
+  orig: 540, 90
   offset: 0, 0
   index: -1
-button-up4
+EnemySummoner_Demon_Up_Summon
   rotate: false
-  xy: 784, 0
-  size: 98, 98
-  split: 30, 30, 26, 33
-  orig: 98, 98
+  xy: 1480, 853
+  size: 540, 90
+  orig: 540, 90
   offset: 0, 0
   index: -1
-green-down
+TowerStun_Angel_Lvl2_Idle
   rotate: false
-  xy: 686, 0
+  xy: 400, 763
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+EnemySoldier_Demon_Left
+  rotate: false
+  xy: 940, 763
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+TowerCannon_Angel_Lvl1_Idle
+  rotate: false
+  xy: 1480, 763
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+TowerSpecial_Angel_Lvl4_Idle
+  rotate: false
+  xy: 0, 673
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+EnemySummoner_Demon_Left_Summon
+  rotate: false
+  xy: 0, 583
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+EnemySoldierArmored_Demon_Down
+  rotate: false
+  xy: 540, 673
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+EnemySummoner_Demon_Down_Summon
+  rotate: false
+  xy: 0, 493
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+EnemySummoner_Demon_Right
+  rotate: false
+  xy: 540, 583
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+TowerSpecial_Angel_Lvl2_Idle
+  rotate: false
+  xy: 1080, 673
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+EnemyWarrior_Demon_Down
+  rotate: false
+  xy: 0, 403
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+EnemyRunner_Demon_Left
+  rotate: false
+  xy: 540, 493
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+EnemySummoner_Demon_Down
+  rotate: false
+  xy: 1080, 583
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+EnemyRunner_Demon_Up
+  rotate: false
+  xy: 0, 313
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+TowerPrimary_Angel_Lvl4_Idle
+  rotate: false
+  xy: 540, 403
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+TowerSpecial_Angel_Lvl1_Idle
+  rotate: false
+  xy: 1080, 493
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+EnemySoldierArmored_Demon_Left
+  rotate: false
+  xy: 0, 223
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+button-green-down
+  rotate: false
+  xy: 1620, 665
   size: 98, 98
   split: 14, 16, 14, 16
   orig: 98, 98
   offset: 0, 0
   index: -1
-green-up
+window-pretty
   rotate: false
-  xy: 882, 0
+  xy: 540, 305
+  size: 98, 98
+  split: 33, 32, 34, 33
+  orig: 98, 98
+  offset: 0, 0
+  index: -1
+button-green-up
+  rotate: false
+  xy: 0, 125
   size: 98, 98
   split: 12, 13, 15, 14
   orig: 98, 98
   offset: 0, 0
   index: -1
-
-../images/misc/aim.png
-format: RGBA8888
-filter: Nearest,Nearest
-repeat: none
-aim
+shopitem-tower-cannon
   rotate: false
-  xy: 0, 0
-  size: 10, 10
-  orig: 10, 10
+  xy: 1080, 413
+  size: 80, 80
+  orig: 80, 80
   offset: 0, 0
   index: -1
-
-window.png
-format: RGBA8888
-filter: Nearest,Nearest
-repeat: none
-window-pretty
+button-close-down
   rotate: false
-  xy: 1, 1
-  size: 98, 98
-  split: 33, 32, 34, 33
-  orig: 98, 98
+  xy: 1620, 585
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+button-close-up
+  rotate: false
+  xy: 1718, 683
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+shopitem-tower-stun
+  rotate: false
+  xy: 540, 225
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+button-pretty-down
+  rotate: false
+  xy: 638, 323
+  size: 80, 80
+  split: 16, 18, 13, 20
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+button-pretty-up
+  rotate: false
+  xy: 0, 45
+  size: 80, 80
+  split: 14, 11, 18, 26
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+shopitem-tower-special
+  rotate: false
+  xy: 98, 143
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+shopitem-tower-primary
+  rotate: false
+  xy: 1160, 413
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+button-sell-down
+  rotate: false
+  xy: 1620, 540
+  size: 45, 45
+  orig: 45, 45
+  offset: 0, 0
+  index: -1
+button-upgrade-up
+  rotate: false
+  xy: 1798, 718
+  size: 45, 45
+  orig: 45, 45
+  offset: 0, 0
+  index: -1
+button-upgrade-down
+  rotate: false
+  xy: 718, 358
+  size: 45, 45
+  orig: 45, 45
+  offset: 0, 0
+  index: -1
+button-sell-up
+  rotate: false
+  xy: 0, 0
+  size: 45, 45
+  orig: 45, 45
+  offset: 0, 0
+  index: -1
+button-default-up
+  rotate: false
+  xy: 2020, 1564
+  size: 9, 9
+  split: 1, 2, 1, 2
+  orig: 9, 9
+  offset: 0, 0
+  index: -1
+label-background-0.25
+  rotate: false
+  xy: 0, 784
+  size: 9, 9
+  split: 4, 4, 4, 4
+  orig: 9, 9
+  offset: 0, 0
+  index: -1
+button-default-down
+  rotate: false
+  xy: 1080, 404
+  size: 9, 9
+  split: 2, 1, 2, 1
+  orig: 9, 9
+  offset: 0, 0
+  index: -1
+health-bar-100
+  rotate: false
+  xy: 1700, 662
+  size: 3, 3
+  split: 1, 1, 1, 1
+  orig: 3, 3
+  offset: 0, 0
+  index: -1
+health-bar-50
+  rotate: false
+  xy: 1718, 680
+  size: 3, 3
+  split: 1, 1, 1, 1
+  orig: 3, 3
+  offset: 0, 0
+  index: -1
+health-bar-30
+  rotate: false
+  xy: 620, 302
+  size: 3, 3
+  split: 1, 1, 1, 1
+  orig: 3, 3
   offset: 0, 0
   index: -1

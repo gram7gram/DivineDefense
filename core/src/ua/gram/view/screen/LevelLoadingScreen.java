@@ -7,13 +7,10 @@ import ua.gram.controller.factory.LevelFactory;
 import ua.gram.model.Level;
 import ua.gram.view.AbstractLoadingScreen;
 
-import java.util.Arrays;
-
 /**
- * <pre>
+ * Loads resources essential for the game process itself: map, external sprites - and creates a Level.
  * TODO implement hints for player
  * TODO Add progress bar
- * </pre>
  *
  * @author Gram <gram7gram@gmail.com>
  */
@@ -33,17 +30,16 @@ public class LevelLoadingScreen extends AbstractLoadingScreen {
     @Override
     public void show() {
         super.show();
-        game.getResources().loadMap(lvl);
-        game.getResources().loadAtlas(Resources.ENEMIES_ATLAS);
-        game.getResources().loadAtlas(Resources.TOWERS_ATLAS);
-        game.getResources().loadTexture(Resources.LASER_START_BACK);
-        game.getResources().loadTexture(Resources.LASER_START_OVER);
-        game.getResources().loadTexture(Resources.LASER_MIDDLE_BACK);
-        game.getResources().loadTexture(Resources.LASER_MIDDLE_OVER);
-        game.getResources().loadTexture(Resources.LASER_END_BACK);
-        game.getResources().loadTexture(Resources.LASER_END_OVER);
-        game.getResources().loadTexture(Resources.RANGE_TEXTURE);
-        game.getResources().loadTexture(Resources.AIM_ICON);
+        Resources resources = game.getResources();
+        resources.loadMap(lvl);
+        resources.loadTexture(Resources.WEAPON_START_BACK);
+        resources.loadTexture(Resources.WEAPON_START_OVER);
+        resources.loadTexture(Resources.WEAPON_MIDDLE_BACK);
+        resources.loadTexture(Resources.WEAPON_MIDDLE_OVER);
+        resources.loadTexture(Resources.WEAPON_END_BACK);
+        resources.loadTexture(Resources.WEAPON_END_OVER);
+        resources.loadTexture(Resources.AIM_TEXTURE);
+        resources.loadTexture(Resources.RANGE_TEXTURE);
     }
 
     @Override
@@ -56,7 +52,6 @@ public class LevelLoadingScreen extends AbstractLoadingScreen {
             level.create(game, lvl);
             game.setScreen(new GameScreen(game, level));
         } catch (NullPointerException e) {
-            System.out.println(e + "\n" + e.getMessage() + Arrays.toString(e.getStackTrace()));
             game.setScreen(new ErrorScreen(game, "Could not get container of level " + lvl, e));
         }
     }

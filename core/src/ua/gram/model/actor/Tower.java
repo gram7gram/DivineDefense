@@ -29,9 +29,9 @@ public abstract class Tower extends Actor {
     public static final byte MAX_TOWER_LEVEL = 4;
     public static final byte MAX_POWER_LEVEL = 4;
     public final float build_delay = 2;
-    protected final int animationWidth = 40;
-    protected final int animationHeight = 60;
-    private final StatusIcon aim;
+    public final int animationWidth = 60;
+    public final int animationHeight = 90;
+    private final AimIcon aim;
     public float damage;
     public float range;
     public float rate;
@@ -67,7 +67,8 @@ public abstract class Tower extends Actor {
         isBuilding = false;
         this.setSize(animationWidth, animationHeight);
         this.setBounds(getX(), getY(), animationWidth, animationHeight);
-        aim = new StatusIcon(game.getResources());
+        aim = new AimIcon(game.getResources());
+        controller = new TowerAnimationController(game.getResources().getSkin(), this);
     }
 
     @Override
@@ -197,7 +198,7 @@ public abstract class Tower extends Actor {
         Vector2 enemyPos = new Vector2(enemy.getX() + enemy.getWidth() / 2f, enemy.getY() + enemy.getHeight() / 2f);
         Vector2 towerPos = new Vector2(this.getX() + this.getWidth() / 2f, this.getY() + this.getHeight() / 2f);
         float distance = enemyPos.dst(towerPos);
-        return distance <= this.range * DDGame.TILEHEIGHT;
+        return distance <= this.range * DDGame.TILE_HEIGHT;
     }
 
     /**

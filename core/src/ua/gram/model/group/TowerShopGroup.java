@@ -1,6 +1,7 @@
 package ua.gram.model.group;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -13,12 +14,11 @@ import ua.gram.model.actor.tower.TowerCannon;
 import ua.gram.model.actor.tower.TowerPrimary;
 import ua.gram.model.actor.tower.TowerSpecial;
 import ua.gram.model.actor.tower.TowerStun;
-import ua.gram.view.AbstractGroup;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class TowerShopGroup extends AbstractGroup {
+public class TowerShopGroup extends Group {
 
     private final DDGame game;
     private final Label towerPrimaryLabel;
@@ -33,50 +33,53 @@ public class TowerShopGroup extends AbstractGroup {
     public TowerShopGroup(DDGame game, TowerShop shop) {
         super();
         this.game = game;
+        byte gap = 5;
+        int butHeight = DDGame.DEFAULT_BUTTON_HEIGHT;
+
         GameBattleStage stage_battle = shop.getStageBattle();
         GameUIStage stage_ui = shop.getStageUi();
 
-        towerPrimaryBut = new Button(game.getSkin(), "tower-primary");
+        towerPrimaryBut = new Button(game.getResources().getSkin(), "shopitem-tower-primary");
         towerPrimaryBut.setVisible(true);
         towerPrimaryBut.setSize(butHeight, butHeight);
         towerPrimaryBut.setPosition(DDGame.WORLD_WIDTH - butHeight * 4 - gap * 4, gap);
 
-        towerCannonBut = new Button(game.getSkin(), "tower-cannon");
+        towerCannonBut = new Button(game.getResources().getSkin(), "shopitem-tower-cannon");
         towerCannonBut.setVisible(true);
         towerCannonBut.setSize(butHeight, butHeight);
         towerCannonBut.setPosition(DDGame.WORLD_WIDTH - butHeight * 3 - gap * 3, gap);
 
-        towerStunBut = new Button(game.getSkin(), "tower-stun");
+        towerStunBut = new Button(game.getResources().getSkin(), "shopitem-tower-stun");
         towerStunBut.setVisible(true);
         towerStunBut.setSize(butHeight, butHeight);
         towerStunBut.setPosition(DDGame.WORLD_WIDTH - butHeight * 2 - gap * 2, gap);
 
-        towerSpecialBut = new Button(game.getSkin(), "tower-special");
+        towerSpecialBut = new Button(game.getResources().getSkin(), "shopitem-tower-special");
         towerSpecialBut.setVisible(true);
         towerSpecialBut.setSize(butHeight, butHeight);
         towerSpecialBut.setPosition(DDGame.WORLD_WIDTH - butHeight - gap, gap);
 
-        towerPrimaryLabel = new Label("" + shop.getPoolPrimary().obtain().getCost(), game.getSkin(), "16_tinted");
+        towerPrimaryLabel = new Label("" + shop.getPoolPrimary().obtain().getCost(), game.getResources().getSkin(), "16_tinted");
         towerPrimaryLabel.setVisible(true);
         towerPrimaryLabel.setPosition(
                 towerPrimaryBut.getX() + towerPrimaryBut.getWidth() - towerPrimaryLabel.getWidth(),
                 towerPrimaryBut.getY()
         );
-        towerCannonLabel = new Label("" + shop.getPoolCannon().obtain().getCost(), game.getSkin(), "16_tinted");
+        towerCannonLabel = new Label("" + shop.getPoolCannon().obtain().getCost(), game.getResources().getSkin(), "16_tinted");
         towerCannonLabel.setVisible(true);
         towerCannonLabel.setPosition(
                 towerCannonBut.getX() + towerCannonBut.getWidth() - towerCannonLabel.getWidth(),
                 towerCannonBut.getY()
         );
 
-        towerStunLabel = new Label("" + shop.getPoolStun().obtain().getCost(), game.getSkin(), "16_tinted");
+        towerStunLabel = new Label("" + shop.getPoolStun().obtain().getCost(), game.getResources().getSkin(), "16_tinted");
         towerStunLabel.setVisible(true);
         towerStunLabel.setPosition(
                 towerStunBut.getX() + towerStunBut.getWidth() - towerStunLabel.getWidth(),
                 towerStunBut.getY()
         );
 
-        towerSpecialLabel = new Label("" + shop.getPoolSpecial().obtain().getCost(), game.getSkin(), "16_tinted");
+        towerSpecialLabel = new Label("" + shop.getPoolSpecial().obtain().getCost(), game.getResources().getSkin(), "16_tinted");
         towerSpecialLabel.setVisible(true);
         towerSpecialLabel.setPosition(
                 towerSpecialBut.getX() + towerSpecialBut.getWidth() - towerSpecialLabel.getWidth(),
@@ -96,6 +99,7 @@ public class TowerShopGroup extends AbstractGroup {
         this.addActor(towerStunLabel);
         this.addActor(towerSpecialBut);
         this.addActor(towerSpecialLabel);
+        this.setDebug(DDGame.DEBUG);
         Gdx.app.log("INFO", "TowerShopGroup is OK");
     }
 

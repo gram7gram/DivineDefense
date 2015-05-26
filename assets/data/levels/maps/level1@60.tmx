@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="14" height="9" tilewidth="60" tileheight="60">
+ <tileset firstgid="1" name="terrain@60px" tilewidth="60" tileheight="60">
+  <image source="terrain@60px.png" width="256" height="64"/>
+  <tile id="1">
+   <properties>
+    <property name="walkable" value=""/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="base" value=""/>
+    <property name="walkable" value=""/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="spawn" value=""/>
+    <property name="walkable" value=""/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Terrain" width="14" height="9">
+  <data encoding="base64" compression="zlib">
+   eJxjZGBgYBwkmJlMfUwU6EPG+ORJsZsJC41uDiF9TDj42PSxkOF3AJDwAJs=
+  </data>
+ </layer>
+</map>

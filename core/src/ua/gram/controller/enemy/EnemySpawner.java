@@ -7,7 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.utils.Pool;
 import ua.gram.DDGame;
-import ua.gram.controller.Resources;
 import ua.gram.controller.pool.EnemyPool;
 import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.model.Level;
@@ -101,8 +100,8 @@ public class EnemySpawner {
             throw new NullPointerException("Couldn't add enemy: " + type);
         }
         enemy.setPosition(
-                level.getMap().getSpawn().getPosition().x * DDGame.TILEHEIGHT,
-                level.getMap().getSpawn().getPosition().y * DDGame.TILEHEIGHT
+                level.getMap().getSpawn().getPosition().x * DDGame.TILE_HEIGHT,
+                level.getMap().getSpawn().getPosition().y * DDGame.TILE_HEIGHT
         );
         enemy.setSpawner(this);
         EnemyGroup enemyGroup = new EnemyGroup(
@@ -128,7 +127,7 @@ public class EnemySpawner {
     private void setActionPath(EnemyGroup group, ArrayList<Vector2> path) {
         Enemy enemy = group.getEnemy();
         enemy.setBattleStage(stage_battle);
-        enemy.setAnimationController(new EnemyAnimationController(game.getResources().getAtlas(Resources.ENEMIES_ATLAS), enemy));
+        enemy.setAnimationController(new EnemyAnimationController(game.getResources().getSkin(), enemy));
         enemy.setAnimation(enemy.getAnimationController().getUpAnimation());
         SequenceAction pathToGo = new SequenceAction();
         pathToGo.addAction(Actions.show());//spawns enemy
@@ -139,14 +138,14 @@ public class EnemySpawner {
                 action = new SequenceAction(
                         Actions.run(new EnemyAnimationChanger(dir, enemy)),
                         Actions.moveBy(
-                                dir.x * DDGame.TILEHEIGHT,
-                                dir.y * DDGame.TILEHEIGHT,
+                                dir.x * DDGame.TILE_HEIGHT,
+                                dir.y * DDGame.TILE_HEIGHT,
                                 enemy.speed)
                 );
             } else {
                 action = Actions.moveBy(
-                        dir.x * DDGame.TILEHEIGHT,
-                        dir.y * DDGame.TILEHEIGHT,
+                        dir.x * DDGame.TILE_HEIGHT,
+                        dir.y * DDGame.TILE_HEIGHT,
                         enemy.speed);
             }
             prevDir = new Vector2(dir);

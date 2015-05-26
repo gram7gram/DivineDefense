@@ -2,6 +2,7 @@ package ua.gram.model.group;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -11,12 +12,11 @@ import ua.gram.DDGame;
 import ua.gram.controller.stage.GameUIStage;
 import ua.gram.model.Level;
 import ua.gram.model.Wave;
-import ua.gram.view.AbstractGroup;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class GameUIGroup extends AbstractGroup {
+public class GameUIGroup extends Group {
 
     private final DDGame game;
     private final Level level;
@@ -30,19 +30,22 @@ public class GameUIGroup extends AbstractGroup {
         super();
         this.game = game;
         this.level = level;
+        byte gap = 5;
+        int butHeight = DDGame.DEFAULT_BUTTON_HEIGHT;
 
-        Button menu = new TextButton("S", game.getSkin(), "default");
+        Button menu = new TextButton("S", game.getResources().getSkin(), "default");
         menu.setPosition(DDGame.WORLD_WIDTH - butHeight - gap, DDGame.WORLD_HEIGHT - butHeight - gap);
         menu.setSize(butHeight, butHeight);
         menu.setVisible(true);
         menu.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                DDGame.PAUSE = true;
                 stage_ui.toggleWindow(stage_ui.getPauseWindow());
             }
         });
 
-        Button speedBut = new TextButton("F", game.getSkin(), "default");
+        Button speedBut = new TextButton("F", game.getResources().getSkin(), "default");
         speedBut.setPosition(gap, DDGame.WORLD_HEIGHT - butHeight - gap);
         speedBut.setSize(butHeight, butHeight);
         speedBut.setVisible(true);
@@ -56,8 +59,8 @@ public class GameUIGroup extends AbstractGroup {
         Vector2 pos = level.getMap().getSpawn().getPosition();
         Vector2 dir = level.getMap().getPath().getPath().get(0);
 
-        counterBut = new TextButton("" + (int) (level.getWave().getCountdown()), game.getSkin(), "default");
-        counterBut.setPosition((pos.x + dir.x) * DDGame.TILEHEIGHT + gap, (pos.y + dir.y) * DDGame.TILEHEIGHT + gap);
+        counterBut = new TextButton("" + (int) (level.getWave().getCountdown()), game.getResources().getSkin(), "default");
+        counterBut.setPosition((pos.x + dir.x) * DDGame.TILE_HEIGHT + gap, (pos.y + dir.y) * DDGame.TILE_HEIGHT + gap);
         counterBut.setSize(butHeight / 2, butHeight / 2);
         counterBut.setVisible(false);
         counterBut.addListener(new ClickListener() {
@@ -76,9 +79,9 @@ public class GameUIGroup extends AbstractGroup {
             }
         });
 
-        healthLabel = new Label("HEALTH: " + game.getPlayer().getHealth(), game.getSkin(), "small_tinted");
-        gemsLabel = new Label("GEMS: " + game.getPlayer().getGems(), game.getSkin(), "small_tinted");
-        moneyLabel = new Label("MONEY: " + game.getPlayer().getCoins(), game.getSkin(), "small_tinted");
+        healthLabel = new Label("HEALTH: " + game.getPlayer().getHealth(), game.getResources().getSkin(), "small_tinted");
+        gemsLabel = new Label("GEMS: " + game.getPlayer().getGems(), game.getResources().getSkin(), "small_tinted");
+        moneyLabel = new Label("MONEY: " + game.getPlayer().getCoins(), game.getResources().getSkin(), "small_tinted");
 
         moneyLabel.setVisible(true);
         moneyLabel.setPosition(
@@ -102,7 +105,7 @@ public class GameUIGroup extends AbstractGroup {
         waveLabel = new Label("WAVE: "
                 + (level.getCurrentWave() <= 0 ? "-" : level.getCurrentWave())
                 + "/" + level.getMaxWaves(),
-                game.getSkin(), "small_tinted");
+                game.getResources().getSkin(), "small_tinted");
         waveLabel.setVisible(true);
         waveLabel.setPosition(
                 DDGame.WORLD_WIDTH / 2f + gap + healthLabel.getWidth() + gap,
@@ -125,8 +128,8 @@ public class GameUIGroup extends AbstractGroup {
      */
     @Override
     public void act(float delta) {
-        super.act(delta);
-        if (!DDGame.PAUSE && !(level.isCleared || game.getPlayer().isDead())) {
+        if (!DDGame.PAUSE && !(level.isCleared | game.getPlayer().isDead())) {
+            super.act(delta);
             updateHealthLabel();
             updateMoneyLabel();
             updateGemsLabel();

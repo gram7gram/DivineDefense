@@ -1,12 +1,10 @@
 package ua.gram;
 
-import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -17,28 +15,27 @@ import ua.gram.view.screen.ErrorScreen;
 import ua.gram.view.screen.LaunchLoadingScreen;
 
 /**
- * <pre>
  * TODO Make different assets for 4x3 and 16x9(16x10) screens
  * TODO For 16x9(16x10) make StretchViewport
  * TODO Add to JSON pressed and disabled drawable for buttons
  * TODO Add copyrights
  * TODO Handle Android Menu, Back click events
  *
- * FIX Logotype
- * FIX Switch 16pt font with 20pt
+ * FIXME Logotype
+ * FIXME Switch 16pt font with 20pt
  *
  * NOTE Enemies should be tough because the amount of towers is unlimited
  * NOTE Skin should not contain nonexistent values
- * </pre>
  *
  * @author Gram <gram7gram@gmail.com>
  */
 public class DDGame extends Game {
 
-    public static final boolean DEBUG = true;
+    public static final boolean DEBUG = false;
     public static final String ANGEL = "Angel";
     public static final String DEMON = "Demon";
-    public static final byte TILEHEIGHT = 40;
+    public static final byte TILE_HEIGHT = 60;
+    public static final byte DEFAULT_BUTTON_HEIGHT = 80;
     public static boolean PAUSE = false;
     public static int WORLD_WIDTH;
     public static int WORLD_HEIGHT;
@@ -59,16 +56,15 @@ public class DDGame extends Game {
 
     @Override
     public void create() {
-        Gdx.app.log("INFO", "Welcome to DivineDefense, by Gram <gram7gram@gmail.com>");
-        Gdx.app.log("INFO", "Visit https://github.com/gram7gram/DivineDefense to view sources");
+        sayHello();
         Gdx.input.setCatchMenuKey(true);
         Gdx.input.setCatchBackKey(true);
-        Gdx.app.setLogLevel(Application.LOG_NONE);
+//        Gdx.app.setLogLevel(Application.LOG_NONE);
         WORLD_WIDTH = Gdx.graphics.getWidth();
         WORLD_HEIGHT = Gdx.graphics.getHeight();
-        MAX = WORLD_HEIGHT * WORLD_WIDTH / TILEHEIGHT;
-        MAP_HEIGHT = WORLD_HEIGHT / TILEHEIGHT;
-        MAP_WIDTH = WORLD_WIDTH / TILEHEIGHT;
+        MAP_WIDTH = WORLD_WIDTH / TILE_HEIGHT;
+        MAP_HEIGHT = WORLD_HEIGHT / TILE_HEIGHT;
+        MAX = MAP_WIDTH * MAP_HEIGHT;//Maximum entities on the map
         resources = new Resources(this);
         this.setScreen(new LaunchLoadingScreen(this));
     }
@@ -90,14 +86,11 @@ public class DDGame extends Game {
 
     @Override
     public void dispose() {
-        if (player != null && !DEBUG) {
-            security.save();
-        }
+//      security.save();
         resources.dispose();
         batch.dispose();
         Gdx.app.log("INFO", "Game disposed");
-        Gdx.app.log("INFO", "Thank you for choosing Divine Defense!");
-        Gdx.app.log("INFO", "I hope you enjoyed it. Bye-bye (^ω^) / ");
+        sayGoodbye();
     }
 
     public void createCamera() {
@@ -158,10 +151,6 @@ public class DDGame extends Game {
         return batch;
     }
 
-    public Skin getSkin() {
-        return resources.getSkin();
-    }
-
     public SecurityHandler getSecurity() {
         return security;
     }
@@ -180,6 +169,16 @@ public class DDGame extends Game {
 
     public void setGameSpeed(int gameSpeed) {
         this.gameSpeed = (byte) gameSpeed;
+    }
+
+    private synchronized void sayGoodbye() {
+        Gdx.app.log("INFO", "Thank you for choosing Divine Defense!");
+        Gdx.app.log("INFO", "I hope you enjoyed it. Bye-bye (^ω^) / ");
+    }
+
+    private synchronized void sayHello() {
+        Gdx.app.log("INFO", "Welcome to DivineDefense, by Gram <gram7gram@gmail.com>");
+        Gdx.app.log("INFO", "Visit https://github.com/gram7gram/DivineDefense to view sources");
     }
 
 }

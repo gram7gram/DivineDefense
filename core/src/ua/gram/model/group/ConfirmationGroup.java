@@ -21,10 +21,10 @@ public class ConfirmationGroup extends Group {
 
     public ConfirmationGroup(final DDGame game, ClickListener abortListener, String confirmButtonText, String message) {
 
-        Window window = new ConfirmationWindow(game.getSkin(), "pretty");
+        Window window = new ConfirmationWindow(game.getResources().getSkin(), "default");
         window.setVisible(true);
 
-        final Button closeBut = new Button(game.getSkin(), "close-button");
+        final Button closeBut = new Button(game.getResources().getSkin(), "close-button");
         closeBut.addListener(abortListener);
         closeBut.setVisible(true);
         closeBut.setSize(80, 80);
@@ -34,7 +34,7 @@ public class ConfirmationGroup extends Group {
         );
         closeBut.toFront();
 
-        Button confirmBut = new TextButton(confirmButtonText, game.getSkin(), "green-button");
+        Button confirmBut = new TextButton(confirmButtonText, game.getResources().getSkin(), "green-button");
         confirmBut.setSize(200, 80);
         confirmBut.setPosition(
                 (DDGame.WORLD_WIDTH - confirmBut.getWidth()) / 2f,
@@ -51,7 +51,7 @@ public class ConfirmationGroup extends Group {
             }
         });
 
-        Label messageLabel = new Label(message, game.getSkin(), "archery64black");
+        Label messageLabel = new Label(message, game.getResources().getSkin(), "archery64black");
         messageLabel.setPosition((DDGame.WORLD_WIDTH - messageLabel.getWidth()) / 2f, DDGame.WORLD_HEIGHT / 2f - 10);
         messageLabel.setVisible(true);
         messageLabel.setWrap(true);

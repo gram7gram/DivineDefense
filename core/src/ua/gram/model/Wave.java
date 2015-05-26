@@ -42,22 +42,22 @@ public class Wave {
         ArrayList<ArrayList<Class<? extends Enemy>>> _waves = new ArrayList<ArrayList<Class<? extends Enemy>>>();
 
         ArrayList<Class<? extends Enemy>> enemies1 = new ArrayList<Class<? extends Enemy>>();
-//        enemies1.add(EnemyRunner.class);
-//        enemies1.add(EnemyRunner.class);
-//        enemies1.add(EnemyRunner.class);
+        enemies1.add(EnemyRunner.class);
+        enemies1.add(EnemyRunner.class);
+        enemies1.add(EnemyRunner.class);
         enemies1.add(EnemySoldier.class);
-//        enemies1.add(EnemySoldier.class);
-//        enemies1.add(EnemySoldier.class);
-//        enemies1.add(EnemySoldierArmored.class);
-//        enemies1.add(EnemySoldier.class);
-//        enemies1.add(EnemyRunner.class);
-//        enemies1.add(EnemySoldierArmored.class);
-//        enemies1.add(EnemySoldierArmored.class);
-//        enemies1.add(EnemySoldierArmored.class);
-//        enemies1.add(EnemyRunner.class);
-//        enemies1.add(EnemySoldierArmored.class);
-//        enemies1.add(EnemySoldier.class);
-//        enemies1.add(EnemyRunner.class);
+        enemies1.add(EnemySoldier.class);
+        enemies1.add(EnemySoldier.class);
+        enemies1.add(EnemySoldierArmored.class);
+        enemies1.add(EnemySoldier.class);
+        enemies1.add(EnemyRunner.class);
+        enemies1.add(EnemySoldierArmored.class);
+        enemies1.add(EnemySoldierArmored.class);
+        enemies1.add(EnemySoldierArmored.class);
+        enemies1.add(EnemyRunner.class);
+        enemies1.add(EnemySoldierArmored.class);
+        enemies1.add(EnemySoldier.class);
+        enemies1.add(EnemyRunner.class);
 
         ArrayList<Class<? extends Enemy>> enemies2 = new ArrayList<Class<? extends Enemy>>();
         enemies2.add(EnemyRunner.class);
@@ -104,7 +104,7 @@ public class Wave {
     }
 
     public void nextWave() {
-        resetCoundown();
+        countdown = 5;
         enemies = waves.get(currentWave);
         ++currentWave;
         spawner.setEnemiesToSpawn(enemies);
@@ -122,13 +122,6 @@ public class Wave {
 
     public float getCountdown() {
         return countdown;
-    }
-
-    /**
-     * Following waves should have smaller delay, so set to 5.
-     */
-    private void resetCoundown() {
-        countdown = 5;
     }
 
     public boolean isFinished() {
