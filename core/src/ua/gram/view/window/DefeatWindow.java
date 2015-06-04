@@ -1,10 +1,7 @@
 package ua.gram.view.window;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import ua.gram.DDGame;
 import ua.gram.controller.listener.ContinueListener;
 import ua.gram.controller.listener.RestartListener;
@@ -24,32 +21,33 @@ public class DefeatWindow extends Window {
     public DefeatWindow(DDGame game, final GameUIStage stage_ui) {
         super("", game.getResources().getSkin(), "default");
         this.game = game;
+        Skin skin = game.getResources().getSkin();
         this.setSize(650, 380);
         this.setPosition(DDGame.WORLD_WIDTH / 2f - this.getWidth() / 2f, DDGame.WORLD_HEIGHT / 2f - this.getHeight() / 2f);
         this.setVisible(true);
         this.setMovable(false);
 
-        Label title1 = new Label("You were defeated...", game.getResources().getSkin(), "tusj64black");
-        Label title2 = new Label("Get the revenge and be victorious:", game.getResources().getSkin(), "archery32black");
-        Label header1 = new Label("Restart", game.getResources().getSkin(), "archery16black");
-        Label header2 = new Label("Continue", game.getResources().getSkin(), "archery16black");
-        Label header3 = new Label("Continue", game.getResources().getSkin(), "archery16black");
+        Label title1 = new Label("You were defeated...", skin, "tusj64black");
+        Label title2 = new Label("Get the revenge and be victorious:", skin, "archery32black");
+        Label header1 = new Label("Restart", skin, "archery16black");
+        Label header2 = new Label("Continue", skin, "archery16black");
+        Label header3 = new Label("Continue", skin, "archery16black");
 
-        Button option1 = new Button(game.getResources().getSkin(), "default");
-        option1.setSize(160, 200);
+        Button option1 = new Button(skin, "default");
+        option1.setSize(200, 200);
         option1.addListener(new RestartListener(game, 1));
 
-        option2 = new Button(game.getResources().getSkin(), "default");
-        option2.setSize(160, 200);
+        option2 = new Button(skin, "default");
+        option2.setSize(200, 200);
         option2.addListener(new ContinueListener(game, 3, 2, this, stage_ui));
         option2.setDisabled(game.getPlayer().getGems() < 2);
 
-        option3 = new Button(game.getResources().getSkin(), "default");
-        option3.setSize(160, 200);
+        option3 = new Button(skin, "default");
+        option3.setSize(200, 200);
         option3.addListener(new ContinueListener(game, Player.DEFAULT_HEALTH, 3, this, stage_ui));
         option3.setDisabled(game.getPlayer().getGems() < 3);
 
-        optionPurchase = new TextButton("BUY", game.getResources().getSkin(), "default");
+        optionPurchase = new TextButton("BUY", skin, "default");
         optionPurchase.setSize(100, 40);
 //        option3.addListener(new MarketScreen);
 
@@ -86,15 +84,15 @@ public class DefeatWindow extends Window {
         this.add(option1)
                 .width(option1.getWidth())
                 .height(option1.getHeight())
-                .center().right().padLeft(40);
+                .center().right();
         this.add(option2)
                 .width(option2.getWidth())
                 .height(option2.getHeight())
-                .center().right().padLeft(40);
+                .center().right();
         this.add(option3)
                 .width(option3.getWidth())
                 .height(option3.getHeight())
-                .center().right().padLeft(40).padRight(40);
+                .center().right();
 
         Gdx.app.log("INFO", this.getClass().getSimpleName() + " is OK");
     }

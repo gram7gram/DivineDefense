@@ -14,6 +14,8 @@ import ua.gram.view.window.VictoryWindow;
 
 /**
  * FIXME Change stats representation.
+ * <p/>
+ * FIXME Disable TowerListener if Window is active!
  *
  * @author Gram <gram7gram@gmail.com>
  */
@@ -66,6 +68,10 @@ public class GameUIStage extends Stage {
         if (window instanceof DefeatWindow && window.isVisible()) {
             ((DefeatWindow) window).update();
         }
+        if (window.isVisible())
+            stage_battle.removeListener(stage_battle.getControlsListener());
+        else
+            stage_battle.addListener(stage_battle.getControlsListener());
         Gdx.app.log("INFO", window.getClass().getSimpleName() + " is " + (window.isVisible() ? "" : "in") + "visible");
     }
 

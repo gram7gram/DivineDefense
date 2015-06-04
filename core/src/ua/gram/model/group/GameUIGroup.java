@@ -1,17 +1,16 @@
 package ua.gram.model.group;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import ua.gram.DDGame;
 import ua.gram.controller.stage.GameUIStage;
 import ua.gram.model.Level;
-import ua.gram.model.Wave;
+import ua.gram.model.actor.CounterButton;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -24,7 +23,8 @@ public class GameUIGroup extends Group {
     private final Label moneyLabel;
     private final Label waveLabel;
     private final Label gemsLabel;
-    private TextButton counterBut;
+    //    private Button counterBut;
+    private CounterButton counter;
 
     public GameUIGroup(final DDGame game, final GameUIStage stage_ui, final Level level) {
         super();
@@ -32,12 +32,13 @@ public class GameUIGroup extends Group {
         this.level = level;
         byte gap = 5;
         int butHeight = DDGame.DEFAULT_BUTTON_HEIGHT;
+        Skin skin = game.getResources().getSkin();
 
-        Button menu = new TextButton("S", game.getResources().getSkin(), "default");
-        menu.setPosition(DDGame.WORLD_WIDTH - butHeight - gap, DDGame.WORLD_HEIGHT - butHeight - gap);
-        menu.setSize(butHeight, butHeight);
-        menu.setVisible(true);
-        menu.addListener(new ClickListener() {
+        Button pauseBut = new Button(skin, "pause-button");
+        pauseBut.setPosition(DDGame.WORLD_WIDTH - butHeight - gap, DDGame.WORLD_HEIGHT - butHeight - gap);
+        pauseBut.setSize(butHeight, butHeight);
+        pauseBut.setVisible(true);
+        pauseBut.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 DDGame.PAUSE = true;
@@ -45,7 +46,7 @@ public class GameUIGroup extends Group {
             }
         });
 
-        Button speedBut = new TextButton("F", game.getResources().getSkin(), "default");
+        Button speedBut = new Button(skin, "speed-button");
         speedBut.setPosition(gap, DDGame.WORLD_HEIGHT - butHeight - gap);
         speedBut.setSize(butHeight, butHeight);
         speedBut.setVisible(true);
@@ -59,29 +60,11 @@ public class GameUIGroup extends Group {
         Vector2 pos = level.getMap().getSpawn().getPosition();
         Vector2 dir = level.getMap().getPath().getPath().get(0);
 
-        counterBut = new TextButton("" + (int) (level.getWave().getCountdown()), game.getResources().getSkin(), "default");
-        counterBut.setPosition((pos.x + dir.x) * DDGame.TILE_HEIGHT + gap, (pos.y + dir.y) * DDGame.TILE_HEIGHT + gap);
-        counterBut.setSize(butHeight / 2, butHeight / 2);
-        counterBut.setVisible(false);
-        counterBut.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.log("INFO", "Countdown interrupted");
-                if (level.getWave().getCountdown() > 0) {
-                    int reward = Integer.parseInt(counterBut.getText().toString());
-                    assert reward >= 0 && reward <= Wave.countdown : "Out of bounds reward: " + reward + " coins";
-                    Gdx.app.log("INFO", "Player recieves " + reward + " coins as reward");
-                    game.getPlayer().addCoins(reward);
-                    //TODO Display profit Label
-                }
-                level.getWave().nextWave();
-                counterBut.setVisible(false);
-            }
-        });
+        counter = new CounterButton(game, level, new Vector2(pos.x + dir.x, pos.y + dir.y));
 
-        healthLabel = new Label("HEALTH: " + game.getPlayer().getHealth(), game.getResources().getSkin(), "small_tinted");
-        gemsLabel = new Label("GEMS: " + game.getPlayer().getGems(), game.getResources().getSkin(), "small_tinted");
-        moneyLabel = new Label("MONEY: " + game.getPlayer().getCoins(), game.getResources().getSkin(), "small_tinted");
+        healthLabel = new Label("HEALTH: " + game.getPlayer().getHealth(), skin, "small_tinted");
+        gemsLabel = new Label("GEMS: " + game.getPlayer().getGems(), skin, "small_tinted");
+        moneyLabel = new Label("MONEY: " + game.getPlayer().getCoins(), skin, "small_tinted");
 
         moneyLabel.setVisible(true);
         moneyLabel.setPosition(
@@ -101,20 +84,19 @@ public class GameUIGroup extends Group {
                 DDGame.WORLD_HEIGHT - healthLabel.getHeight() - gap
         );
 
-
         waveLabel = new Label("WAVE: "
                 + (level.getCurrentWave() <= 0 ? "-" : level.getCurrentWave())
                 + "/" + level.getMaxWaves(),
-                game.getResources().getSkin(), "small_tinted");
+                skin, "small_tinted");
         waveLabel.setVisible(true);
         waveLabel.setPosition(
                 DDGame.WORLD_WIDTH / 2f + gap + healthLabel.getWidth() + gap,
                 DDGame.WORLD_HEIGHT - waveLabel.getHeight() - gap
         );
 
-        this.addActor(menu);
+        this.addActor(pauseBut);
         this.addActor(speedBut);
-        this.addActor(counterBut);
+        this.addActor(counter);
         this.addActor(gemsLabel);
         this.addActor(moneyLabel);
         this.addActor(healthLabel);
@@ -134,7 +116,6 @@ public class GameUIGroup extends Group {
             updateMoneyLabel();
             updateGemsLabel();
             updateWaveLabel();
-            updateCounter();
         }
     }
 
@@ -154,28 +135,8 @@ public class GameUIGroup extends Group {
         moneyLabel.setText("MONEY: " + game.getPlayer().getCoins());
     }
 
-    public void updateCounter() {
-        if (!level.getWave().isStarted && level.getCurrentWave() <= level.getMaxWaves()) {
-            if (!counterBut.isVisible()) {
-                counterBut.setVisible(true);
-                Gdx.app.log("INFO", "Countdown started");
-            }
-            updateCounterButton();
-        }
-    }
-
-    public void updateCounterButton() {
-        int i = (int) level.getWave().getCountdown();
-        counterBut.setText(i + "");
-        if (i <= 0) {
-            Gdx.app.log("INFO", "Countdown finished");
-            level.getWave().nextWave();
-            counterBut.setVisible(false);
-        }
-    }
-
-    public TextButton getCounterBut() {
-        return counterBut;
+    public CounterButton getCounterBut() {
+        return counter;
     }
 
 }

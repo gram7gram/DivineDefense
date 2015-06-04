@@ -57,7 +57,7 @@ public class Level {
 
     public void update(float delta) {
         if (wave.getCurrentWave() <= wave.getMaxWaves()) {
-            wave.update(delta);
+//            wave.start(delta);
             if (wave.isStarted) {
                 spawner.update(delta);
             }

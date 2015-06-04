@@ -46,14 +46,10 @@ public class LevelLoadingScreen extends AbstractLoadingScreen {
     public void doAction() {
         stage_ui.update(progress);
         Gdx.app.log("INFO", "Loading " + progress + "%");
-        try {
-            LevelFactory container = game.getFactory("data/levels/level" + lvl + ".json", LevelFactory.class);
-            Level level = container.create(Level.class);
-            level.create(game, lvl);
-            game.setScreen(new GameScreen(game, level));
-        } catch (NullPointerException e) {
-            game.setScreen(new ErrorScreen(game, "Could not get container of level " + lvl, e));
-        }
+        LevelFactory container = game.getFactory("data/levels/level" + lvl + ".json", LevelFactory.class);
+        Level level = container.create(Level.class);
+        level.create(game, lvl);
+        game.setScreen(new GameScreen(game, level));
     }
 
 }

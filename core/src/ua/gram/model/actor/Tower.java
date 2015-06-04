@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.utils.Pool;
 import ua.gram.DDGame;
 import ua.gram.controller.pool.animation.AnimationController.Types;
 import ua.gram.controller.stage.GameBattleStage;
@@ -23,7 +24,7 @@ import java.util.List;
  *
  * @author Gram <gram7gram@gmail.com>
  */
-public abstract class Tower extends Actor {
+public abstract class Tower extends Actor implements Pool.Poolable {
 
     public static final float SELL_RATIO = .6f;
     public static final byte MAX_TOWER_LEVEL = 4;
@@ -31,7 +32,7 @@ public abstract class Tower extends Actor {
     public final float build_delay = 2;
     public final int animationWidth = 60;
     public final int animationHeight = 90;
-    private final AimIcon aim;
+    //    private final AimIcon aim;
     public float damage;
     public float range;
     public float rate;
@@ -67,7 +68,7 @@ public abstract class Tower extends Actor {
         isBuilding = false;
         this.setSize(animationWidth, animationHeight);
         this.setBounds(getX(), getY(), animationWidth, animationHeight);
-        aim = new AimIcon(game.getResources());
+//        aim = new AimIcon(game.getResources());
         controller = new TowerAnimationController(game.getResources().getSkin(), this);
     }
 
@@ -98,7 +99,7 @@ public abstract class Tower extends Actor {
                     isBuilding = false;
                     isActive = true;
                     this.setTouchable(Touchable.enabled);
-                    stage_battle.addActor(aim);
+//                    stage_battle.addActor(aim);
                     weapon.setSource(this);
                     Gdx.app.log("INFO", this + " is builded");
                 } else {
@@ -113,14 +114,15 @@ public abstract class Tower extends Actor {
                             List<Enemy> victims = chooseVictims(targets);
                             if (!victims.isEmpty()) {
                                 int index = ++targetIndex <= victims.size() - 1 ? targetIndex : 0;
-                                victim = victims.get(index % 2 == 0 && index != 0 ? index : victims.size() - 1 - index);
-                                if (victim != null && isInRange(victim)) {
-                                    victim.isAttacked = true;
-                                    aim.setEnemy(victim);
+                                victim = victims.get(index % 2 == 0 && index != 0 ?
+                                        index : victims.size() - 1 - index);//get enemies from different sides of the array
+                                if (victim != null && this.isInRange(victim) && !victim.isDead) {
+//                                    aim.setEnemy(victim);
+//                                    aim.setVisible(true);
                                     weapon.setTarget(victim);
-                                    aim.setVisible(true);
                                     weapon.setVisible(true);
                                     weapon.toFront();
+                                    victim.isAttacked = true;
                                     victim.receiveDamage(this.damage);
                                 }
                             } else if (victim != null) {
@@ -129,16 +131,10 @@ public abstract class Tower extends Actor {
                                 Gdx.app.error("ERROR", "Could not choose targets!");
                             }
                         }
-//                    } else if (!isInRange(victim) && victim.isAttacked) {
-//                        victim.isAttacked = false;
-//                        victim = null;
-//                        aim.setVisible(false);
-//                        weapon.setTarget(null);
-//                        weapon.setVisible(false);
                     } else {
                         victim.isAttacked = false;
                         victim = null;
-                        aim.setVisible(false);
+//                        aim.setVisible(false);
                         weapon.setTarget(null);
                         weapon.setVisible(false);
                     }
@@ -182,12 +178,13 @@ public abstract class Tower extends Actor {
                 Collections.sort(victims, new EnemyDistanceComparator(this));
                 break;
             case RANDOM:
-                byte index = victims.size() > 1 ? (byte) (Math.random() * (victims.size())) : 0;
+                int index = victims.size() > 1 ? (int) (Math.random() * (victims.size())) : 0;
                 enemyTargets.add(victims.get(index));
                 return enemyTargets;
         }
         if (this.getTowerLevel() > 1 && victims.size() > 1) {
-            enemyTargets = victims.subList(0, victims.size() > this.getTowerLevel() ? this.getTowerLevel() : victims.size());
+            enemyTargets = victims.subList(0, victims.size() > this.getTowerLevel() ?
+                    this.getTowerLevel() : victims.size());
         } else {
             enemyTargets.add(victims.get(0));
         }
@@ -212,7 +209,7 @@ public abstract class Tower extends Actor {
         this.setLevelAnimationContainer(tower_lvl);
         changeAnimation(Types.BUILD);
         game.getPlayer().chargeCoins(30);
-        //update range radius
+        //start range radius
         Gdx.app.log("INFO", this + " is upgraded to " + tower_lvl + " level");
     }
 
@@ -226,6 +223,13 @@ public abstract class Tower extends Actor {
         type = Types.IDLE;//remove
         this.setLevelAnimationContainer(tower_lvl);
         this.setAnimation(container.getAnimation(type));
+    }
+
+    @Override
+    public void reset() {
+        this.strategy = Strategy.STRONGEST;
+        this.tower_lvl = 1;
+        Gdx.app.log("INFO", this.getClass().getSimpleName() + " was reset");
     }
 
     public Weapon getWeapon() {

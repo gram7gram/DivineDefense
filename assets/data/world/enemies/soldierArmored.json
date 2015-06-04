@@ -1,14 +1,8 @@
 {
   "prototypes": [
     {
-      "health": 100,
-      "speed": 1.05,
-      "armor": 5,
-      "reward": 10
-    },
-    {
       "health": 110,
-      "speed": 1,
+      "speed": 1.5,
       "armor": 10,
       "reward": 10
     }

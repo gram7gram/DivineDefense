@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.utils.Pool;
 import ua.gram.DDGame;
 import ua.gram.controller.enemy.EnemyAnimationController;
 import ua.gram.controller.enemy.EnemyRemover;
@@ -19,7 +20,7 @@ import ua.gram.model.group.EnemyGroup;
  *
  * @author Gram <gram7gram@gmail.com>
  */
-public abstract class Enemy extends Actor {
+public abstract class Enemy extends Actor implements Pool.Poolable {
 
     public final int reward;
     public final float defaultHealth;
@@ -34,8 +35,8 @@ public abstract class Enemy extends Actor {
     public boolean isAttacked;
     public boolean isAffected;
     public boolean isDead;//Prevent Towers from shooting if true
-    public float stateTime = 0;
     protected DDGame game;
+    private float stateTime = 0;
     private GameBattleStage stage_battle;
     private EnemyAnimationController enemyAnimation;
     private EnemySpawner spawner;
@@ -50,13 +51,14 @@ public abstract class Enemy extends Actor {
         this.speed = stats[1];
         this.armor = stats[2];
         this.reward = (int) stats[3];
-        defaultHealth = new Float(health);//immutable value
-        defaultSpeed = new Float(speed);//immutable value
-        defaultArmor = new Float(armor);//immutable value
+        defaultHealth = health;
+        defaultSpeed = speed;
+        defaultArmor = armor;
         isStunned = false;
         isAffected = false;
         isDead = false;
         isAttacked = false;
+        this.setSize(animationWidth, animationHeight);
     }
 
     @Override
@@ -74,17 +76,18 @@ public abstract class Enemy extends Actor {
         super.act(delta);
         if (!DDGame.PAUSE) {
             this.setOrigin(this.getX() + this.getWidth() / 2f, this.getY() + this.getHeight() * .9f / 2f);
+            this.setBounds(this.getX(), this.getY(), animationWidth, animationHeight);
             if (this.health <= 0) {
                 die();
             } else {
                 stage_battle.updateActorIndex(this);
                 if (isStunned && !isAffected) {
                     isAffected = true;
-                    this.speed /= 2f;
+                    this.speed = defaultSpeed / 2f;
                     Gdx.app.log("INFO", this + " is stunned");
                 } else if (!isStunned && isAffected) {
                     isAffected = false;
-                    this.speed *= 2f;
+                    this.speed = defaultSpeed;
                     Gdx.app.log("INFO", this + " is unstunned");
                 }
             }
@@ -101,6 +104,14 @@ public abstract class Enemy extends Actor {
                 Gdx.app.log("INFO", enemy + "@" + enemy.hashCode() + " was killed");
             }
         }));
+    }
+
+    @Override
+    public void reset() {
+        this.health = defaultHealth;
+        this.speed = defaultSpeed;
+        this.armor = defaultArmor;
+        Gdx.app.log("INFO", this.getClass().getSimpleName() + " was reset");
     }
 
     public EnemyAnimationController getEnemyAnimation() {
@@ -133,7 +144,8 @@ public abstract class Enemy extends Actor {
 
     public void receiveDamage(float damage) {
         this.health -= damage;
-        Gdx.app.log("INFO", this.getClass().getSimpleName() + " receives " + (int) damage + " damage, health: " + this.health);
+        Gdx.app.log("INFO", this.getClass().getSimpleName() + "@" + this.hashCode() + " recives "
+                + (int) damage + " dmg, hp: " + this.health);
     }
 
     public void setSpawner(EnemySpawner spawner) {

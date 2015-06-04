@@ -27,6 +27,7 @@ public class GameBattleStage extends Stage {
     private GameUIStage stage_ui;
     private volatile ArrayList<Group> indexes;
     private Range range;
+    private ToggleTowerControlsListener controlsListener;
 
     public GameBattleStage(DDGame game, Level level) {
         super(game.getViewport(), game.getBatch());
@@ -52,7 +53,8 @@ public class GameBattleStage extends Stage {
             if (level.getStage() == null) {
                 level.setStage(this);
                 level.createSpawner();
-                this.addListener(new ToggleTowerControlsListener(this, stage_ui));
+                controlsListener = new ToggleTowerControlsListener(this, stage_ui);
+                this.addListener(controlsListener);
             }
             level.update(delta);
         }
@@ -61,7 +63,6 @@ public class GameBattleStage extends Stage {
     /**
      * Handles storing of indexes for Towers and Enemies on the map,
      * so that they can be rendered in appropriate order.
-     * TODO Remove newGroup from previous group is Z-index is changed. Put into other, according to Z-index.
      *
      * @param newGroup group, which is added on the stage
      */
@@ -79,30 +80,6 @@ public class GameBattleStage extends Stage {
             if (group.hasChildren()) ++count;
         }
         Gdx.app.log("INFO", "Stage now has " + count + (count > 1 ? " layers" : " layer"));
-//        synchronized (System.err) {
-//            System.err.println("INDEXES:");
-//            for (int i = 0; i < indexes.size(); i++) {
-//                System.err.print("  " + i + (i > 9 ? " :  " : "  :  "));
-//                for (Actor actor : indexes.get(i).getChildren()) {
-//                    System.err.print(actor.getClass().getSimpleName() + "; ");
-//                }
-//                System.err.println();
-//            }
-//            System.err.println("ACTORS ON STAGE: " + this.getActors().size);
-//            for (int i = 0; i < this.getActors().size; i++) {
-//                Array<Actor> actors = this.getActors();
-//                System.err.print("  " + i + (i > 9 ? " :  " : "  :  " + actors.get(i).getClass().getSimpleName()) + "\r\n");
-//                if (actors.get(i) instanceof Group) {
-//                    for (Actor actor2 : ((Group) actors.get(i)).getChildren()) {
-//                        if (actor2 instanceof TowerGroup || actor2 instanceof EnemyGroup) {
-//                            for (Actor actor3 : ((Group) actor2).getChildren()) {
-//                                System.err.print("      -" + actor3.getClass().getSimpleName() + " Z:" + actor3.getZIndex() + "\r\n");
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
     }
 
     /**
@@ -223,5 +200,9 @@ public class GameBattleStage extends Stage {
 
     public void setUIStage(GameUIStage stage_ui) {
         this.stage_ui = stage_ui;
+    }
+
+    public ToggleTowerControlsListener getControlsListener() {
+        return controlsListener;
     }
 }

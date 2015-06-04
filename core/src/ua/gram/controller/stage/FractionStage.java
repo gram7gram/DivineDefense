@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import ua.gram.DDGame;
 import ua.gram.model.Player;
 import ua.gram.model.group.ConfirmationGroup;
+import ua.gram.view.screen.MainMenuScreen;
 
 /**
  * NOTE Demon button is disabled
@@ -71,6 +72,14 @@ public class FractionStage extends Stage {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
                         displayConfirmation();
+                    }
+                },
+                new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        Gdx.app.log("INFO", "Player Fraction set to " + Player.PLAYER_FRACTION);
+                        Gdx.app.log("INFO", "System Fraction set to " + Player.SYSTEM_FRACTION);
+                        game.setScreen(new MainMenuScreen(game));
                     }
                 },
                 "CONFIRM",

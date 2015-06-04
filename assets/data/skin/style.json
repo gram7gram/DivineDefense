@@ -180,6 +180,18 @@
     "close-button": {
       "up": "button-close-up",
       "down": "button-close-down"
+    },
+    "pause-button": {
+      "up": "button-pause-up",
+      "down": "button-pause-down"
+    },
+    "speed-button": {
+      "up": "button-speed-up",
+      "down": "button-speed-down"
+    },
+    "quit-button": {
+      "up": "button-quit-up",
+      "down": "button-quit-down"
     }
   },
   "com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle": {

@@ -99,4 +99,11 @@ public class Laser extends Weapon {
 
         batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
     }
+
+    public void setBackColor(Color color) {
+        start_back.setColor(color);
+        middle_back.setColor(DDGame.DEBUG ? Color.BLUE : color);
+        end_back.setColor(color);
+    }
+
 }

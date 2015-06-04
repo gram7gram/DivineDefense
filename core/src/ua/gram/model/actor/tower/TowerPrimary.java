@@ -1,14 +1,15 @@
 package ua.gram.model.actor.tower;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.utils.Pool;
+import com.badlogic.gdx.graphics.Color;
 import ua.gram.DDGame;
 import ua.gram.model.actor.Tower;
+import ua.gram.model.actor.Weapon;
+import ua.gram.model.actor.weapon.Laser;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class TowerPrimary extends Tower implements Cloneable, Pool.Poolable {
+public class TowerPrimary extends Tower implements Cloneable {
 
     public TowerPrimary(DDGame game, float[] stats) {
         super(game, stats);
@@ -20,9 +21,8 @@ public class TowerPrimary extends Tower implements Cloneable, Pool.Poolable {
     }
 
     @Override
-    public void reset() {
-        this.tower_lvl = 1;
-        Gdx.app.log("INFO", this.getClass().getSimpleName() + " was reset");
+    public void setWeapon(Weapon weapon) {
+        super.setWeapon(weapon);
+        ((Laser) weapon).setBackColor(Color.RED);
     }
-
 }

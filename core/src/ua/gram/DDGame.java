@@ -31,7 +31,7 @@ import ua.gram.view.screen.LaunchLoadingScreen;
  */
 public class DDGame extends Game {
 
-    public static final boolean DEBUG = false;
+    public static final boolean DEBUG = true;
     public static final String ANGEL = "Angel";
     public static final String DEMON = "Demon";
     public static final byte TILE_HEIGHT = 60;
@@ -115,7 +115,7 @@ public class DDGame extends Game {
      *
      * @param file name of the Json file, that holds information about T class
      * @param type desired type of class to load
-     * @param <T>  class that is named in type variable.
+     * @param <T> class that is named in type variable.
      * @return new object of the desired class with values from Json
      */
     public <T> T getFactory(String file, Class<T> type) {

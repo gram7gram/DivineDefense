@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import ua.gram.DDGame;
@@ -23,9 +24,10 @@ public class MainMenuStage extends Stage {
         byte butHeight = 80;
         short butWidth = 300;
         byte gap = 5;
+        Skin skin = game.getResources().getSkin();
 
-        Button quitBut = new TextButton("Q", game.getResources().getSkin(), "default");
-        quitBut.setSize(butHeight * .75f, butHeight * .75f);
+        Button quitBut = new Button(skin, "quit-button");
+        quitBut.setSize(butHeight, butHeight);
         quitBut.setPosition(width - quitBut.getWidth() - gap, height - quitBut.getHeight() - gap);
         quitBut.setVisible(true);
         quitBut.addListener(new ClickListener() {
@@ -34,7 +36,7 @@ public class MainMenuStage extends Stage {
                 Gdx.app.exit();
             }
         });
-        Button continueBut = new TextButton("CONTINUE", game.getResources().getSkin(), "pretty-button");
+        Button continueBut = new TextButton("PLAY", skin, "pretty-button");
         continueBut.setPosition(width / 4f - butWidth / 2f, height / 2f + butHeight / 2f + gap);
         continueBut.setSize(butWidth, butHeight);
         continueBut.setVisible(true);
@@ -44,7 +46,7 @@ public class MainMenuStage extends Stage {
                 game.setScreen(new LevelSelectScreen(game));
             }
         });
-        Button aboutBut = new TextButton("ABOUT", game.getResources().getSkin(), "pretty-button");
+        Button aboutBut = new TextButton("ABOUT", skin, "pretty-button");
         aboutBut.setPosition(width / 4f - butWidth / 2f, height / 2f - butHeight / 2f);
         aboutBut.setSize(butWidth, butHeight);
         aboutBut.setVisible(true);
@@ -55,7 +57,7 @@ public class MainMenuStage extends Stage {
 //                game.setScreen(new AboutScreen(game));
             }
         });
-        Button settingsBut = new TextButton("SETTINGS", game.getResources().getSkin(), "pretty-button");
+        Button settingsBut = new TextButton("SETTINGS", skin, "pretty-button");
         settingsBut.setPosition(width / 4f - butWidth / 2f, height / 2f - butHeight * 3 / 2f - gap);
         settingsBut.setSize(butWidth, butHeight);
         settingsBut.setVisible(true);

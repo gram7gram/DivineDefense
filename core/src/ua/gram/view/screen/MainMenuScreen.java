@@ -27,6 +27,7 @@ public class MainMenuScreen extends AbstractScreen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage_ui);
+        background.setSize(DDGame.WORLD_WIDTH, DDGame.WORLD_HEIGHT);
     }
 
     @Override

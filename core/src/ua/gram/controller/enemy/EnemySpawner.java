@@ -115,12 +115,10 @@ public class EnemySpawner {
     }
 
     /**
-     * <pre>
      * Sets the Actions for Enemy to do to walk the path
      *
      * FIXME Bigger speed - slower walk of Enemy
      * FIXME Merge Enemy animations in one atlas and image
-     * </pre>
      *
      * @param path - list of directions
      */

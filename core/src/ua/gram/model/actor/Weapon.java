@@ -19,7 +19,7 @@ public abstract class Weapon extends Actor {
     }
 
     /**
-     * Weapon should be update in it's update() method.
+     * Weapon should be start in it's start() method.
      * Weapon will be updated if game is not paused and there is a target.
      *
      * @param delta

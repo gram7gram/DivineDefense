@@ -12,21 +12,18 @@ import java.util.ArrayList;
  */
 public class Wave {
 
-    public static float countdown;
     public static int maxWaves;
     public static int currentWave;
     private final Level level;
     private final ArrayList<ArrayList<Class<? extends Enemy>>> waves;
     public boolean isStarted;
     private EnemySpawner spawner;
-    private ArrayList<Class<? extends Enemy>> enemies;
 
     public Wave(Level level, ArrayList<ArrayList<Class<? extends Enemy>>> waves) {
         this.level = level;
         this.waves = test();
         maxWaves = waves.size();
         currentWave = 0;
-        countdown = 10;
         isStarted = false;
         Gdx.app.log("INFO", "Wave is OK");
     }
@@ -34,7 +31,7 @@ public class Wave {
     /**
      * FIX Should be replaced by Json config file.
      *
-     * @return
+     * @return waves with enemies
      */
     private ArrayList<ArrayList<Class<? extends Enemy>>> test() {
         Gdx.app.log("WARN", "Cannot create waves from empty array! Using test()");
@@ -88,26 +85,9 @@ public class Wave {
         return _waves;
     }
 
-    /**
-     * Prepares enemies for the following wave, if the countdown has finished.
-     *
-     * @param delta
-     */
-    public void update(float delta) {
-        if (!isStarted && !level.isCleared) {
-            if (countdown <= 0) {
-                nextWave();
-            } else {
-                countdown -= delta;
-            }
-        }
-    }
-
     public void nextWave() {
-        countdown = 5;
-        enemies = waves.get(currentWave);
+        spawner.setEnemiesToSpawn(waves.get(currentWave));
         ++currentWave;
-        spawner.setEnemiesToSpawn(enemies);
         isStarted = true;
         Gdx.app.log("INFO", "Wave " + currentWave + "/" + maxWaves + " has started");
     }
@@ -118,10 +98,6 @@ public class Wave {
 
     public int getMaxWaves() {
         return maxWaves;
-    }
-
-    public float getCountdown() {
-        return countdown;
     }
 
     public boolean isFinished() {

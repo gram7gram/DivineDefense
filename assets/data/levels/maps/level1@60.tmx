@@ -1,28 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="14" height="9" tilewidth="60" tileheight="60">
- <tileset firstgid="1" name="terrain@60px" tilewidth="60" tileheight="60">
-  <image source="terrain@60px.png" width="256" height="64"/>
-  <tile id="1">
-   <properties>
-    <property name="walkable" value=""/>
-   </properties>
-  </tile>
-  <tile id="2">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="15" height="10" tilewidth="60" tileheight="60">
+ <tileset firstgid="1" name="1" tilewidth="60" tileheight="60">
+  <image source="444.png" width="1024" height="512"/>
+  <tile id="19">
    <properties>
     <property name="base" value=""/>
     <property name="walkable" value=""/>
    </properties>
   </tile>
-  <tile id="3">
+  <tile id="20">
    <properties>
     <property name="spawn" value=""/>
     <property name="walkable" value=""/>
    </properties>
   </tile>
+  <tile id="21">
+   <properties>
+    <property name="walkable" value=""/>
+   </properties>
+  </tile>
  </tileset>
- <layer name="Terrain" width="14" height="9">
+ <layer name="Terrain" width="15" height="10">
   <data encoding="base64" compression="zlib">
-   eJxjZGBgYBwkmJlMfUwU6EPG+ORJsZsJC41uDiF9TDj42PSxkOF3AJDwAJs=
+   eJwTY2BgECMTC+HA5kCsAcRmeNTgwhZALALElmTqFSOgVxzqNmQsjqSXFU3ODIv5yNgShzi6O2Bq2ICYHUkeZIcyEtZCkhPH4i8YWxJPvGCzF5s7QW7RRMPo4SkK1WuKRZ04A+5wBgBR2hCL
+  </data>
+ </layer>
+ <layer name="Gates" width="15" height="10">
+  <data encoding="base64" compression="zlib">
+   eJztw1WKQgEAAMB3ObsV7Faw3bXAbj23cwq/HJhQEARhI0aNGTdh0pRpM2bNmbdg0ZJlK1atWbdh05ZtO3bt2Xfg0JFjJ06dOffPfxcuXbl249adew8ePXn24tWbdx8+ffkOfr7lA5LdF8s=
   </data>
  </layer>
 </map>

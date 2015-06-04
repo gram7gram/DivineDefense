@@ -3,6 +3,7 @@ package ua.gram.desktop;
 import com.badlogic.gdx.Files;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 import ua.gram.DDGame;
 import ua.gram.controller.security.SecurityHandler;
 
@@ -16,17 +17,21 @@ import java.util.HashMap;
 public class DesktopLauncher {
 
     public static void main(String[] arg) {
+        TexturePacker.Settings settings = new TexturePacker.Settings();
+        settings.maxWidth = 4096;
+        settings.maxHeight = 4096;
+        TexturePacker.process(settings, "toPack/all", "data/skin", "style");
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.useGL30 = false;
         config.resizable = true;
         config.vSyncEnabled = false;
-        config.width = 800;
-        config.height = 480;
+        config.width = 900;
+        config.height = 600;
         config.fullscreen = false;
         config.foregroundFPS = 0;
         config.backgroundFPS = 0;
         config.x = 20;
-        config.y = -1;
+        config.y = 20;
         config.title = "Divine Defense";
         config.addIcon("logo_min128.png", Files.FileType.Internal);//osx
         config.addIcon("logo_min32.png", Files.FileType.Internal);//windows, linux
