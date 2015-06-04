@@ -65,7 +65,7 @@ public class TowerAnimationController {
             case 4:
                 return level4Animation;
             default:
-                throw new NullPointerException("Unknown Tower level: " + level);
+                throw new NullPointerException("Unknown " + tower + " level: " + level);
         }
     }
 

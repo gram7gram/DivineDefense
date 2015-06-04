@@ -86,10 +86,10 @@ public class TowerShopGroup extends Group {
                 towerSpecialBut.getY()
         );
 
-        towerPrimaryBut.addListener(new TowerShopInputListener(shop, stage_battle, stage_ui, TowerPrimary.class));
-        towerCannonBut.addListener(new TowerShopInputListener(shop, stage_battle, stage_ui, TowerCannon.class));
-        towerStunBut.addListener(new TowerShopInputListener(shop, stage_battle, stage_ui, TowerStun.class));
-        towerSpecialBut.addListener(new TowerShopInputListener(shop, stage_battle, stage_ui, TowerSpecial.class));
+        towerPrimaryBut.addListener(new TowerShopInputListener(game, shop, stage_battle, stage_ui, TowerPrimary.class));
+        towerCannonBut.addListener(new TowerShopInputListener(game, shop, stage_battle, stage_ui, TowerCannon.class));
+        towerStunBut.addListener(new TowerShopInputListener(game, shop, stage_battle, stage_ui, TowerStun.class));
+        towerSpecialBut.addListener(new TowerShopInputListener(game, shop, stage_battle, stage_ui, TowerSpecial.class));
 
         this.addActor(towerPrimaryBut);
         this.addActor(towerPrimaryLabel);

@@ -11,12 +11,14 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import ua.gram.DDGame;
 import ua.gram.model.Level;
 import ua.gram.model.Wave;
+import ua.gram.view.screen.ErrorScreen;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
 public class CounterButton extends Actor {
 
+    private final DDGame game;
     private final Animation animation;
     private final Level level;
     private TextureRegion currentFrame;
@@ -24,6 +26,7 @@ public class CounterButton extends Actor {
     private float counter = 0;
 
     public CounterButton(final DDGame game, final Level level, Vector2 position) {
+        this.game = game;
         this.level = level;
         int size = 40;
         animation = new Animation(1,
@@ -42,8 +45,12 @@ public class CounterButton extends Actor {
 //                    //TODO Display profit Label
 //                }
                 Gdx.app.log("INFO", "Player will recieves some coins as reward");
-                level.getWave().nextWave();
-                setVisible(false);
+                try {
+                    level.getWave().nextWave();
+                    setVisible(false);
+                } catch (IndexOutOfBoundsException e) {
+                    game.setScreen(new ErrorScreen(game, "Unappropriate wave number in level " + level.currentLevel, e));
+                }
             }
         });
         this.setSize(size, size);
@@ -68,8 +75,12 @@ public class CounterButton extends Actor {
                 } else if (animation.isAnimationFinished(counter)) {
                     counter = 0;
                     Gdx.app.log("INFO", "Countdown finished");
-                    level.getWave().nextWave();
-                    this.setVisible(false);
+                    try {
+                        level.getWave().nextWave();
+                        this.setVisible(false);
+                    } catch (IndexOutOfBoundsException e) {
+                        game.setScreen(new ErrorScreen(game, "Unappropriate wave number in level " + level.currentLevel, e));
+                    }
                 }
             }
         }

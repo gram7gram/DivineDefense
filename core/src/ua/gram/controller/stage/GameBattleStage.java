@@ -190,11 +190,18 @@ public class GameBattleStage extends Stage {
         return indexes;
     }
 
+    /**
+     * Swaps Enemies between Groups on Stage, that represent Z-indexes.
+     *
+     * @param enemy enemy and it's parent group to swap
+     */
     public void updateActorIndex(Enemy enemy) {
-        int index = (int) (DDGame.MAP_HEIGHT - (enemy.getY()) / DDGame.TILE_HEIGHT) - 1;
-        if (index != enemy.getParent().getZIndex()) {
-            enemy.getParent().remove();
-            indexes.get(index).addActor(enemy.getParent());
+        if (enemy.getParent() != null) {
+            int index = (int) (DDGame.MAP_HEIGHT - (enemy.getY()) / DDGame.TILE_HEIGHT) - 1;
+            if (index != enemy.getParent().getZIndex()) {
+                enemy.getParent().remove();
+                indexes.get(index).addActor(enemy.getParent());
+            }
         }
     }
 

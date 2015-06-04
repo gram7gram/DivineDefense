@@ -20,6 +20,8 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
+ * FIXME Global tower_level???
+ *
  * TODO Different animations: IDLE, BUILDING, SELLING, SHOOTING
  *
  * @author Gram <gram7gram@gmail.com>
@@ -32,7 +34,6 @@ public abstract class Tower extends Actor implements Pool.Poolable {
     public final float build_delay = 2;
     public final int animationWidth = 60;
     public final int animationHeight = 90;
-    //    private final AimIcon aim;
     public float damage;
     public float range;
     public float rate;
@@ -68,7 +69,6 @@ public abstract class Tower extends Actor implements Pool.Poolable {
         isBuilding = false;
         this.setSize(animationWidth, animationHeight);
         this.setBounds(getX(), getY(), animationWidth, animationHeight);
-//        aim = new AimIcon(game.getResources());
         controller = new TowerAnimationController(game.getResources().getSkin(), this);
     }
 
@@ -99,7 +99,6 @@ public abstract class Tower extends Actor implements Pool.Poolable {
                     isBuilding = false;
                     isActive = true;
                     this.setTouchable(Touchable.enabled);
-//                    stage_battle.addActor(aim);
                     weapon.setSource(this);
                     Gdx.app.log("INFO", this + " is builded");
                 } else {
@@ -117,8 +116,6 @@ public abstract class Tower extends Actor implements Pool.Poolable {
                                 victim = victims.get(index % 2 == 0 && index != 0 ?
                                         index : victims.size() - 1 - index);//get enemies from different sides of the array
                                 if (victim != null && this.isInRange(victim) && !victim.isDead) {
-//                                    aim.setEnemy(victim);
-//                                    aim.setVisible(true);
                                     weapon.setTarget(victim);
                                     weapon.setVisible(true);
                                     weapon.toFront();
@@ -201,15 +198,14 @@ public abstract class Tower extends Actor implements Pool.Poolable {
     /**
      * Increases stats of the tower, according to the level and the tower type.
      * TODO Increase stats
-     * TODO Charge according to the next level
+     * TODO Charge according to the next tower level
      * TODO Change Range radius
      */
     public void upgrade() {
-        tower_lvl++;
+        ++tower_lvl;
         this.setLevelAnimationContainer(tower_lvl);
         changeAnimation(Types.BUILD);
         game.getPlayer().chargeCoins(30);
-        //start range radius
         Gdx.app.log("INFO", this + " is upgraded to " + tower_lvl + " level");
     }
 
@@ -260,7 +256,7 @@ public abstract class Tower extends Actor implements Pool.Poolable {
         return cost;
     }
 
-    public int getUpgradeLevel() {
+    public int getPowerLevel() {
         return power_lvl;
     }
 

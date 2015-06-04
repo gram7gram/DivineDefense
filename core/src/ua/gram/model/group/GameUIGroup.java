@@ -23,7 +23,6 @@ public class GameUIGroup extends Group {
     private final Label moneyLabel;
     private final Label waveLabel;
     private final Label gemsLabel;
-    //    private Button counterBut;
     private CounterButton counter;
 
     public GameUIGroup(final DDGame game, final GameUIStage stage_ui, final Level level) {

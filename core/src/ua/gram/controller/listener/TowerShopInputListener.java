@@ -8,24 +8,28 @@ import ua.gram.DDGame;
 import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.controller.stage.GameUIStage;
 import ua.gram.controller.tower.TowerShop;
+import ua.gram.model.Level;
 import ua.gram.model.actor.Tower;
+import ua.gram.view.screen.ErrorScreen;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
 public class TowerShopInputListener extends ClickListener {
 
+    private final DDGame game;
     private final GameUIStage stage_ui;
     private final GameBattleStage stage_battle;
     private final TiledMapTileLayer layer;
-    private final Class<? extends ua.gram.model.actor.Tower> type;
+    private final Class<? extends Tower> type;
     private final TowerShop shop;
-    private ua.gram.model.actor.Tower tower;
+    private Tower tower;
 
-    public TowerShopInputListener(TowerShop shop,
+    public TowerShopInputListener(DDGame game, TowerShop shop,
                                   GameBattleStage stage_battle,
                                   GameUIStage stage_ui,
                                   Class<? extends Tower> type) {
+        this.game = game;
         this.shop = shop;
         this.type = type;
         this.stage_ui = stage_ui;
@@ -68,11 +72,9 @@ public class TowerShopInputListener extends ClickListener {
     }
 
     /**
-     * <pre>
      * Puts the Tower on the map if building is allowed.
      * As soon as tower is put on map, display building animation for 1.5 sec.
      * Then switch to idle animation and activate tower.
-     * </pre>
      */
     @Override
     public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
@@ -82,9 +84,16 @@ public class TowerShopInputListener extends ClickListener {
                 .getTile().getProperties().containsKey("walkable")
                 && stage_battle.isPositionEmpty(X, Y)) {
             shop.build(tower, X, Y);
-            if (!stage_ui.getLevel().getWave().isStarted) {
-                stage_ui.getLevel().getWave().nextWave();
-                stage_ui.getGameUIGroup().getCounterBut().setVisible(false);
+            Level level = stage_ui.getLevel();
+            if (!level.getWave().isStarted && !level.isCleared) {
+                try {
+                    stage_ui.getLevel().getWave().nextWave();
+                    stage_ui.getGameUIGroup().getCounterBut().setVisible(false);
+                } catch (IndexOutOfBoundsException e) {
+                    game.setScreen(new ErrorScreen(game,
+                            "Unappropriate wave [" + stage_ui.getLevel().getWave().getCurrentWave()
+                                    + "] in level " + stage_ui.getLevel().currentLevel, e));
+                }
             }
         } else {
             shop.release(tower);

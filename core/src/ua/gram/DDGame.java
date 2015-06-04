@@ -31,11 +31,11 @@ import ua.gram.view.screen.LaunchLoadingScreen;
  */
 public class DDGame extends Game {
 
-    public static final boolean DEBUG = true;
     public static final String ANGEL = "Angel";
     public static final String DEMON = "Demon";
     public static final byte TILE_HEIGHT = 60;
     public static final byte DEFAULT_BUTTON_HEIGHT = 80;
+    public static boolean DEBUG = true;
     public static boolean PAUSE = false;
     public static int WORLD_WIDTH;
     public static int WORLD_HEIGHT;

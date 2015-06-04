@@ -27,7 +27,14 @@ public abstract class Weapon extends Actor {
     @Override
     public void act(float delta) {
         super.act(delta);
-        if (!DDGame.PAUSE && target != null) update(delta);
+        if (!DDGame.PAUSE) {
+            if (target != null) {
+                this.setVisible(true);
+                update(delta);
+            } else {
+                this.setVisible(false);
+            }
+        }
     }
 
     /**

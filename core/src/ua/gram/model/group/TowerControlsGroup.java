@@ -22,6 +22,7 @@ public class TowerControlsGroup extends Group {
     private final Button sellBut;
     private final Button upgradeBut;
     private final TowerShop shop;
+    private Tower tower;
 
     public TowerControlsGroup(Skin skin, TowerShop shop) {
         super();
@@ -34,10 +35,13 @@ public class TowerControlsGroup extends Group {
     public void act(float delta) {
         super.act(delta);
         this.toFront();
+        if (tower != null && tower.getTowerLevel() == Tower.MAX_TOWER_LEVEL) {
+            upgradeBut.setVisible(false);
+        }
     }
 
     public void setGroup(final TowerGroup group) {
-        final Tower tower = group.getTower();
+        tower = group.getTower();
         final TowerControlsGroup controls = this;
         float butHeight = DDGame.DEFAULT_BUTTON_HEIGHT * .75f;
         byte gap = 5;

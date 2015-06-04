@@ -81,11 +81,11 @@ public class Wave {
 
         _waves.add(enemies1);
         _waves.add(enemies2);
-        _waves.add(enemies3);
+//        _waves.add(enemies3);
         return _waves;
     }
 
-    public void nextWave() {
+    public void nextWave() throws IndexOutOfBoundsException {
         spawner.setEnemiesToSpawn(waves.get(currentWave));
         ++currentWave;
         isStarted = true;
