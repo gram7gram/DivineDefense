@@ -6,322 +6,336 @@ filter: Nearest,Nearest
 repeat: none
 EnemyRunner_Demon_Down
   rotate: false
-  xy: 906, 925
+  xy: 2, 278
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 EnemyRunner_Demon_Left
   rotate: false
-  xy: 906, 833
+  xy: 1530, 928
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 EnemyRunner_Demon_Right
   rotate: false
-  xy: 1448, 925
+  xy: 2, 186
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 EnemyRunner_Demon_Up
   rotate: false
-  xy: 1448, 833
+  xy: 1530, 836
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 EnemySoldierArmored_Demon_Down
   rotate: false
-  xy: 1990, 925
+  xy: 2072, 928
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 EnemySoldierArmored_Demon_Left
   rotate: false
-  xy: 1990, 833
+  xy: 2, 94
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 EnemySoldierArmored_Demon_Right
   rotate: false
-  xy: 2532, 925
+  xy: 2072, 836
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 EnemySoldierArmored_Demon_Up
   rotate: false
-  xy: 2532, 833
+  xy: 2614, 928
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 EnemySoldier_Demon_Down
   rotate: false
-  xy: 3074, 925
+  xy: 2, 2
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 EnemySoldier_Demon_Left
   rotate: false
-  xy: 3074, 833
+  xy: 2614, 836
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 EnemySoldier_Demon_Right
   rotate: false
-  xy: 906, 741
+  xy: 3156, 928
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 EnemySoldier_Demon_Up
   rotate: false
-  xy: 1448, 741
+  xy: 3156, 836
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 EnemySummoner_Demon_Down
   rotate: false
-  xy: 1990, 741
+  xy: 1530, 744
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 EnemySummoner_Demon_Down_Summon
   rotate: false
-  xy: 2532, 741
+  xy: 2072, 744
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 EnemySummoner_Demon_Left
   rotate: false
-  xy: 3074, 741
+  xy: 2614, 744
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 EnemySummoner_Demon_Left_Summon
   rotate: false
-  xy: 2, 141
+  xy: 3156, 744
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 EnemySummoner_Demon_Right
   rotate: false
-  xy: 2, 49
+  xy: 1470, 652
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 EnemySummoner_Demon_Right_Summon
   rotate: false
-  xy: 506, 649
+  xy: 2012, 652
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 EnemySummoner_Demon_Up
   rotate: false
-  xy: 1048, 649
+  xy: 2554, 652
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 EnemySummoner_Demon_Up_Summon
   rotate: false
-  xy: 1590, 649
+  xy: 3096, 652
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 EnemyWarrior_Demon_Down
   rotate: false
-  xy: 2132, 649
+  xy: 1442, 560
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 EnemyWarrior_Demon_Left
   rotate: false
-  xy: 2674, 649
+  xy: 1984, 560
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 EnemyWarrior_Demon_Right
   rotate: false
-  xy: 544, 557
+  xy: 2526, 560
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 EnemyWarrior_Demon_Up
   rotate: false
-  xy: 1086, 557
+  xy: 3068, 560
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 TowerCannon_Angel_Lvl1_Idle
   rotate: false
-  xy: 1628, 557
+  xy: 1442, 468
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 TowerCannon_Angel_Lvl2_Idle
   rotate: false
-  xy: 2170, 557
+  xy: 1984, 468
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 TowerCannon_Angel_Lvl3_Idle
   rotate: false
-  xy: 2712, 557
+  xy: 2526, 468
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 TowerCannon_Angel_Lvl4_Idle
   rotate: false
-  xy: 544, 465
+  xy: 3068, 468
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 TowerPrimary_Angel_Lvl1_Idle
   rotate: false
-  xy: 1086, 465
+  xy: 1230, 376
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 TowerPrimary_Angel_Lvl2_Idle
   rotate: false
-  xy: 1628, 465
+  xy: 1772, 376
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 TowerPrimary_Angel_Lvl3_Idle
   rotate: false
-  xy: 2170, 465
+  xy: 2314, 376
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 TowerPrimary_Angel_Lvl4_Idle
   rotate: false
-  xy: 2712, 465
+  xy: 2856, 376
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 TowerSpecial_Angel_Lvl1_Idle
   rotate: false
-  xy: 544, 373
+  xy: 1230, 284
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 TowerSpecial_Angel_Lvl2_Idle
   rotate: false
-  xy: 1086, 373
+  xy: 1772, 284
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 TowerSpecial_Angel_Lvl3_Idle
   rotate: false
-  xy: 1628, 373
+  xy: 2314, 284
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 TowerSpecial_Angel_Lvl4_Idle
   rotate: false
-  xy: 2170, 373
+  xy: 2856, 284
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 TowerStun_Angel_Lvl1_Idle
   rotate: false
-  xy: 2712, 373
+  xy: 544, 66
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 TowerStun_Angel_Lvl2_Idle
   rotate: false
-  xy: 544, 281
+  xy: 1086, 192
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 TowerStun_Angel_Lvl3_Idle
   rotate: false
-  xy: 1086, 281
+  xy: 1628, 192
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 TowerStun_Angel_Lvl4_Idle
   rotate: false
-  xy: 1628, 281
+  xy: 2170, 192
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 banner-victory
   rotate: false
-  xy: 404, 765
+  xy: 1028, 768
   size: 500, 250
   orig: 500, 250
   offset: 0, 0
   index: -1
 button-angel-up
   rotate: false
-  xy: 2, 625
+  xy: 2, 370
   size: 400, 390
   orig: 400, 390
   offset: 0, 0
   index: -1
+button-back-down
+  rotate: false
+  xy: 4012, 938
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+button-back-up
+  rotate: false
+  xy: 3398, 286
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
 button-close-down
   rotate: false
-  xy: 3216, 659
+  xy: 2815, 202
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
 button-close-up
   rotate: false
-  xy: 2170, 291
+  xy: 3480, 286
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
 button-countdown
   rotate: false
-  xy: 3616, 975
+  xy: 1028, 726
   size: 440, 40
   orig: 440, 40
   offset: 0, 0
   index: -1
 button-default-down
   rotate: false
-  xy: 4058, 1006
+  xy: 1470, 757
   size: 9, 9
   split: 2, 1, 2, 1
   orig: 9, 9
@@ -329,7 +343,7 @@ button-default-down
   index: -1
 button-default-up
   rotate: false
-  xy: 506, 754
+  xy: 1442, 715
   size: 9, 9
   split: 1, 2, 1, 2
   orig: 9, 9
@@ -337,14 +351,14 @@ button-default-up
   index: -1
 button-demon-up
   rotate: false
-  xy: 2, 233
+  xy: 404, 370
   size: 400, 390
   orig: 400, 390
   offset: 0, 0
   index: -1
 button-green-down
   rotate: false
-  xy: 3616, 875
+  xy: 3398, 368
   size: 98, 98
   split: 14, 16, 14, 16
   orig: 98, 98
@@ -352,7 +366,7 @@ button-green-down
   index: -1
 button-green-up
   rotate: false
-  xy: 404, 563
+  xy: 3910, 818
   size: 98, 98
   split: 12, 13, 15, 14
   orig: 98, 98
@@ -360,21 +374,21 @@ button-green-up
   index: -1
 button-pause-down
   rotate: false
-  xy: 3716, 893
+  xy: 2897, 202
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
 button-pause-up
   rotate: false
-  xy: 404, 481
+  xy: 2979, 202
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
 button-pretty-down
   rotate: false
-  xy: 3298, 659
+  xy: 3061, 202
   size: 80, 80
   split: 16, 18, 13, 20
   orig: 80, 80
@@ -382,7 +396,7 @@ button-pretty-down
   index: -1
 button-pretty-up
   rotate: false
-  xy: 2252, 291
+  xy: 3143, 202
   size: 80, 80
   split: 14, 11, 18, 26
   orig: 80, 80
@@ -390,63 +404,77 @@ button-pretty-up
   index: -1
 button-quit-down
   rotate: false
-  xy: 3716, 811
+  xy: 3225, 202
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
 button-quit-up
   rotate: false
-  xy: 3798, 893
+  xy: 3307, 202
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
 button-sell-down
   rotate: false
-  xy: 2, 2
+  xy: 756, 323
   size: 45, 45
   orig: 45, 45
   offset: 0, 0
   index: -1
 button-sell-up
   rotate: false
-  xy: 404, 270
+  xy: 3862, 761
   size: 45, 45
   orig: 45, 45
   offset: 0, 0
   index: -1
 button-speed-down
   rotate: false
-  xy: 404, 399
+  xy: 3698, 726
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
 button-speed-up
   rotate: false
-  xy: 3380, 659
+  xy: 3780, 726
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
 button-upgrade-down
   rotate: false
-  xy: 3544, 694
+  xy: 1742, 145
   size: 45, 45
   orig: 45, 45
   offset: 0, 0
   index: -1
 button-upgrade-up
   rotate: false
-  xy: 2498, 326
+  xy: 596, 19
   size: 45, 45
   orig: 45, 45
   offset: 0, 0
   index: -1
+gates
+  rotate: false
+  xy: 2, 762
+  size: 1024, 256
+  orig: 1024, 256
+  offset: 0, 0
+  index: -1
+header
+  rotate: false
+  xy: 2712, 195
+  size: 101, 87
+  orig: 101, 87
+  offset: 0, 0
+  index: -1
 health-bar-100
   rotate: false
-  xy: 3216, 656
+  xy: 803, 367
   size: 1, 1
   split: 0, 0, 0, 0
   orig: 1, 1
@@ -454,7 +482,7 @@ health-bar-100
   index: -1
 health-bar-30
   rotate: false
-  xy: 2170, 288
+  xy: 1230, 468
   size: 1, 1
   split: 0, 0, 0, 0
   orig: 1, 1
@@ -462,7 +490,7 @@ health-bar-30
   index: -1
 health-bar-50
   rotate: false
-  xy: 486, 560
+  xy: 803, 364
   size: 1, 1
   split: 0, 0, 0, 0
   orig: 1, 1
@@ -470,85 +498,148 @@ health-bar-50
   index: -1
 label-background-0.25
   rotate: false
-  xy: 3616, 764
+  xy: 3610, 641
   size: 9, 9
   split: 4, 4, 4, 4
   orig: 9, 9
   offset: 0, 0
   index: -1
-level-star-big
+level1-preview-down
   rotate: false
-  xy: 404, 663
-  size: 100, 100
-  orig: 100, 100
+  xy: 544, 158
+  size: 210, 210
+  orig: 210, 210
+  offset: 0, 0
+  index: -1
+level1-preview-up
+  rotate: false
+  xy: 3698, 808
+  size: 210, 210
+  orig: 210, 210
+  offset: 0, 0
+  index: -1
+level2-preview-down
+  rotate: false
+  xy: 806, 550
+  size: 210, 210
+  orig: 210, 210
+  offset: 0, 0
+  index: -1
+level2-preview-up
+  rotate: false
+  xy: 806, 338
+  size: 210, 210
+  orig: 210, 210
+  offset: 0, 0
+  index: -1
+level3-preview-down
+  rotate: false
+  xy: 1018, 514
+  size: 210, 210
+  orig: 210, 210
+  offset: 0, 0
+  index: -1
+level3-preview-up
+  rotate: false
+  xy: 1230, 514
+  size: 210, 210
+  orig: 210, 210
+  offset: 0, 0
+  index: -1
+level_lock
+  rotate: false
+  xy: 1018, 302
+  size: 210, 210
+  orig: 210, 210
   offset: 0, 0
   index: -1
 ruby
   rotate: false
-  xy: 3962, 850
+  xy: 1230, 471
   size: 41, 41
   orig: 41, 41
   offset: 0, 0
   index: -1
 shopitem-tower-cannon
   rotate: false
-  xy: 2334, 291
+  xy: 1086, 110
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
 shopitem-tower-cannon-disabled
   rotate: false
-  xy: 3798, 811
+  xy: 1168, 110
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
 shopitem-tower-primary
   rotate: false
-  xy: 3880, 893
+  xy: 1250, 110
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
 shopitem-tower-primary-disabled
   rotate: false
-  xy: 404, 317
+  xy: 1332, 110
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
 shopitem-tower-special
   rotate: false
-  xy: 3462, 659
+  xy: 1414, 110
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
 shopitem-tower-special-disabled
   rotate: false
-  xy: 2416, 291
+  xy: 1496, 110
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
 shopitem-tower-stun
   rotate: false
-  xy: 3880, 811
+  xy: 1578, 110
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
 shopitem-tower-stun-disabled
   rotate: false
-  xy: 3962, 893
+  xy: 1660, 110
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
+star_big
+  rotate: false
+  xy: 3910, 918
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+star_small_disabled
+  rotate: false
+  xy: 544, 14
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+star_small_enabled
+  rotate: false
+  xy: 3638, 692
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
 window-pretty
   rotate: false
-  xy: 3616, 775
+  xy: 3498, 368
   size: 98, 98
   split: 33, 32, 34, 33
   orig: 98, 98

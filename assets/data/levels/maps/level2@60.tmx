@@ -20,9 +20,22 @@
    </properties>
   </tile>
  </tileset>
+ <tileset firstgid="33" name="2" tilewidth="60" tileheight="60">
+  <image source="map_900x600.png" width="900" height="600"/>
+ </tileset>
  <layer name="Terrain" width="15" height="10">
   <data encoding="base64" compression="zlib">
-   eJzjZGBg4MSBxfDI4cOyQMwNxHJk6uWlUC8r1O0wjMtvyBimFx2juwObOpAacSgWBGIJAnrZgJgdza0sRNorh8etbFA3EApTcSwYX5jykBEfABuPCBg=
+   eJzjZGBg4KQSlgFiMSQsTYJeWSDmRcJyeNSi2wHTywGlWZHk0N3Eg2YHTK8QFvuR3cQNxOJAzI5kBwuSWlxybFA5bH5E9ic+ORDmh5qDjImR46MgPinRCwDBmwgf
+  </data>
+ </layer>
+ <layer name="trees" width="15" height="10">
+  <data encoding="base64" compression="zlib">
+   eJzLZ2BgqCeA66A0OqjDIoYN5BCpbhRQFxQAcSEOOVxxUg3FoPhuwKEPGSPrgwFOIAYAa0ELxQ==
+  </data>
+ </layer>
+ <layer name="trees2" width="15" height="10">
+  <data encoding="base64" compression="zlib">
+   eJxjYGBgKGCAABiNC1RDcT1UbQESu56AXnT9MPXE6EPXPwpoB2Dxmk+GXli81gExAJ3YCtg=
   </data>
  </layer>
 </map>

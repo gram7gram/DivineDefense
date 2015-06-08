@@ -13,9 +13,8 @@ import ua.gram.view.window.PauseWindow;
 import ua.gram.view.window.VictoryWindow;
 
 /**
+ * TODO Display Current level at the beginning.
  * FIXME Change stats representation.
- * <p/>
- * FIXME Disable TowerListener if Window is active!
  *
  * @author Gram <gram7gram@gmail.com>
  */
@@ -86,29 +85,17 @@ public class GameUIStage extends Stage {
     public void act(float delta) {
         if (!DDGame.PAUSE) {
             super.act(delta);
-            if (isDefeated()) {
+            if (level.isDefeated() && !victoryWindow.isVisible()) {
                 Gdx.app.log("INFO", "Player is dead");
                 DDGame.PAUSE = true;
                 toggleWindow(defeatWindow);
-            } else if (isVictorious()) {
+            } else if (level.isVictorious() && !defeatWindow.isVisible()) {
                 Gdx.app.log("INFO", "Player is victorious");
                 stage_battle.clear();
                 DDGame.PAUSE = true;
                 toggleWindow(victoryWindow);
             }
         }
-    }
-
-    private boolean isVictorious() {
-        return !game.getPlayer().isDead()
-                && level.isCleared
-                && !stage_battle.hasEnemiesOnMap()
-                && !victoryWindow.isVisible();
-    }
-
-    private boolean isDefeated() {
-        return game.getPlayer().isDead()
-                && !defeatWindow.isVisible();
     }
 
     public TowerControlsGroup getTowerControls() {

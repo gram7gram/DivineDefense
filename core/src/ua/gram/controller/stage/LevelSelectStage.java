@@ -1,43 +1,50 @@
 package ua.gram.controller.stage;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import ua.gram.DDGame;
-import ua.gram.view.screen.LevelLoadingScreen;
+import ua.gram.model.group.LevelTile;
+import ua.gram.model.group.ScreenHeader;
+import ua.gram.view.screen.MainMenuScreen;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
 public class LevelSelectStage extends Stage {
 
-    protected DDGame game;
-
     public LevelSelectStage(final DDGame game) {
         super(game.getViewport(), game.getBatch());
         this.setDebugAll(DDGame.DEBUG);
-        this.game = game;
 
-        Button level1But = new TextButton("1", game.getResources().getSkin(), "default");
-        level1But.setVisible(true);
-        level1But.setSize(150, 150);
-        level1But.setPosition(60, 165);
-        level1But.addListener(new ClickListener() {
+        Button back = new Button(game.getResources().getSkin(), "back-button");
+        back.setSize(80, 80);
+        back.setPosition(DDGame.WORLD_WIDTH - back.getWidth() - 5, DDGame.WORLD_HEIGHT - back.getHeight() - 5);
+        back.setVisible(true);
+        back.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                selectLevel(1);
+                super.clicked(event, x, y);
+                game.setScreen(new MainMenuScreen(game));
             }
         });
+        ScreenHeader header = new ScreenHeader(game);
+        header.setVisible(true);
 
-        this.addActor(level1But);
+        LevelTile tile1 = new LevelTile(game, 1, 2, false);
+        LevelTile tile2 = new LevelTile(game, 2, 3, false);
+        LevelTile tile3 = new LevelTile(game, 3, 0, true);
+
+        tile1.setVisible(true);
+        tile2.setVisible(true);
+        tile3.setVisible(true);
+
+        this.addActor(header);
+        this.addActor(tile1);
+        this.addActor(tile2);
+        this.addActor(tile3);
+        this.addActor(back);
     }
 
-    private void selectLevel(int lvl) {
-        game.getPlayer().setLevel(lvl);
-        Gdx.app.log("INFO", "Level " + game.getPlayer().getLevel() + " is selected");
-        game.setScreen(new LevelLoadingScreen(game, lvl));
-    }
 }

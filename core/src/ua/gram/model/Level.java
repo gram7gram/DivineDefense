@@ -57,11 +57,30 @@ public class Level {
 
     public void update(float delta) {
         if (wave.getCurrentWave() <= wave.getMaxWaves()) {
-//            wave.start(delta);
             if (wave.isStarted) {
                 spawner.update(delta);
             }
         }
+    }
+
+    /**
+     * Player successfully clears the Level.
+     *
+     * @return
+     */
+    public boolean isVictorious() {
+        return !game.getPlayer().isDead()
+                && isCleared
+                && !stage_battle.hasEnemiesOnMap();
+    }
+
+    /**
+     * Player fails the Level.
+     *
+     * @return
+     */
+    public boolean isDefeated() {
+        return game.getPlayer().isDead();
     }
 
     public int getCurrentLevel() {

@@ -192,6 +192,22 @@
     "quit-button": {
       "up": "button-quit-up",
       "down": "button-quit-down"
+    },
+    "back-button": {
+      "up": "button-back-up",
+      "down": "button-back-down"
+    },
+    "level1-preview": {
+      "up": "level1-preview-up",
+      "down": "level1-preview-down"
+    },
+    "level2-preview": {
+      "up": "level2-preview-up",
+      "down": "level2-preview-down"
+    },
+    "level3-preview": {
+      "up": "level3-preview-up",
+      "down": "level3-preview-down"
     }
   },
   "com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle": {

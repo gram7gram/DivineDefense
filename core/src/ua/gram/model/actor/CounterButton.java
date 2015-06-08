@@ -49,7 +49,9 @@ public class CounterButton extends Actor {
                     level.getWave().nextWave();
                     setVisible(false);
                 } catch (IndexOutOfBoundsException e) {
-                    game.setScreen(new ErrorScreen(game, "Unappropriate wave number in level " + level.currentLevel, e));
+                    game.setScreen(new ErrorScreen(game, "Unappropriate wave ["
+                            + level.getWave().getCurrentWave()
+                            + "] in level " + level.currentLevel, e));
                 }
             }
         });

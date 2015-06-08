@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -21,6 +22,7 @@ public class GameScreen extends AbstractScreen {
     private final OrthogonalTiledMapRenderer renderer;
     private final GameBattleStage stage_battle;
     private final GameUIStage stage_ui;
+    private Sprite gates;
 
     public GameScreen(DDGame game, Level level) {
         super(game);
@@ -31,6 +33,7 @@ public class GameScreen extends AbstractScreen {
         stage_ui = new GameUIStage(game, level);
         stage_battle.setUIStage(stage_ui);
         stage_ui.setBattleStage(stage_battle);
+        if (level.currentLevel == 1) gates = new Sprite(game.getResources().getSkin().getRegion("gates"));
         if (DDGame.DEBUG) {
             stage_battle.addListener(new InputListener() {
                 @Override
@@ -53,6 +56,7 @@ public class GameScreen extends AbstractScreen {
         inputMultiplexer.addProcessor(stage_ui);
         inputMultiplexer.addProcessor(stage_battle);
         Gdx.input.setInputProcessor(inputMultiplexer);
+        gates.setPosition(0, DDGame.TILE_HEIGHT * 6);
     }
 
     @Override
@@ -61,6 +65,11 @@ public class GameScreen extends AbstractScreen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
         renderer.render(); //show tile map
         stage_battle.draw();
+        if (gates != null) {
+            stage_battle.getBatch().begin();
+            gates.draw(stage_battle.getBatch());
+            stage_battle.getBatch().end();
+        }
         stage_ui.act(delta);
         stage_ui.draw();
     }

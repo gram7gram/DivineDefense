@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 /**
  * Contains major game objects, like towers and enemies.
+ *
  * TODO Check for occupied cells if tower is build.
  *
  * @author Gram <gram7gram@gmail.com>

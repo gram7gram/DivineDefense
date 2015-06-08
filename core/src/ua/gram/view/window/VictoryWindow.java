@@ -11,11 +11,10 @@ import ua.gram.DDGame;
 import ua.gram.view.screen.LevelLoadingScreen;
 
 /**
- * <pre>
  * TODO Add Stars.
+ * TODO Add reward for level
  *
  * NOTE Add social integration?
- * </pre>
  *
  * @author Gram <gram7gram@gmail.com>
  */
@@ -38,7 +37,7 @@ public class VictoryWindow extends Window {
         victoryBanner.setSize(500, 250);
         victoryBanner.setPosition(originX - 50, originY + 250);
 
-        star = game.getResources().getSkin().getRegion("level-star-big").getTexture();
+        star = game.getResources().getSkin().getRegion("star_big").getTexture();
 
         Button nextLevel = new TextButton("NEXT LEVEL", skin, "pretty-button");
         nextLevel.setSize(200, 80);

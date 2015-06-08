@@ -11,10 +11,8 @@ import ua.gram.controller.stage.FractionStage;
 import ua.gram.view.AbstractScreen;
 
 /**
- * <pre>
  * TODO On following launches display Unlock button for opposite fraction
  * TODO Send AJAX request for statistics about fraction
- * </pre>
  *
  * @author Gram
  */
