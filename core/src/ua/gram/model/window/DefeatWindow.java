@@ -1,4 +1,4 @@
-package ua.gram.view.window;
+package ua.gram.model.window;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -13,16 +13,18 @@ import ua.gram.model.Player;
  */
 public class DefeatWindow extends Window {
 
-    private final DDGame game;
-    private final Button option2;
-    private final Button option3;
-    private final Button optionPurchase;
+    private DDGame game;
+    private Button option2;
+    private Button option3;
+    private Button optionPurchase;
 
     public DefeatWindow(DDGame game, final GameUIStage stage_ui) {
         super("", game.getResources().getSkin(), "default");
         this.game = game;
         Skin skin = game.getResources().getSkin();
-        this.setSize(650, 380);
+        int but_height = 200;
+
+        this.setSize(680, 400);
         this.setPosition(DDGame.WORLD_WIDTH / 2f - this.getWidth() / 2f, DDGame.WORLD_HEIGHT / 2f - this.getHeight() / 2f);
         this.setVisible(true);
         this.setMovable(false);
@@ -34,22 +36,22 @@ public class DefeatWindow extends Window {
         Label header3 = new Label("Continue", skin, "archery16black");
 
         Button option1 = new Button(skin, "default");
-        option1.setSize(200, 200);
+        option1.setSize(but_height, but_height);
         option1.addListener(new RestartListener(game, 1));
 
         option2 = new Button(skin, "default");
-        option2.setSize(200, 200);
+        option2.setSize(but_height, but_height);
         option2.addListener(new ContinueListener(game, 3, 2, this, stage_ui));
         option2.setDisabled(game.getPlayer().getGems() < 2);
 
         option3 = new Button(skin, "default");
-        option3.setSize(200, 200);
+        option3.setSize(but_height, but_height);
         option3.addListener(new ContinueListener(game, Player.DEFAULT_HEALTH, 3, this, stage_ui));
         option3.setDisabled(game.getPlayer().getGems() < 3);
 
         optionPurchase = new TextButton("BUY", skin, "default");
         optionPurchase.setSize(100, 40);
-//        option3.addListener(new MarketScreen);
+//        optionPurchase.addListener(new MarketScreen);
 
         title1.setVisible(true);
         title2.setVisible(true);
@@ -84,15 +86,15 @@ public class DefeatWindow extends Window {
         this.add(option1)
                 .width(option1.getWidth())
                 .height(option1.getHeight())
-                .center().right();
+                .center();
         this.add(option2)
                 .width(option2.getWidth())
                 .height(option2.getHeight())
-                .center().right();
+                .center();
         this.add(option3)
                 .width(option3.getWidth())
                 .height(option3.getHeight())
-                .center().right();
+                .center();
 
         Gdx.app.log("INFO", this.getClass().getSimpleName() + " is OK");
     }
@@ -105,7 +107,7 @@ public class DefeatWindow extends Window {
         option3.setDisabled(game.getPlayer().getGems() < 3);
         optionPurchase.setVisible(option2.isDisabled() && option3.isDisabled());
         if (optionPurchase.isVisible()) {
-            Gdx.app.log("INFO", "All options are disabled. Displaying purchase button");
+            Gdx.app.log("INFO", "Displaying purchase button");
             this.row();
             this.add(optionPurchase)
                     .width(optionPurchase.getWidth())

@@ -59,6 +59,12 @@ public class Wave {
         ArrayList<Class<? extends Enemy>> enemies2 = new ArrayList<Class<? extends Enemy>>();
         enemies2.add(EnemyRunner.class);
         enemies2.add(EnemySoldier.class);
+        enemies2.add(EnemySoldier.class);
+        enemies2.add(EnemySoldier.class);
+        enemies2.add(EnemySummoner.class);
+        enemies2.add(EnemySoldier.class);
+        enemies2.add(EnemyWarrior.class);
+        enemies2.add(EnemyWarrior.class);
 
         ArrayList<Class<? extends Enemy>> enemies3 = new ArrayList<Class<? extends Enemy>>();
         enemies3.add(EnemyRunner.class);
@@ -81,7 +87,8 @@ public class Wave {
 
         _waves.add(enemies1);
         _waves.add(enemies2);
-//        _waves.add(enemies3);
+        _waves.add(enemies3);
+        _waves.add(enemies3);
         return _waves;
     }
 

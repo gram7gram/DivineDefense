@@ -1,4 +1,4 @@
-package ua.gram.view.window;
+package ua.gram.model.window;
 
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;

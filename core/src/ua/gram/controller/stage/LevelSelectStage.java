@@ -29,7 +29,7 @@ public class LevelSelectStage extends Stage {
                 game.setScreen(new MainMenuScreen(game));
             }
         });
-        ScreenHeader header = new ScreenHeader(game);
+        ScreenHeader header = new ScreenHeader(game, "Choose the level");
         header.setVisible(true);
 
         LevelTile tile1 = new LevelTile(game, 1, 2, false);

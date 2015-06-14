@@ -1,7 +1,6 @@
-package ua.gram.view.window;
+package ua.gram.model.window;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -13,7 +12,7 @@ import ua.gram.view.screen.LevelLoadingScreen;
 /**
  * TODO Add Stars.
  * TODO Add reward for level
- *
+ * <p/>
  * NOTE Add social integration?
  *
  * @author Gram <gram7gram@gmail.com>
@@ -21,26 +20,27 @@ import ua.gram.view.screen.LevelLoadingScreen;
 public class VictoryWindow extends Window {
 
     private final Sprite victoryBanner;
-    private final Texture star;
+    private final Sprite star;
 
     public VictoryWindow(final DDGame game) {
         super("", game.getResources().getSkin(), "default");
         Skin skin = game.getResources().getSkin();
+        this.setSize(400, 375);
         float originX = (DDGame.WORLD_WIDTH - this.getWidth()) / 2f;
         float originY = (DDGame.WORLD_HEIGHT - this.getHeight()) / 2f;
-        this.setSize(400, 300);
         this.setPosition(originX, originY);
         this.setVisible(true);
         this.setMovable(false);
 
         victoryBanner = new Sprite(skin.getRegion("banner-victory"));
         victoryBanner.setSize(500, 250);
-        victoryBanner.setPosition(originX - 50, originY + 250);
+        victoryBanner.setPosition(originX - 50, originY + 225);
 
-        star = game.getResources().getSkin().getRegion("star_big").getTexture();
+        star = new Sprite(skin.getRegion("star_big"));
 
         Button nextLevel = new TextButton("NEXT LEVEL", skin, "pretty-button");
-        nextLevel.setSize(200, 80);
+        nextLevel.setSize(250, 80);
+        nextLevel.setPosition((DDGame.WORLD_WIDTH - nextLevel.getWidth()) / 2f, this.getY());
         nextLevel.setVisible(true);
         nextLevel.addListener(new ClickListener() {
             @Override
@@ -53,20 +53,21 @@ public class VictoryWindow extends Window {
             }
         });
 
-        Label reward = new Label("Reward: +2", skin, "default");
-        reward.setPosition(55, 95);
+        Label reward = new Label("Reward: +2 gems", skin, "archery64black");
+        reward.setPosition(originX + 55, originY + 95);
         reward.setVisible(true);
 
-        this.add(nextLevel);
+        this.add(reward).padTop(170).height(40).fillX().row();
+        this.add(nextLevel).fillX().padTop(20).height(80).width(200);
         Gdx.app.log("INFO", this.getClass().getSimpleName() + " is OK");
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        batch.draw(star, 45, 140);
-        batch.draw(star, 150, 140);
-        batch.draw(star, 255, 140);
+        batch.draw(star, this.getX() + 45, this.getY() + 190, 100, 100);
+        batch.draw(star, this.getX() + 150, this.getY() + 190, 100, 100);
+        batch.draw(star, this.getX() + 255, this.getY() + 190, 100, 100);
         victoryBanner.draw(batch);
     }
 }

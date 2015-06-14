@@ -29,7 +29,7 @@ public class EnemySpawner {
     private final GameBattleStage stage_battle;
     private final Level level;
     private final byte capacity = 5;
-    private final float delay = .5f; //2
+    private final float delay = 1;
     private float count;
     private Pool<Enemy> poolWarrior;
     private Pool<Enemy> poolSoldier;

@@ -1,4 +1,4 @@
-package ua.gram.controller.tower;
+package ua.gram.controller.shop;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;

@@ -57,7 +57,7 @@ public class ToggleTowerControlsListener extends ClickListener {
                                 range.setTower(tower);
                                 range.toBack();
                                 controls.toFront();
-                                Gdx.app.log("INFO", "Tower controls are "
+                                Gdx.app.log("INFO", tower + " controls are "
                                         + (controls.isVisible() ? "" : "in") + "visible");
                                 return;
                             }

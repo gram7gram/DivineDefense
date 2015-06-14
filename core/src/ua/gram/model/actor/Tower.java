@@ -9,6 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.utils.Pool;
 import ua.gram.DDGame;
+import ua.gram.controller.comparator.EnemyDistanceComparator;
+import ua.gram.controller.comparator.EnemyHealthComparator;
 import ua.gram.controller.pool.animation.AnimationController.Types;
 import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.controller.tower.TowerAnimationController;
@@ -16,13 +18,13 @@ import ua.gram.controller.tower.TowerLevelAnimationContainer;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 /**
  * FIXME Global tower_level???
- *
+ * <p/>
  * TODO Different animations: IDLE, BUILDING, SELLING, SHOOTING
+ * NOTE The amount of Tower tagets depends on it's tower_level.
  *
  * @author Gram <gram7gram@gmail.com>
  */
@@ -34,13 +36,8 @@ public abstract class Tower extends Actor implements Pool.Poolable {
     public final float build_delay = 2;
     public final int animationWidth = 60;
     public final int animationHeight = 90;
-    public float damage;
-    public float range;
-    public float rate;
-    public int cost;
-    public int power_lvl;
-    public int tower_lvl;
-    public Strategy strategy;
+    private final EnemyDistanceComparator distanceComparator;
+    private final EnemyHealthComparator healthComparator;
     public boolean isActive;
     public boolean isBuilding;
     public float countBuilding = 0;
@@ -51,6 +48,13 @@ public abstract class Tower extends Actor implements Pool.Poolable {
     protected TowerLevelAnimationContainer container;
     protected Animation animation;
     protected Weapon weapon;
+    private float damage;
+    private float range;
+    private float rate;
+    private int cost;
+    private int power_lvl;
+    private int tower_lvl;
+    private Strategy strategy;
     private float stateTime;
     private float count = 0;
     private int targetIndex = -1;
@@ -70,6 +74,8 @@ public abstract class Tower extends Actor implements Pool.Poolable {
         this.setSize(animationWidth, animationHeight);
         this.setBounds(getX(), getY(), animationWidth, animationHeight);
         controller = new TowerAnimationController(game.getResources().getSkin(), this);
+        distanceComparator = new EnemyDistanceComparator(this);
+        healthComparator = new EnemyHealthComparator();
     }
 
     @Override
@@ -83,11 +89,12 @@ public abstract class Tower extends Actor implements Pool.Poolable {
                 //Prevent too soon rendering.
             }
         }
-        if (currentFrame != null) {
-            batch.draw(currentFrame, this.getX(), this.getY());
-        }
+        if (currentFrame != null) batch.draw(currentFrame, this.getX(), this.getY());
     }
 
+    /**
+     * Tower logic is here.
+     */
     @Override
     public void act(float delta) {
         super.act(delta);
@@ -118,12 +125,14 @@ public abstract class Tower extends Actor implements Pool.Poolable {
                                 if (victim != null && this.isInRange(victim) && !victim.isDead) {
                                     weapon.setTarget(victim);
                                     weapon.setVisible(true);
-                                    weapon.toFront();
                                     victim.isAttacked = true;
+                                    weapon.toFront();
                                     victim.receiveDamage(this.damage);
+                                    attack(victim);
                                 }
                             } else if (victim != null) {
                                 victim.isAttacked = false;
+                                post_attack(victim);
                             } else {
                                 Gdx.app.error("ERROR", "Could not choose targets!");
                             }
@@ -143,13 +152,35 @@ public abstract class Tower extends Actor implements Pool.Poolable {
     }
 
     /**
+     * Perform Tower specific preparations before attack.
+     *
+     * @param victim the enemy to attack
+     */
+    public abstract void pre_attack(Enemy victim);
+
+    /**
+     * Perform tower-specific attack.
+     *
+     * @param victim the enemy to attack
+     */
+    public abstract void attack(Enemy victim);
+
+    /**
+     * Perform Tower specific actions after attack.
+     *
+     * @param victim the enemy attacked
+     */
+    public abstract void post_attack(Enemy victim);
+
+    /**
      * Grab Enemies in range.
+     *
+     * @return list of all Enemies in range, whose health is not zero.
      */
     private ArrayList<Enemy> scan() {
         ArrayList<Enemy> targets = new ArrayList<Enemy>();
         for (Enemy enemy : stage_battle.getEnemiesOnMap()) {
             if (isInRange(enemy) && enemy.health > 0) {
-//                Gdx.app.log("INFO", enemy + "@" + enemy.hashCode() + " is in range");
                 targets.add(enemy);
             }
         }
@@ -166,13 +197,15 @@ public abstract class Tower extends Actor implements Pool.Poolable {
         List<Enemy> enemyTargets = new ArrayList<Enemy>();
         switch (this.strategy) {
             case STRONGEST:
-                Collections.sort(victims, new EnemyHealthComparator(EnemyHealthComparator.MAX));
+                healthComparator.setType(EnemyHealthComparator.MAX);
+                Collections.sort(victims, healthComparator);
                 break;
             case WEAKEST:
-                Collections.sort(victims, new EnemyHealthComparator(EnemyHealthComparator.MIN));
+                healthComparator.setType(EnemyHealthComparator.MIN);
+                Collections.sort(victims, healthComparator);
                 break;
             case NEAREST:
-                Collections.sort(victims, new EnemyDistanceComparator(this));
+                Collections.sort(victims, distanceComparator);
                 break;
             case RANDOM:
                 int index = victims.size() > 1 ? (int) (Math.random() * (victims.size())) : 0;
@@ -215,7 +248,7 @@ public abstract class Tower extends Actor implements Pool.Poolable {
      * @param type desired animation type
      */
     public void changeAnimation(Types type) {
-        Gdx.app.log("INFO", "Tower animation changed to: " + tower_lvl + "_" + type.name());
+        Gdx.app.log("INFO", this + " animation changed to: " + tower_lvl + "_" + type.name());
         type = Types.IDLE;//remove
         this.setLevelAnimationContainer(tower_lvl);
         this.setAnimation(container.getAnimation(type));
@@ -302,40 +335,5 @@ public abstract class Tower extends Actor implements Pool.Poolable {
     public enum Strategy {
 
         NEAREST, RANDOM, WEAKEST, STRONGEST
-    }
-
-    private class EnemyHealthComparator implements Comparator<Enemy> {
-
-        public static final int MAX = 1;
-        public static final int MIN = -1;
-        private final int type;
-
-        public EnemyHealthComparator(int type) {
-            this.type = type;
-        }
-
-        @Override
-        public int compare(Enemy enemy1, Enemy enemy2) {
-            return (int) ((enemy1.health - enemy2.health) * type);
-        }
-    }
-
-    private class EnemyDistanceComparator implements Comparator<Enemy> {
-
-        private Tower tower;
-
-        public EnemyDistanceComparator(Tower tower) {
-            this.tower = tower;
-        }
-
-        @Override
-        public int compare(Enemy enemy1, Enemy enemy2) {
-            Vector2 pos1 = enemy1.getCenterPoint();
-            Vector2 pos2 = enemy2.getCenterPoint();
-            Vector2 posTower = tower.getCenterPoint();
-            float dist1 = pos1.dst(posTower);
-            float dist2 = pos2.dst(posTower);
-            return (int) (dist1 - dist2);
-        }
     }
 }

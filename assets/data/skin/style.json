@@ -150,8 +150,8 @@
       "down": "button-angel-up"
     },
     "demon": {
-      "up": "button-demon-up",
-      "down": "button-demon-up"
+      "up": "button-demon-disabled",
+      "disabled": "button-demon-disabled"
     },
     "shopitem-tower-primary": {
       "up": "shopitem-tower-primary",
@@ -196,6 +196,10 @@
     "back-button": {
       "up": "button-back-up",
       "down": "button-back-down"
+    },
+    "buy-button": {
+      "up": "button-buy-up",
+      "down": "button-buy-down"
     },
     "level1-preview": {
       "up": "level1-preview-up",

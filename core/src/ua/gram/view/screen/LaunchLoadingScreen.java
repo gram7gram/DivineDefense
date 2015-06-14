@@ -23,7 +23,6 @@ public class LaunchLoadingScreen extends AbstractLoadingScreen {
         game.setPlayer(PlayerFactory.defaults());//game.getSecurity().load(game))
         game.getResources().loadBasicFiles();
         game.getResources().loadTexture(Resources.BACKGROUND_TEXTURE);
-        game.getResources().loadTexture(Resources.LOCK_TEXTURE);
         game.createCamera();
         game.createBatch();
         game.createViewport();

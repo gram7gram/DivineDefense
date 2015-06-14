@@ -32,7 +32,6 @@ public class Resources implements Disposable {
     public static final String WEAPON_END_BACK = "data/images/misc/end_back.png";
     public static final String WEAPON_END_OVER = "data/images/misc/end_over.png";
     public static final String RANGE_TEXTURE = "data/images/misc/enemy_range.png";
-    public static final String LOCK_TEXTURE = "data/images/misc/fraction_lock.png";
     public static final String AIM_TEXTURE = "data/images/misc/enemy_aim.png";
     private final DDGame game;
     private final AssetManager manager;
@@ -44,7 +43,7 @@ public class Resources implements Disposable {
         try {
             skin = loadSkin(SKIN_FILE);
         } catch (GdxRuntimeException e) {
-            Gdx.app.error("ERROR", "Could not load skin!" + "\nDue to: " + e);
+            Gdx.app.error("ERROR", "Could not load skin!\nDue to: " + e);
             System.exit(1);//Gdx.app.exit() does not do it's job!...
         }
     }

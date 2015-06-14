@@ -56,7 +56,7 @@ public class GameScreen extends AbstractScreen {
         inputMultiplexer.addProcessor(stage_ui);
         inputMultiplexer.addProcessor(stage_battle);
         Gdx.input.setInputProcessor(inputMultiplexer);
-        gates.setPosition(0, DDGame.TILE_HEIGHT * 6);
+        if (gates != null) gates.setPosition(0, DDGame.TILE_HEIGHT * 6);
     }
 
     @Override

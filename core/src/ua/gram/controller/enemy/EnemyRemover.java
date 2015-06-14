@@ -30,9 +30,10 @@ public class EnemyRemover implements Runnable {
         customAction();
         Enemy enemy = group.getEnemy();
         Stage stage = group.getStage();
+        enemy.clearActions();
         spawner.free(enemy);
-        group.clearChildren();
         if (group.remove()) {
+            group.clear();
             int count = 0;
             for (Actor actor1 : stage.getActors()) {
                 if (actor1 instanceof Group) {

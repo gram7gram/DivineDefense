@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import ua.gram.DDGame;
-import ua.gram.view.window.ConfirmationWindow;
+import ua.gram.model.window.ConfirmationWindow;
 
 /**
  * @author Gram <gram7gram@gmail.com>
