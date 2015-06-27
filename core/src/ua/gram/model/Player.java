@@ -13,11 +13,11 @@ public class Player {
     public static String PLAYER_FRACTION;
     public static String SYSTEM_FRACTION;
     public static Tower.Strategy TOWER_PRIMARY_STRATEGY;
-    public static Tower.Strategy TOWER_CANNON_STRATEGY;
+    public static Tower.Strategy TOWER_SECONDARY_STRATEGY;
     public static Tower.Strategy TOWER_STUN_STRATEGY;
     public static Tower.Strategy TOWER_SPECIAL_STRATEGY;
     public static int UNLOCKED_TOWER_PRIMARY;
-    public static int UNLOCKED_TOWER_CANNON;
+    public static int UNLOCKED_TOWER_SECONDARY;
     public static int UNLOCKED_TOWER_STUN;
     public static int DEFAULT_HEALTH;
     public static int UNLOCKED_TOWER_SPECIAL;
@@ -81,16 +81,16 @@ public class Player {
         return level;
     }
 
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
     public int getGems() {
         return gems;
     }
 
     public void setGems(int gems) {
         this.gems = gems;
-    }
-
-    public void setLevel(int level) {
-        this.level = level;
     }
 
     public boolean isDead() {

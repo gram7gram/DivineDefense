@@ -1,6 +1,7 @@
 package ua.gram.controller.listener;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -23,6 +24,7 @@ public class TowerShopInputListener extends ClickListener {
     private final TiledMapTileLayer layer;
     private final Class<? extends Tower> type;
     private final TowerShop shop;
+    private TiledMapTileLayer layer_object;
     private Tower tower;
 
     public TowerShopInputListener(DDGame game, TowerShop shop,
@@ -34,7 +36,10 @@ public class TowerShopInputListener extends ClickListener {
         this.type = type;
         this.stage_ui = stage_ui;
         this.stage_battle = stage_battle;
-        this.layer = stage_battle.getLevel().getMap().getLayer();
+        this.layer = (TiledMapTileLayer) stage_battle.getLevel()
+                .getMap().getTiledMap().getLayers().get("Terrain");
+        this.layer_object = (TiledMapTileLayer) stage_battle.getLevel()
+                .getMap().getTiledMap().getLayers().get("Gates");
     }
 
     /**
@@ -63,9 +68,7 @@ public class TowerShopInputListener extends ClickListener {
     public void touchDragged(InputEvent event, float x, float y, int pointer) {
         float X = event.getStageX() - event.getStageX() % DDGame.TILE_HEIGHT;
         float Y = event.getStageY() - event.getStageY() % DDGame.TILE_HEIGHT;
-        if (!layer.getCell((int) (X / DDGame.TILE_HEIGHT), (int) (Y / DDGame.TILE_HEIGHT))
-                .getTile().getProperties().containsKey("walkable")
-                && stage_battle.isPositionEmpty(X, Y)) {
+        if (canBeBuild(X, Y)) {
             tower.setPosition(X, Y);
             tower.toFront();
         }
@@ -80,9 +83,7 @@ public class TowerShopInputListener extends ClickListener {
     public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
         float X = event.getStageX() - event.getStageX() % DDGame.TILE_HEIGHT;
         float Y = event.getStageY() - event.getStageY() % DDGame.TILE_HEIGHT;
-        if (!layer.getCell((int) (X / DDGame.TILE_HEIGHT), (int) (Y / DDGame.TILE_HEIGHT))
-                .getTile().getProperties().containsKey("walkable")
-                && stage_battle.isPositionEmpty(X, Y)) {
+        if (canBeBuild(X, Y)) {
             shop.build(tower, X, Y);
             Level level = stage_ui.getLevel();
             if (!level.getWave().isStarted && !level.isCleared) {
@@ -98,5 +99,24 @@ public class TowerShopInputListener extends ClickListener {
         } else {
             shop.release(tower);
         }
+    }
+
+    private boolean canBeBuild(float X, float Y) {
+        TiledMapTileLayer.Cell cell1 = layer.getCell((int) (X / DDGame.TILE_HEIGHT), (int) (Y / DDGame.TILE_HEIGHT));
+        MapProperties prop1 = cell1.getTile().getProperties();
+        if (layer_object != null) {
+            TiledMapTileLayer.Cell cell2 = layer_object.getCell((int) (X / DDGame.TILE_HEIGHT), (int) (Y / DDGame.TILE_HEIGHT));
+            if (cell2 != null) {
+                MapProperties prop2 = cell2.getTile().getProperties();
+                if (prop2 != null) {
+                    return !prop1.containsKey("walkable")
+                            && !prop2.containsKey("blocked")
+                            && stage_battle.isPositionEmpty(X, Y);
+                }
+            }
+        }
+        return !prop1.containsKey("walkable")
+                && stage_battle.isPositionEmpty(X, Y);
+
     }
 }

@@ -14,6 +14,8 @@ import ua.gram.model.Player;
 import ua.gram.view.screen.ErrorScreen;
 import ua.gram.view.screen.LaunchLoadingScreen;
 
+import java.io.Serializable;
+
 /**
  * TODO Make different assets for 4x3 and 16x9(16x10) screens
  * TODO For 16x9(16x10) make StretchViewport
@@ -26,23 +28,25 @@ import ua.gram.view.screen.LaunchLoadingScreen;
  *
  * NOTE Enemies should be tough because the amount of towers is unlimited
  * NOTE Skin should not contain nonexistent values
+ * NOTE Singleton
  *
  * @author Gram <gram7gram@gmail.com>
  */
-public class DDGame extends Game {
+public class DDGame extends Game implements Serializable {
 
     public static final String ANGEL = "Angel";
     public static final String DEMON = "Demon";
     public static final byte TILE_HEIGHT = 60;
     public static final byte DEFAULT_BUTTON_HEIGHT = 80;
-    public static boolean DEBUG = false;
+    public volatile static DDGame GAME = new DDGame();
+    public static boolean DEBUG = true;
     public static boolean PAUSE = false;
     public static int WORLD_WIDTH;
     public static int WORLD_HEIGHT;
     public static int MAP_WIDTH;
     public static int MAP_HEIGHT;
-    public static int MAX;
-    private final SecurityHandler security;
+    public static int MAX_ENTITIES;
+    private SecurityHandler security;
     private byte gameSpeed = 1;
     private Resources resources;
     private SpriteBatch batch;
@@ -50,8 +54,7 @@ public class DDGame extends Game {
     private Viewport view;
     private Player player;
 
-    public DDGame(SecurityHandler security) {
-        this.security = security;
+    protected DDGame() {
     }
 
     @Override
@@ -64,7 +67,7 @@ public class DDGame extends Game {
         WORLD_HEIGHT = Gdx.graphics.getHeight();
         MAP_WIDTH = WORLD_WIDTH / TILE_HEIGHT;
         MAP_HEIGHT = WORLD_HEIGHT / TILE_HEIGHT;
-        MAX = MAP_WIDTH * MAP_HEIGHT;//Maximum entities on the map
+        MAX_ENTITIES = MAP_WIDTH * MAP_HEIGHT;//Maximum entities on the map
         resources = new Resources(this);
         this.setScreen(new LaunchLoadingScreen(this));
     }
@@ -76,12 +79,12 @@ public class DDGame extends Game {
 
     @Override
     public void pause() {
-        PAUSE = true;
+        //PAUSE = true;
     }
 
     @Override
     public void resume() {
-        PAUSE = false;
+        //PAUSE = false;
     }
 
     @Override
@@ -116,9 +119,10 @@ public class DDGame extends Game {
      * @param file name of the Json file, that holds information about T class
      * @param type desired type of class to load
      * @param <T> class that is named in type variable.
+     * @param throwException should screen be switched to ErrorScreen in case of Exception
      * @return new object of the desired class with values from Json
      */
-    public <T> T getFactory(String file, Class<T> type) {
+    public <T> T deserialize(String file, Class<T> type, boolean throwException) {
         try {
             Json json = new Json();
             json.setTypeName(null);
@@ -126,7 +130,7 @@ public class DDGame extends Game {
             json.setIgnoreUnknownFields(true);
             return json.fromJson(type, Gdx.files.internal(file));
         } catch (Exception e) {
-            this.setScreen(new ErrorScreen(this, "Could not load factory: " + file, e));
+            if (throwException) this.setScreen(new ErrorScreen(this, "Could not load factory: " + file, e));
         }
         return null;
     }
@@ -155,6 +159,10 @@ public class DDGame extends Game {
         return security;
     }
 
+    public void setSecurity(SecurityHandler security) {
+        this.security = security;
+    }
+
     public Player getPlayer() {
         return player;
     }
@@ -181,4 +189,7 @@ public class DDGame extends Game {
         Gdx.app.log("INFO", "Visit https://github.com/gram7gram/DivineDefense to view sources");
     }
 
+    public Object readResolve() {
+        return GAME;
+    }
 }

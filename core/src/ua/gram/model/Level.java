@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import ua.gram.DDGame;
 import ua.gram.controller.enemy.EnemySpawner;
 import ua.gram.controller.stage.GameBattleStage;
-import ua.gram.model.actor.Enemy;
 import ua.gram.model.map.Map;
 
 import java.util.ArrayList;
@@ -14,6 +13,7 @@ import java.util.ArrayList;
  */
 public class Level {
 
+    public static final int MAX_LEVEL = 3;
     private final Wave wave;
     public boolean isCleared;
     public int currentLevel;
@@ -30,7 +30,7 @@ public class Level {
      * 	level.create(...)
      * 	level.createSpawner()
      */
-    public Level(ArrayList<ArrayList<Class<? extends Enemy>>> waves) {
+    public Level(ArrayList<String[]> waves) {
         wave = new Wave(this, waves);
         isCleared = false;
         Gdx.app.log("INFO", "Level obtained waves");
@@ -38,9 +38,6 @@ public class Level {
 
     /**
      * Should be called after receiving the Level object from Factory.
-     *
-     * @param game
-     * @param lvl
      */
     public void create(DDGame game, int lvl) {
         this.game = game;
@@ -65,8 +62,6 @@ public class Level {
 
     /**
      * Player successfully clears the Level.
-     *
-     * @return
      */
     public boolean isVictorious() {
         return !game.getPlayer().isDead()
@@ -74,10 +69,12 @@ public class Level {
                 && !stage_battle.hasEnemiesOnMap();
     }
 
+    public boolean isLast() {
+        return currentLevel == MAX_LEVEL;
+    }
+
     /**
      * Player fails the Level.
-     *
-     * @return
      */
     public boolean isDefeated() {
         return game.getPlayer().isDead();

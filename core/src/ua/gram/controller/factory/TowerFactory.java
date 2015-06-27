@@ -17,15 +17,15 @@ import java.util.ArrayList;
  */
 public class TowerFactory implements Factory<Tower> {
 
-    private DDGame game;
     private ArrayList<TowerPrototype> prototypes;
 
-    public void setGame(DDGame game) {
-        this.game = game;
+    @Override
+    public Tower create(DDGame game) {
+        return null;
     }
 
     @Override
-    public Tower create(Class<? extends Tower> type) {
+    public Tower create(DDGame game, Class<? extends Tower> type) {
         TowerPrototype tower = prototypes.get(0);
         float[] stats = new float[]{
                 tower.tower_lvl,

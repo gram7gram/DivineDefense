@@ -16,11 +16,11 @@ import java.util.ArrayList;
  */
 public class Map {
 
-    public Spawn spawn;
-    public Base base;
-    public TiledMap tiledMap;
-    public TiledMapTileLayer layer;
-    public Path path;
+    private Spawn spawn;
+    private Base base;
+    private TiledMap tiledMap;
+    private TiledMapTileLayer layer;
+    private Path path;
 
     public Map(TiledMap tiledMap) {
         this.tiledMap = tiledMap;

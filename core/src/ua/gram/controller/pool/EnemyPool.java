@@ -5,25 +5,24 @@ import com.badlogic.gdx.utils.Pool;
 import ua.gram.DDGame;
 import ua.gram.controller.factory.EnemyFactory;
 import ua.gram.model.actor.Enemy;
-import ua.gram.model.actor.enemy.EnemySoldierArmored;
-import ua.gram.model.actor.enemy.EnemyRunner;
-import ua.gram.model.actor.enemy.EnemySoldier;
-import ua.gram.model.actor.enemy.EnemySummoner;
-import ua.gram.model.actor.enemy.EnemyWarrior;
+import ua.gram.model.actor.enemy.*;
 
 /**
- * Created by Gram on 20/1.
+ *
+ * @author Gram <gram7gram@gmail.com>
  */
 public class EnemyPool<T extends Enemy> extends Pool<Enemy> {
 
     private final Class<? extends Enemy> type;
-    private final String enemyFilesDir = "data/world/enemies/";
-    private final EnemyFactory container;
+    private final EnemyFactory factory;
+    private final DDGame game;
 
     public EnemyPool(DDGame game, int capacity, int max, Class<? extends Enemy> type) {
         super(capacity, max);
+        this.game = game;
         this.type = type;
-        String file = "";
+        String file;
+        String enemyFilesDir = "data/world/enemies/";
         if (type.equals(EnemyWarrior.class)) {
             file = enemyFilesDir + "warrior.json";
         } else if (type.equals(EnemyRunner.class)) {
@@ -37,14 +36,13 @@ public class EnemyPool<T extends Enemy> extends Pool<Enemy> {
         } else {
             throw new NullPointerException("Couldn't get configuration for: " + type.getSimpleName());
         }
-        container = game.getFactory(file, EnemyFactory.class);
-        container.setGame(game);
-        Gdx.app.log("INFO", "Pool for " + type.getSimpleName() + " is created.");
+        factory = game.deserialize(file, EnemyFactory.class, true);
+        Gdx.app.log("INFO", "Pool for " + type.getSimpleName() + " is created");
     }
 
     @Override
     @SuppressWarnings("unchecked")
     protected T newObject() {
-        return (T) container.create(type);
+        return (T) factory.create(game, type);
     }
 }

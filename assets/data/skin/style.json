@@ -157,9 +157,9 @@
       "up": "shopitem-tower-primary",
       "disabled": "shopitem-tower-primary-disabled"
     },
-    "shopitem-tower-cannon": {
-      "up": "shopitem-tower-cannon",
-      "disabled": "shopitem-tower-cannon-disabled"
+    "shopitem-tower-secondary": {
+      "up": "shopitem-tower-secondary",
+      "disabled": "shopitem-tower-secondary-disabled"
     },
     "shopitem-tower-stun": {
       "up": "shopitem-tower-stun",

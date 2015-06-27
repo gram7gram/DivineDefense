@@ -7,7 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import ua.gram.DDGame;
+import ua.gram.model.Level;
 import ua.gram.view.screen.LevelLoadingScreen;
+import ua.gram.view.screen.MainMenuScreen;
 
 /**
  * TODO Add Stars.
@@ -22,7 +24,7 @@ public class VictoryWindow extends Window {
     private final Sprite victoryBanner;
     private final Sprite star;
 
-    public VictoryWindow(final DDGame game) {
+    public VictoryWindow(final DDGame game, final Level level) {
         super("", game.getResources().getSkin(), "default");
         Skin skin = game.getResources().getSkin();
         this.setSize(400, 375);
@@ -45,11 +47,16 @@ public class VictoryWindow extends Window {
         nextLevel.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.getPlayer().nextLevel();
-                Gdx.app.log("INFO", "Switching to level " + game.getPlayer().getLevel());
-                setVisible(false);
-                DDGame.PAUSE = false;
-                game.setScreen(new LevelLoadingScreen(game, game.getPlayer().getLevel()));
+                if (!level.isLast()) {
+                    game.getPlayer().nextLevel();
+                    Gdx.app.log("INFO", "Switching to level " + game.getPlayer().getLevel());
+                    setVisible(false);
+                    DDGame.PAUSE = false;
+                    game.setScreen(new LevelLoadingScreen(game, game.getPlayer().getLevel()));
+                } else {
+                    game.setScreen(new MainMenuScreen(game));
+//                    game.setScreen(new FinalScreen(game));
+                }
             }
         });
 

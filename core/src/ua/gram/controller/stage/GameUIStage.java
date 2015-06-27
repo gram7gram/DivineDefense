@@ -36,7 +36,7 @@ public class GameUIStage extends Stage {
         this.game = game;
         this.level = level;
         gameUIGroup = new GameUIGroup(game, this, level);
-        victoryWindow = new VictoryWindow(game);
+        victoryWindow = new VictoryWindow(game, level);
         pauseWindow = new PauseWindow(game, this);
         defeatWindow = new DefeatWindow(game, this);
         gameUIGroup.setVisible(true);

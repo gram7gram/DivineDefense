@@ -3,7 +3,7 @@ package ua.gram.view.screen;
 import com.badlogic.gdx.Gdx;
 import ua.gram.DDGame;
 import ua.gram.controller.Resources;
-import ua.gram.controller.factory.LevelFactory;
+import ua.gram.controller.builder.LevelBuilder;
 import ua.gram.model.Level;
 import ua.gram.view.AbstractLoadingScreen;
 
@@ -46,8 +46,7 @@ public class LevelLoadingScreen extends AbstractLoadingScreen {
     public void doAction() {
         stage_ui.update(progress);
         Gdx.app.log("INFO", "Loading " + progress + "%");
-        LevelFactory container = game.getFactory("data/levels/level" + lvl + ".json", LevelFactory.class);
-        Level level = container.create(Level.class);
+        Level level = LevelBuilder.create(lvl, 1);
         level.create(game, lvl);
         game.setScreen(new GameScreen(game, level));
     }

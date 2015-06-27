@@ -28,15 +28,13 @@ public class EnemySpawner {
     private final ArrayList<Vector2> path;
     private final GameBattleStage stage_battle;
     private final Level level;
-    private final byte capacity = 5;
-    private final float delay = 1;
     private float count;
     private Pool<Enemy> poolWarrior;
     private Pool<Enemy> poolSoldier;
     private Pool<Enemy> poolSoldierArmored;
     private Pool<Enemy> poolSummoner;
     private Pool<Enemy> poolRunner;
-    private LinkedList<Class<? extends Enemy>> enemiesToSpawn;
+    private LinkedList<String> enemiesToSpawn;
 
     public EnemySpawner(DDGame game, Level level, GameBattleStage stage) {
         this.game = game;
@@ -55,13 +53,14 @@ public class EnemySpawner {
      * @param delta Same as Gdx.graphics.getDeltaTime()
      */
     public void update(float delta) {
+        float delay = 1;
         if (count >= delay) {
             count = 0;
             try {
                 if (!enemiesToSpawn.isEmpty()) {
                     spawn(enemiesToSpawn.pop());
                 } else if (!stage_battle.hasEnemiesOnMap() || level.isCleared) {
-                    level.getWave().finished();
+                    level.getWave().finish();
                 }
             } catch (Exception e) {
                 Gdx.app.error("EXC", "Spawn conflict: " + e
@@ -84,17 +83,17 @@ public class EnemySpawner {
      * @throws CloneNotSupportedException - error occcured at cloning.
      * @throws NullPointerException       - type does not belong to known Enemy ancestor.
      */
-    private void spawn(Class<? extends Enemy> type) throws CloneNotSupportedException {
+    private void spawn(String type) throws CloneNotSupportedException {
         Enemy enemy;
-        if (type.equals(EnemyWarrior.class)) {
+        if (type.equals("EnemyWarrior")) {
             enemy = ((EnemyWarrior) (poolWarrior.obtain())).clone();
-        } else if (type.equals(EnemyRunner.class)) {
+        } else if (type.equals("EnemyRunner")) {
             enemy = ((EnemyRunner) (poolRunner.obtain())).clone();
-        } else if (type.equals(EnemySoldier.class)) {
+        } else if (type.equals("EnemySoldier")) {
             enemy = ((EnemySoldier) (poolSoldier.obtain())).clone();
-        } else if (type.equals(EnemySoldierArmored.class)) {
+        } else if (type.equals("EnemySoldierArmored")) {
             enemy = ((EnemySoldierArmored) (poolSoldierArmored.obtain())).clone();
-        } else if (type.equals(EnemySummoner.class)) {
+        } else if (type.equals("EnemySummoner")) {
             enemy = ((EnemySummoner) (poolSummoner.obtain())).clone();
         } else {
             throw new NullPointerException("Couldn't add enemy: " + type);
@@ -116,7 +115,7 @@ public class EnemySpawner {
 
     /**
      * Sets the Actions for Enemy to do to walk the path
-     *
+     * <p/>
      * FIXME Bigger speed - slower walk of Enemy
      * FIXME Merge Enemy animations in one atlas and image
      *
@@ -163,32 +162,29 @@ public class EnemySpawner {
         enemy.addAction(pathToGo);
     }
 
-    private LinkedList<Class<? extends Enemy>> convertList(ArrayList<Class<? extends Enemy>> list) {
-        LinkedList<Class<? extends Enemy>> enemies = new LinkedList<Class<? extends Enemy>>();
-        for (Class<? extends Enemy> type : list) {
+    private LinkedList<String> convertList(String[] list) {
+        LinkedList<String> enemies = new LinkedList<String>();
+        for (String type : list) {
             enemies.add(type);
-            if (type.equals(EnemyWarrior.class) && poolWarrior == null) {
-                poolWarrior = new EnemyPool<EnemyWarrior>(game, capacity, DDGame.MAX, type);
-            } else if (type.equals(EnemyRunner.class) && poolRunner == null) {
-                poolRunner = new EnemyPool<EnemyRunner>(game, capacity, DDGame.MAX, type);
-            } else if (type.equals(EnemySoldier.class) && poolSoldier == null) {
-                poolSoldier = new EnemyPool<EnemySoldier>(game, capacity, DDGame.MAX, type);
-            } else if (type.equals(EnemySoldierArmored.class) && poolSoldierArmored == null) {
-                poolSoldierArmored = new EnemyPool<EnemySoldierArmored>(game, capacity, DDGame.MAX, type);
-            } else if (type.equals(EnemySummoner.class) && poolSummoner == null) {
-                poolSummoner = new EnemyPool<EnemySummoner>(game, capacity, DDGame.MAX, type);
+            byte capacity = 5;
+            if (type.equals("EnemyWarrior") && poolWarrior == null) {
+                poolWarrior = new EnemyPool<EnemyWarrior>(game, capacity, DDGame.MAX_ENTITIES, EnemyWarrior.class);
+            } else if (type.equals("EnemyRunner") && poolRunner == null) {
+                poolRunner = new EnemyPool<EnemyRunner>(game, capacity, DDGame.MAX_ENTITIES, EnemyRunner.class);
+            } else if (type.equals("EnemySoldier") && poolSoldier == null) {
+                poolSoldier = new EnemyPool<EnemySoldier>(game, capacity, DDGame.MAX_ENTITIES, EnemySoldier.class);
+            } else if (type.equals("EnemySoldierArmored") && poolSoldierArmored == null) {
+                poolSoldierArmored = new EnemyPool<EnemySoldierArmored>(game, capacity, DDGame.MAX_ENTITIES, EnemySoldierArmored.class);
+            } else if (type.equals("EnemySummoner") && poolSummoner == null) {
+                poolSummoner = new EnemyPool<EnemySummoner>(game, capacity, DDGame.MAX_ENTITIES, EnemySummoner.class);
             }
         }
         return enemies;
     }
 
-    public boolean hasEnemiesToSpawn() {
-        return !enemiesToSpawn.isEmpty();
-    }
-
-    public void setEnemiesToSpawn(ArrayList<Class<? extends Enemy>> enemiesToSpawn) {
+    public void setEnemiesToSpawn(String[] enemiesToSpawn) {
         this.enemiesToSpawn = convertList(enemiesToSpawn);
-        Gdx.app.log("INFO", "Enemies for wave " + level.getCurrentWave() + " are prepared. Size: " + enemiesToSpawn.size());
+        Gdx.app.log("INFO", "Enemies for wave " + level.getCurrentWave() + " are prepared. Size: " + enemiesToSpawn.length);
     }
 
     public Pool<Enemy> getPool(Class<? extends Enemy> type) {
@@ -209,10 +205,7 @@ public class EnemySpawner {
 
     public void free(Enemy enemy) {
         this.getPool(enemy.getClass()).free(enemy);
-        Gdx.app.log("INFO", enemy + "@" + enemy.hashCode() + " is set free");
+//        Gdx.app.log("INFO", enemy + "@" + enemy.hashCode() + " is set free");
     }
 
-    public GameBattleStage getStage_battle() {
-        return stage_battle;
-    }
 }

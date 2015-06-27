@@ -32,7 +32,7 @@ public class TowerShop {
     private final GameUIStage stage_ui;
     private final TowerShopGroup towerShopGroup;
     private final Pool<Tower> poolPrimary;
-    private final Pool<Tower> poolCannon;
+    private final Pool<Tower> poolSecondary;
     private final Pool<Tower> poolStun;
     private final Pool<Tower> poolSpecial;
 
@@ -41,10 +41,10 @@ public class TowerShop {
         this.game = game;
         this.stage_ui = stage_ui;
         this.stage_battle = stage_battle;
-        poolPrimary = new TowerPool(game, 5, DDGame.MAX, TowerPrimary.class);
-        poolCannon = new TowerPool(game, 5, DDGame.MAX, TowerSecondary.class);
-        poolStun = new TowerPool(game, 5, DDGame.MAX, TowerStun.class);
-        poolSpecial = new TowerPool(game, 5, DDGame.MAX, TowerSpecial.class);
+        poolPrimary = new TowerPool(game, 5, DDGame.MAX_ENTITIES, TowerPrimary.class);
+        poolSecondary = new TowerPool(game, 5, DDGame.MAX_ENTITIES, TowerSecondary.class);
+        poolStun = new TowerPool(game, 5, DDGame.MAX_ENTITIES, TowerStun.class);
+        poolSpecial = new TowerPool(game, 5, DDGame.MAX_ENTITIES, TowerSpecial.class);
         towerShopGroup = new TowerShopGroup(game, this);
         stage_ui.setTowerControls(new TowerControlsGroup(game.getResources().getSkin(), this));
         Gdx.app.log("INFO", "TowerShop is OK");
@@ -65,7 +65,7 @@ public class TowerShop {
         if (type.equals(TowerPrimary.class)) {
             tower = ((TowerPrimary) poolPrimary.obtain()).clone();
         } else if (type.equals(TowerSecondary.class)) {
-            tower = ((TowerSecondary) poolCannon.obtain()).clone();
+            tower = ((TowerSecondary) poolSecondary.obtain()).clone();
         } else if (type.equals(TowerStun.class)) {
             tower = ((TowerStun) poolStun.obtain()).clone();
         } else if (type.equals(TowerSpecial.class)) {
@@ -83,8 +83,7 @@ public class TowerShop {
     }
 
     /**
-     * Puts the tower on the stage.
-     * Adds listener to tower and charges tower cost from player.
+     * Puts the tower on the stage and charges tower cost from player.
      *
      * @param tower will be build on the stage
      * @param x     x-axis of the tower
@@ -138,7 +137,7 @@ public class TowerShop {
         if (type.equals(TowerPrimary.class)) {
             return poolPrimary;
         } else if (type.equals(TowerSecondary.class)) {
-            return poolCannon;
+            return poolSecondary;
         } else if (type.equals(TowerStun.class)) {
             return poolStun;
         } else if (type.equals(TowerSpecial.class)) {
@@ -148,6 +147,11 @@ public class TowerShop {
         }
     }
 
+    /**
+     * Puts the tower in corresponding Pool
+     *
+     * @param tower
+     */
     public void free(Tower tower) {
         this.getPool(tower.getClass()).free(tower);
         Gdx.app.log("INFO", tower.getClass().getSimpleName() + " is set free");
@@ -157,8 +161,8 @@ public class TowerShop {
         return poolPrimary;
     }
 
-    public Pool<Tower> getPoolCannon() {
-        return poolCannon;
+    public Pool<Tower> getPoolSecondary() {
+        return poolSecondary;
     }
 
     public Pool<Tower> getPoolStun() {

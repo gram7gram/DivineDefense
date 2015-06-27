@@ -75,14 +75,14 @@ public class SecurityHandler {
     }
 
     public Player load(DDGame game) {
-        container = game.getFactory("data/player.json", PlayerFactory.class);
+        container = game.deserialize("data/player.json", PlayerFactory.class, true);
         if (checksum != null && checksum.equals(computeChecksum()) && decrypt()) {
             try {
                 input = new FileReader(new File(prefPath));
                 container = json.fromJson(PlayerFactory.class, input);
                 if (container.id.equals(device.get("device.id"))) {
                     Gdx.app.log("INFO", "Preferences loaded successfully");
-                    return container.create(Player.class);
+                    return container.create(game);
                 } else {
                     Gdx.app.log("WARN", "Preferences are corrupted");
                 }
@@ -92,7 +92,7 @@ public class SecurityHandler {
         } else {
             Gdx.app.log("WARN", "Missing preferences file");
         }
-        Player player = container.create(Player.class);
+        Player player = container.create(game);
         player.setDefault(true);
         Gdx.app.log("WARN", "Player defaults are used");
         return player;
