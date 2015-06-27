@@ -3,9 +3,9 @@ package ua.gram.model.group;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import ua.gram.DDGame;
-import ua.gram.model.actor.ProgressBar;
 import ua.gram.model.actor.Tower;
 import ua.gram.model.actor.Weapon;
+import ua.gram.model.actor.misc.ProgressBar;
 
 /**
  * @author Gram <gram7gram@gmail.com>

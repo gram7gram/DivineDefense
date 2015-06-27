@@ -5,7 +5,7 @@ import ua.gram.DDGame;
 import ua.gram.model.actor.Enemy;
 import ua.gram.model.actor.Tower;
 import ua.gram.model.actor.Weapon;
-import ua.gram.model.actor.weapon.Laser;
+import ua.gram.model.actor.weapon.LaserWeapon;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -49,7 +49,7 @@ public class TowerStun extends Tower implements Cloneable {
     @Override
     public void setWeapon(Weapon weapon) {
         super.setWeapon(weapon);
-        ((Laser) weapon).setBackColor(Color.GREEN);
+        ((LaserWeapon) weapon).setBackColor(Color.GREEN);
     }
 
 }

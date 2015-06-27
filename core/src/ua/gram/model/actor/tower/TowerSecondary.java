@@ -5,14 +5,14 @@ import ua.gram.DDGame;
 import ua.gram.model.actor.Enemy;
 import ua.gram.model.actor.Tower;
 import ua.gram.model.actor.Weapon;
-import ua.gram.model.actor.weapon.Laser;
+import ua.gram.model.actor.weapon.LaserWeapon;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class TowerCannon extends Tower implements Cloneable {
+public class TowerSecondary extends Tower implements Cloneable {
 
-    public TowerCannon(DDGame game, float[] stats) {
+    public TowerSecondary(DDGame game, float[] stats) {
         super(game, stats);
     }
 
@@ -32,14 +32,14 @@ public class TowerCannon extends Tower implements Cloneable {
     }
 
     @Override
-    public TowerCannon clone() throws CloneNotSupportedException {
-        return (TowerCannon) super.clone();
+    public TowerSecondary clone() throws CloneNotSupportedException {
+        return (TowerSecondary) super.clone();
     }
 
     @Override
     public void setWeapon(Weapon weapon) {
         super.setWeapon(weapon);
-        ((Laser) weapon).setBackColor(Color.ORANGE);
+        ((LaserWeapon) weapon).setBackColor(Color.ORANGE);
     }
 
 }

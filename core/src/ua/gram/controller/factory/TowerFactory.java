@@ -3,8 +3,8 @@ package ua.gram.controller.factory;
 import com.badlogic.gdx.Gdx;
 import ua.gram.DDGame;
 import ua.gram.model.actor.Tower;
-import ua.gram.model.actor.tower.TowerCannon;
 import ua.gram.model.actor.tower.TowerPrimary;
+import ua.gram.model.actor.tower.TowerSecondary;
 import ua.gram.model.actor.tower.TowerSpecial;
 import ua.gram.model.actor.tower.TowerStun;
 
@@ -38,8 +38,8 @@ public class TowerFactory implements Factory<Tower> {
         Tower towerType;
         if (type.equals(TowerPrimary.class)) {
             towerType = new TowerPrimary(game, stats);
-        } else if (type.equals(TowerCannon.class)) {
-            towerType = new TowerCannon(game, stats);
+        } else if (type.equals(TowerSecondary.class)) {
+            towerType = new TowerSecondary(game, stats);
         } else if (type.equals(TowerStun.class)) {
             towerType = new TowerStun(game, stats);
         } else if (type.equals(TowerSpecial.class)) {

@@ -9,13 +9,13 @@ import ua.gram.controller.pool.TowerPool;
 import ua.gram.controller.pool.animation.AnimationController;
 import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.controller.stage.GameUIStage;
-import ua.gram.model.actor.ProgressBar;
 import ua.gram.model.actor.Tower;
-import ua.gram.model.actor.tower.TowerCannon;
+import ua.gram.model.actor.misc.ProgressBar;
 import ua.gram.model.actor.tower.TowerPrimary;
+import ua.gram.model.actor.tower.TowerSecondary;
 import ua.gram.model.actor.tower.TowerSpecial;
 import ua.gram.model.actor.tower.TowerStun;
-import ua.gram.model.actor.weapon.Laser;
+import ua.gram.model.actor.weapon.LaserWeapon;
 import ua.gram.model.group.TowerControlsGroup;
 import ua.gram.model.group.TowerGroup;
 import ua.gram.model.group.TowerShopGroup;
@@ -42,7 +42,7 @@ public class TowerShop {
         this.stage_ui = stage_ui;
         this.stage_battle = stage_battle;
         poolPrimary = new TowerPool(game, 5, DDGame.MAX, TowerPrimary.class);
-        poolCannon = new TowerPool(game, 5, DDGame.MAX, TowerCannon.class);
+        poolCannon = new TowerPool(game, 5, DDGame.MAX, TowerSecondary.class);
         poolStun = new TowerPool(game, 5, DDGame.MAX, TowerStun.class);
         poolSpecial = new TowerPool(game, 5, DDGame.MAX, TowerSpecial.class);
         towerShopGroup = new TowerShopGroup(game, this);
@@ -64,8 +64,8 @@ public class TowerShop {
         Tower tower;
         if (type.equals(TowerPrimary.class)) {
             tower = ((TowerPrimary) poolPrimary.obtain()).clone();
-        } else if (type.equals(TowerCannon.class)) {
-            tower = ((TowerCannon) poolCannon.obtain()).clone();
+        } else if (type.equals(TowerSecondary.class)) {
+            tower = ((TowerSecondary) poolCannon.obtain()).clone();
         } else if (type.equals(TowerStun.class)) {
             tower = ((TowerStun) poolStun.obtain()).clone();
         } else if (type.equals(TowerSpecial.class)) {
@@ -98,7 +98,7 @@ public class TowerShop {
         tower.setStageBattle(stage_battle);
         TowerGroup towerGroup = new TowerGroup(
                 tower,
-                new Laser(game.getResources(), Color.RED, tower, null),
+                new LaserWeapon(game.getResources(), Color.RED, tower, null),
                 new ProgressBar(game.getResources().getSkin(), tower)
         );
         tower.setTouchable(Touchable.disabled);
@@ -137,7 +137,7 @@ public class TowerShop {
     public Pool<Tower> getPool(Class<? extends Tower> type) {
         if (type.equals(TowerPrimary.class)) {
             return poolPrimary;
-        } else if (type.equals(TowerCannon.class)) {
+        } else if (type.equals(TowerSecondary.class)) {
             return poolCannon;
         } else if (type.equals(TowerStun.class)) {
             return poolStun;

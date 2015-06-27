@@ -172,56 +172,56 @@ EnemyWarrior_Demon_Up
   orig: 540, 90
   offset: 0, 0
   index: -1
-TowerCannon_Angel_Lvl1_Idle
+TowerPrimary_Angel_Lvl1_Idle
   rotate: false
   xy: 2414, 472
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-TowerCannon_Angel_Lvl2_Idle
+TowerPrimary_Angel_Lvl2_Idle
   rotate: false
   xy: 2956, 472
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-TowerCannon_Angel_Lvl3_Idle
+TowerPrimary_Angel_Lvl3_Idle
   rotate: false
   xy: 1330, 380
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-TowerCannon_Angel_Lvl4_Idle
+TowerPrimary_Angel_Lvl4_Idle
   rotate: false
   xy: 1872, 380
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-TowerPrimary_Angel_Lvl1_Idle
+TowerSecondary_Angel_Lvl1_Idle
   rotate: false
   xy: 2414, 380
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-TowerPrimary_Angel_Lvl2_Idle
+TowerSecondary_Angel_Lvl2_Idle
   rotate: false
   xy: 2956, 380
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-TowerPrimary_Angel_Lvl3_Idle
+TowerSecondary_Angel_Lvl3_Idle
   rotate: false
   xy: 1330, 288
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-TowerPrimary_Angel_Lvl4_Idle
+TowerSecondary_Angel_Lvl4_Idle
   rotate: false
   xy: 1872, 288
   size: 540, 90

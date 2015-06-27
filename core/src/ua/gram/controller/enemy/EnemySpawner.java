@@ -11,8 +11,8 @@ import ua.gram.controller.pool.EnemyPool;
 import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.model.Level;
 import ua.gram.model.actor.Enemy;
-import ua.gram.model.actor.HealthBar;
 import ua.gram.model.actor.enemy.*;
+import ua.gram.model.actor.misc.HealthBar;
 import ua.gram.model.group.EnemyGroup;
 
 import java.util.ArrayList;

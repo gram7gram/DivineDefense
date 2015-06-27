@@ -1,4 +1,4 @@
-package ua.gram.model.actor;
+package ua.gram.model.actor.misc;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;

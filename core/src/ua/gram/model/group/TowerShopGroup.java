@@ -10,8 +10,8 @@ import ua.gram.controller.listener.TowerShopInputListener;
 import ua.gram.controller.shop.TowerShop;
 import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.controller.stage.GameUIStage;
-import ua.gram.model.actor.tower.TowerCannon;
 import ua.gram.model.actor.tower.TowerPrimary;
+import ua.gram.model.actor.tower.TowerSecondary;
 import ua.gram.model.actor.tower.TowerSpecial;
 import ua.gram.model.actor.tower.TowerStun;
 
@@ -87,7 +87,7 @@ public class TowerShopGroup extends Group {
         );
 
         towerPrimaryBut.addListener(new TowerShopInputListener(game, shop, stage_battle, stage_ui, TowerPrimary.class));
-        towerCannonBut.addListener(new TowerShopInputListener(game, shop, stage_battle, stage_ui, TowerCannon.class));
+        towerCannonBut.addListener(new TowerShopInputListener(game, shop, stage_battle, stage_ui, TowerSecondary.class));
         towerStunBut.addListener(new TowerShopInputListener(game, shop, stage_battle, stage_ui, TowerStun.class));
         towerSpecialBut.addListener(new TowerShopInputListener(game, shop, stage_battle, stage_ui, TowerSpecial.class));
 

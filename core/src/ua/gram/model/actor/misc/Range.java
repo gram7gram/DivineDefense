@@ -1,4 +1,4 @@
-package ua.gram.model.actor;
+package ua.gram.model.actor.misc;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import ua.gram.DDGame;
 import ua.gram.controller.Resources;
+import ua.gram.model.actor.Tower;
 
 /**
  * @author Gram <gram7gram@gmail.com>

@@ -1,4 +1,4 @@
-package ua.gram.model.actor;
+package ua.gram.model.actor.misc;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import ua.gram.DDGame;
+import ua.gram.model.actor.Enemy;
 
 /**
  * TODO Make HealthBar disappear with the Enemy.

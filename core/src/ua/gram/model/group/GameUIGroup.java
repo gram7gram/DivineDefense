@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import ua.gram.DDGame;
 import ua.gram.controller.stage.GameUIStage;
 import ua.gram.model.Level;
-import ua.gram.model.actor.CounterButton;
+import ua.gram.model.actor.misc.CounterButton;
 
 /**
  * @author Gram <gram7gram@gmail.com>

@@ -8,8 +8,8 @@ import ua.gram.DDGame;
 import ua.gram.controller.listener.ToggleTowerControlsListener;
 import ua.gram.model.Level;
 import ua.gram.model.actor.Enemy;
-import ua.gram.model.actor.Range;
 import ua.gram.model.actor.Tower;
+import ua.gram.model.actor.misc.Range;
 import ua.gram.model.group.EnemyGroup;
 import ua.gram.model.group.TowerGroup;
 

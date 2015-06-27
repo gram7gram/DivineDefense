@@ -12,9 +12,11 @@ import ua.gram.model.actor.Tower;
 import ua.gram.model.actor.Weapon;
 
 /**
+ * Weapon for TowerSecondary
+ *
  * @author Gram <gram7gram@gmail.com>
  */
-public class Laser extends Weapon {
+public class LaserWeapon extends Weapon {
 
     private final Color color_back;
     private final Color color_over;
@@ -25,7 +27,7 @@ public class Laser extends Weapon {
     private final Sprite end_back;
     private final Sprite end_over;
 
-    public Laser(Resources resources, Color color, Tower tower, Enemy enemy) {
+    public LaserWeapon(Resources resources, Color color, Tower tower, Enemy enemy) {
         super(tower, enemy);
         this.color_back = color;
         this.color_over = Color.WHITE;

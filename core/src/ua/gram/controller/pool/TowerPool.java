@@ -5,8 +5,8 @@ import com.badlogic.gdx.utils.Pool;
 import ua.gram.DDGame;
 import ua.gram.controller.factory.TowerFactory;
 import ua.gram.model.actor.Tower;
-import ua.gram.model.actor.tower.TowerCannon;
 import ua.gram.model.actor.tower.TowerPrimary;
+import ua.gram.model.actor.tower.TowerSecondary;
 import ua.gram.model.actor.tower.TowerSpecial;
 import ua.gram.model.actor.tower.TowerStun;
 
@@ -25,7 +25,7 @@ public class TowerPool<T extends Tower> extends Pool<Tower> {
         String towerFilesDir = "data/world/towers/";
         if (type.equals(TowerPrimary.class)) {
             file = towerFilesDir + "primary.json";
-        } else if (type.equals(TowerCannon.class)) {
+        } else if (type.equals(TowerSecondary.class)) {
             file = towerFilesDir + "cannon.json";
         } else if (type.equals(TowerStun.class)) {
             file = towerFilesDir + "stun.json";

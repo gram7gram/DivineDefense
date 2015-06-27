@@ -21,8 +21,6 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * FIXME Global tower_level???
- * <p/>
  * TODO Different animations: IDLE, BUILDING, SELLING, SHOOTING
  * NOTE The amount of Tower tagets depends on it's tower_level.
  *
@@ -99,7 +97,6 @@ public abstract class Tower extends Actor implements Pool.Poolable {
     public void act(float delta) {
         super.act(delta);
         if (!DDGame.PAUSE) {
-            this.setOrigin(this.getX() + this.getWidth() / 2f, this.getY() + this.getHeight() * 1.5f / 2f);
             if (isBuilding) {
                 if (countBuilding >= build_delay) {
                     countBuilding = 0;
@@ -120,9 +117,10 @@ public abstract class Tower extends Actor implements Pool.Poolable {
                             List<Enemy> victims = chooseVictims(targets);
                             if (!victims.isEmpty()) {
                                 int index = ++targetIndex <= victims.size() - 1 ? targetIndex : 0;
-                                victim = victims.get(index % 2 == 0 && index != 0 ?
-                                        index : victims.size() - 1 - index);//get enemies from different sides of the array
-                                if (victim != null && this.isInRange(victim) && !victim.isDead) {
+                                //Get enemies from different sides of the array
+                                victim = victims.get(index % 2 == 0 && index != 0 ? index : victims.size() - index - 1);
+                                if (isInRange(victim) && !victim.isDead) {
+                                    pre_attack(victim);
                                     weapon.setTarget(victim);
                                     weapon.setVisible(true);
                                     victim.isAttacked = true;
@@ -131,8 +129,8 @@ public abstract class Tower extends Actor implements Pool.Poolable {
                                     attack(victim);
                                 }
                             } else if (victim != null) {
-                                victim.isAttacked = false;
                                 post_attack(victim);
+                                victim.isAttacked = false;
                             } else {
                                 Gdx.app.error("ERROR", "Could not choose targets!");
                             }
