@@ -6,14 +6,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import ua.gram.DDGame;
-import ua.gram.controller.shop.TowerShop;
+import ua.gram.controller.market.shop.TowerShop;
 import ua.gram.model.actor.Tower;
 
 /**
- * <pre>
- * TODO Change strategies on click
- * TODO Hide all other ControlGroups on click.
- * </pre>
  *
  * @author Gram <gram7gram@gmail.com>
  */
@@ -50,11 +46,11 @@ public class TowerControlsGroup extends Group {
     public void setGroup(final TowerGroup group) {
         tower = group.getTower();
         byte gap = 5;
-
         sellBut.setPosition(
                 tower.getX() - sellBut.getWidth() - gap,
                 tower.getY() + (tower.getHeight() - sellBut.getHeight()) / 2f
         );
+        sellBut.clearListeners();
         sellBut.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -70,6 +66,7 @@ public class TowerControlsGroup extends Group {
                 tower.getX() + tower.getWidth() + gap,
                 tower.getY() + (tower.getHeight() - upgradeBut.getHeight()) / 2f
         );
+        upgradeBut.clearListeners();
         upgradeBut.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {

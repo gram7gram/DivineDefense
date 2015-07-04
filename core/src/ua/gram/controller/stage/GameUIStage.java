@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import ua.gram.DDGame;
-import ua.gram.controller.shop.TowerShop;
+import ua.gram.controller.market.shop.TowerShop;
 import ua.gram.model.Level;
 import ua.gram.model.group.GameUIGroup;
 import ua.gram.model.group.TowerControlsGroup;
@@ -77,7 +77,6 @@ public class GameUIStage extends Stage {
 
     /**
      * Checks if Player is Dead or Victorious.
-     * FIXME Window is displayed at the moment the last wave has started
      *
      * @param delta
      */

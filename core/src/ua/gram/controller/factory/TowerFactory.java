@@ -11,7 +11,6 @@ import ua.gram.model.actor.tower.TowerStun;
 import java.util.ArrayList;
 
 /**
- * TODO Configure prototypes.get(index) according to the fraction.
  *
  * @author Gram <gram7gram@gmail.com>
  */

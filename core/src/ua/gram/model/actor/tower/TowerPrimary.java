@@ -8,11 +8,16 @@ import ua.gram.model.actor.Weapon;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class TowerPrimary extends Tower implements Cloneable {
+public final class TowerPrimary extends Tower implements Cloneable {
 
 
     public TowerPrimary(DDGame game, float[] stats) {
         super(game, stats);
+    }
+
+    @Override
+    public void update(float delta) {
+        this.setOrigin(getX() + animationWidth / 2f, getY() + 70);
     }
 
     @Override

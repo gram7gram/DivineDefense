@@ -8,7 +8,7 @@ import ua.gram.model.actor.Weapon;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class SpecialWeapon extends Weapon {
+public final class SpecialWeapon extends Weapon {
 
     public SpecialWeapon(Tower tower, Enemy target) {
         super(tower, target);

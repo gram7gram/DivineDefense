@@ -10,10 +10,15 @@ import ua.gram.model.actor.weapon.LaserWeapon;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class TowerStun extends Tower implements Cloneable {
+public final class TowerStun extends Tower implements Cloneable {
 
     public TowerStun(DDGame game, float[] stats) {
         super(game, stats);
+    }
+
+    @Override
+    public void update(float delta) {
+        this.setOrigin(getX() + animationWidth / 2f, getY() + 28);
     }
 
     @Override

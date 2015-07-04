@@ -8,7 +8,6 @@ import ua.gram.controller.stage.GameUIStage;
 
 /**
  * Continue playing the level with additional health.
- * FIXME After continue no next wave
  *
  * @author gram
  */

@@ -10,7 +10,6 @@ import ua.gram.view.AbstractLoadingScreen;
 /**
  * Loads resources essential for the game process itself: map, external sprites - and creates a Level.
  * TODO implement hints for player
- * TODO Add progress bar
  *
  * @author Gram <gram7gram@gmail.com>
  */

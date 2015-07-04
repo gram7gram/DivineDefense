@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import ua.gram.model.actor.Tower;
 
 /**
- * TODO Add level ratings to stored preferences
  *
  * @author Gram <gram7gram@gmail.com>
  */

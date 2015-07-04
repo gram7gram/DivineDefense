@@ -27,7 +27,8 @@ public class Wave {
     }
 
     public void nextWave() throws IndexOutOfBoundsException {
-        spawner.setEnemiesToSpawn(waves.get(++currentWave));
+        spawner.setEnemiesToSpawn(waves.get(currentWave));
+        ++currentWave;
         isStarted = true;
         Gdx.app.log("INFO", "Wave " + currentWave + "/" + maxWaves + " has started");
     }

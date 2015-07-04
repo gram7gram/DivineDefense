@@ -42,9 +42,7 @@ public class DesktopLauncher {
         device.put("os.version", System.getProperty("os.version"));
         device.put("device.id", getMAC());
         device.put("user.prefs", getPrefs());
-        DDGame game = DDGame.GAME;
-        game.setSecurity(new SecurityHandler(device));
-        new LwjglApplication(game, config);
+        new LwjglApplication(new DDGame(new SecurityHandler(device)), config);
     }
 
     /**

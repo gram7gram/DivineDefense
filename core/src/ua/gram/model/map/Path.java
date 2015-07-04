@@ -7,18 +7,17 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * TODO Modify TiledMap to contain several paths (in tile properties)
  *
  * @author Gram <gram7gram@gmail.com>
  */
 public class Path {
 
-    public final List<Vector2> DIRECTIONS;
-    public ArrayList<Vector2> path;
     public static Vector2 NORTH;
     public static Vector2 SOUTH;
     public static Vector2 EAST;
     public static Vector2 WEST;
+    public final List<Vector2> DIRECTIONS;
+    public ArrayList<Vector2> path;
 
     public Path() {
         NORTH = new Vector2(0, 1);

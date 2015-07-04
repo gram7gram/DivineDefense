@@ -14,31 +14,27 @@ import ua.gram.model.Player;
 import ua.gram.view.screen.ErrorScreen;
 import ua.gram.view.screen.LaunchLoadingScreen;
 
-import java.io.Serializable;
-
 /**
  * TODO Make different assets for 4x3 and 16x9(16x10) screens
  * TODO For 16x9(16x10) make StretchViewport
  * TODO Add to JSON pressed and disabled drawable for buttons
  * TODO Add copyrights
  * TODO Handle Android Menu, Back click events
- *
+ * <p/>
  * FIXME Logotype
  * FIXME Switch 16pt font with 20pt
- *
+ * <p/>
  * NOTE Enemies should be tough because the amount of towers is unlimited
  * NOTE Skin should not contain nonexistent values
- * NOTE Singleton
  *
  * @author Gram <gram7gram@gmail.com>
  */
-public class DDGame extends Game implements Serializable {
+public class DDGame extends Game {
 
     public static final String ANGEL = "Angel";
     public static final String DEMON = "Demon";
     public static final byte TILE_HEIGHT = 60;
     public static final byte DEFAULT_BUTTON_HEIGHT = 80;
-    public volatile static DDGame GAME = new DDGame();
     public static boolean DEBUG = true;
     public static boolean PAUSE = false;
     public static int WORLD_WIDTH;
@@ -54,7 +50,8 @@ public class DDGame extends Game implements Serializable {
     private Viewport view;
     private Player player;
 
-    protected DDGame() {
+    public DDGame(SecurityHandler security) {
+        this.security = security;
     }
 
     @Override
@@ -116,13 +113,13 @@ public class DDGame extends Game implements Serializable {
     /**
      * Creates Factory from Json representation of desired class.
      *
-     * @param file name of the Json file, that holds information about T class
-     * @param type desired type of class to load
-     * @param <T> class that is named in type variable.
-     * @param throwException should screen be switched to ErrorScreen in case of Exception
+     * @param file     name of the Json file, that holds information about T class
+     * @param type     desired type of class to load
+     * @param <T>      class that is named in type variable.
+     * @param throwExc should screen be switched to ErrorScreen in case of Exception
      * @return new object of the desired class with values from Json
      */
-    public <T> T deserialize(String file, Class<T> type, boolean throwException) {
+    public <T> T deserialize(String file, Class<T> type, boolean throwExc) {
         try {
             Json json = new Json();
             json.setTypeName(null);
@@ -130,7 +127,7 @@ public class DDGame extends Game implements Serializable {
             json.setIgnoreUnknownFields(true);
             return json.fromJson(type, Gdx.files.internal(file));
         } catch (Exception e) {
-            if (throwException) this.setScreen(new ErrorScreen(this, "Could not load factory: " + file, e));
+            if (throwExc) this.setScreen(new ErrorScreen(this, "Could not load factory: " + file, e));
         }
         return null;
     }
@@ -187,9 +184,5 @@ public class DDGame extends Game implements Serializable {
     private synchronized void sayHello() {
         Gdx.app.log("INFO", "Welcome to DivineDefense, by Gram <gram7gram@gmail.com>");
         Gdx.app.log("INFO", "Visit https://github.com/gram7gram/DivineDefense to view sources");
-    }
-
-    public Object readResolve() {
-        return GAME;
     }
 }

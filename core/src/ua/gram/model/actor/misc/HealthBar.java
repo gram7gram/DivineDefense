@@ -10,7 +10,6 @@ import ua.gram.DDGame;
 import ua.gram.model.actor.Enemy;
 
 /**
- * TODO Make HealthBar disappear with the Enemy.
  *
  * @author Gram <gram7gram@gmail.com>
  */

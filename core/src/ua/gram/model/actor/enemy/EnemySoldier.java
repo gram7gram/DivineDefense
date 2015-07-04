@@ -13,6 +13,11 @@ public class EnemySoldier extends Enemy implements Cloneable {
     }
 
     @Override
+    public void update(float delta) {
+        this.setOrigin(this.getX() + this.getWidth() / 2f, this.getY() + this.getHeight() / 2f);
+    }
+
+    @Override
     public EnemySoldier clone() throws CloneNotSupportedException {
         return (EnemySoldier) super.clone();
     }

@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import ua.gram.DDGame;
 import ua.gram.controller.listener.TowerShopInputListener;
-import ua.gram.controller.shop.TowerShop;
+import ua.gram.controller.market.shop.TowerShop;
 import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.controller.stage.GameUIStage;
 import ua.gram.model.actor.tower.TowerPrimary;

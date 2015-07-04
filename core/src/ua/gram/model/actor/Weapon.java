@@ -29,8 +29,9 @@ public abstract class Weapon extends Actor {
         super.act(delta);
         if (!DDGame.PAUSE) {
             if (target != null) {
-                this.setVisible(true);
                 update(delta);
+                this.setVisible(true);
+                this.setZIndex(target.getY() > tower.getY() ? 0 : tower.getZIndex() + 1);
             } else {
                 this.setVisible(false);
             }

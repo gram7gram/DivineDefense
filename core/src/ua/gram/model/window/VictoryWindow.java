@@ -12,9 +12,7 @@ import ua.gram.view.screen.LevelLoadingScreen;
 import ua.gram.view.screen.MainMenuScreen;
 
 /**
- * TODO Add Stars.
  * TODO Add reward for level
- * <p/>
  * NOTE Add social integration?
  *
  * @author Gram <gram7gram@gmail.com>

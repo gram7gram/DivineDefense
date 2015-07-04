@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import ua.gram.DDGame;
 import ua.gram.model.Player;
@@ -24,7 +25,6 @@ public class FractionStage extends Stage {
 
     private final Group fractions;
     private final DDGame game;
-    private final Button option1;
     private ConfirmationGroup confirmationGroup;
 
     public FractionStage(final DDGame game) {
@@ -37,26 +37,16 @@ public class FractionStage extends Stage {
         header.setVisible(true);
         header.setPosition((DDGame.WORLD_WIDTH - header.getWidth()) / 2f, DDGame.WORLD_HEIGHT - header.getHeight() - 10);
 
-        option1 = new Button(skin, "demon");
+        Button option1 = new Button(skin, "demon");
         option1.setPosition(0, 0);
         option1.setVisible(true);
         option1.setSize(DDGame.WORLD_WIDTH / 2, DDGame.WORLD_HEIGHT);
         option1.setTouchable(Touchable.disabled);
-        option1.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                Player.PLAYER_FRACTION = DDGame.DEMON;
-                Player.SYSTEM_FRACTION = DDGame.ANGEL;
-                if (confirmationGroup == null) createDialog();
-                displayConfirmation();
-            }
-        });
 
         Button option2 = new Button(skin, "angel");
         option2.setPosition(DDGame.WORLD_WIDTH / 2, 0);
         option2.setVisible(true);
         option2.setSize(DDGame.WORLD_WIDTH / 2, DDGame.WORLD_HEIGHT);
-        option2.setTouchable(Touchable.enabled);
         option2.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -67,7 +57,9 @@ public class FractionStage extends Stage {
             }
         });
 
+
         fractions = new Group();
+
         option1.addAction(
                 Actions.sequence(
                         Actions.parallel(
@@ -94,6 +86,33 @@ public class FractionStage extends Stage {
         fractions.addActor(option2);
         fractions.addActor(header);
 
+        if ((!game.getPlayer().isDefault() && Player.PLAYER_FRACTION != null) || DDGame.DEBUG) {
+//            option2.setTouchable(Touchable.disabled);
+            Button cont = new TextButton("Continue", skin, "green-button");
+            cont.setSize(240, 80);
+            float x1 = "Angel".equals(Player.PLAYER_FRACTION) ?
+                    option2.getX() + (option2.getWidth() - cont.getWidth()) / 2f
+                    : option1.getX() + (option1.getWidth() + cont.getWidth()) / 2f;
+            float y1 = 20 + cont.getHeight();
+            cont.setPosition(x1, y1);
+            cont.setTouchable(Touchable.enabled);
+            cont.setVisible(true);
+
+            Button rest = new TextButton("Restart", skin, "blue-button");
+            rest.setSize(240, 80);
+            float x2 = "Angel".equals(Player.PLAYER_FRACTION) ?
+                    option2.getX() + (option2.getWidth() - rest.getWidth()) / 2f
+                    : option1.getX() + (option1.getWidth() + rest.getWidth()) / 2f;
+            float y2 = 10;
+            rest.setPosition(x2, y2);
+            rest.setTouchable(Touchable.enabled);
+            rest.setVisible(true);
+
+            fractions.addActor(rest);
+            fractions.addActor(cont);
+        } else {
+            option2.setTouchable(Touchable.enabled);
+        }
         this.addActor(fractions);
     }
 
@@ -123,10 +142,6 @@ public class FractionStage extends Stage {
         fractions.setTouchable(fractions.isTouchable() ? Touchable.disabled : Touchable.enabled);
         confirmationGroup.setVisible(!confirmationGroup.isVisible());
         Gdx.app.log("INFO", "Confirmation window is " + (confirmationGroup.isVisible() ? "" : "in") + "visible");
-    }
-
-    public Button getDemonButton() {
-        return option1;
     }
 
     public ConfirmationGroup getGroup() {

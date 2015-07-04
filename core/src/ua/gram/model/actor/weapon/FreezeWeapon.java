@@ -10,7 +10,7 @@ import ua.gram.model.actor.Weapon;
  *
  * @author Gram <gram7gram@gmail.com>
  */
-public class FreezeWeapon extends Weapon {
+public final class FreezeWeapon extends Weapon {
 
     public FreezeWeapon(Tower tower, Enemy target) {
         super(tower, target);

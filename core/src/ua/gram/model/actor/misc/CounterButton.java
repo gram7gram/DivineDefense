@@ -14,13 +14,14 @@ import ua.gram.model.Wave;
 import ua.gram.view.screen.ErrorScreen;
 
 /**
+ * TODO Blink this
  * @author Gram <gram7gram@gmail.com>
  */
 public class CounterButton extends Actor {
 
     private final DDGame game;
-    private final Animation animation;
     private final Level level;
+    private Animation animation;
     private TextureRegion currentFrame;
     private float stateTime = 0;
     private float counter = 0;
@@ -28,11 +29,6 @@ public class CounterButton extends Actor {
     public CounterButton(final DDGame game, final Level level, Vector2 position) {
         this.game = game;
         this.level = level;
-        int size = 40;
-        animation = new Animation(1,
-                game.getResources().getSkin().getRegion("button-countdown")
-                        .split(size, size)[0]);
-        animation.setPlayMode(Animation.PlayMode.NORMAL);
         this.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -42,20 +38,20 @@ public class CounterButton extends Actor {
 //                    if (reward <= 0 && reward >= Wave.countdown)
 //                        throw new IllegalArgumentException("Out of bounds reward: " + reward + " coins");
 //                    game.getPlayer().addCoins(reward);
-//                    //TODO Display profit Label
+//                    TODO Display profit Label
 //                }
                 Gdx.app.log("INFO", "Player will recieves some coins as reward");
                 try {
                     level.getWave().nextWave();
                     setVisible(false);
                 } catch (IndexOutOfBoundsException e) {
-                    game.setScreen(new ErrorScreen(game, "Unappropriate wave ["
+                    game.setScreen(new ErrorScreen(game, "Inappropriate wave "
                             + level.getWave().getCurrentWave()
-                            + "] in level " + level.currentLevel, e));
+                            + " in level " + level.currentLevel, e));
                 }
             }
         });
-        this.setSize(size, size);
+        this.setSize(40, 40);
         this.setPosition(
                 position.x * DDGame.TILE_HEIGHT + (DDGame.TILE_HEIGHT - this.getWidth()) / 2f,
                 position.y * DDGame.TILE_HEIGHT + (DDGame.TILE_HEIGHT - this.getHeight()) / 2f
@@ -69,20 +65,17 @@ public class CounterButton extends Actor {
     public void act(float delta) {
         super.act(delta);
         if (!DDGame.PAUSE) {
-            if (!level.getWave().isStarted
-                    && !level.isCleared) {
-                counter += delta;
+            if (!level.getWave().isStarted && !level.isCleared) {
                 if (!this.isVisible()) {
-                    this.start(Wave.currentWave <= 1 ? 1 : 1 / 2f);
-                } else if (animation.isAnimationFinished(counter)) {
-                    counter = 0;
+                    animation = reset();
+                    start(Wave.currentWave <= 1 ? 1 : 1 / 2f);
+                }
+                if (animation.isAnimationFinished(counter)) {
                     Gdx.app.log("INFO", "Countdown finished");
-                    try {
-                        level.getWave().nextWave();
-                        this.setVisible(false);
-                    } catch (IndexOutOfBoundsException e) {
-                        game.setScreen(new ErrorScreen(game, "Unappropriate wave number in level " + level.currentLevel, e));
-                    }
+                    level.getWave().nextWave();
+                    this.setVisible(false);
+                } else {
+                    counter += delta;
                 }
             }
         }
@@ -103,5 +96,19 @@ public class CounterButton extends Actor {
         animation.setPlayMode(Animation.PlayMode.NORMAL);
         this.setVisible(true);
         Gdx.app.log("INFO", "Countdown started");
+    }
+
+    private Animation reset() {
+        int size = 40;
+        Animation animation = new Animation(1, game.getResources().getSkin()
+                .getRegion("button-countdown")
+                .split(size, size)[0]
+        );
+        animation.setPlayMode(Animation.PlayMode.NORMAL);
+        this.setSize(size, size);
+        counter = 0;
+        stateTime = 0;
+        Gdx.app.log("INFO", "Counter animation was reset");
+        return animation;
     }
 }

@@ -7,6 +7,7 @@ import ua.gram.DDGame;
 import ua.gram.view.screen.LevelLoadingScreen;
 
 /**
+ * FIXME Restart forces 1 level!
  * @author gram
  */
 public class RestartListener extends ClickListener {

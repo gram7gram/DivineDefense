@@ -11,7 +11,6 @@ import ua.gram.view.AbstractScreen;
 
 /**
  * TODO On following launches display Unlock button for opposite fraction
- * TODO Send AJAX request for statistics about fraction
  *
  * @author Gram
  */

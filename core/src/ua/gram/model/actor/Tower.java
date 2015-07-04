@@ -69,11 +69,11 @@ public abstract class Tower extends Actor implements Pool.Poolable {
         this.strategy = Strategy.STRONGEST;
         isActive = false;
         isBuilding = false;
-        this.setSize(animationWidth, animationHeight);
-        this.setBounds(getX(), getY(), animationWidth, animationHeight);
         controller = new TowerAnimationController(game.getResources().getSkin(), this);
         distanceComparator = new EnemyDistanceComparator(this);
         healthComparator = new EnemyHealthComparator();
+        this.setSize(animationWidth, animationHeight);
+        this.setBounds(getX(), getY(), animationWidth, animationHeight);
     }
 
     @Override
@@ -97,6 +97,7 @@ public abstract class Tower extends Actor implements Pool.Poolable {
     public void act(float delta) {
         super.act(delta);
         if (!DDGame.PAUSE) {
+            update(delta);
             if (isBuilding) {
                 if (countBuilding >= build_delay) {
                     countBuilding = 0;
@@ -149,6 +150,7 @@ public abstract class Tower extends Actor implements Pool.Poolable {
         }
     }
 
+    public abstract void update(float delta);
     /**
      * Perform Tower specific preparations before attack.
      *

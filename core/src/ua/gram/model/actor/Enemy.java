@@ -16,7 +16,6 @@ import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.model.group.EnemyGroup;
 
 /**
- * TODO Make 8 directional texture region for enemy to smooth moving
  *
  * @author Gram <gram7gram@gmail.com>
  */
@@ -59,6 +58,8 @@ public abstract class Enemy extends Actor implements Pool.Poolable {
         isDead = false;
         isAttacked = false;
         this.setSize(animationWidth, animationHeight);
+        this.setBounds(this.getX(), this.getY(), animationWidth, animationHeight);
+
     }
 
     @Override
@@ -75,8 +76,7 @@ public abstract class Enemy extends Actor implements Pool.Poolable {
     public void act(float delta) {
         super.act(delta);
         if (!DDGame.PAUSE) {
-            this.setOrigin(this.getX() + this.getWidth() / 2f, this.getY() + this.getHeight() * .9f / 2f);
-            this.setBounds(this.getX(), this.getY(), animationWidth, animationHeight);
+            update(delta);
             if (this.health <= 0) {
                 die();
             } else {
@@ -93,6 +93,8 @@ public abstract class Enemy extends Actor implements Pool.Poolable {
             }
         }
     }
+
+    public abstract void update(float delta);
 
     public void die() {
         this.addAction(Actions.run(new EnemyRemover(spawner, group) {

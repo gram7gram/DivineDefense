@@ -20,7 +20,7 @@ import java.util.Random;
  *
  * @author Gram <gram7gram@gmail.com>
  */
-public class LightningWeapon extends Weapon {
+public final class LightningWeapon extends Weapon {
 
     private final Sprite start_back;
     private final Sprite start_over;

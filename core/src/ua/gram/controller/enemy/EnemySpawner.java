@@ -72,12 +72,9 @@ public class EnemySpawner {
     }
 
     /**
-     * <pre>
      * Spawns obtained from pool and cloned Enemy,
      * places it at the Spawn position and gives it the path to go.
      * Spawn takes place in Group with the coresponding HealthBar.
-     * <pre>
-     * FIXME Zindex at spawn
      *
      * @param type the Enemy ancestor to spawn.
      * @throws CloneNotSupportedException - error occcured at cloning.
@@ -117,7 +114,6 @@ public class EnemySpawner {
      * Sets the Actions for Enemy to do to walk the path
      * <p/>
      * FIXME Bigger speed - slower walk of Enemy
-     * FIXME Merge Enemy animations in one atlas and image
      *
      * @param path - list of directions
      */

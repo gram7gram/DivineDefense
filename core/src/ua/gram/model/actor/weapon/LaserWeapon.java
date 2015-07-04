@@ -16,7 +16,7 @@ import ua.gram.model.actor.Weapon;
  *
  * @author Gram <gram7gram@gmail.com>
  */
-public class LaserWeapon extends Weapon {
+public final class LaserWeapon extends Weapon {
 
     private final Color color_back;
     private final Color color_over;
@@ -45,8 +45,8 @@ public class LaserWeapon extends Weapon {
         Vector2 targetPos = new Vector2(target.getOriginX(), target.getOriginY());
 
         float dist = towerPos.dst(targetPos);
-        middle_back.setSize(middle_back.getWidth(), dist - target.getHeight() / 2f);
-        middle_over.setSize(middle_back.getWidth(), dist - target.getHeight() / 2f);
+        middle_back.setSize(middle_back.getWidth(), dist - target.getHeight() / 3f);
+        middle_over.setSize(middle_back.getWidth(), dist - target.getHeight() / 3f);
 
         start_back.setOrigin(start_back.getWidth() / 2f, start_back.getHeight() / 2f);
         start_over.setOrigin(start_back.getWidth() / 2f, start_back.getHeight() / 2f);

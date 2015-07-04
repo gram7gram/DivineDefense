@@ -16,7 +16,6 @@ import ua.gram.DDGame;
 import ua.gram.view.screen.ErrorScreen;
 
 /**
- * TODO Merge resources in one big file.
  * NOTE Sprites should not be present in TextureAtlas: lock, weapon etc.
  *
  * @author Gram <gram7gram@gmail.com>

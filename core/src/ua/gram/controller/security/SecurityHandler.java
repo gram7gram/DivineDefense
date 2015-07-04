@@ -14,11 +14,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
 /**
- * <pre>
- * TODO Use Preferences class to automaticaly store data
- * TODO Recheck checksum
- * TODO Recheck saving.
- * </pre>
  *
  * @author Gram <gram7gram@gmail.com>
  */

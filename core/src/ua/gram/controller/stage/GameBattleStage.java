@@ -201,7 +201,11 @@ public class GameBattleStage extends Stage {
             int index = (int) (DDGame.MAP_HEIGHT - (enemy.getY()) / DDGame.TILE_HEIGHT) - 1;
             if (index != enemy.getParent().getZIndex()) {
                 enemy.getParent().remove();
-                indexes.get(index).addActor(enemy.getParent());
+                Group enemyGroup = enemy.getParent();
+                Group indexGroup = indexes.get(index);
+                if (enemyGroup != null && indexGroup != null) {
+                    indexGroup.addActor(enemyGroup);
+                }
             }
         }
     }
