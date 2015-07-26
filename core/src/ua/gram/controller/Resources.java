@@ -1,12 +1,9 @@
 package ua.gram.controller;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -39,20 +36,14 @@ public class Resources implements Disposable {
     public Resources(DDGame game) {
         this.game = game;
         manager = new AssetManager();
-        try {
+//        try{
             skin = loadSkin(SKIN_FILE);
-        } catch (GdxRuntimeException e) {
-            Gdx.app.error("ERROR", "Could not load skin!\nDue to: " + e);
-            System.exit(1);//Gdx.app.exit() does not do it's job!...
-        }
+//        } catch(Exception e) {
+//            Gdx.app.error("ERROR", "Could not load skin");
+//            Gdx.app.exit();
+//        }
     }
 
-    public void loadBasicFiles() {
-        loadFont("ActionManShaded", 32, "black");//loading label
-        loadFont("SfArchery", 32, "white"); //button labels
-        loadFont("SfArchery", 16, "black"); //button labels
-        loadFont("FffTusj", 64, "white");//Big labels
-    }
 
     /**
      * Loads the JSON and corresponding Atlas files to AssetManager.
@@ -71,23 +62,6 @@ public class Resources implements Disposable {
     }
 
     /**
-     * Loads fonts with specified name in lowercase: fontName+size+color.fnt.
-     * Will display ErrorScreen it was not able to load font.
-     *
-     * @param fontName general font name
-     * @param size     desired font size
-     * @param color    desired font color
-     */
-    public void loadFont(String fontName, int size, String color) {
-        try {
-            manager.load("data/skin/fonts/" + fontName + size + color + ".fnt", BitmapFont.class);
-        } catch (GdxRuntimeException e) {
-            if (game.getCamera() == null) createDisplayComponents();
-            game.setScreen(new ErrorScreen(game, "Could not load font: " + fontName, e));
-        }
-    }
-
-    /**
      * Load tiled map for specified level.
      * Will display ErrorScreen it was not able to load map.
      *
@@ -100,22 +74,6 @@ public class Resources implements Disposable {
         } catch (GdxRuntimeException e) {
             if (game.getCamera() == null) createDisplayComponents();
             game.setScreen(new ErrorScreen(game, "Could not load map for level: " + level, e));
-        }
-    }
-
-    /**
-     * Load TextureAtlas for specified name.
-     * Names are accessible through static Strings in Resources class.
-     * Will display ErrorScreen it was not able to load map.
-     *
-     * @param file atlas location
-     */
-    public void loadAtlas(String file) {
-        try {
-            manager.load(file, TextureAtlas.class);
-        } catch (GdxRuntimeException e) {
-            if (game.getCamera() == null) createDisplayComponents();
-            game.setScreen(new ErrorScreen(game, "Not loaded: " + file, e));
         }
     }
 

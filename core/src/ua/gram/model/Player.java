@@ -99,4 +99,8 @@ public class Player {
     public void nextLevel() {
         this.level += 1;
     }
+
+    public void addGems(int i) {
+        gems += i;
+    }
 }

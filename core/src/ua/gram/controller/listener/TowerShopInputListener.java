@@ -101,6 +101,13 @@ public class TowerShopInputListener extends ClickListener {
         }
     }
 
+    /**
+     * TODO Check canBeBuild method and isPositionEmpty
+     *
+     * @param X
+     * @param Y
+     * @return
+     */
     private boolean canBeBuild(float X, float Y) {
         TiledMapTileLayer.Cell cell1 = layer.getCell((int) (X / DDGame.TILE_HEIGHT), (int) (Y / DDGame.TILE_HEIGHT));
         MapProperties prop1 = cell1.getTile().getProperties();
@@ -109,13 +116,12 @@ public class TowerShopInputListener extends ClickListener {
             if (cell2 != null) {
                 MapProperties prop2 = cell2.getTile().getProperties();
                 if (prop2 != null) {
-                    return !prop1.containsKey("walkable")
-                            && !prop2.containsKey("blocked")
+                    return !prop1.containsKey("walkable") && !prop2.containsKey("blocked")
                             && stage_battle.isPositionEmpty(X, Y);
                 }
             }
         }
-        return !prop1.containsKey("walkable")
+        return !prop1.containsKey("walkable") && !prop1.containsKey("blocked")
                 && stage_battle.isPositionEmpty(X, Y);
 
     }

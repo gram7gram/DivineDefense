@@ -33,7 +33,7 @@ public class FractionStage extends Stage {
         this.game = game;
         Skin skin = game.getResources().getSkin();
 
-        Label header = new Label("Choose your fraction", skin, "archery64white");
+        Label header = new Label("Choose your fraction", skin, "header1white");
         header.setVisible(true);
         header.setPosition((DDGame.WORLD_WIDTH - header.getWidth()) / 2f, DDGame.WORLD_HEIGHT - header.getHeight() - 10);
 

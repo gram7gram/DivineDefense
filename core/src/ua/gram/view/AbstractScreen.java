@@ -50,4 +50,19 @@ public abstract class AbstractScreen implements Screen {
     public void resume() {
         DDGame.PAUSE = false;
     }
+
+    @Override
+    public void show() {
+
+    }
+
+    @Override
+    public void hide() {
+
+    }
+
+    @Override
+    public void dispose() {
+
+    }
 }

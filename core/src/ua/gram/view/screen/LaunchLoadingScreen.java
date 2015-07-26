@@ -21,7 +21,6 @@ public class LaunchLoadingScreen extends AbstractLoadingScreen {
     @Override
     public void show() {
         game.setPlayer(PlayerFactory.defaults());
-        game.getResources().loadBasicFiles();
         game.getResources().loadTexture(Resources.BACKGROUND_TEXTURE);
         game.createCamera();
         game.createBatch();

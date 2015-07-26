@@ -15,7 +15,7 @@ public class LoadingStage extends Stage {
     public LoadingStage(DDGame game) {
         super(game.getViewport(), game.getBatch());
         this.setDebugAll(DDGame.DEBUG);
-        label = new Label("Loading: 0%", game.getResources().getSkin(), "action64black");
+        label = new Label("Loading: 0%", game.getResources().getSkin(), "header1black");
         label.setPosition(
                 DDGame.WORLD_WIDTH / 2 - label.getWidth() / 2,
                 DDGame.WORLD_HEIGHT / 2 - label.getHeight() / 2

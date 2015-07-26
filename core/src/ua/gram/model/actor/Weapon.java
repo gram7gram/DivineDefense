@@ -70,4 +70,8 @@ public abstract class Weapon extends Actor {
     public void setSource(Tower source) {
         this.tower = source;
     }
+
+    public void resetTarget() {
+        target = null;
+    }
 }

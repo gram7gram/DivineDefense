@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 /**
  * Contains major game objects, like towers and enemies.
- *
+ * <p/>
  * TODO Check for occupied cells if tower is build.
  *
  * @author Gram <gram7gram@gmail.com>
@@ -166,20 +166,12 @@ public class GameBattleStage extends Stage {
     }
 
     public boolean isPositionEmpty(float x, float y) {
-//        for (Actor actor : this.getActors()) {
-//            if (actor instanceof Group) {
-//                for (Actor actor1 : ((Group) actor).getChildren()) {
-//                    if (actor1 instanceof TowerGroup) {
-//                        for (Actor actor2 : ((TowerGroup) actor1).getChildren()) {
-//                            if (actor2 instanceof Tower) {
-//                                return (Float.compare(actor2.getX(), x) != 0
-//                                        && Float.compare(actor2.getY(), y) != 0);
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
+        for (Tower tower : this.getTowersOnMap()) {
+            if (Float.compare(tower.getX(), x) != 0 && Float.compare(tower.getY(), y) != 0) {
+                Gdx.app.log("WARN", "Position is occupied");
+                return false;
+            }
+        }
         return true;
     }
 

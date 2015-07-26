@@ -15,6 +15,7 @@ import ua.gram.view.screen.ErrorScreen;
 
 /**
  * TODO Blink this
+ *
  * @author Gram <gram7gram@gmail.com>
  */
 public class CounterButton extends Actor {
@@ -27,36 +28,38 @@ public class CounterButton extends Actor {
     private float counter = 0;
 
     public CounterButton(final DDGame game, final Level level, Vector2 position) {
+        final CounterButton counterButton = this;
         this.game = game;
         this.level = level;
-        this.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.log("INFO", "Countdown interrupted");
-//                if (level.getWave().getCountdown() > 0) {
-//                    int reward = (int) (animation.getKeyFrameIndex(Gdx.graphics.getDeltaTime()) / animation.getFrameDuration());
-//                    if (reward <= 0 && reward >= Wave.countdown)
-//                        throw new IllegalArgumentException("Out of bounds reward: " + reward + " coins");
-//                    game.getPlayer().addCoins(reward);
-//                    TODO Display profit Label
-//                }
-                Gdx.app.log("INFO", "Player will recieves some coins as reward");
-                try {
-                    level.getWave().nextWave();
-                    setVisible(false);
-                } catch (IndexOutOfBoundsException e) {
-                    game.setScreen(new ErrorScreen(game, "Inappropriate wave "
-                            + level.getWave().getCurrentWave()
-                            + " in level " + level.currentLevel, e));
-                }
-            }
-        });
         this.setSize(40, 40);
         this.setPosition(
                 position.x * DDGame.TILE_HEIGHT + (DDGame.TILE_HEIGHT - this.getWidth()) / 2f,
                 position.y * DDGame.TILE_HEIGHT + (DDGame.TILE_HEIGHT - this.getHeight()) / 2f
         );
         this.setVisible(false);
+        this.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Gdx.app.log("INFO", "Countdown interrupted");
+                try {
+                    if (!animation.isAnimationFinished(counter)) {
+                        int reward = (int) (stateTime / animation.getFrameDuration());
+                        if (reward > 0) {
+                            Gdx.app.log("INFO", "Player receives " + (reward *= 10) + " coins as reward");
+                            game.getPlayer().addCoins(reward);
+                            new PopupLabel("+" + reward, game.getResources().getSkin(), "smallpopupwhite", counterButton);
+                        }
+                    }
+                    level.getWave().nextWave();
+                    counterButton.setVisible(false);
+                    stateTime = 0;
+                } catch (Exception e) {
+                    game.setScreen(new ErrorScreen(game, "Inappropriate wave "
+                            + level.getWave().getCurrentWave()
+                            + " in level " + level.currentLevel, e));
+                }
+            }
+        });
         this.setDebug(DDGame.DEBUG);
         Gdx.app.log("INFO", "Counter button is OK");
     }

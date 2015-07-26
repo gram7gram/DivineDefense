@@ -6,7 +6,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import ua.gram.DDGame;
 import ua.gram.model.group.LevelTile;
-import ua.gram.model.group.ScreenHeader;
 import ua.gram.view.screen.MainMenuScreen;
 
 /**
@@ -29,8 +28,6 @@ public class LevelSelectStage extends Stage {
                 game.setScreen(new MainMenuScreen(game));
             }
         });
-        ScreenHeader header = new ScreenHeader(game, "Choose the level");
-        header.setVisible(true);
 
         LevelTile tile1 = new LevelTile(game, 1, 2, false);
         LevelTile tile2 = new LevelTile(game, 2, 3, false);
@@ -40,7 +37,6 @@ public class LevelSelectStage extends Stage {
         tile2.setVisible(true);
         tile3.setVisible(true);
 
-        this.addActor(header);
         this.addActor(tile1);
         this.addActor(tile2);
         this.addActor(tile3);

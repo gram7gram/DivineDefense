@@ -15,6 +15,8 @@ import ua.gram.controller.enemy.EnemySpawner;
 import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.model.group.EnemyGroup;
 
+import java.util.Random;
+
 /**
  *
  * @author Gram <gram7gram@gmail.com>
@@ -102,7 +104,11 @@ public abstract class Enemy extends Actor implements Pool.Poolable {
             public void customAction() {
                 Enemy enemy = group.getEnemy();
                 game.getPlayer().addCoins(enemy.reward);
-                //TODO Randomly add gems as reward
+                float value = new Random().nextFloat();
+                if (value > .45 && value < .55) {//10% chance
+                    game.getPlayer().addGems(1);
+                    Gdx.app.log("INFO", "Player got 1 gem");
+                }
                 Gdx.app.log("INFO", enemy + "@" + enemy.hashCode() + " was killed");
             }
         }));

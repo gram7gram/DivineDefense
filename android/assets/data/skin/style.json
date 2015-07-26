@@ -1,0 +1,265 @@
+{
+  "com.badlogic.gdx.graphics.Color": {
+    "white": {
+      "r": 1,
+      "g": 1,
+      "b": 1,
+      "a": 1
+    },
+    "black": {
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 1
+    },
+    "black25": {
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 0.25
+    }
+  },
+  "com.badlogic.gdx.graphics.g2d.BitmapFont": {
+    "default": {
+      "file": "data/skin/fonts/64/SfArchery64black.fnt"
+    },
+    "tusj64black": {
+      "file": "data/skin/fonts/64/tusj64black.fnt"
+    },
+    "tusj64white": {
+      "file": "data/skin/fonts/64/tusj64white.fnt"
+    },
+    "archery64black": {
+      "file": "data/skin/fonts/64/SfArchery64black.fnt"
+    },
+    "archery64white": {
+      "file": "data/skin/fonts/64/SfArchery64white.fnt"
+    },
+    "action64black": {
+      "file": "data/skin/fonts/64/ActionManShaded64black.fnt"
+    },
+    "action64white": {
+      "file": "data/skin/fonts/64/ActionManShaded64white.fnt"
+    },
+    "action40black": {
+      "file": "data/skin/fonts/40/action40black.fnt"
+    },
+    "tusj32black": {
+      "file": "data/skin/fonts/32/tusj32black.fnt"
+    },
+    "tusj32white": {
+      "file": "data/skin/fonts/32/tusj32white.fnt"
+    },
+    "archery32black": {
+      "file": "data/skin/fonts/32/archery32black.fnt"
+    },
+    "archery32white": {
+      "file": "data/skin/fonts/32/archery32white.fnt"
+    },
+    "actionshaded32black": {
+      "file": "data/skin/fonts/32/ActionManShaded32black.fnt"
+    },
+    "actionshaded32white": {
+      "file": "data/skin/fonts/32/ActionManShaded32white.fnt"
+    },
+    "action32black": {
+      "file": "data/skin/fonts/32/action32black.fnt"
+    },
+    "action24black": {
+      "file": "data/skin/fonts/24/action24black.fnt"
+    },
+    "komika24grey": {
+      "file": "data/skin/fonts/24/komika24grey.fnt"
+    },
+    "komika24black": {
+      "file": "data/skin/fonts/24/komika24black.fnt"
+    },
+    "komika24white": {
+      "file": "data/skin/fonts/24/komika24white.fnt"
+    },
+    "komika16black": {
+      "file": "data/skin/fonts/16/komika16black.fnt"
+    },
+    "komika16black": {
+      "file": "data/skin/fonts/16/komika16black.fnt"
+    },
+    "archery16white": {
+      "file": "data/skin/fonts/16/SfArchery16black.fnt"
+    }
+  },
+  "com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle": {
+    "default": {
+      "font": "archery64black"
+    },
+    "header1black": {
+      "font": "archery64black"
+    },
+    "header1white": {
+      "font": "archery64white"
+    },
+    "header1altblack": {
+      "font": "action40black"
+    },
+    "header1altwhite": {
+      "font": "tusj64white"
+    },
+    "header2black": {
+      "font": "action32black"
+    },
+    "header2altwhite": {
+      "font": "archery32white"
+    },
+    "header3black": {
+      "font": "komika24grey"
+    },
+    "normaltextblack": {
+      "font": "action24black"
+    },
+    "footerblack": {
+      "font": "komika24black"
+    },
+    "smallpopupwhite": {
+      "font": "komika24white"
+    },
+    "small_tinted": {
+      "font": "archery32white",
+      "background": "label-background-0.25"
+    },
+    "16_tinted": {
+      "font": "archery16white",
+      "background": "label-background-0.25"
+    }
+  },
+  "com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {
+    "default": {
+      "font": "archery32black",
+      "up": "button-default-up",
+      "down": "button-default-down"
+    },
+    "tower": {
+      "font": "archery32black",
+      "up": "button-default-up",
+      "down": "button-default-down"
+    },
+    "green-button": {
+      "font": "archery32white",
+      "up": "button-green-up",
+      "down": "button-green-down"
+    },
+    "blue-button": {
+      "font": "archery32white",
+      "up": "button-blue-up",
+      "down": "button-blue-down"
+    },
+    "pretty-button": {
+      "font": "archery32black",
+      "up": "button-pretty-up",
+      "down": "button-pretty-down"
+    }
+  },
+  "com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle": {
+    "default": {
+      "up": "button-default-up",
+      "down": "button-default-down"
+    },
+    "angel": {
+      "up": "button-angel-up",
+      "down": "button-angel-up"
+    },
+    "demon": {
+      "up": "button-demon-disabled",
+      "disabled": "button-demon-disabled"
+    },
+    "shopitem-tower-primary": {
+      "up": "shopitem-tower-primary",
+      "disabled": "shopitem-tower-primary-disabled"
+    },
+    "shopitem-tower-secondary": {
+      "up": "shopitem-tower-secondary",
+      "disabled": "shopitem-tower-secondary-disabled"
+    },
+    "shopitem-tower-stun": {
+      "up": "shopitem-tower-stun",
+      "disabled": "shopitem-tower-stun-disabled"
+    },
+    "shopitem-tower-special": {
+      "up": "shopitem-tower-special",
+      "disabled": "shopitem-tower-special-disabled"
+    },
+    "sell-button": {
+      "up": "button-sell-up",
+      "down": "button-sell-down"
+    },
+    "upgrade-button": {
+      "up": "button-upgrade-up",
+      "down": "button-upgrade-down"
+    },
+    "close-button": {
+      "up": "button-close-up",
+      "down": "button-close-down"
+    },
+    "pause-button": {
+      "up": "button-pause-up",
+      "down": "button-pause-down"
+    },
+    "speed-button": {
+      "up": "button-speed-up",
+      "down": "button-speed-down"
+    },
+    "quit-button": {
+      "up": "button-quit-up",
+      "down": "button-quit-down"
+    },
+    "back-button": {
+      "up": "button-back-up",
+      "down": "button-back-down"
+    },
+    "buy-button": {
+      "up": "button-buy-up",
+      "down": "button-buy-down"
+    },
+    "level1-preview": {
+      "up": "level1-preview-up",
+      "down": "level1-preview-down"
+    },
+    "level2-preview": {
+      "up": "level2-preview-up",
+      "down": "level2-preview-down"
+    },
+    "level3-preview": {
+      "up": "level3-preview-up",
+      "down": "level3-preview-down"
+    },
+    "button-defeat-restart": {
+      "up": "button-defeat-1-up",
+      "down": "button-defeat-1-down",
+      "over": "button-defeat-1-down"
+    },
+    "button-defeat-continue-part": {
+      "up": "button-defeat-2-up",
+      "down": "button-defeat-2-down",
+      "over": "button-defeat-2-down",
+      "disabled": "button-defeat-2-disabled"
+    },
+    "button-defeat-continue-full": {
+      "up": "button-defeat-3-up",
+      "down": "button-defeat-3-down",
+      "over": "button-defeat-3-down",
+      "disabled": "button-defeat-3-disabled"
+    },
+    "button-goto-shop": {
+      "up": "button-goto-shop-up",
+      "down": "button-goto-shop-down"
+    }
+  },
+  "com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle": {
+    "default": {
+      "titleFont": "default",
+      "background": "window-pretty"
+    },
+    "window-pretty-header": {
+      "titleFont": "action40black",
+      "background": "window-pretty-header"
+    }
+  }
+}

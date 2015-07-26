@@ -39,7 +39,7 @@ public class ConfirmationGroup extends Group {
         confirmBut.setVisible(true);
         confirmBut.addListener(confirmListener);
 
-        Label messageLabel = new Label(message, game.getResources().getSkin(), "archery64black");
+        Label messageLabel = new Label(message, game.getResources().getSkin(), "header1black");
         messageLabel.setPosition((DDGame.WORLD_WIDTH - messageLabel.getWidth()) / 2f, DDGame.WORLD_HEIGHT / 2f - 10);
         messageLabel.setVisible(true);
         messageLabel.setWrap(true);

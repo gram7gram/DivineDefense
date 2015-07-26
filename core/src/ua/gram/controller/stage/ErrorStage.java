@@ -12,7 +12,7 @@ import ua.gram.DDGame;
 import java.util.Arrays;
 
 /**
- * Created by Gram on 12/1.
+ * @author Gram <gram7gram@gmail.com>
  */
 public class ErrorStage extends Stage {
 
@@ -21,11 +21,11 @@ public class ErrorStage extends Stage {
         this.setDebugAll(DDGame.DEBUG);
         byte gap = 5;
         Gdx.app.error("ERROR", error);
-        Label errorLabel = new Label("ERROR", game.getResources().getSkin(), "tusj64white");
+        Label errorLabel = new Label("ERROR", game.getResources().getSkin(), "header1altwhite");
         errorLabel.setPosition((DDGame.WORLD_WIDTH - errorLabel.getWidth()) / 2f, DDGame.WORLD_HEIGHT / 2f + 20);
         errorLabel.setVisible(true);
 
-        final Label thrownErrorLabel = new Label(error, game.getResources().getSkin(), "archery32white");
+        final Label thrownErrorLabel = new Label(error, game.getResources().getSkin(), "header2altwhite");
         thrownErrorLabel.setPosition((DDGame.WORLD_WIDTH - thrownErrorLabel.getWidth()) / 2f, (DDGame.WORLD_HEIGHT - thrownErrorLabel.getHeight()) / 2f);
         thrownErrorLabel.setVisible(true);
 

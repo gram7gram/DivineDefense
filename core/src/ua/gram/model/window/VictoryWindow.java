@@ -58,7 +58,7 @@ public class VictoryWindow extends Window {
             }
         });
 
-        Label reward = new Label("Reward: +2 gems", skin, "archery64black");
+        Label reward = new Label("Reward: +2 gems", skin, "header2black");
         reward.setPosition(originX + 55, originY + 95);
         reward.setVisible(true);
 

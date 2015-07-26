@@ -138,9 +138,8 @@ public abstract class Tower extends Actor implements Pool.Poolable {
                         }
                     } else {
                         victim.isAttacked = false;
+                        weapon.resetTarget();
                         victim = null;
-//                        aim.setVisible(false);
-                        weapon.setTarget(null);
                         weapon.setVisible(false);
                     }
                 } else {

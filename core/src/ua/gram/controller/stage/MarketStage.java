@@ -6,7 +6,7 @@ import ua.gram.DDGame;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class MarketStage extends Stage {
+public final class MarketStage extends Stage {
 
     private final DDGame game;
 
