@@ -84,7 +84,7 @@
       "file": "data/skin/fonts/16/komika16black.fnt"
     },
     "archery16white": {
-      "file": "data/skin/fonts/16/SfArchery16black.fnt"
+      "file": "data/skin/fonts/16/SfArchery16white.fnt"
     }
   },
   "com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle": {

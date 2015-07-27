@@ -20,10 +20,8 @@ import ua.gram.view.screen.LaunchLoadingScreen;
  * TODO Add to JSON pressed and disabled drawable for buttons
  * TODO Add copyrights
  * TODO Handle Android Menu, Back click events
- * <p/>
  * FIXME Logotype
  * FIXME Switch 16pt font with 20pt
- * <p/>
  * NOTE Enemies should be tough because the amount of towers is unlimited
  * NOTE Skin should not contain nonexistent values
  *
@@ -35,7 +33,7 @@ public class DDGame extends Game {
     public static final String DEMON = "Demon";
     public static final byte TILE_HEIGHT = 60;
     public static final byte DEFAULT_BUTTON_HEIGHT = 80;
-    public static boolean DEBUG = false;
+    public static boolean DEBUG = true;
     public static boolean PAUSE = false;
     public static int WORLD_WIDTH;
     public static int WORLD_HEIGHT;
@@ -43,7 +41,7 @@ public class DDGame extends Game {
     public static int MAP_HEIGHT;
     public static int MAX_ENTITIES;
     private SecurityHandler security;
-    private byte gameSpeed = 1;
+    private float gameSpeed = 1;
     private Resources resources;
     private SpriteBatch batch;
     private OrthographicCamera camera;
@@ -57,8 +55,8 @@ public class DDGame extends Game {
     @Override
     public void create() {
         sayHello();
-        Gdx.input.setCatchMenuKey(true);
-        Gdx.input.setCatchBackKey(true);
+//        Gdx.input.setCatchMenuKey(true);
+//        Gdx.input.setCatchBackKey(true);
 //        Gdx.app.setLogLevel(Application.LOG_NONE);
         WORLD_WIDTH = Gdx.graphics.getWidth();
         WORLD_HEIGHT = Gdx.graphics.getHeight();
@@ -156,10 +154,6 @@ public class DDGame extends Game {
         return security;
     }
 
-    public void setSecurity(SecurityHandler security) {
-        this.security = security;
-    }
-
     public Player getPlayer() {
         return player;
     }
@@ -168,12 +162,12 @@ public class DDGame extends Game {
         this.player = player;
     }
 
-    public byte getGameSpeed() {
+    public float getGameSpeed() {
         return gameSpeed;
     }
 
-    public void setGameSpeed(int gameSpeed) {
-        this.gameSpeed = (byte) gameSpeed;
+    public void setGameSpeed(float gameSpeed) {
+        this.gameSpeed = gameSpeed;
     }
 
     private synchronized void sayGoodbye() {

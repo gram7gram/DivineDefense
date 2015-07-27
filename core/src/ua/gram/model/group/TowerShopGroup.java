@@ -3,6 +3,7 @@ package ua.gram.model.group;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import ua.gram.DDGame;
@@ -99,6 +100,19 @@ public class TowerShopGroup extends Group {
         this.addActor(towerStunLabel);
         this.addActor(towerSpecialBut);
         this.addActor(towerSpecialLabel);
+        this.addAction(
+                Actions.sequence(
+                        Actions.parallel(
+                                Actions.alpha(0),
+                                Actions.moveBy(0, -towerPrimaryBut.getHeight())
+                        ),
+                        Actions.delay(.5f),
+                        Actions.parallel(
+                                Actions.alpha(1, .2f),
+                                Actions.moveBy(0, towerPrimaryBut.getHeight(), .2f)
+                        )
+                )
+        );
         this.setDebug(DDGame.DEBUG);
         Gdx.app.log("INFO", "TowerShopGroup is OK");
     }

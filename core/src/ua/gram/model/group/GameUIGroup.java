@@ -3,6 +3,7 @@ package ua.gram.model.group;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -52,10 +53,9 @@ public class GameUIGroup extends Group {
         speedBut.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setGameSpeed(2);
+                game.setGameSpeed(game.getGameSpeed() > 1 ? 1 : 1.5f);
             }
         });
-
         Vector2 pos = level.getMap().getSpawn().getPosition();
         Vector2 dir = level.getMap().getPath().getPath().get(0);
 
@@ -95,18 +95,30 @@ public class GameUIGroup extends Group {
 
         this.addActor(pauseBut);
         this.addActor(speedBut);
+        Group labels = new Group();
+        labels.addActor(gemsLabel);
+        labels.addActor(moneyLabel);
+        labels.addActor(healthLabel);
+        labels.addActor(waveLabel);
+
         this.addActor(counter);
-        this.addActor(gemsLabel);
-        this.addActor(moneyLabel);
-        this.addActor(healthLabel);
-        this.addActor(waveLabel);
+        this.addActor(labels);
+        labels.addAction(
+                Actions.sequence(
+                        Actions.parallel(
+                                Actions.alpha(0),
+                                Actions.moveBy(0, gemsLabel.getHeight())
+                        ),
+                        Actions.delay(.5f),
+                        Actions.parallel(
+                                Actions.alpha(1, .2f),
+                                Actions.moveBy(0, -gemsLabel.getHeight(), .2f)
+                        )
+                )
+        );
+
     }
 
-    /**
-     * Updates UI components.
-     *
-     * @param delta
-     */
     @Override
     public void act(float delta) {
         if (!DDGame.PAUSE && !(level.isCleared | game.getPlayer().isDead())) {

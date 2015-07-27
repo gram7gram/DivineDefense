@@ -101,13 +101,6 @@ public class TowerShopInputListener extends ClickListener {
         }
     }
 
-    /**
-     * TODO Check canBeBuild method and isPositionEmpty
-     *
-     * @param X
-     * @param Y
-     * @return
-     */
     private boolean canBeBuild(float X, float Y) {
         TiledMapTileLayer.Cell cell1 = layer.getCell((int) (X / DDGame.TILE_HEIGHT), (int) (Y / DDGame.TILE_HEIGHT));
         MapProperties prop1 = cell1.getTile().getProperties();

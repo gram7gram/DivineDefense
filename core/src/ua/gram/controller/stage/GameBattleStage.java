@@ -29,10 +29,12 @@ public class GameBattleStage extends Stage {
     private volatile ArrayList<Group> indexes;
     private Range range;
     private ToggleTowerControlsListener controlsListener;
+    private ArrayList<int[]> towerPositions;
 
     public GameBattleStage(DDGame game, Level level) {
         super(game.getViewport(), game.getBatch());
         this.level = level;
+        towerPositions = new ArrayList<int[]>();
         indexes = new ArrayList<Group>();
         for (int i = 0; i < DDGame.MAP_HEIGHT; i++) {
             Group group = new Group();
@@ -166,9 +168,8 @@ public class GameBattleStage extends Stage {
     }
 
     public boolean isPositionEmpty(float x, float y) {
-        for (Tower tower : this.getTowersOnMap()) {
-            if (Float.compare(tower.getX(), x) != 0 && Float.compare(tower.getY(), y) != 0) {
-                Gdx.app.log("WARN", "Position is occupied");
+        for (int[] position : towerPositions) {
+            if (position[0] == (int) x / DDGame.TILE_HEIGHT && position[1] == (int) y / DDGame.TILE_HEIGHT) {
                 return false;
             }
         }
@@ -208,5 +209,13 @@ public class GameBattleStage extends Stage {
 
     public ToggleTowerControlsListener getControlsListener() {
         return controlsListener;
+    }
+
+    public void addTowerPosition(Tower tower) {
+        towerPositions.add(new int[]{(int) tower.getX() / DDGame.TILE_HEIGHT, (int) tower.getY() / DDGame.TILE_HEIGHT});
+    }
+
+    public void removeTowerPosition(Tower tower) {
+        towerPositions.remove(new int[]{(int) tower.getX() / DDGame.TILE_HEIGHT, (int) tower.getY() / DDGame.TILE_HEIGHT});
     }
 }

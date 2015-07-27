@@ -36,15 +36,14 @@ public class TowerShop {
     private final Pool<Tower> poolStun;
     private final Pool<Tower> poolSpecial;
 
-    @SuppressWarnings("unchecked")
     public TowerShop(DDGame game, GameBattleStage stage_battle, GameUIStage stage_ui) {
         this.game = game;
         this.stage_ui = stage_ui;
         this.stage_battle = stage_battle;
-        poolPrimary = new TowerPool(game, 5, DDGame.MAX_ENTITIES, TowerPrimary.class);
-        poolSecondary = new TowerPool(game, 5, DDGame.MAX_ENTITIES, TowerSecondary.class);
-        poolStun = new TowerPool(game, 5, DDGame.MAX_ENTITIES, TowerStun.class);
-        poolSpecial = new TowerPool(game, 5, DDGame.MAX_ENTITIES, TowerSpecial.class);
+        poolPrimary = new TowerPool<TowerPrimary>(game, 5, DDGame.MAX_ENTITIES, TowerPrimary.class);
+        poolSecondary = new TowerPool<TowerSecondary>(game, 5, DDGame.MAX_ENTITIES, TowerSecondary.class);
+        poolStun = new TowerPool<TowerStun>(game, 5, DDGame.MAX_ENTITIES, TowerStun.class);
+        poolSpecial = new TowerPool<TowerSpecial>(game, 5, DDGame.MAX_ENTITIES, TowerSpecial.class);
         towerShopGroup = new TowerShopGroup(game, this);
         stage_ui.setTowerControls(new TowerControlsGroup(game.getResources().getSkin(), this));
         Gdx.app.log("INFO", "TowerShop is OK");
@@ -104,6 +103,7 @@ public class TowerShop {
         towerGroup.setVisible(true);
         tower.setOrigin(tower.getX() + 20, tower.getY() + 42);
         stage_battle.updateZIndexes(towerGroup);
+        stage_battle.addTowerPosition(tower);
         tower.isBuilding = true;
         Gdx.app.log("INFO", tower + " is building...");
     }
@@ -120,6 +120,7 @@ public class TowerShop {
     }
 
     public void sell(TowerGroup group) {
+        stage_battle.removeTowerPosition(group.getTower());
         int revenue = (int) (group.getTower().getCost() * SELL_RATIO);
         Gdx.app.log("INFO", this.getClass().getSimpleName() + " is sold for: " + revenue + " coins");
         game.getPlayer().addCoins(revenue);
@@ -149,8 +150,6 @@ public class TowerShop {
 
     /**
      * Puts the tower in corresponding Pool
-     *
-     * @param tower
      */
     public void free(Tower tower) {
         this.getPool(tower.getClass()).free(tower);

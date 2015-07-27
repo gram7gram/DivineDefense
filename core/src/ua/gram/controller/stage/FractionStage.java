@@ -114,6 +114,9 @@ public class FractionStage extends Stage {
             option2.setTouchable(Touchable.enabled);
         }
         this.addActor(fractions);
+//        DefeatWindow window = new DefeatWindow(game, this);
+//        window.setVisible(true);
+//        this.addActor(window);
     }
 
     private void createDialog() {
