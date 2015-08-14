@@ -10,9 +10,9 @@ import ua.gram.DDGame;
  *
  * @author gram
  */
-public class ConfirmationWindow extends Window {
+public class EmptyWindow extends Window {
 
-    public ConfirmationWindow(Skin skin, String style) {
+    public EmptyWindow(Skin skin, String style) {
         super("", skin, style);
         this.setSize(480, 250);
         this.setPosition((DDGame.WORLD_WIDTH - this.getWidth()) / 2f, (DDGame.WORLD_HEIGHT - this.getHeight()) / 2f);

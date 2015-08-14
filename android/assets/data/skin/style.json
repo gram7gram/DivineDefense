@@ -146,6 +146,11 @@
       "up": "button-green-up",
       "down": "button-green-down"
     },
+    "green-button-smaller": {
+      "font": "komika24grey",
+      "up": "button-green-up",
+      "down": "button-green-down"
+    },
     "blue-button": {
       "font": "archery32white",
       "up": "button-blue-up",

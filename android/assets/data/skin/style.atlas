@@ -1,0 +1,770 @@
+
+style.png
+size: 4096,2048
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+EnemyRunner_Demon_Down
+  rotate: false
+  xy: 1256, 1233
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+EnemyRunner_Demon_Left
+  rotate: false
+  xy: 2256, 1793
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+EnemyRunner_Demon_Right
+  rotate: false
+  xy: 2256, 1701
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+EnemyRunner_Demon_Up
+  rotate: false
+  xy: 2256, 1609
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+EnemySoldierArmored_Demon_Down
+  rotate: false
+  xy: 2256, 1517
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+EnemySoldierArmored_Demon_Left
+  rotate: false
+  xy: 2256, 1425
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+EnemySoldierArmored_Demon_Right
+  rotate: false
+  xy: 454, 879
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+EnemySoldierArmored_Demon_Up
+  rotate: false
+  xy: 454, 787
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+EnemySoldier_Demon_Down
+  rotate: false
+  xy: 454, 695
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+EnemySoldier_Demon_Left
+  rotate: false
+  xy: 3058, 1895
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+EnemySoldier_Demon_Right
+  rotate: false
+  xy: 1256, 1141
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+EnemySoldier_Demon_Up
+  rotate: false
+  xy: 406, 603
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+EnemySummoner_Demon_Down
+  rotate: false
+  xy: 406, 511
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+EnemySummoner_Demon_Down_Summon
+  rotate: false
+  xy: 406, 419
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+EnemySummoner_Demon_Left
+  rotate: false
+  xy: 406, 327
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+EnemySummoner_Demon_Left_Summon
+  rotate: false
+  xy: 406, 235
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+EnemySummoner_Demon_Right
+  rotate: false
+  xy: 406, 143
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+EnemySummoner_Demon_Right_Summon
+  rotate: false
+  xy: 406, 51
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+EnemySummoner_Demon_Up
+  rotate: false
+  xy: 2246, 1333
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+EnemySummoner_Demon_Up_Summon
+  rotate: false
+  xy: 3000, 1803
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+EnemyWarrior_Demon_Down
+  rotate: false
+  xy: 3000, 1711
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+EnemyWarrior_Demon_Left
+  rotate: false
+  xy: 3000, 1619
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+EnemyWarrior_Demon_Right
+  rotate: false
+  xy: 3000, 1527
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+EnemyWarrior_Demon_Up
+  rotate: false
+  xy: 2798, 1435
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+TowerPrimary_Angel_Lvl1_Idle
+  rotate: false
+  xy: 2798, 1343
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+TowerPrimary_Angel_Lvl2_Idle
+  rotate: false
+  xy: 2788, 1251
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+TowerPrimary_Angel_Lvl3_Idle
+  rotate: false
+  xy: 1168, 1049
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+TowerPrimary_Angel_Lvl4_Idle
+  rotate: false
+  xy: 1168, 957
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+TowerSecondary_Angel_Lvl1_Idle
+  rotate: false
+  xy: 996, 865
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+TowerSecondary_Angel_Lvl2_Idle
+  rotate: false
+  xy: 996, 773
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+TowerSecondary_Angel_Lvl3_Idle
+  rotate: false
+  xy: 996, 681
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+TowerSecondary_Angel_Lvl4_Idle
+  rotate: false
+  xy: 948, 589
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+TowerSpecial_Angel_Lvl1_Idle
+  rotate: false
+  xy: 948, 497
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+TowerSpecial_Angel_Lvl2_Idle
+  rotate: false
+  xy: 948, 405
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+TowerSpecial_Angel_Lvl3_Idle
+  rotate: false
+  xy: 948, 313
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+TowerSpecial_Angel_Lvl4_Idle
+  rotate: false
+  xy: 948, 221
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+TowerStun_Angel_Lvl1_Idle
+  rotate: false
+  xy: 948, 129
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+TowerStun_Angel_Lvl2_Idle
+  rotate: false
+  xy: 2, 1325
+  size: 1800, 717
+  orig: 1800, 717
+  offset: 0, 0
+  index: -1
+TowerStun_Angel_Lvl3_Idle
+  rotate: false
+  xy: 948, 37
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+TowerStun_Angel_Lvl4_Idle
+  rotate: false
+  xy: 2228, 1241
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+banner-victory
+  rotate: false
+  xy: 454, 971
+  size: 500, 250
+  orig: 500, 250
+  offset: 0, 0
+  index: -1
+button-angel-up
+  rotate: false
+  xy: 2, 723
+  size: 450, 600
+  orig: 450, 600
+  offset: 0, 0
+  index: -1
+button-back-down
+  rotate: false
+  xy: 1168, 1141
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+button-back-up
+  rotate: false
+  xy: 3600, 1905
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+button-blue-down
+  rotate: false
+  xy: 1740, 633
+  size: 78, 78
+  split: 13, 64, 11, 14
+  orig: 78, 78
+  offset: 0, 0
+  index: -1
+button-blue-up
+  rotate: false
+  xy: 2720, 1161
+  size: 78, 78
+  split: 16, 61, 13, 11
+  orig: 78, 78
+  offset: 0, 0
+  index: -1
+button-buy-down
+  rotate: false
+  xy: 3744, 1730
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+button-buy-up
+  rotate: false
+  xy: 3956, 1942
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+button-close-down
+  rotate: false
+  xy: 1710, 959
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+button-close-up
+  rotate: false
+  xy: 3764, 1484
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+button-countdown
+  rotate: false
+  xy: 1804, 1400
+  size: 440, 40
+  orig: 440, 40
+  offset: 0, 0
+  index: -1
+button-default-down
+  rotate: false
+  xy: 2798, 1537
+  size: 9, 9
+  split: 2, 1, 2, 1
+  orig: 9, 9
+  offset: 0, 0
+  index: -1
+button-default-up
+  rotate: false
+  xy: 956, 1000
+  size: 9, 9
+  split: 1, 2, 1, 2
+  orig: 9, 9
+  offset: 0, 0
+  index: -1
+button-defeat-1-down
+  rotate: false
+  xy: 2, 386
+  size: 200, 335
+  orig: 200, 335
+  offset: 0, 0
+  index: -1
+button-defeat-1-up
+  rotate: false
+  xy: 2, 49
+  size: 200, 335
+  orig: 200, 335
+  offset: 0, 0
+  index: -1
+button-defeat-2-disabled
+  rotate: false
+  xy: 204, 386
+  size: 200, 335
+  orig: 200, 335
+  offset: 0, 0
+  index: -1
+button-defeat-2-down
+  rotate: false
+  xy: 204, 49
+  size: 200, 335
+  orig: 200, 335
+  offset: 0, 0
+  index: -1
+button-defeat-2-up
+  rotate: false
+  xy: 2798, 1548
+  size: 200, 335
+  orig: 200, 335
+  offset: 0, 0
+  index: -1
+button-defeat-3-disabled
+  rotate: false
+  xy: 1538, 620
+  size: 200, 335
+  orig: 200, 335
+  offset: 0, 0
+  index: -1
+button-defeat-3-down
+  rotate: false
+  xy: 1490, 283
+  size: 200, 335
+  orig: 200, 335
+  offset: 0, 0
+  index: -1
+button-defeat-3-up
+  rotate: false
+  xy: 3542, 1558
+  size: 200, 335
+  orig: 200, 335
+  offset: 0, 0
+  index: -1
+button-demon-disabled
+  rotate: false
+  xy: 1804, 1442
+  size: 450, 600
+  orig: 450, 600
+  offset: 0, 0
+  index: -1
+button-goto-shop-down
+  rotate: false
+  xy: 3058, 1987
+  size: 645, 55
+  orig: 645, 55
+  offset: 0, 0
+  index: -1
+button-goto-shop-up
+  rotate: false
+  xy: 2256, 1885
+  size: 646, 55
+  orig: 646, 55
+  offset: 0, 0
+  index: -1
+button-green-down
+  rotate: false
+  xy: 3846, 1732
+  size: 98, 98
+  split: 14, 16, 14, 16
+  orig: 98, 98
+  offset: 0, 0
+  index: -1
+button-green-up
+  rotate: false
+  xy: 3956, 1842
+  size: 98, 98
+  split: 12, 13, 15, 14
+  orig: 98, 98
+  offset: 0, 0
+  index: -1
+button-pause-down
+  rotate: false
+  xy: 3764, 1402
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+button-pause-up
+  rotate: false
+  xy: 3764, 1320
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+button-pretty-down
+  rotate: false
+  xy: 3330, 1233
+  size: 80, 80
+  split: 16, 18, 13, 20
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+button-pretty-up
+  rotate: false
+  xy: 3412, 1233
+  size: 80, 80
+  split: 14, 11, 18, 26
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+button-quit-down
+  rotate: false
+  xy: 3494, 1233
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+button-quit-up
+  rotate: false
+  xy: 2228, 1159
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+button-sell-down
+  rotate: false
+  xy: 1798, 1141
+  size: 45, 45
+  orig: 45, 45
+  offset: 0, 0
+  index: -1
+button-sell-up
+  rotate: false
+  xy: 2956, 1895
+  size: 45, 45
+  orig: 45, 45
+  offset: 0, 0
+  index: -1
+button-speed-down
+  rotate: false
+  xy: 2310, 1159
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+button-speed-up
+  rotate: false
+  xy: 2392, 1159
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+button-upgrade-down
+  rotate: false
+  xy: 3003, 1895
+  size: 45, 45
+  orig: 45, 45
+  offset: 0, 0
+  index: -1
+button-upgrade-up
+  rotate: false
+  xy: 2, 2
+  size: 45, 45
+  orig: 45, 45
+  offset: 0, 0
+  index: -1
+header
+  rotate: false
+  xy: 3744, 1566
+  size: 98, 60
+  split: 35, 36, 14, 34
+  orig: 98, 60
+  offset: 0, 0
+  index: -1
+health-bar-100
+  rotate: false
+  xy: 948, 681
+  size: 1, 1
+  split: 0, 0, 0, 0
+  orig: 1, 1
+  offset: 0, 0
+  index: -1
+health-bar-30
+  rotate: false
+  xy: 951, 681
+  size: 1, 1
+  split: 0, 0, 0, 0
+  orig: 1, 1
+  offset: 0, 0
+  index: -1
+health-bar-50
+  rotate: false
+  xy: 954, 681
+  size: 1, 1
+  split: 0, 0, 0, 0
+  orig: 1, 1
+  offset: 0, 0
+  index: -1
+label-background-0.25
+  rotate: false
+  xy: 948, 684
+  size: 9, 9
+  split: 4, 4, 4, 4
+  orig: 9, 9
+  offset: 0, 0
+  index: -1
+level1-preview-down
+  rotate: false
+  xy: 956, 1011
+  size: 210, 210
+  orig: 210, 210
+  offset: 0, 0
+  index: -1
+level1-preview-up
+  rotate: false
+  xy: 1490, 71
+  size: 210, 210
+  orig: 210, 210
+  offset: 0, 0
+  index: -1
+level2-preview-down
+  rotate: false
+  xy: 3340, 1315
+  size: 210, 210
+  orig: 210, 210
+  offset: 0, 0
+  index: -1
+level2-preview-up
+  rotate: false
+  xy: 3552, 1346
+  size: 210, 210
+  orig: 210, 210
+  offset: 0, 0
+  index: -1
+level3-preview-down
+  rotate: false
+  xy: 1804, 1188
+  size: 210, 210
+  orig: 210, 210
+  offset: 0, 0
+  index: -1
+level3-preview-up
+  rotate: false
+  xy: 2016, 1188
+  size: 210, 210
+  orig: 210, 210
+  offset: 0, 0
+  index: -1
+level_lock
+  rotate: false
+  xy: 3744, 1832
+  size: 210, 210
+  orig: 210, 210
+  offset: 0, 0
+  index: -1
+misc-fly-animation
+  rotate: false
+  xy: 454, 1223
+  size: 800, 100
+  orig: 800, 100
+  offset: 0, 0
+  index: -1
+misc-fly-with-8-animation
+  rotate: false
+  xy: 2256, 1942
+  size: 800, 100
+  orig: 800, 100
+  offset: 0, 0
+  index: -1
+misc-gem-small
+  rotate: false
+  xy: 406, 696
+  size: 40, 25
+  orig: 40, 25
+  offset: 0, 0
+  index: -1
+ruby
+  rotate: false
+  xy: 1490, 638
+  size: 41, 41
+  orig: 41, 41
+  offset: 0, 0
+  index: -1
+shopitem-tower-primary
+  rotate: false
+  xy: 2474, 1159
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+shopitem-tower-primary-disabled
+  rotate: false
+  xy: 2556, 1159
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+shopitem-tower-secondary
+  rotate: false
+  xy: 2638, 1159
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+shopitem-tower-secondary-disabled
+  rotate: false
+  xy: 3576, 1264
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+shopitem-tower-special
+  rotate: false
+  xy: 3658, 1264
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+shopitem-tower-special-disabled
+  rotate: false
+  xy: 1740, 877
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+shopitem-tower-stun
+  rotate: false
+  xy: 1740, 795
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+shopitem-tower-stun-disabled
+  rotate: false
+  xy: 1740, 713
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+star_big
+  rotate: false
+  xy: 3744, 1628
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+star_small_disabled
+  rotate: false
+  xy: 2904, 1890
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+star_small_enabled
+  rotate: false
+  xy: 1692, 568
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+window-pretty
+  rotate: false
+  xy: 1710, 1041
+  size: 98, 98
+  split: 33, 32, 34, 33
+  orig: 98, 98
+  offset: 0, 0
+  index: -1
+window-pretty-header
+  rotate: false
+  xy: 3846, 1632
+  size: 98, 98
+  split: 49, 48, 64, 33
+  orig: 98, 98
+  offset: 0, 0
+  index: -1
