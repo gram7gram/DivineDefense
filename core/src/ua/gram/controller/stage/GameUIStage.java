@@ -60,17 +60,14 @@ public class GameUIStage extends Stage {
         window.setVisible(!window.isVisible());
         gameUIGroup.setVisible(!window.isVisible());
         towerShop.getTowerShopGroup().setVisible(!window.isVisible());
-//    	float duration = .2f;
-//    	window.addAction(window.isVisible() ? Actions.alpha(0, duration) : Actions.alpha(1, duration));
-//    	gameUIGroup.addAction(window.isVisible() ? Actions.alpha(1, duration) : Actions.alpha(0, duration));
-//    	towerShopGroup.addAction(window.isVisible() ? Actions.alpha(1, duration) : Actions.alpha(0, duration));
-        if (window instanceof DefeatWindow && window.isVisible()) {
-            ((DefeatWindow) window).update();
-        }
-        if (window.isVisible())
+        if (window.isVisible()) {
+            if (window instanceof DefeatWindow) {
+                ((DefeatWindow) window).update();
+            }
             stage_battle.removeListener(stage_battle.getControlsListener());
-        else
+        } else {
             stage_battle.addListener(stage_battle.getControlsListener());
+        }
         Gdx.app.log("INFO", window.getClass().getSimpleName() + " is " + (window.isVisible() ? "" : "in") + "visible");
     }
 

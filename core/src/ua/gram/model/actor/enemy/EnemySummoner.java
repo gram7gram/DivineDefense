@@ -1,5 +1,6 @@
 package ua.gram.model.actor.enemy;
 
+import com.badlogic.gdx.Gdx;
 import ua.gram.DDGame;
 import ua.gram.model.actor.Enemy;
 
@@ -12,8 +13,13 @@ public final class EnemySummoner extends Enemy implements Cloneable {
         super(game, stats);
     }
 
-    public Enemy summon() {
-        return null;
+    @Override
+    public void ability() {
+        try {
+            this.getSpawner().spawn("EnemySoldier", this.getPosition());
+        } catch (CloneNotSupportedException e) {
+            Gdx.app.log("WARN", "Could not execute ability for EnemySpawner!");
+        }
     }
 
     @Override

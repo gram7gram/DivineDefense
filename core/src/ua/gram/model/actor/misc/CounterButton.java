@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import ua.gram.DDGame;
 import ua.gram.model.Level;
 import ua.gram.model.Wave;
+import ua.gram.model.group.GameUIGroup;
 import ua.gram.view.screen.ErrorScreen;
 
 /**
@@ -75,6 +76,7 @@ public class CounterButton extends Actor {
                 }
                 if (animation.isAnimationFinished(counter)) {
                     Gdx.app.log("INFO", "Countdown finished");
+                    ((GameUIGroup)this.getParent()).showNotification("WAVE " + (level.getCurrentWave()+1));
                     level.getWave().nextWave();
                     this.setVisible(false);
                 } else {

@@ -20,6 +20,7 @@ public class EnemyGroup extends Group {
     public EnemyGroup(Enemy enemy, HealthBar bar) {
         this.enemy = enemy;
         this.bar = bar;
+        enemy.setGroup(this);
         this.addActor(enemy);
         this.addActor(bar);
         if (DDGame.DEBUG) {
@@ -35,7 +36,9 @@ public class EnemyGroup extends Group {
     @Override
     public void act(float delta) {
         super.act(delta);
-        if (!DDGame.PAUSE && DDGame.DEBUG) dummy.setPosition(enemy.getOriginX() - 1, enemy.getOriginY() - 1);
+        if (!DDGame.PAUSE && DDGame.DEBUG && null != dummy) {
+            dummy.setPosition(enemy.getOriginX() - 1, enemy.getOriginY() - 1);
+        }
     }
 
     public Enemy getEnemy() {

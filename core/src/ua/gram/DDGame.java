@@ -15,6 +15,8 @@ import ua.gram.view.screen.ErrorScreen;
 import ua.gram.view.screen.LaunchLoadingScreen;
 
 /**
+ * Game enter point
+ *
  * TODO Make different assets for 4x3 and 16x9(16x10) screens
  * TODO For 16x9(16x10) make StretchViewport
  * TODO Add to JSON pressed and disabled drawable for buttons

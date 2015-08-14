@@ -20,7 +20,7 @@ public class DesktopLauncher {
         TexturePacker.Settings settings = new TexturePacker.Settings();
         settings.maxWidth = 4096;
         settings.maxHeight = 4096;
-        TexturePacker.process(settings, "toPack/all", "data/skin", "style");
+//        TexturePacker.process(settings, "toPack/all", "data/skin", "style");
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.useGL30 = false;
         config.resizable = true;

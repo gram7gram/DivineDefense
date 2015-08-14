@@ -23,9 +23,6 @@ public class LevelLoadingScreen extends AbstractLoadingScreen {
         Gdx.app.log("INFO", "Screen set to LevelLoadingScreen");
     }
 
-    /**
-     * NOTE: It is essential to call super.show() for stage to be created
-     */
     @Override
     public void show() {
         super.show();

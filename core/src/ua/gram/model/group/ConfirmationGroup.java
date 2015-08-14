@@ -1,54 +1,55 @@
 package ua.gram.model.group;
 
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import ua.gram.DDGame;
-import ua.gram.model.window.ConfirmationWindow;
+import ua.gram.model.window.EmptyWindow;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
 public class ConfirmationGroup extends Group {
 
-    public ConfirmationGroup(final DDGame game, ClickListener abortListener, ClickListener confirmListener, String confirmButtonText, String message) {
+    public ConfirmationGroup(final DDGame game, ClickListener action0, ClickListener action1, ClickListener action2, String action1Text, String action2Text, String message) {
 
-        Window window = new ConfirmationWindow(game.getResources().getSkin(), "default");
+        Skin skin = game.getResources().getSkin();
+
+        WindowGroup window = new WindowGroup(skin, "default", this, action0);
         window.setVisible(true);
 
-        final Button closeBut = new Button(game.getResources().getSkin(), "close-button");
-        closeBut.addListener(abortListener);
-        closeBut.setVisible(true);
-        closeBut.setSize(80, 80);
-        closeBut.setPosition(
-                (DDGame.WORLD_WIDTH + window.getWidth() - closeBut.getWidth()) / 2f,
-                (DDGame.WORLD_HEIGHT + window.getHeight() - closeBut.getHeight()) / 2f
-        );
-        closeBut.toFront();
+        Button cont = new TextButton(action1Text, skin, "green-button");
+        cont.setSize(180, 60);
+        cont.setTouchable(Touchable.enabled);
+        cont.setVisible(true);
+        cont.setPosition(
+                (DDGame.WORLD_WIDTH - cont.getWidth()) / 2,
+                window.getWindow().getY() + 20);
+        cont.addListener(action1);
 
-        Button confirmBut = new TextButton(confirmButtonText, game.getResources().getSkin(), "pretty-button");
-        confirmBut.setSize(200, 80);
-        confirmBut.setPosition(
-                (DDGame.WORLD_WIDTH - confirmBut.getWidth()) / 2f,
-                (DDGame.WORLD_HEIGHT - confirmBut.getHeight()) / 2f - 60
-        );
-        confirmBut.setVisible(true);
-        confirmBut.addListener(confirmListener);
+        if (action2 != null) {
+            Button rest = new TextButton(action2Text, skin, "green-button-smaller");
+            rest.setSize(110, 45);
+            rest.setTouchable(Touchable.enabled);
+            rest.setVisible(true);
+            rest.addListener(action2);
+            rest.setPosition(
+                    DDGame.WORLD_WIDTH / 2 - (DDGame.WORLD_WIDTH / 2 - window.getWindow().getX()) / 2 - rest.getWidth() + 15,
+                    window.getWindow().getY() + 20 + (cont.getHeight() - rest.getHeight()) / 2);
+            window.addActor(rest);
+        }
 
-        Label messageLabel = new Label(message, game.getResources().getSkin(), "header1black");
+        Label messageLabel = new Label(message, skin, "header1black");
         messageLabel.setPosition((DDGame.WORLD_WIDTH - messageLabel.getWidth()) / 2f, DDGame.WORLD_HEIGHT / 2f - 10);
         messageLabel.setVisible(true);
         messageLabel.setWrap(true);
         messageLabel.setAlignment(Align.center);
 
+        window.addActor(messageLabel);
+        window.addActor(cont);
         this.addActor(window);
-        this.addActor(closeBut);
-        this.addActor(messageLabel);
-        this.addActor(confirmBut);
 
         this.setVisible(false);
     }

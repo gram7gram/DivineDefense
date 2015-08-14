@@ -26,12 +26,13 @@ public class FractionStage extends Stage {
     private final Group fractions;
     private final DDGame game;
     private ConfirmationGroup confirmationGroup;
+    private ConfirmationGroup continueGroup;
+
 
     public FractionStage(final DDGame game) {
         super(game.getViewport(), game.getBatch());
-        this.setDebugAll(DDGame.DEBUG);
         this.game = game;
-        Skin skin = game.getResources().getSkin();
+        final Skin skin = game.getResources().getSkin();
 
         Label header = new Label("Choose your fraction", skin, "header1white");
         header.setVisible(true);
@@ -47,13 +48,14 @@ public class FractionStage extends Stage {
         option2.setPosition(DDGame.WORLD_WIDTH / 2, 0);
         option2.setVisible(true);
         option2.setSize(DDGame.WORLD_WIDTH / 2, DDGame.WORLD_HEIGHT);
+        option2.setTouchable(Touchable.enabled);
         option2.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Player.PLAYER_FRACTION = DDGame.ANGEL;
                 Player.SYSTEM_FRACTION = DDGame.DEMON;
                 if (confirmationGroup == null) createDialog();
-                displayConfirmation();
+                displayConfirmation(confirmationGroup);
             }
         });
 
@@ -85,48 +87,60 @@ public class FractionStage extends Stage {
         fractions.addActor(option1);
         fractions.addActor(option2);
         fractions.addActor(header);
-
-        if ((!game.getPlayer().isDefault() && Player.PLAYER_FRACTION != null) || DDGame.DEBUG) {
-//            option2.setTouchable(Touchable.disabled);
-            Button cont = new TextButton("Continue", skin, "green-button");
-            cont.setSize(240, 80);
-            float x1 = "Angel".equals(Player.PLAYER_FRACTION) ?
-                    option2.getX() + (option2.getWidth() - cont.getWidth()) / 2f
-                    : option1.getX() + (option1.getWidth() + cont.getWidth()) / 2f;
-            float y1 = 20 + cont.getHeight();
-            cont.setPosition(x1, y1);
-            cont.setTouchable(Touchable.enabled);
-            cont.setVisible(true);
-
-            Button rest = new TextButton("Restart", skin, "blue-button");
-            rest.setSize(240, 80);
-            float x2 = "Angel".equals(Player.PLAYER_FRACTION) ?
-                    option2.getX() + (option2.getWidth() - rest.getWidth()) / 2f
-                    : option1.getX() + (option1.getWidth() + rest.getWidth()) / 2f;
-            float y2 = 10;
-            rest.setPosition(x2, y2);
-            rest.setTouchable(Touchable.enabled);
-            rest.setVisible(true);
-
-            fractions.addActor(rest);
-            fractions.addActor(cont);
-        } else {
-            option2.setTouchable(Touchable.enabled);
-        }
         this.addActor(fractions);
-//        DefeatWindow window = new DefeatWindow(game, this);
-//        window.setVisible(true);
-//        this.addActor(window);
+
+        //TODO Display continueGroup only if Player has valid save
+        Button button = new TextButton("?", skin, "green-button");
+        button.setPosition(10, 10);
+        button.setSize(60, 60);
+        button.setVisible(true);
+        button.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                if (continueGroup == null) {
+                    continueGroup = new ConfirmationGroup(game,
+                            (new ClickListener() {
+                                @Override
+                                public void clicked(InputEvent event, float x, float y) {
+                                    super.clicked(event, x, y);
+                                    displayConfirmation(continueGroup);
+                                }
+                            }),
+                            (new ClickListener() {
+                                @Override
+                                public void clicked(InputEvent event, float x, float y) {
+                                    super.clicked(event, x, y);
+                                    game.setScreen(new MainMenuScreen(game));
+                                }
+                            }),
+                            (new ClickListener() {
+                                @Override
+                                public void clicked(InputEvent event, float x, float y) {
+                                    super.clicked(event, x, y);
+                                    game.setScreen(new MainMenuScreen(game));
+                                }
+                            }),
+                            "Continue", "Restart", "Continue playing");
+                    addActor(continueGroup);
+                }
+                displayConfirmation(continueGroup);
+            }
+        });
+        this.addActor(button);
+
+        this.setDebugAll(DDGame.DEBUG);
     }
 
     private void createDialog() {
         confirmationGroup = new ConfirmationGroup(game,
-                new ClickListener() {
+                (new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
-                        displayConfirmation();
+                        super.clicked(event, x, y);
+                        displayConfirmation(confirmationGroup);
                     }
-                },
+                }),
                 new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
@@ -134,17 +148,17 @@ public class FractionStage extends Stage {
                         Gdx.app.log("INFO", "System Fraction set to " + Player.SYSTEM_FRACTION);
                         game.setScreen(new MainMenuScreen(game));
                     }
-                },
-                "CONFIRM",
+                }, null,
+                "Confirm", null,
                 "You have chosen\n" + Player.PLAYER_FRACTION + " fraction"
         );
         this.addActor(confirmationGroup);
     }
 
-    private void displayConfirmation() {
+    private void displayConfirmation(Group group) {
         fractions.setTouchable(fractions.isTouchable() ? Touchable.disabled : Touchable.enabled);
-        confirmationGroup.setVisible(!confirmationGroup.isVisible());
-        Gdx.app.log("INFO", "Confirmation window is " + (confirmationGroup.isVisible() ? "" : "in") + "visible");
+        group.setVisible(!group.isVisible());
+        Gdx.app.log("INFO", group.getClass().getSimpleName() + " is " + (group.isVisible() ? "" : "in") + "visible");
     }
 
     public ConfirmationGroup getGroup() {

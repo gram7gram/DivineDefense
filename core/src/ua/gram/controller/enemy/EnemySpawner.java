@@ -14,6 +14,8 @@ import ua.gram.model.actor.Enemy;
 import ua.gram.model.actor.enemy.*;
 import ua.gram.model.actor.misc.HealthBar;
 import ua.gram.model.group.EnemyGroup;
+import ua.gram.model.map.Map;
+import ua.gram.model.map.Spawn;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -58,7 +60,7 @@ public class EnemySpawner {
             count = 0;
             try {
                 if (!enemiesToSpawn.isEmpty()) {
-                    spawn(enemiesToSpawn.pop());
+                    spawn(enemiesToSpawn.pop(), level.getMap().getSpawn().getPosition());
                 } else if (!stage_battle.hasEnemiesOnMap() || level.isCleared) {
                     level.getWave().finish();
                 }
@@ -77,10 +79,11 @@ public class EnemySpawner {
      * Spawn takes place in Group with the coresponding HealthBar.
      *
      * @param type the Enemy ancestor to spawn.
+     * @param spawn map tile position to spawn in
      * @throws CloneNotSupportedException - error occcured at cloning.
      * @throws NullPointerException       - type does not belong to known Enemy ancestor.
      */
-    private void spawn(String type) throws CloneNotSupportedException {
+    public void spawn(String type, Vector2 spawn) throws CloneNotSupportedException {
         Enemy enemy;
         if (type.equals("EnemyWarrior")) {
             enemy = ((EnemyWarrior) (poolWarrior.obtain())).clone();
@@ -96,15 +99,17 @@ public class EnemySpawner {
             throw new NullPointerException("Couldn't add enemy: " + type);
         }
         enemy.setPosition(
-                level.getMap().getSpawn().getPosition().x * DDGame.TILE_HEIGHT,
-                level.getMap().getSpawn().getPosition().y * DDGame.TILE_HEIGHT
+                spawn.x * DDGame.TILE_HEIGHT,
+                spawn.y * DDGame.TILE_HEIGHT
         );
         enemy.setSpawner(this);
         EnemyGroup enemyGroup = new EnemyGroup(
                 enemy,
                 new HealthBar(game.getResources().getSkin(), enemy)
         );
-        enemyGroup.getEnemy().setGroup(enemyGroup);
+        if (level.getMap().getSpawn().getPosition() != spawn) {
+            path =
+        }
         setActionPath(enemyGroup, path);
         enemyGroup.setVisible(true);
         stage_battle.updateZIndexes(enemyGroup);

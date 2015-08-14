@@ -35,6 +35,7 @@ public abstract class Enemy extends Actor implements Pool.Poolable {
     public boolean isStunned;
     public boolean isAttacked;
     public boolean isAffected;
+    public boolean hasAbility;
     public boolean isDead;//Prevent Towers from shooting if true
     protected DDGame game;
     private float stateTime = 0;
@@ -52,6 +53,7 @@ public abstract class Enemy extends Actor implements Pool.Poolable {
         this.speed = stats[1];
         this.armor = stats[2];
         this.reward = (int) stats[3];
+        this.hasAbility = (int) stats[4] == 1;
         defaultHealth = health;
         defaultSpeed = speed;
         defaultArmor = armor;
@@ -83,6 +85,7 @@ public abstract class Enemy extends Actor implements Pool.Poolable {
                 die();
             } else {
                 stage_battle.updateActorIndex(this);
+                if (hasAbility) ability();
                 if (isStunned && !isAffected) {
                     isAffected = true;
                     this.speed = defaultSpeed / 2f;
@@ -94,6 +97,10 @@ public abstract class Enemy extends Actor implements Pool.Poolable {
                 }
             }
         }
+    }
+
+    public void ability() {
+
     }
 
     public abstract void update(float delta);
@@ -156,6 +163,10 @@ public abstract class Enemy extends Actor implements Pool.Poolable {
                 + (int) damage + " dmg, hp: " + this.health);
     }
 
+    public EnemySpawner getSpawner() {
+        return spawner;
+    }
+
     public void setSpawner(EnemySpawner spawner) {
         this.spawner = spawner;
     }
@@ -165,6 +176,10 @@ public abstract class Enemy extends Actor implements Pool.Poolable {
                 this.getX() + (this.getWidth() / 2f),
                 this.getY() + (this.getHeight() / 2f)
         );
+    }
+
+    public Vector2 getPosition() {
+        return new Vector2(this.getX(), this.getY());
     }
 
     public void setGroup(EnemyGroup group) {
