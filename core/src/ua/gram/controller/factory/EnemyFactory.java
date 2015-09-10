@@ -40,9 +40,9 @@ public class EnemyFactory implements Factory<Enemy> {
         } else if (type.equals(EnemyRunner.class)) {
             enemyType = new EnemyRunner(game, stats);
         } else {
-            throw new NullPointerException("Enemy factory couldn't create: " + type.getSimpleName());
+            throw new NullPointerException("EnemyFactory couldn't create: " + type.getSimpleName());
         }
-        Gdx.app.log("INFO", "Factory creates " + type.getSimpleName());
+        Gdx.app.log("INFO", "EnemyFactory creates: " + type.getSimpleName());
         return enemyType;
     }
 

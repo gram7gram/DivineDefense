@@ -14,11 +14,11 @@ import ua.gram.controller.enemy.EnemyRemover;
 import ua.gram.controller.enemy.EnemySpawner;
 import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.model.group.EnemyGroup;
+import ua.gram.model.map.Path;
 
 import java.util.Random;
 
 /**
- *
  * @author Gram <gram7gram@gmail.com>
  */
 public abstract class Enemy extends Actor implements Pool.Poolable {
@@ -35,8 +35,9 @@ public abstract class Enemy extends Actor implements Pool.Poolable {
     public boolean isStunned;
     public boolean isAttacked;
     public boolean isAffected;
-    public boolean isDead;//Prevent Towers from shooting if true
+    public boolean isDead;
     protected DDGame game;
+    protected Path path;
     private float stateTime = 0;
     private GameBattleStage stage_battle;
     private EnemyAnimationController enemyAnimation;
@@ -96,6 +97,10 @@ public abstract class Enemy extends Actor implements Pool.Poolable {
         }
     }
 
+    /**
+     * Perform Enemy-specific action.
+     * Executes every iteration, if not paused.
+     */
     public abstract void update(float delta);
 
     public void die() {
@@ -156,6 +161,10 @@ public abstract class Enemy extends Actor implements Pool.Poolable {
                 + (int) damage + " dmg, hp: " + this.health);
     }
 
+    public EnemySpawner getSpawner() {
+        return spawner;
+    }
+
     public void setSpawner(EnemySpawner spawner) {
         this.spawner = spawner;
     }
@@ -165,6 +174,18 @@ public abstract class Enemy extends Actor implements Pool.Poolable {
                 this.getX() + (this.getWidth() / 2f),
                 this.getY() + (this.getHeight() / 2f)
         );
+    }
+
+    protected Path getPath() {
+        return path;
+    }
+
+    public void setPath(Path path) {
+        this.path = path;
+    }
+
+    public Vector2 getPosition() {
+        return new Vector2(this.getX(), this.getY());
     }
 
     public void setGroup(EnemyGroup group) {

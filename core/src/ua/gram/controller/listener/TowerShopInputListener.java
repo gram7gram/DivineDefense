@@ -28,14 +28,12 @@ public class TowerShopInputListener extends ClickListener {
     private Tower tower;
 
     public TowerShopInputListener(DDGame game, TowerShop shop,
-                                  GameBattleStage stage_battle,
-                                  GameUIStage stage_ui,
                                   Class<? extends Tower> type) {
         this.game = game;
         this.shop = shop;
         this.type = type;
-        this.stage_ui = stage_ui;
-        this.stage_battle = stage_battle;
+        this.stage_ui = shop.getStageUi();
+        this.stage_battle = shop.getStageBattle();
         this.layer = (TiledMapTileLayer) stage_battle.getLevel()
                 .getMap().getTiledMap().getLayers().get("Terrain");
         this.layer_object = (TiledMapTileLayer) stage_battle.getLevel()

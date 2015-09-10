@@ -1,17 +1,19 @@
 package ua.gram.model.group;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import ua.gram.DDGame;
+import ua.gram.controller.Toggler;
 import ua.gram.controller.stage.GameUIStage;
 import ua.gram.model.Level;
 import ua.gram.model.actor.misc.CounterButton;
+import ua.gram.model.actor.misc.CustomLabel;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -20,10 +22,12 @@ public class GameUIGroup extends Group {
 
     private final DDGame game;
     private final Level level;
-    private final Label healthLabel;
-    private final Label moneyLabel;
-    private final Label waveLabel;
-    private final Label gemsLabel;
+    private final CustomLabel healthLabel;
+    private final CustomLabel moneyLabel;
+    private final CustomLabel waveLabel;
+    private final CustomLabel gemsLabel;
+    private final CustomLabel notificationLabel;
+    private final Toggler toggler;
     private CounterButton counter;
 
     public GameUIGroup(final DDGame game, final GameUIStage stage_ui, final Level level) {
@@ -57,13 +61,13 @@ public class GameUIGroup extends Group {
             }
         });
         Vector2 pos = level.getMap().getSpawn().getPosition();
-        Vector2 dir = level.getMap().getPath().getPath().get(0);
+        Vector2 dir = level.getMap().getPath().getDirections().get(0);
 
         counter = new CounterButton(game, level, new Vector2(pos.x + dir.x, pos.y + dir.y));
 
-        healthLabel = new Label("HEALTH: " + game.getPlayer().getHealth(), skin, "small_tinted");
-        gemsLabel = new Label("GEMS: " + game.getPlayer().getGems(), skin, "small_tinted");
-        moneyLabel = new Label("MONEY: " + game.getPlayer().getCoins(), skin, "small_tinted");
+        healthLabel = new CustomLabel("HEALTH: " + game.getPlayer().getHealth(), skin, "small_tinted");
+        gemsLabel = new CustomLabel("GEMS: " + game.getPlayer().getGems(), skin, "small_tinted");
+        moneyLabel = new CustomLabel("MONEY: " + game.getPlayer().getCoins(), skin, "small_tinted");
 
         moneyLabel.setVisible(true);
         moneyLabel.setPosition(
@@ -83,7 +87,7 @@ public class GameUIGroup extends Group {
                 DDGame.WORLD_HEIGHT - healthLabel.getHeight() - gap
         );
 
-        waveLabel = new Label("WAVE: "
+        waveLabel = new CustomLabel("WAVE: "
                 + (level.getCurrentWave() <= 0 ? "-" : level.getCurrentWave())
                 + "/" + level.getMaxWaves(),
                 skin, "small_tinted");
@@ -93,16 +97,17 @@ public class GameUIGroup extends Group {
                 DDGame.WORLD_HEIGHT - waveLabel.getHeight() - gap
         );
 
-        this.addActor(pauseBut);
-        this.addActor(speedBut);
+        notificationLabel = new CustomLabel("", skin, "header1white");
+        notificationLabel.setVisible(false);
+
+
+        toggler = new Toggler(notificationLabel);
+
         Group labels = new Group();
         labels.addActor(gemsLabel);
         labels.addActor(moneyLabel);
         labels.addActor(healthLabel);
         labels.addActor(waveLabel);
-
-        this.addActor(counter);
-        this.addActor(labels);
         labels.addAction(
                 Actions.sequence(
                         Actions.parallel(
@@ -117,6 +122,11 @@ public class GameUIGroup extends Group {
                 )
         );
 
+        this.addActor(pauseBut);
+        this.addActor(speedBut);
+        this.addActor(notificationLabel);
+        this.addActor(counter);
+        this.addActor(labels);
     }
 
     @Override
@@ -128,6 +138,23 @@ public class GameUIGroup extends Group {
             updateGemsLabel();
             updateWaveLabel();
         }
+    }
+
+    public void showNotification(String message) {
+        notificationLabel.setText(message);
+        notificationLabel.setPosition(
+                (DDGame.WORLD_WIDTH - notificationLabel.getWidth()) / 2f,
+                (DDGame.WORLD_HEIGHT - notificationLabel.getHeight()) / 2f);
+        notificationLabel.addAction(
+                Actions.sequence(
+                        Actions.run(toggler),
+                        Actions.alpha(0),
+                        Actions.alpha(1, .6f),
+                        Actions.delay(1),
+                        Actions.alpha(0, .6f),
+                        Actions.run(toggler)
+                ));
+        Gdx.app.log("INFO", "Showed notification: " + message);
     }
 
     public void updateHealthLabel() {

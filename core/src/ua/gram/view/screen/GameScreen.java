@@ -21,9 +21,11 @@ public class GameScreen extends AbstractScreen {
     private final OrthogonalTiledMapRenderer renderer;
     private final GameBattleStage stage_battle;
     private final GameUIStage stage_ui;
+    private final Level level;
 
     public GameScreen(DDGame game, Level level) {
         super(game);
+        this.level = level;
         DDGame.PAUSE = false;
         renderer = new OrthogonalTiledMapRenderer(level.getMap().getTiledMap());
         renderer.setView(game.getCamera());
@@ -53,6 +55,7 @@ public class GameScreen extends AbstractScreen {
         inputMultiplexer.addProcessor(stage_ui);
         inputMultiplexer.addProcessor(stage_battle);
         Gdx.input.setInputProcessor(inputMultiplexer);
+        stage_ui.getGameUIGroup().showNotification("LEVEL " + (level.getCurrentLevel()));
     }
 
     @Override

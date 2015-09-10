@@ -25,7 +25,6 @@ import java.util.LinkedList;
 public class EnemySpawner {
 
     private final DDGame game;
-    private final ArrayList<Vector2> path;
     private final GameBattleStage stage_battle;
     private final Level level;
     private float count;
@@ -34,21 +33,20 @@ public class EnemySpawner {
     private Pool<Enemy> poolSoldierArmored;
     private Pool<Enemy> poolSummoner;
     private Pool<Enemy> poolRunner;
+    private ArrayList<Vector2> path;
     private LinkedList<String> enemiesToSpawn;
 
     public EnemySpawner(DDGame game, Level level, GameBattleStage stage) {
         this.game = game;
         this.stage_battle = stage;
         this.level = level;
-        this.path = level.getMap().getPathArray();
+        this.path = level.getMap().getDirectionsArray();
         Gdx.app.log("INFO", "EnemySpawner is OK");
     }
 
     /**
-     * <pre>
      * Basic loop that spawns enemies with specified delay.
      * NOTE Level is Finished, if there are no enemies to spawn
-     * </pre>
      *
      * @param delta Same as Gdx.graphics.getDeltaTime()
      */
@@ -58,7 +56,7 @@ public class EnemySpawner {
             count = 0;
             try {
                 if (!enemiesToSpawn.isEmpty()) {
-                    spawn(enemiesToSpawn.pop());
+                    spawn(enemiesToSpawn.pop(), level.getMap().getSpawn().getPosition());
                 } else if (!stage_battle.hasEnemiesOnMap() || level.isCleared) {
                     level.getWave().finish();
                 }
@@ -76,11 +74,12 @@ public class EnemySpawner {
      * places it at the Spawn position and gives it the path to go.
      * Spawn takes place in Group with the coresponding HealthBar.
      *
-     * @param type the Enemy ancestor to spawn.
+     * @param type  the Enemy ancestor to spawn.
+     * @param spawn map tile position to spawn at.
      * @throws CloneNotSupportedException - error occcured at cloning.
      * @throws NullPointerException       - type does not belong to known Enemy ancestor.
      */
-    private void spawn(String type) throws CloneNotSupportedException {
+    public void spawn(String type, Vector2 spawn) throws CloneNotSupportedException {
         Enemy enemy;
         if (type.equals("EnemyWarrior")) {
             enemy = ((EnemyWarrior) (poolWarrior.obtain())).clone();
@@ -96,15 +95,16 @@ public class EnemySpawner {
             throw new NullPointerException("Couldn't add enemy: " + type);
         }
         enemy.setPosition(
-                level.getMap().getSpawn().getPosition().x * DDGame.TILE_HEIGHT,
-                level.getMap().getSpawn().getPosition().y * DDGame.TILE_HEIGHT
+                spawn.x * DDGame.TILE_HEIGHT,
+                spawn.y * DDGame.TILE_HEIGHT
         );
         enemy.setSpawner(this);
-        EnemyGroup enemyGroup = new EnemyGroup(
-                enemy,
+        EnemyGroup enemyGroup = new EnemyGroup(enemy,
                 new HealthBar(game.getResources().getSkin(), enemy)
         );
-        enemyGroup.getEnemy().setGroup(enemyGroup);
+        if (level.getMap().getSpawn().getPosition() != spawn) {
+            path = level.getMap().normalizePath(spawn).getDirections();
+        }
         setActionPath(enemyGroup, path);
         enemyGroup.setVisible(true);
         stage_battle.updateZIndexes(enemyGroup);

@@ -7,7 +7,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- *
  * @author Gram <gram7gram@gmail.com>
  */
 public class Path {
@@ -18,6 +17,7 @@ public class Path {
     public static Vector2 WEST;
     public final List<Vector2> DIRECTIONS;
     public ArrayList<Vector2> path;
+    public ArrayList<Vector2> directions;
 
     public Path() {
         NORTH = new Vector2(0, 1);
@@ -30,14 +30,38 @@ public class Path {
         DIRECTIONS.add(EAST);
         DIRECTIONS.add(WEST);
         path = new ArrayList<Vector2>();
+        directions = new ArrayList<Vector2>();
     }
 
-    public synchronized void addPath(Vector2 dir) {
-        path.add(dir);
+    public synchronized void addDirection(Vector2 dir) {
+        directions.add(dir);
+    }
+
+    public synchronized void addPath(Vector2 position) {
+        path.add(position);
     }
 
     public ArrayList<Vector2> getPath() {
         return path;
     }
 
+    public ArrayList<Vector2> getDirections() {
+        return directions;
+    }
+
+    /**
+     * TODO Return right direction
+     *
+     * @param posToSpawn
+     * @return
+     */
+    public Vector2 getNextDirection(Vector2 posToSpawn) {
+        for (Vector2 pos : path) {
+            if (Float.compare(pos.x, posToSpawn.x) == 0
+                    && Float.compare(pos.y, posToSpawn.y) == 0) {
+                return NORTH;
+            }
+        }
+        return EAST;
+    }
 }

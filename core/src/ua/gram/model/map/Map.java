@@ -24,8 +24,8 @@ public class Map {
     public Map(TiledMap tiledMap) {
         this.tiledMap = tiledMap;
         layer = (TiledMapTileLayer) tiledMap.getLayers().get("Terrain");
-        parseMap();
-        normalizePath();
+        spawn = findSpawnPoint();
+        path = normalizePath(spawn.getPosition());
         Gdx.app.log("INFO", "Map is OK");
     }
 
@@ -33,20 +33,23 @@ public class Map {
      * Parses whole map grid, looking for 'spawn' property of the tile.
      * If found one, new Spawn object is created and search is aborted.
      */
-    private void parseMap() {
+    private Spawn findSpawnPoint() {
+        Spawn spawnPoint = null;
         MapProperties properties;
         for (int x = 0; x < layer.getWidth(); x++) {
             for (int y = 0; y < layer.getHeight(); y++) {
                 properties = layer.getCell(x, y).getTile().getProperties();
                 if (properties.containsKey("spawn")) {
-                    spawn = new Spawn(new Vector2(x, y));
-                    return;
+                    spawnPoint = new Spawn(new Vector2(x, y));
+                    break;
                 }
             }
         }
+        return spawnPoint;
     }
 
     /**
+     * Converts path to array of directions, which Actor should turn to.
      * Searches the map for 'walkable' property, starting from 'spawn' tile.
      * If found one and it is not the previous, it is added to array.
      * if the added one contains 'base' property, new Base object is
@@ -58,36 +61,39 @@ public class Map {
      * sure that you start scanning from 'spawn' and finish in 'base' to avoid random
      * 'walkable' tile adding to the path.
      */
-    private void normalizePath() {
-        path = new Path();
+    public Path normalizePath(Vector2 start) {
+        Path route = new Path();
         MapProperties properties;
         Vector2 lastDir = new Vector2();
-        Vector2 position = new Vector2((int) spawn.getPosition().x, (int) spawn.getPosition().y);
-        while (true) {
-            for (Vector2 direction : path.DIRECTIONS) {
+        Vector2 position = new Vector2((int) start.x, (int) start.y);
+        boolean isFound = false;
+        while (!isFound) {
+            for (Vector2 direction : route.DIRECTIONS) {
                 if (!direction.equals(lastDir)) {
                     if ((direction.equals(Path.WEST) && position.x > 0)
                             || (direction.equals(Path.SOUTH) && position.y > 0)
                             || (direction.equals(Path.EAST) && position.x < layer.getWidth() - 1)
                             || (direction.equals(Path.NORTH) && position.y < layer.getHeight() - 1)) {
-                        properties = layer.getCell(
-                                (int) (position.x + direction.x),
-                                (int) (position.y + direction.y))
+                        int currentX = (int) (position.x + direction.x);
+                        int currentY = (int) (position.y + direction.y);
+                        properties = layer.getCell(currentX, currentY)
                                 .getTile().getProperties();
                         if (properties.containsKey("walkable")) {
-                            path.addPath(direction);
+                            route.addDirection(direction);
+                            route.addPath(new Vector2(currentX, currentY));
                             position.add(direction);
                             lastDir = new Vector2((int) -direction.x, (int) -direction.y);
                             if (properties.containsKey("base")) {
                                 base = new Base(position);
-                                Gdx.app.log("INFO", "Path is OK");
-                                return;
+                                isFound = true;
                             }
                         }
                     }
                 }
             }
         }
+        Gdx.app.log("INFO", "Path is OK");
+        return route;
     }
 
     public TiledMap getTiledMap() {
@@ -108,6 +114,11 @@ public class Map {
 
     public Path getPath() {
         return path;
+    }
+
+
+    public ArrayList<Vector2> getDirectionsArray() {
+        return path.getDirections();
     }
 
     public ArrayList<Vector2> getPathArray() {

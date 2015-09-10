@@ -3,7 +3,7 @@ package ua.gram.controller.enemy;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import ua.gram.controller.pool.animation.AnimationController.Types;
+import ua.gram.controller.pool.animation.AnimationController;
 import ua.gram.controller.pool.animation.EnemyAnimationPool;
 import ua.gram.model.Player;
 import ua.gram.model.actor.Enemy;
@@ -11,15 +11,15 @@ import ua.gram.model.actor.Enemy;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class EnemyAnimationController {
+public class EnemyAnimationController implements AnimationController {
 
     public static final float DELAY = 1 / 10f;
     private final Skin skin;
-    private final Enemy enemy;
     private final Animation upAnimation;
     private final Animation downAnimation;
     private final Animation leftAnimation;
     private final Animation rightAnimation;
+    private Enemy enemy;
     private EnemyAnimationPool leftPool;
     private EnemyAnimationPool rightPool;
     private EnemyAnimationPool upPool;
@@ -38,6 +38,23 @@ public class EnemyAnimationController {
         downAnimation = downPool.obtain();
     }
 
+    public EnemyAnimationController(Skin skin) {
+        this.skin = skin;
+        upPool = new EnemyAnimationPool(setAnimationRegion(Types.UP));
+        leftPool = new EnemyAnimationPool(setAnimationRegion(Types.LEFT));
+        rightPool = new EnemyAnimationPool(setAnimationRegion(Types.RIGHT));
+        downPool = new EnemyAnimationPool(setAnimationRegion(Types.DOWN));
+        upAnimation = upPool.obtain();
+        leftAnimation = leftPool.obtain();
+        rightAnimation = rightPool.obtain();
+        downAnimation = downPool.obtain();
+    }
+
+    public void setEnemy(Enemy enemy) {
+        this.enemy = enemy;
+    }
+
+    @Override
     public TextureRegion[] setAnimationRegion(Types animationType) {
         String region = enemy.getClass().getSimpleName()
                 + "_" + Player.SYSTEM_FRACTION;
@@ -67,6 +84,7 @@ public class EnemyAnimationController {
         return regions[0];
     }
 
+    @Override
     public void free(Animation animation) {
         if (animation == upAnimation) {
             upPool.free(animation);

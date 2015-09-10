@@ -9,12 +9,14 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public interface AnimationController {
 
     /**
-     * Gets corresponding Atlas region form the texture and splits it, acording to animationWidth and animationHeight.
+     * Gets corresponding Atlas region from
+     * the texture and splits it, acording
+     * to animationWidth and animationHeight.
      *
      * @param animationType type of the animation region to search for
      * @return splitted array of tiles
      */
-    TextureRegion[] setAnimationRegion(Types animationType, int animationWidth, int animationHeight);
+    TextureRegion[] setAnimationRegion(Types animationType);
 
     /**
      * Puts animation in corresponding pool.
@@ -24,7 +26,8 @@ public interface AnimationController {
     void free(Animation animation);
 
     /**
-     * The states of Actors in the game, including Enemy and Tower.
+     * The states of Actors in the game,
+     * including Enemy and Tower.
      */
     enum Types {
 
