@@ -89,7 +89,7 @@
   },
   "com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle": {
     "default": {
-      "font": "archery64black"
+      "font": "action24black"
     },
     "header1black": {
       "font": "archery64black"
@@ -255,6 +255,14 @@
     "button-goto-shop": {
       "up": "button-goto-shop-up",
       "down": "button-goto-shop-down"
+    },
+    "market-item-category1": {
+      "up": "market-item-category1-item1",
+      "down": "market-item-category1-item1"
+    },
+    "market-item-category2": {
+      "up": "market-item-category1-item1",
+      "down": "market-item-category1-item1"
     }
   },
   "com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle": {

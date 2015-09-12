@@ -1,0 +1,98 @@
+[
+  {
+    "category": "category1",
+    "icon": "market-item-category1",
+    "items": [
+      {
+        "name":"Item 1",
+        "description": "General item header",
+        "price": 10,
+        "currency": "coins",
+        "icon": "market-item-category1-item1"
+      },
+      {
+        "name":"Item 2",
+        "description": "General item header",
+        "price": 1,
+        "currency": "gems",
+        "icon": "market-item-category1-item2"
+      },
+      {
+        "name":"Item 3",
+        "description": "General item header",
+        "price": 1,
+        "currency": "gems",
+        "icon": "market-item-category1-item3"
+      },
+      {
+        "name":"Item 4",
+        "description": "General item header",
+        "price": 10,
+        "currency": "gems",
+        "icon": "market-item-category1-item4"
+      }
+    ]
+  },
+  {
+    "category": "category2",
+    "icon": "market-item-category2",
+    "items": [
+      {
+        "name":"Item 1",
+        "description": "General item header",
+        "price": 10,
+        "currency": "coins",
+        "icon": "market-item-category2-item1"
+      },
+      {
+        "name":"Item 2",
+        "description": "General item header",
+        "price": 2,
+        "currency": "gems",
+        "icon": "market-item-category2-item2"
+      },
+      {
+        "name":"Item 3",
+        "description": "General item header",
+        "price": 2,
+        "currency": "gems",
+        "icon": "market-item-category2-item3"
+      },
+      {
+        "name":"Item 4",
+        "description": "General item header",
+        "price": 20,
+        "currency": "gems",
+        "icon": "market-item-category2-item4"
+      },
+      {
+        "name":"Item 3",
+        "description": "General item header",
+        "price": 2,
+        "currency": "gems",
+        "icon": "market-item-category2-item3"
+      },
+      {
+        "name":"Item 4",
+        "description": "General item header",
+        "price": 20,
+        "currency": "gems",
+        "icon": "market-item-category2-item4"
+      },
+      {
+        "name":"Item 3",
+        "description": "General item header",
+        "price": 2,
+        "currency": "gems",
+        "icon": "market-item-category2-item3"
+      },
+      {
+        "name":"Item 4",
+        "description": "General item header",
+        "price": 20,
+        "currency": "gems",
+        "icon": "market-item-category2-item4"
+      }
+    ]
+  }
+]

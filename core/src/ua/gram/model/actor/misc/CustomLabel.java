@@ -11,9 +11,16 @@ public class CustomLabel extends Label {
 
     private String text;
 
-    public CustomLabel(CharSequence text, Skin skin, String styleName) {
+    public CustomLabel(String text, Skin skin) {
+        super(text, skin);
+        this.text = text;
+        this.setDebug(DDGame.DEBUG);
+        this.setSize(150, 60);//better then (0,0)
+    }
+
+    public CustomLabel(String text, Skin skin, String styleName) {
         super(text, skin, styleName);
-        this.text = text.toString();
+        this.text = text;
         this.setDebug(DDGame.DEBUG);
         this.setSize(150, 60);//better then (0,0)
     }

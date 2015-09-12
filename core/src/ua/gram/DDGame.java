@@ -65,7 +65,8 @@ public class DDGame extends Game {
         MAP_WIDTH = WORLD_WIDTH / TILE_HEIGHT;
         MAP_HEIGHT = WORLD_HEIGHT / TILE_HEIGHT;
         MAX_ENTITIES = MAP_WIDTH * MAP_HEIGHT;//Maximum entities on the map
-        resources = new Resources(this);
+        resources = new Resources();
+        Resources.game = this;
         this.setScreen(new LaunchLoadingScreen(this));
     }
 
