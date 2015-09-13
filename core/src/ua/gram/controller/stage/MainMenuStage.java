@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import ua.gram.DDGame;
+import ua.gram.controller.listener.DebugListener;
 import ua.gram.view.screen.LevelSelectScreen;
 
 /**
@@ -18,6 +19,7 @@ public class MainMenuStage extends Stage {
 
     public MainMenuStage(final DDGame game) {
         super(game.getViewport(), game.getBatch());
+        if (DDGame.DEBUG) this.addListener(new DebugListener(this));
         this.setDebugAll(DDGame.DEBUG);
         int width = DDGame.WORLD_WIDTH;
         int height = DDGame.WORLD_HEIGHT;

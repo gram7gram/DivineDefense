@@ -141,7 +141,7 @@ public class GameUIGroup extends Group {
     }
 
     public void showNotification(String message) {
-        notificationLabel.setText(message);
+        notificationLabel.updateText(message);
         notificationLabel.setPosition(
                 (DDGame.WORLD_WIDTH - notificationLabel.getWidth()) / 2f,
                 (DDGame.WORLD_HEIGHT - notificationLabel.getHeight()) / 2f);
@@ -158,19 +158,19 @@ public class GameUIGroup extends Group {
     }
 
     public void updateHealthLabel() {
-        healthLabel.setText("HEALTH: " + game.getPlayer().getHealth());
+        healthLabel.updateText("HEALTH: " + game.getPlayer().getHealth());
     }
 
     public void updateGemsLabel() {
-        gemsLabel.setText("GEMS: " + game.getPlayer().getGems());
+        gemsLabel.updateText("GEMS: " + game.getPlayer().getGems());
     }
 
     public void updateWaveLabel() {
-        waveLabel.setText("WAVE: " + (level.getCurrentWave() <= 0 ? "-" : level.getCurrentWave()) + "/" + level.getMaxWaves());
+        waveLabel.updateText("WAVE: " + (level.getCurrentWave() <= 0 ? "-" : level.getCurrentWave()) + "/" + level.getMaxWaves());
     }
 
     public void updateMoneyLabel() {
-        moneyLabel.setText("MONEY: " + game.getPlayer().getCoins());
+        moneyLabel.updateText("MONEY: " + game.getPlayer().getCoins());
     }
 
     public CounterButton getCounterBut() {

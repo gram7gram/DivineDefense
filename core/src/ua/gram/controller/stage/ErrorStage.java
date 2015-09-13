@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import ua.gram.DDGame;
+import ua.gram.controller.listener.DebugListener;
 
 import java.util.Arrays;
 
@@ -18,6 +19,7 @@ public class ErrorStage extends Stage {
 
     public ErrorStage(final DDGame game, final String error, final Exception e) {
         super(game.getViewport(), game.getBatch());
+        if (DDGame.DEBUG) this.addListener(new DebugListener(this));
         this.setDebugAll(DDGame.DEBUG);
         byte gap = 5;
         Gdx.app.error("ERROR", error);

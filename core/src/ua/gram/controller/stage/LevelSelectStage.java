@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import ua.gram.DDGame;
+import ua.gram.controller.listener.DebugListener;
 import ua.gram.model.group.LevelTile;
 import ua.gram.view.screen.MainMenuScreen;
 
@@ -16,7 +17,7 @@ public class LevelSelectStage extends Stage {
     public LevelSelectStage(final DDGame game) {
         super(game.getViewport(), game.getBatch());
         this.setDebugAll(DDGame.DEBUG);
-
+        if (DDGame.DEBUG) this.addListener(new DebugListener(this));
         Button back = new Button(game.getResources().getSkin(), "back-button");
         back.setSize(80, 80);
         back.setPosition(DDGame.WORLD_WIDTH - back.getWidth() - 5, DDGame.WORLD_HEIGHT - back.getHeight() - 5);

@@ -20,7 +20,7 @@ public class DesktopLauncher {
         TexturePacker.Settings settings = new TexturePacker.Settings();
         settings.maxWidth = 4096;
         settings.maxHeight = 4096;
-//        TexturePacker.process(settings, "toPack/all", "data/skin", "style");
+        //TexturePacker.process(settings, "toPack/all", "data/skin", "style");
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.useGL30 = false;
         config.resizable = true;
@@ -30,8 +30,8 @@ public class DesktopLauncher {
         config.fullscreen = false;
         config.foregroundFPS = 0;
         config.backgroundFPS = 0;
-        config.x = 20;
-        config.y = 20;
+        config.x = 0;
+        config.y = 0;
         config.title = "Divine Defense";
         config.addIcon("logo_min128.png", Files.FileType.Internal);//osx
         config.addIcon("logo_min32.png", Files.FileType.Internal);//windows, linux

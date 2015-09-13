@@ -7,9 +7,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Json;
 import ua.gram.DDGame;
 import ua.gram.controller.Resources;
+import ua.gram.controller.listener.DebugListener;
 import ua.gram.model.actor.market.MarketCategoryContainer;
 import ua.gram.model.group.MarketGroup;
 import ua.gram.model.prototype.MarketCategoryPrototype;
+import ua.gram.view.screen.MarketScreen;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -20,8 +22,9 @@ public final class MarketStage extends Stage {
 
     public MarketStage(final DDGame game) {
         super(game.getViewport(), game.getBatch());
+        if (DDGame.DEBUG) this.addListener(new DebugListener(this));
         this.game = game;
-
+        this.setDebugAll(DDGame.DEBUG);
         MarketCategoryPrototype[] prototypes = new Json().fromJson(
                 MarketCategoryPrototype[].class,
                 Resources.loadFile(Resources.MARKET));
@@ -29,5 +32,6 @@ public final class MarketStage extends Stage {
         MarketGroup root = new MarketGroup(game, prototypes);
 
         this.addActor(root);
+
     }
 }

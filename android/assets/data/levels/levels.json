@@ -5,7 +5,16 @@
     "icon":"level-1-preview",
     "difficulty": 1,
     "stars": 0,
-    "resources":[]
+    "resources":[],
+    "waves":[
+      {
+        "max": 5,
+        "waves":[
+          ["EnemyRunner","EnemyRunner"],
+          []
+        ]
+      }
+    ]
   },
   {
     "level": 2,

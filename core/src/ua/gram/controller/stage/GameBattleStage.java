@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import ua.gram.DDGame;
+import ua.gram.controller.listener.DebugListener;
 import ua.gram.controller.listener.ToggleTowerControlsListener;
 import ua.gram.model.Level;
 import ua.gram.model.actor.Enemy;
@@ -33,6 +34,7 @@ public class GameBattleStage extends Stage {
 
     public GameBattleStage(DDGame game, Level level) {
         super(game.getViewport(), game.getBatch());
+        if (DDGame.DEBUG) this.addListener(new DebugListener(this));
         this.level = level;
         towerPositions = new ArrayList<int[]>();
         indexes = new ArrayList<Group>();

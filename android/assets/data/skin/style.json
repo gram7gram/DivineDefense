@@ -156,6 +156,21 @@
       "up": "button-blue-up",
       "down": "button-blue-down"
     },
+    "blue-button-big": {
+      "font": "archery32white",
+      "up": "button-blue-up",
+      "down": "button-blue-down"
+    },
+    "blue-button-medium": {
+      "font": "komika24white",
+      "up": "button-blue-up",
+      "down": "button-blue-down"
+    },
+    "blue-button-small": {
+      "font": "archery16white",
+      "up": "button-blue-up",
+      "down": "button-blue-down"
+    },
     "pretty-button": {
       "font": "archery32black",
       "up": "button-pretty-up",
@@ -256,13 +271,14 @@
       "up": "button-goto-shop-up",
       "down": "button-goto-shop-down"
     },
-    "market-item-category1": {
-      "up": "market-item-category1-item1",
-      "down": "market-item-category1-item1"
+    "market-category1": {
+      "up": "market-category1",
+      "down": "market-category1",
+      "checked": "market-category1-enabled"
     },
-    "market-item-category2": {
-      "up": "market-item-category1-item1",
-      "down": "market-item-category1-item1"
+    "market-category2": {
+      "up": "market-category2",
+      "down": "market-category2"
     }
   },
   "com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle": {

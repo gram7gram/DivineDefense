@@ -2,6 +2,7 @@ package ua.gram.model.actor.misc;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.StringBuilder;
 import ua.gram.DDGame;
 
 /**
@@ -9,30 +10,24 @@ import ua.gram.DDGame;
  */
 public class CustomLabel extends Label {
 
-    private String text;
-
-    public CustomLabel(String text, Skin skin) {
-        super(text, skin);
-        this.text = text;
-        this.setDebug(DDGame.DEBUG);
-        this.setSize(150, 60);//better then (0,0)
-    }
+    private StringBuilder label = new StringBuilder();
 
     public CustomLabel(String text, Skin skin, String styleName) {
         super(text, skin, styleName);
-        this.text = text;
+        label.append(text);
         this.setDebug(DDGame.DEBUG);
-        this.setSize(150, 60);//better then (0,0)
     }
 
     @Override
     public void act(float delta) {
-        this.setText(text);
+        this.setText(label);
         super.act(delta);
     }
 
-    @Override
-    public void setText(CharSequence text) {
-        this.text = text.toString();
+    public void updateText(CharSequence text) {
+        invalidate();
+        label.setLength(0);
+        this.label = label.append(text);
     }
+
 }

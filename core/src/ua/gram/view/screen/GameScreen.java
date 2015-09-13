@@ -8,6 +8,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import ua.gram.DDGame;
+import ua.gram.controller.listener.DebugListener;
 import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.controller.stage.GameUIStage;
 import ua.gram.model.Level;
@@ -33,19 +34,6 @@ public class GameScreen extends AbstractScreen {
         stage_ui = new GameUIStage(game, level);
         stage_battle.setUIStage(stage_ui);
         stage_ui.setBattleStage(stage_battle);
-        if (DDGame.DEBUG) {
-            stage_battle.addListener(new InputListener() {
-                @Override
-                public boolean keyDown(InputEvent event, int keycode) {
-                    if (keycode == Input.Keys.D) {
-                        DDGame.DEBUG = !DDGame.DEBUG;
-                        stage_battle.setDebugAll(DDGame.DEBUG);
-                        stage_ui.setDebugAll(DDGame.DEBUG);
-                    }
-                    return super.keyDown(event, keycode);
-                }
-            });
-        }
         Gdx.app.log("INFO", "Screen set to GameScreen");
     }
 

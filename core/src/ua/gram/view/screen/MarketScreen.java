@@ -16,6 +16,12 @@ public class MarketScreen extends AbstractScreen {
     public MarketScreen(DDGame game) {
         super(game);
         stage = new MarketStage(game);
+        Gdx.app.log("INFO", "MarketSreen is OK");
+    }
+
+    @Override
+    public void show() {
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override

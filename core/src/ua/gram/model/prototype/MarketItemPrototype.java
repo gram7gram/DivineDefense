@@ -9,9 +9,25 @@ public class MarketItemPrototype {
      */
     public String name;
     /**
-     * Item description
+     * Style of the header
+     */
+    public String nameStyle;
+    /**
+     * Purchase button style
+     */
+    public String buttonStyle;
+    /**
+     * Purchase button text
+     */
+    public String button;
+    /**
+     * Styleof the description
      */
     public String description;
+    /**
+     * Item description
+     */
+    public String descriptionStyle;
     /**
      * Currency of the offer
      */
@@ -24,4 +40,8 @@ public class MarketItemPrototype {
      * Icon of the item
      */
     public String icon;
+    /**
+     * Background of the tile
+     */
+    public String background;
 }
