@@ -1,0 +1,12 @@
+{
+  "prototypes": [
+    {
+      "tower_lvl": 1,
+      "upgrade_lvl": 1,
+      "damage": 5,
+      "range": 1,
+      "rate": 0.5,
+      "cost": 40
+    }
+  ]
+}
