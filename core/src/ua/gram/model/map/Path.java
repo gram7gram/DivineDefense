@@ -1,6 +1,7 @@
 package ua.gram.model.map;
 
 import com.badlogic.gdx.math.Vector2;
+import ua.gram.DDGame;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -50,18 +51,21 @@ public class Path {
     }
 
     /**
-     * TODO Return right direction
      *
-     * @param posToSpawn
-     * @return
+     * @param posToSpawn actual position of an Actor in pixels
+     * @return next position in the path
      */
-    public Vector2 getNextDirection(Vector2 posToSpawn) {
+    public Vector2 getNextPosition(Vector2 posToSpawn) throws Exception {
+        int count = 0;
+        posToSpawn.x = (int) (posToSpawn.x / DDGame.TILE_HEIGHT);
+        posToSpawn.y = (int) (posToSpawn.y / DDGame.TILE_HEIGHT);
         for (Vector2 pos : path) {
             if (Float.compare(pos.x, posToSpawn.x) == 0
                     && Float.compare(pos.y, posToSpawn.y) == 0) {
-                return NORTH;
+                return path.get(count);
             }
+            ++count;
         }
-        return EAST;
+        throw new Exception("Position not found");
     }
 }

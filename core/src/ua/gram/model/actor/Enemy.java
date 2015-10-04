@@ -114,7 +114,7 @@ public abstract class Enemy extends Actor implements Pool.Poolable {
                     game.getPlayer().addGems(1);
                     Gdx.app.log("INFO", "Player got 1 gem");
                 }
-                Gdx.app.log("INFO", enemy + "@" + enemy.hashCode() + " was killed");
+                Gdx.app.log("INFO", enemy + " was killed");
             }
         }));
     }

@@ -1,5 +1,7 @@
 package ua.gram.model.actor.enemy;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
 import ua.gram.DDGame;
 import ua.gram.model.actor.AbilityUser;
 import ua.gram.model.actor.Enemy;
@@ -9,7 +11,6 @@ import ua.gram.model.actor.Enemy;
  */
 public final class EnemySummoner extends Enemy implements Cloneable, AbilityUser {
 
-    private final float delayAbility = 3;
     private float counter = 0;
 
     public EnemySummoner(DDGame game, float[] stats) {
@@ -18,23 +19,26 @@ public final class EnemySummoner extends Enemy implements Cloneable, AbilityUser
 
     @Override
     public void ability() {
-//        try {
-//            Vector2 posToSpawn = this.getPosition();
-//            Vector2 nextDirection = this.getPath().getNextDirection(posToSpawn);
-//            this.getSpawner().spawn("EnemySoldier"
-//        } catch (CloneNotSupportedException e) {
-//            Gdx.app.log("WARN", "Could not execute ability for Summoner!");
-//        }
+//        this.getActions().clear();
+        try {
+            Vector2 posToSpawn = this.getPosition();
+            Vector2 next = path.getNextPosition(posToSpawn);
+            this.getSpawner().spawn("EnemySoldier", next);
+            Gdx.app.log("INFO", "Ability!");
+        } catch (Exception e) {
+            Gdx.app.log("WARN", "Could not execute ability for Summoner!");
+        }
     }
 
     @Override
     public void update(float delta) {
         this.setOrigin(this.getX() + this.getWidth() / 2f, this.getY() + this.getHeight() / 2f);
-        if (Float.compare(counter, delayAbility) == 0) {
+        if (counter > 3) {
             ability();
             counter = 0;
-        } else
+        } else {
             counter += delta;
+        }
     }
 
     @Override

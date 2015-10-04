@@ -7,6 +7,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * NOTE: https://cdn.tutsplus.com/gamedev/authors/daniel-schuller/jrpg-using-tilemap-layers.png
@@ -46,6 +47,13 @@ public class Map {
             }
         }
         return spawnPoint;
+    }
+
+    public ArrayList<Vector2> getDirectionsFrom(Vector2 start) {
+        ArrayList<Vector2> route = path.getPath();
+        int currentIndex = route.indexOf(start);
+        List<Vector2> list = path.getDirections().subList(currentIndex + 1, route.size());
+        return new ArrayList<Vector2>(list);
     }
 
     /**
@@ -115,7 +123,6 @@ public class Map {
     public Path getPath() {
         return path;
     }
-
 
     public ArrayList<Vector2> getDirectionsArray() {
         return path.getDirections();

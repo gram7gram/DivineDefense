@@ -14,6 +14,7 @@ import ua.gram.model.actor.Enemy;
 import ua.gram.model.actor.enemy.*;
 import ua.gram.model.actor.misc.HealthBar;
 import ua.gram.model.group.EnemyGroup;
+import ua.gram.model.map.Map;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,14 +34,12 @@ public class EnemySpawner {
     private Pool<Enemy> poolSoldierArmored;
     private Pool<Enemy> poolSummoner;
     private Pool<Enemy> poolRunner;
-    private ArrayList<Vector2> path;
     private LinkedList<String> enemiesToSpawn;
 
     public EnemySpawner(DDGame game, Level level, GameBattleStage stage) {
         this.game = game;
         this.stage_battle = stage;
         this.level = level;
-        this.path = level.getMap().getDirectionsArray();
         Gdx.app.log("INFO", "EnemySpawner is OK");
     }
 
@@ -79,7 +78,7 @@ public class EnemySpawner {
      * @throws CloneNotSupportedException - error occcured at cloning.
      * @throws NullPointerException       - type does not belong to known Enemy ancestor.
      */
-    public void spawn(String type, Vector2 spawn) throws CloneNotSupportedException {
+    public void spawn(String type, Vector2 spawn) throws CloneNotSupportedException, NullPointerException {
         Enemy enemy;
         if (type.equals("EnemyWarrior")) {
             enemy = ((EnemyWarrior) (poolWarrior.obtain())).clone();
@@ -99,15 +98,29 @@ public class EnemySpawner {
                 spawn.y * DDGame.TILE_HEIGHT
         );
         enemy.setSpawner(this);
+        Map map = level.getMap();
+        enemy.setPath(map.getPath());
         EnemyGroup enemyGroup = new EnemyGroup(enemy,
                 new HealthBar(game.getResources().getSkin(), enemy)
         );
-        if (level.getMap().getSpawn().getPosition() != spawn) {
-            path = level.getMap().normalizePath(spawn).getDirections();
-        }
-        setActionPath(enemyGroup, path);
+        ArrayList<Vector2> path;
+        if (spawn != map.getSpawn().getPosition()) {
+            path = map.getDirectionsFrom(spawn);
+        } else
+            path = this.normalizePathFrom(spawn);
+        this.setActionPath(enemyGroup, path);
         enemyGroup.setVisible(true);
         stage_battle.updateZIndexes(enemyGroup);
+    }
+
+    /**
+     * Get Direction which ACtor should go to reach Base.
+     *
+     * @param start start position
+     * @return list of directions
+     */
+    public ArrayList<Vector2> normalizePathFrom(Vector2 start) {
+        return level.getMap().normalizePath(start).getDirections();
     }
 
     /**

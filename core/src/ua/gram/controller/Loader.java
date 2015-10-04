@@ -81,6 +81,10 @@ public final class Loader {
     private static ArrayList<String[]> level1_diff1() {
         ArrayList<String[]> waves = new ArrayList<String[]>();
         waves.add(new String[]{
+                "EnemySummoner",
+                "EnemySummoner",
+                "EnemySummoner",
+                "EnemySummoner",
                 "EnemyRunner",
                 "EnemyRunner",
                 "EnemySoldier",
