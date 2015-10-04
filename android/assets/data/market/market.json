@@ -152,6 +152,66 @@
         "descriptionStyle": "normaltextblack",
         "buttonStyle": "blue-button-medium",
         "background": "button-default-up"
+      },
+      {
+        "name": "Item 9",
+        "description": "General item description",
+        "price": 2,
+        "currency": "gems",
+        "icon": "market-item-category2-item7",
+        "button": "Purchase",
+        "nameStyle": "header2black",
+        "descriptionStyle": "normaltextblack",
+        "buttonStyle": "blue-button-medium",
+        "background": "button-default-up"
+      },
+      {
+        "name": "Item 10",
+        "description": "General item description",
+        "price": 20,
+        "currency": "gems",
+        "icon": "market-item-category2-item8",
+        "button": "Purchase",
+        "nameStyle": "header2black",
+        "descriptionStyle": "normaltextblack",
+        "buttonStyle": "blue-button-medium",
+        "background": "button-default-up"
+      },
+      {
+        "name": "Item 11",
+        "description": "General item description",
+        "price": 2,
+        "currency": "gems",
+        "icon": "market-item-category2-item7",
+        "button": "Purchase",
+        "nameStyle": "header2black",
+        "descriptionStyle": "normaltextblack",
+        "buttonStyle": "blue-button-medium",
+        "background": "button-default-up"
+      },
+      {
+        "name": "Item 12",
+        "description": "General item description",
+        "price": 20,
+        "currency": "gems",
+        "icon": "market-item-category2-item8",
+        "button": "Purchase",
+        "nameStyle": "header2black",
+        "descriptionStyle": "normaltextblack",
+        "buttonStyle": "blue-button-medium",
+        "background": "button-default-up"
+      },
+      {
+        "name": "Item 13",
+        "description": "General item description",
+        "price": 20,
+        "currency": "gems",
+        "icon": "market-item-category2-item8",
+        "button": "Purchase",
+        "nameStyle": "header2black",
+        "descriptionStyle": "normaltextblack",
+        "buttonStyle": "blue-button-medium",
+        "background": "button-default-up"
       }
     ]
   }

@@ -1,13 +1,11 @@
 package ua.gram.model.actor.market;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import ua.gram.DDGame;
 import ua.gram.model.prototype.MarketCategoryPrototype;
-import ua.gram.model.prototype.MarketItemPrototype;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -18,8 +16,9 @@ public class MarketCategoryContainer extends Table {
     private Button tab;
 
     public MarketCategoryContainer(DDGame game, MarketCategoryPrototype prototype) {
-        this.category = prototype.category;
+        super(game.getResources().getSkin());
         Skin skin = game.getResources().getSkin();
+        this.category = prototype.category;
         tab = new Button(skin, prototype.icon);
         for (int i = 0; i < prototype.items.length; i += 2) {
             this.add(new MarketItem(game, prototype.items[i]))

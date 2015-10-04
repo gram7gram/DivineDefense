@@ -34,7 +34,6 @@ public class Player {
     public void chargeGems(int amount) {
         if (gems < amount) throw new IllegalArgumentException("Unable to charge " + amount + " gems");
         Gdx.app.log("INFO", "Player had: " + this.gems + " gems. Now has: " + (this.gems -= amount));
-
     }
 
     public void addCoins(int amount) {
@@ -48,7 +47,7 @@ public class Player {
     }
 
     public void restoreHealth() {
-        this.health = new Integer(DEFAULT_HEALTH);//prevent referencing
+        this.health = DEFAULT_HEALTH;
         Gdx.app.log("INFO", "Player's health is restored to " + DEFAULT_HEALTH + " lives");
     }
 
@@ -101,6 +100,6 @@ public class Player {
     }
 
     public void addGems(int i) {
-        gems += i;
+        this.gems += i;
     }
 }

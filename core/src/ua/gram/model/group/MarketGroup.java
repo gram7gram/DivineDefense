@@ -1,13 +1,13 @@
 package ua.gram.model.group;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Cell;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Array;
 import ua.gram.DDGame;
 import ua.gram.model.actor.market.MarketCategoryContainer;
 import ua.gram.model.actor.misc.CustomLabel;
@@ -22,9 +22,9 @@ import java.util.ArrayList;
 public class MarketGroup extends Table {
 
     public MarketGroup(final DDGame game, MarketCategoryPrototype[] prototypes) {
-        Skin skin = game.getResources().getSkin();
+        final Skin skin = game.getResources().getSkin();
         final ArrayList<MarketCategoryContainer> containers = new ArrayList<MarketCategoryContainer>(4);
-        final CustomLabel header = new CustomLabel("Test", skin, "header1white");
+        final CustomLabel header = new CustomLabel("", skin, "header1white");
         header.setVisible(true);
         boolean active = false;
         for (MarketCategoryPrototype proto : prototypes) {
@@ -40,25 +40,31 @@ public class MarketGroup extends Table {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     super.clicked(event, x, y);
+
                     Actor current = null;
                     for (MarketCategoryContainer cont : containers) {
                         if (cont.getTab().isChecked() && current == null) {
                             current = cont;
-                            System.out.println("Current found");
                         }
                         cont.getTab().setChecked(false);
                         cont.setVisible(false);
+                        cont.getTab().setTouchable(Touchable.enabled);
                     }
-                    Cell cell = getCell(current);
+                    header.updateText(container.getCategory());
+                    tab.setChecked(true);
+                    tab.setTouchable(Touchable.disabled);
+                    Array cells = getCells();
+                    Cell cell = (Cell) cells.get(cells.size - 1);
                     if (cell != null) {
-                        cell.clearActor();
-                        cell.setActor(container);
-                        header.updateText(container.getCategory());
-                        tab.setChecked(true);
+                        ScrollPane scroll = new ScrollPane(container, skin);
+                        scroll.setScrollingDisabled(true, false);
+                        cell.setActor(scroll);
                         container.setVisible(true);
-                        System.out.println("YES");
+                        cell.getActor().setVisible(true);
+                        cell.expand();
+                        Gdx.app.log("INFO", "Opened MarketCategory: " + container.getCategory());
                     } else {
-                        System.out.println("NOT");
+                        Gdx.app.error("ERROR", "Missing MarketCategory: " + container.getCategory());
                     }
                 }
 
@@ -84,14 +90,8 @@ public class MarketGroup extends Table {
             tabs.add(container.getTab()).width(80).height(80).row();
         }
         this.add(tabs).width(80).expandY().align(Align.top);
-        this.add(containers.get(0)).top().left().expand();
-//        for (MarketCategoryContainer container : containers) {
-//            container.setVisible(false);
-//            if (containers.indexOf(container) == containers.size() - 1) {
-//                this.add(container).top().left().expand();
-//            } else {
-//                this.add(container);
-//            }
-//        }
+        ScrollPane scroll = new ScrollPane(containers.get(0), skin);
+        scroll.setScrollingDisabled(true, false);
+        this.add(scroll).top().left().expand();
     }
 }

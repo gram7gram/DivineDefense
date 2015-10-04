@@ -290,5 +290,15 @@
       "titleFont": "action40black",
       "background": "window-pretty-header"
     }
+  },
+  "com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle": {
+    "default": {
+        "background": "label-background-0.25"
+    }
+  },
+  "com.badlogic.gdx.scenes.scene2d.ui.Table": {
+    "default": {
+      "background": "window-pretty"
+    }
   }
 }

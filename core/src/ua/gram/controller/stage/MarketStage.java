@@ -10,6 +10,7 @@ import ua.gram.controller.Resources;
 import ua.gram.controller.listener.DebugListener;
 import ua.gram.model.actor.market.MarketCategoryContainer;
 import ua.gram.model.group.MarketGroup;
+import ua.gram.model.group.PlayerDataTable;
 import ua.gram.model.prototype.MarketCategoryPrototype;
 import ua.gram.view.screen.MarketScreen;
 
@@ -18,12 +19,9 @@ import ua.gram.view.screen.MarketScreen;
  */
 public final class MarketStage extends Stage {
 
-    private final DDGame game;
-
     public MarketStage(final DDGame game) {
         super(game.getViewport(), game.getBatch());
         if (DDGame.DEBUG) this.addListener(new DebugListener(this));
-        this.game = game;
         this.setDebugAll(DDGame.DEBUG);
         MarketCategoryPrototype[] prototypes = new Json().fromJson(
                 MarketCategoryPrototype[].class,
@@ -31,7 +29,13 @@ public final class MarketStage extends Stage {
 
         MarketGroup root = new MarketGroup(game, prototypes);
 
+        PlayerDataTable playerData = new PlayerDataTable(game);
+        playerData.setPosition(
+                (DDGame.WORLD_WIDTH - playerData.getWidth())/2f,
+                20);
+
         this.addActor(root);
+        this.addActor(playerData);
 
     }
 }
