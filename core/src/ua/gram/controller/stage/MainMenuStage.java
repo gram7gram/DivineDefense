@@ -5,11 +5,13 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import ua.gram.DDGame;
 import ua.gram.controller.listener.DebugListener;
 import ua.gram.view.screen.LevelSelectScreen;
+import ua.gram.view.screen.MarketScreen;
 
 /**
  *
@@ -39,19 +41,20 @@ public class MainMenuStage extends Stage {
             }
         });
         Button continueBut = new TextButton("PLAY", skin, "pretty-button");
-        continueBut.setPosition(width / 4f - butWidth / 2f, height / 2f + butHeight / 2f + gap);
-        continueBut.setSize(butWidth, butHeight);
-        continueBut.setVisible(true);
         continueBut.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(new LevelSelectScreen(game));
             }
         });
+        Button marketBut = new TextButton("MARKET", skin, "pretty-button");
+        marketBut.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(new MarketScreen(game));
+            }
+        });
         Button aboutBut = new TextButton("ABOUT", skin, "pretty-button");
-        aboutBut.setPosition(width / 4f - butWidth / 2f, height / 2f - butHeight / 2f);
-        aboutBut.setSize(butWidth, butHeight);
-        aboutBut.setVisible(true);
         aboutBut.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -60,9 +63,6 @@ public class MainMenuStage extends Stage {
             }
         });
         Button settingsBut = new TextButton("SETTINGS", skin, "pretty-button");
-        settingsBut.setPosition(width / 4f - butWidth / 2f, height / 2f - butHeight * 3 / 2f - gap);
-        settingsBut.setSize(butWidth, butHeight);
-        settingsBut.setVisible(true);
         settingsBut.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -71,10 +71,17 @@ public class MainMenuStage extends Stage {
             }
         });
 
-        this.addActor(quitBut);
-        this.addActor(continueBut);
-        this.addActor(aboutBut);
-        this.addActor(settingsBut);
+        Table table = new Table(skin);
+
+        table.setDebug(DDGame.DEBUG);
+        table.setSize(DDGame.WORLD_WIDTH / 2f, DDGame.WORLD_HEIGHT);
+
+        table.add(continueBut).width(butWidth).row();
+        table.add(marketBut).width(butWidth).row();
+        table.add(settingsBut).width(butWidth).row();
+        table.add(aboutBut).width(butWidth).row();
+
+        this.addActor(table);
     }
 
 }
