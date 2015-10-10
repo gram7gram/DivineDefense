@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import ua.gram.DDGame;
 import ua.gram.controller.listener.TowerShopInputListener;
 import ua.gram.controller.market.shop.TowerShop;
-import ua.gram.model.actor.Tower;
+import ua.gram.model.actor.tower.Tower;
 
 /**
  * @author Gram <gram7gram@gmail.com>

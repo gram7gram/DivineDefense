@@ -21,6 +21,7 @@ public class MarketScreen extends AbstractScreen {
 
     @Override
     public void show() {
+        Gdx.app.log("INFO", "Screen set to MainMenuScreen");
         Gdx.input.setInputProcessor(stage);
     }
 

@@ -5,6 +5,8 @@ import ua.gram.DDGame;
 import ua.gram.controller.enemy.EnemySpawner;
 import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.model.map.Map;
+import ua.gram.model.prototype.LevelPrototype;
+import ua.gram.model.prototype.WavePrototype;
 
 import java.util.ArrayList;
 
@@ -13,51 +15,48 @@ import java.util.ArrayList;
  */
 public class Level {
 
-    public static final int MAX_LEVEL = 3;
-    private final Wave wave;
+    public static int MAX_LEVEL = 3;
+    public static int maxWaves;
+    private final ArrayList<Wave> waves;
     public boolean isCleared;
     public int currentLevel;
+    private Wave currentWave;
     private Map map;
     private DDGame game;
     private EnemySpawner spawner;
     private GameBattleStage stage_battle;
 
-    /**
-     * Is created using Factory!
-     * Holds the Map, Wave and EnemySpawner objects.
-     * For successful creation of the Level object, follow the order:
-     * 	Level level = new Level(...)
-     * 	level.create(...)
-     * 	level.createSpawner()
-     */
-    public Level(ArrayList<String[]> waves) {
-        wave = new Wave(this, waves);
-        isCleared = false;
-        Gdx.app.log("INFO", "Level obtained waves");
-    }
-
-    /**
-     * Should be called after receiving the Level object from Factory.
-     */
-    public void create(DDGame game, int lvl) {
+    public Level(DDGame game, LevelPrototype prototype) {
         this.game = game;
-        currentLevel = lvl;
-        map = new Map(game.getResources().getMap(lvl));
-        Gdx.app.log("INFO", "Level obtained map");
-        Gdx.app.log("INFO", "Level " + lvl + " is OK");
+        waves = new ArrayList<Wave>(prototype.waves.length);
+        for (WavePrototype proto : prototype.waves) {
+            waves.add(new Wave(this, proto));
+        }
+        isCleared = false;
+        currentLevel = prototype.level;
+        map = new Map(game.getResources().getMap(prototype.map));
+        Gdx.app.log("INFO", "Level " + currentLevel + " is OK");
     }
 
     public void createSpawner() {
         spawner = new EnemySpawner(game, this, stage_battle);
-        wave.setSpawner(spawner);
     }
 
     public void update(float delta) {
-        if (wave.getCurrentWave() <= wave.getMaxWaves()) {
-            if (wave.isStarted) {
+        if (currentWave.getIndex() == maxWaves) {
+            if (currentWave.isStarted) {
+                if (spawner == null)
+                    createSpawner();
                 spawner.update(delta);
             }
         }
+    }
+
+    public void nextWave() throws IndexOutOfBoundsException {
+        currentWave = waves.get(waves.indexOf(currentWave) + 1);
+        spawner.setEnemiesToSpawn(currentWave.getEnemies());
+        currentWave.isStarted = true;
+        Gdx.app.log("INFO", "Wave " + currentWave + "/" + maxWaves + " has started");
     }
 
     /**
@@ -89,15 +88,15 @@ public class Level {
     }
 
     public int getCurrentWave() {
-        return wave.getCurrentWave();
+        return currentWave.getIndex();
     }
 
     public int getMaxWaves() {
-        return wave.getMaxWaves();
+        return maxWaves;
     }
 
     public Wave getWave() {
-        return wave;
+        return currentWave;
     }
 
     public GameBattleStage getStage() {

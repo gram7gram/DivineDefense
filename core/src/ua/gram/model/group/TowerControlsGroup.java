@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import ua.gram.DDGame;
 import ua.gram.controller.market.shop.TowerShop;
-import ua.gram.model.actor.Tower;
+import ua.gram.model.actor.tower.Tower;
 
 /**
  *

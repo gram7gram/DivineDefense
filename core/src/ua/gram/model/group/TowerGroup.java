@@ -4,9 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import ua.gram.DDGame;
-import ua.gram.model.actor.Tower;
-import ua.gram.model.actor.Weapon;
 import ua.gram.model.actor.misc.ProgressBar;
+import ua.gram.model.actor.tower.Tower;
+import ua.gram.model.actor.weapon.Weapon;
 
 /**
  * @author Gram <gram7gram@gmail.com>

@@ -1,9 +1,8 @@
 package ua.gram.model.actor.weapon;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import ua.gram.model.actor.Enemy;
-import ua.gram.model.actor.Tower;
-import ua.gram.model.actor.Weapon;
+import ua.gram.model.actor.enemy.Enemy;
+import ua.gram.model.actor.tower.Tower;
 
 /**
  * @author Gram <gram7gram@gmail.com>

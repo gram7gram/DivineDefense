@@ -1,5 +1,6 @@
 package ua.gram.view.screen;
 
+import com.badlogic.gdx.Gdx;
 import ua.gram.DDGame;
 import ua.gram.controller.Resources;
 import ua.gram.controller.factory.PlayerFactory;
@@ -16,10 +17,12 @@ public class LaunchLoadingScreen extends AbstractLoadingScreen {
 
     public LaunchLoadingScreen(DDGame game) {
         super(game);
+        Gdx.app.log("INFO", "LaunchLoadingScreen is OK");
     }
 
     @Override
     public void show() {
+        Gdx.app.log("INFO", "Screen set to GameScreen");
         game.setPlayer(PlayerFactory.defaults());
         game.getResources().loadTexture(Resources.BACKGROUND_TEXTURE);
         game.createCamera();

@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import ua.gram.controller.Resources;
 import ua.gram.controller.security.SecurityHandler;
 import ua.gram.model.Player;
+import ua.gram.model.prototype.GamePrototype;
 import ua.gram.view.screen.ErrorScreen;
 import ua.gram.view.screen.LaunchLoadingScreen;
 
@@ -42,6 +43,7 @@ public class DDGame extends Game {
     public static int MAP_WIDTH;
     public static int MAP_HEIGHT;
     public static int MAX_ENTITIES;
+    private final GamePrototype prototype;
     private SecurityHandler security;
     private float gameSpeed = 1;
     private Resources resources;
@@ -50,8 +52,9 @@ public class DDGame extends Game {
     private Viewport view;
     private Player player;
 
-    public DDGame(SecurityHandler security) {
+    public DDGame(SecurityHandler security, GamePrototype prototype) {
         this.security = security;
+        this.prototype = prototype;
     }
 
     @Override
@@ -131,6 +134,10 @@ public class DDGame extends Game {
             if (throwExc) this.setScreen(new ErrorScreen(this, "Could not load factory: " + file, e));
         }
         return null;
+    }
+
+    public GamePrototype getPrototype() {
+        return prototype;
     }
 
     public Resources getResources() {

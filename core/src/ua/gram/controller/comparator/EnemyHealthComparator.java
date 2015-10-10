@@ -1,6 +1,6 @@
 package ua.gram.controller.comparator;
 
-import ua.gram.model.actor.Enemy;
+import ua.gram.model.actor.enemy.Enemy;
 
 import java.util.Comparator;
 

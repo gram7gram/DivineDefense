@@ -7,7 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import ua.gram.DDGame;
+import ua.gram.controller.Resources;
 import ua.gram.model.Level;
+import ua.gram.model.prototype.LevelPrototype;
 import ua.gram.view.screen.LevelLoadingScreen;
 import ua.gram.view.screen.MainMenuScreen;
 
@@ -50,7 +52,10 @@ public class VictoryWindow extends Window {
                     Gdx.app.log("INFO", "Switching to level " + game.getPlayer().getLevel());
                     setVisible(false);
                     DDGame.PAUSE = false;
-                    game.setScreen(new LevelLoadingScreen(game, game.getPlayer().getLevel()));
+                    LevelPrototype prototype = game.deserialize(Resources.LEVELS,
+                            LevelPrototype[].class, true)[game.getPlayer().getLevel()];
+                    Level level = new Level(game, prototype);
+                    game.setScreen(new LevelLoadingScreen(game, level));
                 } else {
                     game.setScreen(new MainMenuScreen(game));
 //                    game.setScreen(new FinalScreen(game));

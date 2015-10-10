@@ -1,9 +1,9 @@
 package ua.gram.model.actor.tower;
 
 import ua.gram.DDGame;
-import ua.gram.model.actor.Enemy;
-import ua.gram.model.actor.Tower;
-import ua.gram.model.actor.Weapon;
+import ua.gram.model.actor.enemy.Enemy;
+import ua.gram.model.actor.weapon.Weapon;
+import ua.gram.model.prototype.TowerPrototype;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -11,8 +11,8 @@ import ua.gram.model.actor.Weapon;
 public final class TowerPrimary extends Tower implements Cloneable {
 
 
-    public TowerPrimary(DDGame game, float[] stats) {
-        super(game, stats);
+    public TowerPrimary(DDGame game, TowerPrototype prototype) {
+        super(game, prototype);
     }
 
     @Override

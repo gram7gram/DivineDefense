@@ -10,7 +10,7 @@ import ua.gram.controller.market.shop.TowerShop;
 import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.controller.stage.GameUIStage;
 import ua.gram.model.Level;
-import ua.gram.model.actor.Tower;
+import ua.gram.model.actor.tower.Tower;
 import ua.gram.view.screen.ErrorScreen;
 
 /**
@@ -86,11 +86,11 @@ public class TowerShopInputListener extends ClickListener {
             Level level = stage_ui.getLevel();
             if (!level.getWave().isStarted && !level.isCleared) {
                 try {
-                    stage_ui.getLevel().getWave().nextWave();
+                    stage_ui.getLevel().nextWave();
                     stage_ui.getGameUIGroup().getCounterBut().setVisible(false);
                 } catch (IndexOutOfBoundsException e) {
                     game.setScreen(new ErrorScreen(game,
-                            "Unappropriate wave [" + stage_ui.getLevel().getWave().getCurrentWave()
+                            "Unappropriate wave [" + stage_ui.getLevel().getCurrentWave()
                                     + "] in level " + stage_ui.getLevel().currentLevel, e));
                 }
             }

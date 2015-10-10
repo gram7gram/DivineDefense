@@ -65,4 +65,8 @@ public abstract class AbstractScreen implements Screen {
     public void dispose() {
 
     }
+
+    public DDGame getGame() {
+        return game;
+    }
 }

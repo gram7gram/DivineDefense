@@ -1,59 +1,38 @@
 [
   {
     "level": 1,
-    "map": "data/levels/maps/level1@60.tmp",
-    "icon":"level-1-preview",
     "difficulty": 1,
-    "stars": 0,
-    "resources":[],
-    "waves":[
+    "ranking": 0,
+    "map": "data/levels/maps/level1@60.tmp",
+    "preview": "level-1-preview",
+    "resources": [],
+    "locked": false,
+    "waves": [
       {
-        "max": 5,
-        "waves":[
-          ["EnemyRunner","EnemyRunner"],
-          []
+        "index": 0,
+        "enemies": [
+          "EnemyRunner",
+          "EnemyRunner"
         ]
       }
     ]
   },
   {
     "level": 2,
+    "difficulty": 1,
+    "ranking": 0,
     "map": "data/levels/maps/level2@60.tmp",
-    "icon":"level-2-preview",
-    "difficulty": 1,
-    "stars": 0,
-    "resources":[]
-  },
-  {
-    "level": 3,
-    "map": "data/levels/maps/level3@60.tmp",
-    "icon":"level-3-preview",
-    "difficulty": 1,
-    "stars": 0,
-    "resources":[]
-  },
-  {
-    "level": 4,
-    "map": "data/levels/maps/level4@60.tmp",
-    "icon":"level-4-preview",
-    "difficulty": 1,
-    "stars": 0,
-    "resources":[]
-  },
-  {
-    "level": 5,
-    "map": "data/levels/maps/level5@60.tmp",
-    "icon":"level-5-preview",
-    "difficulty": 1,
-    "stars": 0,
-    "resources":[]
-  },
-  {
-    "level": 6,
-    "map": "data/levels/maps/level6@60.tmp",
-    "icon":"level-6-preview",
-    "difficulty": 1,
-    "stars": 0,
-    "resources":[]
+    "preview": "level-2-preview",
+    "resources": [],
+    "locked": false,
+    "waves": [
+      {
+        "index": 0,
+        "enemies": [
+          "EnemyRunner",
+          "EnemyWarrior"
+        ]
+      }
+    ]
   }
 ]

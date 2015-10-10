@@ -1,6 +1,7 @@
 package ua.gram.controller.security;
 
 import com.badlogic.gdx.Gdx;
+import ua.gram.model.prototype.GamePrototype;
 
 import javax.activation.CommandMap;
 import javax.activation.DataHandler;
@@ -17,7 +18,8 @@ import java.util.HashMap;
 import java.util.Properties;
 
 /**
- * Created by Gram on 12/1.
+ *
+ * @author Gram <gram7gram@gmail.com>
  */
 public class BugReport {
 
@@ -26,10 +28,10 @@ public class BugReport {
     private final String PASS;
     private final String HOST;
     private final short PORT;
-    private HashMap<String, String> device;
+    private GamePrototype prototype;
 
-    public BugReport(HashMap<String, String> device) {
-        this.device = device;
+    public BugReport(GamePrototype prototype) {
+        this.prototype = prototype;
         TO = "gram7gram@gmail.com";
         FROM = "divinedefensegame@gmail.com";
         PASS = "cxmmjGtdLmucADN";
@@ -39,8 +41,9 @@ public class BugReport {
 
     public boolean sendReport(String text) {
         String content = "";
-        for (String key : device.keySet()) {
-            content += key + ": " + device.get(key) + "\n";
+        HashMap<String, Object> map = prototype.toMap();
+        for (String key : map.keySet()) {
+            content += key + ": " + map.get(key) + "\n";
         }
         content += text;
         try {

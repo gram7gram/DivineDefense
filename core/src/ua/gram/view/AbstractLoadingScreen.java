@@ -63,4 +63,6 @@ public abstract class AbstractLoadingScreen extends AbstractScreen {
     public void dispose() {
         Gdx.app.log("WARN", "LoadingScreen disposed");
     }
+
+
 }

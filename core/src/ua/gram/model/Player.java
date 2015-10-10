@@ -1,7 +1,7 @@
 package ua.gram.model;
 
 import com.badlogic.gdx.Gdx;
-import ua.gram.model.actor.Tower;
+import ua.gram.model.prototype.PlayerPrototype;
 
 /**
  *
@@ -11,10 +11,6 @@ public class Player {
 
     public static String PLAYER_FRACTION;
     public static String SYSTEM_FRACTION;
-    public static Tower.Strategy TOWER_PRIMARY_STRATEGY;
-    public static Tower.Strategy TOWER_SECONDARY_STRATEGY;
-    public static Tower.Strategy TOWER_STUN_STRATEGY;
-    public static Tower.Strategy TOWER_SPECIAL_STRATEGY;
     public static int UNLOCKED_TOWER_PRIMARY;
     public static int UNLOCKED_TOWER_SECONDARY;
     public static int UNLOCKED_TOWER_STUN;
@@ -25,6 +21,29 @@ public class Player {
     private int health;
     private int coins;
     private int gems;
+//    public static Tower.Strategy TOWER_PRIMARY_STRATEGY;
+//    public static Tower.Strategy TOWER_SECONDARY_STRATEGY;
+//    public static Tower.Strategy TOWER_STUN_STRATEGY;
+//    public static Tower.Strategy TOWER_SPECIAL_STRATEGY;
+
+    public Player() {
+    }
+
+    public Player(PlayerPrototype prototype) {
+        this.setDefault(false);
+        this.setCoins(prototype.coins);
+        this.setGems(prototype.gems);
+        this.setHealth(prototype.health);
+        DEFAULT_HEALTH = prototype.health;
+        UNLOCKED_TOWER_PRIMARY = prototype.unlockedTowerPrimary;
+        UNLOCKED_TOWER_SECONDARY = prototype.unlockedTowerSecondary;
+        UNLOCKED_TOWER_STUN = prototype.unlockedTowerStun;
+        UNLOCKED_TOWER_SPECIAL = prototype.unlockedTowerSpecial;
+//        Player.TOWER_PRIMARY_STRATEGY = prototype.towerPrimaryStrategy;
+//        Player.TOWER_SECONDARY_STRATEGY = prototype.towerSecondaryStrategy;
+//        Player.TOWER_STUN_STRATEGY = prototype.towerStunStrategy;
+//        Player.TOWER_SPECIAL_STRATEGY = prototype.towerSpecialStrategy;
+    }
 
     public void chargeCoins(int amount) {
         if (coins < amount) throw new IllegalArgumentException("Unable to charge " + amount + " coins");
