@@ -7,7 +7,7 @@ import ua.gram.controller.Resources;
 import ua.gram.model.actor.tower.*;
 import ua.gram.model.prototype.TowerPrototype;
 
-import java.util.Map;
+import java.util.HashMap;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -16,13 +16,13 @@ public class TowerPool<T extends Tower> extends Pool<Tower> {
 
     private final String type;
     private final DDGame game;
-    private Map<String, TowerPrototype> map;
-    ;
+    private HashMap<String, TowerPrototype> map;
 
     public TowerPool(DDGame game, String type) {
         super(5, DDGame.MAX_ENTITIES);
         this.game = game;
         this.type = type;
+        map = new HashMap<String, TowerPrototype>();
         TowerPrototype[] prototypes = game.deserialize(Resources.TOWERS, TowerPrototype[].class, true);
         for (TowerPrototype prototype : prototypes) {
             map.put(prototype.name, prototype);

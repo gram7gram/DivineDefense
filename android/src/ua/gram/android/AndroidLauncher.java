@@ -30,6 +30,8 @@ public class AndroidLauncher extends AndroidApplication {
         prototype.osCodename = Build.VERSION.CODENAME;
         prototype.osRelease = Build.VERSION.RELEASE;
         prototype.configPath = null;
+        prototype.maxRanking = 3;
+        prototype.maxLevels = 8;
 
         initialize(new DDGame(new SecurityHandler(prototype), prototype), config);
     }

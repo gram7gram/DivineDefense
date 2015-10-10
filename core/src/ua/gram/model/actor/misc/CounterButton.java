@@ -54,6 +54,7 @@ public class CounterButton extends Actor {
                     counterButton.setVisible(false);
                     stateTime = 0;
                 } catch (Exception e) {
+                    counterButton.setVisible(false);
                     game.setScreen(new ErrorScreen(game, "Inappropriate wave "
                             + level.getCurrentWave()
                             + " in level " + level.currentLevel, e));
@@ -68,7 +69,7 @@ public class CounterButton extends Actor {
     public void act(float delta) {
         super.act(delta);
         if (!DDGame.PAUSE) {
-            if (!level.getWave().isStarted && !level.isCleared) {
+            if (!level.isActiveWave() && !level.isFinished()) {
                 if (!this.isVisible()) {
                     animation = reset();
                     start(level.getCurrentWave() <= 1 ? 1 : 1 / 2f);

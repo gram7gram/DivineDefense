@@ -15,6 +15,8 @@ public class PlayerFactory implements Factory<Player, PlayerPrototype> {
         player.setGems(7);
         player.setHealth(10);
         Player.DEFAULT_HEALTH = 10;
+        Player.PLAYER_FRACTION = DDGame.ANGEL;
+        Player.SYSTEM_FRACTION = DDGame.DEMON;
 //        Player.TOWER_PRIMARY_STRATEGY = Tower.Strategy.STRONGEST;
 //        Player.TOWER_SECONDARY_STRATEGY = Tower.Strategy.STRONGEST;
 //        Player.TOWER_STUN_STRATEGY = Tower.Strategy.STRONGEST;

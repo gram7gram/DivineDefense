@@ -5,7 +5,9 @@
     "health": 110,
     "speed": 1,
     "armor": 10,
-    "reward": 10
+    "reward": 10,
+    "width": 60,
+    "height": 90
   },
   {
     "name": "EnemySoldier",
@@ -13,7 +15,9 @@
     "health": 110,
     "speed": 1.6,
     "armor": 10,
-    "reward": 10
+    "reward": 10,
+    "width": 60,
+    "height": 90
   },
   {
     "name": "EnemySoldierArmored",
@@ -21,7 +25,9 @@
     "health": 110,
     "speed": 1.4,
     "armor": 10,
-    "reward": 10
+    "reward": 10,
+    "width": 60,
+    "height": 90
   },
   {
     "name": "EnemySummoner",
@@ -29,7 +35,9 @@
     "health": 110,
     "speed": 1.5,
     "armor": 10,
-    "reward": 10
+    "reward": 10,
+    "width": 60,
+    "height": 90
   },
   {
     "name": "EnemyWarrior",
@@ -37,6 +45,8 @@
     "health": 110,
     "speed": 0.9,
     "armor": 10,
-    "reward": 10
+    "reward": 10,
+    "width": 60,
+    "height": 90
   }
 ]

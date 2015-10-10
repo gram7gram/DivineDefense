@@ -38,12 +38,13 @@ public class DesktopLauncher {
         config.addIcon("logo_min16.png", Files.FileType.Internal);//windows
 
         DesktopGamePrototype prototype = new DesktopGamePrototype();
-        prototype.gameModule = "Android";
         prototype.id = getMAC();
         prototype.gameModule = "Desktop";
         prototype.osName = System.getProperty("os.name");
         prototype.osVersion = System.getProperty("os.version");
         prototype.configPath = getPrefs();
+        prototype.maxRanking = 3;
+        prototype.maxLevels = 8;
 
         new LwjglApplication(new DDGame(new SecurityHandler(prototype), prototype), config);
     }

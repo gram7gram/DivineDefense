@@ -54,8 +54,7 @@ public class VictoryWindow extends Window {
                     DDGame.PAUSE = false;
                     LevelPrototype prototype = game.deserialize(Resources.LEVELS,
                             LevelPrototype[].class, true)[game.getPlayer().getLevel()];
-                    Level level = new Level(game, prototype);
-                    game.setScreen(new LevelLoadingScreen(game, level));
+                    game.setScreen(new LevelLoadingScreen(game, prototype));
                 } else {
                     game.setScreen(new MainMenuScreen(game));
 //                    game.setScreen(new FinalScreen(game));

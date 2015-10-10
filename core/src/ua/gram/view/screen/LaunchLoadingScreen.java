@@ -34,7 +34,8 @@ public class LaunchLoadingScreen extends AbstractLoadingScreen {
     @Override
     public void doAction() {
 //        game.setScreen(new MarketScreen(game));
-        game.setScreen(new FractionScreen(game));
+//        game.setScreen(new FractionScreen(game));
+        game.setScreen(new LevelSelectScreen(game));
     }
 
 }

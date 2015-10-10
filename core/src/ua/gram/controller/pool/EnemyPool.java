@@ -7,23 +7,22 @@ import ua.gram.controller.Resources;
 import ua.gram.model.actor.enemy.*;
 import ua.gram.model.prototype.EnemyPrototype;
 
-import java.util.Map;
+import java.util.HashMap;
 
 /**
- *
  * @author Gram <gram7gram@gmail.com>
  */
 public class EnemyPool<T extends Enemy> extends Pool<Enemy> {
 
     private final String type;
     private final DDGame game;
-    private Map<String, EnemyPrototype> map;
-    ;
+    private HashMap<String, EnemyPrototype> map;
 
     public EnemyPool(DDGame game, String type) {
         super(5, DDGame.MAX_ENTITIES);
         this.game = game;
         this.type = type;
+        map = new HashMap<String, EnemyPrototype>();
         EnemyPrototype[] prototypes = game.deserialize(Resources.ENEMIES, EnemyPrototype[].class, true);
         for (EnemyPrototype prototype : prototypes) {
             map.put(prototype.name, prototype);

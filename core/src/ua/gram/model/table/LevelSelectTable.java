@@ -17,15 +17,12 @@ public class LevelSelectTable extends Table {
 
     public LevelSelectTable(final DDGame game, LevelPrototype[] prototypes) {
         Table nested = new Table();
+        nested.setVisible(true);
         for (LevelPrototype prototype : prototypes) {
             LevelTile tile1 = new LevelTile(game, prototype);
             tile1.setVisible(true);
-            nested.add(tile1).width(200).height(200);
+            nested.add(tile1).width(200).height(200).pad(10);
         }
-        nested.setVisible(true);
-        ScrollPane scroll = new ScrollPane(nested);
-        scroll.setScrollingDisabled(false, true);
-        scroll.setVisible(true);
 
         Button back = new Button(game.getResources().getSkin(), "back-button");
         back.setVisible(true);
@@ -37,9 +34,14 @@ public class LevelSelectTable extends Table {
             }
         });
 
+        ScrollPane scroll = new ScrollPane(nested);
+        scroll.setScrollingDisabled(false, true);
+        scroll.setVisible(true);
+
+        this.setDebug(DDGame.DEBUG);
+        this.setFillParent(true);
         this.add(back).height(80).width(80);
-        this.add().expandX().row();
-        this.add().expandY().width(80);
-        this.add(scroll).expand();
+        this.add().expandX().height(80).row();
+        this.add(scroll).colspan(2).expand();
     }
 }

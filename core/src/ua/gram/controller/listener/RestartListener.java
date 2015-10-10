@@ -5,7 +5,6 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import ua.gram.DDGame;
 import ua.gram.controller.Resources;
-import ua.gram.model.Level;
 import ua.gram.model.prototype.LevelPrototype;
 import ua.gram.view.screen.LevelLoadingScreen;
 
@@ -28,8 +27,7 @@ public class RestartListener extends ClickListener {
         game.getPlayer().restoreHealth();
         game.getPlayer().decreaseHealth();
         LevelPrototype prototype = game.deserialize(Resources.LEVELS, LevelPrototype[].class, true)[lvl - 1];
-        Level level = new Level(game, prototype);
-        game.setScreen(new LevelLoadingScreen(game, level));
+        game.setScreen(new LevelLoadingScreen(game, prototype));
     }
 
 }

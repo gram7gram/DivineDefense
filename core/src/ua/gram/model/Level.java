@@ -18,6 +18,7 @@ public class Level {
     public static int MAX_LEVEL = 3;
     public static int maxWaves;
     private final ArrayList<Wave> waves;
+    private final LevelPrototype prototype;
     public boolean isCleared;
     public int currentLevel;
     private Wave currentWave;
@@ -25,9 +26,13 @@ public class Level {
     private DDGame game;
     private EnemySpawner spawner;
     private GameBattleStage stage_battle;
+    private boolean activeWave;
 
-    public Level(DDGame game, LevelPrototype prototype) {
+    public Level(DDGame game, LevelPrototype prototype) throws Exception {
         this.game = game;
+        this.prototype = prototype;
+        if (prototype.waves.length == 0) throw new Exception("Missing waves");
+        maxWaves = prototype.waves.length;
         waves = new ArrayList<Wave>(prototype.waves.length);
         for (WavePrototype proto : prototype.waves) {
             waves.add(new Wave(this, proto));
@@ -43,20 +48,25 @@ public class Level {
     }
 
     public void update(float delta) {
-        if (currentWave.getIndex() == maxWaves) {
-            if (currentWave.isStarted) {
-                if (spawner == null)
-                    createSpawner();
-                spawner.update(delta);
+        if (currentWave != null) {
+            if (currentWave.getIndex() <= maxWaves) {
+                if (currentWave.isStarted) {
+                    if (spawner == null)
+                        createSpawner();
+                    spawner.update(delta);
+                }
             }
         }
     }
 
     public void nextWave() throws IndexOutOfBoundsException {
+//        if (currentWave == null) {
+//            currentWave = waves.get(0);
+//        } else
         currentWave = waves.get(waves.indexOf(currentWave) + 1);
         spawner.setEnemiesToSpawn(currentWave.getEnemies());
         currentWave.isStarted = true;
-        Gdx.app.log("INFO", "Wave " + currentWave + "/" + maxWaves + " has started");
+        Gdx.app.log("INFO", "Wave " + currentWave.getIndex() + "(" + currentWave.getEnemies().length + ") /" + maxWaves + " has started");
     }
 
     /**
@@ -88,7 +98,7 @@ public class Level {
     }
 
     public int getCurrentWave() {
-        return currentWave.getIndex();
+        return currentWave != null ? currentWave.getIndex() : 0;
     }
 
     public int getMaxWaves() {
@@ -107,4 +117,16 @@ public class Level {
         this.stage_battle = stage;
     }
 
+    public LevelPrototype getPrototype() {
+        return prototype;
+    }
+
+    public boolean isActiveWave() {
+        if (currentWave == null) return false;
+        return currentWave.isStarted;
+    }
+
+    public boolean isFinished() {
+        return isCleared || (currentWave != null && currentWave.getIndex() == maxWaves);
+    }
 }

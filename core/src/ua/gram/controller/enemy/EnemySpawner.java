@@ -175,15 +175,15 @@ public class EnemySpawner {
         for (String type : list) {
             enemies.add(type);
             if (type.equals("EnemyWarrior") && poolWarrior == null) {
-                poolWarrior = new EnemyPool<EnemyWarrior>(game, EnemyWarrior.class);
+                poolWarrior = new EnemyPool<EnemyWarrior>(game, "EnemyWarrior");
             } else if (type.equals("EnemyRunner") && poolRunner == null) {
-                poolRunner = new EnemyPool<EnemyRunner>(game, EnemyRunner.class);
+                poolRunner = new EnemyPool<EnemyRunner>(game, "EnemyRunner");
             } else if (type.equals("EnemySoldier") && poolSoldier == null) {
-                poolSoldier = new EnemyPool<EnemySoldier>(game, EnemySoldier.class);
+                poolSoldier = new EnemyPool<EnemySoldier>(game, "EnemySoldier");
             } else if (type.equals("EnemySoldierArmored") && poolSoldierArmored == null) {
-                poolSoldierArmored = new EnemyPool<EnemySoldierArmored>(game, EnemySoldierArmored.class);
+                poolSoldierArmored = new EnemyPool<EnemySoldierArmored>(game, "EnemySoldierArmored");
             } else if (type.equals("EnemySummoner") && poolSummoner == null) {
-                poolSummoner = new EnemyPool<EnemySummoner>(game, EnemySummoner.class);
+                poolSummoner = new EnemyPool<EnemySummoner>(game, "EnemySummoner");
             }
         }
         return enemies;

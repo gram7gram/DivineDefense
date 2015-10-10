@@ -78,6 +78,20 @@ public class Resources implements Disposable {
     }
 
     /**
+     * Load tiled map for specified level by file.
+     * Will display ErrorScreen it was not able to load map.
+     */
+    public void loadMap(String file) {
+        try {
+            manager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
+            manager.load(file, TiledMap.class);
+        } catch (GdxRuntimeException e) {
+            if (game.getCamera() == null) createDisplayComponents();
+            game.setScreen(new ErrorScreen(game, "Could not load map for level: " + file, e));
+        }
+    }
+
+    /**
      * Load tiled map for specified level.
      * Will display ErrorScreen it was not able to load map.
      *
