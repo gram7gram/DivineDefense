@@ -10,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import ua.gram.DDGame;
 import ua.gram.model.Level;
-import ua.gram.model.Wave;
 import ua.gram.model.group.GameUIGroup;
 import ua.gram.view.screen.ErrorScreen;
 
@@ -51,12 +50,13 @@ public class CounterButton extends Actor {
                             new PopupLabel("+" + reward, game.getResources().getSkin(), "smallpopupwhite", counterButton);
                         }
                     }
-                    level.getWave().nextWave();
+                    level.nextWave();
                     counterButton.setVisible(false);
                     stateTime = 0;
                 } catch (Exception e) {
+                    counterButton.setVisible(false);
                     game.setScreen(new ErrorScreen(game, "Inappropriate wave "
-                            + level.getWave().getCurrentWave()
+                            + level.getCurrentWave()
                             + " in level " + level.currentLevel, e));
                 }
             }
@@ -69,15 +69,15 @@ public class CounterButton extends Actor {
     public void act(float delta) {
         super.act(delta);
         if (!DDGame.PAUSE) {
-            if (!level.getWave().isStarted && !level.isCleared) {
+            if (!level.isActiveWave() && !level.isFinished()) {
                 if (!this.isVisible()) {
                     animation = reset();
-                    start(Wave.currentWave <= 1 ? 1 : 1 / 2f);
+                    start(level.getCurrentWave() <= 1 ? 1 : 1 / 2f);
                 }
                 if (animation.isAnimationFinished(counter)) {
                     Gdx.app.log("INFO", "Countdown finished");
                     ((GameUIGroup) this.getParent()).showNotification("WAVE " + (level.getCurrentWave() + 1));
-                    level.getWave().nextWave();
+                    level.nextWave();
                     this.setVisible(false);
                 } else {
                     counter += delta;

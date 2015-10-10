@@ -21,11 +21,12 @@ public class MainMenuScreen extends AbstractScreen {
         super(game);
         stage_ui = new MainMenuStage(game);
         background = new Sprite(game.getResources().getTexture(Resources.BACKGROUND_TEXTURE));
-        Gdx.app.log("INFO", "Screen set to MainMenuScreen");
+        Gdx.app.log("INFO", "MainMenuScreen is OK");
     }
 
     @Override
     public void show() {
+        Gdx.app.log("INFO", "Screen set to MainMenuScreen");
         Gdx.input.setInputProcessor(stage_ui);
         background.setSize(DDGame.WORLD_WIDTH, DDGame.WORLD_HEIGHT);
     }

@@ -3,8 +3,7 @@ package ua.gram.model.actor.enemy;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import ua.gram.DDGame;
-import ua.gram.model.actor.AbilityUser;
-import ua.gram.model.actor.Enemy;
+import ua.gram.model.prototype.EnemyPrototype;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -13,13 +12,12 @@ public final class EnemySummoner extends Enemy implements Cloneable, AbilityUser
 
     private float counter = 0;
 
-    public EnemySummoner(DDGame game, float[] stats) {
-        super(game, stats);
+    public EnemySummoner(DDGame game, EnemyPrototype prototype) {
+        super(game, prototype);
     }
 
     @Override
     public void ability() {
-//        this.getActions().clear();
         try {
             Vector2 posToSpawn = this.getPosition();
             Vector2 next = path.getNextPosition(posToSpawn);

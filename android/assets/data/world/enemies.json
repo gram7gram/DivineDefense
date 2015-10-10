@@ -1,0 +1,52 @@
+[
+  {
+    "name": "EnemyRunner",
+    "ability": false,
+    "health": 110,
+    "speed": 1,
+    "armor": 10,
+    "reward": 10,
+    "width": 60,
+    "height": 90
+  },
+  {
+    "name": "EnemySoldier",
+    "ability": false,
+    "health": 110,
+    "speed": 1.6,
+    "armor": 10,
+    "reward": 10,
+    "width": 60,
+    "height": 90
+  },
+  {
+    "name": "EnemySoldierArmored",
+    "ability": false,
+    "health": 110,
+    "speed": 1.4,
+    "armor": 10,
+    "reward": 10,
+    "width": 60,
+    "height": 90
+  },
+  {
+    "name": "EnemySummoner",
+    "ability": true,
+    "health": 110,
+    "speed": 1.5,
+    "armor": 10,
+    "reward": 10,
+    "width": 60,
+    "height": 90
+  },
+  {
+    "name": "EnemyWarrior",
+    "ability": false,
+    "health": 110,
+    "speed": 0.9,
+    "armor": 10,
+    "reward": 10,
+    "width": 60,
+    "height": 90
+  }
+]

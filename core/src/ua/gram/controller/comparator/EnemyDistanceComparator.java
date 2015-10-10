@@ -1,8 +1,8 @@
 package ua.gram.controller.comparator;
 
 import com.badlogic.gdx.math.Vector2;
-import ua.gram.model.actor.Enemy;
-import ua.gram.model.actor.Tower;
+import ua.gram.model.actor.enemy.Enemy;
+import ua.gram.model.actor.tower.Tower;
 
 import java.util.Comparator;
 

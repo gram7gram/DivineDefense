@@ -4,9 +4,8 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import ua.gram.controller.Resources;
-import ua.gram.model.actor.Enemy;
-import ua.gram.model.actor.Tower;
-import ua.gram.model.actor.Weapon;
+import ua.gram.model.actor.enemy.Enemy;
+import ua.gram.model.actor.tower.Tower;
 
 import java.util.LinkedList;
 import java.util.Random;

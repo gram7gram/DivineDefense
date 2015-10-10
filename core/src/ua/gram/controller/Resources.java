@@ -32,7 +32,10 @@ public class Resources implements Disposable {
     public static final String WEAPON_END_OVER = "data/images/misc/end_over.png";
     public static final String RANGE_TEXTURE = "data/images/misc/enemy_range.png";
     public static final String AIM_TEXTURE = "data/images/misc/enemy_aim.png";
+    public static final String LEVELS = "data/levels/levels.json";
     public static DDGame game;
+    public static String TOWERS = "data/world/towers.json";
+    public static String ENEMIES = "data/world/enemies.json";
     private final AssetManager manager;
     private Skin skin;
 
@@ -72,6 +75,20 @@ public class Resources implements Disposable {
             Gdx.app.exit();
         }
         return skin;
+    }
+
+    /**
+     * Load tiled map for specified level by file.
+     * Will display ErrorScreen it was not able to load map.
+     */
+    public void loadMap(String file) {
+        try {
+            manager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
+            manager.load(file, TiledMap.class);
+        } catch (GdxRuntimeException e) {
+            if (game.getCamera() == null) createDisplayComponents();
+            game.setScreen(new ErrorScreen(game, "Could not load map for level: " + file, e));
+        }
     }
 
     /**
@@ -118,6 +135,10 @@ public class Resources implements Disposable {
         return manager.get("data/levels/maps/level" + level + "@60.tmx", TiledMap.class);
     }
 
+    public TiledMap getMap(String map) {
+        return manager.get(map, TiledMap.class);
+    }
+
     public Texture getTexture(String file) {
         return manager.get(file, Texture.class);
     }
@@ -141,4 +162,5 @@ public class Resources implements Disposable {
     public void dispose() {
         manager.dispose();
     }
+
 }

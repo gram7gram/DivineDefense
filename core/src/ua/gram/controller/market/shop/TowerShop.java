@@ -9,18 +9,14 @@ import ua.gram.controller.pool.TowerPool;
 import ua.gram.controller.pool.animation.AnimationController;
 import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.controller.stage.GameUIStage;
-import ua.gram.model.actor.Tower;
 import ua.gram.model.actor.misc.ProgressBar;
-import ua.gram.model.actor.tower.TowerPrimary;
-import ua.gram.model.actor.tower.TowerSecondary;
-import ua.gram.model.actor.tower.TowerSpecial;
-import ua.gram.model.actor.tower.TowerStun;
+import ua.gram.model.actor.tower.*;
 import ua.gram.model.actor.weapon.LaserWeapon;
 import ua.gram.model.group.TowerControlsGroup;
 import ua.gram.model.group.TowerGroup;
 import ua.gram.model.group.TowerShopGroup;
 
-import static ua.gram.model.actor.Tower.SELL_RATIO;
+import static ua.gram.model.actor.tower.Tower.SELL_RATIO;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -40,10 +36,10 @@ public class TowerShop {
         this.game = game;
         this.stage_ui = stage_ui;
         this.stage_battle = stage_battle;
-        poolPrimary = new TowerPool<TowerPrimary>(game, 5, DDGame.MAX_ENTITIES, TowerPrimary.class);
-        poolSecondary = new TowerPool<TowerSecondary>(game, 5, DDGame.MAX_ENTITIES, TowerSecondary.class);
-        poolStun = new TowerPool<TowerStun>(game, 5, DDGame.MAX_ENTITIES, TowerStun.class);
-        poolSpecial = new TowerPool<TowerSpecial>(game, 5, DDGame.MAX_ENTITIES, TowerSpecial.class);
+        poolPrimary = new TowerPool<TowerPrimary>(game, "TowerPrimary");
+        poolSecondary = new TowerPool<TowerSecondary>(game, "TowerSecondary");
+        poolStun = new TowerPool<TowerStun>(game, "TowerStun");
+        poolSpecial = new TowerPool<TowerSpecial>(game, "TowerSpecial");
         towerShopGroup = new TowerShopGroup(game, this);
         stage_ui.setTowerControls(new TowerControlsGroup(game.getResources().getSkin(), this));
         Gdx.app.log("INFO", "TowerShop is OK");

@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import ua.gram.controller.pool.animation.AnimationController;
 import ua.gram.controller.pool.animation.EnemyAnimationPool;
 import ua.gram.model.Player;
-import ua.gram.model.actor.Enemy;
+import ua.gram.model.actor.enemy.Enemy;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -80,7 +80,7 @@ public class EnemyAnimationController implements AnimationController {
             default:
                 throw new NullPointerException("Unknown Enemy Animation id: " + animationType);
         }
-        TextureRegion[][] regions = skin.getRegion(region).split(enemy.animationWidth, enemy.animationHeight);
+        TextureRegion[][] regions = skin.getRegion(region).split((int) enemy.getWidth(), (int) enemy.getHeight());
         return regions[0];
     }
 

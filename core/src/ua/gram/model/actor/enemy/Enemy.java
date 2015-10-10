@@ -1,4 +1,4 @@
-package ua.gram.model.actor;
+package ua.gram.model.actor.enemy;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -15,6 +15,7 @@ import ua.gram.controller.enemy.EnemySpawner;
 import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.model.group.EnemyGroup;
 import ua.gram.model.map.Path;
+import ua.gram.model.prototype.EnemyPrototype;
 
 import java.util.Random;
 
@@ -27,8 +28,6 @@ public abstract class Enemy extends Actor implements Pool.Poolable {
     public final float defaultHealth;
     public final float defaultSpeed;
     public final float defaultArmor;
-    public final byte animationWidth = 60;
-    public final byte animationHeight = 90;
     public float health;
     public float speed;
     public float armor;
@@ -47,12 +46,12 @@ public abstract class Enemy extends Actor implements Pool.Poolable {
     private Animation animation;
     private Vector2 direction;
 
-    public Enemy(DDGame game, float[] stats) {
+    public Enemy(DDGame game, EnemyPrototype prototype) {
         this.game = game;
-        this.health = stats[0];
-        this.speed = stats[1];
-        this.armor = stats[2];
-        this.reward = (int) stats[3];
+        this.health = prototype.health;
+        this.speed = prototype.speed;
+        this.armor = prototype.armor;
+        this.reward = prototype.reward;
         defaultHealth = health;
         defaultSpeed = speed;
         defaultArmor = armor;
@@ -60,8 +59,8 @@ public abstract class Enemy extends Actor implements Pool.Poolable {
         isAffected = false;
         isDead = false;
         isAttacked = false;
-        this.setSize(animationWidth, animationHeight);
-        this.setBounds(this.getX(), this.getY(), animationWidth, animationHeight);
+        this.setSize(prototype.width, prototype.height);
+        this.setBounds(this.getX(), this.getY(), prototype.width, prototype.height);
 
     }
 

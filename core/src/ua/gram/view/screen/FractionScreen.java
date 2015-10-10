@@ -25,11 +25,12 @@ public class FractionScreen extends AbstractScreen {
         stage_ui = new FractionStage(game);
         batch = game.getBatch();
         background = new Sprite(game.getResources().getTexture(Resources.BACKGROUND_TEXTURE));
-        Gdx.app.log("INFO", "Screen set to FractionScreen");
+        Gdx.app.log("INFO", "FractionScreen is OK");
     }
 
     @Override
     public void show() {
+        Gdx.app.log("INFO", "Screen set to FractionScreen");
         Gdx.input.setInputProcessor(stage_ui);
         background.setSize(DDGame.WORLD_WIDTH, DDGame.WORLD_HEIGHT);
         background.setPosition(0, 0);

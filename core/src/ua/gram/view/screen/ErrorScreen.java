@@ -8,7 +8,8 @@ import ua.gram.controller.stage.ErrorStage;
 import ua.gram.view.AbstractScreen;
 
 /**
- * Created by Gram on 12/1.
+ *
+ * @author Gram <gram7gram@gmail.com>
  */
 public class ErrorScreen extends AbstractScreen {
 
@@ -18,12 +19,13 @@ public class ErrorScreen extends AbstractScreen {
         super(game);
         Gdx.app.error("ERROR", error);
         stage_ui = new ErrorStage(game, error, e);
-        Gdx.app.log("INFO", "Screen set to ErrorScreen");
+        Gdx.app.log("INFO", "ErrorScreen is OK");
     }
 
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage_ui);
+        Gdx.app.log("INFO", "Screen set to ErrorScreen");
     }
 
     @Override

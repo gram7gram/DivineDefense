@@ -1,13 +1,11 @@
 package ua.gram.controller.factory;
 
 import ua.gram.DDGame;
+import ua.gram.model.prototype.Prototype;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public interface Factory<V> {
-
-    V create(DDGame game);
-
-    V create(DDGame game, Class<? extends V> type);
+public interface Factory<A, P extends Prototype> {
+    A create(DDGame game, P prototype);
 }

@@ -3,46 +3,48 @@ package ua.gram.controller.pool;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Pool;
 import ua.gram.DDGame;
-import ua.gram.controller.factory.EnemyFactory;
-import ua.gram.model.actor.Enemy;
+import ua.gram.controller.Resources;
 import ua.gram.model.actor.enemy.*;
+import ua.gram.model.prototype.EnemyPrototype;
+
+import java.util.HashMap;
 
 /**
- *
  * @author Gram <gram7gram@gmail.com>
  */
 public class EnemyPool<T extends Enemy> extends Pool<Enemy> {
 
-    private final Class<? extends Enemy> type;
-    private final EnemyFactory factory;
+    private final String type;
     private final DDGame game;
+    private HashMap<String, EnemyPrototype> map;
 
-    public EnemyPool(DDGame game, int capacity, int max, Class<? extends Enemy> type) {
-        super(capacity, max);
+    public EnemyPool(DDGame game, String type) {
+        super(5, DDGame.MAX_ENTITIES);
         this.game = game;
         this.type = type;
-        String file;
-        String enemyFilesDir = "data/world/enemies/";
-        if (type.equals(EnemyWarrior.class)) {
-            file = enemyFilesDir + "warrior.json";
-        } else if (type.equals(EnemyRunner.class)) {
-            file = enemyFilesDir + "runner.json";
-        } else if (type.equals(EnemySoldier.class)) {
-            file = enemyFilesDir + "soldier.json";
-        } else if (type.equals(EnemySoldierArmored.class)) {
-            file = enemyFilesDir + "soldierArmored.json";
-        } else if (type.equals(EnemySummoner.class)) {
-            file = enemyFilesDir + "summoner.json";
-        } else {
-            throw new NullPointerException("Couldn't get configuration for: " + type.getSimpleName());
+        map = new HashMap<String, EnemyPrototype>();
+        EnemyPrototype[] prototypes = game.deserialize(Resources.ENEMIES, EnemyPrototype[].class, true);
+        for (EnemyPrototype prototype : prototypes) {
+            map.put(prototype.name, prototype);
         }
-        factory = game.deserialize(file, EnemyFactory.class, true);
-        Gdx.app.log("INFO", "Pool for " + type.getSimpleName() + " is created");
+        Gdx.app.log("INFO", "Pool for " + type + " is created");
     }
 
     @Override
     @SuppressWarnings("unchecked")
     protected T newObject() {
-        return (T) factory.create(game, type);
+        if (type.equals("EnemyRunner")) {
+            return (T) new EnemyRunner(game, map.get(type));
+        } else if (type.equals("EnemySoldier")) {
+            return (T) new EnemySoldier(game, map.get(type));
+        } else if (type.equals("EnemySoldierArmored")) {
+            return (T) new EnemySoldierArmored(game, map.get(type));
+        } else if (type.equals("EnemySummoner")) {
+            return (T) new EnemySummoner(game, map.get(type));
+        } else if (type.equals("EnemyWarrior")) {
+            return (T) new EnemyWarrior(game, map.get(type));
+        } else {
+            throw new NullPointerException("Couldn't get configuration for: " + type);
+        }
     }
 }

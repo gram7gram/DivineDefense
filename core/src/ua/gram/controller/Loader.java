@@ -18,6 +18,7 @@ public final class Loader {
 //    private int waves_for_lvl6 = 10;
 
     public static ArrayList<String[]> getWaves(int lvl, int difficulty) {
+
         switch (lvl) {
             case 1:
                 switch (difficulty) {

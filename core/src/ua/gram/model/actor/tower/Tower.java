@@ -1,4 +1,4 @@
-package ua.gram.model.actor;
+package ua.gram.model.actor.tower;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -15,6 +15,9 @@ import ua.gram.controller.pool.animation.AnimationController.Types;
 import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.controller.tower.TowerAnimationController;
 import ua.gram.controller.tower.TowerLevelAnimationContainer;
+import ua.gram.model.actor.enemy.Enemy;
+import ua.gram.model.actor.weapon.Weapon;
+import ua.gram.model.prototype.TowerPrototype;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -58,14 +61,14 @@ public abstract class Tower extends Actor implements Pool.Poolable {
     private int targetIndex = -1;
     private Enemy victim;
 
-    public Tower(DDGame game, float[] stats) {
+    public Tower(DDGame game, TowerPrototype prototype) {
         this.game = game;
-        this.power_lvl = (int) stats[0];
-        this.tower_lvl = (int) stats[1];
-        this.damage = stats[2];
-        this.range = stats[3];
-        this.rate = stats[4];
-        this.cost = (int) stats[5];
+        this.power_lvl = prototype.powerLevel;
+        this.tower_lvl = prototype.towerLevel;
+        this.damage = prototype.damage;
+        this.range = prototype.range;
+        this.rate = prototype.rate;
+        this.cost = prototype.cost;
         this.strategy = Strategy.STRONGEST;
         isActive = false;
         isBuilding = false;

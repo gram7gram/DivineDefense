@@ -238,18 +238,6 @@
       "up": "button-buy-up",
       "down": "button-buy-down"
     },
-    "level1-preview": {
-      "up": "level1-preview-up",
-      "down": "level1-preview-down"
-    },
-    "level2-preview": {
-      "up": "level2-preview-up",
-      "down": "level2-preview-down"
-    },
-    "level3-preview": {
-      "up": "level3-preview-up",
-      "down": "level3-preview-down"
-    },
     "button-defeat-restart": {
       "up": "button-defeat-1-up",
       "down": "button-defeat-1-down",
@@ -279,6 +267,10 @@
     "market-category2": {
       "up": "market-category2",
       "down": "market-category2"
+    },
+    "level-star-small": {
+      "up": "star_small_enabled",
+      "disabled": "star_small_disabled"
     }
   },
   "com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle": {

@@ -1,14 +1,15 @@
 package ua.gram.model.actor.enemy;
 
 import ua.gram.DDGame;
+import ua.gram.model.prototype.EnemyPrototype;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
 public final class EnemySoldierArmored extends EnemySoldier {
 
-    public EnemySoldierArmored(DDGame game, float[] stats) {
-        super(game, stats);
+    public EnemySoldierArmored(DDGame game, EnemyPrototype prototype) {
+        super(game, prototype);
     }
 
     @Override

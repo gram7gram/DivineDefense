@@ -1,5 +1,6 @@
 android {
-
+    signingConfigs {
+    }
     buildToolsVersion '22.0.1'
     compileSdkVersion 19
     sourceSets {
@@ -18,6 +19,11 @@ android {
         debug {
             debuggable true
         }
+    }
+    defaultConfig {
+        minSdkVersion 19
+    }
+    productFlavors {
     }
 }
 // needed to add JNI shared libraries to APK when compiling on CLI

@@ -3,13 +3,11 @@ package ua.gram.desktop;
 import com.badlogic.gdx.Files;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 import ua.gram.DDGame;
 import ua.gram.controller.security.SecurityHandler;
 
 import java.net.NetworkInterface;
 import java.util.Enumeration;
-import java.util.HashMap;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -17,10 +15,12 @@ import java.util.HashMap;
 public class DesktopLauncher {
 
     public static void main(String[] arg) {
-        TexturePacker.Settings settings = new TexturePacker.Settings();
-        settings.maxWidth = 4096;
-        settings.maxHeight = 4096;
-        //TexturePacker.process(settings, "toPack/all", "data/skin", "style");
+
+//        TexturePacker.Settings settings = new TexturePacker.Settings();
+//        settings.maxWidth = 4096;
+//        settings.maxHeight = 4096;
+//        TexturePacker.process(settings, "toPack/all", "data/skin", "style");
+
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.useGL30 = false;
         config.resizable = true;
@@ -36,13 +36,17 @@ public class DesktopLauncher {
         config.addIcon("logo_min128.png", Files.FileType.Internal);//osx
         config.addIcon("logo_min32.png", Files.FileType.Internal);//windows, linux
         config.addIcon("logo_min16.png", Files.FileType.Internal);//windows
-        HashMap<String, String> device = new HashMap<String, String>();
-        device.put("game.module", "Desktop");
-        device.put("os.name", System.getProperty("os.name"));
-        device.put("os.version", System.getProperty("os.version"));
-        device.put("device.id", getMAC());
-        device.put("user.prefs", getPrefs());
-        new LwjglApplication(new DDGame(new SecurityHandler(device)), config);
+
+        DesktopGamePrototype prototype = new DesktopGamePrototype();
+        prototype.id = getMAC();
+        prototype.gameModule = "Desktop";
+        prototype.osName = System.getProperty("os.name");
+        prototype.osVersion = System.getProperty("os.version");
+        prototype.configPath = getPrefs();
+        prototype.maxRanking = 3;
+        prototype.maxLevels = 8;
+
+        new LwjglApplication(new DDGame(new SecurityHandler(prototype), prototype), config);
     }
 
     /**

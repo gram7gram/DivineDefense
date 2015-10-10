@@ -2,12 +2,11 @@ package ua.gram.controller.enemy;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import ua.gram.DDGame;
+import ua.gram.model.actor.enemy.Enemy;
+import ua.gram.model.map.Path;
 
 import java.util.Arrays;
-
-import ua.gram.DDGame;
-import ua.gram.model.actor.Enemy;
-import ua.gram.model.map.Path;
 
 /**
  * <pre>

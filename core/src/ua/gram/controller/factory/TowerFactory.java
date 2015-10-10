@@ -2,61 +2,31 @@ package ua.gram.controller.factory;
 
 import com.badlogic.gdx.Gdx;
 import ua.gram.DDGame;
-import ua.gram.model.actor.Tower;
-import ua.gram.model.actor.tower.TowerPrimary;
-import ua.gram.model.actor.tower.TowerSecondary;
-import ua.gram.model.actor.tower.TowerSpecial;
-import ua.gram.model.actor.tower.TowerStun;
-
-import java.util.ArrayList;
+import ua.gram.model.actor.tower.*;
+import ua.gram.model.prototype.TowerPrototype;
 
 /**
  *
  * @author Gram <gram7gram@gmail.com>
  */
-public class TowerFactory implements Factory<Tower> {
-
-    private ArrayList<TowerPrototype> prototypes;
+public class TowerFactory implements Factory<Tower, TowerPrototype> {
 
     @Override
-    public Tower create(DDGame game) {
-        return null;
-    }
-
-    @Override
-    public Tower create(DDGame game, Class<? extends Tower> type) {
-        TowerPrototype tower = prototypes.get(0);
-        float[] stats = new float[]{
-                tower.tower_lvl,
-                tower.upgrade_lvl,
-                tower.damage,
-                tower.range,
-                tower.rate,
-                tower.cost
-        };
+    public Tower create(DDGame game, TowerPrototype prototype) {
         Tower towerType;
-        if (type.equals(TowerPrimary.class)) {
-            towerType = new TowerPrimary(game, stats);
-        } else if (type.equals(TowerSecondary.class)) {
-            towerType = new TowerSecondary(game, stats);
-        } else if (type.equals(TowerStun.class)) {
-            towerType = new TowerStun(game, stats);
-        } else if (type.equals(TowerSpecial.class)) {
-            towerType = new TowerSpecial(game, stats);
+        String type = prototype.type;
+        if (type.equals("TowerPrimary")) {
+            towerType = new TowerPrimary(game, prototype);
+        } else if (type.equals("TowerSecondary")) {
+            towerType = new TowerSecondary(game, prototype);
+        } else if (type.equals("TowerStun")) {
+            towerType = new TowerStun(game, prototype);
+        } else if (type.equals("TowerSpecial")) {
+            towerType = new TowerSpecial(game, prototype);
         } else {
-            throw new NullPointerException("Factory couldn't create: " + type.getSimpleName());
+            throw new NullPointerException("Factory couldn't create: " + type);
         }
-        Gdx.app.log("INFO", "Factory creates " + type.getSimpleName());
+        Gdx.app.log("INFO", "Factory creates " + type);
         return towerType;
-    }
-
-    static class TowerPrototype {
-
-        public int tower_lvl;
-        public int upgrade_lvl;
-        public float damage;
-        public float range;
-        public float rate;
-        public int cost;
     }
 }

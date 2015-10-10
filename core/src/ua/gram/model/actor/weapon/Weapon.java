@@ -1,8 +1,10 @@
-package ua.gram.model.actor;
+package ua.gram.model.actor.weapon;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import ua.gram.DDGame;
+import ua.gram.model.actor.enemy.Enemy;
+import ua.gram.model.actor.tower.Tower;
 
 /**
  * @author Gram <gram7gram@gmail.com>

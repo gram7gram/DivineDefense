@@ -2,18 +2,18 @@ package ua.gram.model.actor.tower;
 
 import com.badlogic.gdx.graphics.Color;
 import ua.gram.DDGame;
-import ua.gram.model.actor.Enemy;
-import ua.gram.model.actor.Tower;
-import ua.gram.model.actor.Weapon;
+import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.actor.weapon.LaserWeapon;
+import ua.gram.model.actor.weapon.Weapon;
+import ua.gram.model.prototype.TowerPrototype;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
 public final class TowerSpecial extends Tower implements Cloneable {
 
-    public TowerSpecial(DDGame game, float[] stats) {
-        super(game, stats);
+    public TowerSpecial(DDGame game, TowerPrototype prototype) {
+        super(game, prototype);
     }
 
     @Override

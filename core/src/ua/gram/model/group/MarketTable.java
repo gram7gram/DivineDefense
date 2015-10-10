@@ -19,9 +19,9 @@ import java.util.ArrayList;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class MarketGroup extends Table {
+public class MarketTable extends Table {
 
-    public MarketGroup(final DDGame game, MarketCategoryPrototype[] prototypes) {
+    public MarketTable(final DDGame game, MarketCategoryPrototype[] prototypes) {
         final Skin skin = game.getResources().getSkin();
         final ArrayList<MarketCategoryContainer> containers = new ArrayList<MarketCategoryContainer>(4);
         final CustomLabel header = new CustomLabel("", skin, "header1white");

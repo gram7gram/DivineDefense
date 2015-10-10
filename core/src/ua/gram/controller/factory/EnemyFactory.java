@@ -2,55 +2,32 @@ package ua.gram.controller.factory;
 
 import com.badlogic.gdx.Gdx;
 import ua.gram.DDGame;
-import ua.gram.model.actor.Enemy;
 import ua.gram.model.actor.enemy.*;
-
-import java.util.ArrayList;
+import ua.gram.model.prototype.EnemyPrototype;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class EnemyFactory implements Factory<Enemy> {
-
-    private ArrayList<EnemyPrototype> prototypes;
+public class EnemyFactory implements Factory<Enemy, EnemyPrototype> {
 
     @Override
-    public Enemy create(DDGame game) {
-        return null;
-    }
-
-    @Override
-    public Enemy create(DDGame game, Class<? extends Enemy> type) {
-        EnemyPrototype enemy = prototypes.get(0);
-        float[] stats = new float[]{
-                enemy.health,
-                enemy.speed,
-                enemy.armor,
-                enemy.reward
-        };
+    public Enemy create(DDGame game, EnemyPrototype prototype) {
         Enemy enemyType;
-        if (type.equals(EnemyWarrior.class)) {
-            enemyType = new EnemyWarrior(game, stats);
-        } else if (type.equals(EnemySoldier.class)) {
-            enemyType = new EnemySoldier(game, stats);
-        } else if (type.equals(EnemySoldierArmored.class)) {
-            enemyType = new EnemySoldierArmored(game, stats);
-        } else if (type.equals(EnemySummoner.class)) {
-            enemyType = new EnemySummoner(game, stats);
-        } else if (type.equals(EnemyRunner.class)) {
-            enemyType = new EnemyRunner(game, stats);
+        String type = prototype.type;
+        if (type.equals("EnemyWarrior")) {
+            enemyType = new EnemyWarrior(game, prototype);
+        } else if (type.equals("EnemySoldier")) {
+            enemyType = new EnemySoldier(game, prototype);
+        } else if (type.equals("EnemySoldierArmored")) {
+            enemyType = new EnemySoldierArmored(game, prototype);
+        } else if (type.equals("EnemySummoner")) {
+            enemyType = new EnemySummoner(game, prototype);
+        } else if (type.equals("EnemyRunner")) {
+            enemyType = new EnemyRunner(game, prototype);
         } else {
-            throw new NullPointerException("EnemyFactory couldn't create: " + type.getSimpleName());
+            throw new NullPointerException("EnemyFactory couldn't create: " + type);
         }
-        Gdx.app.log("INFO", "EnemyFactory creates: " + type.getSimpleName());
+        Gdx.app.log("INFO", "EnemyFactory creates: " + type);
         return enemyType;
-    }
-
-    static class EnemyPrototype {
-
-        public short health;
-        public float speed;
-        public short armor;
-        public short reward;
     }
 }

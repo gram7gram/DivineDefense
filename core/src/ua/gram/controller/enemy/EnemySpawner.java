@@ -10,7 +10,6 @@ import ua.gram.DDGame;
 import ua.gram.controller.pool.EnemyPool;
 import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.model.Level;
-import ua.gram.model.actor.Enemy;
 import ua.gram.model.actor.enemy.*;
 import ua.gram.model.actor.misc.HealthBar;
 import ua.gram.model.group.EnemyGroup;
@@ -175,17 +174,16 @@ public class EnemySpawner {
         LinkedList<String> enemies = new LinkedList<String>();
         for (String type : list) {
             enemies.add(type);
-            byte capacity = 5;
             if (type.equals("EnemyWarrior") && poolWarrior == null) {
-                poolWarrior = new EnemyPool<EnemyWarrior>(game, capacity, DDGame.MAX_ENTITIES, EnemyWarrior.class);
+                poolWarrior = new EnemyPool<EnemyWarrior>(game, "EnemyWarrior");
             } else if (type.equals("EnemyRunner") && poolRunner == null) {
-                poolRunner = new EnemyPool<EnemyRunner>(game, capacity, DDGame.MAX_ENTITIES, EnemyRunner.class);
+                poolRunner = new EnemyPool<EnemyRunner>(game, "EnemyRunner");
             } else if (type.equals("EnemySoldier") && poolSoldier == null) {
-                poolSoldier = new EnemyPool<EnemySoldier>(game, capacity, DDGame.MAX_ENTITIES, EnemySoldier.class);
+                poolSoldier = new EnemyPool<EnemySoldier>(game, "EnemySoldier");
             } else if (type.equals("EnemySoldierArmored") && poolSoldierArmored == null) {
-                poolSoldierArmored = new EnemyPool<EnemySoldierArmored>(game, capacity, DDGame.MAX_ENTITIES, EnemySoldierArmored.class);
+                poolSoldierArmored = new EnemyPool<EnemySoldierArmored>(game, "EnemySoldierArmored");
             } else if (type.equals("EnemySummoner") && poolSummoner == null) {
-                poolSummoner = new EnemyPool<EnemySummoner>(game, capacity, DDGame.MAX_ENTITIES, EnemySummoner.class);
+                poolSummoner = new EnemyPool<EnemySummoner>(game, "EnemySummoner");
             }
         }
         return enemies;

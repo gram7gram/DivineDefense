@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import ua.gram.DDGame;
-import ua.gram.model.actor.Tower;
+import ua.gram.model.actor.tower.Tower;
 
 /**
  * @author Gram <gram7gram@gmail.com>

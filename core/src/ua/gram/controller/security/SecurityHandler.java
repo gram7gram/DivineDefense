@@ -5,13 +5,13 @@ import com.badlogic.gdx.utils.Base64Coder;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter;
 import ua.gram.DDGame;
-import ua.gram.controller.factory.PlayerFactory;
 import ua.gram.model.Player;
+import ua.gram.model.prototype.GamePrototype;
+import ua.gram.model.prototype.PlayerPrototype;
 
 import java.io.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
 
 /**
  *
@@ -21,29 +21,30 @@ public class SecurityHandler {
 
     private final String prefPath;
     private final String sumPath;
-    private final HashMap<String, String> device;
+    private final GamePrototype prototype;
     private final Json json;
-    private String checksum;
     private FileReader input;
     private FileWriter output;
-    private PlayerFactory container;
 
-    public SecurityHandler(HashMap<String, String> device) {
-        this.device = device;
+    public SecurityHandler(GamePrototype prototype) {
+        this.prototype = prototype;
         json = new Json();
         json.setTypeName(null);
         json.setUsePrototypes(false);
         json.setIgnoreUnknownFields(true);
         json.setOutputType(JsonWriter.OutputType.json);
-        prefPath = device.get("user.prefs") + "divine.json";
-        sumPath = device.get("user.prefs") + "divine.sum";
+        prefPath = prototype.configPath + "divine.json";
+        sumPath = prototype.configPath + "divine.sum";
         System.out.println("INFO: Security initialized");
     }
 
+    /**
+     * @deprecated
+     */
     public void checkSum() {
         try {
             BufferedReader br = new BufferedReader(new FileReader(sumPath));
-            checksum = br.readLine();
+            String checksum = br.readLine();
             br.close();
             if (!checksum.equals(computeChecksum())) {
                 Gdx.app.error("ERROR", "Checksum file is corrupted");
@@ -57,9 +58,12 @@ public class SecurityHandler {
         }
     }
 
+    /**
+     * @deprecated
+     */
     public void save() {
         try {
-            encrypt(json.toJson(container));
+            encrypt(json.toJson(prototype));
             output = new FileWriter(new File(sumPath));
             output.write(computeChecksum());
             output.close();
@@ -69,35 +73,23 @@ public class SecurityHandler {
         }
     }
 
+
     public Player load(DDGame game) {
-        container = game.deserialize("data/player.json", PlayerFactory.class, true);
-        if (checksum != null && checksum.equals(computeChecksum()) && decrypt()) {
-            try {
-                input = new FileReader(new File(prefPath));
-                container = json.fromJson(PlayerFactory.class, input);
-                if (container.id.equals(device.get("device.id"))) {
-                    Gdx.app.log("INFO", "Preferences loaded successfully");
-                    return container.create(game);
-                } else {
-                    Gdx.app.log("WARN", "Preferences are corrupted");
-                }
-            } catch (FileNotFoundException e) {
-                Gdx.app.error("ERROR", "Missing preferences file");
-            }
-        } else {
-            Gdx.app.log("WARN", "Missing preferences file");
-        }
-        Player player = container.create(game);
+        PlayerPrototype prototype = game.deserialize("data/player.json", PlayerPrototype.class, true);
+        Player player = new Player(prototype);
         player.setDefault(true);
         Gdx.app.log("WARN", "Player defaults are used");
         return player;
     }
 
+    /**
+     * @deprecated
+     */
     private String computeChecksum() {
         String algorithm = "MD5";
         try {
             MessageDigest md = MessageDigest.getInstance(algorithm);
-            md.update(device.get("device.id").getBytes());//salt
+            md.update(prototype.id.getBytes());//salt
             input = new FileReader(new File(prefPath));
             BufferedReader reader = new BufferedReader(input);
             String s;
@@ -118,6 +110,9 @@ public class SecurityHandler {
         return "undefined";
     }
 
+    /**
+     * @deprecated
+     */
     private boolean encrypt(String data) {
         try {
             data = Base64Coder.encodeString(data);
@@ -135,6 +130,9 @@ public class SecurityHandler {
         return false;
     }
 
+    /**
+     * @deprecated
+     */
     private boolean decrypt() {
         try {
             String data = "";
@@ -161,6 +159,6 @@ public class SecurityHandler {
     }
 
     public boolean sendBugReport(String error) {
-        return new BugReport(device).sendReport(error);
+        return new BugReport(prototype).sendReport(error);
     }
 }
