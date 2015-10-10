@@ -14,28 +14,13 @@ Choose your fraction and join the divine battle for world domination!
 You may choose between Demon and Angel fraction. Each has unique weaponry and stats.
 Defend from invasion of the opposite fraction, gain game progress, gold and upgrades!
 
+
+> **Contributors**
+
+Art: Евгений Ф. <yeugenyf@gmail.com>
+
+
 > **Backlog**
 Last update: 05.10.15
 
-Type | Description | Status | Points | Started | Finished
---- | --- | --- | --- | --- | --- | ---
-User story | Weaponary  | &nbsp; | &nbsp; | &nbsp; | &nbsp; 
-Task  | Develop weapons for different towers | &nbsp; | &nbsp; | &nbsp; | &nbsp;
-&nbsp;  | &nbsp; | &nbsp; | &nbsp; | &nbsp; | &nbsp; 
-User story | Design  | &nbsp; | &nbsp; | &nbsp; | &nbsp; 
-Task  | Design FractionScreen | &nbsp; | &nbsp; | &nbsp; | &nbsp; 
-Task  | Design MainMenuScreen | &nbsp; | &nbsp; | &nbsp; | &nbsp; 
-Task  | Design MarketSreen | &nbsp; | &nbsp; | &nbsp; | &nbsp; 
-Task  | Design LevelSelectScreen | &nbsp; | &nbsp; | &nbsp; | &nbsp; 
-&nbsp;  | &nbsp; | &nbsp; | &nbsp; | &nbsp; | &nbsp; 
-User story | Security  | &nbsp; | &nbsp; | &nbsp; | &nbsp; 
-Task  | &nbsp; | &nbsp; | &nbsp; | &nbsp; | &nbsp; 
-User story | Serialization  | &nbsp; | &nbsp; | &nbsp; | &nbsp; 
-Task  | Save changable resources to json | &nbsp; | &nbsp; | &nbsp; | &nbsp; 
-Task  | Restore changable resources from json | &nbsp; | &nbsp; | &nbsp; | &nbsp; 
-&nbsp;  | &nbsp; | &nbsp; | &nbsp; | &nbsp; | &nbsp; 
-User story | In-app purchases  | &nbsp; | &nbsp; | &nbsp; | &nbsp; 
-Task  | Develop Market logics | &nbsp; | &nbsp; | &nbsp; | &nbsp; 
-Task  | Include payment systems (PayPal, Bitcoin etc) | &nbsp; | &nbsp; | &nbsp; | &nbsp; 
-Task  | Appreciation notification | &nbsp; | &nbsp; | &nbsp; | &nbsp;
-&nbsp;  | &nbsp; | &nbsp; | &nbsp; | &nbsp; | &nbsp; 
+View file: [Google Sheets](https://docs.google.com/spreadsheets/d/1vBrT38lhQ9iKPLnRarzoykjd9VbRDE75M08Yns6BpgE/edit?usp=sharing "Google Sheets")
