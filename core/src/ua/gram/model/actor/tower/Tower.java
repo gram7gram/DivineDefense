@@ -15,6 +15,7 @@ import ua.gram.controller.pool.animation.AnimationController.Types;
 import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.controller.tower.TowerAnimationController;
 import ua.gram.controller.tower.TowerLevelAnimationContainer;
+import ua.gram.model.actor.GameActor;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.actor.weapon.Weapon;
 import ua.gram.model.prototype.TowerPrototype;
@@ -29,7 +30,7 @@ import java.util.List;
  *
  * @author Gram <gram7gram@gmail.com>
  */
-public abstract class Tower extends Actor implements Pool.Poolable {
+public abstract class Tower extends GameActor implements Pool.Poolable {
 
     public static final float SELL_RATIO = .6f;
     public static final byte MAX_TOWER_LEVEL = 4;

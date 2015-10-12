@@ -20,7 +20,6 @@ public class EnemyGroup extends Group {
     public EnemyGroup(Enemy enemy, HealthBar bar) {
         this.enemy = enemy;
         this.bar = bar;
-        enemy.setGroup(this);
         this.addActor(enemy);
         this.addActor(bar);
         if (DDGame.DEBUG) {

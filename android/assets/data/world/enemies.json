@@ -37,7 +37,9 @@
     "armor": 10,
     "reward": 10,
     "width": 60,
-    "height": 90
+    "height": 90,
+    "abilityDuration":1.5,
+    "abilityDelay":4
   },
   {
     "name": "EnemyWarrior",

@@ -12,7 +12,7 @@
         "index": 1,
         "enemies": [
           "EnemyRunner",
-          "EnemyRunner"
+          "EnemySummoner"
         ]
       },
       {

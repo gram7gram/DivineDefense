@@ -11,9 +11,13 @@ import ua.gram.model.prototype.EnemyPrototype;
 public final class EnemySummoner extends Enemy implements Cloneable, AbilityUser {
 
     private float counter = 0;
+    private final float abilityDelay;
+    private final float abilityDuration;
 
     public EnemySummoner(DDGame game, EnemyPrototype prototype) {
         super(game, prototype);
+        abilityDelay = prototype.abilityDelay;
+        abilityDuration = prototype.abilityDuration;
     }
 
     @Override
@@ -44,5 +48,13 @@ public final class EnemySummoner extends Enemy implements Cloneable, AbilityUser
         return (EnemySummoner) super.clone();
     }
 
+    @Override
+    public float getAbilityDelay() {
+        return abilityDelay;
+    }
 
+    @Override
+    public float getAbilityDuration() {
+        return abilityDuration;
+    }
 }

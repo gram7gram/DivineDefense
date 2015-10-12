@@ -14,6 +14,8 @@ import ua.gram.model.actor.enemy.*;
 import ua.gram.model.actor.misc.HealthBar;
 import ua.gram.model.group.EnemyGroup;
 import ua.gram.model.map.Map;
+import ua.gram.model.state.StateManager;
+import ua.gram.model.state.enemy.EnemyStateManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -102,13 +104,14 @@ public class EnemySpawner {
         EnemyGroup enemyGroup = new EnemyGroup(enemy,
                 new HealthBar(game.getResources().getSkin(), enemy)
         );
+        enemyGroup.setVisible(true);
+        enemy.setGroup(enemyGroup);
         ArrayList<Vector2> path;
         if (spawn != map.getSpawn().getPosition()) {
             path = map.getDirectionsFrom(spawn);
         } else
             path = this.normalizePathFrom(spawn);
         this.setActionPath(enemyGroup, path);
-        enemyGroup.setVisible(true);
         stage_battle.updateZIndexes(enemyGroup);
     }
 
@@ -130,42 +133,74 @@ public class EnemySpawner {
      * @param path - list of directions
      */
     private void setActionPath(EnemyGroup group, ArrayList<Vector2> path) {
-        Enemy enemy = group.getEnemy();
+        final Enemy enemy = group.getEnemy();
+        final EnemyStateManager manager = enemy.getStateManager();
         enemy.setBattleStage(stage_battle);
         enemy.setAnimationController(new EnemyAnimationController(game.getResources().getSkin(), enemy));
         enemy.setAnimation(enemy.getAnimationController().getUpAnimation());
+
         SequenceAction pathToGo = new SequenceAction();
-        pathToGo.addAction(Actions.show());//spawns enemy
+
+        //Spawn Enemy
+        pathToGo.addAction(Actions.parallel(
+                Actions.show(),
+                Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                        manager.swapLevel1State(manager.getSpawnState());
+                        manager.swapLevel2State(manager.getIdleState());
+                    }
+                })
+        ));
+
+        //Move Enemy
         Vector2 prevDir = Vector2.Zero;
+        int delayAbility = 0;
         for (final Vector2 dir : path) {
-            Action action;
+            SequenceAction action = new SequenceAction();
+
             if (!dir.equals(prevDir)) {
-                action = new SequenceAction(
-                        Actions.run(new EnemyAnimationChanger(dir, enemy)),
-                        Actions.moveBy(
-                                dir.x * DDGame.TILE_HEIGHT,
-                                dir.y * DDGame.TILE_HEIGHT,
-                                enemy.speed)
-                );
-            } else {
-                action = Actions.moveBy(
-                        dir.x * DDGame.TILE_HEIGHT,
-                        dir.y * DDGame.TILE_HEIGHT,
-                        enemy.speed);
+                action.addAction(Actions.run(new EnemyAnimationChanger(dir, enemy)));
             }
+
+            action.addAction(
+                    Actions.moveBy(
+                            dir.x * DDGame.TILE_HEIGHT,
+                            dir.y * DDGame.TILE_HEIGHT,
+                            enemy.speed)
+            );
+
+            if (enemy instanceof AbilityUser) {
+
+                //Execute ability every 4th move
+                if (delayAbility == ((AbilityUser) enemy).getAbilityDelay()) {
+                    action.addAction(Actions.run(new Runnable() {
+                        @Override
+                        public void run() {
+                            manager.swapLevel3State(manager.getAbilityState());
+                        }
+                    }));
+                    delayAbility = 0;
+                } else
+                    ++delayAbility;
+
+            }
+
             prevDir = new Vector2(dir);
             pathToGo.addAction(action);
         }
+
+        //Remove Enemy
         pathToGo.addAction(
                 Actions.parallel(
                         Actions.hide(),
-                        Actions.run(new EnemyRemover(this, group) {
+                        Actions.run(new Runnable() {
                             @Override
-                            public void customAction() {
-                                Gdx.app.log("INFO", "Enemy reached the Base");
-                                game.getPlayer().decreaseHealth();
+                            public void run() {
+                                manager.swapLevel1State(manager.getFinishState());
                             }
-                        }))
+                        })
+                )
         );
         enemy.addAction(pathToGo);
     }
@@ -191,7 +226,8 @@ public class EnemySpawner {
 
     public void setEnemiesToSpawn(String[] enemiesToSpawn) {
         this.enemiesToSpawn = convertList(enemiesToSpawn);
-        Gdx.app.log("INFO", "Enemies for wave " + level.getCurrentWave() + " are prepared. Size: " + enemiesToSpawn.length);
+        Gdx.app.log("INFO", "Enemies for wave " + level.getCurrentWave()
+                + " are prepared. Size: " + enemiesToSpawn.length);
     }
 
     public Pool<Enemy> getPool(Class<? extends Enemy> type) {

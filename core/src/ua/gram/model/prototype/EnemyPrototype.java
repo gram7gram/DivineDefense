@@ -12,4 +12,8 @@ public final class EnemyPrototype extends Prototype {
     public String name;
     public float height;
     public float width;
+
+    //for AbilityUser
+    public float abilityDelay;
+    public float abilityDuration;
 }
