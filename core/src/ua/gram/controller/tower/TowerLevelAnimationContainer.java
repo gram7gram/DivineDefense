@@ -2,6 +2,7 @@ package ua.gram.controller.tower;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import ua.gram.controller.pool.animation.AnimationController;
+import ua.gram.model.Animator;
 
 /**
  * Holds Pools of Animations for each level and state of the Tower.
@@ -11,21 +12,21 @@ import ua.gram.controller.pool.animation.AnimationController;
 public class TowerLevelAnimationContainer {
 
     private Animation idleAnimation;
-//    private Animation shootAnimation = null;
-//    private Animation buildAnimation = null;
-//    private Animation sellAnimation = null;
+//    private Animator shootAnimation = null;
+//    private Animator buildAnimation = null;
+//    private Animator sellAnimation = null;
 
     public TowerLevelAnimationContainer(TowerAnimationController towerAnimation, int level) {
         idleAnimation = new Animation(
                 TowerAnimationController.DELAY,
                 towerAnimation.setAnimationRegion(
-                        AnimationController.Types.IDLE,
+                        Animator.Types.IDLE,
                         level)
         );
         idleAnimation.setPlayMode(Animation.PlayMode.LOOP);
     }
 
-    public Animation getAnimation(AnimationController.Types type) {
+    public Animation getAnimation(Animator.Types type) {
         switch (type) {
             case IDLE:
                 return idleAnimation;

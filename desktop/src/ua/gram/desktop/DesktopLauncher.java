@@ -1,8 +1,12 @@
 package ua.gram.desktop;
 
 import com.badlogic.gdx.Files;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.tools.texturepacker.TexturePacker;
+import com.badlogic.gdx.utils.Json;
 import ua.gram.DDGame;
 import ua.gram.controller.security.SecurityHandler;
 
@@ -37,14 +41,16 @@ public class DesktopLauncher {
         config.addIcon("logo_min32.png", Files.FileType.Internal);//windows, linux
         config.addIcon("logo_min16.png", Files.FileType.Internal);//windows
 
-        DesktopGamePrototype prototype = new DesktopGamePrototype();
+        Json json = new Json();
+        json.setIgnoreUnknownFields(true);
+        DesktopGamePrototype prototype = json.fromJson(
+                DesktopGamePrototype.class,
+                new FileHandle("data/config.json"));
         prototype.id = getMAC();
         prototype.gameModule = "Desktop";
         prototype.osName = System.getProperty("os.name");
         prototype.osVersion = System.getProperty("os.version");
         prototype.configPath = getPrefs();
-        prototype.maxRanking = 3;
-        prototype.maxLevels = 8;
 
         new LwjglApplication(new DDGame(new SecurityHandler(prototype), prototype), config);
     }

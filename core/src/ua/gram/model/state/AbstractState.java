@@ -9,11 +9,9 @@ import ua.gram.DDGame;
 public class AbstractState<A extends Actor> {
 
     private DDGame game;
-    private A actor;
 
-    public AbstractState(DDGame game, A actor) {
+    public AbstractState(DDGame game) {
         this.game = game;
-        this.actor = actor;
     }
 
     public DDGame getGame() {
@@ -24,11 +22,8 @@ public class AbstractState<A extends Actor> {
         this.game = game;
     }
 
-    public A getActor() {
-        return actor;
-    }
-
-    public void setActor(A actor) {
-        this.actor = actor;
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
     }
 }

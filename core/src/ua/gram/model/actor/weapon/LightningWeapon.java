@@ -67,7 +67,7 @@ public final class LightningWeapon extends Weapon {
     private Vector2[] generateNodes(int max_generation) {
         LinkedList<Vector2> nodes = new LinkedList<Vector2>();
         nodes.addFirst(tower.getCenterPoint());
-        nodes.addLast(target.getCenterPoint());
+        nodes.addLast(target.getOrigin());
         Random rand = new Random();
         for (int generation = 1; generation <= max_generation; generation++) {
             for (int i = 0; i < nodes.size(); i += 2) {

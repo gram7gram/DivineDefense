@@ -22,7 +22,7 @@ public class ErrorStage extends Stage {
         if (DDGame.DEBUG) this.addListener(new DebugListener(this));
         this.setDebugAll(DDGame.DEBUG);
         byte gap = 5;
-        Gdx.app.error("ERROR", error);
+        Gdx.app.error("ERROR", e.getMessage() + "\n" + Arrays.toString(e.getStackTrace()));
         Label errorLabel = new Label("ERROR", game.getResources().getSkin(), "header1altwhite");
         errorLabel.setPosition((DDGame.WORLD_WIDTH - errorLabel.getWidth()) / 2f, DDGame.WORLD_HEIGHT / 2f + 20);
         errorLabel.setVisible(true);

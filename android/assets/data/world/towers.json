@@ -6,7 +6,9 @@
     "damage": 50,
     "range": 1.3,
     "rate": 1,
-    "cost": 40
+    "cost": 40,
+    "width": 60,
+    "height": 90
   },
   {
     "name": "TowerSecondary",
@@ -15,7 +17,9 @@
     "damage": 5,
     "range": 1.3,
     "rate": 0.5,
-    "cost": 60
+    "cost": 60,
+    "width": 60,
+    "height": 90
   },
   {
     "name": "TowerSpecial",
@@ -24,7 +28,9 @@
     "damage": 5,
     "range": 2,
     "rate": 0.5,
-    "cost": 70
+    "cost": 70,
+    "width": 60,
+    "height": 90
   },
   {
     "name": "TowerStun",
@@ -33,6 +39,8 @@
     "damage": 5,
     "range": 1,
     "rate": 0.5,
-    "cost": 50
+    "cost": 50,
+    "width": 60,
+    "height": 90
   }
 ]

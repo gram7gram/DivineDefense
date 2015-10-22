@@ -2,10 +2,14 @@ package ua.gram.android;
 
 import android.os.Build;
 import android.os.Bundle;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.utils.Json;
 import ua.gram.DDGame;
 import ua.gram.controller.security.SecurityHandler;
+import ua.gram.model.prototype.GamePrototype;
 
 public class AndroidLauncher extends AndroidApplication {
     @Override
@@ -22,7 +26,9 @@ public class AndroidLauncher extends AndroidApplication {
         config.useCompass = false;
         config.hideStatusBar = true;
 
-        AndroidGamePrototype prototype = new AndroidGamePrototype();
+        AndroidGamePrototype prototype = new Json().fromJson(
+                AndroidGamePrototype.class,
+                new FileHandle("data/config.json"));
         prototype.gameModule = "Android";
         prototype.id = android.provider.Settings.Secure.ANDROID_ID;
         prototype.apiVersion = String.valueOf(Build.VERSION.SDK_INT);
@@ -30,8 +36,6 @@ public class AndroidLauncher extends AndroidApplication {
         prototype.osCodename = Build.VERSION.CODENAME;
         prototype.osRelease = Build.VERSION.RELEASE;
         prototype.configPath = null;
-        prototype.maxRanking = 3;
-        prototype.maxLevels = 8;
 
         initialize(new DDGame(new SecurityHandler(prototype), prototype), config);
     }

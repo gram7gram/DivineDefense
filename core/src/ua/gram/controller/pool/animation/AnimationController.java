@@ -2,11 +2,16 @@ package ua.gram.controller.pool.animation;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import ua.gram.model.Animator;
+import ua.gram.model.actor.GameActor;
+import ua.gram.model.map.Path;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public interface AnimationController {
+public interface AnimationController<A extends GameActor> {
+
+    float DELAY = 1 / 10f;
 
     /**
      * Gets corresponding Atlas region from
@@ -16,24 +21,17 @@ public interface AnimationController {
      * @param animationType type of the animation region to search for
      * @return splitted array of tiles
      */
-    TextureRegion[] setAnimationRegion(Types animationType);
+    TextureRegion[] setAnimationRegion(Animator.Types type, Path.Types direction, Animator.Types ability) throws Exception;
 
     /**
      * Puts animation in corresponding pool.
      *
      * @param animation
      */
-    void free(Animation animation);
+    void free(Animator.Types type, Path.Types direction, Animation animation);
 
-    /**
-     * The states of Actors in the game,
-     * including Enemy and Tower.
-     */
-    enum Types {
+    void init(A actor);
 
-        //For Tower
-        IDLE, SHOOT, BUILD, SELL, LAND, AIR, LANDAIR,
-        //For Enemy
-        LEFT, RIGHT, DOWN, UP, DEAD, SPAWN, CLEAR
-    }
+    Animation obtain(Animator.Types type, Path.Types direction) throws Exception;
+
 }

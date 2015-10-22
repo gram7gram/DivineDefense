@@ -5,16 +5,15 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.utils.Pool;
 import ua.gram.DDGame;
 import ua.gram.controller.comparator.EnemyDistanceComparator;
 import ua.gram.controller.comparator.EnemyHealthComparator;
-import ua.gram.controller.pool.animation.AnimationController.Types;
 import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.controller.tower.TowerAnimationController;
 import ua.gram.controller.tower.TowerLevelAnimationContainer;
+import ua.gram.model.Animator;
 import ua.gram.model.actor.GameActor;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.actor.weapon.Weapon;
@@ -36,8 +35,6 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
     public static final byte MAX_TOWER_LEVEL = 4;
     public static final byte MAX_POWER_LEVEL = 4;
     public final float build_delay = 2;
-    public final int animationWidth = 60;
-    public final int animationHeight = 90;
     private final EnemyDistanceComparator distanceComparator;
     private final EnemyHealthComparator healthComparator;
     public boolean isActive;
@@ -63,6 +60,7 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
     private Enemy victim;
 
     public Tower(DDGame game, TowerPrototype prototype) {
+        super(prototype);
         this.game = game;
         this.power_lvl = prototype.powerLevel;
         this.tower_lvl = prototype.towerLevel;
@@ -76,8 +74,6 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
         controller = new TowerAnimationController(game.getResources().getSkin(), this);
         distanceComparator = new EnemyDistanceComparator(this);
         healthComparator = new EnemyHealthComparator();
-        this.setSize(animationWidth, animationHeight);
-        this.setBounds(getX(), getY(), animationWidth, animationHeight);
     }
 
     @Override
@@ -96,6 +92,7 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
 
     /**
      * Tower logic is here.
+     * TODO Make TowerStateManager
      */
     @Override
     public void act(float delta) {
@@ -130,7 +127,7 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
                                     weapon.setVisible(true);
                                     victim.isAttacked = true;
                                     weapon.toFront();
-                                    victim.receiveDamage(this.damage);
+                                    victim.damage(this.damage);
                                     attack(victim);
                                 }
                             } else if (victim != null) {
@@ -240,7 +237,7 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
     public void upgrade() {
         ++tower_lvl;
         this.setLevelAnimationContainer(tower_lvl);
-        changeAnimation(Types.BUILD);
+        changeAnimation(Animator.Types.BUILD);
         game.getPlayer().chargeCoins(30);
         Gdx.app.log("INFO", this + " is upgraded to " + tower_lvl + " level");
     }
@@ -250,9 +247,9 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
      *
      * @param type desired animation type
      */
-    public void changeAnimation(Types type) {
+    public void changeAnimation(Animator.Types type) {
         Gdx.app.log("INFO", this + " animation changed to: " + tower_lvl + "_" + type.name());
-        type = Types.IDLE;//remove
+        type = Animator.Types.IDLE;//remove
         this.setLevelAnimationContainer(tower_lvl);
         this.setAnimation(container.getAnimation(type));
     }

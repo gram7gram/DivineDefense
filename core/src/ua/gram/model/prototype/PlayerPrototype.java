@@ -3,7 +3,7 @@ package ua.gram.model.prototype;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public final class PlayerPrototype extends Prototype {
+public final class PlayerPrototype implements Prototype {
     public long id;
     public byte health;
     public short coins;

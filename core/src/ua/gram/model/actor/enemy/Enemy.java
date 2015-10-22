@@ -5,27 +5,22 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Pool;
 import ua.gram.DDGame;
-import ua.gram.controller.enemy.EnemyAnimationController;
-import ua.gram.controller.enemy.EnemyRemover;
+import ua.gram.controller.enemy.EnemyAnimationProvider;
 import ua.gram.controller.enemy.EnemySpawner;
+import ua.gram.controller.pool.animation.AnimationController;
 import ua.gram.controller.stage.GameBattleStage;
+import ua.gram.model.Animator;
 import ua.gram.model.actor.GameActor;
 import ua.gram.model.group.EnemyGroup;
 import ua.gram.model.map.Path;
 import ua.gram.model.prototype.EnemyPrototype;
 import ua.gram.model.state.enemy.EnemyStateManager;
-import ua.gram.model.state.enemy.level1.*;
-import ua.gram.model.state.enemy.level2.*;
-import ua.gram.model.state.enemy.level3.AbilityState;
+import ua.gram.model.state.enemy.level1.Level1State;
+import ua.gram.model.state.enemy.level2.Level2State;
 import ua.gram.model.state.enemy.level3.Level3State;
 import ua.gram.model.state.enemy.level4.Level4State;
-import ua.gram.model.state.enemy.level4.StunState;
-
-import java.util.Random;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -47,20 +42,20 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
     protected Path path;
     private float stateTime = 0;
     private GameBattleStage stage_battle;
-    private EnemyAnimationController enemyAnimation;
+    private EnemyAnimationProvider enemyAnimation;
     private EnemySpawner spawner;
     private EnemyGroup group;
     private TextureRegion currentFrame;
-    private Animation animation;
-    private Vector2 direction;
-
-    private final EnemyStateManager stateManager;
+    private Animator animator;
+    private Vector2 currentDirection;
+    private Path.Types currentDirectionType;
     private Level1State currentLevel1State;
     private Level2State currentLevel2State;
     private Level3State currentLevel3State;
     private Level4State currentLevel4State;
 
     public Enemy(DDGame game, EnemyPrototype prototype) {
+        super(prototype);
         this.game = game;
         health = prototype.health;
         speed = prototype.speed;
@@ -73,21 +68,17 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
         isAffected = false;
         isDead = false;
         isAttacked = false;
-
-        this.setSize(prototype.width, prototype.height);
-        this.setBounds(this.getX(), this.getY(), prototype.width, prototype.height);
-
-        stateManager = new EnemyStateManager(game, this);
-        stateManager.swapLevel1State(stateManager.getInactiveState());
-        stateManager.swapLevel2State(stateManager.getIdleState());
+        currentDirection = Vector2.Zero;
+        animator = new Animator();
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
+        if (animator.getAnimation() == null) return;
         if (!DDGame.PAUSE || currentFrame == null) {
             stateTime += Gdx.graphics.getDeltaTime();
-            currentFrame = animation.getKeyFrame(stateTime, true);
+            currentFrame = animator.getAnimation().getKeyFrame(stateTime, true);
         }
         batch.draw(currentFrame, getX(), getY());
     }
@@ -97,20 +88,18 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
         super.act(delta);
         if (!DDGame.PAUSE) {
             update(delta);
-            if (this.health <= 0 && currentLevel1State != stateManager.getDeathState()) {
-                stateManager.swap(currentLevel1State, stateManager.getDeathState());
-                stateManager.swap(currentLevel2State, null);
-                stateManager.swap(currentLevel3State, null);
-                stateManager.swap(currentLevel4State, null);
+            EnemyStateManager stateManager = spawner.getStateManager();
+            if (this.health <= 0 && currentLevel1State != stateManager.getDeadState()) {
+                stateManager.swapLevel1State(this, stateManager.getDeadState());
             } else {
                 stage_battle.updateActorIndex(this);
                 if (isStunned && !isAffected) {
-                    stateManager.swap(currentLevel4State, stateManager.getStunState());
+                    stateManager.swapLevel4State(this, stateManager.getStunState());
                 } else if (!isStunned && isAffected) {
-                    stateManager.swap(currentLevel4State, null);
+                    stateManager.swapLevel4State(this, null);
                 }
             }
-            stateManager.update(delta);
+            stateManager.update(this, delta);
         }
     }
 
@@ -125,40 +114,38 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
         this.health = defaultHealth;
         this.speed = defaultSpeed;
         this.armor = defaultArmor;
-        Gdx.app.log("INFO", this.getClass().getSimpleName() + " was reset");
+        EnemyStateManager stateManager = spawner.getStateManager();
+        stateManager.swapLevel1State(this, stateManager.getInactiveState());
+        stateManager.swapLevel2State(this, stateManager.getIdleState());
+        Gdx.app.log("INFO", this + " was reset");
     }
 
-    public EnemyAnimationController getEnemyAnimation() {
+    public EnemyAnimationProvider getAnimationProvider() {
         return enemyAnimation;
     }
 
-    public Vector2 getDirection() {
-        return direction;
-    }
-
-    public void setDirection(Vector2 direction) {
-        this.direction = direction;
-    }
-
-    public EnemyAnimationController getAnimationController() {
-        return enemyAnimation;
-    }
-
-    public void setAnimationController(EnemyAnimationController enemyAnimation) {
+    public void setAnimationController(EnemyAnimationProvider enemyAnimation) {
         this.enemyAnimation = enemyAnimation;
     }
 
     public Animation getAnimation() {
-        return animation;
+        return animator.getAnimation();
     }
 
     public void setAnimation(Animation animation) {
-        this.animation = animation;
+        this.animator.setAnimation(animation);
     }
 
-    public void receiveDamage(float damage) {
+    public void setAnimation(Animator.Types type) {
+        this.setAnimation(this.getAnimationProvider().get(
+                this.getOriginType(),
+                type,
+                this.getCurrentDirectionType()).obtain());
+    }
+
+    public void damage(float damage) {
         this.health -= damage;
-        Gdx.app.log("INFO", this.getClass().getSimpleName() + "@" + this.hashCode() + " recives "
+        Gdx.app.log("INFO", this + "@" + this.hashCode() + " receives "
                 + (int) damage + " dmg, hp: " + this.health);
     }
 
@@ -170,11 +157,12 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
         this.spawner = spawner;
     }
 
-    public Vector2 getCenterPoint() {
-        return new Vector2(
-                this.getX() + (this.getWidth() / 2f),
-                this.getY() + (this.getHeight() / 2f)
-        );
+    public Vector2 getOrigin() {
+        return new Vector2(this.getX() + this.getOriginX(), this.getY() + this.getOriginY());
+//        return new Vector2(
+//                this.getX() + (this.getWidth() / 2f),
+//                this.getY() + (this.getHeight() / 2f)
+//        );
     }
 
     public EnemyGroup getEnemyGroup() {
@@ -199,10 +187,6 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
 
     public void setBattleStage(GameBattleStage stage_battle) {
         this.stage_battle = stage_battle;
-    }
-
-    public EnemyStateManager getStateManager() {
-        return stateManager;
     }
 
     public Level1State getCurrentLevel1State() {
@@ -235,5 +219,25 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
 
     public void setCurrentLevel4State(Level4State currentLevel4State) {
         this.currentLevel4State = currentLevel4State;
+    }
+
+    public Vector2 getCurrentDirection() {
+        return currentDirection;
+    }
+
+    public void setCurrentDirection(Vector2 currentDirection) {
+        this.currentDirection = currentDirection;
+    }
+
+    public void alterSpeed(float deceleration) {
+        this.speed = defaultSpeed * deceleration;
+    }
+
+    public Path.Types getCurrentDirectionType() {
+        return currentDirectionType;
+    }
+
+    public void setCurrentDirectionType(Path.Types currentDirectionType) {
+        this.currentDirectionType = currentDirectionType;
     }
 }

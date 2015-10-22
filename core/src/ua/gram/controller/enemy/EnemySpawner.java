@@ -2,9 +2,9 @@ package ua.gram.controller.enemy;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Pool;
 import ua.gram.DDGame;
 import ua.gram.controller.pool.EnemyPool;
@@ -14,7 +14,7 @@ import ua.gram.model.actor.enemy.*;
 import ua.gram.model.actor.misc.HealthBar;
 import ua.gram.model.group.EnemyGroup;
 import ua.gram.model.map.Map;
-import ua.gram.model.state.StateManager;
+import ua.gram.model.map.Path;
 import ua.gram.model.state.enemy.EnemyStateManager;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ import java.util.LinkedList;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class EnemySpawner {
+public final class EnemySpawner {
 
     private final DDGame game;
     private final GameBattleStage stage_battle;
@@ -36,11 +36,15 @@ public class EnemySpawner {
     private Pool<Enemy> poolSummoner;
     private Pool<Enemy> poolRunner;
     private LinkedList<String> enemiesToSpawn;
+    private final EnemyAnimationProvider animationProvider;
+    private final EnemyStateManager stateManager;
 
     public EnemySpawner(DDGame game, Level level, GameBattleStage stage) {
         this.game = game;
         this.stage_battle = stage;
         this.level = level;
+        stateManager = new EnemyStateManager(game);
+        animationProvider = new EnemyAnimationProvider(game.getResources().getSkin());
         Gdx.app.log("INFO", "EnemySpawner is OK");
     }
 
@@ -56,7 +60,8 @@ public class EnemySpawner {
             count = 0;
             try {
                 if (!enemiesToSpawn.isEmpty()) {
-                    spawn(enemiesToSpawn.pop(), level.getMap().getSpawn().getPosition());
+                    Vector2 spawnPosition = level.getMap().getSpawn().getPosition();
+                    this.spawn(enemiesToSpawn.pop(), spawnPosition);
                 } else if (!stage_battle.hasEnemiesOnMap() || level.isCleared) {
                     level.getWave().finish();
                 }
@@ -75,48 +80,31 @@ public class EnemySpawner {
      * Spawn takes place in Group with the coresponding HealthBar.
      *
      * @param type  the Enemy ancestor to spawn.
-     * @param spawn map tile position to spawn at.
+     * @param spawn map tile position to spawn at (not in pixels)
      * @throws CloneNotSupportedException - error occcured at cloning.
      * @throws NullPointerException       - type does not belong to known Enemy ancestor.
      */
     public void spawn(String type, Vector2 spawn) throws CloneNotSupportedException, NullPointerException {
-        Enemy enemy;
-        if (type.equals("EnemyWarrior")) {
-            enemy = ((EnemyWarrior) (poolWarrior.obtain())).clone();
-        } else if (type.equals("EnemyRunner")) {
-            enemy = ((EnemyRunner) (poolRunner.obtain())).clone();
-        } else if (type.equals("EnemySoldier")) {
-            enemy = ((EnemySoldier) (poolSoldier.obtain())).clone();
-        } else if (type.equals("EnemySoldierArmored")) {
-            enemy = ((EnemySoldierArmored) (poolSoldierArmored.obtain())).clone();
-        } else if (type.equals("EnemySummoner")) {
-            enemy = ((EnemySummoner) (poolSummoner.obtain())).clone();
-        } else {
-            throw new NullPointerException("Couldn't add enemy: " + type);
-        }
-        enemy.setPosition(
-                spawn.x * DDGame.TILE_HEIGHT,
-                spawn.y * DDGame.TILE_HEIGHT
-        );
-        enemy.setSpawner(this);
-        Map map = level.getMap();
-        enemy.setPath(map.getPath());
-        EnemyGroup enemyGroup = new EnemyGroup(enemy,
-                new HealthBar(game.getResources().getSkin(), enemy)
-        );
+        Enemy enemy = this.obtain(type);
+        Skin skin = game.getResources().getSkin();
+        enemy.setPosition(spawn.x * DDGame.TILE_HEIGHT, spawn.y * DDGame.TILE_HEIGHT);
+        HealthBar bar = new HealthBar(skin, enemy);
+        EnemyGroup enemyGroup = new EnemyGroup(skin, enemy, bar);
         enemyGroup.setVisible(true);
         enemy.setGroup(enemyGroup);
-        ArrayList<Vector2> path;
-        if (spawn != map.getSpawn().getPosition()) {
-            path = map.getDirectionsFrom(spawn);
-        } else
-            path = this.normalizePathFrom(spawn);
-        this.setActionPath(enemyGroup, path);
+        enemy.setSpawner(this);
+        enemy.setBattleStage(stage_battle);
         stage_battle.updateZIndexes(enemyGroup);
+        stateManager.init(enemy);
+        animationProvider.init(enemy);
+        stateManager.setActor(enemy);
+        animationProvider.setActor(enemy);
+        stateManager.swapLevel1State(enemy, stateManager.getInactiveState());
+        stateManager.swapLevel2State(enemy, stateManager.getIdleState());
     }
 
     /**
-     * Get Direction which ACtor should go to reach Base.
+     * Get directions which Actor should turn to reach the Base.
      *
      * @param start start position
      * @return list of directions
@@ -127,31 +115,28 @@ public class EnemySpawner {
 
     /**
      * Sets the Actions for Enemy to do to walk the path
-     * <p/>
-     * FIXME Bigger speed - slower walk of Enemy
-     *
-     * @param path - list of directions
+     * FIX Bigger speed - slower walk of Enemy
      */
-    private void setActionPath(EnemyGroup group, ArrayList<Vector2> path) {
-        final Enemy enemy = group.getEnemy();
-        final EnemyStateManager manager = enemy.getStateManager();
-        enemy.setBattleStage(stage_battle);
-        enemy.setAnimationController(new EnemyAnimationController(game.getResources().getSkin(), enemy));
-        enemy.setAnimation(enemy.getAnimationController().getUpAnimation());
+    public void setActionPath(final Enemy enemy) {
+        Vector2 spawn = enemy.getPosition();
+        Map map = level.getMap();
+        enemy.setPath(map.getPath());
+        ArrayList<Vector2> path;
+        if (spawn != map.getSpawn().getPosition()) {
+            path = map.getDirectionsFrom(spawn);
+        } else
+            path = this.normalizePathFrom(spawn);
 
         SequenceAction pathToGo = new SequenceAction();
 
+        enemy.setCurrentDirection(path.get(0));
+        enemy.setCurrentDirectionType(Path.getType(path.get(0)));
+
+        stateManager.swapLevel1State(enemy, stateManager.getSpawnState());
+        stateManager.swapLevel2State(enemy, stateManager.getIdleState());
+
         //Spawn Enemy
-        pathToGo.addAction(Actions.parallel(
-                Actions.show(),
-                Actions.run(new Runnable() {
-                    @Override
-                    public void run() {
-                        manager.swapLevel1State(manager.getSpawnState());
-                        manager.swapLevel2State(manager.getIdleState());
-                    }
-                })
-        ));
+        pathToGo.addAction(Actions.show());
 
         //Move Enemy
         Vector2 prevDir = Vector2.Zero;
@@ -172,12 +157,12 @@ public class EnemySpawner {
 
             if (enemy instanceof AbilityUser) {
 
-                //Execute ability every 4th move
+                //Execute ability every n-th move
                 if (delayAbility == ((AbilityUser) enemy).getAbilityDelay()) {
                     action.addAction(Actions.run(new Runnable() {
                         @Override
                         public void run() {
-                            manager.swapLevel3State(manager.getAbilityState());
+                            stateManager.swapLevel3State(enemy, stateManager.getAbilityState());
                         }
                     }));
                     delayAbility = 0;
@@ -197,12 +182,13 @@ public class EnemySpawner {
                         Actions.run(new Runnable() {
                             @Override
                             public void run() {
-                                manager.swapLevel1State(manager.getFinishState());
+                                stateManager.swapLevel1State(enemy, stateManager.getFinishState());
                             }
                         })
                 )
         );
         enemy.addAction(pathToGo);
+        Gdx.app.log("INFO", enemy + " receives action path");
     }
 
     private LinkedList<String> convertList(String[] list) {
@@ -251,4 +237,29 @@ public class EnemySpawner {
 //        Gdx.app.log("INFO", enemy + "@" + enemy.hashCode() + " is set free");
     }
 
+    public Enemy obtain(String type) throws CloneNotSupportedException {
+        Enemy enemy;
+        if (type.equals("EnemyWarrior")) {
+            enemy = ((EnemyWarrior) (poolWarrior.obtain())).clone();
+        } else if (type.equals("EnemyRunner")) {
+            enemy = ((EnemyRunner) (poolRunner.obtain())).clone();
+        } else if (type.equals("EnemySoldier")) {
+            enemy = ((EnemySoldier) (poolSoldier.obtain())).clone();
+        } else if (type.equals("EnemySoldierArmored")) {
+            enemy = ((EnemySoldierArmored) (poolSoldierArmored.obtain())).clone();
+        } else if (type.equals("EnemySummoner")) {
+            enemy = ((EnemySummoner) (poolSummoner.obtain())).clone();
+        } else {
+            throw new NullPointerException("Couldn't add enemy: " + type);
+        }
+        return enemy;
+    }
+
+    public EnemyAnimationProvider getAnimationProvider() {
+        return animationProvider;
+    }
+
+    public EnemyStateManager getStateManager() {
+        return stateManager;
+    }
 }

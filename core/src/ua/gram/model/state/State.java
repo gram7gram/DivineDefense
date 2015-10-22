@@ -1,15 +1,25 @@
 package ua.gram.model.state;
 
-import ua.gram.DDGame;
+import ua.gram.model.actor.GameActor;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public interface State {
+public interface State<T extends GameActor> {
 
-    void preManage();
+    /**
+     * Execute before actual management:
+     * load nessessary recources, objects etc.
+     */
+    void preManage(T actor);
 
-    void manage();
+    /**
+     * Implement state logic
+     */
+    void manage(T actor, float delta);
 
-    void postManage();
+    /**
+     * Clean-un and reset state
+     */
+    void postManage(T actor);
 }

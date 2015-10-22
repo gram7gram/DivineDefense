@@ -3,17 +3,22 @@ package ua.gram.model.prototype;
 import java.util.HashMap;
 
 /**
+ * TODO Split into Global and Game configuration
  * @author Gram <gram7gram@gmail.com>
  */
-public abstract class GamePrototype extends Prototype {
+public abstract class GamePrototype implements Prototype {
 
     public String id;
-    public byte maxLevels;
-    public byte maxRanking;
     public String configPath;
     public String gameModule;
     public String osName;
     public String deviceId;
+    public String contact;
+    public String token;
+    public String client;
+    public String author;
+    public int maxLevels;
+    public int maxRanking;
 
     private HashMap<String, Object> map;
 

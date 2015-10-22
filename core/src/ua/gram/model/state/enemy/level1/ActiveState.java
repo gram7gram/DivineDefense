@@ -8,22 +8,22 @@ import ua.gram.model.actor.enemy.Enemy;
  */
 public final class ActiveState extends Level1State {
 
-    public ActiveState(DDGame game, Enemy actor) {
-        super(game, actor);
+    public ActiveState(DDGame game) {
+        super(game);
     }
 
     @Override
-    public void preManage() {
-
-    }
-
-    @Override
-    public void manage() {
+    public void preManage(Enemy enemy) {
 
     }
 
     @Override
-    public void postManage() {
+    public void manage(Enemy enemy, float delta) {
+
+    }
+
+    @Override
+    public void postManage(Enemy enemy) {
 
     }
 }

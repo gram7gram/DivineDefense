@@ -1,44 +1,41 @@
 package ua.gram.model.state.enemy.level1;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import ua.gram.DDGame;
 import ua.gram.controller.enemy.EnemySpawner;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.group.EnemyGroup;
-import ua.gram.model.state.enemy.level2.Level2State;
+import ua.gram.model.state.enemy.level1.InactiveState;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public final class FinishState extends InactiveState {
+public class FinishState extends InactiveState {
 
-    public FinishState(DDGame game, Enemy enemy) {
-        super(game, enemy);
+    public FinishState(DDGame game) {
+        super(game);
     }
 
     @Override
-    public void preManage() {
-        Gdx.app.log("INFO", getActor().getClass().getSimpleName()
-                + "#" + getActor().hashCode() + " reaches the Base");
+    public void preManage(Enemy enemy) {
+        super.preManage(enemy);
+        Gdx.app.log("INFO", enemy + " reaches the Base");
     }
 
     @Override
-    public void manage() {
-        EnemySpawner spawner = getActor().getSpawner();
-        EnemyGroup group = getActor().getEnemyGroup();
-        Enemy enemy = group.getEnemy();
+    public void manage(Enemy enemy, float delta) {
+        EnemySpawner spawner = enemy.getSpawner();
+        EnemyGroup group = enemy.getEnemyGroup();
 
         enemy.clearActions();
-        spawner.free(enemy);
+        if (spawner != null) spawner.free(enemy);
+        else Gdx.app.error("ERROR", "No spawner in enemy");
 
-        if (group.remove()) group.clear();
-        else Gdx.app.error("ERROR", "Could not remove " + enemy + " from its parent!");
+        group.clear();
+        group.remove();
 
         getGame().getPlayer().decreaseHealth();
 
-        getActor().getStateManager().swapLevel1State(null);
+        enemy.getSpawner().getStateManager().swapLevel1State(enemy, null);
     }
 }

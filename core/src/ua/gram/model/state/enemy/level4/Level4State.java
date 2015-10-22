@@ -8,14 +8,10 @@ import ua.gram.model.state.State;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public abstract class Level4State extends AbstractState<Enemy> implements State {
+public abstract class Level4State extends AbstractState<Enemy> implements State<Enemy> {
 
-    public Level4State(DDGame game, Enemy actor) {
-        super(game, actor);
+    public Level4State(DDGame game) {
+        super(game);
     }
 
-    @Override
-    public void manage() {
-
-    }
 }

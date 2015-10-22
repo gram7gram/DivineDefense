@@ -3,7 +3,7 @@ package ua.gram.model.prototype;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public final class MarketItemPrototype extends Prototype {
+public final class MarketItemPrototype implements Prototype {
     /**
      * Item header
      */

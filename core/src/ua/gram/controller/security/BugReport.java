@@ -14,11 +14,12 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.util.ByteArrayDataSource;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Properties;
 
 /**
- *
+ * TODO Include log file to mail
  * @author Gram <gram7gram@gmail.com>
  */
 public class BugReport {
@@ -32,9 +33,9 @@ public class BugReport {
 
     public BugReport(GamePrototype prototype) {
         this.prototype = prototype;
-        TO = "gram7gram@gmail.com";
-        FROM = "divinedefensegame@gmail.com";
-        PASS = "cxmmjGtdLmucADN";
+        TO = prototype.contact;
+        FROM = prototype.client;
+        PASS = prototype.token;
         HOST = "smtp.gmail.com";
         PORT = 465;
     }
@@ -87,7 +88,7 @@ public class BugReport {
             Gdx.app.log("INFO", "Email send successfully!");
             return true;
         } catch (MessagingException exc) {
-            Gdx.app.error("ERR", "Could not send email " + exc);
+            Gdx.app.error("EXC", "Could not send email: " + exc.getMessage());
             return false;
         }
     }

@@ -7,6 +7,8 @@ import ua.gram.DDGame;
 import ua.gram.controller.stage.ErrorStage;
 import ua.gram.view.AbstractScreen;
 
+import java.util.Arrays;
+
 /**
  *
  * @author Gram <gram7gram@gmail.com>
@@ -17,7 +19,6 @@ public class ErrorScreen extends AbstractScreen {
 
     public ErrorScreen(DDGame game, String error, Exception e) {
         super(game);
-        Gdx.app.error("ERROR", error);
         stage_ui = new ErrorStage(game, error, e);
         Gdx.app.log("INFO", "ErrorScreen is OK");
     }

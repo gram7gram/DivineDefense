@@ -2,6 +2,7 @@ package ua.gram.model.map;
 
 import com.badlogic.gdx.math.Vector2;
 import ua.gram.DDGame;
+import ua.gram.controller.pool.animation.AnimationController;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -67,5 +68,34 @@ public class Path {
             ++count;
         }
         throw new Exception("Position not found");
+    }
+
+    public static Types getType(Vector2 dir) {
+        if (dir.equals(Path.EAST)) {
+            return Types.RIGHT;
+        } else if (dir.equals(Path.WEST)) {
+            return Types.LEFT;
+        } else if (dir.equals(Path.NORTH)) {
+            return Types.UP;
+        } else if (dir.equals(Path.SOUTH)) {
+            return Types.DOWN;
+        } else {
+            throw new NullPointerException("Direction is not of the known values: [" + dir.x + ":" + dir.y + "]");
+        }
+    }
+
+    public static Vector2 getVector(Types type) {
+        switch(type) {
+            case UP: return Path.NORTH;
+            case RIGHT: return Path.EAST;
+            case LEFT: return Path.WEST;
+            case DOWN: return Path.SOUTH;
+            default:
+                throw new NullPointerException("Type is not of the know values: " + type);
+        }
+    }
+
+    public enum Types {
+        LEFT, UP, DOWN, RIGHT
     }
 }

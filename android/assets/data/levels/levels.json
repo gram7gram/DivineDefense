@@ -44,24 +44,6 @@
     ]
   },
   {
-    "level": 2,
-    "difficulty": 1,
-    "ranking": 0,
-    "map": "data/levels/maps/level2@60.tmx",
-    "preview": "level-2-preview",
-    "resources": [],
-    "locked": false,
-    "waves": [
-      {
-        "index": 1,
-        "enemies": [
-          "EnemyRunner",
-          "EnemyWarrior"
-        ]
-      }
-    ]
-  },
-  {
     "level": 3,
     "difficulty": 1,
     "ranking": 0,
