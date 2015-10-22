@@ -1,4 +1,4 @@
-![alt text](https://github.com/gram7gram/DivineDefense/blob/master/logo_small.png "**ICON**")
+![alt text](https://github.com/gram7gram/DivineDefense/blob/mainstream/logo_small.png "**ICON**")
 
 ## Divine Defense
 
@@ -21,6 +21,5 @@ Art: Евгений Ф. <yeugenyf@gmail.com>
 
 
 > **Backlog**
-Last update: 05.10.15
 
 View file: [Google Sheets](https://docs.google.com/spreadsheets/d/1vBrT38lhQ9iKPLnRarzoykjd9VbRDE75M08Yns6BpgE/edit?usp=sharing "Google Sheets")
