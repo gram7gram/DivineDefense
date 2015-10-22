@@ -1,4 +1,4 @@
-![alt text](https://github.com/gram7gram/DivineDefense/blob/master/logo_small.png "**ICON**")
+![alt text](https://github.com/gram7gram/DivineDefense/blob/mainstream/logo_small.png "**ICON**")
 
 ## Divine Defense
 
