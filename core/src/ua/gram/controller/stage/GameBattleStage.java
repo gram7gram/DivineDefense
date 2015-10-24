@@ -15,6 +15,7 @@ import ua.gram.model.group.EnemyGroup;
 import ua.gram.model.group.TowerGroup;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Contains major game objects, like towers and enemies.
@@ -197,9 +198,14 @@ public class GameBattleStage extends Stage {
             if (index != enemy.getParent().getZIndex()) {
                 enemy.getParent().remove();
                 Group enemyGroup = enemy.getParent();
-                Group indexGroup = indexes.get(index);
-                if (enemyGroup != null && indexGroup != null) {
-                    indexGroup.addActor(enemyGroup);
+                try {
+                    Group indexGroup = indexes.get(index);
+                    if (enemyGroup != null && indexGroup != null) {
+                        indexGroup.addActor(enemyGroup);
+                    }
+                } catch (IndexOutOfBoundsException e) {
+                    Gdx.app.error("EXC", "GameBattleStage failed to update indexes"
+                            + "\r\n" + Arrays.toString(e.getStackTrace()));
                 }
             }
         }

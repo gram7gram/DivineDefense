@@ -29,6 +29,8 @@ public final class EnemySpawner {
     private final DDGame game;
     private final GameBattleStage stage_battle;
     private final Level level;
+    private final EnemyAnimationProvider animationProvider;
+    private final EnemyStateManager stateManager;
     private float count;
     private Pool<Enemy> poolWarrior;
     private Pool<Enemy> poolSoldier;
@@ -36,8 +38,6 @@ public final class EnemySpawner {
     private Pool<Enemy> poolSummoner;
     private Pool<Enemy> poolRunner;
     private LinkedList<String> enemiesToSpawn;
-    private final EnemyAnimationProvider animationProvider;
-    private final EnemyStateManager stateManager;
 
     public EnemySpawner(DDGame game, Level level, GameBattleStage stage) {
         this.game = game;
@@ -86,21 +86,25 @@ public final class EnemySpawner {
      */
     public void spawn(String type, Vector2 spawn) throws CloneNotSupportedException, NullPointerException {
         Enemy enemy = this.obtain(type);
-        Skin skin = game.getResources().getSkin();
-        enemy.setPosition(spawn.x * DDGame.TILE_HEIGHT, spawn.y * DDGame.TILE_HEIGHT);
-        HealthBar bar = new HealthBar(skin, enemy);
-        EnemyGroup enemyGroup = new EnemyGroup(skin, enemy, bar);
-        enemyGroup.setVisible(true);
-        enemy.setGroup(enemyGroup);
-        enemy.setSpawner(this);
-        enemy.setBattleStage(stage_battle);
-        stage_battle.updateZIndexes(enemyGroup);
         stateManager.init(enemy);
         animationProvider.init(enemy);
-        stateManager.setActor(enemy);
-        animationProvider.setActor(enemy);
+        enemy.setSpawner(this);
+        enemy.setAnimationProvider(animationProvider);
         stateManager.swapLevel1State(enemy, stateManager.getInactiveState());
         stateManager.swapLevel2State(enemy, stateManager.getIdleState());
+        try {
+            Skin skin = game.getResources().getSkin();
+            enemy.setPosition(spawn.x * DDGame.TILE_HEIGHT, spawn.y * DDGame.TILE_HEIGHT);
+            HealthBar bar = new HealthBar(skin, enemy);
+            EnemyGroup enemyGroup = new EnemyGroup(skin, enemy, bar);
+            enemyGroup.setVisible(true);
+            enemy.setGroup(enemyGroup);
+            enemy.setBattleStage(stage_battle);
+            stage_battle.updateZIndexes(enemyGroup);
+            stateManager.swapLevel1State(enemy, stateManager.getSpawnState());
+        } catch (Exception e) {
+            Gdx.app.error("EXC", "EnemySpawner failed to spawn " + enemy);
+        }
     }
 
     /**

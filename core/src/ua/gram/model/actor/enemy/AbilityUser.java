@@ -5,7 +5,7 @@ package ua.gram.model.actor.enemy;
  */
 public interface AbilityUser {
 
-    void ability();
+//    void ability();
 
     float getAbilityDelay();
 

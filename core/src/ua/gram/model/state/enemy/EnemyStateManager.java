@@ -14,6 +14,8 @@ import ua.gram.model.state.enemy.level3.Level3State;
 import ua.gram.model.state.enemy.level4.Level4State;
 import ua.gram.model.state.enemy.level4.StunState;
 
+import java.util.Arrays;
+
 /**
  * @author Gram <gram7gram@gmail.com>
  */
@@ -62,16 +64,18 @@ public final class EnemyStateManager extends StateManager<Enemy> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void swap(Enemy enemy, State current, State newState) {
+        if (enemy == null) return;
         if (current == null && newState == null)
-            throw new IllegalArgumentException("Could not swap both empty states");
+            throw new NullPointerException("Could not swap both empty states");
         if (current != null) {
             try {
                 current.postManage(enemy);
             } catch (Exception e) {
                 Gdx.app.error("EXC", "Could not execute postManage() on "
                         + enemy + " state " + current
-                        + ": " + e.getMessage());
+                        + "\r\n" + Arrays.toString(e.getStackTrace()));
             }
         }
         if (newState != null) {
@@ -80,14 +84,14 @@ public final class EnemyStateManager extends StateManager<Enemy> {
             } catch (Exception e) {
                 Gdx.app.error("EXC", "Could not execute persist() on "
                         + enemy + " state " + newState
-                        + ": " + e.getMessage());
+                        + "\r\n" + Arrays.toString(e.getStackTrace()));
             }
             try {
                 newState.preManage(enemy);
             } catch (Exception e) {
                 Gdx.app.error("EXC", "Could not execute preManage() on "
                         + enemy + " state " + newState
-                        + ": " + e.getMessage());
+                        + "\r\n" + Arrays.toString(e.getStackTrace()));
             }
         }
     }

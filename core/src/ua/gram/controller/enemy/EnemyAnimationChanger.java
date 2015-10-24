@@ -2,7 +2,6 @@ package ua.gram.controller.enemy;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import ua.gram.controller.pool.animation.AnimationController;
 import ua.gram.controller.pool.animation.AnimationPool;
 import ua.gram.model.Animator;
 import ua.gram.model.actor.enemy.Enemy;
@@ -49,7 +48,7 @@ public class EnemyAnimationChanger implements Runnable {
 
             enemy.setAnimation(pool.obtain());
         } catch (Exception e) {
-            Gdx.app.error("EXC", "Cannot update " + enemy + " animation\r\n"
+            Gdx.app.error("EXC", "Cannot change " + enemy + " animation\r\n"
                     + Arrays.toString(e.getStackTrace()));
         }
     }
