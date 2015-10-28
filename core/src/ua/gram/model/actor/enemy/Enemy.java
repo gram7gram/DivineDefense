@@ -47,11 +47,16 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
     private TextureRegion currentFrame;
     private Animator animator;
     private Vector2 currentDirection;
+    private Vector2 previousDirection;
     private Path.Types currentDirectionType;
     private Level1State currentLevel1State;
     private Level2State currentLevel2State;
     private Level3State currentLevel3State;
     private Level4State currentLevel4State;
+    private Animator.Types currentLevel1StateType;
+    private Animator.Types currentLevel2StateType;
+    private Animator.Types currentLevel3StateType;
+    private Animator.Types currentLevel4StateType;
 
     public Enemy(DDGame game, EnemyPrototype prototype) {
         super(prototype);
@@ -68,6 +73,7 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
         isDead = false;
         isAttacked = false;
         currentDirection = Vector2.Zero;
+        previousDirection = Vector2.Zero;
         animator = new Animator();
     }
 
@@ -131,15 +137,15 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
         return animator.getAnimation();
     }
 
+    public void setAnimation(Animation animation) {
+        this.animator.setAnimation(animation);
+    }
+
     public void setAnimation(Animator.Types type) {
         this.setAnimation(this.getAnimationProvider().get(
                 this.getOriginType(),
                 type,
                 this.getCurrentDirectionType()).obtain());
-    }
-
-    public void setAnimation(Animation animation) {
-        this.animator.setAnimation(animation);
     }
 
     public void damage(float damage) {
@@ -226,6 +232,7 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
 
     public void setCurrentDirection(Vector2 currentDirection) {
         this.currentDirection = currentDirection;
+        this.setCurrentDirectionType(Path.getType(currentDirection));
     }
 
     public void alterSpeed(float deceleration) {
@@ -238,5 +245,45 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
 
     public void setCurrentDirectionType(Path.Types currentDirectionType) {
         this.currentDirectionType = currentDirectionType;
+    }
+
+    public Vector2 getPreviousDirection() {
+        return previousDirection;
+    }
+
+    public void setPreviousDirection(Vector2 previousDirection) {
+        this.previousDirection = previousDirection;
+    }
+
+    public Animator.Types getCurrentLevel1StateType() {
+        return currentLevel1StateType;
+    }
+
+    public void setCurrentLevel1StateType(Animator.Types currentLevel1StateType) {
+        this.currentLevel1StateType = currentLevel1StateType;
+    }
+
+    public Animator.Types getCurrentLevel2StateType() {
+        return currentLevel2StateType;
+    }
+
+    public void setCurrentLevel2StateType(Animator.Types currentLevel2StateType) {
+        this.currentLevel2StateType = currentLevel2StateType;
+    }
+
+    public Animator.Types getCurrentLevel3StateType() {
+        return currentLevel3StateType;
+    }
+
+    public void setCurrentLevel3StateType(Animator.Types currentLevel3StateType) {
+        this.currentLevel3StateType = currentLevel3StateType;
+    }
+
+    public Animator.Types getCurrentLevel4StateType() {
+        return currentLevel4StateType;
+    }
+
+    public void setCurrentLevel4StateType(Animator.Types currentLevel4StateType) {
+        this.currentLevel4StateType = currentLevel4StateType;
     }
 }

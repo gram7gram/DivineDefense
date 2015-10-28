@@ -1,16 +1,20 @@
 package ua.gram.model.actor.enemy;
 
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import ua.gram.DDGame;
 import ua.gram.model.prototype.EnemyPrototype;
+import ua.gram.model.state.enemy.EnemyStateManager;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
 public final class EnemySummoner extends Enemy implements Cloneable, AbilityUser {
 
-    //    private float counter = 0;
     private final float abilityDelay;
     private final float abilityDuration;
+    private float delayAbility;
+    private Runnable level3Swapper;
 
     public EnemySummoner(DDGame game, EnemyPrototype prototype) {
         super(game, prototype);
@@ -18,27 +22,39 @@ public final class EnemySummoner extends Enemy implements Cloneable, AbilityUser
         abilityDuration = prototype.abilityDuration;
     }
 
-//    @Override
-//    public void ability() {
-//        try {
-//            Vector2 posToSpawn = this.getPosition();
-//            Vector2 next = path.getNextPosition(posToSpawn);
-//            this.getSpawner().spawn("EnemySoldier", next);
-//            Gdx.app.log("INFO", "Ability!");
-//        } catch (Exception e) {
-//            Gdx.app.log("WARN", "Could not execute ability for Summoner!");
-//        }
-//    }
+    @Override
+    public void ability(SequenceAction actions) {
+        if (delayAbility == this.getAbilityDelay()) {
+            if (level3Swapper == null) {
+                final EnemyStateManager stateManager = this.getSpawner().getStateManager();
+                final Enemy enemy = this;
+                level3Swapper = new Runnable() {
+                    @Override
+                    public void run() {
+                        stateManager.swapLevel3State(enemy, stateManager.getAbilityState());
+                    }
+                };
+            }
+
+            int index1 = actions.getActions().indexOf(actions.getActions().peek(), true);
+
+            actions.addAction(
+                    Actions.parallel(
+                            Actions.run(level3Swapper),
+                            Actions.moveBy(0, 0, abilityDuration)));
+
+            int index2 = actions.getActions().indexOf(actions.getActions().peek(), true);
+
+            actions.getActions().swap(index1, index2);
+
+            delayAbility = 0;
+        } else
+            ++delayAbility;
+    }
 
     @Override
     public void update(float delta) {
         this.setOrigin(this.getX() + this.getWidth() / 2f, this.getY() + this.getHeight() / 2f);
-//        if (counter > 3) {
-//            ability();
-//            counter = 0;
-//        } else {
-//            counter += delta;
-//        }
     }
 
     @Override

@@ -16,17 +16,16 @@ import java.util.List;
  */
 public class Map {
 
-    private Spawn spawn;
+    private final Spawn spawn;
+    private final TiledMap tiledMap;
+    private final TiledMapTileLayer layer;
     private Base base;
-    private TiledMap tiledMap;
-    private TiledMapTileLayer layer;
     private Path path;
 
     public Map(TiledMap tiledMap) {
         this.tiledMap = tiledMap;
         layer = (TiledMapTileLayer) tiledMap.getLayers().get("Terrain");
         spawn = findSpawnPoint();
-        path = normalizePath(spawn.getPosition());
         Gdx.app.log("INFO", "Map is OK");
     }
 
@@ -50,6 +49,7 @@ public class Map {
     }
 
     public ArrayList<Vector2> getDirectionsFrom(Vector2 start) {
+        if (path == null) path = normalizePath(spawn.getPosition());
         ArrayList<Vector2> route = path.getPath();
         int currentIndex = route.indexOf(start);
         List<Vector2> list = path.getDirections().subList(currentIndex + 1, route.size());
@@ -108,10 +108,6 @@ public class Map {
         return tiledMap;
     }
 
-    public TiledMapTileLayer getLayer() {
-        return layer;
-    }
-
     public Spawn getSpawn() {
         return spawn;
     }
@@ -124,11 +120,4 @@ public class Map {
         return path;
     }
 
-    public ArrayList<Vector2> getDirectionsArray() {
-        return path.getDirections();
-    }
-
-    public ArrayList<Vector2> getPathArray() {
-        return path.getPath();
-    }
 }

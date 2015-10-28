@@ -5,7 +5,6 @@ import ua.gram.DDGame;
 import ua.gram.controller.enemy.EnemySpawner;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.group.EnemyGroup;
-import ua.gram.model.state.enemy.level1.InactiveState;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -28,8 +27,8 @@ public class FinishState extends InactiveState {
         EnemyGroup group = enemy.getEnemyGroup();
 
         enemy.clearActions();
-        if (spawner != null) spawner.free(enemy);
-        else Gdx.app.error("ERROR", "No spawner in enemy");
+
+        spawner.free(enemy);
 
         group.clear();
         group.remove();

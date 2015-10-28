@@ -10,6 +10,8 @@ import ua.gram.model.actor.enemy.AbilityUser;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.state.enemy.EnemyStateManager;
 
+import java.util.Arrays;
+
 /**
  * @author Gram <gram7gram@gmail.com>
  */
@@ -35,7 +37,6 @@ public class AbilityState extends Level3State {
         enemy.setAnimation(pool.obtain());
         executed = false;
         abilityDurationCount = 0;
-        Gdx.app.log("INFO", enemy + " performs ability");
     }
 
     @Override
@@ -45,7 +46,6 @@ public class AbilityState extends Level3State {
                 abilityDurationCount = 0;
                 manager.swapLevel2State(enemy, manager.getWalkingState());
                 manager.swapLevel3State(enemy, null);
-                Gdx.app.log("INFO", "Ability is off!");
             } else {
                 abilityDurationCount += delta;
                 if (!executed) {
@@ -54,9 +54,11 @@ public class AbilityState extends Level3State {
                         Vector2 posToSpawn = enemy.getPosition();
                         Vector2 next = enemy.getPath().getNextPosition(posToSpawn);
                         enemy.getSpawner().spawn("EnemySoldier", next);
-                        Gdx.app.log("INFO", "Ability!");
+                        Gdx.app.log("INFO", enemy + " performs ability");
                     } catch (Exception e) {
-                        Gdx.app.log("WARN", "Could not execute ability for Summoner!");
+                        Gdx.app.error("EXC", "Could not execute ability for Summoner!"
+                                + "\r\n" + e.getMessage()
+                                + "\r\n" + Arrays.toString(e.getStackTrace()));
                     }
                 }
             }

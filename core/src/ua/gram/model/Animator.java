@@ -1,7 +1,6 @@
 package ua.gram.model;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
-import ua.gram.controller.pool.animation.AnimationController;
 import ua.gram.model.map.Path;
 
 /**
@@ -47,6 +46,7 @@ public class Animator {
         IDLE, SHOOT, BUILD, SELL, LAND, AIR, LANDAIR,
         //For Enemy
         WALKING, STUN, ABILITY, DEAD, FINISH,
+        SPAWN,
         LEFT_WALKING,
         RIGHT_WALKING,
         DOWN_WALKING,
@@ -74,6 +74,6 @@ public class Animator {
         UP_STUN,
         DOWN_STUN,
         LEFT_STUN,
-        RIGHT_STUN, SPAWN,
+        RIGHT_STUN,
     }
 }

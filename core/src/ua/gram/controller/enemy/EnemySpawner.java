@@ -2,8 +2,6 @@ package ua.gram.controller.enemy;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Pool;
 import ua.gram.DDGame;
@@ -17,7 +15,6 @@ import ua.gram.model.map.Map;
 import ua.gram.model.map.Path;
 import ua.gram.model.state.enemy.EnemyStateManager;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 
@@ -108,91 +105,20 @@ public final class EnemySpawner {
     }
 
     /**
-     * Get directions which Actor should turn to reach the Base.
-     *
-     * @param start start position
-     * @return list of directions
-     */
-    public ArrayList<Vector2> normalizePathFrom(Vector2 start) {
-        return level.getMap().normalizePath(start).getDirections();
-    }
-
-    /**
      * Sets the Actions for Enemy to do to walk the path
      * FIX Bigger speed - slower walk of Enemy
      */
-    public void setActionPath(final Enemy enemy) {
-        Vector2 spawn = enemy.getPosition();
+    public void setActionPath(final Enemy enemy, Vector2 spawn) {
         Map map = level.getMap();
-        enemy.setPath(map.getPath());
-        ArrayList<Vector2> path;
-        if (spawn != map.getSpawn().getPosition()) {
-            path = map.getDirectionsFrom(spawn);
-        } else
-            path = this.normalizePathFrom(spawn);
 
-        SequenceAction pathToGo = new SequenceAction();
+        Path path = level.getMap().normalizePath(map.getSpawn().getPosition());
+        enemy.setPath(path);
 
-        enemy.setCurrentDirection(path.get(0));
-        enemy.setCurrentDirectionType(Path.getType(path.get(0)));
+        enemy.setCurrentDirection(enemy.getPath().peekNextDirection());
+        enemy.setCurrentDirectionType(Path.getType(enemy.getCurrentDirection()));
 
         stateManager.swapLevel1State(enemy, stateManager.getSpawnState());
         stateManager.swapLevel2State(enemy, stateManager.getIdleState());
-
-        //Spawn Enemy
-        pathToGo.addAction(Actions.show());
-
-        //Move Enemy
-        Vector2 prevDir = Vector2.Zero;
-        int delayAbility = 0;
-        for (final Vector2 dir : path) {
-            SequenceAction action = new SequenceAction();
-
-            if (!dir.equals(prevDir)) {
-                action.addAction(Actions.run(new EnemyAnimationChanger(dir, enemy)));
-            }
-
-            action.addAction(
-                    Actions.moveBy(
-                            dir.x * DDGame.TILE_HEIGHT,
-                            dir.y * DDGame.TILE_HEIGHT,
-                            enemy.speed)
-            );
-
-            if (enemy instanceof AbilityUser) {
-
-                //Execute ability every n-th move
-                if (delayAbility == ((AbilityUser) enemy).getAbilityDelay()) {
-                    action.addAction(Actions.run(new Runnable() {
-                        @Override
-                        public void run() {
-                            stateManager.swapLevel3State(enemy, stateManager.getAbilityState());
-                        }
-                    }));
-                    delayAbility = 0;
-                } else
-                    ++delayAbility;
-
-            }
-
-            prevDir = new Vector2(dir);
-            pathToGo.addAction(action);
-        }
-
-        //Remove Enemy
-        pathToGo.addAction(
-                Actions.parallel(
-                        Actions.hide(),
-                        Actions.run(new Runnable() {
-                            @Override
-                            public void run() {
-                                stateManager.swapLevel1State(enemy, stateManager.getFinishState());
-                            }
-                        })
-                )
-        );
-        enemy.addAction(pathToGo);
-        Gdx.app.log("INFO", enemy + " receives action path");
     }
 
     private LinkedList<String> convertList(String[] list) {
@@ -265,5 +191,13 @@ public final class EnemySpawner {
 
     public EnemyStateManager getStateManager() {
         return stateManager;
+    }
+
+    public Level getLevel() {
+        return level;
+    }
+
+    public Vector2 getSpawnPosition() {
+        return level.getMap().getSpawn().getPosition();
     }
 }

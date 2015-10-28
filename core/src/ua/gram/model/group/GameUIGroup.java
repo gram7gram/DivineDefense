@@ -61,9 +61,8 @@ public class GameUIGroup extends Group {
             }
         });
         Vector2 pos = level.getMap().getSpawn().getPosition();
-        Vector2 dir = level.getMap().getPath().getDirections().get(0);
 
-        counter = new CounterButton(game, level, new Vector2(pos.x + dir.x, pos.y + dir.y));
+        counter = new CounterButton(game, level, new Vector2(pos.x, pos.y));
 
         healthLabel = new CustomLabel("HEALTH: " + game.getPlayer().getHealth(), skin, "small_tinted");
         gemsLabel = new CustomLabel("GEMS: " + game.getPlayer().getGems(), skin, "small_tinted");

@@ -1,14 +1,9 @@
 package ua.gram.controller.enemy;
 
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import ua.gram.controller.pool.animation.AnimationController;
 import ua.gram.controller.pool.animation.AnimationPool;
 import ua.gram.controller.pool.animation.EnemyAnimation;
-import ua.gram.controller.pool.animation.EnemyDirectionAnimationPool;
 import ua.gram.model.Animator;
-import ua.gram.model.Player;
 import ua.gram.model.actor.GameActor;
 import ua.gram.model.actor.enemy.*;
 import ua.gram.model.map.Path;
@@ -18,7 +13,7 @@ import ua.gram.model.map.Path;
  */
 public class EnemyAnimationProvider {
 
-    public static float DELAY = 1/10f;
+    public static final float DELAY = 1 / 10f;
     private final Skin skin;
     private final EnemyAnimation soldierAnimation;
     private final EnemyAnimation soldierArmoredAnimation;
@@ -58,7 +53,9 @@ public class EnemyAnimationProvider {
         return skin;
     }
 
-    public AnimationPool get(GameActor.Types origin, Animator.Types type, Path.Types direction) throws IllegalArgumentException{
+    public AnimationPool get(GameActor.Types origin,
+                             Animator.Types type,
+                             Path.Types direction) throws IllegalArgumentException {
         return this.get(origin).get(type).get(direction);
     }
 

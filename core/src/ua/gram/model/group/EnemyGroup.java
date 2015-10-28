@@ -56,6 +56,7 @@ public class EnemyGroup extends Group {
             info.draw(batch, enemy.getCurrentLevel2State() + "", x, y + 24);
             info.draw(batch, enemy.getCurrentLevel3State() + "", x, y + 36);
             info.draw(batch, enemy.getCurrentLevel4State() + "", x, y + 48);
+            info.draw(batch, enemy.getCurrentDirectionType() + "", x, y + 60);
         }
     }
 

@@ -65,56 +65,67 @@ public final class EnemyStateManager extends StateManager<Enemy> {
 
     @Override
     @SuppressWarnings("unchecked")
-    public void swap(Enemy enemy, State current, State newState) {
+    public void swap(Enemy enemy, State current, State newState, int level) {
         if (enemy == null) return;
+
         if (current == null && newState == null)
             throw new NullPointerException("Could not swap both empty states");
+
+        if (current == newState) {
+            Gdx.app.error("ERROR", "Ignored swap " + current + " to " + newState + " on " + enemy);
+            return;
+        }
+
         if (current != null) {
             try {
                 current.postManage(enemy);
             } catch (Exception e) {
                 Gdx.app.error("EXC", "Could not execute postManage() on "
-                        + enemy + " state " + current
+                        + enemy + "'s state " + current
+                        + "\r\n" + e.getMessage()
                         + "\r\n" + Arrays.toString(e.getStackTrace()));
             }
         }
+
+        try {
+            this.persist(enemy, newState, level);
+        } catch (Exception e) {
+            Gdx.app.error("EXC", "Could not execute persist() on "
+                    + enemy + "'s state " + newState
+                    + "\r\n" + e.getMessage()
+                    + "\r\n" + Arrays.toString(e.getStackTrace()));
+        }
+
         if (newState != null) {
-            try {
-                this.persist(enemy, newState);
-            } catch (Exception e) {
-                Gdx.app.error("EXC", "Could not execute persist() on "
-                        + enemy + " state " + newState
-                        + "\r\n" + Arrays.toString(e.getStackTrace()));
-            }
             try {
                 newState.preManage(enemy);
             } catch (Exception e) {
                 Gdx.app.error("EXC", "Could not execute preManage() on "
-                        + enemy + " state " + newState
+                        + enemy + "'s state " + newState
+                        + "\r\n" + e.getMessage()
                         + "\r\n" + Arrays.toString(e.getStackTrace()));
             }
         }
     }
 
     public void swapLevel1State(Enemy enemy, Level1State state) {
-        swap(enemy, enemy.getCurrentLevel1State(), state);
+        swap(enemy, enemy.getCurrentLevel1State(), state, 1);
     }
 
     public void swapLevel2State(Enemy enemy, Level2State state) {
-        swap(enemy, enemy.getCurrentLevel2State(), state);
+        swap(enemy, enemy.getCurrentLevel2State(), state, 2);
     }
 
     public void swapLevel3State(Enemy enemy, Level3State state) {
-        swap(enemy, enemy.getCurrentLevel3State(), state);
+        swap(enemy, enemy.getCurrentLevel3State(), state, 3);
     }
 
     public void swapLevel4State(Enemy enemy, Level4State state) {
-        swap(enemy, enemy.getCurrentLevel4State(), state);
+        swap(enemy, enemy.getCurrentLevel4State(), state, 4);
     }
 
     @Override
-    public void persist(Enemy enemy, State newState) {
-        if (enemy == null || newState == null) return;
+    public void persist(Enemy enemy, State newState, int level) throws NullPointerException {
         if (newState instanceof Level1State) {
             enemy.setCurrentLevel1State((Level1State) newState);
         } else if (newState instanceof Level2State) {
@@ -123,6 +134,23 @@ public final class EnemyStateManager extends StateManager<Enemy> {
             enemy.setCurrentLevel3State((Level3State) newState);
         } else if (newState instanceof Level4State) {
             enemy.setCurrentLevel4State((Level4State) newState);
+        } else {
+            switch (level) {
+                case 1:
+                    enemy.setCurrentLevel1State(null);
+                    break;
+                case 2:
+                    enemy.setCurrentLevel2State(null);
+                    break;
+                case 3:
+                    enemy.setCurrentLevel3State(null);
+                    break;
+                case 4:
+                    enemy.setCurrentLevel4State(null);
+                    break;
+                default:
+                    throw new NullPointerException("Unknown state: " + newState);
+            }
         }
     }
 

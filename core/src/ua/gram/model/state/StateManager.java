@@ -30,7 +30,7 @@ public abstract class StateManager<A extends GameActor> {
      * @param before current state; nullable
      * @param after  new state; nullable
      */
-    public abstract void swap(A actor, State before, State after);
+    public abstract void swap(A actor, State before, State after, int levelw);
 
     /**
      * Save actor-specific state
@@ -38,7 +38,7 @@ public abstract class StateManager<A extends GameActor> {
      * @param actor
      * @param newState
      */
-    public abstract void persist(A actor, State newState);
+    public abstract void persist(A actor, State newState, int level) throws NullPointerException;
 
     public A getActor() {
         return actor;

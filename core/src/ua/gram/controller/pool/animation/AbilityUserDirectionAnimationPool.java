@@ -18,11 +18,11 @@ public class AbilityUserDirectionAnimationPool implements DirectionPool{
         leftPool = new AnimationPool(provider.setAnimationRegion(
                 Animator.Types.WALKING, Path.Types.LEFT, type));
         rightPool = new AnimationPool(provider.setAnimationRegion(
-                Animator.Types.WALKING, Path.Types.LEFT, type));
+                Animator.Types.WALKING, Path.Types.RIGHT, type));
         downPool = new AnimationPool(provider.setAnimationRegion(
-                Animator.Types.WALKING, Path.Types.LEFT, type));
+                Animator.Types.WALKING, Path.Types.DOWN, type));
         upPool = new AnimationPool(provider.setAnimationRegion(
-                Animator.Types.WALKING, Path.Types.LEFT, type));
+                Animator.Types.WALKING, Path.Types.UP, type));
     }
 
     public AnimationPool get(Path.Types direction) throws IllegalArgumentException{
