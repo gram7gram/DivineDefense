@@ -1,7 +1,6 @@
 package ua.gram.controller.tower;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
-import ua.gram.controller.pool.animation.AnimationController;
 import ua.gram.model.Animator;
 
 /**

@@ -1,6 +1,7 @@
 package ua.gram.model.map;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import ua.gram.DDGame;
 
 import java.util.*;
@@ -48,7 +49,8 @@ public class Path {
         } else if (dir.equals(Path.SOUTH)) {
             return Types.DOWN;
         } else {
-            throw new NullPointerException("Direction is not of the known values: [" + dir.x + ":" + dir.y + "]");
+            throw new NullPointerException("Direction is not of the known values: ["
+                    + dir.x + ":" + dir.y + "]");
         }
     }
 
@@ -78,8 +80,17 @@ public class Path {
         } else if (dir.equals(SOUTH)) {
             return NORTH;
         } else {
-            throw new NullPointerException("Direction is not of the known values: [" + dir.x + ":" + dir.y + "]");
+            throw new NullPointerException("Direction is not of the known values: ["
+                    + dir.x + ":" + dir.y + "]");
         }
+    }
+
+    public static boolean compare(Vector2 vec1, Vector2 vec2) {
+        int vecX1 = (int) vec1.x;
+        int vecY1 = (int) vec1.y;
+        int vecX2 = (int) vec2.x;
+        int vecY2 = (int) vec2.y;
+        return vecX1 == vecX2 && vecY1 == vecY2;
     }
 
     public void addDirection(Vector2 dir) {
@@ -133,7 +144,7 @@ public class Path {
      * @param posToSpawn actual position of an Actor in pixels
      * @return next position in the path
      */
-    public Vector2 getNextPosition(Vector2 posToSpawn) throws Exception {
+    public Vector2 getNextPosition(Vector2 posToSpawn) {
         int count = 0;
         posToSpawn.x = (int) (posToSpawn.x / DDGame.TILE_HEIGHT);
         posToSpawn.y = (int) (posToSpawn.y / DDGame.TILE_HEIGHT);
@@ -144,7 +155,7 @@ public class Path {
             }
             ++count;
         }
-        throw new Exception("Position not found");
+        throw new GdxRuntimeException("Position not found");
     }
 
     public enum Types {

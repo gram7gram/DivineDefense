@@ -1,15 +1,15 @@
 package ua.gram.model.actor;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import ua.gram.model.prototype.GameActorPrototype;
-
-import java.io.Serializable;
 
 public class GameActor extends Actor {
 
     protected final float animationWidth;
     protected final float animationHeight;
     private final Types originType;
+    protected Vector2 currentPosition;
 
     public GameActor(GameActorPrototype prototype) {
         this.animationHeight = prototype.height;
@@ -54,6 +54,18 @@ public class GameActor extends Actor {
 
     public Types getOriginType() {
         return originType;
+    }
+
+    public Vector2 getCurrentPosition() {
+        if (currentPosition == null) {
+            currentPosition = new Vector2(this.getX(), this.getY());
+        }
+        currentPosition.set(this.getX(), this.getY());
+        return currentPosition;
+    }
+
+    public void setCurrentPosition(Vector2 currentPosition) {
+        this.currentPosition = currentPosition;
     }
 
     public enum Types  {

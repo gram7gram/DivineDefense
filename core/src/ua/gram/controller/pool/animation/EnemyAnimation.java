@@ -13,17 +13,17 @@ import ua.gram.model.map.Path;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class EnemyAnimation implements AnimationController<Enemy> {
+public class EnemyAnimation implements AnimationControllerInterface<Enemy> {
 
-    private DirectionPool idlePool;
-    private DirectionPool walkingPool;
-    private DirectionPool deadPool;
-    private DirectionPool spawnPool;
-    private DirectionPool abilityPool;
     private final GameActor.Types origin;
     private final EnemyAnimationProvider provider;
-    private Enemy enemy;
     public boolean initialized;
+    private DirectionPoolInterface idlePool;
+    private DirectionPoolInterface walkingPool;
+    private DirectionPoolInterface deadPool;
+    private DirectionPoolInterface spawnPool;
+    private DirectionPoolInterface abilityPool;
+    private Enemy enemy;
 
     public EnemyAnimation(GameActor.Types origin, EnemyAnimationProvider provider) {
         this.origin = origin;
@@ -69,6 +69,7 @@ public class EnemyAnimation implements AnimationController<Enemy> {
                 Gdx.app.error("EXC", "Error at loading ABILITY animation type for " + origin);
             }
         }
+        Gdx.app.log("INFO", "Animation for " + origin + " is OK");
     }
 
     @Override
@@ -99,7 +100,7 @@ public class EnemyAnimation implements AnimationController<Enemy> {
         return  this.get(type).get(direction).obtain();
     }
 
-    public DirectionPool get(Animator.Types type) throws IllegalArgumentException {
+    public DirectionPoolInterface get(Animator.Types type) throws IllegalArgumentException {
         switch (type) {
             case WALKING:
                 return walkingPool;

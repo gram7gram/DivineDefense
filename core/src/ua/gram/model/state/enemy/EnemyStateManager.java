@@ -3,7 +3,7 @@ package ua.gram.model.state.enemy;
 import com.badlogic.gdx.Gdx;
 import ua.gram.DDGame;
 import ua.gram.model.actor.enemy.Enemy;
-import ua.gram.model.state.State;
+import ua.gram.model.state.StateInterface;
 import ua.gram.model.state.StateManager;
 import ua.gram.model.state.enemy.level1.*;
 import ua.gram.model.state.enemy.level2.IdleState;
@@ -57,24 +57,43 @@ public final class EnemyStateManager extends StateManager<Enemy> {
     @Override
     public void update(Enemy enemy, float delta) {
         if (enemy == null) return;
-        if (enemy.getCurrentLevel1State() != null) enemy.getCurrentLevel1State().manage(enemy, delta);
-        if (enemy.getCurrentLevel2State() != null) enemy.getCurrentLevel2State().manage(enemy, delta);
-        if (enemy.getCurrentLevel3State() != null) enemy.getCurrentLevel3State().manage(enemy, delta);
-        if (enemy.getCurrentLevel4State() != null) enemy.getCurrentLevel4State().manage(enemy, delta);
+        if (enemy.getCurrentLevel1State() != null) try {
+            enemy.getCurrentLevel1State().manage(enemy, delta);
+        } catch (Exception e) {
+            Gdx.app.error("EXC", "Could not manage Level1State on " + enemy
+                    + "\r\n" + e.getMessage()
+                    + "\r\n" + Arrays.toString(e.getStackTrace()));
+        }
+        if (enemy.getCurrentLevel2State() != null) try {
+            enemy.getCurrentLevel2State().manage(enemy, delta);
+        } catch (Exception e) {
+            Gdx.app.error("EXC", "Could not manage Level2State on " + enemy
+                    + "\r\n" + e.getMessage()
+                    + "\r\n" + Arrays.toString(e.getStackTrace()));
+        }
+        if (enemy.getCurrentLevel3State() != null) try {
+            enemy.getCurrentLevel3State().manage(enemy, delta);
+        } catch (Exception e) {
+            Gdx.app.error("EXC", "Could not manage Level3State on " + enemy
+                    + "\r\n" + e.getMessage()
+                    + "\r\n" + Arrays.toString(e.getStackTrace()));
+        }
+        if (enemy.getCurrentLevel4State() != null) try {
+            enemy.getCurrentLevel4State().manage(enemy, delta);
+        } catch (Exception e) {
+            Gdx.app.error("EXC", "Could not manage Level4State on " + enemy
+                    + "\r\n" + e.getMessage()
+                    + "\r\n" + Arrays.toString(e.getStackTrace()));
+        }
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public void swap(Enemy enemy, State current, State newState, int level) {
+    public void swap(Enemy enemy, StateInterface current, StateInterface newState, int level) {
         if (enemy == null) return;
 
         if (current == null && newState == null)
             throw new NullPointerException("Could not swap both empty states");
-
-        if (current == newState) {
-            Gdx.app.error("ERROR", "Ignored swap " + current + " to " + newState + " on " + enemy);
-            return;
-        }
 
         if (current != null) {
             try {
@@ -85,6 +104,11 @@ public final class EnemyStateManager extends StateManager<Enemy> {
                         + "\r\n" + e.getMessage()
                         + "\r\n" + Arrays.toString(e.getStackTrace()));
             }
+        }
+
+        if (current == newState) {
+            Gdx.app.log("WARN", "Ignored swap " + current + " to " + newState + " on " + enemy);
+            return;
         }
 
         try {
@@ -125,7 +149,7 @@ public final class EnemyStateManager extends StateManager<Enemy> {
     }
 
     @Override
-    public void persist(Enemy enemy, State newState, int level) throws NullPointerException {
+    public void persist(Enemy enemy, StateInterface newState, int level) throws NullPointerException {
         if (newState instanceof Level1State) {
             enemy.setCurrentLevel1State((Level1State) newState);
         } else if (newState instanceof Level2State) {
@@ -152,6 +176,15 @@ public final class EnemyStateManager extends StateManager<Enemy> {
                     throw new NullPointerException("Unknown state: " + newState);
             }
         }
+    }
+
+    @Override
+    public void reset(Enemy enemy) {
+        enemy.setCurrentLevel1State(null);
+        enemy.setCurrentLevel2State(null);
+        enemy.setCurrentLevel3State(null);
+        enemy.setCurrentLevel4State(null);
+        Gdx.app.log("INFO", enemy + " states has been reseted");
     }
 
     public DeadState getDeadState() {

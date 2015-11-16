@@ -11,7 +11,9 @@
       {
         "index": 1,
         "enemies": [
-          "EnemySummoner"
+          "EnemySummoner",
+          "EnemyWarrior",
+          "EnemyWarrior"
         ]
       },
       {
@@ -19,7 +21,11 @@
         "enemies": [
           "EnemySoldier",
           "EnemyWarrior",
-          "EnemyWarrior"
+          "EnemyWarrior",
+          "EnemySummoner",
+          "EnemySummoner",
+          "EnemySoldierArmored",
+          "EnemyRunner"
         ]
       }
     ]

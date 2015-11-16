@@ -9,7 +9,7 @@ import ua.gram.model.map.Path;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public interface AnimationController<A extends GameActor> {
+public interface AnimationControllerInterface<A extends GameActor> {
 
     float DELAY = 1 / 10f;
 

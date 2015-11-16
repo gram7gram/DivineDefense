@@ -27,18 +27,23 @@ public class EnemyAnimationProvider {
         soldierAnimation = new EnemyAnimation(GameActor.Types.SOLDIER, this);
         soldierArmoredAnimation = new EnemyAnimation(GameActor.Types.SOLDIER_ARMORED, this);
         runnerAnimation = new EnemyAnimation(GameActor.Types.RUNNER, this);
-        warriorAnimation = new EnemyAnimation(GameActor.Types.WARRIOR,this);
+        warriorAnimation = new EnemyAnimation(GameActor.Types.WARRIOR, this);
         summomerAnimation = new EnemyAnimation(GameActor.Types.SUMMONER, this);
     }
 
     public void init(Enemy enemy) {
         //subclass first
-        if (enemy instanceof EnemySoldierArmored && !soldierArmoredAnimation.initialized) soldierArmoredAnimation.init(enemy);
-        //now concrete classes
-        else if (enemy instanceof EnemySoldier && !soldierAnimation.initialized) soldierAnimation.init(enemy);
-        else if (enemy instanceof EnemyRunner && !runnerAnimation.initialized) runnerAnimation.init(enemy);
-        else if (enemy instanceof EnemySummoner && !summomerAnimation.initialized) summomerAnimation.init(enemy);
-        else if (enemy instanceof EnemyWarrior && !warriorAnimation.initialized) warriorAnimation.init(enemy);
+        if (enemy instanceof EnemySoldierArmored && !soldierArmoredAnimation.initialized)
+            soldierArmoredAnimation.init(enemy);
+            //now concrete classes
+        else if (enemy instanceof EnemySoldier && !soldierAnimation.initialized)
+            soldierAnimation.init(enemy);
+        else if (enemy instanceof EnemyRunner && !runnerAnimation.initialized)
+            runnerAnimation.init(enemy);
+        else if (enemy instanceof EnemySummoner && !summomerAnimation.initialized)
+            summomerAnimation.init(enemy);
+        else if (enemy instanceof EnemyWarrior && !warriorAnimation.initialized)
+            warriorAnimation.init(enemy);
     }
 
     public void setActor(Enemy enemy) {
@@ -61,12 +66,18 @@ public class EnemyAnimationProvider {
 
     public EnemyAnimation get(GameActor.Types origin) {
         switch (origin) {
-            case WARRIOR: return warriorAnimation;
-            case SOLDIER: return soldierAnimation;
-            case SOLDIER_ARMORED:return soldierArmoredAnimation;
-            case SUMMONER: return summomerAnimation;
-            case RUNNER: return runnerAnimation;
-            default: throw new IllegalArgumentException("Unknown Enemy type: " + origin);
+            case WARRIOR:
+                return warriorAnimation;
+            case SOLDIER:
+                return soldierAnimation;
+            case SOLDIER_ARMORED:
+                return soldierArmoredAnimation;
+            case SUMMONER:
+                return summomerAnimation;
+            case RUNNER:
+                return runnerAnimation;
+            default:
+                throw new IllegalArgumentException("Unknown Enemy type: " + origin);
         }
     }
 

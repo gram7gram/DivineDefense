@@ -1,15 +1,49 @@
 package ua.gram.model.actor.enemy;
 
-import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+import ua.gram.DDGame;
+import ua.gram.model.prototype.EnemyPrototype;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public interface AbilityUser {
+public abstract class AbilityUser extends Enemy implements AbilityUserInterface {
 
-    void ability(SequenceAction actions);
+    private final float abilityDelay;
+    private final float abilityDuration;
+    private float delayAbility;
 
-    float getAbilityDelay();
+    public AbilityUser(DDGame game, EnemyPrototype prototype) {
+        super(game, prototype);
+        abilityDelay = prototype.abilityDelay;
+        abilityDuration = prototype.abilityDuration;
+    }
 
-    float getAbilityDuration();
+    @Override
+    public float getAbilityDelay() {
+        return abilityDelay;
+    }
+
+    @Override
+    public float getAbilityDuration() {
+        return abilityDuration;
+    }
+
+    @Override
+    public boolean isAbilityPossible(float delta) {
+        if (delayAbility >= this.getAbilityDelay()) {
+            delayAbility = 0;
+            return true;
+        } else {
+            delayAbility += delta;
+            return false;
+        }
+    }
+
+    public float getDelayAbility() {
+        return delayAbility;
+    }
+
+    public void setDelayAbility(float delayAbility) {
+        this.delayAbility = delayAbility;
+    }
 }

@@ -1,6 +1,7 @@
 package ua.gram.model.group;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -136,6 +137,16 @@ public class GameUIGroup extends Group {
             updateMoneyLabel();
             updateGemsLabel();
             updateWaveLabel();
+        }
+    }
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        super.draw(batch, parentAlpha);
+        if (DDGame.DEBUG) {
+            game.getInfo().draw(batch,
+                    "FPS: " + Gdx.graphics.getFramesPerSecond(),
+                    10, DDGame.WORLD_HEIGHT - 12);
         }
     }
 

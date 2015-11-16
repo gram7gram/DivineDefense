@@ -32,13 +32,14 @@ public class SpawnState extends InactiveState {
                 enemy.getCurrentLevel1StateType(),
                 enemy.getCurrentDirectionType());
         enemy.setAnimation(pool.obtain());
-        Gdx.app.log("INFO", enemy + " spawns");
+        spawnDurationCount = 0;
+        Gdx.app.log("INFO", enemy + " state: " + enemy.getCurrentLevel1StateType());
     }
 
     @Override
     public void manage(Enemy enemy, float delta) {
         EnemyStateManager manager = enemy.getSpawner().getStateManager();
-        if (spawnDurationCount >= 1.5 && enemy.getCurrentLevel2State() != manager.getWalkingState()) {
+        if (spawnDurationCount >= enemy.getSpawnDuration()) {
             manager.swapLevel1State(enemy, manager.getActiveState());
             manager.swapLevel2State(enemy, manager.getWalkingState());
             spawnDurationCount = 0;
@@ -49,6 +50,6 @@ public class SpawnState extends InactiveState {
 
     @Override
     public void postManage(Enemy enemy) {
-
+        spawnDurationCount = 0;
     }
 }

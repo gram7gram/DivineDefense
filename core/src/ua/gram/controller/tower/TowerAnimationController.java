@@ -1,9 +1,7 @@
 package ua.gram.controller.tower;
 
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import ua.gram.controller.pool.animation.AnimationController;
 import ua.gram.model.Animator;
 import ua.gram.model.Player;
 import ua.gram.model.actor.tower.Tower;

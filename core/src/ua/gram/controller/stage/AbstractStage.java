@@ -14,7 +14,12 @@ public abstract class AbstractStage extends Stage {
     public AbstractStage(DDGame game) {
         super(game.getViewport(), game.getBatch());
         this.game = game;
-        this.setDebugAll(DDGame.DEBUG);
         if (DDGame.DEBUG) this.addListener(new DebugListener(this));
+    }
+
+    @Override
+    public void act() {
+        super.act();
+        this.setDebugAll(DDGame.DEBUG);
     }
 }

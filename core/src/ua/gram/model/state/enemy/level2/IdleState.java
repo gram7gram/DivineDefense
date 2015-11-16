@@ -28,16 +28,27 @@ public class IdleState extends Level2State {
                 enemy.setAnimation(pool.obtain());
             }
         }
-        Gdx.app.log("INFO", enemy + " is idle");
+        Gdx.app.log("INFO", enemy + " state: " + Animator.Types.IDLE);
     }
 
     @Override
     public void manage(Enemy enemy, float delta) {
         enemy.speed = 0;
+//        Array<Action> actions = enemy.getActions();
+//        boolean hasRemovedMove = false;
+//        for (Action action : actions) {
+//            if (action instanceof MoveByAction) {
+//                actions.removeValue(action, false);
+//                hasRemovedMove = true;
+//            }
+//        }
+//        if (hasRemovedMove) {
+//            Gdx.app.log("WARN", Animator.Types.IDLE + " state emptied MoveBy actions");
+//        }
     }
 
     @Override
     public void postManage(Enemy enemy) {
-
+        enemy.speed = enemy.defaultSpeed;
     }
 }

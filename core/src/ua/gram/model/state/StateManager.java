@@ -15,22 +15,20 @@ public abstract class StateManager<A extends GameActor> {
         this.game = game;
     }
 
-    public StateManager(DDGame game, A actor) {
-        this.game = game;
-        this.actor = actor;
-    }
-
     public abstract void init(A actor);
 
     public abstract void update(A actor, float delta);
 
     /**
-     * Swap states. Executes postManage on before and preManage on after.
+     * Swap states. Executes StateInterface::postManage on {@param before}
+     * and StateInterface::preManage on {@param after}.
      *
+     * @param actor the actor which will be managed
      * @param before current state; nullable
-     * @param after  new state; nullable
+     * @param after new state; nullable
+     * @param level integer represetation of the state level, aka 1-4
      */
-    public abstract void swap(A actor, State before, State after, int levelw);
+    public abstract void swap(A actor, StateInterface before, StateInterface after, int level);
 
     /**
      * Save actor-specific state
@@ -38,7 +36,14 @@ public abstract class StateManager<A extends GameActor> {
      * @param actor
      * @param newState
      */
-    public abstract void persist(A actor, State newState, int level) throws NullPointerException;
+    public abstract void persist(A actor, StateInterface newState, int level) throws NullPointerException;
+
+    /**
+     * Reset all states for the Actor
+     *
+     * @param actor
+     */
+    public abstract void reset(A actor);
 
     public A getActor() {
         return actor;
@@ -47,4 +52,5 @@ public abstract class StateManager<A extends GameActor> {
     public void setActor(A actor) {
         this.actor = actor;
     }
+
 }

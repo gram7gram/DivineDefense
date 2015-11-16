@@ -11,7 +11,6 @@ import ua.gram.model.Level;
 import ua.gram.model.actor.enemy.*;
 import ua.gram.model.actor.misc.HealthBar;
 import ua.gram.model.group.EnemyGroup;
-import ua.gram.model.map.Map;
 import ua.gram.model.map.Path;
 import ua.gram.model.state.enemy.EnemyStateManager;
 
@@ -93,7 +92,7 @@ public final class EnemySpawner {
             Skin skin = game.getResources().getSkin();
             enemy.setPosition(spawn.x * DDGame.TILE_HEIGHT, spawn.y * DDGame.TILE_HEIGHT);
             HealthBar bar = new HealthBar(skin, enemy);
-            EnemyGroup enemyGroup = new EnemyGroup(skin, enemy, bar);
+            EnemyGroup enemyGroup = new EnemyGroup(game, enemy, bar);
             enemyGroup.setVisible(true);
             enemy.setGroup(enemyGroup);
             enemy.setBattleStage(stage_battle);
@@ -109,16 +108,11 @@ public final class EnemySpawner {
      * FIX Bigger speed - slower walk of Enemy
      */
     public void setActionPath(final Enemy enemy, Vector2 spawn) {
-        Map map = level.getMap();
-
-        Path path = level.getMap().normalizePath(map.getSpawn().getPosition());
+        Path path = level.getMap().normalizePath(spawn);
         enemy.setPath(path);
 
-        enemy.setCurrentDirection(enemy.getPath().peekNextDirection());
+        enemy.setCurrentDirection(path.peekNextDirection());
         enemy.setCurrentDirectionType(Path.getType(enemy.getCurrentDirection()));
-
-        stateManager.swapLevel1State(enemy, stateManager.getSpawnState());
-        stateManager.swapLevel2State(enemy, stateManager.getIdleState());
     }
 
     private LinkedList<String> convertList(String[] list) {

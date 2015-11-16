@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.Pool;
 import ua.gram.DDGame;
 import ua.gram.controller.enemy.EnemyAnimationProvider;
 import ua.gram.controller.enemy.EnemySpawner;
+import ua.gram.controller.pool.animation.AnimationPool;
 import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.model.Animator;
 import ua.gram.model.actor.GameActor;
@@ -33,6 +34,7 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
     public float health;
     public float speed;
     public float armor;
+    public float spawnDuration;
     public boolean isStunned;
     public boolean isAttacked;
     public boolean isAffected;
@@ -65,6 +67,7 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
         speed = prototype.speed;
         armor = prototype.armor;
         reward = prototype.reward;
+        spawnDuration = prototype.spawnDuration;
         defaultHealth = health;
         defaultSpeed = speed;
         defaultArmor = armor;
@@ -120,8 +123,9 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
         this.speed = defaultSpeed;
         this.armor = defaultArmor;
         EnemyStateManager stateManager = spawner.getStateManager();
-        stateManager.swapLevel1State(this, stateManager.getInactiveState());
-        stateManager.swapLevel2State(this, stateManager.getIdleState());
+        stateManager.reset(this);
+//        stateManager.swapLevel1State(this, stateManager.getInactiveState());
+//        stateManager.swapLevel2State(this, stateManager.getIdleState());
         Gdx.app.log("INFO", this + " was reset");
     }
 
@@ -137,20 +141,21 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
         return animator.getAnimation();
     }
 
+    public void setAnimation(Animator.Types type) {
+        AnimationPool pool = this.getAnimationProvider().get(
+                this.getOriginType(),
+                type,
+                this.getCurrentDirectionType());
+        this.setAnimation(pool.obtain());
+    }
+
     public void setAnimation(Animation animation) {
         this.animator.setAnimation(animation);
     }
 
-    public void setAnimation(Animator.Types type) {
-        this.setAnimation(this.getAnimationProvider().get(
-                this.getOriginType(),
-                type,
-                this.getCurrentDirectionType()).obtain());
-    }
-
     public void damage(float damage) {
         this.health -= damage;
-        Gdx.app.log("INFO", this + "@" + this.hashCode() + " receives "
+        Gdx.app.log("INFO", this + " receives "
                 + (int) damage + " dmg, hp: " + this.health);
     }
 
@@ -170,6 +175,14 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
 //        );
     }
 
+    public float getSpawnDuration() {
+        return spawnDuration;
+    }
+
+    public void setSpawnDuration(float spawnDuration) {
+        this.spawnDuration = spawnDuration;
+    }
+
     public EnemyGroup getEnemyGroup() {
         return group;
     }
@@ -180,10 +193,6 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
 
     public void setPath(Path path) {
         this.path = path;
-    }
-
-    public Vector2 getPosition() {
-        return new Vector2(this.getX(), this.getY());
     }
 
     public void setGroup(EnemyGroup group) {

@@ -6,7 +6,6 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.utils.Pool;
 import ua.gram.DDGame;
 import ua.gram.controller.pool.TowerPool;
-import ua.gram.controller.pool.animation.AnimationController;
 import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.controller.stage.GameUIStage;
 import ua.gram.model.Animator;

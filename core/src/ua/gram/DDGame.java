@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -51,6 +52,7 @@ public class DDGame extends Game {
     private OrthographicCamera camera;
     private Viewport view;
     private Player player;
+    private BitmapFont info;
 
     public DDGame(SecurityHandler security, GamePrototype prototype) {
         this.security = security;
@@ -70,6 +72,8 @@ public class DDGame extends Game {
         MAX_ENTITIES = MAP_WIDTH * MAP_HEIGHT;//Maximum entities on the map
         resources = new Resources();
         Resources.game = this;
+        info = new BitmapFont();
+        info.setColor(1, 1, 1, 1);
         this.setScreen(new LaunchLoadingScreen(this));
     }
 
@@ -115,7 +119,7 @@ public class DDGame extends Game {
     }
 
     /**
-     * Creates Factory from Json representation of desired class.
+     * Creates FactoryInterface from Json representation of desired class.
      *
      * @param file     name of the Json file, that holds information about T class
      * @param type     desired type of class to load
@@ -134,6 +138,10 @@ public class DDGame extends Game {
             if (throwExc) this.setScreen(new ErrorScreen(this, "Could not load factory: " + file, e));
         }
         return null;
+    }
+
+    public BitmapFont getInfo() {
+        return info;
     }
 
     public GamePrototype getPrototype() {

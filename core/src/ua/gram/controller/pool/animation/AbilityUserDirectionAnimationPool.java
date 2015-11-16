@@ -7,7 +7,7 @@ import ua.gram.model.map.Path;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class AbilityUserDirectionAnimationPool implements DirectionPool{
+public class AbilityUserDirectionAnimationPool implements DirectionPoolInterface {
 
     private final AnimationPool leftPool;
     private final AnimationPool rightPool;
@@ -23,6 +23,7 @@ public class AbilityUserDirectionAnimationPool implements DirectionPool{
                 Animator.Types.WALKING, Path.Types.DOWN, type));
         upPool = new AnimationPool(provider.setAnimationRegion(
                 Animator.Types.WALKING, Path.Types.UP, type));
+        Gdx.app.log("INFO", "DirectionPool for " + type + " is OK");
     }
 
     public AnimationPool get(Path.Types direction) throws IllegalArgumentException{

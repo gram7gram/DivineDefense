@@ -1,17 +1,13 @@
 package ua.gram.controller.pool.animation;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.utils.Pool;
-import ua.gram.controller.enemy.EnemyAnimationProvider;
 import ua.gram.model.Animator;
 import ua.gram.model.map.Path;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class EnemyDirectionAnimationPool implements DirectionPool{
+public class EnemyDirectionAnimationPool implements DirectionPoolInterface {
 
     protected final AnimationPool leftPool;
     protected final AnimationPool rightPool;
@@ -27,6 +23,7 @@ public class EnemyDirectionAnimationPool implements DirectionPool{
                 type, Path.Types.DOWN, null));
         upPool = new AnimationPool(provider.setAnimationRegion(
                 type, Path.Types.UP, null));
+        Gdx.app.log("INFO", "DirectionPool for " + type + " is OK");
     }
 
     public AnimationPool get(Path.Types direction) throws IllegalArgumentException{

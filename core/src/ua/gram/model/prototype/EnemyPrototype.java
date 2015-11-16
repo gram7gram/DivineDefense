@@ -11,4 +11,5 @@ public final class EnemyPrototype extends GameActorPrototype {
     //for AbilityUser
     public float abilityDelay;
     public float abilityDuration;
+    public float spawnDuration;
 }

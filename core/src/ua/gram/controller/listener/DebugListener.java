@@ -24,6 +24,14 @@ public class DebugListener extends InputListener {
             DDGame.DEBUG = !DDGame.DEBUG;
             stage.setDebugAll(DDGame.DEBUG);
             Gdx.app.log("INFO", "Debuging is " + (DDGame.DEBUG ? "on" : "off"));
+        } else if (keycode == Input.Keys.PLUS) {
+            DDGame.DEBUG = true;
+            stage.setDebugAll(true);
+            Gdx.app.log("INFO", "Debuging is on");
+        } else if (keycode == Input.Keys.MINUS) {
+            DDGame.DEBUG = false;
+            stage.setDebugAll(false);
+            Gdx.app.log("INFO", "Debuging is off");
         } else if (keycode == Input.Keys.ESCAPE) {
             Gdx.app.log("WARN", "Pressed ESC in debug mode. Will exit");
             Gdx.app.exit();

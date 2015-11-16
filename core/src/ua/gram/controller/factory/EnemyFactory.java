@@ -8,7 +8,7 @@ import ua.gram.model.prototype.EnemyPrototype;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class EnemyFactory implements Factory<Enemy, EnemyPrototype> {
+public class EnemyFactory implements FactoryInterface<Enemy, EnemyPrototype> {
 
     @Override
     public Enemy create(DDGame game, EnemyPrototype prototype) {
