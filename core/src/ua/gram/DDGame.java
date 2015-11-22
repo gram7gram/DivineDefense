@@ -13,6 +13,7 @@ import ua.gram.controller.Resources;
 import ua.gram.controller.security.SecurityHandler;
 import ua.gram.model.Player;
 import ua.gram.model.prototype.GamePrototype;
+import ua.gram.model.prototype.ParametersPrototype;
 import ua.gram.view.screen.ErrorScreen;
 import ua.gram.view.screen.LaunchLoadingScreen;
 
@@ -31,7 +32,7 @@ import ua.gram.view.screen.LaunchLoadingScreen;
  *
  * @author Gram <gram7gram@gmail.com>
  */
-public class DDGame extends Game {
+public class DDGame<P extends GamePrototype> extends Game {
 
     public static final String ANGEL = "Angel";
     public static final String DEMON = "Demon";
@@ -44,7 +45,7 @@ public class DDGame extends Game {
     public static int MAP_WIDTH;
     public static int MAP_HEIGHT;
     public static int MAX_ENTITIES;
-    private final GamePrototype prototype;
+    private final P prototype;
     private SecurityHandler security;
     private float gameSpeed = 1;
     private Resources resources;
@@ -54,7 +55,7 @@ public class DDGame extends Game {
     private Player player;
     private BitmapFont info;
 
-    public DDGame(SecurityHandler security, GamePrototype prototype) {
+    public DDGame(SecurityHandler security, P prototype) {
         this.security = security;
         this.prototype = prototype;
     }
@@ -74,7 +75,7 @@ public class DDGame extends Game {
         Resources.game = this;
         info = new BitmapFont();
         info.setColor(1, 1, 1, 1);
-        this.setScreen(new LaunchLoadingScreen(this));
+        this.setScreen(new LaunchLoadingScreen(this, prototype));
     }
 
     @Override
@@ -135,7 +136,9 @@ public class DDGame extends Game {
             json.setIgnoreUnknownFields(true);
             return json.fromJson(type, Gdx.files.internal(file));
         } catch (Exception e) {
-            if (throwExc) this.setScreen(new ErrorScreen(this, "Could not load factory: " + file, e));
+            if (throwExc)
+                this.setScreen(
+                        new ErrorScreen(this, "Could not load factory: " + file, e));
         }
         return null;
     }
@@ -144,8 +147,8 @@ public class DDGame extends Game {
         return info;
     }
 
-    public GamePrototype getPrototype() {
-        return prototype;
+    public <PP extends ParametersPrototype> PP getParameters() {
+        return prototype.getParameters();
     }
 
     public Resources getResources() {
@@ -188,13 +191,19 @@ public class DDGame extends Game {
         this.gameSpeed = gameSpeed;
     }
 
+    public GamePrototype getPrototype() {
+        return prototype;
+    }
+
     private synchronized void sayGoodbye() {
-        Gdx.app.log("INFO", "Thank you for choosing Divine Defense!");
-        Gdx.app.log("INFO", "I hope you enjoyed it. Bye-bye (^ω^) / ");
+        for (String text : getParameters().consoleBye) {
+            Gdx.app.log("INFO", text);
+        }
     }
 
     private synchronized void sayHello() {
-        Gdx.app.log("INFO", "Welcome to DivineDefense, by Gram <gram7gram@gmail.com>");
-        Gdx.app.log("INFO", "Visit https://github.com/gram7gram/DivineDefense to view sources");
+        for (String text : getParameters().consoleHello) {
+            Gdx.app.log("INFO", text);
+        }
     }
 }

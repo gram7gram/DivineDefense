@@ -3,7 +3,6 @@ package ua.gram.controller.pool;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Pool;
 import ua.gram.DDGame;
-import ua.gram.controller.Resources;
 import ua.gram.model.actor.enemy.*;
 import ua.gram.model.prototype.EnemyPrototype;
 
@@ -23,7 +22,7 @@ public class EnemyPool<T extends Enemy> extends Pool<Enemy> {
         this.game = game;
         this.type = type;
         map = new HashMap<String, EnemyPrototype>();
-        EnemyPrototype[] prototypes = game.deserialize(Resources.ENEMIES, EnemyPrototype[].class, true);
+        EnemyPrototype[] prototypes = game.getPrototype().enemies;
         for (EnemyPrototype prototype : prototypes) {
             map.put(prototype.name, prototype);
         }

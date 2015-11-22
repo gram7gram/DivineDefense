@@ -34,16 +34,33 @@
   },
   {
     "name": "EnemySummoner",
-    "ability": true,
     "health": 110,
     "speed": 1.5,
     "armor": 10,
     "reward": 10,
     "width": 60,
     "height": 90,
+    "spawnDuration": 1.5,
     "abilityDuration": 2,
     "abilityDelay": 2,
-    "spawnDuration": 1.5
+    "ability": true,
+    "abilityConfig": {
+      "type": "SUMMON",
+      "content": [
+        {
+          "origin": "EnemySoldier",
+          "probability": 0.7,
+          "amount": 1
+        },
+        {
+          "origin": "EnemySoldierArmored",
+          "probability": 0.1,
+          "amount": 1
+        }
+      ],
+      "abilityDuration": 2,
+      "abilityDelay": 2
+    }
   },
   {
     "name": "EnemyWarrior",

@@ -3,7 +3,6 @@ package ua.gram.controller.pool;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Pool;
 import ua.gram.DDGame;
-import ua.gram.controller.Resources;
 import ua.gram.model.actor.tower.*;
 import ua.gram.model.prototype.TowerPrototype;
 
@@ -23,7 +22,7 @@ public class TowerPool<T extends Tower> extends Pool<Tower> {
         this.game = game;
         this.type = type;
         map = new HashMap<String, TowerPrototype>();
-        TowerPrototype[] prototypes = game.deserialize(Resources.TOWERS, TowerPrototype[].class, true);
+        TowerPrototype[] prototypes = game.getPrototype().towers;
         for (TowerPrototype prototype : prototypes) {
             map.put(prototype.name, prototype);
         }

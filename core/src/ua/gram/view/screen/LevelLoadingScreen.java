@@ -28,7 +28,7 @@ public class LevelLoadingScreen extends AbstractLoadingScreen {
         super.show();
         Gdx.app.log("INFO", "Screen set to LevelLoadingScreen");
         Resources resources = this.getGame().getResources();
-        resources.loadMap(prototype.map);
+        resources.loadMap(prototype.map.name);
         resources.loadTexture(Resources.WEAPON_START_BACK);
         resources.loadTexture(Resources.WEAPON_START_OVER);
         resources.loadTexture(Resources.WEAPON_MIDDLE_BACK);

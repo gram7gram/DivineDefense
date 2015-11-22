@@ -1,7 +1,7 @@
 package ua.gram.controller.security;
 
 import com.badlogic.gdx.Gdx;
-import ua.gram.model.prototype.GamePrototype;
+import ua.gram.model.prototype.ParametersPrototype;
 
 import javax.activation.CommandMap;
 import javax.activation.DataHandler;
@@ -14,7 +14,6 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.util.ByteArrayDataSource;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Properties;
 
@@ -29,9 +28,9 @@ public class BugReport {
     private final String PASS;
     private final String HOST;
     private final short PORT;
-    private GamePrototype prototype;
+    private ParametersPrototype prototype;
 
-    public BugReport(GamePrototype prototype) {
+    public BugReport(ParametersPrototype prototype) {
         this.prototype = prototype;
         TO = prototype.contact;
         FROM = prototype.client;

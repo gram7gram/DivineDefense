@@ -57,13 +57,14 @@ public final class EnemySpawner {
             try {
                 if (!enemiesToSpawn.isEmpty()) {
                     Vector2 spawnPosition = level.getMap().getSpawn().getPosition();
-                    this.spawn(enemiesToSpawn.pop(), spawnPosition);
+                    this.spawn(enemiesToSpawn.pop(), spawnPosition, false);
                 } else if (!stage_battle.hasEnemiesOnMap() || level.isCleared) {
                     level.getWave().finish();
                 }
             } catch (Exception e) {
-                Gdx.app.error("EXC", "Spawn conflict: " + e
-                        + "\r\n" + Arrays.toString(e.getStackTrace()));
+                Gdx.app.error("EXC", "Spawn conflict"
+                        + "\r\nMSG: " + e.getMessage()
+                        + "\r\nTRACE: " + Arrays.toString(e.getStackTrace()));
             }
         } else {
             count += delta;
@@ -80,8 +81,16 @@ public final class EnemySpawner {
      * @throws CloneNotSupportedException - error occcured at cloning.
      * @throws NullPointerException       - type does not belong to known Enemy ancestor.
      */
-    public void spawn(String type, Vector2 spawn) throws CloneNotSupportedException, NullPointerException {
-        Enemy enemy = this.obtain(type);
+    public void spawn(String type, Vector2 spawn, boolean rewrite) throws CloneNotSupportedException, NullPointerException {
+        Enemy enemy;
+        try {
+            enemy = this.obtain(type);
+        } catch (Exception e) {
+            Gdx.app.error("EXC", "Unable to obtain [" + type + "] from pool"
+                    + "\r\nMSG: " + e.getMessage()
+                    + "\r\nTRACE: " + Arrays.toString(e.getStackTrace()));
+            return;
+        }
         stateManager.init(enemy);
         animationProvider.init(enemy);
         enemy.setSpawner(this);
@@ -97,9 +106,13 @@ public final class EnemySpawner {
             enemy.setGroup(enemyGroup);
             enemy.setBattleStage(stage_battle);
             stage_battle.updateZIndexes(enemyGroup);
+            if (rewrite)
+                stateManager.getSpawnState().setSpawnPosition(spawn);
             stateManager.swapLevel1State(enemy, stateManager.getSpawnState());
         } catch (Exception e) {
-            Gdx.app.error("EXC", "EnemySpawner failed to spawn " + enemy);
+            Gdx.app.error("EXC", "EnemySpawner failed to spawn " + enemy
+                    + "\r\nMSG: " + e.getMessage()
+                    + "\r\nTRACE: " + Arrays.toString(e.getStackTrace()));
         }
     }
 
@@ -164,14 +177,19 @@ public final class EnemySpawner {
     public Enemy obtain(String type) throws CloneNotSupportedException {
         Enemy enemy;
         if (type.equals("EnemyWarrior")) {
+            if (poolWarrior == null) poolWarrior = new EnemyPool<EnemyWarrior>(game, type);
             enemy = ((EnemyWarrior) (poolWarrior.obtain())).clone();
         } else if (type.equals("EnemyRunner")) {
+            if (poolRunner == null) poolRunner = new EnemyPool<EnemyRunner>(game, type);
             enemy = ((EnemyRunner) (poolRunner.obtain())).clone();
         } else if (type.equals("EnemySoldier")) {
+            if (poolSoldier == null) poolSoldier = new EnemyPool<EnemySoldier>(game, type);
             enemy = ((EnemySoldier) (poolSoldier.obtain())).clone();
         } else if (type.equals("EnemySoldierArmored")) {
+            if (poolSoldierArmored == null) poolSoldierArmored = new EnemyPool<EnemySoldierArmored>(game, type);
             enemy = ((EnemySoldierArmored) (poolSoldierArmored.obtain())).clone();
         } else if (type.equals("EnemySummoner")) {
+            if (poolSummoner == null) poolSummoner = new EnemyPool<EnemySummoner>(game, type);
             enemy = ((EnemySummoner) (poolSummoner.obtain())).clone();
         } else {
             throw new NullPointerException("Couldn't add enemy: " + type);

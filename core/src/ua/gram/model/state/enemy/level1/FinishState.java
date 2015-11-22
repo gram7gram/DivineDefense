@@ -35,7 +35,7 @@ public class FinishState extends InactiveState {
 
         spawner.free(enemy);
 
-        enemy.remove();
+//        enemy.remove();
         group.clear();
         group.remove();
     }

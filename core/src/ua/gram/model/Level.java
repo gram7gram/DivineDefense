@@ -39,7 +39,7 @@ public class Level {
         }
         isCleared = false;
         currentLevel = prototype.level;
-        map = new Map(game.getResources().getMap(prototype.map));
+        map = new Map(game, prototype.map);
         Gdx.app.log("INFO", "Level " + currentLevel + " is OK");
     }
 

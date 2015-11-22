@@ -9,6 +9,6 @@ public final class LevelPrototype implements Prototype {
     public byte ranking;
     public boolean locked;
     public String preview;
-    public String map;
     public WavePrototype[] waves;
+    public MapPrototype map;
 }

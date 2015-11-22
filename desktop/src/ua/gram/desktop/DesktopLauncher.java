@@ -1,14 +1,14 @@
 package ua.gram.desktop;
 
 import com.badlogic.gdx.Files;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 import com.badlogic.gdx.utils.Json;
 import ua.gram.DDGame;
 import ua.gram.controller.security.SecurityHandler;
+import ua.gram.desktop.prototype.DesktopGamePrototype;
+import ua.gram.desktop.prototype.DesktopParametersPrototype;
 
 import java.net.NetworkInterface;
 import java.util.Enumeration;
@@ -25,32 +25,24 @@ public class DesktopLauncher {
 //        settings.maxHeight = 4096;
 //        TexturePacker.process(settings, "toPack/all", "data/skin", "style");
 
-        LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-        config.useGL30 = false;
-        config.resizable = true;
-        config.vSyncEnabled = false;
-        config.width = 900;
-        config.height = 600;
-        config.fullscreen = false;
-        config.foregroundFPS = 0;
-        config.backgroundFPS = 0;
-        config.x = 0;
-        config.y = 0;
-        config.title = "Divine Defense";
-        config.addIcon("logo_min128.png", Files.FileType.Internal);//osx
-        config.addIcon("logo_min32.png", Files.FileType.Internal);//windows, linux
-        config.addIcon("logo_min16.png", Files.FileType.Internal);//windows
-
         Json json = new Json();
         json.setIgnoreUnknownFields(true);
         DesktopGamePrototype prototype = json.fromJson(
                 DesktopGamePrototype.class,
-                new FileHandle("data/config.json"));
-        prototype.id = getMAC();
-        prototype.gameModule = "Desktop";
-        prototype.osName = System.getProperty("os.name");
-        prototype.osVersion = System.getProperty("os.version");
-        prototype.configPath = getPrefs();
+                new FileHandle("data/parameters.json"));
+
+        DesktopParametersPrototype parameters = prototype.parameters;
+
+        parameters.id = getMAC();
+        parameters.gameModule = "Desktop";
+        parameters.osName = System.getProperty("os.name");
+        parameters.osVersion = System.getProperty("os.version");
+        parameters.configPath = getPrefs();
+
+        LwjglApplicationConfiguration config = prototype.config.desktop;
+        config.addIcon(prototype.config.logo128, Files.FileType.Internal);
+        config.addIcon(prototype.config.logo32, Files.FileType.Internal);
+        config.addIcon(prototype.config.logo16, Files.FileType.Internal);
 
         new LwjglApplication(new DDGame(new SecurityHandler(prototype), prototype), config);
     }

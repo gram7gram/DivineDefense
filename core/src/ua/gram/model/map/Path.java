@@ -11,22 +11,18 @@ import java.util.*;
  */
 public class Path {
 
-    public static Vector2 NORTH;
-    public static Vector2 SOUTH;
-    public static Vector2 EAST;
-    public static Vector2 WEST;
-    public final List<Vector2> DIRECTIONS;
-    public final ArrayList<Vector2> path;
-    public final ArrayList<Vector2> directions;
-    public final Stack<Vector2> directionStack;
-    public final Stack<Vector2> pathStack;
+    public static final Vector2 NORTH = new Vector2(0, 1);
+    public static final Vector2 SOUTH = new Vector2(0, -1);
+    public static final Vector2 EAST = new Vector2(1, 0);
+    public static final Vector2 WEST = new Vector2(-1, 0);
+    public static List<Vector2> DIRECTIONS;
+    public ArrayList<Vector2> path;
+    public ArrayList<Vector2> directions;
+    public Stack<Vector2> directionStack;
+    public Stack<Vector2> pathStack;
     private boolean isReverssed = false;
 
     public Path() {
-        NORTH = new Vector2(0, 1);
-        SOUTH = new Vector2(0, -1);
-        EAST = new Vector2(1, 0);
-        WEST = new Vector2(-1, 0);
         DIRECTIONS = new LinkedList<Vector2>();
         DIRECTIONS.add(NORTH);
         DIRECTIONS.add(SOUTH);
@@ -40,13 +36,13 @@ public class Path {
 
     public static Types getType(Vector2 dir) {
         if (dir == null || dir == Vector2.Zero) return null;
-        if (dir.equals(Path.EAST)) {
+        if (dir.equals(EAST)) {
             return Types.RIGHT;
-        } else if (dir.equals(Path.WEST)) {
+        } else if (dir.equals(WEST)) {
             return Types.LEFT;
-        } else if (dir.equals(Path.NORTH)) {
+        } else if (dir.equals(NORTH)) {
             return Types.UP;
-        } else if (dir.equals(Path.SOUTH)) {
+        } else if (dir.equals(SOUTH)) {
             return Types.DOWN;
         } else {
             throw new NullPointerException("Direction is not of the known values: ["
@@ -57,13 +53,13 @@ public class Path {
     public static Vector2 getVector(Types type) {
         switch (type) {
             case UP:
-                return Path.NORTH;
+                return NORTH;
             case RIGHT:
-                return Path.EAST;
+                return EAST;
             case LEFT:
-                return Path.WEST;
+                return WEST;
             case DOWN:
-                return Path.SOUTH;
+                return SOUTH;
             default:
                 throw new NullPointerException("Type is not of the know values: " + type);
         }
@@ -107,16 +103,32 @@ public class Path {
         return path;
     }
 
+    public void setPath(ArrayList<Vector2> path) {
+        this.path = path;
+    }
+
     public ArrayList<Vector2> getDirections() {
         return directions;
+    }
+
+    public void setDirections(ArrayList<Vector2> directions) {
+        this.directions = directions;
     }
 
     public Stack<Vector2> getDirectionStack() {
         return directionStack;
     }
 
+    public void setDirectionStack(Stack<Vector2> directionStack) {
+        this.directionStack = directionStack;
+    }
+
     public Stack<Vector2> getPathStack() {
         return pathStack;
+    }
+
+    public void setPathStack(Stack<Vector2> pathStack) {
+        this.pathStack = pathStack;
     }
 
     public Vector2 nextDirection() {
@@ -156,6 +168,11 @@ public class Path {
             ++count;
         }
         throw new GdxRuntimeException("Position not found");
+    }
+
+    public List<Vector2> findFrom(Vector2 current) {
+        int index = path.indexOf(current);
+        return directionStack.subList(index, path.size() - 1);
     }
 
     public enum Types {

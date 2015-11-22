@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import ua.gram.DDGame;
 import ua.gram.controller.stage.LoadingStage;
+import ua.gram.model.prototype.GamePrototype;
 import ua.gram.view.screen.ErrorScreen;
 import ua.gram.view.screen.MainMenuScreen;
 
@@ -19,6 +20,10 @@ public abstract class AbstractLoadingScreen extends AbstractScreen {
 
     public AbstractLoadingScreen(DDGame game) {
         super(game);
+    }
+
+    public AbstractLoadingScreen(DDGame game, GamePrototype prototype) {
+        super(game, prototype);
     }
 
     @Override

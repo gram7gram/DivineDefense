@@ -3,7 +3,6 @@ package ua.gram.model.state.enemy.level2;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.utils.GdxRuntimeException;
 import ua.gram.DDGame;
 import ua.gram.controller.enemy.EnemyAnimationChanger;
 import ua.gram.controller.enemy.EnemyAnimationProvider;
@@ -49,21 +48,15 @@ public class WalkingState extends Level2State {
     public void manage(final Enemy enemy, float delta) {
         int x = Math.round(enemy.getX());
         int y = Math.round(enemy.getY());
-        Path path = enemy.getPath();
-        if (x % DDGame.TILE_HEIGHT == 0 && y % DDGame.TILE_HEIGHT == 0
-                && !path.getDirections().isEmpty()) {
+        if (x % DDGame.TILE_HEIGHT == 0 && y % DDGame.TILE_HEIGHT == 0) {
             try {
+                Path path = enemy.getPath();
                 if (Path.compare(enemy.getCurrentDirection(), basePosition)) {
                     Gdx.app.log("INFO", enemy + " position equals to Base. Removing enemy");
                     remove(enemy);
                 } else {
                     Vector2 current = enemy.getCurrentDirection();
-                    Vector2 dir = path.peekNextDirection();
-
-                    if (dir.equals(enemy.getPreviousDirection()))
-                        throw new GdxRuntimeException(enemy + " attemped to move backwards");
-
-                    dir = path.nextDirection();
+                    Vector2 dir = path.nextDirection();
 
                     animationChanger.setEnemy(enemy);
                     animationChanger.setDir(dir);
@@ -74,8 +67,11 @@ public class WalkingState extends Level2State {
                             && ((AbilityUserInterface) enemy).isAbilityPossible(1)) {
                         EnemyStateManager manager = enemy.getSpawner().getStateManager();
                         stateSwapper.update(enemy, enemy.getCurrentLevel3State(), manager.getAbilityState(), 3);
-                        enemy.addAction(Actions.run(stateSwapper));
-                        enemy.addAction(Actions.delay(((AbilityUserInterface) enemy).getAbilityDuration()));
+                        enemy.addAction(
+                                Actions.sequence(
+                                        Actions.run(stateSwapper),
+                                        Actions.delay(((AbilityUserInterface) enemy).getAbilityDuration()))
+                        );
                     }
 
                     enemy.addAction(

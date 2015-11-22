@@ -2,14 +2,12 @@ package ua.gram.controller.stage;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import ua.gram.DDGame;
-import ua.gram.controller.listener.DebugListener;
 import ua.gram.view.screen.LevelSelectScreen;
 import ua.gram.view.screen.MarketScreen;
 
@@ -17,11 +15,10 @@ import ua.gram.view.screen.MarketScreen;
  *
  * @author Gram <gram7gram@gmail.com>
  */
-public class MainMenuStage extends Stage {
+public class MainMenuStage extends AbstractStage {
 
     public MainMenuStage(final DDGame game) {
-        super(game.getViewport(), game.getBatch());
-        if (DDGame.DEBUG) this.addListener(new DebugListener(this));
+        super(game);
         this.setDebugAll(DDGame.DEBUG);
         int width = DDGame.WORLD_WIDTH;
         int height = DDGame.WORLD_HEIGHT;
@@ -44,7 +41,7 @@ public class MainMenuStage extends Stage {
         continueBut.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new LevelSelectScreen(game));
+                game.setScreen(new LevelSelectScreen(game, game.getPrototype()));
             }
         });
         Button marketBut = new TextButton("MARKET", skin, "pretty-button");

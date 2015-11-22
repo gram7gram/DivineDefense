@@ -2,6 +2,7 @@ package ua.gram.view;
 
 import com.badlogic.gdx.Screen;
 import ua.gram.DDGame;
+import ua.gram.model.prototype.GamePrototype;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -9,9 +10,16 @@ import ua.gram.DDGame;
 public abstract class AbstractScreen implements Screen {
 
     protected DDGame game;
+    protected GamePrototype prototype;
+
+    public AbstractScreen(DDGame game, GamePrototype prototype) {
+        this.game = game;
+        this.prototype = prototype;
+    }
 
     public AbstractScreen(DDGame game) {
         this.game = game;
+        this.prototype = game.getPrototype();
     }
 
     @Override

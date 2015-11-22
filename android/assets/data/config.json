@@ -4,5 +4,11 @@
   "client": "divinedefensegame@gmail.com",
   "token": "cxmmjGtdLmucADN",
   "maxLevel": 8,
-  "maxRanking": 3
+  "maxRanking": 3,
+  "map": {
+    "layer": "Terrain",
+    "walkableProperty": "walkable",
+    "spawnProperty": "spawn",
+    "baseProperty": "base"
+  }
 }

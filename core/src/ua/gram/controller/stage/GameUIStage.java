@@ -1,10 +1,8 @@
 package ua.gram.controller.stage;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import ua.gram.DDGame;
-import ua.gram.controller.listener.DebugListener;
 import ua.gram.controller.market.shop.TowerShop;
 import ua.gram.model.Level;
 import ua.gram.model.group.GameUIGroup;
@@ -19,7 +17,7 @@ import ua.gram.model.window.VictoryWindow;
  *
  * @author Gram <gram7gram@gmail.com>
  */
-public class GameUIStage extends Stage {
+public class GameUIStage extends AbstractStage {
 
     private final DDGame game;
     private final GameUIGroup gameUIGroup;
@@ -32,8 +30,7 @@ public class GameUIStage extends Stage {
     private TowerControlsGroup towerControls;
 
     public GameUIStage(DDGame game, Level level) {
-        super(game.getViewport(), game.getBatch());
-        if (DDGame.DEBUG) this.addListener(new DebugListener(this));
+        super(game);
         this.setDebugAll(DDGame.DEBUG);
         this.game = game;
         this.level = level;
@@ -81,8 +78,8 @@ public class GameUIStage extends Stage {
      */
     @Override
     public void act(float delta) {
+        super.act(delta);
         if (!DDGame.PAUSE) {
-            super.act(delta);
             if (level.isDefeated() && !victoryWindow.isVisible()) {
                 Gdx.app.log("INFO", "Player is dead");
                 DDGame.PAUSE = true;

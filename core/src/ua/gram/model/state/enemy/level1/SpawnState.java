@@ -1,6 +1,7 @@
 package ua.gram.model.state.enemy.level1;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
 import ua.gram.DDGame;
 import ua.gram.controller.enemy.EnemyAnimationProvider;
 import ua.gram.controller.enemy.EnemySpawner;
@@ -15,6 +16,7 @@ import ua.gram.model.state.enemy.EnemyStateManager;
 public class SpawnState extends InactiveState {
 
     private float spawnDurationCount;
+    private Vector2 spawnPosition;
 
     public SpawnState(DDGame game) {
         super(game);
@@ -25,7 +27,7 @@ public class SpawnState extends InactiveState {
         super.preManage(enemy);
         enemy.setCurrentLevel1StateType(Animator.Types.SPAWN);
         EnemySpawner spawner = enemy.getSpawner();
-        spawner.setActionPath(enemy, spawner.getSpawnPosition());
+        spawner.setActionPath(enemy, spawnPosition == null ? spawner.getSpawnPosition() : spawnPosition);
         EnemyAnimationProvider provider = enemy.getAnimationProvider();
         AnimationPool pool = provider.get(
                 enemy.getOriginType(),
@@ -51,5 +53,10 @@ public class SpawnState extends InactiveState {
     @Override
     public void postManage(Enemy enemy) {
         spawnDurationCount = 0;
+        spawnPosition = null;
+    }
+
+    public void setSpawnPosition(Vector2 spawnPosition) {
+        this.spawnPosition = spawnPosition;
     }
 }

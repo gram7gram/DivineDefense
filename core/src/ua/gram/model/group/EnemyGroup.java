@@ -43,7 +43,7 @@ public class EnemyGroup extends Group {
     @Override
     public void act(float delta) {
         super.act(delta);
-        if (!DDGame.PAUSE && DDGame.DEBUG) {
+        if (!DDGame.PAUSE && DDGame.DEBUG && enemy != null) {
             origin.setPosition(enemy.getOriginX() - 1, enemy.getOriginY() - 1);
             coordinates.setPosition(enemy.getX() - 1, enemy.getY() - 1);
         }
