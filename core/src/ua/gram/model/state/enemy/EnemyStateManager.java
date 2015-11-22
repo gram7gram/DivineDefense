@@ -43,15 +43,15 @@ public final class EnemyStateManager extends StateManager<Enemy> {
 
     @Override
     public void init(Enemy enemy) {
-        if (activeState == null) activeState = new ActiveState(game);
-        if (inactiveState == null) inactiveState = new InactiveState(game);
-        if (idleState == null) idleState = new IdleState(game);
-        if (walkingState == null) walkingState = new WalkingState(game);
-        if (abilityState == null) abilityState = new AbilityState(game);
         if (stunState == null) stunState = new StunState(game);
         if (deadState == null) deadState = new DeadState(game);
-        if (finishState == null) finishState = new FinishState(game);
+        if (idleState == null) idleState = new IdleState(game);
         if (spawnState == null) spawnState = new SpawnState(game);
+        if (activeState == null) activeState = new ActiveState(game);
+        if (finishState == null) finishState = new FinishState(game);
+        if (walkingState == null) walkingState = new WalkingState(game);
+        if (abilityState == null) abilityState = new AbilityState(game);
+        if (inactiveState == null) inactiveState = new InactiveState(game);
     }
 
     @Override
@@ -61,29 +61,29 @@ public final class EnemyStateManager extends StateManager<Enemy> {
             enemy.getCurrentLevel1State().manage(enemy, delta);
         } catch (Exception e) {
             Gdx.app.error("EXC", "Could not manage Level1State on " + enemy
-                    + "\r\n" + e.getMessage()
-                    + "\r\n" + Arrays.toString(e.getStackTrace()));
+                    + "\r\nMSG: " + e.getMessage()
+                    + "\r\nTRACE: " + Arrays.toString(e.getStackTrace()));
         }
         if (enemy.getCurrentLevel2State() != null) try {
             enemy.getCurrentLevel2State().manage(enemy, delta);
         } catch (Exception e) {
             Gdx.app.error("EXC", "Could not manage Level2State on " + enemy
-                    + "\r\n" + e.getMessage()
-                    + "\r\n" + Arrays.toString(e.getStackTrace()));
+                    + "\r\nMSG: " + e.getMessage()
+                    + "\r\nTRACE: " + Arrays.toString(e.getStackTrace()));
         }
         if (enemy.getCurrentLevel3State() != null) try {
             enemy.getCurrentLevel3State().manage(enemy, delta);
         } catch (Exception e) {
             Gdx.app.error("EXC", "Could not manage Level3State on " + enemy
-                    + "\r\n" + e.getMessage()
-                    + "\r\n" + Arrays.toString(e.getStackTrace()));
+                    + "\r\nMSG: " + e.getMessage()
+                    + "\r\nTRACE: " + Arrays.toString(e.getStackTrace()));
         }
         if (enemy.getCurrentLevel4State() != null) try {
             enemy.getCurrentLevel4State().manage(enemy, delta);
         } catch (Exception e) {
             Gdx.app.error("EXC", "Could not manage Level4State on " + enemy
-                    + "\r\n" + e.getMessage()
-                    + "\r\n" + Arrays.toString(e.getStackTrace()));
+                    + "\r\nMSG: " + e.getMessage()
+                    + "\r\nTRACE: " + Arrays.toString(e.getStackTrace()));
         }
     }
 

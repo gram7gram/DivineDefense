@@ -4,11 +4,13 @@ import com.badlogic.gdx.Files;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 import com.badlogic.gdx.utils.Json;
 import ua.gram.DDGame;
 import ua.gram.controller.security.SecurityHandler;
 import ua.gram.desktop.prototype.DesktopGamePrototype;
 import ua.gram.desktop.prototype.DesktopParametersPrototype;
+import ua.gram.model.prototype.TexturePackerPrototype;
 
 import java.net.NetworkInterface;
 import java.util.Enumeration;
@@ -20,11 +22,6 @@ public class DesktopLauncher {
 
     public static void main(String[] arg) {
 
-//        TexturePacker.Settings settings = new TexturePacker.Settings();
-//        settings.maxWidth = 4096;
-//        settings.maxHeight = 4096;
-//        TexturePacker.process(settings, "toPack/all", "data/skin", "style");
-
         Json json = new Json();
         json.setIgnoreUnknownFields(true);
         DesktopGamePrototype prototype = json.fromJson(
@@ -32,7 +29,6 @@ public class DesktopLauncher {
                 new FileHandle("data/parameters.json"));
 
         DesktopParametersPrototype parameters = prototype.parameters;
-
         parameters.id = getMAC();
         parameters.gameModule = "Desktop";
         parameters.osName = System.getProperty("os.name");
@@ -43,6 +39,11 @@ public class DesktopLauncher {
         config.addIcon(prototype.config.logo128, Files.FileType.Internal);
         config.addIcon(prototype.config.logo32, Files.FileType.Internal);
         config.addIcon(prototype.config.logo16, Files.FileType.Internal);
+
+        if (prototype.config.reloadTextures) {
+            TexturePackerPrototype packer = prototype.config.texturePacker;
+            TexturePacker.process(packer.config, packer.from, packer.to, packer.name);
+        }
 
         new LwjglApplication(new DDGame(new SecurityHandler(prototype), prototype), config);
     }

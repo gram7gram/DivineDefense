@@ -51,6 +51,8 @@ public class WalkingState extends Level2State {
         if (x % DDGame.TILE_HEIGHT == 0 && y % DDGame.TILE_HEIGHT == 0) {
             try {
                 Path path = enemy.getPath();
+                if (path == null) throw new NullPointerException("Missing path for " + enemy);
+
                 if (Path.compare(enemy.getCurrentDirection(), basePosition)) {
                     Gdx.app.log("INFO", enemy + " position equals to Base. Removing enemy");
                     remove(enemy);

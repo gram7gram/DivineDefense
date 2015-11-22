@@ -46,6 +46,7 @@ public class DDGame<P extends GamePrototype> extends Game {
     public static int MAP_HEIGHT;
     public static int MAX_ENTITIES;
     private final P prototype;
+    private final ParametersPrototype parameters;
     private SecurityHandler security;
     private float gameSpeed = 1;
     private Resources resources;
@@ -58,6 +59,7 @@ public class DDGame<P extends GamePrototype> extends Game {
     public DDGame(SecurityHandler security, P prototype) {
         this.security = security;
         this.prototype = prototype;
+        this.parameters = prototype.getParameters();
     }
 
     @Override
@@ -151,6 +153,10 @@ public class DDGame<P extends GamePrototype> extends Game {
         return prototype.getParameters();
     }
 
+    public ParametersPrototype getAbstractParameters() {
+        return parameters;
+    }
+
     public Resources getResources() {
         return resources;
     }
@@ -196,14 +202,14 @@ public class DDGame<P extends GamePrototype> extends Game {
     }
 
     private synchronized void sayGoodbye() {
-        for (String text : getParameters().consoleBye) {
-            Gdx.app.log("INFO", text);
+        for (String text : parameters.consoleBye) {
+            Gdx.app.log("INFO", parameters.processString(text));
         }
     }
 
     private synchronized void sayHello() {
-        for (String text : getParameters().consoleHello) {
-            Gdx.app.log("INFO", text);
+        for (String text : parameters.consoleHello) {
+            Gdx.app.log("INFO", parameters.processString(text));
         }
     }
 }

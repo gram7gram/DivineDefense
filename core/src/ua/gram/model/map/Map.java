@@ -5,6 +5,7 @@ import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import ua.gram.DDGame;
 import ua.gram.model.prototype.MapPrototype;
 
@@ -22,12 +23,14 @@ public class Map {
     private final TiledMapTileLayer layer;
     private final Path path;
     private final MapPrototype prototype;
+    private final int parseLimit;
     private Base base;
     private MapProperties properties;
 
     public Map(DDGame game, MapPrototype prototype) {
         this.prototype = prototype;
         this.tiledMap = game.getResources().getMap(prototype.name);
+        parseLimit = 3 * DDGame.MAX_ENTITIES;
         path = new Path();
         layer = (TiledMapTileLayer) tiledMap.getLayers().get(prototype.layer);
         spawn = findSpawnPoint();
@@ -52,14 +55,6 @@ public class Map {
         return spawnPoint;
     }
 
-//    public ArrayList<Vector2> getDirectionsFrom(Vector2 start) {
-//        if (path == null) path = normalizePath(spawn.getPosition());
-//        ArrayList<Vector2> route = path.getPath();
-//        int currentIndex = route.indexOf(start);
-//        List<Vector2> list = path.getDirections().subList(currentIndex + 1, route.size());
-//        return new ArrayList<Vector2>(list);
-//    }
-
     /**
      * Converts path to array of directions, which Actor should turn to.
      * Searches the map for 'walkable' property, starting from 'spawn' tile.
@@ -78,7 +73,8 @@ public class Map {
         Vector2 lastDir = new Vector2();
         Vector2 position = new Vector2((int) start.x, (int) start.y);
         boolean isFound = false;
-        while (!isFound) {
+        int count = 0;
+        while (!isFound && count < parseLimit) {
             for (Vector2 direction : Path.DIRECTIONS) {
                 if (!direction.equals(lastDir)) {
                     if ((direction.equals(Path.WEST) && position.x > 0)
@@ -99,10 +95,13 @@ public class Map {
                                 isFound = true;
                             }
                         }
+                        ++count;
                     }
                 }
             }
         }
+        if (count == parseLimit) throw new GdxRuntimeException("Path normalization error: parse limit reached");
+        if (!isFound) throw new GdxRuntimeException("Path normalization error: no Base found");
         Gdx.app.log("INFO", "Path is OK");
         return route;
     }
@@ -120,12 +119,15 @@ public class Map {
      * sure that you start scanning from 'spawn' and finish in 'base' to avoid random
      * 'walkable' tile adding to the path.
      */
-    public Stack<Vector2> normalizeDirections(Vector2 start) {
+    public Stack<Vector2> normalizeDirections(Vector2 lastDir, Vector2 start) {
         Stack<Vector2> elements = new Stack<Vector2>();
-        Vector2 lastDir = new Vector2();
         Vector2 position = new Vector2((int) start.x, (int) start.y);
         boolean isFound = false;
-        while (!isFound) {
+        int count = 0;
+
+        //TODO Work on algorithm
+
+        while (!isFound && count < parseLimit) {
             for (Vector2 direction : Path.DIRECTIONS) {
                 if (!direction.equals(lastDir)) {
                     if ((direction.equals(Path.WEST) && position.x > 0)
@@ -142,12 +144,16 @@ public class Map {
                             lastDir = new Vector2((int) -direction.x, (int) -direction.y);
                             if (properties.containsKey(prototype.baseProperty)) {
                                 isFound = true;
+                                break;
                             }
                         }
+                        ++count;
                     }
                 }
             }
         }
+        if (count == parseLimit) throw new GdxRuntimeException("Path normalization error: parse limit reached");
+        if (!isFound) throw new GdxRuntimeException("Path normalization error: no Base found");
         Gdx.app.log("INFO", "Path is OK");
         return elements;
     }

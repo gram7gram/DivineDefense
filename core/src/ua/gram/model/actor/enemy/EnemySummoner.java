@@ -14,7 +14,6 @@ public final class EnemySummoner extends AbilityUser implements Cloneable {
 
     public EnemySummoner(DDGame game, EnemyPrototype prototype) {
         super(game, prototype);
-
     }
 
     @Override
@@ -25,7 +24,7 @@ public final class EnemySummoner extends AbilityUser implements Cloneable {
             Vector2 position = new Vector2(
                     (pos.x - (pos.x % DDGame.TILE_HEIGHT)) / DDGame.TILE_HEIGHT + next.x,
                     (pos.y - (pos.y % DDGame.TILE_HEIGHT)) / DDGame.TILE_HEIGHT + next.y);
-            this.getSpawner().spawn("EnemySoldier", position, true);
+            this.getSpawner().spawnChild(this, "EnemySoldier", position);
             Gdx.app.log("INFO", this + " performs ability");
         } catch (Exception e) {
             Gdx.app.error("EXC", "Could not execute ability for " + this

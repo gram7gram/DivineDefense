@@ -11,6 +11,7 @@ import ua.gram.model.Level;
 import ua.gram.model.actor.enemy.*;
 import ua.gram.model.actor.misc.HealthBar;
 import ua.gram.model.group.EnemyGroup;
+import ua.gram.model.map.Map;
 import ua.gram.model.map.Path;
 import ua.gram.model.state.enemy.EnemyStateManager;
 
@@ -57,7 +58,7 @@ public final class EnemySpawner {
             try {
                 if (!enemiesToSpawn.isEmpty()) {
                     Vector2 spawnPosition = level.getMap().getSpawn().getPosition();
-                    this.spawn(enemiesToSpawn.pop(), spawnPosition, false);
+                    this.spawn(enemiesToSpawn.pop(), spawnPosition);
                 } else if (!stage_battle.hasEnemiesOnMap() || level.isCleared) {
                     level.getWave().finish();
                 }
@@ -81,7 +82,7 @@ public final class EnemySpawner {
      * @throws CloneNotSupportedException - error occcured at cloning.
      * @throws NullPointerException       - type does not belong to known Enemy ancestor.
      */
-    public void spawn(String type, Vector2 spawn, boolean rewrite) throws CloneNotSupportedException, NullPointerException {
+    public void spawn(String type, Vector2 spawn) throws CloneNotSupportedException, NullPointerException {
         Enemy enemy;
         try {
             enemy = this.obtain(type);
@@ -106,8 +107,51 @@ public final class EnemySpawner {
             enemy.setGroup(enemyGroup);
             enemy.setBattleStage(stage_battle);
             stage_battle.updateZIndexes(enemyGroup);
-            if (rewrite)
-                stateManager.getSpawnState().setSpawnPosition(spawn);
+            stateManager.swapLevel1State(enemy, stateManager.getSpawnState());
+        } catch (Exception e) {
+            Gdx.app.error("EXC", "EnemySpawner failed to spawn " + enemy
+                    + "\r\nMSG: " + e.getMessage()
+                    + "\r\nTRACE: " + Arrays.toString(e.getStackTrace()));
+        }
+    }
+
+    /**
+     * Spawns obtained from pool and cloned Enemy,
+     * places it at the Spawn position and gives it the path to go.
+     * Spawn takes place in Group with the coresponding HealthBar.
+     *
+     * @param type  the Enemy ancestor to spawn.
+     * @param spawn map tile position to spawn at (not in pixels)
+     * @throws CloneNotSupportedException - error occcured at cloning.
+     * @throws NullPointerException       - type does not belong to known Enemy ancestor.
+     */
+    public void spawnChild(Enemy parent, String type, Vector2 spawn) throws CloneNotSupportedException, NullPointerException {
+        Enemy enemy;
+        try {
+            enemy = this.obtain(type);
+        } catch (Exception e) {
+            Gdx.app.error("EXC", "Unable to obtain [" + type + "] from pool"
+                    + "\r\nMSG: " + e.getMessage()
+                    + "\r\nTRACE: " + Arrays.toString(e.getStackTrace()));
+            return;
+        }
+        stateManager.init(enemy);
+        animationProvider.init(enemy);
+        enemy.setSpawner(this);
+        enemy.setAnimationProvider(animationProvider);
+        stateManager.swapLevel1State(enemy, stateManager.getInactiveState());
+        stateManager.swapLevel2State(enemy, stateManager.getIdleState());
+        try {
+            Skin skin = game.getResources().getSkin();
+            enemy.setPosition(spawn.x * DDGame.TILE_HEIGHT, spawn.y * DDGame.TILE_HEIGHT);
+            HealthBar bar = new HealthBar(skin, enemy);
+            EnemyGroup enemyGroup = new EnemyGroup(game, enemy, bar);
+            enemyGroup.setVisible(true);
+            enemy.setGroup(enemyGroup);
+            enemy.setBattleStage(stage_battle);
+            stage_battle.updateZIndexes(enemyGroup);
+            stateManager.getSpawnState().setSpawnPosition(spawn);
+            stateManager.getSpawnState().setParent(parent);
             stateManager.swapLevel1State(enemy, stateManager.getSpawnState());
         } catch (Exception e) {
             Gdx.app.error("EXC", "EnemySpawner failed to spawn " + enemy
@@ -120,8 +164,23 @@ public final class EnemySpawner {
      * Sets the Actions for Enemy to do to walk the path
      * FIX Bigger speed - slower walk of Enemy
      */
+    public void setActionPathForChild(Enemy parent, Enemy child, Vector2 spawn) {
+        Map map = level.getMap();
+        Path path = map.getPath();
+        path.setDirectionStack(map.normalizeDirections(parent.getCurrentDirection(), spawn));
+        child.setPath(path);
+        child.setPreviousDirection(parent.getPreviousDirection());
+        child.setCurrentDirection(parent.getCurrentDirection());
+        child.setCurrentDirectionType(Path.getType(parent.getCurrentDirection()));
+    }
+
+    /**
+     * Sets the Actions for Enemy to do to walk the path
+     * FIX Bigger speed - slower walk of Enemy
+     */
     public void setActionPath(final Enemy enemy, Vector2 spawn) {
-        Path path = level.getMap().normalizePath(spawn);
+        Map map = level.getMap();
+        Path path = map.normalizePath(spawn);
         enemy.setPath(path);
 
         enemy.setCurrentDirection(path.peekNextDirection());

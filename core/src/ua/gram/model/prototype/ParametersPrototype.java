@@ -1,5 +1,6 @@
 package ua.gram.model.prototype;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 
 /**
@@ -20,6 +21,9 @@ public abstract class ParametersPrototype implements Prototype {
     public String token;
     public String client;
     public String author;
+    public String repository;
+    public String title;
+    public String git;
     public int maxLevels;
     public int maxRanking;
     public MapPrototype map;
@@ -36,6 +40,22 @@ public abstract class ParametersPrototype implements Prototype {
         config.put("osName", osName);
         config.put("deviceId", deviceId);
         return config;
+    }
+
+    public String processString(String text) {
+        for (Field field : this.getClass().getFields()) {
+            Class type = field.getType();
+            if (type.equals(String.class)
+                    || type.equals(Integer.class)
+                    || type.equals(Boolean.class)) {
+                try {
+                    String value = field.get(this) == null ? "x" : field.get(this).toString();
+                    text = text.replace("{{ " + field.getName() + " }}", value);
+                } catch (IllegalAccessException e) {
+                }
+            }
+        }
+        return text;
     }
 
     protected HashMap<String, Object> getConfig() {

@@ -17,6 +17,7 @@ public class SpawnState extends InactiveState {
 
     private float spawnDurationCount;
     private Vector2 spawnPosition;
+    private Enemy parent;
 
     public SpawnState(DDGame game) {
         super(game);
@@ -27,7 +28,11 @@ public class SpawnState extends InactiveState {
         super.preManage(enemy);
         enemy.setCurrentLevel1StateType(Animator.Types.SPAWN);
         EnemySpawner spawner = enemy.getSpawner();
-        spawner.setActionPath(enemy, spawnPosition == null ? spawner.getSpawnPosition() : spawnPosition);
+        if (spawnPosition == null && parent == null) {
+            spawner.setActionPath(enemy, spawner.getSpawnPosition());
+        } else {
+            spawner.setActionPathForChild(parent, enemy, spawner.getSpawnPosition());
+        }
         EnemyAnimationProvider provider = enemy.getAnimationProvider();
         AnimationPool pool = provider.get(
                 enemy.getOriginType(),
@@ -54,9 +59,14 @@ public class SpawnState extends InactiveState {
     public void postManage(Enemy enemy) {
         spawnDurationCount = 0;
         spawnPosition = null;
+        parent = null;
     }
 
     public void setSpawnPosition(Vector2 spawnPosition) {
         this.spawnPosition = spawnPosition;
+    }
+
+    public void setParent(Enemy parent) {
+        this.parent = parent;
     }
 }
