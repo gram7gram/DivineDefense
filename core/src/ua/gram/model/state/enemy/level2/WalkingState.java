@@ -58,8 +58,8 @@ public class WalkingState extends Level2State {
         int x = Math.round(enemy.getX());
         int y = Math.round(enemy.getY());
 
-        if (x % DDGame.TILE_HEIGHT == 0 && y % DDGame.TILE_HEIGHT == 0) {
-            if ((prevX != x || prevY != y) && iteration > Gdx.graphics.getFramesPerSecond() / 3) {
+        if (x % DDGame.TILE_HEIGHT == 0 && y % DDGame.TILE_HEIGHT == 0 && iteration > 3) {
+            if ((prevX != x || prevY != y)) {
                 iteration = 0;
                 try {
                     EnemyPath path = enemy.getPath();
@@ -107,9 +107,9 @@ public class WalkingState extends Level2State {
                     Gdx.app.log("WARN", "Direction stack is empty. Removing " + enemy);
                     remove(enemy);
                 }
-            } else {
-                ++iteration;
             }
+        } else {
+            ++iteration;
         }
     }
 

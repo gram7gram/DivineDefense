@@ -32,6 +32,7 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
     public final float defaultSpeed;
     public final float defaultArmor;
     public final int reward;
+    private final Vector2 originPosition;
     public float health;
     public float speed;
     public float armor;
@@ -78,6 +79,7 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
         isAttacked = false;
         currentDirection = Vector2.Zero;
         previousDirection = Vector2.Zero;
+        originPosition = Vector2.Zero;
         animator = new Animator();
     }
 
@@ -124,6 +126,7 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
         this.speed = defaultSpeed;
         this.armor = defaultArmor;
         stateTime = 0;
+        currentFrame = null;
         EnemyStateManager stateManager = spawner.getStateManager();
         stateManager.reset(this);
 //        stateManager.swapLevel1State(this, stateManager.getInactiveState());
@@ -143,16 +146,16 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
         return animator.getAnimation();
     }
 
-    public void setAnimation(Animation animation) {
-        this.animator.setAnimation(animation);
-    }
-
     public void setAnimation(Animator.Types type) {
-        AnimationPool pool = this.getAnimationProvider().get(
+        AnimationPool pool = animationProvider.get(
                 this.getOriginType(),
                 type,
                 this.getCurrentDirectionType());
         this.setAnimation(pool.obtain());
+    }
+
+    public void setAnimation(Animation animation) {
+        this.animator.setAnimation(animation);
     }
 
     public void damage(float damage) {
@@ -170,11 +173,9 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
     }
 
     public Vector2 getOrigin() {
-        return new Vector2(this.getX() + this.getOriginX(), this.getY() + this.getOriginY());
-//        return new Vector2(
-//                this.getX() + (this.getWidth() / 2f),
-//                this.getY() + (this.getHeight() / 2f)
-//        );
+        originPosition.set(this.getX() + this.getOriginX(), this.getY() + this.getOriginY());
+        return originPosition;
+//        return new Vector2(this.getX() + this.getOriginX(), this.getY() + this.getOriginY());
     }
 
     public float getSpawnDuration() {

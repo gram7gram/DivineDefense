@@ -117,7 +117,8 @@ public class Map {
         }
         if (!isFound && count == parseLimit)
             throw new GdxRuntimeException("Path normalization error: parse limit reached");
-        if (!isFound) throw new GdxRuntimeException("Path normalization error: no Base found");
+        if (!isFound)
+            throw new GdxRuntimeException("Path normalization error: no Base found");
         Gdx.app.log("INFO", "Path is OK");
         properties = null;
         return path;

@@ -14,6 +14,7 @@ public class AnimationPool extends Pool<Animation> {
 
     public AnimationPool(TextureRegion[] tiles) {
         super(4);
+        if (tiles == null || tiles[0] == null) throw new NullPointerException("Passed empty tiles to constructor");
         this.tiles = tiles;
     }
 

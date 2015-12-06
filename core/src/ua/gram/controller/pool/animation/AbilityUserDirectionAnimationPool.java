@@ -15,18 +15,14 @@ public class AbilityUserDirectionAnimationPool implements DirectionPoolInterface
     private final AnimationPool upPool;
 
     public AbilityUserDirectionAnimationPool(Animator.Types type, EnemyAnimation provider) {
-        leftPool = new AnimationPool(provider.setAnimationRegion(
-                Animator.Types.WALKING, Path.Types.LEFT, type));
-        rightPool = new AnimationPool(provider.setAnimationRegion(
-                Animator.Types.WALKING, Path.Types.RIGHT, type));
-        downPool = new AnimationPool(provider.setAnimationRegion(
-                Animator.Types.WALKING, Path.Types.DOWN, type));
-        upPool = new AnimationPool(provider.setAnimationRegion(
-                Animator.Types.WALKING, Path.Types.UP, type));
+        leftPool = new AnimationPool(provider.setAnimationRegion(Animator.Types.WALKING, Path.Types.LEFT, type));
+        rightPool = new AnimationPool(provider.setAnimationRegion(Animator.Types.WALKING, Path.Types.RIGHT, type));
+        downPool = new AnimationPool(provider.setAnimationRegion(Animator.Types.WALKING, Path.Types.DOWN, type));
+        upPool = new AnimationPool(provider.setAnimationRegion(Animator.Types.WALKING, Path.Types.UP, type));
         Gdx.app.log("INFO", "DirectionPool for " + type + " is OK");
     }
 
-    public AnimationPool get(Path.Types direction) throws IllegalArgumentException{
+    public AnimationPool get(Path.Types direction) throws IllegalArgumentException {
         if (direction == null) {
             Gdx.app.log("WARN", "Direction type is NULL. Using default");
             return downPool;

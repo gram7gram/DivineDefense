@@ -69,7 +69,7 @@ public class EnemyAnimation implements AnimationControllerInterface<Enemy> {
                 Gdx.app.error("EXC", "Error at loading ABILITY animation type for " + origin);
             }
         }
-        Gdx.app.log("INFO", "Animation for " + origin + " is OK");
+        Gdx.app.log("INFO", "Animation for " + enemy + " is OK");
     }
 
     @Override
@@ -87,6 +87,9 @@ public class EnemyAnimation implements AnimationControllerInterface<Enemy> {
         TextureRegion[][] regions = texture.split(
                 (int) enemy.getAnimationWidth(),
                 (int) enemy.getAnimationHeight());
+
+        if (regions == null || regions[0] == null) throw new NullPointerException("Texture not loaded: " + region);
+
         return regions[0];
     }
 

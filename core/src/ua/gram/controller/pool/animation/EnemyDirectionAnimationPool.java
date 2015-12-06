@@ -15,14 +15,10 @@ public class EnemyDirectionAnimationPool implements DirectionPoolInterface {
     protected final AnimationPool upPool;
 
     public EnemyDirectionAnimationPool(Animator.Types type, EnemyAnimation provider) {
-        leftPool = new AnimationPool(provider.setAnimationRegion(
-                type, Path.Types.LEFT, null));
-        rightPool = new AnimationPool(provider.setAnimationRegion(
-                type, Path.Types.RIGHT, null));
-        downPool = new AnimationPool(provider.setAnimationRegion(
-                type, Path.Types.DOWN, null));
-        upPool = new AnimationPool(provider.setAnimationRegion(
-                type, Path.Types.UP, null));
+        leftPool = new AnimationPool(provider.setAnimationRegion(type, Path.Types.LEFT, null));
+        rightPool = new AnimationPool(provider.setAnimationRegion(type, Path.Types.RIGHT, null));
+        downPool = new AnimationPool(provider.setAnimationRegion(type, Path.Types.DOWN, null));
+        upPool = new AnimationPool(provider.setAnimationRegion(type, Path.Types.UP, null));
         Gdx.app.log("INFO", "DirectionPool for " + type + " is OK");
     }
 
