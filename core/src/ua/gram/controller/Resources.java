@@ -22,7 +22,6 @@ import ua.gram.view.screen.ErrorScreen;
 public class Resources implements Disposable {
 
     public static final String SKIN_FILE = "data/skin/style.json";
-    public static final String MARKET = "data/market/market.json";
     public static final String BACKGROUND_TEXTURE = "data/images/misc/background.jpg";
     public static final String WEAPON_START_BACK = "data/images/misc/start_back.png";
     public static final String WEAPON_START_OVER = "data/images/misc/start_over.png";
@@ -32,19 +31,17 @@ public class Resources implements Disposable {
     public static final String WEAPON_END_OVER = "data/images/misc/end_over.png";
     public static final String RANGE_TEXTURE = "data/images/misc/enemy_range.png";
     public static final String AIM_TEXTURE = "data/images/misc/enemy_aim.png";
-    public static final String LEVELS = "data/levels/levels.json";
-    public static DDGame game;
-    public static String TOWERS = "data/world/towers.json";
-    public static String ENEMIES = "data/world/enemies.json";
+    private final DDGame game;
     private final AssetManager manager;
     private Skin skin;
 
-    public Resources() {
+    public Resources(DDGame game) {
+        this.game = game;
         manager = new AssetManager();
         skin = loadSkin(SKIN_FILE);
     }
 
-    public static FileHandle loadFile(String path) {
+    public FileHandle loadFile(String path) {
         FileHandle handle = null;
         try {
             handle = new FileHandle(path);

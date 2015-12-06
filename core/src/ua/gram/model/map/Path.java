@@ -1,10 +1,9 @@
 package ua.gram.model.map;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.GdxRuntimeException;
-import ua.gram.DDGame;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -16,22 +15,13 @@ public class Path {
     public static final Vector2 EAST = new Vector2(1, 0);
     public static final Vector2 WEST = new Vector2(-1, 0);
     public static List<Vector2> DIRECTIONS;
-    public ArrayList<Vector2> path;
-    public ArrayList<Vector2> directions;
-    public Stack<Vector2> directionStack;
-    public Stack<Vector2> pathStack;
-    private boolean isReverssed = false;
 
     public Path() {
-        DIRECTIONS = new LinkedList<Vector2>();
+        DIRECTIONS = new ArrayList<Vector2>();
         DIRECTIONS.add(NORTH);
         DIRECTIONS.add(SOUTH);
         DIRECTIONS.add(EAST);
         DIRECTIONS.add(WEST);
-        path = new ArrayList<Vector2>();
-        directions = new ArrayList<Vector2>();
-        directionStack = new Stack<Vector2>();
-        pathStack = new Stack<Vector2>();
     }
 
     public static Types getType(Vector2 dir) {
@@ -44,10 +34,8 @@ public class Path {
             return Types.UP;
         } else if (dir.equals(SOUTH)) {
             return Types.DOWN;
-        } else {
-            throw new NullPointerException("Direction is not of the known values: ["
-                    + dir.x + ":" + dir.y + "]");
         }
+        return null;
     }
 
     public static Vector2 getVector(Types type) {
@@ -61,7 +49,7 @@ public class Path {
             case DOWN:
                 return SOUTH;
             default:
-                throw new NullPointerException("Type is not of the know values: " + type);
+                return null;
         }
     }
 
@@ -75,10 +63,8 @@ public class Path {
             return SOUTH;
         } else if (dir.equals(SOUTH)) {
             return NORTH;
-        } else {
-            throw new NullPointerException("Direction is not of the known values: ["
-                    + dir.x + ":" + dir.y + "]");
         }
+        return null;
     }
 
     public static boolean compare(Vector2 vec1, Vector2 vec2) {
@@ -89,90 +75,43 @@ public class Path {
         return vecX1 == vecX2 && vecY1 == vecY2;
     }
 
-    public void addDirection(Vector2 dir) {
-        directions.add(dir);
-        directionStack.push(dir);
+    public static boolean equal(Vector2 vec1, Vector2 vec2) {
+        return Float.compare(vec1.x, vec2.x) == 0
+                && Float.compare(vec1.y, vec2.y) == 0;
     }
 
-    public void addPath(Vector2 position) {
-        path.add(position);
-        pathStack.push(position);
+    public static Vector2 direction(Vector2 vec1, Vector2 vec2) {
+        int vecX1 = (int) vec1.x;
+        int vecY1 = (int) vec1.y;
+        int vecX2 = (int) vec2.x;
+        int vecY2 = (int) vec2.y;
+        if (vecX1 == vecX2 && vecY1 == vecY2) {
+            return Vector2.Zero;
+        } else if (vecX1 == vecX2 && vecY1 > vecY2) {
+            return Path.NORTH;
+        } else if (vecX1 == vecX2 && vecY1 < vecY2) {
+            return Path.SOUTH;
+        } else if (vecX1 > vecX2 && vecY1 == vecY2) {
+            return Path.EAST;
+        } else if (vecX1 < vecX2 && vecY1 == vecY2) {
+            return Path.WEST;
+        } else return null;
     }
 
-    public ArrayList<Vector2> getPath() {
-        return path;
+    public static String toString(Vector2 pos) {
+        return Path.toString(pos.x, pos.y);
     }
 
-    public void setPath(ArrayList<Vector2> path) {
-        this.path = path;
+    public static String toStringRound(Vector2 pos) {
+        return Path.toString(Math.round(pos.x), Math.round(pos.y));
     }
 
-    public ArrayList<Vector2> getDirections() {
-        return directions;
+    public static String toString(float x, float y) {
+        return "[" + x + ":" + y + "]";
     }
 
-    public void setDirections(ArrayList<Vector2> directions) {
-        this.directions = directions;
-    }
-
-    public Stack<Vector2> getDirectionStack() {
-        return directionStack;
-    }
-
-    public void setDirectionStack(Stack<Vector2> directionStack) {
-        this.directionStack = directionStack;
-    }
-
-    public Stack<Vector2> getPathStack() {
-        return pathStack;
-    }
-
-    public void setPathStack(Stack<Vector2> pathStack) {
-        this.pathStack = pathStack;
-    }
-
-    public Vector2 nextDirection() {
-        if (!isReverssed) {
-            Collections.reverse(directionStack);
-            isReverssed = true;
-        }
-        return directionStack.pop();
-    }
-
-    public Vector2 nextPath() {
-        return pathStack.pop();
-    }
-
-    public Vector2 peekNextDirection() {
-        return directionStack.peek();
-    }
-
-    public Vector2 peekNextPath() {
-        return pathStack.peek();
-    }
-
-    /**
-     *
-     * @param posToSpawn actual position of an Actor in pixels
-     * @return next position in the path
-     */
-    public Vector2 getNextPosition(Vector2 posToSpawn) {
-        int count = 0;
-        posToSpawn.x = (int) (posToSpawn.x / DDGame.TILE_HEIGHT);
-        posToSpawn.y = (int) (posToSpawn.y / DDGame.TILE_HEIGHT);
-        for (Vector2 pos : path) {
-            if (Float.compare(pos.x, posToSpawn.x) == 0
-                    && Float.compare(pos.y, posToSpawn.y) == 0) {
-                return path.get(count);
-            }
-            ++count;
-        }
-        throw new GdxRuntimeException("Position not found");
-    }
-
-    public List<Vector2> findFrom(Vector2 current) {
-        int index = path.indexOf(current);
-        return directionStack.subList(index, path.size() - 1);
+    public static Vector2 clone(Vector2 vector) {
+        return new Vector2((int) vector.x, (int) vector.y);
     }
 
     public enum Types {

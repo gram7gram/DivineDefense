@@ -24,6 +24,7 @@ public abstract class ParametersPrototype implements Prototype {
     public String repository;
     public String title;
     public String git;
+    public boolean debugging;
     public int maxLevels;
     public int maxRanking;
     public MapPrototype map;

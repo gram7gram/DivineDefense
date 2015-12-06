@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import ua.gram.DDGame;
 import ua.gram.controller.stage.MarketStage;
+import ua.gram.model.prototype.MarketPrototype;
 import ua.gram.view.AbstractScreen;
 
 /**
@@ -13,9 +14,9 @@ public class MarketScreen extends AbstractScreen {
 
     private final MarketStage stage;
 
-    public MarketScreen(DDGame game) {
+    public MarketScreen(DDGame game, MarketPrototype prototype) {
         super(game);
-        stage = new MarketStage(game);
+        stage = new MarketStage(game, prototype);
         Gdx.app.log("INFO", "MarketSreen is OK");
     }
 

@@ -38,7 +38,7 @@ public class DDGame<P extends GamePrototype> extends Game {
     public static final String DEMON = "Demon";
     public static final byte TILE_HEIGHT = 60;
     public static final byte DEFAULT_BUTTON_HEIGHT = 80;
-    public static boolean DEBUG = true;
+    public static boolean DEBUG;
     public static boolean PAUSE = false;
     public static int WORLD_WIDTH;
     public static int WORLD_HEIGHT;
@@ -48,33 +48,33 @@ public class DDGame<P extends GamePrototype> extends Game {
     private final P prototype;
     private final ParametersPrototype parameters;
     private SecurityHandler security;
-    private float gameSpeed = 1;
     private Resources resources;
     private SpriteBatch batch;
     private OrthographicCamera camera;
     private Viewport view;
     private Player player;
     private BitmapFont info;
+    private float gameSpeed = 1;
 
     public DDGame(SecurityHandler security, P prototype) {
         this.security = security;
         this.prototype = prototype;
         this.parameters = prototype.getParameters();
+        DEBUG = parameters.debugging;
     }
 
     @Override
     public void create() {
+//        Gdx.app.setLogLevel(com.badlogic.gdx.Application.LOG_NONE);
         sayHello();
 //        Gdx.input.setCatchMenuKey(true);
 //        Gdx.input.setCatchBackKey(true);
-//        Gdx.app.setLogLevel(Application.LOG_NONE);
         WORLD_WIDTH = Gdx.graphics.getWidth();
         WORLD_HEIGHT = Gdx.graphics.getHeight();
         MAP_WIDTH = WORLD_WIDTH / TILE_HEIGHT;
         MAP_HEIGHT = WORLD_HEIGHT / TILE_HEIGHT;
         MAX_ENTITIES = MAP_WIDTH * MAP_HEIGHT;//Maximum entities on the map
-        resources = new Resources();
-        Resources.game = this;
+        resources = new Resources(this);
         info = new BitmapFont();
         info.setColor(1, 1, 1, 1);
         this.setScreen(new LaunchLoadingScreen(this, prototype));
@@ -140,7 +140,7 @@ public class DDGame<P extends GamePrototype> extends Game {
         } catch (Exception e) {
             if (throwExc)
                 this.setScreen(
-                        new ErrorScreen(this, "Could not load factory: " + file, e));
+                        new ErrorScreen(this, "Could not load: " + file, e));
         }
         return null;
     }
@@ -211,5 +211,9 @@ public class DDGame<P extends GamePrototype> extends Game {
         for (String text : parameters.consoleHello) {
             Gdx.app.log("INFO", parameters.processString(text));
         }
+    }
+
+    public void resetGameSpeed() {
+        this.gameSpeed = 1;
     }
 }

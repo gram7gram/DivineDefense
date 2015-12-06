@@ -5,13 +5,14 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Pool;
 import ua.gram.DDGame;
+import ua.gram.controller.Log;
 import ua.gram.controller.pool.EnemyPool;
 import ua.gram.controller.stage.GameBattleStage;
+import ua.gram.model.EnemyPath;
 import ua.gram.model.Level;
 import ua.gram.model.actor.enemy.*;
 import ua.gram.model.actor.misc.HealthBar;
 import ua.gram.model.group.EnemyGroup;
-import ua.gram.model.map.Map;
 import ua.gram.model.map.Path;
 import ua.gram.model.state.enemy.EnemyStateManager;
 
@@ -154,9 +155,7 @@ public final class EnemySpawner {
             stateManager.getSpawnState().setParent(parent);
             stateManager.swapLevel1State(enemy, stateManager.getSpawnState());
         } catch (Exception e) {
-            Gdx.app.error("EXC", "EnemySpawner failed to spawn " + enemy
-                    + "\r\nMSG: " + e.getMessage()
-                    + "\r\nTRACE: " + Arrays.toString(e.getStackTrace()));
+            Log.exc("EnemySpawner failed to spawn " + enemy, e);
         }
     }
 
@@ -164,25 +163,10 @@ public final class EnemySpawner {
      * Sets the Actions for Enemy to do to walk the path
      * FIX Bigger speed - slower walk of Enemy
      */
-    public void setActionPathForChild(Enemy parent, Enemy child, Vector2 spawn) {
-        Map map = level.getMap();
-        Path path = map.getPath();
-        path.setDirectionStack(map.normalizeDirections(parent.getCurrentDirection(), spawn));
-        child.setPath(path);
-        child.setPreviousDirection(parent.getPreviousDirection());
-        child.setCurrentDirection(parent.getCurrentDirection());
-        child.setCurrentDirectionType(Path.getType(parent.getCurrentDirection()));
-    }
-
-    /**
-     * Sets the Actions for Enemy to do to walk the path
-     * FIX Bigger speed - slower walk of Enemy
-     */
-    public void setActionPath(final Enemy enemy, Vector2 spawn) {
-        Map map = level.getMap();
-        Path path = map.normalizePath(spawn);
+    public void setActionPath(final Enemy enemy, Vector2 spawn, Vector2 previous) {
+        EnemyPath path = level.getMap().normalizePath(previous, spawn);
         enemy.setPath(path);
-
+        enemy.setPreviousDirection(previous);
         enemy.setCurrentDirection(path.peekNextDirection());
         enemy.setCurrentDirectionType(Path.getType(enemy.getCurrentDirection()));
     }

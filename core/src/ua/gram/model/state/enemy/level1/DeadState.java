@@ -1,6 +1,7 @@
 package ua.gram.model.state.enemy.level1;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import ua.gram.DDGame;
 import ua.gram.model.actor.enemy.Enemy;
 
@@ -16,7 +17,7 @@ public class DeadState extends InactiveState {
     }
 
     @Override
-    public void preManage(Enemy enemy) {
+    public void preManage(Enemy enemy) throws GdxRuntimeException {
         super.preManage(enemy);
         Gdx.app.log("INFO", enemy + " is dead");
     }

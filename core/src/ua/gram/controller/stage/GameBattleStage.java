@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import ua.gram.DDGame;
+import ua.gram.controller.Log;
 import ua.gram.controller.listener.ToggleTowerControlsListener;
 import ua.gram.model.Level;
 import ua.gram.model.actor.enemy.Enemy;
@@ -73,16 +74,27 @@ public class GameBattleStage extends AbstractStage {
         for (Actor actor : newGroup.getChildren()) {
             if (actor instanceof Enemy || actor instanceof Tower) {
                 int index = DDGame.MAP_HEIGHT - Math.abs((int) (actor.getY() / DDGame.TILE_HEIGHT) - 1);
-                indexes.get(index).addActor(newGroup);
-                Gdx.app.log("INFO", actor.getClass().getSimpleName() + " added to " + index + " index");
-                break;
+                Group group = indexes.get(index);
+                if (group != null) {
+                    group.addActor(newGroup);
+                    Gdx.app.log("INFO", actor.getClass().getSimpleName() + " added to " + index + " index");
+                    break;
+                } else {
+                    Log.warn(this.getClass().getSimpleName() + " failed to get Group at " + index + " index");
+                }
             }
         }
+
+        int count = countLayers();
+        Gdx.app.log("INFO", "Stage now has " + count + (count > 1 ? " layers" : " layer"));
+    }
+
+    public int countLayers() {
         int count = 0;
         for (Group group : indexes) {
             if (group.hasChildren()) ++count;
         }
-        Gdx.app.log("INFO", "Stage now has " + count + (count > 1 ? " layers" : " layer"));
+        return count;
     }
 
     /**
@@ -91,7 +103,6 @@ public class GameBattleStage extends AbstractStage {
      *
      * @return true - at least one Enemy
      */
-
     public boolean hasEnemiesOnMap() {
         for (Group group : indexes) {
             for (Actor actor : group.getChildren()) {

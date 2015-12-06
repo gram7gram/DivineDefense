@@ -48,7 +48,7 @@ public class MainMenuStage extends AbstractStage {
         marketBut.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new MarketScreen(game));
+                game.setScreen(new MarketScreen(game, game.getPrototype().market));
             }
         });
         Button aboutBut = new TextButton("ABOUT", skin, "pretty-button");

@@ -1,7 +1,9 @@
 package ua.gram.model.state.enemy;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import ua.gram.DDGame;
+import ua.gram.controller.Log;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.state.StateInterface;
 import ua.gram.model.state.StateManager;
@@ -13,8 +15,6 @@ import ua.gram.model.state.enemy.level3.AbilityState;
 import ua.gram.model.state.enemy.level3.Level3State;
 import ua.gram.model.state.enemy.level4.Level4State;
 import ua.gram.model.state.enemy.level4.StunState;
-
-import java.util.Arrays;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -60,36 +60,28 @@ public final class EnemyStateManager extends StateManager<Enemy> {
         if (enemy.getCurrentLevel1State() != null) try {
             enemy.getCurrentLevel1State().manage(enemy, delta);
         } catch (Exception e) {
-            Gdx.app.error("EXC", "Could not manage Level1State on " + enemy
-                    + "\r\nMSG: " + e.getMessage()
-                    + "\r\nTRACE: " + Arrays.toString(e.getStackTrace()));
+            Log.exc("Could not manage Level1State on " + enemy, e);
         }
         if (enemy.getCurrentLevel2State() != null) try {
             enemy.getCurrentLevel2State().manage(enemy, delta);
         } catch (Exception e) {
-            Gdx.app.error("EXC", "Could not manage Level2State on " + enemy
-                    + "\r\nMSG: " + e.getMessage()
-                    + "\r\nTRACE: " + Arrays.toString(e.getStackTrace()));
+            Log.exc("Could not manage Level2State on " + enemy, e);
         }
         if (enemy.getCurrentLevel3State() != null) try {
             enemy.getCurrentLevel3State().manage(enemy, delta);
         } catch (Exception e) {
-            Gdx.app.error("EXC", "Could not manage Level3State on " + enemy
-                    + "\r\nMSG: " + e.getMessage()
-                    + "\r\nTRACE: " + Arrays.toString(e.getStackTrace()));
+            Log.exc("Could not manage Level3State on " + enemy, e);
         }
         if (enemy.getCurrentLevel4State() != null) try {
             enemy.getCurrentLevel4State().manage(enemy, delta);
         } catch (Exception e) {
-            Gdx.app.error("EXC", "Could not manage Level4State on " + enemy
-                    + "\r\nMSG: " + e.getMessage()
-                    + "\r\nTRACE: " + Arrays.toString(e.getStackTrace()));
+            Log.exc("Could not manage Level4State on " + enemy, e);
         }
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public void swap(Enemy enemy, StateInterface current, StateInterface newState, int level) {
+    public synchronized void swap(Enemy enemy, StateInterface current, StateInterface newState, int level) {
         if (enemy == null) return;
 
         if (current == null && newState == null)
@@ -98,11 +90,11 @@ public final class EnemyStateManager extends StateManager<Enemy> {
         if (current != null) {
             try {
                 current.postManage(enemy);
+//            } catch (GdxRuntimeException e) {
+//                game.setScreen(new ErrorScreen(game, e.getMessage(), e));
             } catch (Exception e) {
-                Gdx.app.error("EXC", "Could not execute postManage() on "
-                        + enemy + "'s state " + current
-                        + "\r\n" + e.getMessage()
-                        + "\r\n" + Arrays.toString(e.getStackTrace()));
+                Log.exc("Could not execute postManage() on "
+                        + enemy + "'s state " + current, e);
             }
         }
 
@@ -113,21 +105,21 @@ public final class EnemyStateManager extends StateManager<Enemy> {
 
         try {
             this.persist(enemy, newState, level);
+//        } catch (GdxRuntimeException e) {
+//            game.setScreen(new ErrorScreen(game, e.getMessage(), e));
         } catch (Exception e) {
-            Gdx.app.error("EXC", "Could not execute persist() on "
-                    + enemy + "'s state " + newState
-                    + "\r\n" + e.getMessage()
-                    + "\r\n" + Arrays.toString(e.getStackTrace()));
+            Log.exc("Could not execute persist() on "
+                    + enemy + "'s state " + current, e);
         }
 
         if (newState != null) {
             try {
                 newState.preManage(enemy);
+//            } catch (GdxRuntimeException e) {
+//                game.setScreen(new ErrorScreen(game, e.getMessage(), e));
             } catch (Exception e) {
-                Gdx.app.error("EXC", "Could not execute preManage() on "
-                        + enemy + "'s state " + newState
-                        + "\r\n" + e.getMessage()
-                        + "\r\n" + Arrays.toString(e.getStackTrace()));
+                Log.exc("Could not execute preManage() on "
+                        + enemy + "'s state " + current, e);
             }
         }
     }
@@ -149,7 +141,7 @@ public final class EnemyStateManager extends StateManager<Enemy> {
     }
 
     @Override
-    public void persist(Enemy enemy, StateInterface newState, int level) throws NullPointerException {
+    public void persist(Enemy enemy, StateInterface newState, int level) throws NullPointerException, GdxRuntimeException {
         if (newState instanceof Level1State) {
             enemy.setCurrentLevel1State((Level1State) newState);
         } else if (newState instanceof Level2State) {

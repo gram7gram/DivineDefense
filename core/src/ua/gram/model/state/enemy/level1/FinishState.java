@@ -1,6 +1,7 @@
 package ua.gram.model.state.enemy.level1;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import ua.gram.DDGame;
 import ua.gram.controller.enemy.EnemySpawner;
 import ua.gram.model.Player;
@@ -18,7 +19,7 @@ public class FinishState extends InactiveState {
     }
 
     @Override
-    public void preManage(Enemy enemy) {
+    public void preManage(Enemy enemy) throws GdxRuntimeException {
         super.preManage(enemy);
         Gdx.app.log("INFO", enemy + " reaches the Base");
     }

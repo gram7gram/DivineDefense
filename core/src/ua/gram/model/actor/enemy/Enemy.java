@@ -12,6 +12,7 @@ import ua.gram.controller.enemy.EnemySpawner;
 import ua.gram.controller.pool.animation.AnimationPool;
 import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.model.Animator;
+import ua.gram.model.EnemyPath;
 import ua.gram.model.actor.GameActor;
 import ua.gram.model.group.EnemyGroup;
 import ua.gram.model.map.Path;
@@ -40,7 +41,7 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
     public boolean isAffected;
     public boolean isDead;
     protected DDGame game;
-    protected Path path;
+    protected EnemyPath path;
     private float stateTime = 0;
     private GameBattleStage stage_battle;
     private EnemyAnimationProvider animationProvider;
@@ -122,6 +123,7 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
         this.health = defaultHealth;
         this.speed = defaultSpeed;
         this.armor = defaultArmor;
+        stateTime = 0;
         EnemyStateManager stateManager = spawner.getStateManager();
         stateManager.reset(this);
 //        stateManager.swapLevel1State(this, stateManager.getInactiveState());
@@ -141,16 +143,16 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
         return animator.getAnimation();
     }
 
+    public void setAnimation(Animation animation) {
+        this.animator.setAnimation(animation);
+    }
+
     public void setAnimation(Animator.Types type) {
         AnimationPool pool = this.getAnimationProvider().get(
                 this.getOriginType(),
                 type,
                 this.getCurrentDirectionType());
         this.setAnimation(pool.obtain());
-    }
-
-    public void setAnimation(Animation animation) {
-        this.animator.setAnimation(animation);
     }
 
     public void damage(float damage) {
@@ -187,11 +189,11 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
         return group;
     }
 
-    public Path getPath() {
+    public EnemyPath getPath() {
         return path;
     }
 
-    public void setPath(Path path) {
+    public void setPath(EnemyPath path) {
         this.path = path;
     }
 
@@ -294,5 +296,13 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
 
     public void setCurrentLevel4StateType(Animator.Types currentLevel4StateType) {
         this.currentLevel4StateType = currentLevel4StateType;
+    }
+
+    public Vector2 getCurrentPositionIndex() {
+        return new Vector2(Math.round(this.getX()) / DDGame.TILE_HEIGHT, Math.round(this.getY()) / DDGame.TILE_HEIGHT);
+    }
+
+    public Animator getAnimator() {
+        return animator;
     }
 }

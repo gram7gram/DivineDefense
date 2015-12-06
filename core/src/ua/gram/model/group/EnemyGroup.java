@@ -30,9 +30,11 @@ public class EnemyGroup extends Group {
             origin = new Actor();
             origin.setSize(3, 3);
             origin.setVisible(true);
+
             coordinates = new Actor();
             coordinates.setSize(3, 3);
             coordinates.setVisible(true);
+
             this.addActor(origin);
             this.addActor(coordinates);
         }
@@ -43,9 +45,18 @@ public class EnemyGroup extends Group {
     @Override
     public void act(float delta) {
         super.act(delta);
-        if (!DDGame.PAUSE && DDGame.DEBUG && enemy != null) {
-            origin.setPosition(enemy.getOriginX() - 1, enemy.getOriginY() - 1);
-            coordinates.setPosition(enemy.getX() - 1, enemy.getY() - 1);
+        if (!DDGame.PAUSE) {
+            if (enemy != null && origin != null && coordinates != null) {
+                if (DDGame.DEBUG) {
+                    origin.setVisible(true);
+                    coordinates.setVisible(true);
+                    origin.setPosition(enemy.getOriginX() - 1, enemy.getOriginY() - 1);
+                    coordinates.setPosition(enemy.getX() - 1, enemy.getY() - 1);
+                } else {
+                    origin.setVisible(false);
+                    coordinates.setVisible(false);
+                }
+            }
         }
     }
 

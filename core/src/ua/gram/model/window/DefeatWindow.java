@@ -56,7 +56,7 @@ public class DefeatWindow extends Window {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                game.setScreen(new MarketScreen(game));
+                game.setScreen(new MarketScreen(game, game.getPrototype().market));
             }
 
         });

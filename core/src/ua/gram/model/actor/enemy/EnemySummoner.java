@@ -3,9 +3,9 @@ package ua.gram.model.actor.enemy;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import ua.gram.DDGame;
+import ua.gram.controller.Log;
+import ua.gram.model.map.Path;
 import ua.gram.model.prototype.EnemyPrototype;
-
-import java.util.Arrays;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -20,16 +20,25 @@ public final class EnemySummoner extends AbilityUser implements Cloneable {
     public synchronized void ability() {
         try {
             Vector2 pos = this.getCurrentPosition();
-            Vector2 next = this.getPath().peekNextDirection();
+            Vector2 next = this.getCurrentDirection();
+            Vector2 index = this.getCurrentPositionIndex();
             Vector2 position = new Vector2(
-                    (pos.x - (pos.x % DDGame.TILE_HEIGHT)) / DDGame.TILE_HEIGHT + next.x,
-                    (pos.y - (pos.y % DDGame.TILE_HEIGHT)) / DDGame.TILE_HEIGHT + next.y);
+                    (Math.round(pos.x) - (Math.round(pos.x) % DDGame.TILE_HEIGHT)) / DDGame.TILE_HEIGHT + next.x,
+                    (Math.round(pos.y) - (Math.round(pos.y) % DDGame.TILE_HEIGHT)) / DDGame.TILE_HEIGHT + next.y);
+
+            System.out.println("--------");
+            System.out.println("Current: " + Path.toStringRound(pos));
+            System.out.println("Index: " + Path.toString(index));
+            System.out.println("Direction: " + Path.toString(next));
+            System.out.println("Result: " + Path.toString(position));
+            System.out.println("Check: " +
+                    ((int) (index.x + next.x) == (int) position.x
+                            && (int) (index.y + next.y) == (int) position.y));
+
             this.getSpawner().spawnChild(this, "EnemySoldier", position);
             Gdx.app.log("INFO", this + " performs ability");
         } catch (Exception e) {
-            Gdx.app.error("EXC", "Could not execute ability for " + this
-                    + "\r\nMSG: " + e.getMessage()
-                    + "\r\nTRACE: " + Arrays.toString(e.getStackTrace()));
+            Log.exc("Could not execute ability for " + this, e);
         }
     }
 

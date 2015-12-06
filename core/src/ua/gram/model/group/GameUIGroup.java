@@ -58,7 +58,7 @@ public class GameUIGroup extends Group {
         speedBut.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setGameSpeed(game.getGameSpeed() > 1 ? 1 : 1.5f);
+                game.setGameSpeed(game.getGameSpeed() < 1 ? 1 : 0.5f);
             }
         });
         Vector2 pos = level.getMap().getSpawn().getPosition();

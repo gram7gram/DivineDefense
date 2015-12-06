@@ -1,5 +1,6 @@
 package ua.gram.model.state;
 
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import ua.gram.DDGame;
 import ua.gram.model.actor.GameActor;
 
@@ -32,11 +33,10 @@ public abstract class StateManager<A extends GameActor> {
 
     /**
      * Save actor-specific state
-     *
-     * @param actor
+     *  @param actor
      * @param newState
      */
-    public abstract void persist(A actor, StateInterface newState, int level) throws NullPointerException;
+    public abstract void persist(A actor, StateInterface newState, int level) throws NullPointerException, GdxRuntimeException;
 
     /**
      * Reset all states for the Actor
