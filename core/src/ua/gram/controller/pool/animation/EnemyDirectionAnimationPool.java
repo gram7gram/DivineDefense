@@ -9,10 +9,13 @@ import ua.gram.model.map.Path;
  */
 public class EnemyDirectionAnimationPool implements DirectionPoolInterface {
 
-    protected final AnimationPool leftPool;
-    protected final AnimationPool rightPool;
-    protected final AnimationPool downPool;
-    protected final AnimationPool upPool;
+    protected AnimationPool leftPool;
+    protected AnimationPool rightPool;
+    protected AnimationPool downPool;
+    protected AnimationPool upPool;
+
+    public EnemyDirectionAnimationPool() {
+    }
 
     public EnemyDirectionAnimationPool(Animator.Types type, EnemyAnimation provider) {
         leftPool = new AnimationPool(provider.setAnimationRegion(type, Path.Types.LEFT, null));
@@ -22,7 +25,7 @@ public class EnemyDirectionAnimationPool implements DirectionPoolInterface {
         Gdx.app.log("INFO", "DirectionPool for " + type + " is OK");
     }
 
-    public AnimationPool get(Path.Types direction) throws IllegalArgumentException{
+    public AnimationPool get(Path.Types direction) {
         if (direction == null) {
             Gdx.app.log("WARN", "Direction type is NULL. Using default");
             return downPool;
@@ -36,10 +39,8 @@ public class EnemyDirectionAnimationPool implements DirectionPoolInterface {
                 return leftPool;
             case DOWN:
                 return downPool;
-            default: {
-                Gdx.app.log("WARN", "Direction type [" + direction + "] not found. Using default");
-                return downPool;
-            }
+            default:
+                throw new IllegalArgumentException("Direction type [" + direction + "] not found");
         }
     }
 

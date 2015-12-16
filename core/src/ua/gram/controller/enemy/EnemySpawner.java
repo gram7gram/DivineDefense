@@ -13,10 +13,8 @@ import ua.gram.model.Level;
 import ua.gram.model.actor.enemy.*;
 import ua.gram.model.actor.misc.HealthBar;
 import ua.gram.model.group.EnemyGroup;
-import ua.gram.model.map.Path;
 import ua.gram.model.state.enemy.EnemyStateManager;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 
 /**
@@ -64,9 +62,7 @@ public final class EnemySpawner {
                     level.getWave().finish();
                 }
             } catch (Exception e) {
-                Gdx.app.error("EXC", "Spawn conflict"
-                        + "\r\nMSG: " + e.getMessage()
-                        + "\r\nTRACE: " + Arrays.toString(e.getStackTrace()));
+                Log.exc("Spawn conflict", e);
             }
         } else {
             count += delta;
@@ -88,9 +84,7 @@ public final class EnemySpawner {
         try {
             enemy = this.obtain(type);
         } catch (Exception e) {
-            Gdx.app.error("EXC", "Unable to obtain [" + type + "] from pool"
-                    + "\r\nMSG: " + e.getMessage()
-                    + "\r\nTRACE: " + Arrays.toString(e.getStackTrace()));
+            Log.exc("Unable to obtain [" + type + "] from pool", e);
             return;
         }
         stateManager.init(enemy);
@@ -110,9 +104,7 @@ public final class EnemySpawner {
             stage_battle.updateZIndexes(enemyGroup);
             stateManager.swapLevel1State(enemy, stateManager.getSpawnState());
         } catch (Exception e) {
-            Gdx.app.error("EXC", "EnemySpawner failed to spawn " + enemy
-                    + "\r\nMSG: " + e.getMessage()
-                    + "\r\nTRACE: " + Arrays.toString(e.getStackTrace()));
+            Log.exc("EnemySpawner failed to spawn " + enemy, e);
         }
     }
 
@@ -131,9 +123,7 @@ public final class EnemySpawner {
         try {
             enemy = this.obtain(type);
         } catch (Exception e) {
-            Gdx.app.error("EXC", "Unable to obtain [" + type + "] from pool"
-                    + "\r\nMSG: " + e.getMessage()
-                    + "\r\nTRACE: " + Arrays.toString(e.getStackTrace()));
+            Log.exc("Unable to obtain [" + type + "] from pool", e);
             return;
         }
         stateManager.init(enemy);
@@ -155,7 +145,7 @@ public final class EnemySpawner {
             stateManager.getSpawnState().setParent(parent);
             stateManager.swapLevel1State(enemy, stateManager.getSpawnState());
         } catch (Exception e) {
-            Log.exc("EnemySpawner failed to spawn " + enemy, e);
+            Log.exc("EnemySpawner failed to spawn " + parent + "'s child " + enemy, e);
         }
     }
 
@@ -166,9 +156,8 @@ public final class EnemySpawner {
     public void setActionPath(final Enemy enemy, Vector2 spawn, Vector2 previous) {
         EnemyPath path = level.getMap().normalizePath(previous, spawn);
         enemy.setPath(path);
-        enemy.setPreviousDirection(previous);
-        enemy.setCurrentDirection(path.peekNextDirection());
-        enemy.setCurrentDirectionType(Path.getType(enemy.getCurrentDirection()));
+        Vector2 current = path.peekNextDirection();
+        enemy.setCurrentDirection(current);
     }
 
     private LinkedList<String> convertList(String[] list) {
@@ -214,7 +203,7 @@ public final class EnemySpawner {
 
     public void free(Enemy enemy) {
         this.getPool(enemy.getClass()).free(enemy);
-//        Gdx.app.log("INFO", enemy + "@" + enemy.hashCode() + " is set free");
+        Gdx.app.log("INFO", enemy + " is set free");
     }
 
     public Enemy obtain(String type) throws CloneNotSupportedException {

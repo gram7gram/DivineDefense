@@ -1,16 +1,15 @@
 package ua.gram.controller.pool.animation;
 
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Pool;
-import ua.gram.controller.enemy.EnemyAnimationProvider;
+import ua.gram.model.PollableAnimation;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class AnimationPool extends Pool<Animation> {
+public class AnimationPool extends Pool<PollableAnimation> {
 
-    private TextureRegion[] tiles;
+    private final TextureRegion[] tiles;
 
     public AnimationPool(TextureRegion[] tiles) {
         super(4);
@@ -19,10 +18,7 @@ public class AnimationPool extends Pool<Animation> {
     }
 
     @Override
-    public Animation newObject() {
-        Animation a = new Animation(EnemyAnimationProvider.DELAY, tiles);
-        a.setPlayMode(Animation.PlayMode.LOOP);
-        return a;
+    public PollableAnimation newObject() {
+        return new PollableAnimation(tiles);
     }
-
 }

@@ -13,6 +13,7 @@ import ua.gram.controller.pool.animation.AnimationPool;
 import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.model.Animator;
 import ua.gram.model.EnemyPath;
+import ua.gram.model.PollableAnimation;
 import ua.gram.model.actor.GameActor;
 import ua.gram.model.group.EnemyGroup;
 import ua.gram.model.map.Path;
@@ -52,6 +53,7 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
     private Animator animator;
     private Vector2 currentDirection;
     private Vector2 previousDirection;
+    private Path.Types previousDirectionType;
     private Path.Types currentDirectionType;
     private Level1State currentLevel1State;
     private Level2State currentLevel2State;
@@ -86,7 +88,7 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        if (animator.getAnimation() == null) return;
+        if (animator.getAnimation() == null) throw new NullPointerException("Missing animation");
         if (!DDGame.PAUSE || currentFrame == null) {
             stateTime += Gdx.graphics.getDeltaTime();
             currentFrame = animator.getAnimation().getKeyFrame(stateTime, true);
@@ -143,19 +145,16 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
     }
 
     public Animation getAnimation() {
-        return animator.getAnimation();
+        return animator.getPoolable().getAnimation();
+    }
+
+    public void setAnimation(PollableAnimation animation) {
+        this.animator.setPollable(animation);
     }
 
     public void setAnimation(Animator.Types type) {
-        AnimationPool pool = animationProvider.get(
-                this.getOriginType(),
-                type,
-                this.getCurrentDirectionType());
+        AnimationPool pool = animationProvider.get(this, type);
         this.setAnimation(pool.obtain());
-    }
-
-    public void setAnimation(Animation animation) {
-        this.animator.setAnimation(animation);
     }
 
     public void damage(float damage) {
@@ -244,7 +243,9 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
 
     public void setCurrentDirection(Vector2 currentDirection) {
         this.currentDirection = currentDirection;
-        this.setCurrentDirectionType(Path.getType(currentDirection));
+        this.previousDirection = Path.opposite(currentDirection);
+        this.currentDirectionType = Path.getType(currentDirection);
+        this.previousDirectionType = Path.getType(this.previousDirection);
     }
 
     public void alterSpeed(float deceleration) {
@@ -265,6 +266,9 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
 
     public void setPreviousDirection(Vector2 previousDirection) {
         this.previousDirection = previousDirection;
+        this.currentDirection = Path.opposite(previousDirection);
+        this.previousDirectionType = Path.getType(previousDirection);
+        this.currentDirectionType = Path.getType(this.currentDirection);
     }
 
     public Animator.Types getCurrentLevel1StateType() {
@@ -305,5 +309,9 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
 
     public Animator getAnimator() {
         return animator;
+    }
+
+    public PollableAnimation getPoolableAnimation() {
+        return animator.getPoolable();
     }
 }

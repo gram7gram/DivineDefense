@@ -1,6 +1,5 @@
 package ua.gram.model.state.enemy.level1;
 
-import com.badlogic.gdx.Gdx;
 import ua.gram.DDGame;
 import ua.gram.model.actor.enemy.Enemy;
 
@@ -15,7 +14,7 @@ public class InactiveState extends Level1State {
 
     @Override
     public void preManage(Enemy enemy) {
-        Gdx.app.log("INFO", enemy + " is inactive");
+
     }
 
     @Override

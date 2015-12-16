@@ -295,6 +295,10 @@
       "preview": "level-1-preview",
       "resources": [],
       "locked": false,
+      initialDirection: {
+        x: 0,
+        y: 1
+      },
       "waves": [
         {
           "index": 1,
@@ -330,6 +334,10 @@
       "preview": "level-2-preview",
       "resources": [],
       "locked": false,
+      initialDirection: {
+        x: 1,
+        y: 0
+      },
       "waves": [
         {
           "index": 1,
@@ -354,6 +362,10 @@
       "preview": "level-3-preview",
       "resources": [],
       "locked": true,
+      initialDirection: {
+        x: 0,
+        y: 1
+      },
       "waves": [
         {
           "index": 1,
@@ -378,6 +390,10 @@
       "preview": "level-2-preview",
       "resources": [],
       "locked": true,
+      initialDirection: {
+        x: 0,
+        y: 1
+      },
       "waves": [
         {
           "index": 1,
@@ -432,7 +448,7 @@
       "width": 60,
       "height": 90,
       "spawnDuration": 1.5,
-      "abilityDuration": 2,
+      "abilityDuration": 5,
       "abilityDelay": 2,
       "ability": true,
       "abilityConfig": {

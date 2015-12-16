@@ -121,6 +121,7 @@ public class Map {
             throw new GdxRuntimeException("Path normalization error: no Base found");
         Gdx.app.log("INFO", "Path is OK");
         properties = null;
+        recursion = 0;
         return path;
     }
 

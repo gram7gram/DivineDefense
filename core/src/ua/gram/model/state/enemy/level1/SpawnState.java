@@ -6,9 +6,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import ua.gram.DDGame;
-import ua.gram.controller.enemy.EnemyAnimationProvider;
 import ua.gram.controller.enemy.EnemySpawner;
-import ua.gram.controller.pool.animation.AnimationPool;
 import ua.gram.model.Animator;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.map.Map;
@@ -31,36 +29,34 @@ public class SpawnState extends InactiveState {
     @Override
     public void preManage(Enemy enemy) throws GdxRuntimeException {
         super.preManage(enemy);
-        enemy.setCurrentLevel1StateType(Animator.Types.SPAWN);
-
         EnemySpawner spawner = enemy.getSpawner();
+        Vector2 initial = spawner.getLevel().getPrototype().initialDirection;
+
+        enemy.setCurrentDirection(initial);
+
+        initAnimation(enemy, Animator.Types.SPAWN);
 
         Map map = spawner.getLevel().getMap();
 
         Vector2 pos = spawnPosition == null
                 ? spawner.getSpawnPosition()
                 : spawnPosition;
-        Vector2 prev = parent == null
-                ? Vector2.Zero
-                : parent.getPreviousDirection();
 
-        if (checkSpawnPosition(map, pos))
-            spawner.setActionPath(enemy, pos, prev);
-        else {
+        if (!checkSpawnPosition(map, pos))
             throw new GdxRuntimeException("Cannot spawn child. Requested cell "
                     + Path.toString(pos) + " does not contain nessesary property");
-        }
+
+        Vector2 prev = parent == null
+                ? Path.opposite(initial)
+                : parent.getPreviousDirection();
+
+        spawner.setActionPath(enemy, pos, prev);
 
         Gdx.app.log("INFO", enemy + " is spawned at " + Path.toString(pos));
 
-        EnemyAnimationProvider provider = enemy.getAnimationProvider();
-        AnimationPool pool = provider.get(
-                enemy.getOriginType(),
-                enemy.getCurrentLevel1StateType(),
-                enemy.getCurrentDirectionType());
-        enemy.setAnimation(pool.obtain());
         spawnDurationCount = 0;
-        Gdx.app.log("INFO", enemy + " state: " + enemy.getCurrentLevel1StateType());
+        enemy.setVisible(true);
+        Gdx.app.log("INFO", enemy + " state: " + enemy.getAnimator().getType());
     }
 
     @Override

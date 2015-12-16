@@ -8,16 +8,20 @@ import ua.gram.model.map.Path;
  */
 public class Animator {
 
-    private Animation animation;
+    private PollableAnimation pollableAnimation;
     private Path.Types direction;
     private Types type;
 
-    public Animation getAnimation() {
-        return animation;
+    public PollableAnimation getPoolable() {
+        return pollableAnimation;
     }
 
-    public void setAnimation(Animation animation) {
-        this.animation = animation;
+    public Animation getAnimation() {
+        return pollableAnimation.getAnimation();
+    }
+
+    public void setPollable(PollableAnimation pollable) {
+        this.pollableAnimation = pollable;
     }
 
     public Path.Types getDirection() {

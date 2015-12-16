@@ -20,7 +20,6 @@ public class EnemyAnimationProvider {
     private final EnemyAnimation runnerAnimation;
     private final EnemyAnimation summomerAnimation;
     private final EnemyAnimation warriorAnimation;
-    private Enemy enemy;
 
     public EnemyAnimationProvider(Skin skin) throws NullPointerException {
         this.skin = skin;
@@ -46,14 +45,6 @@ public class EnemyAnimationProvider {
             warriorAnimation.init(enemy);
     }
 
-    public void setActor(Enemy enemy) {
-        this.enemy = enemy;
-    }
-
-    public Enemy getEnemy() {
-        return enemy;
-    }
-
     public Skin getSkin() {
         return skin;
     }
@@ -62,6 +53,14 @@ public class EnemyAnimationProvider {
                              Animator.Types type,
                              Path.Types direction) throws IllegalArgumentException {
         return this.get(origin).get(type).get(direction);
+    }
+
+    public AnimationPool get(Enemy enemy, Animator.Types type) throws IllegalArgumentException {
+        return this.get(enemy.getOriginType()).get(type).get(enemy.getCurrentDirectionType());
+    }
+
+    public EnemyAnimation get(Enemy enemy) {
+        return this.get(enemy.getOriginType());
     }
 
     public EnemyAnimation get(GameActor.Types origin) {

@@ -24,6 +24,11 @@ public class DeadState extends InactiveState {
 
     @Override
     public void manage(Enemy enemy,float delta) {
+
+    }
+
+    @Override
+    public void postManage(Enemy enemy) {
         getGame().getPlayer().addCoins(enemy.reward);
         float value = new Random().nextFloat();
 
@@ -32,11 +37,5 @@ public class DeadState extends InactiveState {
             getGame().getPlayer().addGems(1);
             Gdx.app.log("INFO", "Player got 1 gem");
         }
-
-    }
-
-    @Override
-    public void postManage(Enemy enemy) {
-
     }
 }
