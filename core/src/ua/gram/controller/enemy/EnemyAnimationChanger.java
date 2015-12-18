@@ -36,6 +36,7 @@ public class EnemyAnimationChanger implements Runnable {
             Log.exc("Cannot free " + enemy + " previous animation", e);
         }
 
+        //NOTE Next animation may have other direction, so update nessesary
         enemy.setCurrentDirection(dir);
 
         try {
@@ -45,8 +46,8 @@ public class EnemyAnimationChanger implements Runnable {
             Log.exc("Cannot change " + enemy + " animation", e);
         }
 
-        Gdx.app.log("INFO", enemy + " updates animation to:"
-                + " " + type + " " + enemy.getCurrentDirectionType());
+        Gdx.app.log("INFO", enemy + " updates animation to: "
+                + type + " " + enemy.getCurrentDirectionType());
     }
 
     public void update(Enemy enemy, Vector2 dir) {

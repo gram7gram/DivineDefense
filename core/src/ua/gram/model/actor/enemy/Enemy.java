@@ -148,13 +148,13 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
         return animator.getPoolable().getAnimation();
     }
 
-    public void setAnimation(PollableAnimation animation) {
-        this.animator.setPollable(animation);
-    }
-
     public void setAnimation(Animator.Types type) {
         AnimationPool pool = animationProvider.get(this, type);
         this.setAnimation(pool.obtain());
+    }
+
+    public void setAnimation(PollableAnimation animation) {
+        this.animator.setPollable(animation);
     }
 
     public void damage(float damage) {
@@ -174,7 +174,6 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
     public Vector2 getOrigin() {
         originPosition.set(this.getX() + this.getOriginX(), this.getY() + this.getOriginY());
         return originPosition;
-//        return new Vector2(this.getX() + this.getOriginX(), this.getY() + this.getOriginY());
     }
 
     public float getSpawnDuration() {

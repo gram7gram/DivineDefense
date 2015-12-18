@@ -2,11 +2,14 @@ package ua.gram.model.group;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import ua.gram.DDGame;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.actor.misc.HealthBar;
+
+import java.util.List;
 
 
 /**
@@ -19,6 +22,7 @@ public class EnemyGroup extends Group {
     private final HealthBar bar;
     private Actor origin;
     private Actor coordinates;
+    private boolean test = true;
 
     public EnemyGroup(DDGame game, Enemy enemy, HealthBar bar) {
         this.game = game;
@@ -52,6 +56,20 @@ public class EnemyGroup extends Group {
                     coordinates.setVisible(true);
                     origin.setPosition(enemy.getOriginX() - 1, enemy.getOriginY() - 1);
                     coordinates.setPosition(enemy.getX() - 1, enemy.getY() - 1);
+                    if (test && enemy.getPath() != null) {
+                        List<Vector2> dirs = enemy.getPath().getDirections();
+                        Vector2 pos = new Vector2(enemy.getCurrentPosition());
+                        for (Vector2 v : dirs) {
+                            Actor a = new Actor();
+                            a.setSize(6, 6);
+                            a.setVisible(true);
+                            a.setPosition(pos.x + (DDGame.TILE_HEIGHT - a.getWidth()) / 2,
+                                    pos.y + (DDGame.TILE_HEIGHT - a.getHeight()) / 2);
+                            pos.add(new Vector2(v.x * DDGame.TILE_HEIGHT, v.y * DDGame.TILE_HEIGHT));
+                            this.addActor(a);
+                        }
+                        test = false;
+                    }
                 } else {
                     origin.setVisible(false);
                     coordinates.setVisible(false);

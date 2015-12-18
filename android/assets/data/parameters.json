@@ -303,7 +303,8 @@
         {
           "index": 1,
           "enemies": [
-            "EnemySummoner"
+            "EnemySummoner",
+            "EnemyWarrior",
           ]
         },
         {

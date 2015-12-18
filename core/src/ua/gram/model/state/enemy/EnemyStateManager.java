@@ -165,8 +165,9 @@ public final class EnemyStateManager extends StateManager<Enemy> {
                     enemy.setCurrentLevel4State(null);
                     break;
                 default:
-                    throw new NullPointerException("Unknown state: " + newState);
+                    throw new NullPointerException("Unknown " + enemy + " level " + level + " state");
             }
+            Log.warn(enemy + " level " + level + " state is set to NULL");
         }
     }
 

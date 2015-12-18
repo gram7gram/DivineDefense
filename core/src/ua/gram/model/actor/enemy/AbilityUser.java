@@ -23,6 +23,10 @@ public abstract class AbilityUser extends Enemy implements AbilityUserInterface 
         return abilityDelay;
     }
 
+    public void setAbilityDelay(float delayAbility) {
+        this.delayAbility = delayAbility;
+    }
+
     @Override
     public float getAbilityDuration() {
         return abilityDuration;
@@ -37,13 +41,5 @@ public abstract class AbilityUser extends Enemy implements AbilityUserInterface 
             delayAbility += delta;
             return false;
         }
-    }
-
-    public float getDelayAbility() {
-        return delayAbility;
-    }
-
-    public void setDelayAbility(float delayAbility) {
-        this.delayAbility = delayAbility;
     }
 }
