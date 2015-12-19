@@ -1,6 +1,7 @@
 package ua.gram.model.group;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -57,13 +58,12 @@ public class GameUIGroup extends Group {
         speedBut.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setGameSpeed(game.getGameSpeed() > 1 ? 1 : 1.5f);
+                game.setGameSpeed(game.getGameSpeed() < 1 ? 1 : 0.5f);
             }
         });
         Vector2 pos = level.getMap().getSpawn().getPosition();
-        Vector2 dir = level.getMap().getPath().getDirections().get(0);
 
-        counter = new CounterButton(game, level, new Vector2(pos.x + dir.x, pos.y + dir.y));
+        counter = new CounterButton(game, level, new Vector2(pos.x, pos.y));
 
         healthLabel = new CustomLabel("HEALTH: " + game.getPlayer().getHealth(), skin, "small_tinted");
         gemsLabel = new CustomLabel("GEMS: " + game.getPlayer().getGems(), skin, "small_tinted");
@@ -137,6 +137,16 @@ public class GameUIGroup extends Group {
             updateMoneyLabel();
             updateGemsLabel();
             updateWaveLabel();
+        }
+    }
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        super.draw(batch, parentAlpha);
+        if (DDGame.DEBUG) {
+            game.getInfo().draw(batch,
+                    "FPS: " + Gdx.graphics.getFramesPerSecond(),
+                    10, DDGame.WORLD_HEIGHT - 12);
         }
     }
 

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import ua.gram.DDGame;
 import ua.gram.controller.Resources;
 import ua.gram.controller.factory.PlayerFactory;
+import ua.gram.model.prototype.GamePrototype;
 import ua.gram.view.AbstractLoadingScreen;
 
 /**
@@ -15,8 +16,8 @@ import ua.gram.view.AbstractLoadingScreen;
  */
 public class LaunchLoadingScreen extends AbstractLoadingScreen {
 
-    public LaunchLoadingScreen(DDGame game) {
-        super(game);
+    public LaunchLoadingScreen(DDGame game, GamePrototype prototype) {
+        super(game, prototype);
         Gdx.app.log("INFO", "LaunchLoadingScreen is OK");
     }
 
@@ -35,7 +36,7 @@ public class LaunchLoadingScreen extends AbstractLoadingScreen {
     public void doAction() {
 //        game.setScreen(new MarketScreen(game));
 //        game.setScreen(new FractionScreen(game));
-        game.setScreen(new LevelSelectScreen(game));
+        game.setScreen(new LevelSelectScreen(game, prototype));
     }
 
 }

@@ -1,7 +1,7 @@
 package ua.gram.controller.security;
 
 import com.badlogic.gdx.Gdx;
-import ua.gram.model.prototype.GamePrototype;
+import ua.gram.model.prototype.ParametersPrototype;
 
 import javax.activation.CommandMap;
 import javax.activation.DataHandler;
@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.Properties;
 
 /**
- *
+ * TODO Include log file to mail
  * @author Gram <gram7gram@gmail.com>
  */
 public class BugReport {
@@ -28,13 +28,13 @@ public class BugReport {
     private final String PASS;
     private final String HOST;
     private final short PORT;
-    private GamePrototype prototype;
+    private ParametersPrototype prototype;
 
-    public BugReport(GamePrototype prototype) {
+    public BugReport(ParametersPrototype prototype) {
         this.prototype = prototype;
-        TO = "gram7gram@gmail.com";
-        FROM = "divinedefensegame@gmail.com";
-        PASS = "cxmmjGtdLmucADN";
+        TO = prototype.contact;
+        FROM = prototype.client;
+        PASS = prototype.token;
         HOST = "smtp.gmail.com";
         PORT = 465;
     }
@@ -87,7 +87,7 @@ public class BugReport {
             Gdx.app.log("INFO", "Email send successfully!");
             return true;
         } catch (MessagingException exc) {
-            Gdx.app.error("ERR", "Could not send email " + exc);
+            Gdx.app.error("EXC", "Could not send email: " + exc.getMessage());
             return false;
         }
     }

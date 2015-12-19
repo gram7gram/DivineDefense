@@ -9,7 +9,7 @@ import ua.gram.model.prototype.TowerPrototype;
  *
  * @author Gram <gram7gram@gmail.com>
  */
-public class TowerFactory implements Factory<Tower, TowerPrototype> {
+public class TowerFactory implements FactoryInterface<Tower, TowerPrototype> {
 
     @Override
     public Tower create(DDGame game, TowerPrototype prototype) {

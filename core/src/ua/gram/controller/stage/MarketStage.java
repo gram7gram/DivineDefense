@@ -1,26 +1,19 @@
 package ua.gram.controller.stage;
 
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.Json;
 import ua.gram.DDGame;
-import ua.gram.controller.Resources;
-import ua.gram.controller.listener.DebugListener;
 import ua.gram.model.group.MarketTable;
 import ua.gram.model.group.PlayerDataTable;
 import ua.gram.model.prototype.MarketCategoryPrototype;
+import ua.gram.model.prototype.MarketPrototype;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public final class MarketStage extends Stage {
+public final class MarketStage extends AbstractStage {
 
-    public MarketStage(final DDGame game) {
-        super(game.getViewport(), game.getBatch());
-        if (DDGame.DEBUG) this.addListener(new DebugListener(this));
-        this.setDebugAll(DDGame.DEBUG);
-        MarketCategoryPrototype[] prototypes = new Json().fromJson(
-                MarketCategoryPrototype[].class,
-                Resources.loadFile(Resources.MARKET));
+    public MarketStage(final DDGame game, MarketPrototype prototype) {
+        super(game);
+        MarketCategoryPrototype[] prototypes = prototype.categories;
 
         MarketTable root = new MarketTable(game, prototypes);
 
@@ -31,6 +24,5 @@ public final class MarketStage extends Stage {
 
         this.addActor(root);
         this.addActor(playerData);
-
     }
 }

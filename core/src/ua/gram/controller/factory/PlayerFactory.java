@@ -7,7 +7,7 @@ import ua.gram.model.prototype.PlayerPrototype;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class PlayerFactory implements Factory<Player, PlayerPrototype> {
+public class PlayerFactory implements FactoryInterface<Player, PlayerPrototype> {
 
     public static Player defaults() {
         Player player = new Player();

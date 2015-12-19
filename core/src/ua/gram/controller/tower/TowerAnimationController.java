@@ -2,12 +2,13 @@ package ua.gram.controller.tower;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import ua.gram.controller.pool.animation.AnimationController;
+import ua.gram.model.Animator;
 import ua.gram.model.Player;
 import ua.gram.model.actor.tower.Tower;
 
 /**
  * NOTE Don't create unnecessary LevelAnimation.
+ * TODO Implement AnimationController
  *
  * @author Gram <gram7gram@gmail.com>
  */
@@ -30,27 +31,18 @@ public class TowerAnimationController {
         level4Animation = new TowerLevelAnimationContainer(this, 4);
     }
 
-    public TextureRegion[] setAnimationRegion(AnimationController.Types animationType, int level) {
+    public TextureRegion[] setAnimationRegion(Animator.Types animationType, int level) {
         String region = tower.getClass().getSimpleName()
                 + "_" + Player.PLAYER_FRACTION
-                + "_Lvl" + level;
-        switch (animationType) {
-            case IDLE:
-                region += "_Idle";
-                break;
-            case BUILD:
-                region += "_Build";
-                break;
-            case SELL:
-                region += "_Sell";
-                break;
-            case SHOOT:
-                region += "_Shoot";
-                break;
-            default:
-                throw new NullPointerException("Unknown Enemy Animation id: " + animationType);
-        }
-        TextureRegion[][] regions = skin.getRegion(region).split(tower.animationWidth, tower.animationHeight);
+                + "_Lvl" + level
+                + "_" + animationType;
+        TextureRegion texture = skin.getRegion(region);
+
+        if (texture == null) throw new NullPointerException("Texture not found for region: " + region);
+
+        TextureRegion[][] regions = texture.split(
+                (int)tower.getAnimationWidth(),
+                (int)tower.getAnimationHeight());
         return regions[0];
     }
 
@@ -68,5 +60,4 @@ public class TowerAnimationController {
                 throw new NullPointerException("Unknown " + tower + " level: " + level);
         }
     }
-
 }

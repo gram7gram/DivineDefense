@@ -6,9 +6,9 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.utils.Pool;
 import ua.gram.DDGame;
 import ua.gram.controller.pool.TowerPool;
-import ua.gram.controller.pool.animation.AnimationController;
 import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.controller.stage.GameUIStage;
+import ua.gram.model.Animator;
 import ua.gram.model.actor.misc.ProgressBar;
 import ua.gram.model.actor.tower.*;
 import ua.gram.model.actor.weapon.LaserWeapon;
@@ -69,7 +69,7 @@ public class TowerShop {
             throw new NullPointerException("Couldn't build tower: " + type);
         }
         tower.setLevelAnimationContainer(tower.getTowerLevel());
-        tower.changeAnimation(AnimationController.Types.IDLE);//displayed while moving around screen
+        tower.changeAnimation(Animator.Types.IDLE);//displayed while moving around screen
         tower.setPosition(x, y);
         tower.setVisible(true);
         tower.setTouchable(Touchable.disabled);
@@ -86,7 +86,7 @@ public class TowerShop {
      */
     public void build(Tower tower, float x, float y) {
         tower.remove();
-        tower.changeAnimation(AnimationController.Types.BUILD);
+        tower.changeAnimation(Animator.Types.BUILD);
         tower.setPosition(x, y);
         game.getPlayer().chargeCoins(tower.getCost());
         tower.setStageBattle(stage_battle);

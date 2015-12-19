@@ -45,7 +45,7 @@ public class LevelTile extends Table {
 
         this.setBackground(skin.getDrawable(prototype.preview));
         this.pad(10);
-        this.add().expand().colspan(game.getPrototype().maxRanking).row();
+        this.add().expand().colspan(game.getParameters().maxRanking).row();
 
         if (prototype.ranking > 0) {
             TextureRegion starEnabled = skin.getRegion("star_small_enabled");
@@ -54,7 +54,7 @@ public class LevelTile extends Table {
             }
         }
 
-        int rank = game.getPrototype().maxRanking - prototype.ranking;
+        int rank = game.getParameters().maxRanking - prototype.ranking;
         if (rank > 0) {
             TextureRegion starDisabled = skin.getRegion("star_small_disabled");
             for (byte i = 0; i < rank; i++) {

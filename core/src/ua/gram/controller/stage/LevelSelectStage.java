@@ -2,8 +2,7 @@ package ua.gram.controller.stage;
 
 import com.badlogic.gdx.Gdx;
 import ua.gram.DDGame;
-import ua.gram.controller.Resources;
-import ua.gram.model.prototype.LevelPrototype;
+import ua.gram.model.prototype.GamePrototype;
 import ua.gram.model.table.LevelSelectTable;
 
 /**
@@ -11,10 +10,10 @@ import ua.gram.model.table.LevelSelectTable;
  */
 public class LevelSelectStage extends AbstractStage {
 
-    public LevelSelectStage(DDGame game) {
+    public LevelSelectStage(DDGame game, GamePrototype prototype) {
         super(game);
-        LevelPrototype[] prototypes = game.deserialize(Resources.LEVELS, LevelPrototype[].class, true);
-        LevelSelectTable table = new LevelSelectTable(game, prototypes);
+//        LevelPrototype[] prototypes = game.deserialize(Resources.LEVELS, LevelPrototype[].class, true);
+        LevelSelectTable table = new LevelSelectTable(game, prototype.levels);
         table.setVisible(true);
         this.addActor(table);
         Gdx.app.log("INFO", "LevelSelectStage is OK");

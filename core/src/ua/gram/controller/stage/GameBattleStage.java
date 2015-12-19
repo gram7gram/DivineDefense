@@ -3,9 +3,8 @@ package ua.gram.controller.stage;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import ua.gram.DDGame;
-import ua.gram.controller.listener.DebugListener;
+import ua.gram.controller.Log;
 import ua.gram.controller.listener.ToggleTowerControlsListener;
 import ua.gram.model.Level;
 import ua.gram.model.actor.enemy.Enemy;
@@ -15,6 +14,7 @@ import ua.gram.model.group.EnemyGroup;
 import ua.gram.model.group.TowerGroup;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Contains major game objects, like towers and enemies.
@@ -23,7 +23,7 @@ import java.util.ArrayList;
  *
  * @author Gram <gram7gram@gmail.com>
  */
-public class GameBattleStage extends Stage {
+public class GameBattleStage extends AbstractStage {
 
     private final Level level;
     private GameUIStage stage_ui;
@@ -33,8 +33,7 @@ public class GameBattleStage extends Stage {
     private ArrayList<int[]> towerPositions;
 
     public GameBattleStage(DDGame game, Level level) {
-        super(game.getViewport(), game.getBatch());
-        if (DDGame.DEBUG) this.addListener(new DebugListener(this));
+        super(game);
         this.level = level;
         towerPositions = new ArrayList<int[]>();
         indexes = new ArrayList<Group>();
@@ -53,8 +52,8 @@ public class GameBattleStage extends Stage {
 
     @Override
     public void act(float delta) {
+        super.act(delta);
         if (!DDGame.PAUSE) {
-            super.act(delta);
             if (level.getStage() == null) {
                 level.setStage(this);
                 level.createSpawner();
@@ -74,17 +73,28 @@ public class GameBattleStage extends Stage {
     public void updateZIndexes(Group newGroup) {
         for (Actor actor : newGroup.getChildren()) {
             if (actor instanceof Enemy || actor instanceof Tower) {
-                int index = (int) (DDGame.MAP_HEIGHT - (actor.getY()) / DDGame.TILE_HEIGHT) - 1;
-                indexes.get(index).addActor(newGroup);
-                Gdx.app.log("INFO", actor.getClass().getSimpleName() + " added to " + index + " index");
-                break;
+                int index = DDGame.MAP_HEIGHT - Math.abs((int) (actor.getY() / DDGame.TILE_HEIGHT) - 1);
+                Group group = indexes.get(index);
+                if (group != null) {
+                    group.addActor(newGroup);
+                    Gdx.app.log("INFO", actor.getClass().getSimpleName() + " added to " + index + " index");
+                    break;
+                } else {
+                    Log.warn(this.getClass().getSimpleName() + " failed to get Group at " + index + " index");
+                }
             }
         }
+
+        int count = countLayers();
+        Gdx.app.log("INFO", "Stage now has " + count + (count > 1 ? " layers" : " layer"));
+    }
+
+    public int countLayers() {
         int count = 0;
         for (Group group : indexes) {
             if (group.hasChildren()) ++count;
         }
-        Gdx.app.log("INFO", "Stage now has " + count + (count > 1 ? " layers" : " layer"));
+        return count;
     }
 
     /**
@@ -93,7 +103,6 @@ public class GameBattleStage extends Stage {
      *
      * @return true - at least one Enemy
      */
-
     public boolean hasEnemiesOnMap() {
         for (Group group : indexes) {
             for (Actor actor : group.getChildren()) {
@@ -197,9 +206,14 @@ public class GameBattleStage extends Stage {
             if (index != enemy.getParent().getZIndex()) {
                 enemy.getParent().remove();
                 Group enemyGroup = enemy.getParent();
-                Group indexGroup = indexes.get(index);
-                if (enemyGroup != null && indexGroup != null) {
-                    indexGroup.addActor(enemyGroup);
+                try {
+                    Group indexGroup = indexes.get(index);
+                    if (enemyGroup != null && indexGroup != null) {
+                        indexGroup.addActor(enemyGroup);
+                    }
+                } catch (IndexOutOfBoundsException e) {
+                    Gdx.app.error("EXC", "GameBattleStage failed to update indexes"
+                            + "\r\n" + Arrays.toString(e.getStackTrace()));
                 }
             }
         }

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -12,6 +13,7 @@ import ua.gram.controller.Resources;
 import ua.gram.controller.security.SecurityHandler;
 import ua.gram.model.Player;
 import ua.gram.model.prototype.GamePrototype;
+import ua.gram.model.prototype.ParametersPrototype;
 import ua.gram.view.screen.ErrorScreen;
 import ua.gram.view.screen.LaunchLoadingScreen;
 
@@ -30,47 +32,52 @@ import ua.gram.view.screen.LaunchLoadingScreen;
  *
  * @author Gram <gram7gram@gmail.com>
  */
-public class DDGame extends Game {
+public class DDGame<P extends GamePrototype> extends Game {
 
     public static final String ANGEL = "Angel";
     public static final String DEMON = "Demon";
     public static final byte TILE_HEIGHT = 60;
     public static final byte DEFAULT_BUTTON_HEIGHT = 80;
-    public static boolean DEBUG = true;
+    public static boolean DEBUG;
     public static boolean PAUSE = false;
     public static int WORLD_WIDTH;
     public static int WORLD_HEIGHT;
     public static int MAP_WIDTH;
     public static int MAP_HEIGHT;
     public static int MAX_ENTITIES;
-    private final GamePrototype prototype;
+    private final P prototype;
+    private final ParametersPrototype parameters;
     private SecurityHandler security;
-    private float gameSpeed = 1;
     private Resources resources;
     private SpriteBatch batch;
     private OrthographicCamera camera;
     private Viewport view;
     private Player player;
+    private BitmapFont info;
+    private float gameSpeed = 1;
 
-    public DDGame(SecurityHandler security, GamePrototype prototype) {
+    public DDGame(SecurityHandler security, P prototype) {
         this.security = security;
         this.prototype = prototype;
+        this.parameters = prototype.getParameters();
+        DEBUG = parameters.debugging;
     }
 
     @Override
     public void create() {
+//        Gdx.app.setLogLevel(com.badlogic.gdx.Application.LOG_NONE);
         sayHello();
 //        Gdx.input.setCatchMenuKey(true);
 //        Gdx.input.setCatchBackKey(true);
-//        Gdx.app.setLogLevel(Application.LOG_NONE);
         WORLD_WIDTH = Gdx.graphics.getWidth();
         WORLD_HEIGHT = Gdx.graphics.getHeight();
         MAP_WIDTH = WORLD_WIDTH / TILE_HEIGHT;
         MAP_HEIGHT = WORLD_HEIGHT / TILE_HEIGHT;
         MAX_ENTITIES = MAP_WIDTH * MAP_HEIGHT;//Maximum entities on the map
-        resources = new Resources();
-        Resources.game = this;
-        this.setScreen(new LaunchLoadingScreen(this));
+        resources = new Resources(this);
+        info = new BitmapFont();
+        info.setColor(1, 1, 1, 1);
+        this.setScreen(new LaunchLoadingScreen(this, prototype));
     }
 
     @Override
@@ -115,7 +122,7 @@ public class DDGame extends Game {
     }
 
     /**
-     * Creates Factory from Json representation of desired class.
+     * Creates FactoryInterface from Json representation of desired class.
      *
      * @param file     name of the Json file, that holds information about T class
      * @param type     desired type of class to load
@@ -131,13 +138,23 @@ public class DDGame extends Game {
             json.setIgnoreUnknownFields(true);
             return json.fromJson(type, Gdx.files.internal(file));
         } catch (Exception e) {
-            if (throwExc) this.setScreen(new ErrorScreen(this, "Could not load factory: " + file, e));
+            if (throwExc)
+                this.setScreen(
+                        new ErrorScreen(this, "Could not load: " + file, e));
         }
         return null;
     }
 
-    public GamePrototype getPrototype() {
-        return prototype;
+    public BitmapFont getInfo() {
+        return info;
+    }
+
+    public <PP extends ParametersPrototype> PP getParameters() {
+        return prototype.getParameters();
+    }
+
+    public ParametersPrototype getAbstractParameters() {
+        return parameters;
     }
 
     public Resources getResources() {
@@ -180,13 +197,23 @@ public class DDGame extends Game {
         this.gameSpeed = gameSpeed;
     }
 
+    public GamePrototype getPrototype() {
+        return prototype;
+    }
+
     private synchronized void sayGoodbye() {
-        Gdx.app.log("INFO", "Thank you for choosing Divine Defense!");
-        Gdx.app.log("INFO", "I hope you enjoyed it. Bye-bye (^ω^) / ");
+        for (String text : parameters.consoleBye) {
+            Gdx.app.log("INFO", parameters.processString(text));
+        }
     }
 
     private synchronized void sayHello() {
-        Gdx.app.log("INFO", "Welcome to DivineDefense, by Gram <gram7gram@gmail.com>");
-        Gdx.app.log("INFO", "Visit https://github.com/gram7gram/DivineDefense to view sources");
+        for (String text : parameters.consoleHello) {
+            Gdx.app.log("INFO", parameters.processString(text));
+        }
+    }
+
+    public void resetGameSpeed() {
+        this.gameSpeed = 1;
     }
 }

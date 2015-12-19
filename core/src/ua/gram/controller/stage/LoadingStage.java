@@ -1,6 +1,5 @@
 package ua.gram.controller.stage;
 
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import ua.gram.DDGame;
 
@@ -8,13 +7,12 @@ import ua.gram.DDGame;
  *
  * @author Gram <gram7gram@gmail.com>
  */
-public class LoadingStage extends Stage {
+public class LoadingStage extends AbstractStage {
 
     public Label label;
 
     public LoadingStage(DDGame game) {
-        super(game.getViewport(), game.getBatch());
-        this.setDebugAll(DDGame.DEBUG);
+        super(game);
         label = new Label("Loading: 0%", game.getResources().getSkin(), "header1black");
         label.setPosition(
                 DDGame.WORLD_WIDTH / 2 - label.getWidth() / 2,

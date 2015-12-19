@@ -7,7 +7,6 @@ import com.badlogic.gdx.utils.JsonWriter;
 import ua.gram.DDGame;
 import ua.gram.model.Player;
 import ua.gram.model.prototype.GamePrototype;
-import ua.gram.model.prototype.PlayerPrototype;
 
 import java.io.*;
 import java.security.MessageDigest;
@@ -17,24 +16,24 @@ import java.security.NoSuchAlgorithmException;
  *
  * @author Gram <gram7gram@gmail.com>
  */
-public class SecurityHandler {
+public class SecurityHandler<P extends GamePrototype> {
 
+    private final P prototype;
     private final String prefPath;
     private final String sumPath;
-    private final GamePrototype prototype;
     private final Json json;
     private FileReader input;
     private FileWriter output;
 
-    public SecurityHandler(GamePrototype prototype) {
+    public SecurityHandler(P prototype) {
         this.prototype = prototype;
         json = new Json();
         json.setTypeName(null);
         json.setUsePrototypes(false);
         json.setIgnoreUnknownFields(true);
         json.setOutputType(JsonWriter.OutputType.json);
-        prefPath = prototype.configPath + "divine.json";
-        sumPath = prototype.configPath + "divine.sum";
+        prefPath = prototype.getConfigPath() + "divine.json";
+        sumPath = prototype.getConfigPath() + "divine.sum";
         System.out.println("INFO: Security initialized");
     }
 
@@ -75,8 +74,7 @@ public class SecurityHandler {
 
 
     public Player load(DDGame game) {
-        PlayerPrototype prototype = game.deserialize("data/player.json", PlayerPrototype.class, true);
-        Player player = new Player(prototype);
+        Player player = new Player(prototype.player);
         player.setDefault(true);
         Gdx.app.log("WARN", "Player defaults are used");
         return player;
@@ -89,7 +87,7 @@ public class SecurityHandler {
         String algorithm = "MD5";
         try {
             MessageDigest md = MessageDigest.getInstance(algorithm);
-            md.update(prototype.id.getBytes());//salt
+            md.update(prototype.getParameters().id.getBytes());//salt
             input = new FileReader(new File(prefPath));
             BufferedReader reader = new BufferedReader(input);
             String s;
@@ -159,6 +157,6 @@ public class SecurityHandler {
     }
 
     public boolean sendBugReport(String error) {
-        return new BugReport(prototype).sendReport(error);
+        return new BugReport(prototype.getParameters()).sendReport(error);
     }
 }

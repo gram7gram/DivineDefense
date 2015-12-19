@@ -77,7 +77,7 @@ public class MarketTable extends Table {
         back.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new LevelSelectScreen(game));
+                game.setScreen(new LevelSelectScreen(game, game.getPrototype()));
             }
         });
 

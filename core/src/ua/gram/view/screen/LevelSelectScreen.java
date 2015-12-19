@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import ua.gram.DDGame;
 import ua.gram.controller.Resources;
 import ua.gram.controller.stage.LevelSelectStage;
+import ua.gram.model.prototype.GamePrototype;
 import ua.gram.view.AbstractScreen;
 
 /**
@@ -16,9 +17,9 @@ public class LevelSelectScreen extends AbstractScreen {
     private final LevelSelectStage stage;
     private final Sprite background;
 
-    public LevelSelectScreen(DDGame game) {
-        super(game);
-        stage = new LevelSelectStage(game);
+    public LevelSelectScreen(DDGame game, GamePrototype prototype) {
+        super(game, prototype);
+        stage = new LevelSelectStage(game, prototype);
         background = new Sprite(game.getResources().getTexture(Resources.BACKGROUND_TEXTURE));
         Gdx.app.log("INFO", "LevelSelectScreen is OK");
     }

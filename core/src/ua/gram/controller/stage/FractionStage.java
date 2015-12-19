@@ -3,7 +3,6 @@ package ua.gram.controller.stage;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -21,7 +20,7 @@ import ua.gram.view.screen.MainMenuScreen;
  *
  * @author Gram <gram7gram@gmail.com>
  */
-public class FractionStage extends Stage {
+public class FractionStage extends AbstractStage {
 
     private final Group fractions;
     private final DDGame game;
@@ -30,7 +29,7 @@ public class FractionStage extends Stage {
 
 
     public FractionStage(final DDGame game) {
-        super(game.getViewport(), game.getBatch());
+        super(game);
         this.game = game;
         final Skin skin = game.getResources().getSkin();
 

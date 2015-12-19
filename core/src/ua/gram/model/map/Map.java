@@ -5,9 +5,13 @@ import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.GdxRuntimeException;
+import ua.gram.DDGame;
+import ua.gram.controller.Log;
+import ua.gram.model.EnemyPath;
+import ua.gram.model.prototype.MapPrototype;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 /**
  * NOTE: https://cdn.tutsplus.com/gamedev/authors/daniel-schuller/jrpg-using-tilemap-layers.png
@@ -16,17 +20,25 @@ import java.util.List;
  */
 public class Map {
 
-    private Spawn spawn;
-    private Base base;
-    private TiledMap tiledMap;
-    private TiledMapTileLayer layer;
-    private Path path;
+    private final Spawn spawn;
+    private final TiledMap tiledMap;
+    private final TiledMapTileLayer layer;
+    private final Path path;
+    private final MapPrototype prototype;
+    private final int parseLimit;
+    private final Base base;
+    private MapProperties properties;
+    private int recursion = 0;
 
-    public Map(TiledMap tiledMap) {
-        this.tiledMap = tiledMap;
-        layer = (TiledMapTileLayer) tiledMap.getLayers().get("Terrain");
-        spawn = findSpawnPoint();
-        path = normalizePath(spawn.getPosition());
+    public Map(DDGame game, MapPrototype prototype) {
+        this.prototype = prototype;
+        this.tiledMap = game.getResources().getMap(prototype.name);
+        parseLimit = 3 * DDGame.MAX_ENTITIES;
+        path = new Path();
+        layer = (TiledMapTileLayer) tiledMap.getLayers().get(prototype.layer);
+        HashMap<String, Vector2> points = findMapPoints();
+        spawn = new Spawn(points.get(prototype.spawnProperty));
+        base = new Base(points.get(prototype.baseProperty));
         Gdx.app.log("INFO", "Map is OK");
     }
 
@@ -34,26 +46,21 @@ public class Map {
      * Parses whole map grid, looking for 'spawn' property of the tile.
      * If found one, new Spawn object is created and search is aborted.
      */
-    private Spawn findSpawnPoint() {
-        Spawn spawnPoint = null;
-        MapProperties properties;
+    private HashMap<String, Vector2> findMapPoints() {
+        HashMap<String, Vector2> map = new HashMap<String, Vector2>(2);
         for (int x = 0; x < layer.getWidth(); x++) {
             for (int y = 0; y < layer.getHeight(); y++) {
                 properties = layer.getCell(x, y).getTile().getProperties();
-                if (properties.containsKey("spawn")) {
-                    spawnPoint = new Spawn(new Vector2(x, y));
+                if (properties.containsKey(prototype.spawnProperty)) {
+                    map.put(prototype.spawnProperty, new Vector2(x, y));
+                } else if (properties.containsKey(prototype.baseProperty)) {
+                    map.put(prototype.baseProperty, new Vector2(x, y));
                     break;
                 }
             }
         }
-        return spawnPoint;
-    }
-
-    public ArrayList<Vector2> getDirectionsFrom(Vector2 start) {
-        ArrayList<Vector2> route = path.getPath();
-        int currentIndex = route.indexOf(start);
-        List<Vector2> list = path.getDirections().subList(currentIndex + 1, route.size());
-        return new ArrayList<Vector2>(list);
+        properties = null;
+        return map;
     }
 
     /**
@@ -69,14 +76,14 @@ public class Map {
      * sure that you start scanning from 'spawn' and finish in 'base' to avoid random
      * 'walkable' tile adding to the path.
      */
-    public Path normalizePath(Vector2 start) {
-        Path route = new Path();
-        MapProperties properties;
-        Vector2 lastDir = new Vector2();
-        Vector2 position = new Vector2((int) start.x, (int) start.y);
+    public EnemyPath normalizePath(Vector2 lastDir, Vector2 start) {
+        if (lastDir == null || start == null) throw new NullPointerException("Path normalization impossible");
+        EnemyPath path = new EnemyPath();
+        Vector2 position = Path.clone(start);
         boolean isFound = false;
-        while (!isFound) {
-            for (Vector2 direction : route.DIRECTIONS) {
+        int count = 0;
+        while (!isFound && count < parseLimit) {
+            for (Vector2 direction : Path.DIRECTIONS) {
                 if (!direction.equals(lastDir)) {
                     if ((direction.equals(Path.WEST) && position.x > 0)
                             || (direction.equals(Path.SOUTH) && position.y > 0)
@@ -86,30 +93,40 @@ public class Map {
                         int currentY = (int) (position.y + direction.y);
                         properties = layer.getCell(currentX, currentY)
                                 .getTile().getProperties();
-                        if (properties.containsKey("walkable")) {
-                            route.addDirection(direction);
-                            route.addPath(new Vector2(currentX, currentY));
+                        if (properties.containsKey(prototype.walkableProperty)) {
+                            path.addDirection(direction);
+                            path.addPath(new Vector2(currentX, currentY));
                             position.add(direction);
-                            lastDir = new Vector2((int) -direction.x, (int) -direction.y);
-                            if (properties.containsKey("base")) {
-                                base = new Base(position);
+                            lastDir = Path.opposite(direction);
+                            if (properties.containsKey(prototype.baseProperty)) {
                                 isFound = true;
+                                break;
+                            } else if (properties.containsKey(prototype.spawnProperty)) {
+                                ++recursion;
+                                if (recursion < 2) {
+                                    Log.warn("Path normalization was reversed: search was in the wrong direction");
+                                    return normalizePath(Path.opposite(lastDir), start);
+                                } else
+                                    throw new GdxRuntimeException("Path normalization error: parsing in wrong direction");
                             }
                         }
+                        ++count;
                     }
                 }
             }
         }
+        if (!isFound && count == parseLimit)
+            throw new GdxRuntimeException("Path normalization error: parse limit reached");
+        if (!isFound)
+            throw new GdxRuntimeException("Path normalization error: no Base found");
         Gdx.app.log("INFO", "Path is OK");
-        return route;
+        properties = null;
+        recursion = 0;
+        return path;
     }
 
     public TiledMap getTiledMap() {
         return tiledMap;
-    }
-
-    public TiledMapTileLayer getLayer() {
-        return layer;
     }
 
     public Spawn getSpawn() {
@@ -124,11 +141,11 @@ public class Map {
         return path;
     }
 
-    public ArrayList<Vector2> getDirectionsArray() {
-        return path.getDirections();
+    public MapPrototype getPrototype() {
+        return prototype;
     }
 
-    public ArrayList<Vector2> getPathArray() {
-        return path.getPath();
+    public TiledMapTileLayer getActiveLayer() {
+        return layer;
     }
 }

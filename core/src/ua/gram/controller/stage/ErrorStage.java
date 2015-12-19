@@ -2,27 +2,24 @@ package ua.gram.controller.stage;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import ua.gram.DDGame;
-import ua.gram.controller.listener.DebugListener;
 
 import java.util.Arrays;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class ErrorStage extends Stage {
+public class ErrorStage extends AbstractStage {
 
     public ErrorStage(final DDGame game, final String error, final Exception e) {
-        super(game.getViewport(), game.getBatch());
-        if (DDGame.DEBUG) this.addListener(new DebugListener(this));
+        super(game);
         this.setDebugAll(DDGame.DEBUG);
         byte gap = 5;
-        Gdx.app.error("ERROR", error);
+        Gdx.app.error("ERROR", e.getMessage() + "\n" + Arrays.toString(e.getStackTrace()));
         Label errorLabel = new Label("ERROR", game.getResources().getSkin(), "header1altwhite");
         errorLabel.setPosition((DDGame.WORLD_WIDTH - errorLabel.getWidth()) / 2f, DDGame.WORLD_HEIGHT / 2f + 20);
         errorLabel.setVisible(true);

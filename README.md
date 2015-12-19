@@ -1,12 +1,10 @@
-![alt text](https://github.com/gram7gram/DivineDefense/blob/mainstream/logo_small.png "**ICON**")
+![GAME ICON](https://github.com/gram7gram/DivineDefense/blob/mainstream/logo_small.png "**ICON**")
 
 ## Divine Defense
 
 > The Tower Defense game
 
-> By Gram
-
-> Contact me: gram7gram@gmail.com
+> By Gram: <gram7gram@gmail.com>
 
 **Game idea**: There are two eternal fractions, battling over and over.
 Choose your fraction and join the divine battle for world domination!
