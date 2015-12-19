@@ -15,7 +15,7 @@ import ua.gram.model.actor.enemy.Enemy;
  */
 public class EnemyAnimationChanger implements Runnable {
 
-    private final Animator.Types type;
+    private Animator.Types type;
     private Enemy enemy;
     private Vector2 dir;
 
@@ -25,7 +25,7 @@ public class EnemyAnimationChanger implements Runnable {
 
     @Override
     public void run() {
-        if (enemy == null || type == null) throw new NullPointerException("Missing required params");
+        if (enemy == null || type == null) throw new NullPointerException("Missing required parameters");
 
         EnemyAnimationProvider animationProvider = enemy.getAnimationProvider();
 
@@ -36,18 +36,25 @@ public class EnemyAnimationChanger implements Runnable {
             Log.exc("Cannot free " + enemy + " previous animation", e);
         }
 
-        //NOTE Next animation may have other direction, so update nessesary
+        //NOTE Next animation may have other direction, so update is nessesary
         if (dir != null) enemy.setCurrentDirection(dir);
 
         try {
             AnimationPool pool = animationProvider.get(enemy, type);
             enemy.setAnimation(pool.obtain());
-        } catch (Exception e) {
-            Log.exc("Cannot change " + enemy + " animation", e);
-        }
 
-        Gdx.app.log("INFO", enemy + " updates animation to: "
-                + type + " " + enemy.getCurrentDirectionType());
+            Gdx.app.log("INFO", enemy + " updates animation to: "
+                    + type + " " + enemy.getCurrentDirectionType());
+
+        } catch (Exception e) {
+            Log.exc("Cannot set new animation for " + enemy, e);
+        }
+    }
+
+    public void update(Enemy enemy, Vector2 dir, Animator.Types type) {
+        this.enemy = enemy;
+        this.dir = dir;
+        this.type = type;
     }
 
     public void update(Enemy enemy, Vector2 dir) {

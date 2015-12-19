@@ -94,8 +94,6 @@ public final class EnemyStateManager extends StateManager<Enemy> {
         if (current != null) {
             try {
                 current.postManage(enemy);
-//            } catch (GdxRuntimeException e) {
-//                game.setScreen(new ErrorScreen(game, e.getMessage(), e));
             } catch (Exception e) {
                 Log.exc("Could not execute postManage() on "
                         + enemy + "'s state " + current, e);
@@ -109,8 +107,6 @@ public final class EnemyStateManager extends StateManager<Enemy> {
 
         try {
             this.persist(enemy, newState, level);
-//        } catch (GdxRuntimeException e) {
-//            game.setScreen(new ErrorScreen(game, e.getMessage(), e));
         } catch (Exception e) {
             Log.exc("Could not execute persist() on "
                     + enemy + "'s state " + current, e);
@@ -119,8 +115,6 @@ public final class EnemyStateManager extends StateManager<Enemy> {
         if (newState != null) {
             try {
                 newState.preManage(enemy);
-//            } catch (GdxRuntimeException e) {
-//                game.setScreen(new ErrorScreen(game, e.getMessage(), e));
             } catch (Exception e) {
                 Log.exc("Could not execute preManage() on "
                         + enemy + "'s state " + current, e);

@@ -11,17 +11,15 @@ public interface StateInterface<T extends GameActor> {
      * Execute before actual management:
      * load nessessary recources, objects etc.
      */
-    void preManage(T actor) throws Exception;
+    void preManage(T actor);
 
     /**
      * Implement state logic
      */
-    void manage(T actor, float delta) throws Exception;
-
-//    boolean manageOnce(T actor, float delta) throws Exception;
+    void manage(T actor, float delta);
 
     /**
      * Clean-un and reset state
      */
-    void postManage(T actor) throws Exception;
+    void postManage(T actor);
 }

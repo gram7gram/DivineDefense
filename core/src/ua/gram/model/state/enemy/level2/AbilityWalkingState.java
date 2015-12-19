@@ -1,10 +1,9 @@
 package ua.gram.model.state.enemy.level2;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import ua.gram.DDGame;
-import ua.gram.controller.enemy.EnemyAnimationChanger;
 import ua.gram.model.Animator;
 import ua.gram.model.EnemyPath;
 import ua.gram.model.actor.enemy.AbilityUser;
@@ -19,7 +18,6 @@ public class AbilityWalkingState extends WalkingState {
 
     public AbilityWalkingState(DDGame game) {
         super(game);
-        walkingAnimationChanger = new EnemyAnimationChanger(Animator.Types.ABILITY);
     }
 
     @Override
@@ -27,12 +25,6 @@ public class AbilityWalkingState extends WalkingState {
 
         if (!(enemy instanceof AbilityUser))
             throw new IllegalArgumentException(enemy + " is not AbilityUser. It should not have access to such method");
-
-        if (Path.compare(enemy.getCurrentPosition(), basePosition)) {
-            Gdx.app.log("INFO", enemy + " position equals to Base. Removing enemy");
-            remove(enemy);
-            return;
-        }
 
         EnemyPath path = enemy.getPath();
         if (path == null) throw new NullPointerException("Missing path for " + enemy);
@@ -42,27 +34,36 @@ public class AbilityWalkingState extends WalkingState {
 
         boolean isSameDirection = Path.compare(dir, current);
 
-        if (!isSameDirection) {
-            walkingAnimationChanger.update(enemy, dir);
-            enemy.addAction(
-                    Actions.parallel(
-                            Actions.run(walkingAnimationChanger),
-                            moveBy(enemy, dir)
-                    )
-            );
-        } else if (((AbilityUser) enemy).isAbilityPossible(1)) {
+        if (((AbilityUser) enemy).isAbilityPossible(1)) {
             EnemyStateManager manager = enemy.getSpawner().getStateManager();
+
             stateSwapper.update(enemy, enemy.getCurrentLevel3State(), manager.getAbilityState(), 3);
-            walkingAnimationChanger.update(enemy);
+            walkingAnimationChanger.update(enemy, null, Animator.Types.ABILITY);
+
             float time = ((AbilityUser) enemy).getAbilityDuration();
+
+            Action action = isSameDirection ? moveBy(enemy, dir) : Actions.sequence(
+                    Actions.run(walkingAnimationChanger),
+                    moveBy(enemy, dir)
+            );
+
             enemy.addAction(
                     Actions.sequence(
                             Actions.parallel(
                                     Actions.run(stateSwapper),
                                     Actions.run(walkingAnimationChanger)
                             ),
-                            Actions.delay(time, moveBy(enemy, dir))
-                    ));
+                            Actions.delay(time, action)
+                    )
+            );
+        } else if (!isSameDirection) {
+            walkingAnimationChanger.update(enemy, dir, Animator.Types.WALKING);
+            enemy.addAction(
+                    Actions.sequence(
+                            Actions.run(walkingAnimationChanger),
+                            moveBy(enemy, dir)
+                    )
+            );
         } else {
             enemy.setCurrentDirection(dir);
             enemy.addAction(moveBy(enemy, dir));

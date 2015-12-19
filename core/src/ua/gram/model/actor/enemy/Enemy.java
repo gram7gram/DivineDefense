@@ -33,6 +33,7 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
     public final float defaultSpeed;
     public final float defaultArmor;
     public final int reward;
+    public final EnemyPrototype prototype;
     private final Vector2 originPosition;
     public float health;
     public float speed;
@@ -67,6 +68,7 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
     public Enemy(DDGame game, EnemyPrototype prototype) {
         super(prototype);
         this.game = game;
+        this.prototype = prototype;
         health = prototype.health;
         speed = prototype.speed;
         armor = prototype.armor;
@@ -100,6 +102,8 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
     public void act(float delta) {
         super.act(delta);
         if (!DDGame.PAUSE) {
+            if (game.getGameSpeed() != 1)
+                animationProvider.get(this, animator.getType()).setDelay(game.getGameSpeed() * prototype.frameDuration);
             update(delta);
             EnemyStateManager stateManager = spawner.getStateManager();
             if (this.health <= 0 && currentLevel1State != stateManager.getDeadState()) {
@@ -148,13 +152,13 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
         return animator.getPoolable().getAnimation();
     }
 
+    public void setAnimation(PollableAnimation animation) {
+        this.animator.setPollable(animation);
+    }
+
     public void setAnimation(Animator.Types type) {
         AnimationPool pool = animationProvider.get(this, type);
         this.setAnimation(pool.obtain());
-    }
-
-    public void setAnimation(PollableAnimation animation) {
-        this.animator.setPollable(animation);
     }
 
     public void damage(float damage) {

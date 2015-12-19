@@ -46,12 +46,6 @@ public class WalkingState extends Level2State {
     }
 
     protected void move(final Enemy enemy, float delta, int x, int y) {
-        if (Path.compare(enemy.getCurrentPosition(), basePosition)) {
-            Gdx.app.log("INFO", enemy + " position equals to Base. Removing enemy");
-            remove(enemy);
-            return;
-        }
-
         EnemyPath path = enemy.getPath();
         if (path == null) throw new NullPointerException("Missing path for " + enemy);
 
@@ -61,16 +55,17 @@ public class WalkingState extends Level2State {
         boolean isSameDirection = Path.compare(dir, current);
 
         if (!isSameDirection) {
-            System.out.println("CHANGING to: " + Path.toString(dir));
             walkingAnimationChanger.update(enemy, dir);
-            enemy.addAction(Actions.run(walkingAnimationChanger));
+            enemy.addAction(Actions.parallel(
+                    Actions.run(walkingAnimationChanger),
+                    moveBy(enemy, dir)
+            ));
+        } else {
+            enemy.setCurrentDirection(dir);
+            enemy.addAction(
+                    moveBy(enemy, dir)
+            );
         }
-
-        enemy.setCurrentDirection(dir);
-
-        enemy.addAction(
-                moveBy(enemy, dir)
-        );
 
     }
 
@@ -78,6 +73,12 @@ public class WalkingState extends Level2State {
     public void manage(final Enemy enemy, float delta) {
         int x = Math.round(enemy.getX());
         int y = Math.round(enemy.getY());
+
+        if (Path.compare(enemy.getCurrentPositionIndex(), basePosition) && !removed) {
+            Gdx.app.log("INFO", enemy + " position equals to Base. Removing enemy");
+            remove(enemy);
+            return;
+        }
 
         if (x % DDGame.TILE_HEIGHT == 0 && y % DDGame.TILE_HEIGHT == 0
                 && !removed && isIterationAllowed(iteration)) {
@@ -113,11 +114,7 @@ public class WalkingState extends Level2State {
     protected final void remove(Enemy enemy) {
         EnemyStateManager manager = enemy.getSpawner().getStateManager();
         stateSwapper.update(enemy, enemy.getCurrentLevel1State(), manager.getFinishState(), 1);
-        enemy.addAction(
-                Actions.parallel(
-                        Actions.run(stateSwapper),
-                        Actions.hide())
-        );
+        enemy.addAction(Actions.run(stateSwapper));
         removed = true;
     }
 

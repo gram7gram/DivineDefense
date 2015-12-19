@@ -10,6 +10,7 @@ import ua.gram.model.PollableAnimation;
 public class AnimationPool extends Pool<PollableAnimation> {
 
     private final TextureRegion[] tiles;
+    private float delay = .1f;
 
     public AnimationPool(TextureRegion[] tiles) {
         super(4);
@@ -19,6 +20,10 @@ public class AnimationPool extends Pool<PollableAnimation> {
 
     @Override
     public PollableAnimation newObject() {
-        return new PollableAnimation(tiles);
+        return new PollableAnimation(delay, tiles);
+    }
+
+    public void setDelay(float delay) {
+        this.delay = delay;
     }
 }

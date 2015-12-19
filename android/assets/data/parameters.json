@@ -303,7 +303,8 @@
         {
           "index": 1,
           "enemies": [
-            "EnemySummoner",
+            "EnemyWarrior",
+            "EnemyRunner",
             "EnemyWarrior",
           ]
         },
@@ -416,7 +417,8 @@
       "reward": 10,
       "width": 60,
       "height": 90,
-      "spawnDuration": 1.5
+      "spawnDuration": 1.5,
+      "frameDuration": 0.1
     },
     {
       "name": "EnemySoldier",
@@ -427,7 +429,8 @@
       "reward": 10,
       "width": 60,
       "height": 90,
-      "spawnDuration": 1.5
+      "spawnDuration": 1.5,
+      "frameDuration": 0.1
     },
     {
       "name": "EnemySoldierArmored",
@@ -438,7 +441,8 @@
       "reward": 10,
       "width": 60,
       "height": 90,
-      "spawnDuration": 1.5
+      "spawnDuration": 1.5,
+      "frameDuration": 0.1
     },
     {
       "name": "EnemySummoner",
@@ -449,6 +453,7 @@
       "width": 60,
       "height": 90,
       "spawnDuration": 1.5,
+      "frameDuration": 0.1,
       "abilityDuration": 5,
       "abilityDelay": 2,
       "ability": true,
@@ -479,7 +484,8 @@
       "reward": 10,
       "width": 60,
       "height": 90,
-      "spawnDuration": 1.5
+      "spawnDuration": 1.5,
+      "frameDuration": 0.1
     }
   ],
   "towers": [
