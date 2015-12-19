@@ -36,7 +36,7 @@ public class AbilityState extends Level3State {
         float duration = ((AbilityUserInterface) enemy).getAbilityDuration();
         if (abilityDurationCount >= duration) {
             abilityDurationCount = 0;
-            manager.swapLevel2State(enemy, manager.getWalkingState());
+            manager.swapLevel2State(enemy, manager.getWalkingState(enemy));
             manager.swapLevel3State(enemy, null);
         } else {
             abilityDurationCount += delta;

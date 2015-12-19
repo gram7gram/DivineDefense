@@ -57,7 +57,7 @@ public class SpawnState extends InactiveState {
         EnemyStateManager manager = enemy.getSpawner().getStateManager();
         if (spawnDurationCount >= enemy.getSpawnDuration()) {
             manager.swapLevel1State(enemy, manager.getActiveState());
-            manager.swapLevel2State(enemy, manager.getWalkingState());
+            manager.swapLevel2State(enemy, manager.getWalkingState(enemy));
             spawnDurationCount = 0;
         } else {
             spawnDurationCount += delta;

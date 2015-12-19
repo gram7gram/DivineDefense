@@ -2,7 +2,6 @@ package ua.gram.controller.enemy;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Pool;
 import ua.gram.DDGame;
 import ua.gram.controller.Log;
@@ -11,7 +10,6 @@ import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.model.EnemyPath;
 import ua.gram.model.Level;
 import ua.gram.model.actor.enemy.*;
-import ua.gram.model.actor.misc.HealthBar;
 import ua.gram.model.group.EnemyGroup;
 import ua.gram.model.state.enemy.EnemyStateManager;
 
@@ -94,10 +92,8 @@ public final class EnemySpawner {
         stateManager.swapLevel1State(enemy, stateManager.getInactiveState());
         stateManager.swapLevel2State(enemy, stateManager.getIdleState());
         try {
-            Skin skin = game.getResources().getSkin();
             enemy.setPosition(spawn.x * DDGame.TILE_HEIGHT, spawn.y * DDGame.TILE_HEIGHT);
-            HealthBar bar = new HealthBar(skin, enemy);
-            EnemyGroup enemyGroup = new EnemyGroup(game, enemy, bar);
+            EnemyGroup enemyGroup = new EnemyGroup(game, enemy);
             enemyGroup.setVisible(true);
             enemy.setGroup(enemyGroup);
             enemy.setBattleStage(stage_battle);
@@ -133,10 +129,8 @@ public final class EnemySpawner {
         stateManager.swapLevel1State(enemy, stateManager.getInactiveState());
         stateManager.swapLevel2State(enemy, stateManager.getIdleState());
         try {
-            Skin skin = game.getResources().getSkin();
             enemy.setPosition(spawn.x * DDGame.TILE_HEIGHT, spawn.y * DDGame.TILE_HEIGHT);
-            HealthBar bar = new HealthBar(skin, enemy);
-            EnemyGroup enemyGroup = new EnemyGroup(game, enemy, bar);
+            EnemyGroup enemyGroup = new EnemyGroup(game, enemy);
             enemyGroup.setVisible(true);
             enemy.setGroup(enemyGroup);
             enemy.setBattleStage(stage_battle);

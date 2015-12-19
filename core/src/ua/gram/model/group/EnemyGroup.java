@@ -19,15 +19,14 @@ public class EnemyGroup extends Group {
 
     private final DDGame game;
     private final Enemy enemy;
-    private final HealthBar bar;
     private Actor origin;
     private Actor coordinates;
     private boolean test = true;
 
-    public EnemyGroup(DDGame game, Enemy enemy, HealthBar bar) {
+    public EnemyGroup(DDGame game, Enemy enemy) {
         this.game = game;
         this.enemy = enemy;
-        this.bar = bar;
+        HealthBar bar = new HealthBar(game.getResources().getSkin(), enemy);
         this.addActor(enemy);
         this.addActor(bar);
         if (DDGame.DEBUG) {
@@ -97,9 +96,5 @@ public class EnemyGroup extends Group {
 
     public Enemy getEnemy() {
         return enemy;
-    }
-
-    public HealthBar getHealthBar() {
-        return bar;
     }
 }

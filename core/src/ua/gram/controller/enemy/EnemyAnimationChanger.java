@@ -25,7 +25,7 @@ public class EnemyAnimationChanger implements Runnable {
 
     @Override
     public void run() {
-        if (enemy == null || dir == null || type == null) throw new NullPointerException("Missing required params");
+        if (enemy == null || type == null) throw new NullPointerException("Missing required params");
 
         EnemyAnimationProvider animationProvider = enemy.getAnimationProvider();
 
@@ -37,7 +37,7 @@ public class EnemyAnimationChanger implements Runnable {
         }
 
         //NOTE Next animation may have other direction, so update nessesary
-        enemy.setCurrentDirection(dir);
+        if (dir != null) enemy.setCurrentDirection(dir);
 
         try {
             AnimationPool pool = animationProvider.get(enemy, type);
@@ -53,5 +53,10 @@ public class EnemyAnimationChanger implements Runnable {
     public void update(Enemy enemy, Vector2 dir) {
         this.enemy = enemy;
         this.dir = dir;
+    }
+
+    public void update(Enemy enemy) {
+        this.enemy = enemy;
+        this.dir = null;
     }
 }

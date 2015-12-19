@@ -4,10 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import ua.gram.DDGame;
 import ua.gram.controller.Log;
+import ua.gram.model.actor.enemy.AbilityUser;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.state.StateInterface;
 import ua.gram.model.state.StateManager;
 import ua.gram.model.state.enemy.level1.*;
+import ua.gram.model.state.enemy.level2.AbilityWalkingState;
 import ua.gram.model.state.enemy.level2.IdleState;
 import ua.gram.model.state.enemy.level2.Level2State;
 import ua.gram.model.state.enemy.level2.WalkingState;
@@ -31,6 +33,7 @@ public final class EnemyStateManager extends StateManager<Enemy> {
     //Level 2
     private IdleState idleState;
     private WalkingState walkingState;
+    private AbilityWalkingState abilityWalkingState;
     //Level 3
     private AbilityState abilityState;
     //Level 4
@@ -52,6 +55,7 @@ public final class EnemyStateManager extends StateManager<Enemy> {
         if (walkingState == null) walkingState = new WalkingState(game);
         if (abilityState == null) abilityState = new AbilityState(game);
         if (inactiveState == null) inactiveState = new InactiveState(game);
+        if (abilityWalkingState == null) abilityWalkingState = new AbilityWalkingState(game);
     }
 
     @Override
@@ -200,8 +204,8 @@ public final class EnemyStateManager extends StateManager<Enemy> {
         return spawnState;
     }
 
-    public WalkingState getWalkingState() {
-        return walkingState;
+    public WalkingState getWalkingState(Enemy enemy) {
+        return enemy instanceof AbilityUser ? abilityWalkingState : walkingState;
     }
 
     public ActiveState getActiveState() {
