@@ -19,6 +19,9 @@ public class FinishState extends InactiveState {
     @Override
     public void preManage(Enemy enemy) {
         super.preManage(enemy);
+
+        enemy.isRemoved = true;
+
         Gdx.app.log("INFO", enemy + " reaches the Base");
         enemy.getAnimationProvider().get(enemy).free(enemy);
         Gdx.app.log("INFO", enemy + " frees animation");
@@ -34,4 +37,5 @@ public class FinishState extends InactiveState {
         Player player = this.getGame().getPlayer();
         player.decreaseHealth();
     }
+
 }

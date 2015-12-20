@@ -51,16 +51,6 @@ public class GameUIGroup extends Group {
             }
         });
 
-        Button speedBut = new Button(skin, "speed-button");
-        speedBut.setPosition(gap, DDGame.WORLD_HEIGHT - butHeight - gap);
-        speedBut.setSize(butHeight, butHeight);
-        speedBut.setVisible(true);
-        speedBut.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                game.setGameSpeed(game.getGameSpeed() < 1 ? 1 : 0.5f);
-            }
-        });
         Vector2 pos = level.getMap().getSpawn().getPosition();
 
         counter = new CounterButton(game, level, new Vector2(pos.x, pos.y));
@@ -122,8 +112,21 @@ public class GameUIGroup extends Group {
                 )
         );
 
+        if (DDGame.DEBUG) {
+            Button speedBut = new Button(skin, "speed-button");
+            speedBut.setPosition(gap, DDGame.WORLD_HEIGHT - butHeight - gap);
+            speedBut.setSize(butHeight, butHeight);
+            speedBut.setVisible(true);
+            speedBut.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    float speed = game.getGameSpeed() < 1 ? game.decreaseGameSpeed() : game.increaseGameSpeed();
+                }
+            });
+            this.addActor(speedBut);
+        }
+
         this.addActor(pauseBut);
-        this.addActor(speedBut);
         this.addActor(notificationLabel);
         this.addActor(counter);
         this.addActor(labels);

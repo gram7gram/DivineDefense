@@ -197,6 +197,16 @@ public class DDGame<P extends GamePrototype> extends Game {
         this.gameSpeed = gameSpeed;
     }
 
+    public float increaseGameSpeed() {
+        gameSpeed = .5f;
+        return gameSpeed;
+    }
+
+    public float decreaseGameSpeed() {
+        gameSpeed = 1;
+        return gameSpeed;
+    }
+
     public GamePrototype getPrototype() {
         return prototype;
     }

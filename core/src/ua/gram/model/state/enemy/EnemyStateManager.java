@@ -101,7 +101,7 @@ public final class EnemyStateManager extends StateManager<Enemy> {
         }
 
         if (current == newState) {
-            Gdx.app.log("WARN", "Ignored swap " + current + " to " + newState + " on " + enemy);
+            Log.warn("Ignored swap " + current + " to " + newState + " on " + enemy);
             return;
         }
 
@@ -175,7 +175,7 @@ public final class EnemyStateManager extends StateManager<Enemy> {
         enemy.setCurrentLevel2State(null);
         enemy.setCurrentLevel3State(null);
         enemy.setCurrentLevel4State(null);
-        Gdx.app.log("INFO", enemy + " states has been reseted");
+        Gdx.app.log("INFO", enemy + " states have been reset");
     }
 
     public DeadState getDeadState() {

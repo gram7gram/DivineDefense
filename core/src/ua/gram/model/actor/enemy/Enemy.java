@@ -34,7 +34,6 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
     public final float defaultArmor;
     public final int reward;
     public final EnemyPrototype prototype;
-    private final Vector2 originPosition;
     public float health;
     public float speed;
     public float armor;
@@ -43,15 +42,17 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
     public boolean isAttacked;
     public boolean isAffected;
     public boolean isDead;
+    public boolean isRemoved;
     protected DDGame game;
     protected EnemyPath path;
     private float stateTime = 0;
-    private GameBattleStage stage_battle;
+    private GameBattleStage battleStage;
     private EnemyAnimationProvider animationProvider;
     private EnemySpawner spawner;
     private EnemyGroup group;
     private TextureRegion currentFrame;
     private Animator animator;
+    private Vector2 originPosition;
     private Vector2 currentDirection;
     private Vector2 previousDirection;
     private Path.Types previousDirectionType;
@@ -80,7 +81,7 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
         isStunned = false;
         isAffected = false;
         isDead = false;
-        isAttacked = false;
+        isRemoved = false;
         currentDirection = Vector2.Zero;
         previousDirection = Vector2.Zero;
         originPosition = Vector2.Zero;
@@ -101,7 +102,7 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
     @Override
     public void act(float delta) {
         super.act(delta);
-        if (!DDGame.PAUSE) {
+        if (!DDGame.PAUSE && !isRemoved) {
             if (game.getGameSpeed() != 1)
                 animationProvider.get(this, animator.getType()).setDelay(game.getGameSpeed() * prototype.frameDuration);
             update(delta);
@@ -109,7 +110,7 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
             if (this.health <= 0 && currentLevel1State != stateManager.getDeadState()) {
                 stateManager.swapLevel1State(this, stateManager.getDeadState());
             } else {
-                stage_battle.updateActorIndex(this);
+                battleStage.updateActorIndex(this);
                 if (isStunned && !isAffected) {
                     stateManager.swapLevel4State(this, stateManager.getStunState());
                 } else if (!isStunned && isAffected) {
@@ -128,15 +129,22 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
 
     @Override
     public void reset() {
-        this.health = defaultHealth;
-        this.speed = defaultSpeed;
-        this.armor = defaultArmor;
-        stateTime = 0;
-        currentFrame = null;
         EnemyStateManager stateManager = spawner.getStateManager();
         stateManager.reset(this);
-//        stateManager.swapLevel1State(this, stateManager.getInactiveState());
-//        stateManager.swapLevel2State(this, stateManager.getIdleState());
+        health = prototype.health;
+        speed = prototype.speed;
+        armor = prototype.armor;
+        stateTime = 0;
+        path = null;
+        currentFrame = null;
+        isStunned = false;
+        isAffected = false;
+        isDead = false;
+        isAttacked = false;
+        isRemoved = false;
+        currentDirection = Vector2.Zero;
+        previousDirection = Vector2.Zero;
+        originPosition = Vector2.Zero;
         Gdx.app.log("INFO", this + " was reset");
     }
 
@@ -152,13 +160,13 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
         return animator.getPoolable().getAnimation();
     }
 
-    public void setAnimation(PollableAnimation animation) {
-        this.animator.setPollable(animation);
-    }
-
     public void setAnimation(Animator.Types type) {
         AnimationPool pool = animationProvider.get(this, type);
         this.setAnimation(pool.obtain());
+    }
+
+    public void setAnimation(PollableAnimation animation) {
+        this.animator.setPollable(animation);
     }
 
     public void damage(float damage) {
@@ -202,10 +210,6 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
 
     public void setGroup(EnemyGroup group) {
         this.group = group;
-    }
-
-    public void setBattleStage(GameBattleStage stage_battle) {
-        this.stage_battle = stage_battle;
     }
 
     public Level1State getCurrentLevel1State() {
@@ -316,5 +320,13 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
 
     public PollableAnimation getPoolableAnimation() {
         return animator.getPoolable();
+    }
+
+    public GameBattleStage getBattleStage() {
+        return battleStage;
+    }
+
+    public void setBattleStage(GameBattleStage stage_battle) {
+        this.battleStage = stage_battle;
     }
 }

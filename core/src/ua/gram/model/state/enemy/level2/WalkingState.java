@@ -25,7 +25,6 @@ public class WalkingState extends Level2State {
     private int prevX;
     private int prevY;
     private int iteration;
-    private boolean removed;
 
     public WalkingState(DDGame game) {
         super(game);
@@ -74,14 +73,15 @@ public class WalkingState extends Level2State {
         int x = Math.round(enemy.getX());
         int y = Math.round(enemy.getY());
 
-        if (Path.compare(enemy.getCurrentPositionIndex(), basePosition) && !removed) {
-            Gdx.app.log("INFO", enemy + " position equals to Base. Removing enemy");
+        if (enemy.isRemoved) return;
+
+        if (Path.compare(enemy.getCurrentPositionIndex(), basePosition)) {
+            Log.info(enemy + " position equals to Base. Removing enemy");
             remove(enemy);
             return;
         }
 
-        if (x % DDGame.TILE_HEIGHT == 0 && y % DDGame.TILE_HEIGHT == 0
-                && !removed && isIterationAllowed(iteration)) {
+        if (x % DDGame.TILE_HEIGHT == 0 && y % DDGame.TILE_HEIGHT == 0 && isIterationAllowed(iteration)) {
             if ((prevX != x || prevY != y)) {
                 iteration = 0;
                 try {
@@ -89,7 +89,7 @@ public class WalkingState extends Level2State {
                     move(enemy, delta, x, y);
 
                 } catch (EmptyStackException e) {
-                    Gdx.app.log("WARN", "Direction stack is empty. Removing " + enemy);
+                    Log.warn("Direction stack is empty. Removing " + enemy);
                     remove(enemy);
                 } catch (NullPointerException e) {
                     Log.exc("Required variable is NULL. Removing " + enemy, e);
@@ -113,9 +113,7 @@ public class WalkingState extends Level2State {
 
     protected final void remove(Enemy enemy) {
         EnemyStateManager manager = enemy.getSpawner().getStateManager();
-        stateSwapper.update(enemy, enemy.getCurrentLevel1State(), manager.getFinishState(), 1);
-        enemy.addAction(Actions.run(stateSwapper));
-        removed = true;
+        manager.swap(enemy, enemy.getCurrentLevel1State(), manager.getFinishState(), 1);
     }
 
     protected final boolean isIterationAllowed(int iteration) {
@@ -126,7 +124,6 @@ public class WalkingState extends Level2State {
         prevX = -1;
         prevY = -1;
         iteration = 0;
-        removed = false;
     }
 
     @Override
