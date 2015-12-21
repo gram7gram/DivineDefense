@@ -13,12 +13,12 @@ public interface AnimationControllerInterface<A extends GameActor> {
 
     /**
      * Gets corresponding Atlas region from
-     * the texture and splits it, acording
-     * to animationWidth and animationHeight.
+     * the texture and split it, acording
+     * to animationWidth and animationHeight, available for owner Actor
      *
      * @return splitted array of tiles
      */
-    TextureRegion[] setAnimationRegion(Animator.Types type, Path.Types direction, Animator.Types ability) throws Exception;
+    TextureRegion[] getAnimationRegion(Animator.Types type, Path.Types direction) throws Exception;
 
     void init(A actor);
 

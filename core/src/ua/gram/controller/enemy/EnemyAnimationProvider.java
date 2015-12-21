@@ -13,7 +13,6 @@ import ua.gram.model.map.Path;
  */
 public class EnemyAnimationProvider {
 
-    public static final float DELAY = 1 / 10f;
     private final Skin skin;
     private final EnemyAnimation soldierAnimation;
     private final EnemyAnimation soldierArmoredAnimation;
@@ -23,17 +22,18 @@ public class EnemyAnimationProvider {
 
     public EnemyAnimationProvider(Skin skin) throws NullPointerException {
         this.skin = skin;
-        soldierAnimation = new EnemyAnimation(GameActor.Types.SOLDIER, this);
-        soldierArmoredAnimation = new EnemyAnimation(GameActor.Types.SOLDIER_ARMORED, this);
-        runnerAnimation = new EnemyAnimation(GameActor.Types.RUNNER, this);
-        warriorAnimation = new EnemyAnimation(GameActor.Types.WARRIOR, this);
-        summomerAnimation = new EnemyAnimation(GameActor.Types.SUMMONER, this);
+        runnerAnimation = new EnemyAnimation(this);
+        warriorAnimation = new EnemyAnimation(this);
+        soldierAnimation = new EnemyAnimation(this);
+        summomerAnimation = new EnemyAnimation(this);
+        soldierArmoredAnimation = new EnemyAnimation(this);
     }
 
     public void init(Enemy enemy) {
         //subclass first
         if (enemy instanceof EnemySoldierArmored && !soldierArmoredAnimation.initialized)
             soldierArmoredAnimation.init(enemy);
+
             //now concrete classes
         else if (enemy instanceof EnemySoldier && !soldierAnimation.initialized)
             soldierAnimation.init(enemy);
@@ -56,7 +56,15 @@ public class EnemyAnimationProvider {
     }
 
     public AnimationPool get(Enemy enemy, Animator.Types type) throws IllegalArgumentException {
-        return this.get(enemy.getOriginType()).get(type).get(enemy.getCurrentDirectionType());
+        return this.get(enemy.getOriginType())
+                .get(type)
+                .get(enemy.getCurrentDirectionType());
+    }
+
+    public AnimationPool getPool(Enemy enemy) throws IllegalArgumentException {
+        return this.get(enemy.getOriginType())
+                .get(enemy.getAnimator().getType())
+                .get(enemy.getCurrentDirectionType());
     }
 
     public EnemyAnimation get(Enemy enemy) {

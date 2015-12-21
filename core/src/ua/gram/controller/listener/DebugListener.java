@@ -13,18 +13,19 @@ public class DebugListener extends InputListener {
 
     @Override
     public boolean keyDown(InputEvent event, int keycode) {
-        if (keycode == Input.Keys.D) {
-            DDGame.DEBUG = !DDGame.DEBUG;
-            Gdx.app.log("INFO", "Debuging is " + (DDGame.DEBUG ? "on" : "off"));
-        } else if (keycode == Input.Keys.PLUS) {
-            DDGame.DEBUG = true;
-            Gdx.app.log("INFO", "Debuging is on");
-        } else if (keycode == Input.Keys.MINUS) {
-            DDGame.DEBUG = false;
-            Gdx.app.log("INFO", "Debuging is off");
-        } else if (keycode == Input.Keys.ESCAPE) {
-            Gdx.app.log("WARN", "Pressed ESC in debug mode. Will exit");
-            Gdx.app.exit();
+        switch (keycode) {
+            case Input.Keys.PLUS:
+                DDGame.DEBUG = true;
+                Gdx.app.log("INFO", "Debuging is on");
+                break;
+            case Input.Keys.MINUS:
+                DDGame.DEBUG = false;
+                Gdx.app.log("INFO", "Debuging is off");
+                break;
+            case Input.Keys.ESCAPE:
+                Gdx.app.log("WARN", "Pressed ESC in debug mode. Will exit");
+                Gdx.app.exit();
+                break;
         }
         return super.keyDown(event, keycode);
     }

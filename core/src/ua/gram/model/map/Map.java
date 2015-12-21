@@ -42,12 +42,34 @@ public class Map {
         Gdx.app.log("INFO", "Map is OK");
     }
 
+    public boolean checkSpawnPosition(Vector2 pos) {
+        TiledMapTileLayer layer = this.getActiveLayer();
+        TiledMapTileLayer.Cell cell = layer.getCell((int) pos.x, (int) pos.y);
+        if (cell != null) {
+            MapProperties prop = cell.getTile().getProperties();
+            return prop.containsKey(prototype.walkableProperty);
+        } else {
+            return false;
+        }
+    }
+
+    public boolean checkPosition(Vector2 pos, String property) {
+        TiledMapTileLayer layer = this.getActiveLayer();
+        TiledMapTileLayer.Cell cell = layer.getCell((int) pos.x, (int) pos.y);
+        if (cell != null) {
+            MapProperties prop = cell.getTile().getProperties();
+            return prop.containsKey(property);
+        } else {
+            return false;
+        }
+    }
+
     /**
      * Parses whole map grid, looking for 'spawn' property of the tile.
      * If found one, new Spawn object is created and search is aborted.
      */
     private HashMap<String, Vector2> findMapPoints() {
-        HashMap<String, Vector2> map = new HashMap<String, Vector2>(2);
+        HashMap<String, Vector2> map = new HashMap<>(2);
         for (int x = 0; x < layer.getWidth(); x++) {
             for (int y = 0; y < layer.getHeight(); y++) {
                 properties = layer.getCell(x, y).getTile().getProperties();
@@ -79,6 +101,10 @@ public class Map {
     public EnemyPath normalizePath(Vector2 lastDir, Vector2 start) {
         if (lastDir == null || start == null) throw new NullPointerException("Path normalization impossible");
         EnemyPath path = new EnemyPath();
+        if (Path.equal(start, base.getPosition())) {
+            path.addDirection(Path.opposite(lastDir));
+            return path;
+        }
         Vector2 position = Path.clone(start);
         boolean isFound = false;
         int count = 0;

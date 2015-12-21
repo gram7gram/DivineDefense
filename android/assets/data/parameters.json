@@ -55,11 +55,267 @@
   },
   "player": {
     "id": 0,
-    "health": 10,
-    "money": 250,
+    "health": 1000,
+    "coins": 250,
     "gems": 7,
     "fraction": null
   },
+  "levels": [
+    {
+      "level": 1,
+      "map": {
+        "layer": "Terrain",
+        "walkableProperty": "walkable",
+        "spawnProperty": "spawn",
+        "baseProperty": "base",
+        "name": "data/levels/maps/level1@60.tmx"
+      },
+      "difficulty": 1,
+      "ranking": 3,
+      "preview": "level-1-preview",
+      "resources": [],
+      "locked": false,
+      "initialDirection": {
+        "x": 0,
+        "y": 1
+      },
+      "waves": [
+        {
+          "index": 1,
+          "enemies": [
+            "EnemyWarrior",
+            "EnemyRunner",
+            "EnemyWarrior",
+            "EnemySummoner",
+            "EnemySummoner"
+          ]
+        },
+        {
+          "index": 2,
+          "enemies": [
+            "EnemySoldier",
+            "EnemyWarrior",
+            "EnemyWarrior",
+            "EnemySummoner",
+            "EnemySummoner",
+            "EnemySoldierArmored",
+            "EnemyRunner"
+          ]
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "map": {
+        "layer": "Terrain",
+        "walkableProperty": "walkable",
+        "spawnProperty": "spawn",
+        "baseProperty": "base",
+        "name": "data/levels/maps/level2@60.tmx"
+      },
+      "difficulty": 1,
+      "ranking": 0,
+      "preview": "level-2-preview",
+      "resources": [],
+      "locked": false,
+      "initialDirection": {
+        "x": 1,
+        "y": 0
+      },
+      "waves": [
+        {
+          "index": 1,
+          "enemies": [
+            "EnemyRunner",
+            "EnemyWarrior"
+          ]
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "map": {
+        "layer": "Terrain",
+        "walkableProperty": "walkable",
+        "spawnProperty": "spawn",
+        "baseProperty": "base",
+        "name": "data/levels/maps/level3@60.tmx"
+      },
+      "difficulty": 1,
+      "ranking": 0,
+      "preview": "level-3-preview",
+      "resources": [],
+      "locked": true,
+      "initialDirection": {
+        "x": 0,
+        "y": 1
+      },
+      "waves": [
+        {
+          "index": 1,
+          "enemies": [
+            "EnemyRunner",
+            "EnemyWarrior"
+          ]
+        }
+      ]
+    },
+    {
+      "level": 4,
+      "map": {
+        "layer": "Terrain",
+        "walkableProperty": "walkable",
+        "spawnProperty": "spawn",
+        "baseProperty": "base",
+        "name": "data/levels/maps/level4@60.tmx"
+      },
+      "difficulty": 1,
+      "ranking": 0,
+      "preview": "level-2-preview",
+      "resources": [],
+      "locked": true,
+      "initialDirection": {
+        "x": 0,
+        "y": 1
+      },
+      "waves": [
+        {
+          "index": 1,
+          "enemies": [
+            "EnemyRunner",
+            "EnemyWarrior"
+          ]
+        }
+      ]
+    }
+  ],
+  "enemies": [
+    {
+      "name": "EnemyRunner",
+      "ability": false,
+      "health": 110,
+      "speed": 1,
+      "armor": 10,
+      "reward": 10,
+      "width": 60,
+      "height": 90,
+      "spawnDuration": 1.5,
+      "frameDuration": 0.1
+    },
+    {
+      "name": "EnemySoldier",
+      "ability": false,
+      "health": 110,
+      "speed": 1.6,
+      "armor": 10,
+      "reward": 10,
+      "width": 60,
+      "height": 90,
+      "spawnDuration": 1.5,
+      "frameDuration": 0.1
+    },
+    {
+      "name": "EnemySoldierArmored",
+      "ability": false,
+      "health": 110,
+      "speed": 1.4,
+      "armor": 10,
+      "reward": 10,
+      "width": 60,
+      "height": 90,
+      "spawnDuration": 1.5,
+      "frameDuration": 0.1
+    },
+    {
+      "name": "EnemySummoner",
+      "health": 110,
+      "speed": 3.5,
+      "armor": 10,
+      "reward": 10,
+      "width": 60,
+      "height": 90,
+      "spawnDuration": 1.5,
+      "frameDuration": 0.1,
+      "abilityDuration": 3,
+      "abilityDelay": 4,
+      "ability": true,
+      "abilityConfig": {
+        "type": "SUMMON",
+        "content": [
+          {
+            "origin": "EnemySoldier",
+            "probability": 0.7,
+            "amount": 1
+          },
+          {
+            "origin": "EnemySoldierArmored",
+            "probability": 0.1,
+            "amount": 1
+          }
+        ],
+        "abilityDuration": 2,
+        "abilityDelay": 2
+      }
+    },
+    {
+      "name": "EnemyWarrior",
+      "ability": false,
+      "health": 110,
+      "speed": 0.9,
+      "armor": 10,
+      "reward": 10,
+      "width": 60,
+      "height": 90,
+      "spawnDuration": 1.5,
+      "frameDuration": 0.1
+    }
+  ],
+  "towers": [
+    {
+      "name": "TowerPrimary",
+      "towerLevel": 1,
+      "powerLevel": 1,
+      "damage": 50,
+      "range": 1.3,
+      "rate": 1,
+      "cost": 40,
+      "width": 60,
+      "height": 90
+    },
+    {
+      "name": "TowerSecondary",
+      "towerLevel": 1,
+      "powerLevel": 1,
+      "damage": 5,
+      "range": 1.3,
+      "rate": 0.5,
+      "cost": 60,
+      "width": 60,
+      "height": 90
+    },
+    {
+      "name": "TowerSpecial",
+      "towerLevel": 1,
+      "powerLevel": 1,
+      "damage": 5,
+      "range": 2,
+      "rate": 0.5,
+      "cost": 70,
+      "width": 60,
+      "height": 90
+    },
+    {
+      "name": "TowerStun",
+      "towerLevel": 1,
+      "powerLevel": 1,
+      "damage": 5,
+      "range": 1,
+      "rate": 0.5,
+      "cost": 50,
+      "width": 60,
+      "height": 90
+    }
+  ],
   "market": {
     "categories": [
       {
@@ -279,259 +535,5 @@
         ]
       }
     ]
-  },
-  "levels": [
-    {
-      "level": 1,
-      "map": {
-        "layer": "Terrain",
-        "walkableProperty": "walkable",
-        "spawnProperty": "spawn",
-        "baseProperty": "base",
-        "name": "data/levels/maps/level1@60.tmx"
-      },
-      "difficulty": 1,
-      "ranking": 3,
-      "preview": "level-1-preview",
-      "resources": [],
-      "locked": false,
-      initialDirection: {
-        x: 0,
-        y: 1
-      },
-      "waves": [
-        {
-          "index": 1,
-          "enemies": [
-            "EnemyWarrior",
-            "EnemyRunner",
-            "EnemyWarrior",
-          ]
-        },
-        {
-          "index": 2,
-          "enemies": [
-            "EnemySoldier",
-            "EnemyWarrior",
-            "EnemyWarrior",
-            "EnemySummoner",
-            "EnemySummoner",
-            "EnemySoldierArmored",
-            "EnemyRunner"
-          ]
-        }
-      ]
-    },
-    {
-      "level": 2,
-      "map": {
-        "layer": "Terrain",
-        "walkableProperty": "walkable",
-        "spawnProperty": "spawn",
-        "baseProperty": "base",
-        "name": "data/levels/maps/level2@60.tmx"
-      },
-      "difficulty": 1,
-      "ranking": 0,
-      "preview": "level-2-preview",
-      "resources": [],
-      "locked": false,
-      initialDirection: {
-        x: 1,
-        y: 0
-      },
-      "waves": [
-        {
-          "index": 1,
-          "enemies": [
-            "EnemyRunner",
-            "EnemyWarrior"
-          ]
-        }
-      ]
-    },
-    {
-      "level": 3,
-      "map": {
-        "layer": "Terrain",
-        "walkableProperty": "walkable",
-        "spawnProperty": "spawn",
-        "baseProperty": "base",
-        "name": "data/levels/maps/level3@60.tmx"
-      },
-      "difficulty": 1,
-      "ranking": 0,
-      "preview": "level-3-preview",
-      "resources": [],
-      "locked": true,
-      initialDirection: {
-        x: 0,
-        y: 1
-      },
-      "waves": [
-        {
-          "index": 1,
-          "enemies": [
-            "EnemyRunner",
-            "EnemyWarrior"
-          ]
-        }
-      ]
-    },
-    {
-      "level": 4,
-      "map": {
-        "layer": "Terrain",
-        "walkableProperty": "walkable",
-        "spawnProperty": "spawn",
-        "baseProperty": "base",
-        "name": "data/levels/maps/level4@60.tmx"
-      },
-      "difficulty": 1,
-      "ranking": 0,
-      "preview": "level-2-preview",
-      "resources": [],
-      "locked": true,
-      initialDirection: {
-        x: 0,
-        y: 1
-      },
-      "waves": [
-        {
-          "index": 1,
-          "enemies": [
-            "EnemyRunner",
-            "EnemyWarrior"
-          ]
-        }
-      ]
-    }
-  ],
-  "enemies": [
-    {
-      "name": "EnemyRunner",
-      "ability": false,
-      "health": 110,
-      "speed": 1,
-      "armor": 10,
-      "reward": 10,
-      "width": 60,
-      "height": 90,
-      "spawnDuration": 1.5,
-      "frameDuration": 0.1
-    },
-    {
-      "name": "EnemySoldier",
-      "ability": false,
-      "health": 110,
-      "speed": 1.6,
-      "armor": 10,
-      "reward": 10,
-      "width": 60,
-      "height": 90,
-      "spawnDuration": 1.5,
-      "frameDuration": 0.1
-    },
-    {
-      "name": "EnemySoldierArmored",
-      "ability": false,
-      "health": 110,
-      "speed": 1.4,
-      "armor": 10,
-      "reward": 10,
-      "width": 60,
-      "height": 90,
-      "spawnDuration": 1.5,
-      "frameDuration": 0.1
-    },
-    {
-      "name": "EnemySummoner",
-      "health": 110,
-      "speed": 3.5,
-      "armor": 10,
-      "reward": 10,
-      "width": 60,
-      "height": 90,
-      "spawnDuration": 1.5,
-      "frameDuration": 0.1,
-      "abilityDuration": 5,
-      "abilityDelay": 2,
-      "ability": true,
-      "abilityConfig": {
-        "type": "SUMMON",
-        "content": [
-          {
-            "origin": "EnemySoldier",
-            "probability": 0.7,
-            "amount": 1
-          },
-          {
-            "origin": "EnemySoldierArmored",
-            "probability": 0.1,
-            "amount": 1
-          }
-        ],
-        "abilityDuration": 2,
-        "abilityDelay": 2
-      }
-    },
-    {
-      "name": "EnemyWarrior",
-      "ability": false,
-      "health": 110,
-      "speed": 0.9,
-      "armor": 10,
-      "reward": 10,
-      "width": 60,
-      "height": 90,
-      "spawnDuration": 1.5,
-      "frameDuration": 0.1
-    }
-  ],
-  "towers": [
-    {
-      "name": "TowerPrimary",
-      "towerLevel": 1,
-      "powerLevel": 1,
-      "damage": 50,
-      "range": 1.3,
-      "rate": 1,
-      "cost": 40,
-      "width": 60,
-      "height": 90
-    },
-    {
-      "name": "TowerSecondary",
-      "towerLevel": 1,
-      "powerLevel": 1,
-      "damage": 5,
-      "range": 1.3,
-      "rate": 0.5,
-      "cost": 60,
-      "width": 60,
-      "height": 90
-    },
-    {
-      "name": "TowerSpecial",
-      "towerLevel": 1,
-      "powerLevel": 1,
-      "damage": 5,
-      "range": 2,
-      "rate": 0.5,
-      "cost": 70,
-      "width": 60,
-      "height": 90
-    },
-    {
-      "name": "TowerStun",
-      "towerLevel": 1,
-      "powerLevel": 1,
-      "damage": 5,
-      "range": 1,
-      "rate": 0.5,
-      "cost": 50,
-      "width": 60,
-      "height": 90
-    }
-  ]
+  }
 }

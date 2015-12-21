@@ -1,10 +1,11 @@
 package ua.gram.controller.pool.animation;
 
-import com.badlogic.gdx.Gdx;
+import ua.gram.controller.Log;
 import ua.gram.model.Animator;
 import ua.gram.model.map.Path;
 
 /**
+ * Holds pools for each direction, available in the game.
  * @author Gram <gram7gram@gmail.com>
  */
 public class EnemyDirectionAnimationPool implements DirectionPoolInterface {
@@ -14,20 +15,23 @@ public class EnemyDirectionAnimationPool implements DirectionPoolInterface {
     protected AnimationPool downPool;
     protected AnimationPool upPool;
 
-    public EnemyDirectionAnimationPool() {
+    public EnemyDirectionAnimationPool(EnemyAnimation provider, Animator.Types type) {
+        leftPool = new AnimationPool(provider.getAnimationRegion(type, Path.Types.LEFT));
+        rightPool = new AnimationPool(provider.getAnimationRegion(type, Path.Types.RIGHT));
+        downPool = new AnimationPool(provider.getAnimationRegion(type, Path.Types.DOWN));
+        upPool = new AnimationPool(provider.getAnimationRegion(type, Path.Types.UP));
+        Log.info("DirectionPool for " + type + " is OK");
     }
 
-    public EnemyDirectionAnimationPool(Animator.Types type, EnemyAnimation provider) {
-        leftPool = new AnimationPool(provider.setAnimationRegion(type, Path.Types.LEFT, null));
-        rightPool = new AnimationPool(provider.setAnimationRegion(type, Path.Types.RIGHT, null));
-        downPool = new AnimationPool(provider.setAnimationRegion(type, Path.Types.DOWN, null));
-        upPool = new AnimationPool(provider.setAnimationRegion(type, Path.Types.UP, null));
-        Gdx.app.log("INFO", "DirectionPool for " + type + " is OK");
-    }
-
+    /**
+     * Get a pool by direction enum
+     *
+     * @param direction
+     * @return corresponding to direction pool
+     */
     public AnimationPool get(Path.Types direction) {
         if (direction == null) {
-            Gdx.app.log("WARN", "Direction type is NULL. Using default");
+            Log.warn("Direction type is NULL. Using default");
             return downPool;
         }
         switch (direction) {

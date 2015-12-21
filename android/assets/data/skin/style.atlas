@@ -39,14 +39,14 @@ EnemyRunner_Demon_DEAD_LEFT
   orig: 540, 90
   offset: 0, 0
   index: -1
-EnemyRunner_Demon_WALKING_LEFT
+EnemyRunner_Demon_SPAWN_LEFT
   rotate: false
   xy: 2256, 1793
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-EnemyRunner_Demon_SPAWN_LEFT
+EnemyRunner_Demon_WALKING_LEFT
   rotate: false
   xy: 2256, 1793
   size: 540, 90
@@ -102,14 +102,14 @@ EnemyRunner_Demon_FINISH_UP
   orig: 540, 90
   offset: 0, 0
   index: -1
-EnemyRunner_Demon_SPAWN_UP
+EnemyRunner_Demon_WALKING_UP
   rotate: false
   xy: 2256, 1609
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-EnemyRunner_Demon_WALKING_UP
+EnemyRunner_Demon_SPAWN_UP
   rotate: false
   xy: 2256, 1609
   size: 540, 90
@@ -151,6 +151,13 @@ EnemySoldierArmored_Demon_DEAD_DOWN
   orig: 540, 90
   offset: 0, 0
   index: -1
+EnemySoldierArmored_Demon_WALKING_DOWN
+  rotate: false
+  xy: 2256, 1517
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
 EnemySoldierArmored_Demon_FINISH_DOWN
   rotate: false
   xy: 2256, 1517
@@ -165,21 +172,7 @@ EnemySoldierArmored_Demon_SPAWN_DOWN
   orig: 540, 90
   offset: 0, 0
   index: -1
-EnemySoldierArmored_Demon_WALKING_DOWN
-  rotate: false
-  xy: 2256, 1517
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
 EnemySoldierArmored_Demon_DEAD_LEFT
-  rotate: false
-  xy: 2256, 1425
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
-EnemySoldierArmored_Demon_SPAWN_LEFT
   rotate: false
   xy: 2256, 1425
   size: 540, 90
@@ -200,21 +193,14 @@ EnemySoldierArmored_Demon_WALKING_LEFT
   orig: 540, 90
   offset: 0, 0
   index: -1
+EnemySoldierArmored_Demon_SPAWN_LEFT
+  rotate: false
+  xy: 2256, 1425
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
 EnemySoldierArmored_Demon_DEAD_RIGHT
-  rotate: false
-  xy: 454, 879
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
-EnemySoldierArmored_Demon_WALKING_RIGHT
-  rotate: false
-  xy: 454, 879
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
-EnemySoldierArmored_Demon_SPAWN_RIGHT
   rotate: false
   xy: 454, 879
   size: 540, 90
@@ -228,6 +214,20 @@ EnemySoldierArmored_Demon_FINISH_RIGHT
   orig: 540, 90
   offset: 0, 0
   index: -1
+EnemySoldierArmored_Demon_SPAWN_RIGHT
+  rotate: false
+  xy: 454, 879
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+EnemySoldierArmored_Demon_WALKING_RIGHT
+  rotate: false
+  xy: 454, 879
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
 EnemySoldierArmored_Demon_DEAD_UP
   rotate: false
   xy: 454, 787
@@ -235,7 +235,7 @@ EnemySoldierArmored_Demon_DEAD_UP
   orig: 540, 90
   offset: 0, 0
   index: -1
-EnemySoldierArmored_Demon_SPAWN_UP
+EnemySoldierArmored_Demon_WALKING_UP
   rotate: false
   xy: 454, 787
   size: 540, 90
@@ -249,7 +249,7 @@ EnemySoldierArmored_Demon_FINISH_UP
   orig: 540, 90
   offset: 0, 0
   index: -1
-EnemySoldierArmored_Demon_WALKING_UP
+EnemySoldierArmored_Demon_SPAWN_UP
   rotate: false
   xy: 454, 787
   size: 540, 90
@@ -305,13 +305,6 @@ EnemySoldier_Demon_FINISH_DOWN
   orig: 540, 90
   offset: 0, 0
   index: -1
-EnemySoldier_Demon_WALKING_DOWN
-  rotate: false
-  xy: 454, 695
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
 EnemySoldier_Demon_IDLE_DOWN
   rotate: false
   xy: 454, 695
@@ -319,21 +312,14 @@ EnemySoldier_Demon_IDLE_DOWN
   orig: 540, 90
   offset: 0, 0
   index: -1
+EnemySoldier_Demon_WALKING_DOWN
+  rotate: false
+  xy: 454, 695
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
 EnemySoldier_Demon_DEAD_LEFT
-  rotate: false
-  xy: 3058, 1895
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
-EnemySoldier_Demon_IDLE_LEFT
-  rotate: false
-  xy: 3058, 1895
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
-EnemySoldier_Demon_SPAWN_LEFT
   rotate: false
   xy: 3058, 1895
   size: 540, 90
@@ -354,7 +340,28 @@ EnemySoldier_Demon_WALKING_LEFT
   orig: 540, 90
   offset: 0, 0
   index: -1
+EnemySoldier_Demon_IDLE_LEFT
+  rotate: false
+  xy: 3058, 1895
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+EnemySoldier_Demon_SPAWN_LEFT
+  rotate: false
+  xy: 3058, 1895
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
 EnemySoldier_Demon_DEAD_RIGHT
+  rotate: false
+  xy: 1256, 1141
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+EnemySoldier_Demon_FINISH_RIGHT
   rotate: false
   xy: 1256, 1141
   size: 540, 90
@@ -369,13 +376,6 @@ EnemySoldier_Demon_SPAWN_RIGHT
   offset: 0, 0
   index: -1
 EnemySoldier_Demon_WALKING_RIGHT
-  rotate: false
-  xy: 1256, 1141
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
-EnemySoldier_Demon_FINISH_RIGHT
   rotate: false
   xy: 1256, 1141
   size: 540, 90
@@ -424,114 +424,142 @@ EnemySoldier_Demon_IDLE_UP
   orig: 60, 90
   offset: 0, 0
   index: -1
-EnemySummoner_Demon_DEAD_DOWN
+EnemySummoner_Demon_ABILITY_DOWN
   rotate: false
   xy: 406, 511
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-EnemySummoner_Demon_FINISH_DOWN
+EnemySummoner_Demon_ABILITY_LEFT
   rotate: false
-  xy: 406, 511
+  xy: 406, 419
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+EnemySummoner_Demon_ABILITY_RIGHT
+  rotate: false
+  xy: 406, 327
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+EnemySummoner_Demon_ABILITY_UP
+  rotate: false
+  xy: 406, 235
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+EnemySummoner_Demon_DEAD_DOWN
+  rotate: false
+  xy: 406, 143
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 EnemySummoner_Demon_WALKING_DOWN
   rotate: false
-  xy: 406, 511
+  xy: 406, 143
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 EnemySummoner_Demon_SPAWN_DOWN
   rotate: false
-  xy: 406, 511
+  xy: 406, 143
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+EnemySummoner_Demon_FINISH_DOWN
+  rotate: false
+  xy: 406, 143
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 EnemySummoner_Demon_DEAD_LEFT
   rotate: false
-  xy: 406, 419
+  xy: 406, 51
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 EnemySummoner_Demon_FINISH_LEFT
   rotate: false
-  xy: 406, 419
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
-EnemySummoner_Demon_SPAWN_LEFT
-  rotate: false
-  xy: 406, 419
+  xy: 406, 51
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 EnemySummoner_Demon_WALKING_LEFT
   rotate: false
-  xy: 406, 419
+  xy: 406, 51
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+EnemySummoner_Demon_SPAWN_LEFT
+  rotate: false
+  xy: 406, 51
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 EnemySummoner_Demon_DEAD_RIGHT
   rotate: false
-  xy: 406, 327
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
-EnemySummoner_Demon_FINISH_RIGHT
-  rotate: false
-  xy: 406, 327
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
-EnemySummoner_Demon_SPAWN_RIGHT
-  rotate: false
-  xy: 406, 327
+  xy: 2246, 1333
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 EnemySummoner_Demon_WALKING_RIGHT
   rotate: false
-  xy: 406, 327
+  xy: 2246, 1333
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+EnemySummoner_Demon_SPAWN_RIGHT
+  rotate: false
+  xy: 2246, 1333
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+EnemySummoner_Demon_FINISH_RIGHT
+  rotate: false
+  xy: 2246, 1333
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 EnemySummoner_Demon_DEAD_UP
   rotate: false
-  xy: 406, 235
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
-EnemySummoner_Demon_SPAWN_UP
-  rotate: false
-  xy: 406, 235
+  xy: 3000, 1803
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 EnemySummoner_Demon_WALKING_UP
   rotate: false
-  xy: 406, 235
+  xy: 3000, 1803
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 EnemySummoner_Demon_FINISH_UP
   rotate: false
-  xy: 406, 235
+  xy: 3000, 1803
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+EnemySummoner_Demon_SPAWN_UP
+  rotate: false
+  xy: 3000, 1803
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
@@ -564,42 +592,7 @@ EnemySummoner_Demon_IDLE_UP
   orig: 60, 90
   offset: 0, 0
   index: -1
-EnemySummoner_Demon_WALKING_DOWN_ABILITY
-  rotate: false
-  xy: 406, 143
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
-EnemySummoner_Demon_WALKING_LEFT_ABILITY
-  rotate: false
-  xy: 406, 51
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
-EnemySummoner_Demon_WALKING_RIGHT_ABILITY
-  rotate: false
-  xy: 2246, 1333
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
-EnemySummoner_Demon_WALKING_UP_ABILITY
-  rotate: false
-  xy: 3000, 1803
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
 EnemyWarrior_Demon_DEAD_DOWN
-  rotate: false
-  xy: 3000, 1711
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
-EnemyWarrior_Demon_WALKING_DOWN
   rotate: false
   xy: 3000, 1711
   size: 540, 90
@@ -620,7 +613,21 @@ EnemyWarrior_Demon_FINISH_DOWN
   orig: 540, 90
   offset: 0, 0
   index: -1
+EnemyWarrior_Demon_WALKING_DOWN
+  rotate: false
+  xy: 3000, 1711
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
 EnemyWarrior_Demon_DEAD_LEFT
+  rotate: false
+  xy: 3000, 1619
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+EnemyWarrior_Demon_SPAWN_LEFT
   rotate: false
   xy: 3000, 1619
   size: 540, 90
@@ -641,21 +648,7 @@ EnemyWarrior_Demon_FINISH_LEFT
   orig: 540, 90
   offset: 0, 0
   index: -1
-EnemyWarrior_Demon_SPAWN_LEFT
-  rotate: false
-  xy: 3000, 1619
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
 EnemyWarrior_Demon_DEAD_RIGHT
-  rotate: false
-  xy: 3000, 1527
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
-EnemyWarrior_Demon_FINISH_RIGHT
   rotate: false
   xy: 3000, 1527
   size: 540, 90
@@ -676,7 +669,21 @@ EnemyWarrior_Demon_WALKING_RIGHT
   orig: 540, 90
   offset: 0, 0
   index: -1
+EnemyWarrior_Demon_FINISH_RIGHT
+  rotate: false
+  xy: 3000, 1527
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
 EnemyWarrior_Demon_DEAD_UP
+  rotate: false
+  xy: 2798, 1435
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+EnemyWarrior_Demon_FINISH_UP
   rotate: false
   xy: 2798, 1435
   size: 540, 90
@@ -691,13 +698,6 @@ EnemyWarrior_Demon_WALKING_UP
   offset: 0, 0
   index: -1
 EnemyWarrior_Demon_SPAWN_UP
-  rotate: false
-  xy: 2798, 1435
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
-EnemyWarrior_Demon_FINISH_UP
   rotate: false
   xy: 2798, 1435
   size: 540, 90
@@ -1221,7 +1221,7 @@ market-item-category1-item1
   orig: 80, 80
   offset: 0, 0
   index: -1
-market-item-category2-item1
+market-item-category2-item3
   rotate: false
   xy: 1784, 151
   size: 80, 80
@@ -1235,21 +1235,7 @@ market-item-category1-item5
   orig: 80, 80
   offset: 0, 0
   index: -1
-market-item-category2-item8
-  rotate: false
-  xy: 1784, 151
-  size: 80, 80
-  orig: 80, 80
-  offset: 0, 0
-  index: -1
-market-item-category2-item2
-  rotate: false
-  xy: 1784, 151
-  size: 80, 80
-  orig: 80, 80
-  offset: 0, 0
-  index: -1
-market-item-category2-item6
+market-item-category2-item4
   rotate: false
   xy: 1784, 151
   size: 80, 80
@@ -1270,14 +1256,7 @@ market-item-category1-item2
   orig: 80, 80
   offset: 0, 0
   index: -1
-market-item-category1-item4
-  rotate: false
-  xy: 1784, 151
-  size: 80, 80
-  orig: 80, 80
-  offset: 0, 0
-  index: -1
-market-item-category2-item3
+market-item-category2-item8
   rotate: false
   xy: 1784, 151
   size: 80, 80
@@ -1298,14 +1277,35 @@ market-item-category2-item5
   orig: 80, 80
   offset: 0, 0
   index: -1
-market-item-category2-item7
+market-item-category2-item6
   rotate: false
   xy: 1784, 151
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
-market-item-category2-item4
+market-item-category2-item2
+  rotate: false
+  xy: 1784, 151
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+market-item-category1-item4
+  rotate: false
+  xy: 1784, 151
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+market-item-category2-item1
+  rotate: false
+  xy: 1784, 151
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+market-item-category2-item7
   rotate: false
   xy: 1784, 151
   size: 80, 80

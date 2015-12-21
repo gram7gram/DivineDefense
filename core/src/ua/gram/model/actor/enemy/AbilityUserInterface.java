@@ -11,5 +11,9 @@ public interface AbilityUserInterface {
 
     float getAbilityDuration();
 
+    boolean isAbilityPossible();
+
     boolean isAbilityPossible(float delta);
+
+    boolean isAbilityExecuted();
 }

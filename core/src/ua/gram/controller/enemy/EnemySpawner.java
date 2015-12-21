@@ -13,7 +13,7 @@ import ua.gram.model.actor.enemy.*;
 import ua.gram.model.group.EnemyGroup;
 import ua.gram.model.state.enemy.EnemyStateManager;
 
-import java.util.LinkedList;
+import java.util.Stack;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -31,7 +31,7 @@ public final class EnemySpawner {
     private Pool<Enemy> poolSoldierArmored;
     private Pool<Enemy> poolSummoner;
     private Pool<Enemy> poolRunner;
-    private LinkedList<String> enemiesToSpawn;
+    private Stack<String> enemiesToSpawn;
 
     public EnemySpawner(DDGame game, Level level, GameBattleStage stage) {
         this.game = game;
@@ -150,12 +150,14 @@ public final class EnemySpawner {
     public void setActionPath(final Enemy enemy, Vector2 spawn, Vector2 previous) {
         EnemyPath path = level.getMap().normalizePath(previous, spawn);
         enemy.setPath(path);
-        Vector2 current = path.peekNextDirection();
-        enemy.setCurrentDirection(current);
+        if (enemy.getCurrentDirection() == null) {
+            Vector2 current = path.peekNextDirection();
+            enemy.setCurrentDirection(current);
+        }
     }
 
-    private LinkedList<String> convertList(String[] list) {
-        LinkedList<String> enemies = new LinkedList<String>();
+    private Stack<String> convertList(String[] list) {
+        Stack<String> enemies = new Stack<>();
         for (String type : list) {
             enemies.add(type);
             if (type.equals("EnemyWarrior") && poolWarrior == null) {
@@ -202,23 +204,29 @@ public final class EnemySpawner {
 
     public Enemy obtain(String type) throws CloneNotSupportedException {
         Enemy enemy;
-        if (type.equals("EnemyWarrior")) {
-            if (poolWarrior == null) poolWarrior = new EnemyPool<EnemyWarrior>(game, type);
-            enemy = ((EnemyWarrior) (poolWarrior.obtain())).clone();
-        } else if (type.equals("EnemyRunner")) {
-            if (poolRunner == null) poolRunner = new EnemyPool<EnemyRunner>(game, type);
-            enemy = ((EnemyRunner) (poolRunner.obtain())).clone();
-        } else if (type.equals("EnemySoldier")) {
-            if (poolSoldier == null) poolSoldier = new EnemyPool<EnemySoldier>(game, type);
-            enemy = ((EnemySoldier) (poolSoldier.obtain())).clone();
-        } else if (type.equals("EnemySoldierArmored")) {
-            if (poolSoldierArmored == null) poolSoldierArmored = new EnemyPool<EnemySoldierArmored>(game, type);
-            enemy = ((EnemySoldierArmored) (poolSoldierArmored.obtain())).clone();
-        } else if (type.equals("EnemySummoner")) {
-            if (poolSummoner == null) poolSummoner = new EnemyPool<EnemySummoner>(game, type);
-            enemy = ((EnemySummoner) (poolSummoner.obtain())).clone();
-        } else {
-            throw new NullPointerException("Couldn't add enemy: " + type);
+        switch (type) {
+            case "EnemyWarrior":
+                if (poolWarrior == null) poolWarrior = new EnemyPool<EnemyWarrior>(game, type);
+                enemy = ((EnemyWarrior) (poolWarrior.obtain())).clone();
+                break;
+            case "EnemyRunner":
+                if (poolRunner == null) poolRunner = new EnemyPool<EnemyRunner>(game, type);
+                enemy = ((EnemyRunner) (poolRunner.obtain())).clone();
+                break;
+            case "EnemySoldier":
+                if (poolSoldier == null) poolSoldier = new EnemyPool<EnemySoldier>(game, type);
+                enemy = ((EnemySoldier) (poolSoldier.obtain())).clone();
+                break;
+            case "EnemySoldierArmored":
+                if (poolSoldierArmored == null) poolSoldierArmored = new EnemyPool<EnemySoldierArmored>(game, type);
+                enemy = ((EnemySoldierArmored) (poolSoldierArmored.obtain())).clone();
+                break;
+            case "EnemySummoner":
+                if (poolSummoner == null) poolSummoner = new EnemyPool<EnemySummoner>(game, type);
+                enemy = ((EnemySummoner) (poolSummoner.obtain())).clone();
+                break;
+            default:
+                throw new NullPointerException("Couldn't add enemy: " + type);
         }
         return enemy;
     }

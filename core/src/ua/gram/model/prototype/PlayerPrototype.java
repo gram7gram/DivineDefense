@@ -5,14 +5,14 @@ package ua.gram.model.prototype;
  */
 public final class PlayerPrototype implements Prototype {
     public long id;
-    public byte health;
-    public short coins;
-    public short gems;
+    public int health;
+    public int coins;
+    public int gems;
     public String fraction;
-    public byte towerPrimaryStrategy;
-    public byte towerSecondaryStrategy;
-    public byte towerStunStrategy;
-    public byte towerSpecialStrategy;
+    public int towerPrimaryStrategy;
+    public int towerSecondaryStrategy;
+    public int towerStunStrategy;
+    public int towerSpecialStrategy;
     public int unlockedTowerPrimary;
     public int unlockedTowerSecondary;
     public int unlockedTowerStun;

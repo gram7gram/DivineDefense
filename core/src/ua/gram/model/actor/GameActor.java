@@ -2,6 +2,7 @@ package ua.gram.model.actor;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import ua.gram.DDGame;
 import ua.gram.model.prototype.GameActorPrototype;
 
 public class GameActor extends Actor {
@@ -17,26 +18,44 @@ public class GameActor extends Actor {
         this.setSize(prototype.width, prototype.height);
         this.setBounds(this.getX(), this.getY(), prototype.width, prototype.height);
 
-        if (prototype.name.equals("EnemyWarrior")) {
-            originType = Types.WARRIOR;
-        } else if (prototype.name.equals("EnemySummoner")) {
-            originType = Types.SUMMONER;
-        } else if (prototype.name.equals("EnemySoldier")) {
-            originType = Types.SOLDIER;
-        } else if (prototype.name.equals("EnemySoldierArmored")) {
-            originType = Types.SOLDIER_ARMORED;
-        } else if (prototype.name.equals("EnemyRunner")) {
-            originType = Types.RUNNER;
-        } else if (prototype.name.equals("TowerPrimary")) {
-            originType = Types.PRIMARY;
-        } else if (prototype.name.equals("TowerSpecial")) {
-            originType = Types.SPECIAL;
-        } else if (prototype.name.equals("TowerSecondary")) {
-            originType = Types.SECONDARY;
-        } else if (prototype.name.equals("TowerStun")) {
-            originType = Types.STUN;
-        } else {
-            throw new IllegalArgumentException("Unknown GameActor origin: " + prototype.name);
+        switch (prototype.name) {
+            case "EnemyWarrior":
+                originType = Types.WARRIOR;
+                break;
+            case "EnemySummoner":
+                originType = Types.SUMMONER;
+                break;
+            case "EnemySoldier":
+                originType = Types.SOLDIER;
+                break;
+            case "EnemySoldierArmored":
+                originType = Types.SOLDIER_ARMORED;
+                break;
+            case "EnemyRunner":
+                originType = Types.RUNNER;
+                break;
+            case "TowerPrimary":
+                originType = Types.PRIMARY;
+                break;
+            case "TowerSpecial":
+                originType = Types.SPECIAL;
+                break;
+            case "TowerSecondary":
+                originType = Types.SECONDARY;
+                break;
+            case "TowerStun":
+                originType = Types.STUN;
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown GameActor origin: " + prototype.name);
+        }
+    }
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        if (!DDGame.PAUSE) {
+            this.setDebug(DDGame.DEBUG);
         }
     }
 

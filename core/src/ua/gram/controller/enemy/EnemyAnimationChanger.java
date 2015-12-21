@@ -1,6 +1,5 @@
 package ua.gram.controller.enemy;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import ua.gram.controller.Log;
 import ua.gram.controller.pool.animation.AnimationPool;
@@ -27,43 +26,63 @@ public class EnemyAnimationChanger implements Runnable {
     public void run() {
         if (enemy == null || type == null) throw new NullPointerException("Missing required parameters");
 
+        if (enemy.getCurrentDirection() == dir && enemy.getAnimator().getType() == type) {
+            Log.warn("Ignored animation change from " + enemy.getAnimator().getType()
+                    + " to " + type
+                    + " on " + enemy);
+            return;
+        }
+
         EnemyAnimationProvider animationProvider = enemy.getAnimationProvider();
 
         try {
-            AnimationPool pool = animationProvider.get(enemy, type);
+            AnimationPool pool = animationProvider.getPool(enemy);
             pool.free(enemy.getPoolableAnimation());
+
+            Log.info(enemy + " frees animation:"
+                    + " " + enemy.getAnimator().getType()
+                    + " " + enemy.getCurrentDirectionType());
+
         } catch (Exception e) {
             Log.exc("Cannot free " + enemy + " previous animation", e);
         }
 
         //NOTE Next animation may have other direction, so update is nessesary
         if (dir != null) enemy.setCurrentDirection(dir);
+        enemy.getAnimator().setType(type);
 
         try {
-            AnimationPool pool = animationProvider.get(enemy, type);
+            AnimationPool pool = animationProvider.getPool(enemy);
             enemy.setAnimation(pool.obtain());
 
-            Gdx.app.log("INFO", enemy + " updates animation to: "
-                    + type + " " + enemy.getCurrentDirectionType());
+            Log.info(enemy + " obtains animation to:"
+                    + " " + enemy.getAnimator().getType()
+                    + " " + enemy.getCurrentDirectionType());
 
         } catch (Exception e) {
             Log.exc("Cannot set new animation for " + enemy, e);
         }
     }
 
-    public void update(Enemy enemy, Vector2 dir, Animator.Types type) {
+    public EnemyAnimationChanger update(Enemy enemy, Vector2 dir, Animator.Types type) {
         this.enemy = enemy;
         this.dir = dir;
         this.type = type;
+
+        return this;
     }
 
-    public void update(Enemy enemy, Vector2 dir) {
+    public EnemyAnimationChanger update(Enemy enemy, Vector2 dir) {
         this.enemy = enemy;
         this.dir = dir;
+
+        return this;
     }
 
-    public void update(Enemy enemy) {
+    public EnemyAnimationChanger update(Enemy enemy) {
         this.enemy = enemy;
         this.dir = null;
+
+        return this;
     }
 }

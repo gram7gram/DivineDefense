@@ -21,7 +21,7 @@ public class EnemyPool<T extends Enemy> extends Pool<Enemy> {
         super(5, DDGame.MAX_ENTITIES);
         this.game = game;
         this.type = type;
-        map = new HashMap<String, EnemyPrototype>();
+        map = new HashMap<>();
         EnemyPrototype[] prototypes = game.getPrototype().enemies;
         for (EnemyPrototype prototype : prototypes) {
             map.put(prototype.name, prototype);
@@ -32,18 +32,19 @@ public class EnemyPool<T extends Enemy> extends Pool<Enemy> {
     @Override
     @SuppressWarnings("unchecked")
     protected T newObject() {
-        if (type.equals("EnemyRunner")) {
-            return (T) new EnemyRunner(game, map.get(type));
-        } else if (type.equals("EnemySoldier")) {
-            return (T) new EnemySoldier(game, map.get(type));
-        } else if (type.equals("EnemySoldierArmored")) {
-            return (T) new EnemySoldierArmored(game, map.get(type));
-        } else if (type.equals("EnemySummoner")) {
-            return (T) new EnemySummoner(game, map.get(type));
-        } else if (type.equals("EnemyWarrior")) {
-            return (T) new EnemyWarrior(game, map.get(type));
-        } else {
-            throw new NullPointerException("Couldn't get configuration for: " + type);
+        switch (type) {
+            case "EnemyRunner":
+                return (T) new EnemyRunner(game, map.get(type));
+            case "EnemySoldier":
+                return (T) new EnemySoldier(game, map.get(type));
+            case "EnemySoldierArmored":
+                return (T) new EnemySoldierArmored(game, map.get(type));
+            case "EnemySummoner":
+                return (T) new EnemySummoner(game, map.get(type));
+            case "EnemyWarrior":
+                return (T) new EnemyWarrior(game, map.get(type));
+            default:
+                throw new NullPointerException("Couldn't get configuration for: " + type);
         }
     }
 }

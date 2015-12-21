@@ -14,11 +14,13 @@ public class EnemyStateSwapper implements Runnable {
     private StateInterface state2;
     private int level;
 
-    public void update(Enemy enemy, StateInterface state1, StateInterface state2, int level) {
+    public EnemyStateSwapper update(Enemy enemy, StateInterface state1, StateInterface state2, int level) {
         this.enemy = enemy;
         this.state1 = state1;
         this.state2 = state2;
         this.level = level;
+
+        return this;
     }
 
     @Override

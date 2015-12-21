@@ -29,7 +29,8 @@ public class SpawnState extends InactiveState {
         EnemySpawner spawner = enemy.getSpawner();
         Vector2 initial = spawner.getLevel().getPrototype().initialDirection;
 
-        enemy.setCurrentDirection(initial);
+        enemy.setCurrentDirection(parent == null || parent.getCurrentDirection() == null
+                ? initial : parent.getCurrentDirection());
 
         initAnimation(enemy, Animator.Types.SPAWN);
 

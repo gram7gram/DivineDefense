@@ -24,6 +24,8 @@ import ua.gram.model.state.enemy.level2.Level2State;
 import ua.gram.model.state.enemy.level3.Level3State;
 import ua.gram.model.state.enemy.level4.Level4State;
 
+import java.util.Random;
+
 /**
  * @author Gram <gram7gram@gmail.com>
  */
@@ -43,12 +45,13 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
     public boolean isAffected;
     public boolean isDead;
     public boolean isRemoved;
+    public boolean hasReachedCheckpoint;
     protected DDGame game;
     protected EnemyPath path;
+    protected EnemySpawner spawner;
     private float stateTime = 0;
     private GameBattleStage battleStage;
     private EnemyAnimationProvider animationProvider;
-    private EnemySpawner spawner;
     private EnemyGroup group;
     private TextureRegion currentFrame;
     private Animator animator;
@@ -82,6 +85,7 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
         isAffected = false;
         isDead = false;
         isRemoved = false;
+        hasReachedCheckpoint = true;
         currentDirection = Vector2.Zero;
         previousDirection = Vector2.Zero;
         originPosition = Vector2.Zero;
@@ -132,7 +136,7 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
         EnemyStateManager stateManager = spawner.getStateManager();
         stateManager.reset(this);
         health = prototype.health;
-        speed = prototype.speed;
+        speed = prototype.speed * (new Random().nextInt((11 - 9) + 10) / 10 + 0.9f);
         armor = prototype.armor;
         stateTime = 0;
         path = null;
@@ -142,6 +146,7 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
         isDead = false;
         isAttacked = false;
         isRemoved = false;
+        hasReachedCheckpoint = true;
         currentDirection = Vector2.Zero;
         previousDirection = Vector2.Zero;
         originPosition = Vector2.Zero;
@@ -160,13 +165,13 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
         return animator.getPoolable().getAnimation();
     }
 
+    public void setAnimation(PollableAnimation animation) {
+        this.animator.setPollable(animation);
+    }
+
     public void setAnimation(Animator.Types type) {
         AnimationPool pool = animationProvider.get(this, type);
         this.setAnimation(pool.obtain());
-    }
-
-    public void setAnimation(PollableAnimation animation) {
-        this.animator.setPollable(animation);
     }
 
     public void damage(float damage) {

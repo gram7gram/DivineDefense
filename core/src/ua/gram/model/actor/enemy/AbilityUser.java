@@ -8,14 +8,16 @@ import ua.gram.model.prototype.EnemyPrototype;
  */
 public abstract class AbilityUser extends Enemy implements AbilityUserInterface {
 
-    private final float abilityDelay;
-    private final float abilityDuration;
-    private float delayAbility;
+    protected final float abilityDelay;
+    protected final float abilityDuration;
+    public boolean isAbilityExecuted;
+    protected float delayAbility;
 
     public AbilityUser(DDGame game, EnemyPrototype prototype) {
         super(game, prototype);
         abilityDelay = prototype.abilityDelay;
         abilityDuration = prototype.abilityDuration;
+        isAbilityExecuted = false;
     }
 
     @Override
@@ -41,5 +43,27 @@ public abstract class AbilityUser extends Enemy implements AbilityUserInterface 
             delayAbility += delta;
             return false;
         }
+    }
+
+    @Override
+    public boolean isAbilityPossible() {
+        if (delayAbility >= abilityDelay) {
+            delayAbility = 0;
+            return true;
+        } else {
+            delayAbility += 1;
+            return false;
+        }
+    }
+
+    @Override
+    public boolean isAbilityExecuted() {
+        return isAbilityExecuted;
+    }
+
+    @Override
+    public void reset() {
+        super.reset();
+        isAbilityExecuted = false;
     }
 }

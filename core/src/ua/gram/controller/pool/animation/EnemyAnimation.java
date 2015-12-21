@@ -17,7 +17,6 @@ import ua.gram.model.map.Path;
 public class EnemyAnimation implements AnimationControllerInterface<Enemy> {
 
     private final EnemyAnimationProvider provider;
-    private final GameActor.Types origin;
     public boolean initialized;
     private DirectionPoolInterface idlePool;
     private DirectionPoolInterface walkingPool;
@@ -26,8 +25,7 @@ public class EnemyAnimation implements AnimationControllerInterface<Enemy> {
     private DirectionPoolInterface abilityPool;
     private Enemy enemy;
 
-    public EnemyAnimation(GameActor.Types origin, EnemyAnimationProvider provider) {
-        this.origin = origin;
+    public EnemyAnimation(EnemyAnimationProvider provider) {
         this.provider = provider;
         initialized = false;
     }
@@ -38,25 +36,25 @@ public class EnemyAnimation implements AnimationControllerInterface<Enemy> {
         GameActor.Types origin = enemy.getOriginType();
         initialized = true;
         try {
-            walkingPool = new EnemyDirectionAnimationPool(Animator.Types.WALKING, this);
+            walkingPool = new EnemyDirectionAnimationPool(this, Animator.Types.WALKING);
         } catch (IllegalArgumentException e) {
             initialized = false;
             Log.exc("Error at loading WALKING animation type for " + origin, e);
         }
         try {
-            deadPool = new EnemyDirectionAnimationPool(Animator.Types.DEAD, this);
+            deadPool = new EnemyDirectionAnimationPool(this, Animator.Types.WALKING);
         } catch (IllegalArgumentException e) {
             initialized = false;
             Log.exc("Error at loading DEAD animation type for " + origin, e);
         }
         try {
-            spawnPool = new EnemyDirectionAnimationPool(Animator.Types.SPAWN, this);
+            spawnPool = new EnemyDirectionAnimationPool(this, Animator.Types.WALKING);
         } catch (IllegalArgumentException e) {
             initialized = false;
             Log.exc("Error at loading SPAWN animation type for " + origin, e);
         }
         try {
-            idlePool = new EnemyDirectionAnimationPool(Animator.Types.IDLE, this);
+            idlePool = new EnemyDirectionAnimationPool(this, Animator.Types.WALKING);
         } catch (IllegalArgumentException e) {
             initialized = false;
             Log.exc("Error at loading IDLE animation type for " + origin, e);
@@ -64,7 +62,7 @@ public class EnemyAnimation implements AnimationControllerInterface<Enemy> {
 
         if (origin == GameActor.Types.SUMMONER) {
             try {
-                abilityPool = new AbilityUserDirectionAnimationPool(Animator.Types.ABILITY, this);
+                abilityPool = new EnemyDirectionAnimationPool(this, Animator.Types.ABILITY);
             } catch (IllegalArgumentException e) {
                 initialized = false;
                 Log.exc("Error at loading ABILITY animation type for " + origin, e);
@@ -74,16 +72,13 @@ public class EnemyAnimation implements AnimationControllerInterface<Enemy> {
     }
 
     @Override
-    public TextureRegion[] setAnimationRegion(Animator.Types type,
-                                              Path.Types direction,
-                                              Animator.Types ability) throws NullPointerException {
+    public TextureRegion[] getAnimationRegion(Animator.Types type, Path.Types direction) {
         if (enemy == null) throw new NullPointerException("Missing enemy");
 
         String region = enemy.getClass().getSimpleName()
                 + "_" + Player.SYSTEM_FRACTION
                 + "_" + type
-                + "_" + direction
-                + (ability != null ? "_" + ability : "");
+                + "_" + direction;
 
         TextureRegion texture = provider.getSkin().getRegion(region);
 

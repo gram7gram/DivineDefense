@@ -3,7 +3,7 @@ package ua.gram.view.screen;
 import com.badlogic.gdx.Gdx;
 import ua.gram.DDGame;
 import ua.gram.controller.Resources;
-import ua.gram.controller.factory.PlayerFactory;
+import ua.gram.model.Player;
 import ua.gram.model.prototype.GamePrototype;
 import ua.gram.view.AbstractLoadingScreen;
 
@@ -24,7 +24,9 @@ public class LaunchLoadingScreen extends AbstractLoadingScreen {
     @Override
     public void show() {
         Gdx.app.log("INFO", "Screen set to GameScreen");
-        game.setPlayer(PlayerFactory.defaults());
+        game.setPlayer(new Player(prototype.player));
+        Player.PLAYER_FRACTION = DDGame.ANGEL;
+        Player.SYSTEM_FRACTION = DDGame.DEMON;
         game.getResources().loadTexture(Resources.BACKGROUND_TEXTURE);
         game.createCamera();
         game.createBatch();

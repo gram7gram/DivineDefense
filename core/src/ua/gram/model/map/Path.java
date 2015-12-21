@@ -99,7 +99,7 @@ public class Path {
     }
 
     public static String toString(Vector2 pos) {
-        return Path.toString(pos.x, pos.y);
+        return pos == null ? null : Path.toString(pos.x, pos.y);
     }
 
     public static String toStringRound(Vector2 pos) {
