@@ -195,7 +195,7 @@ public class DeadState extends InactiveState {
 
 States diagramm:
 
-![states image](http://github.com/gram7gram/DivineDefese/blob/DD-9/misc/states.png?raw=true)
+![states image](https://github.com/gram7gram/DivineDefense/blob/mainstream/misc/states.png?raw=true)
 
 References:
 
