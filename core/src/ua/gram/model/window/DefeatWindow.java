@@ -1,6 +1,5 @@
 package ua.gram.model.window;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -10,7 +9,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import ua.gram.DDGame;
+import ua.gram.controller.Log;
+import ua.gram.controller.listener.ContinueListener;
 import ua.gram.controller.listener.RestartListener;
+import ua.gram.controller.stage.GameUIStage;
+import ua.gram.model.Player;
 import ua.gram.view.screen.MarketScreen;
 
 /**
@@ -42,16 +45,14 @@ public class DefeatWindow extends Window {
 
         option2 = new Button(skin, "button-defeat-continue-part");
         option2.setSize(200, 335);
-//        option2.addListener(new ContinueListener(game, 3, 2, this, (GameUIStage) stage_ui));
-        option2.setDisabled(game.getPlayer().getGems() < 2);
+        option2.addListener(new ContinueListener(game, 3, 2, this, (GameUIStage) stage_ui));
 
         option3 = new Button(skin, "button-defeat-continue-full");
         option3.setSize(200, 335);
-//        option3.addListener(new ContinueListener(game, Player.DEFAULT_HEALTH, 3, this, (GameUIStage) stage_ui));
-        option3.setDisabled(game.getPlayer().getGems() < 3);
+        option3.addListener(new ContinueListener(game, Player.DEFAULT_HEALTH, 3, this, (GameUIStage) stage_ui));
 
         optionPurchase = new Button(skin, "button-goto-shop");
-        optionPurchase.setSize(645, 55);//x57.5,y55
+        optionPurchase.setSize(645, 55);
         optionPurchase.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -101,7 +102,7 @@ public class DefeatWindow extends Window {
                         Actions.alpha(1, .8f)
                 )
         );
-        Gdx.app.log("INFO", this.getClass().getSimpleName() + " is OK");
+        Log.info(this.getClass().getSimpleName() + " is OK");
     }
 
     /**
@@ -110,7 +111,7 @@ public class DefeatWindow extends Window {
     public void update() {
         option2.setDisabled(game.getPlayer().getGems() < 2);
         option3.setDisabled(game.getPlayer().getGems() < 3);
-        optionPurchase.setVisible(option2.isDisabled() && option3.isDisabled());
-        Gdx.app.log("INFO", this.getClass().getSimpleName() + " is updated");
+        optionPurchase.setVisible(option2.isDisabled() || option3.isDisabled());
+        Log.info(this.getClass().getSimpleName() + " is updated");
     }
 }

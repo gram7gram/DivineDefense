@@ -33,10 +33,10 @@
     }
   },
   "parameters": {
+    "debugging": true,
     "title": "Divine Defense",
     "contact": "gram7gram@gmail.com",
     "author": "Dmitriy Bondarchuk (Gram) <{{ contact }}>",
-    "debugging": true,
     "client": "divinedefensegame@gmail.com",
     "token": "cxmmjGtdLmucADN",
     "repository": "https://github.com/gram7gram/DivineDefense",
@@ -55,7 +55,7 @@
   },
   "player": {
     "id": 0,
-    "health": 1000,
+    "health": 10,
     "coins": 250,
     "gems": 7,
     "fraction": null
