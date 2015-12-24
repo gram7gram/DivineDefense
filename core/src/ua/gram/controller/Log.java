@@ -19,6 +19,10 @@ public class Log {
         Gdx.app.log("WARN", msg);
     }
 
+    public synchronized static void crit(String msg) {
+        Gdx.app.error("CRIT", msg);
+    }
+
     public synchronized static void exc(String msg, Exception e) {
         msg += "\nCLASS:\t" + e.getClass().getSimpleName();
         msg += "\nMSG:\t" + e.getMessage();

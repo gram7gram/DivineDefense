@@ -10,14 +10,17 @@ public abstract class AbilityUser extends Enemy implements AbilityUserInterface 
 
     protected final float abilityDelay;
     protected final float abilityDuration;
-    public boolean isAbilityExecuted;
+    protected float abilityDurationCount;
     protected float delayAbility;
+    protected boolean isAbilityExecuted;
+    protected boolean isInterrupted;
 
     public AbilityUser(DDGame game, EnemyPrototype prototype) {
         super(game, prototype);
         abilityDelay = prototype.abilityDelay;
         abilityDuration = prototype.abilityDuration;
         isAbilityExecuted = false;
+        isInterrupted = false;
     }
 
     @Override
@@ -62,8 +65,39 @@ public abstract class AbilityUser extends Enemy implements AbilityUserInterface 
     }
 
     @Override
+    public void setAbilityExecuted(boolean executed) {
+        this.isAbilityExecuted = executed;
+    }
+
+    public boolean isAbilityActive() {
+        return abilityDurationCount > 0;
+    }
+
+    @Override
+    public boolean isInterrupted() {
+        return isInterrupted;
+    }
+
+    @Override
     public void reset() {
         super.reset();
+        isInterrupted = false;
         isAbilityExecuted = false;
+        abilityDurationCount = 0;
+    }
+
+    @Override
+    public float getAbilityDurationCount() {
+        return abilityDurationCount;
+    }
+
+    @Override
+    public void setAbilityDurationCount(float duration) {
+        this.abilityDurationCount = duration;
+    }
+
+    @Override
+    public void addAbilityDurationCount(float duration) {
+        this.abilityDurationCount += duration;
     }
 }

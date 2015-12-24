@@ -55,7 +55,7 @@
   },
   "player": {
     "id": 0,
-    "health": 10,
+    "health": 1000,
     "coins": 250,
     "gems": 7,
     "fraction": null

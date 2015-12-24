@@ -6,7 +6,6 @@ import ua.gram.DDGame;
 import ua.gram.model.Animator;
 import ua.gram.model.actor.enemy.AbilityUser;
 import ua.gram.model.actor.enemy.Enemy;
-import ua.gram.model.map.Path;
 import ua.gram.model.state.enemy.EnemyStateManager;
 
 /**
@@ -19,43 +18,34 @@ public class AbilityWalkingState extends WalkingState {
     }
 
     @Override
-    protected synchronized void move(final Enemy enemy, float delta, int x, int y, final Vector2 dir) {
+    protected synchronized void move(final Enemy enemy, float delta, int x, int y) {
 
         if (!(enemy instanceof AbilityUser))
             throw new IllegalArgumentException(enemy + " is not AbilityUser. It should not have access to such method");
 
-        Vector2 current = enemy.getCurrentDirection();
+        AbilityUser user = (AbilityUser) enemy;
 
-        boolean isSameDirection = Path.compare(dir, current);
-
-        if (((AbilityUser) enemy).isAbilityPossible()) {
-            EnemyStateManager manager = enemy.getSpawner().getStateManager();
-
-            float seconds = ((AbilityUser) enemy).getAbilityDuration();
-
-            enemy.addAction(
-                    Actions.sequence(
-                            Actions.run(animationChanger.update(enemy, dir, Animator.Types.ABILITY)),
-                            Actions.run(stateSwapper.update(enemy, enemy.getCurrentLevel3State(), manager.getAbilityState(), 3)),
-                            Actions.delay(seconds, Actions.sequence(
-                                    Actions.run(animationChanger.update(enemy, dir, Animator.Types.WALKING)),
-                                    moveBy(enemy, dir)
-                            ))
-                    )
-            );
-        } else {//else if (enemy.hasReachedCheckpoint) {
-            if (!isSameDirection) {
-                enemy.addAction(
+        if (!user.isAbilityActive()) {
+            if (user.isAbilityPossible()) {
+                final Vector2 dir = user.getPath().nextDirection();
+                EnemyStateManager manager = user.getSpawner().getStateManager();
+                user.addAction(
                         Actions.sequence(
-                                Actions.run(animationChanger.update(enemy, dir, Animator.Types.WALKING)),
-                                moveBy(enemy, dir)
+                                Actions.run(animationChanger.update(user, dir, Animator.Types.ABILITY)),
+                                Actions.run(stateSwapper.update(enemy,
+                                        user.getCurrentLevel3State(),
+                                        manager.getAbilityState(), 3)),
+                                Actions.delay(user.getAbilityDuration(), Actions.sequence(
+                                        Actions.run(animationChanger.update(user, dir, Animator.Types.WALKING)),
+                                        moveBy(user, dir)
+                                ))
                         )
                 );
-            } else {
-                enemy.setCurrentDirection(dir);
-                enemy.addAction(Actions.sequence(
-                        Actions.run(animationChanger.update(enemy, dir, Animator.Types.WALKING)),
-                        moveBy(enemy, dir)
+            } else if (!user.isAbilityExecuted()) {
+                final Vector2 dir = user.getPath().nextDirection();
+                user.addAction(Actions.sequence(
+                        Actions.run(animationChanger.update(user, dir, Animator.Types.WALKING)),
+                        moveBy(user, dir)
                 ));
             }
         }

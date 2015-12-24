@@ -10,6 +10,7 @@ import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.state.AbstractState;
 
 /**
+ * Representation of Actor at the moment of time.
  * @author Gram <gram7gram@gmail.com>
  */
 public abstract class EnemyState extends AbstractState<Enemy> {

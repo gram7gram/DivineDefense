@@ -10,6 +10,7 @@ public class GameActor extends Actor {
     protected final float animationWidth;
     protected final float animationHeight;
     private final Types originType;
+    protected int updateIterationCount;
     protected Vector2 currentPosition;
 
     public GameActor(GameActorPrototype prototype) {
@@ -85,6 +86,18 @@ public class GameActor extends Actor {
 
     public void setCurrentPosition(Vector2 currentPosition) {
         this.currentPosition = currentPosition;
+    }
+
+    public int getUpdateIterationCount() {
+        return updateIterationCount;
+    }
+
+    public void setUpdateIterationCount(int updateIterationCount) {
+        this.updateIterationCount = updateIterationCount;
+    }
+
+    public void addUpdateIterationCount(int updateIterationCount) {
+        this.updateIterationCount += updateIterationCount;
     }
 
     public enum Types  {

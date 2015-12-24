@@ -58,6 +58,8 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
     private Vector2 originPosition;
     private Vector2 currentDirection;
     private Vector2 previousDirection;
+    private Vector2 previousPosition;
+    private Path.Types previousPositionType;
     private Path.Types previousDirectionType;
     private Path.Types currentDirectionType;
     private Level1State currentLevel1State;
@@ -88,6 +90,7 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
         hasReachedCheckpoint = true;
         currentDirection = Vector2.Zero;
         previousDirection = Vector2.Zero;
+        previousPosition = Vector2.Zero;
         originPosition = Vector2.Zero;
         animator = new Animator();
     }
@@ -150,6 +153,7 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
         currentDirection = Vector2.Zero;
         previousDirection = Vector2.Zero;
         originPosition = Vector2.Zero;
+        previousPosition = Vector2.Zero;
         Gdx.app.log("INFO", this + " was reset");
     }
 
@@ -165,13 +169,13 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
         return animator.getPoolable().getAnimation();
     }
 
-    public void setAnimation(PollableAnimation animation) {
-        this.animator.setPollable(animation);
-    }
-
     public void setAnimation(Animator.Types type) {
         AnimationPool pool = animationProvider.get(this, type);
         this.setAnimation(pool.obtain());
+    }
+
+    public void setAnimation(PollableAnimation animation) {
+        this.animator.setPollable(animation);
     }
 
     public void damage(float damage) {
@@ -333,5 +337,17 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
 
     public void setBattleStage(GameBattleStage stage_battle) {
         this.battleStage = stage_battle;
+    }
+
+    public void setPreviousPosition(float x, float y) {
+        previousPosition.set(x, y);
+    }
+
+    public Vector2 getPreviousPosition() {
+        return previousPosition;
+    }
+
+    public void setPreviousPosition(Vector2 vec) {
+        previousPosition = vec;
     }
 }

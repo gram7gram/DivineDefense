@@ -67,11 +67,29 @@ public class Path {
         return null;
     }
 
+    /**
+     * Compare two Vector2s by casting their coordinates to integers
+     *
+     * @return are they "equal"
+     */
     public static boolean compare(Vector2 vec1, Vector2 vec2) {
         int vecX1 = (int) vec1.x;
         int vecY1 = (int) vec1.y;
         int vecX2 = (int) vec2.x;
         int vecY2 = (int) vec2.y;
+        return vecX1 == vecX2 && vecY1 == vecY2;
+    }
+
+    /**
+     * Compare two Vector2s by rounding their coordinates to integers
+     *
+     * @return are they "equal"
+     */
+    public static boolean rcompare(Vector2 vec1, Vector2 vec2) {
+        int vecX1 = Math.round(vec1.x);
+        int vecY1 = Math.round(vec1.y);
+        int vecX2 = Math.round(vec2.x);
+        int vecY2 = Math.round(vec2.y);
         return vecX1 == vecX2 && vecY1 == vecY2;
     }
 

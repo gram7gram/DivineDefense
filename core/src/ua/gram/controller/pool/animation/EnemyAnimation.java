@@ -42,19 +42,19 @@ public class EnemyAnimation implements AnimationControllerInterface<Enemy> {
             Log.exc("Error at loading WALKING animation type for " + origin, e);
         }
         try {
-            deadPool = new EnemyDirectionAnimationPool(this, Animator.Types.WALKING);
+            deadPool = new EnemyDirectionAnimationPool(this, Animator.Types.DEAD);
         } catch (IllegalArgumentException e) {
             initialized = false;
             Log.exc("Error at loading DEAD animation type for " + origin, e);
         }
         try {
-            spawnPool = new EnemyDirectionAnimationPool(this, Animator.Types.WALKING);
+            spawnPool = new EnemyDirectionAnimationPool(this, Animator.Types.SPAWN);
         } catch (IllegalArgumentException e) {
             initialized = false;
             Log.exc("Error at loading SPAWN animation type for " + origin, e);
         }
         try {
-            idlePool = new EnemyDirectionAnimationPool(this, Animator.Types.WALKING);
+            idlePool = new EnemyDirectionAnimationPool(this, Animator.Types.IDLE);
         } catch (IllegalArgumentException e) {
             initialized = false;
             Log.exc("Error at loading IDLE animation type for " + origin, e);

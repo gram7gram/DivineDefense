@@ -1,8 +1,6 @@
 package ua.gram.model.actor.enemy;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.GdxRuntimeException;
 import ua.gram.DDGame;
 import ua.gram.controller.Log;
 import ua.gram.model.map.Map;
@@ -14,12 +12,15 @@ import ua.gram.model.prototype.EnemyPrototype;
  */
 public final class EnemySummoner extends AbilityUser implements Cloneable {
 
+    private Vector2 previousBadPosition;
+
     public EnemySummoner(DDGame game, EnemyPrototype prototype) {
         super(game, prototype);
+        previousBadPosition = Vector2.Zero;
     }
 
     @Override
-    public synchronized void ability() {
+    public synchronized boolean ability() {
         Vector2 pos = this.getCurrentPosition();
         Vector2 next = this.getCurrentDirection();
         Vector2 position = new Vector2(
@@ -28,17 +29,24 @@ public final class EnemySummoner extends AbilityUser implements Cloneable {
 
         Map map = getSpawner().getLevel().getMap();
 
-        if (!map.checkSpawnPosition(position)) {
-            throw new GdxRuntimeException("Cannot spawn child. Requested cell "
+        if (Path.compare(previousBadPosition, position) || !map.checkSpawnPosition(position)) {
+            previousBadPosition = Path.clone(position);
+            Log.crit("Cannot spawn child. Requested cell "
                     + Path.toString(position) + " does not contain nessesary property");
+            return false;
+        } else {
+            previousBadPosition = Vector2.Zero;
         }
 
         try {
             spawner.spawnChild(this, "EnemySoldier", position);
-            Gdx.app.log("INFO", this + " performs ability");
+            Log.info(this + " performs ability");
         } catch (Exception e) {
             Log.exc("Could not execute ability for " + this, e);
+            return false;
         }
+
+        return true;
     }
 
     @Override
@@ -49,5 +57,11 @@ public final class EnemySummoner extends AbilityUser implements Cloneable {
     @Override
     public EnemySummoner clone() throws CloneNotSupportedException {
         return (EnemySummoner) super.clone();
+    }
+
+    @Override
+    public void reset() {
+        super.reset();
+        previousBadPosition = Vector2.Zero;
     }
 }
