@@ -16,13 +16,12 @@ public class TowerGroup extends Group {
     private final Tower tower;
     private final Weapon weapon;
 
-    public TowerGroup(Tower tower, Weapon weapon, ProgressBar bar) {
+    public TowerGroup(Tower tower, DDGame game) {
         this.tower = tower;
-        this.weapon = weapon;
+        this.weapon = tower.getWeapon();
         this.addActor(tower);
         this.addActor(weapon);
-        this.addActor(bar);
-        tower.setWeapon(weapon);
+        this.addActor(new ProgressBar(game.getResources().getSkin(), tower));
         weapon.setVisible(false);
         weapon.toFront();
         if (DDGame.DEBUG) {

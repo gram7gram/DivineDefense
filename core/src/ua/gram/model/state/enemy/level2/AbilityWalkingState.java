@@ -47,6 +47,11 @@ public class AbilityWalkingState extends WalkingState {
                         Actions.run(animationChanger.update(user, dir, Animator.Types.WALKING)),
                         moveBy(user, dir)
                 ));
+            } else {
+                final Vector2 dir = user.getPath().peekNextDirection();
+                user.addAction(
+                        Actions.run(animationChanger.update(user, dir, Animator.Types.WALKING))
+                );
             }
         }
     }

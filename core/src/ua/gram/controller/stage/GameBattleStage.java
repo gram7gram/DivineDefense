@@ -8,7 +8,6 @@ import ua.gram.controller.Log;
 import ua.gram.controller.listener.ToggleTowerControlsListener;
 import ua.gram.model.Level;
 import ua.gram.model.actor.enemy.Enemy;
-import ua.gram.model.actor.misc.Range;
 import ua.gram.model.actor.tower.Tower;
 import ua.gram.model.group.EnemyGroup;
 import ua.gram.model.group.TowerGroup;
@@ -28,23 +27,19 @@ public class GameBattleStage extends AbstractStage {
     private final Level level;
     private GameUIStage stage_ui;
     private volatile ArrayList<Group> indexes;
-    private Range range;
     private ToggleTowerControlsListener controlsListener;
     private ArrayList<int[]> towerPositions;
 
     public GameBattleStage(DDGame game, Level level) {
         super(game);
         this.level = level;
-        towerPositions = new ArrayList<int[]>();
-        indexes = new ArrayList<Group>();
+        towerPositions = new ArrayList<>();
+        indexes = new ArrayList<>();
         for (int i = 0; i < DDGame.MAP_HEIGHT; i++) {
             Group group = new Group();
             indexes.add(group);
             this.addActor(group);
         }
-        range = new Range(game.getResources());
-        range.setVisible(false);
-        this.addActor(range);
         this.setDebugAll(DDGame.DEBUG);
         Gdx.app.log("INFO", indexes.size() + " indexes are OK");
         Gdx.app.log("INFO", "BattleStage is OK");
@@ -138,7 +133,7 @@ public class GameBattleStage extends AbstractStage {
      * @return enemies on map
      */
     public ArrayList<Enemy> getEnemiesOnMap() {
-        ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+        ArrayList<Enemy> enemies = new ArrayList<>();
         for (Group group : indexes) {
             for (Actor actor : group.getChildren()) {
                 if (actor instanceof EnemyGroup) {
@@ -159,7 +154,7 @@ public class GameBattleStage extends AbstractStage {
      * @return towers on map
      */
     public ArrayList<Tower> getTowersOnMap() {
-        ArrayList<Tower> towers = new ArrayList<Tower>();
+        ArrayList<Tower> towers = new ArrayList<>();
         for (Group group : indexes) {
             for (Actor actor : group.getChildren()) {
                 if (actor instanceof TowerGroup) {
@@ -185,10 +180,6 @@ public class GameBattleStage extends AbstractStage {
             }
         }
         return true;
-    }
-
-    public Range getRange() {
-        return range;
     }
 
     public ArrayList<Group> getIndexes() {

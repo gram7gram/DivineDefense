@@ -7,7 +7,7 @@ public abstract class GamePrototype implements Prototype {
     public PlayerPrototype player;
     public MapPrototype map;
     public MarketPrototype market;
-    public LevelPrototype[] levels;
+    public LevelConfigPrototype level;
     public WavePrototype[] waves;
     public EnemyPrototype[] enemies;
     public TowerPrototype[] towers;

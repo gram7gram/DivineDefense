@@ -76,7 +76,7 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
         this.game = game;
         this.prototype = prototype;
         health = prototype.health;
-        speed = prototype.speed;
+        speed = prototype.speed * (new Random().nextInt((11 - 9) + 10) / 10 + 0.9f);
         armor = prototype.armor;
         reward = prototype.reward;
         spawnDuration = prototype.spawnDuration;
@@ -169,13 +169,13 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
         return animator.getPoolable().getAnimation();
     }
 
+    public void setAnimation(PollableAnimation animation) {
+        this.animator.setPollable(animation);
+    }
+
     public void setAnimation(Animator.Types type) {
         AnimationPool pool = animationProvider.get(this, type);
         this.setAnimation(pool.obtain());
-    }
-
-    public void setAnimation(PollableAnimation animation) {
-        this.animator.setPollable(animation);
     }
 
     public void damage(float damage) {

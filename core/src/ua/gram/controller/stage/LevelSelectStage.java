@@ -12,8 +12,7 @@ public class LevelSelectStage extends AbstractStage {
 
     public LevelSelectStage(DDGame game, GamePrototype prototype) {
         super(game);
-//        LevelPrototype[] prototypes = game.deserialize(Resources.LEVELS, LevelPrototype[].class, true);
-        LevelSelectTable table = new LevelSelectTable(game, prototype.levels);
+        LevelSelectTable table = new LevelSelectTable(game, prototype.level.levels);
         table.setVisible(true);
         this.addActor(table);
         Gdx.app.log("INFO", "LevelSelectStage is OK");

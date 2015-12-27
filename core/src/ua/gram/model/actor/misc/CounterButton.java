@@ -43,7 +43,7 @@ public class CounterButton extends Actor {
                 Gdx.app.log("INFO", "Countdown interrupted");
                 try {
                     if (!animation.isAnimationFinished(counter)) {
-                        int reward = (int) (stateTime / animation.getFrameDuration());
+                        int reward = (int) (animation.getFrameDuration() - (stateTime / animation.getFrameDuration()));
                         if (reward > 0) {
                             Gdx.app.log("INFO", "Player receives " + (reward *= 10) + " coins as reward");
                             game.getPlayer().addCoins(reward);
@@ -57,7 +57,7 @@ public class CounterButton extends Actor {
                     counterButton.setVisible(false);
                     game.setScreen(new ErrorScreen(game, "Inappropriate wave "
                             + level.getCurrentWave()
-                            + " in level " + level.currentLevel, e));
+                            + " in level " + level.getCurrentLevel(), e));
                 }
             }
         });

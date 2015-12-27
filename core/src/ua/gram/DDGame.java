@@ -13,13 +13,16 @@ import ua.gram.controller.Resources;
 import ua.gram.controller.security.SecurityHandler;
 import ua.gram.model.Player;
 import ua.gram.model.prototype.GamePrototype;
+import ua.gram.model.prototype.LevelPrototype;
 import ua.gram.model.prototype.ParametersPrototype;
+import ua.gram.services.Container;
+import ua.gram.services.NotificationService;
 import ua.gram.view.screen.ErrorScreen;
 import ua.gram.view.screen.LaunchLoadingScreen;
 
 /**
  * Game enter point
- *
+ * <p/>
  * TODO Make different assets for 4x3 and 16x9(16x10) screens
  * TODO For 16x9(16x10) make StretchViewport
  * TODO Add to JSON pressed and disabled drawable for buttons
@@ -45,6 +48,7 @@ public class DDGame<P extends GamePrototype> extends Game {
     public static int MAP_WIDTH;
     public static int MAP_HEIGHT;
     public static int MAX_ENTITIES;
+    public static int MAX_LEVELS;
     private final P prototype;
     private final ParametersPrototype parameters;
     private SecurityHandler security;
@@ -55,6 +59,7 @@ public class DDGame<P extends GamePrototype> extends Game {
     private Player player;
     private BitmapFont info;
     private float gameSpeed = 1;
+    private Container container;
 
     public DDGame(SecurityHandler security, P prototype) {
         this.security = security;
@@ -65,18 +70,20 @@ public class DDGame<P extends GamePrototype> extends Game {
 
     @Override
     public void create() {
-//        Gdx.app.setLogLevel(com.badlogic.gdx.Application.LOG_NONE);
+        Gdx.app.setLogLevel(parameters.logLevel);
         sayHello();
-//        Gdx.input.setCatchMenuKey(true);
-//        Gdx.input.setCatchBackKey(true);
         WORLD_WIDTH = Gdx.graphics.getWidth();
         WORLD_HEIGHT = Gdx.graphics.getHeight();
         MAP_WIDTH = WORLD_WIDTH / TILE_HEIGHT;
         MAP_HEIGHT = WORLD_HEIGHT / TILE_HEIGHT;
         MAX_ENTITIES = MAP_WIDTH * MAP_HEIGHT;//Maximum entities on the map
+        MAX_LEVELS = prototype.level.levels.length;
         resources = new Resources(this);
         info = new BitmapFont();
         info.setColor(1, 1, 1, 1);
+        container = new Container(
+                new NotificationService()
+        );
         this.setScreen(new LaunchLoadingScreen(this, prototype));
     }
 
@@ -105,17 +112,20 @@ public class DDGame<P extends GamePrototype> extends Game {
     }
 
     public void createCamera() {
+        if (camera != null) return;
         camera = new OrthographicCamera();
         camera.position.set(WORLD_WIDTH / 2f, WORLD_HEIGHT / 2f, 0);
         camera.update();
     }
 
     public void createBatch() {
+        if (batch != null) return;
         batch = new SpriteBatch();
         batch.setProjectionMatrix(camera.combined);
     }
 
     public void createViewport() {
+        if (view != null) return;
         float RATIO = (float) (Gdx.graphics.getHeight() / Gdx.graphics.getWidth());
         view = new ExtendViewport(WORLD_WIDTH * RATIO, WORLD_HEIGHT, camera);
         view.apply();
@@ -197,6 +207,10 @@ public class DDGame<P extends GamePrototype> extends Game {
         this.gameSpeed = gameSpeed;
     }
 
+    public Container getContainer() {
+        return container;
+    }
+
     public float increaseGameSpeed() {
         gameSpeed = .5f;
         return gameSpeed;
@@ -209,6 +223,10 @@ public class DDGame<P extends GamePrototype> extends Game {
 
     public GamePrototype getPrototype() {
         return prototype;
+    }
+
+    public LevelPrototype getPrototype(int lvl) {
+        return prototype.level.levels[lvl - 1];
     }
 
     private synchronized void sayGoodbye() {

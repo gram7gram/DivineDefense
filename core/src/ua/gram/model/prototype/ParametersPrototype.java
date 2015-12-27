@@ -24,15 +24,17 @@ public abstract class ParametersPrototype implements Prototype {
     public String repository;
     public String title;
     public String git;
+    public String skin;
     public boolean debugging;
     public int maxLevels;
     public int maxRanking;
+    public int logLevel;
     public MapPrototype map;
 
     private HashMap<String, Object> config;
 
     public HashMap<String, Object> toMap() {
-        config = new HashMap<String, Object>();
+        config = new HashMap<>();
         config.put("id", id);
         config.put("maxLevels", maxLevels);
         config.put("maxRanking", maxRanking);
@@ -50,9 +52,10 @@ public abstract class ParametersPrototype implements Prototype {
                     || type.equals(Integer.class)
                     || type.equals(Boolean.class)) {
                 try {
-                    String value = field.get(this) == null ? "x" : field.get(this).toString();
+                    String value = field.get(this) == null ? "?" : field.get(this).toString();
                     text = text.replace("{{ " + field.getName() + " }}", value);
                 } catch (IllegalAccessException e) {
+                    //ignore
                 }
             }
         }

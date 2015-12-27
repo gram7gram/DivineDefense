@@ -1,7 +1,6 @@
 package ua.gram.controller.market.shop;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.utils.Pool;
 import ua.gram.DDGame;
@@ -9,9 +8,7 @@ import ua.gram.controller.pool.TowerPool;
 import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.controller.stage.GameUIStage;
 import ua.gram.model.Animator;
-import ua.gram.model.actor.misc.ProgressBar;
 import ua.gram.model.actor.tower.*;
-import ua.gram.model.actor.weapon.LaserWeapon;
 import ua.gram.model.group.TowerControlsGroup;
 import ua.gram.model.group.TowerGroup;
 import ua.gram.model.group.TowerShopGroup;
@@ -90,11 +87,7 @@ public class TowerShop {
         tower.setPosition(x, y);
         game.getPlayer().chargeCoins(tower.getCost());
         tower.setStageBattle(stage_battle);
-        TowerGroup towerGroup = new TowerGroup(
-                tower,
-                new LaserWeapon(game.getResources(), Color.RED, tower, null),
-                new ProgressBar(game.getResources().getSkin(), tower)
-        );
+        TowerGroup towerGroup = new TowerGroup(tower, game);
         tower.setTouchable(Touchable.disabled);
         towerGroup.setVisible(true);
         tower.setOrigin(tower.getX() + 20, tower.getY() + 42);
@@ -150,22 +143,6 @@ public class TowerShop {
     public void free(Tower tower) {
         this.getPool(tower.getClass()).free(tower);
         Gdx.app.log("INFO", tower.getClass().getSimpleName() + " is set free");
-    }
-
-    public Pool<Tower> getPoolPrimary() {
-        return poolPrimary;
-    }
-
-    public Pool<Tower> getPoolSecondary() {
-        return poolSecondary;
-    }
-
-    public Pool<Tower> getPoolStun() {
-        return poolStun;
-    }
-
-    public Pool<Tower> getPoolSpecial() {
-        return poolSpecial;
     }
 
     public TowerShopGroup getTowerShopGroup() {

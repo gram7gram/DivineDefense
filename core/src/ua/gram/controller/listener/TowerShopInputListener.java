@@ -91,7 +91,7 @@ public class TowerShopInputListener extends ClickListener {
                 } catch (IndexOutOfBoundsException e) {
                     game.setScreen(new ErrorScreen(game,
                             "Unappropriate wave [" + stage_ui.getLevel().getCurrentWave()
-                                    + "] in level " + stage_ui.getLevel().currentLevel, e));
+                                    + "] in level " + stage_ui.getLevel().getCurrentLevel(), e));
                 }
             }
         } else {

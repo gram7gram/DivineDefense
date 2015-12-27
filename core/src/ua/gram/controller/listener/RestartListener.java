@@ -25,7 +25,7 @@ public class RestartListener extends ClickListener {
         Gdx.app.log("INFO", "Level " + lvl + " will now restart");
         game.getPlayer().restoreHealth();
         game.getPlayer().decreaseHealth();
-        LevelPrototype prototype = game.getPrototype().levels[lvl - 1];
+        LevelPrototype prototype = game.getPrototype(lvl);
         game.setScreen(new LevelLoadingScreen(game, prototype));
     }
 

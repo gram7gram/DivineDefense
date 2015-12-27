@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -21,34 +20,15 @@ import ua.gram.view.screen.ErrorScreen;
  */
 public class Resources implements Disposable {
 
-    public static final String SKIN_FILE = "data/skin/style.json";
     public static final String BACKGROUND_TEXTURE = "data/images/misc/background.jpg";
-    public static final String WEAPON_START_BACK = "data/images/misc/start_back.png";
-    public static final String WEAPON_START_OVER = "data/images/misc/start_over.png";
-    public static final String WEAPON_MIDDLE_BACK = "data/images/misc/middle_back.png";
-    public static final String WEAPON_MIDDLE_OVER = "data/images/misc/middle_over.png";
-    public static final String WEAPON_END_BACK = "data/images/misc/end_back.png";
-    public static final String WEAPON_END_OVER = "data/images/misc/end_over.png";
-    public static final String RANGE_TEXTURE = "data/images/misc/enemy_range.png";
-    public static final String AIM_TEXTURE = "data/images/misc/enemy_aim.png";
     private final DDGame game;
     private final AssetManager manager;
-    private Skin skin;
+    private final Skin skin;
 
     public Resources(DDGame game) {
         this.game = game;
         manager = new AssetManager();
-        skin = loadSkin(SKIN_FILE);
-    }
-
-    public FileHandle loadFile(String path) {
-        FileHandle handle = null;
-        try {
-            handle = new FileHandle(path);
-        } catch (Exception e) {
-            game.setScreen(new ErrorScreen(game, "Missing config file: \r\n" + path, e));
-        }
-        return handle;
+        skin = loadSkin(game.getParameters().skin);
     }
 
     /**
@@ -68,7 +48,7 @@ public class Resources implements Disposable {
             manager.finishLoading();
             skin = manager.get(file, Skin.class);
         } catch (Exception e) {
-            Gdx.app.error("ERROR", "Missing skin file: \r\n" + file + "\r\n" + e);
+            Log.crit("Missing skin file: \r\n" + file + "\r\n" + e);
             Gdx.app.exit();
         }
         return skin;
@@ -85,22 +65,6 @@ public class Resources implements Disposable {
         } catch (GdxRuntimeException e) {
             if (game.getCamera() == null) createDisplayComponents();
             game.setScreen(new ErrorScreen(game, "Could not load map for level: " + file, e));
-        }
-    }
-
-    /**
-     * Load tiled map for specified level.
-     * Will display ErrorScreen it was not able to load map.
-     *
-     * @param level level number [1..n]
-     */
-    public void loadMap(int level) {
-        try {
-            manager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
-            manager.load("data/levels/maps/level" + level + "@60.tmx", TiledMap.class);
-        } catch (GdxRuntimeException e) {
-            if (game.getCamera() == null) createDisplayComponents();
-            game.setScreen(new ErrorScreen(game, "Could not load map for level: " + level, e));
         }
     }
 
@@ -126,10 +90,6 @@ public class Resources implements Disposable {
 
     public Skin getSkin() {
         return skin;
-    }
-
-    public TiledMap getMap(int level) {
-        return manager.get("data/levels/maps/level" + level + "@60.tmx", TiledMap.class);
     }
 
     public TiledMap getMap(String map) {

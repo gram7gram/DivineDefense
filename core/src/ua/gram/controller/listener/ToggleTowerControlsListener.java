@@ -7,7 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.controller.stage.GameUIStage;
-import ua.gram.model.actor.misc.Range;
 import ua.gram.model.actor.tower.Tower;
 import ua.gram.model.group.TowerControlsGroup;
 import ua.gram.model.group.TowerGroup;
@@ -40,12 +39,10 @@ public class ToggleTowerControlsListener extends ClickListener {
                             TowerGroup towerGroup = ((TowerGroup) actor);
                             TowerControlsGroup controls = stage_ui.getTowerControls();
                             Tower tower = towerGroup.getTower();
-                            Range range = stage_battle.getRange();
                             if (controls.isVisible()
                                     && !contains(controls.getUpgradeBut(), x, y)
                                     && !contains(controls.getSellBut(), x, y)) {
                                 controls.setVisible(false);
-                                range.setVisible(false);
                                 Gdx.app.log("INFO", "Controls are hidden by stage");
                                 return;
                             } else if (!controls.isVisible()
@@ -53,9 +50,6 @@ public class ToggleTowerControlsListener extends ClickListener {
                                     && tower.isActive) {
                                 controls.setGroup(towerGroup);
                                 controls.setVisible(true);
-                                range.setVisible(true);
-                                range.setTower(tower);
-                                range.toBack();
                                 controls.toFront();
                                 Gdx.app.log("INFO", tower + " controls are "
                                         + (controls.isVisible() ? "" : "in") + "visible");

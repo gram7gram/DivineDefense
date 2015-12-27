@@ -56,7 +56,6 @@ public class TowerControlsGroup extends Group {
             public void clicked(InputEvent event, float x, float y) {
                 if (tower != null) {
                     setVisible(false);
-                    shop.getStageBattle().getRange().setVisible(false);
                     shop.sell(group);
                     tower = null;
                 }
@@ -72,7 +71,6 @@ public class TowerControlsGroup extends Group {
             public void clicked(InputEvent event, float x, float y) {
                 if (tower != null) {
                     setVisible(false);
-                    shop.getStageBattle().getRange().setVisible(false);
                     tower.upgrade();
                     tower = null;
                 }

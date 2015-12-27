@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.utils.Pool;
 import ua.gram.DDGame;
+import ua.gram.controller.Log;
 import ua.gram.controller.comparator.EnemyDistanceComparator;
 import ua.gram.controller.comparator.EnemyHealthComparator;
 import ua.gram.controller.stage.GameBattleStage;
@@ -18,6 +19,7 @@ import ua.gram.model.actor.GameActor;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.actor.weapon.Weapon;
 import ua.gram.model.prototype.TowerPrototype;
+import ua.gram.model.prototype.WeaponPrototype;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,6 +37,7 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
     public static final byte MAX_TOWER_LEVEL = 4;
     public static final byte MAX_POWER_LEVEL = 4;
     public final float build_delay = 2;
+    protected final TowerPrototype prototype;
     private final EnemyDistanceComparator distanceComparator;
     private final EnemyHealthComparator healthComparator;
     public boolean isActive;
@@ -62,6 +65,7 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
     public Tower(DDGame game, TowerPrototype prototype) {
         super(prototype);
         this.game = game;
+        this.prototype = prototype;
         this.power_lvl = prototype.powerLevel;
         this.tower_lvl = prototype.towerLevel;
         this.damage = prototype.damage;
@@ -106,7 +110,7 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
                     isActive = true;
                     this.setTouchable(Touchable.enabled);
                     weapon.setSource(this);
-                    Gdx.app.log("INFO", this + " is builded");
+                    Log.info(this + " is builded");
                 } else {
                     countBuilding += delta;
                 }
@@ -122,7 +126,7 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
                                 //Get enemies from different sides of the array
                                 victim = victims.get(index % 2 == 0 && index != 0 ? index : victims.size() - index - 1);
                                 if (isInRange(victim) && !victim.isDead) {
-                                    pre_attack(victim);
+                                    preAttack(victim);
                                     weapon.setTarget(victim);
                                     weapon.setVisible(true);
                                     victim.isAttacked = true;
@@ -131,10 +135,10 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
                                     attack(victim);
                                 }
                             } else if (victim != null) {
-                                post_attack(victim);
+                                postAttack(victim);
                                 victim.isAttacked = false;
                             } else {
-                                Gdx.app.error("ERROR", "Could not choose targets!");
+                                Log.crit("Could not choose targets!");
                             }
                         }
                     } else {
@@ -151,12 +155,13 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
     }
 
     public abstract void update(float delta);
+
     /**
      * Perform Tower specific preparations before attack.
      *
      * @param victim the enemy to attack
      */
-    public abstract void pre_attack(Enemy victim);
+    public abstract void preAttack(Enemy victim);
 
     /**
      * Perform tower-specific attack.
@@ -170,8 +175,12 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
      *
      * @param victim the enemy attacked
      */
-    public abstract void post_attack(Enemy victim);
+    public abstract void postAttack(Enemy victim);
 
+    public abstract WeaponPrototype getWeaponPrototype();
+
+    public abstract Weapon getWeapon();
+    
     /**
      * Grab Enemies in range.
      *
@@ -239,7 +248,7 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
         this.setLevelAnimationContainer(tower_lvl);
         changeAnimation(Animator.Types.BUILD);
         game.getPlayer().chargeCoins(30);
-        Gdx.app.log("INFO", this + " is upgraded to " + tower_lvl + " level");
+        Log.info(this + " is upgraded to " + tower_lvl + " level");
     }
 
     /**
@@ -248,7 +257,7 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
      * @param type desired animation type
      */
     public void changeAnimation(Animator.Types type) {
-        Gdx.app.log("INFO", this + " animation changed to: " + tower_lvl + "_" + type.name());
+        Log.info(this + " animation changed to: " + tower_lvl + "_" + type.name());
         type = Animator.Types.IDLE;//remove
         this.setLevelAnimationContainer(tower_lvl);
         this.setAnimation(container.getAnimation(type));
@@ -258,15 +267,7 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
     public void reset() {
         this.strategy = Strategy.STRONGEST;
         this.tower_lvl = 1;
-        Gdx.app.log("INFO", this.getClass().getSimpleName() + " was reset");
-    }
-
-    public Weapon getWeapon() {
-        return weapon;
-    }
-
-    public void setWeapon(Weapon weapon) {
-        this.weapon = weapon;
+        Log.info(this.getClass().getSimpleName() + " was reset");
     }
 
     public float getDamage() {

@@ -2,7 +2,8 @@ package ua.gram.model.actor.tower;
 
 import ua.gram.DDGame;
 import ua.gram.model.actor.enemy.Enemy;
-import ua.gram.model.actor.weapon.Weapon;
+import ua.gram.model.actor.weapon.LaserWeapon;
+import ua.gram.model.prototype.LaserWeaponPrototype;
 import ua.gram.model.prototype.TowerPrototype;
 
 /**
@@ -21,7 +22,7 @@ public final class TowerPrimary extends Tower implements Cloneable {
     }
 
     @Override
-    public void pre_attack(Enemy victim) {
+    public void preAttack(Enemy victim) {
 
     }
 
@@ -31,8 +32,21 @@ public final class TowerPrimary extends Tower implements Cloneable {
     }
 
     @Override
-    public void post_attack(Enemy victim) {
+    public void postAttack(Enemy victim) {
 
+    }
+
+    @Override
+    public LaserWeaponPrototype getWeaponPrototype() {
+        return (LaserWeaponPrototype) prototype.weapon;
+    }
+
+    @Override
+    public LaserWeapon getWeapon() {
+        if (weapon == null) {
+            weapon = new LaserWeapon(game.getResources(), this, null);
+        }
+        return (LaserWeapon) weapon;
     }
 
     @Override
@@ -40,9 +54,4 @@ public final class TowerPrimary extends Tower implements Cloneable {
         return (TowerPrimary) super.clone();
     }
 
-    @Override
-    public void setWeapon(Weapon weapon) {
-        super.setWeapon(weapon);
-        //...
-    }
 }

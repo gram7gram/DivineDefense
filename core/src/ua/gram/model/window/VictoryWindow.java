@@ -51,7 +51,7 @@ public class VictoryWindow extends Window {
                     Gdx.app.log("INFO", "Switching to level " + game.getPlayer().getLevel());
                     setVisible(false);
                     DDGame.PAUSE = false;
-                    LevelPrototype prototype = game.getPrototype().levels[game.getPlayer().getLevel()];
+                    LevelPrototype prototype = game.getPrototype().level.levels[game.getPlayer().getLevel()];
                     game.setScreen(new LevelLoadingScreen(game, prototype));
                 } else {
                     game.setScreen(new MainMenuScreen(game));

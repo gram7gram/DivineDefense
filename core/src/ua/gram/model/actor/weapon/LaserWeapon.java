@@ -9,6 +9,7 @@ import ua.gram.DDGame;
 import ua.gram.controller.Resources;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.actor.tower.Tower;
+import ua.gram.model.prototype.LaserWeaponPrototype;
 
 /**
  * Weapon for TowerSecondary
@@ -26,16 +27,17 @@ public final class LaserWeapon extends Weapon {
     private final Sprite end_back;
     private final Sprite end_over;
 
-    public LaserWeapon(Resources resources, Color color, Tower tower, Enemy enemy) {
+    public LaserWeapon(Resources resources, Tower tower, Enemy enemy) {
         super(tower, enemy);
-        this.color_back = color;
-        this.color_over = Color.WHITE;
-        this.start_back = new Sprite(resources.getTexture(Resources.WEAPON_START_BACK));
-        this.start_over = new Sprite(resources.getTexture(Resources.WEAPON_START_OVER));
-        this.middle_back = new Sprite(resources.getTexture(Resources.WEAPON_MIDDLE_BACK));
-        this.middle_over = new Sprite(resources.getTexture(Resources.WEAPON_MIDDLE_OVER));
-        this.end_back = new Sprite(resources.getTexture(Resources.WEAPON_END_BACK));
-        this.end_over = new Sprite(resources.getTexture(Resources.WEAPON_END_OVER));
+        LaserWeaponPrototype prototype = (LaserWeaponPrototype) tower.getWeaponPrototype();
+        this.color_back = prototype.colorBack;
+        this.color_over = prototype.colorOver;
+        this.start_back = new Sprite(resources.getTexture(prototype.startBack));
+        this.start_over = new Sprite(resources.getTexture(prototype.startOver));
+        this.middle_back = new Sprite(resources.getTexture(prototype.middleBack));
+        this.middle_over = new Sprite(resources.getTexture(prototype.middleOver));
+        this.end_back = new Sprite(resources.getTexture(prototype.endBack));
+        this.end_over = new Sprite(resources.getTexture(prototype.endOver));
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import ua.gram.DDGame;
 import ua.gram.controller.Resources;
 import ua.gram.model.Level;
+import ua.gram.model.prototype.LevelConfigPrototype;
 import ua.gram.model.prototype.LevelPrototype;
 import ua.gram.view.AbstractLoadingScreen;
 
@@ -15,10 +16,12 @@ import ua.gram.view.AbstractLoadingScreen;
  */
 public class LevelLoadingScreen extends AbstractLoadingScreen {
 
+    private final LevelConfigPrototype config;
     private final LevelPrototype prototype;
 
     public LevelLoadingScreen(DDGame game, LevelPrototype prototype) {
         super(game);
+        this.config = game.getPrototype().level;
         this.prototype = prototype;
         Gdx.app.log("INFO", "LevelLoadingScreen is OK");
     }
@@ -29,14 +32,9 @@ public class LevelLoadingScreen extends AbstractLoadingScreen {
         Gdx.app.log("INFO", "Screen set to LevelLoadingScreen");
         Resources resources = this.getGame().getResources();
         resources.loadMap(prototype.map.name);
-        resources.loadTexture(Resources.WEAPON_START_BACK);
-        resources.loadTexture(Resources.WEAPON_START_OVER);
-        resources.loadTexture(Resources.WEAPON_MIDDLE_BACK);
-        resources.loadTexture(Resources.WEAPON_MIDDLE_OVER);
-        resources.loadTexture(Resources.WEAPON_END_BACK);
-        resources.loadTexture(Resources.WEAPON_END_OVER);
-        resources.loadTexture(Resources.AIM_TEXTURE);
-        resources.loadTexture(Resources.RANGE_TEXTURE);
+        for (String resource : config.resources) {
+            resources.loadTexture(resource);
+        }
     }
 
     @Override

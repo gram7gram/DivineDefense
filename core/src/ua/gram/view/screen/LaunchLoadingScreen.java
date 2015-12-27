@@ -23,10 +23,8 @@ public class LaunchLoadingScreen extends AbstractLoadingScreen {
 
     @Override
     public void show() {
-        Gdx.app.log("INFO", "Screen set to GameScreen");
+        Gdx.app.log("INFO", "Screen set to LaunchLoadingScreen");
         game.setPlayer(new Player(prototype.player));
-        Player.PLAYER_FRACTION = DDGame.ANGEL;
-        Player.SYSTEM_FRACTION = DDGame.DEMON;
         game.getResources().loadTexture(Resources.BACKGROUND_TEXTURE);
         game.createCamera();
         game.createBatch();
@@ -36,9 +34,7 @@ public class LaunchLoadingScreen extends AbstractLoadingScreen {
 
     @Override
     public void doAction() {
-//        game.setScreen(new MarketScreen(game));
-//        game.setScreen(new FractionScreen(game));
-        game.setScreen(new LevelSelectScreen(game, prototype));
+        game.setScreen(new FractionScreen(game));
     }
 
 }
