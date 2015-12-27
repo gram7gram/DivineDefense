@@ -14,4 +14,9 @@ public final class LaserWeaponPrototype extends WeaponPrototype {
     public String middleOver;
     public String endBack;
     public String endOver;
+
+    @Override
+    public float getDuration() {
+        return -1;
+    }
 }

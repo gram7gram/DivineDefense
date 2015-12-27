@@ -50,7 +50,6 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
     protected EnemyPath path;
     protected EnemySpawner spawner;
     private float stateTime = 0;
-    private GameBattleStage battleStage;
     private EnemyAnimationProvider animationProvider;
     private EnemyGroup group;
     private TextureRegion currentFrame;
@@ -59,17 +58,13 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
     private Vector2 currentDirection;
     private Vector2 previousDirection;
     private Vector2 previousPosition;
-    private Path.Types previousPositionType;
-    private Path.Types previousDirectionType;
+    //    private Path.Types previousPositionType;
+//    private Path.Types previousDirectionType;
     private Path.Types currentDirectionType;
     private Level1State currentLevel1State;
     private Level2State currentLevel2State;
     private Level3State currentLevel3State;
     private Level4State currentLevel4State;
-    private Animator.Types currentLevel1StateType;
-    private Animator.Types currentLevel2StateType;
-    private Animator.Types currentLevel3StateType;
-    private Animator.Types currentLevel4StateType;
 
     public Enemy(DDGame game, EnemyPrototype prototype) {
         super(prototype);
@@ -96,14 +91,24 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
     }
 
     @Override
+    public EnemyGroup getParent() {
+        return (EnemyGroup) super.getParent();
+    }
+
+    @Override
+    public GameBattleStage getStage() {
+        return (GameBattleStage) super.getStage();
+    }
+
+    @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         if (animator.getAnimation() == null) throw new NullPointerException("Missing animation");
         if (!DDGame.PAUSE || currentFrame == null) {
-            stateTime += Gdx.graphics.getDeltaTime();
             currentFrame = animator.getAnimation().getKeyFrame(stateTime, true);
+            stateTime += Gdx.graphics.getDeltaTime();
         }
-        batch.draw(currentFrame, getX(), getY());
+        if (currentFrame != null) batch.draw(currentFrame, getX(), getY());
     }
 
     @Override
@@ -117,7 +122,7 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
             if (this.health <= 0 && currentLevel1State != stateManager.getDeadState()) {
                 stateManager.swapLevel1State(this, stateManager.getDeadState());
             } else {
-                battleStage.updateActorIndex(this);
+                getStage().updateActorIndex(getParent());
                 if (isStunned && !isAffected) {
                     stateManager.swapLevel4State(this, stateManager.getStunState());
                 } else if (!isStunned && isAffected) {
@@ -169,13 +174,13 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
         return animator.getPoolable().getAnimation();
     }
 
-    public void setAnimation(PollableAnimation animation) {
-        this.animator.setPollable(animation);
-    }
-
     public void setAnimation(Animator.Types type) {
         AnimationPool pool = animationProvider.get(this, type);
         this.setAnimation(pool.obtain());
+    }
+
+    public void setAnimation(PollableAnimation animation) {
+        this.animator.setPollable(animation);
     }
 
     public void damage(float damage) {
@@ -199,10 +204,6 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
 
     public float getSpawnDuration() {
         return spawnDuration;
-    }
-
-    public void setSpawnDuration(float spawnDuration) {
-        this.spawnDuration = spawnDuration;
     }
 
     public EnemyGroup getEnemyGroup() {
@@ -261,7 +262,7 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
         this.currentDirection = currentDirection;
         this.previousDirection = Path.opposite(currentDirection);
         this.currentDirectionType = Path.getType(currentDirection);
-        this.previousDirectionType = Path.getType(this.previousDirection);
+//        this.previousDirectionType = Path.getType(this.previousDirection);
     }
 
     public void alterSpeed(float deceleration) {
@@ -272,52 +273,16 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
         return currentDirectionType;
     }
 
-    public void setCurrentDirectionType(Path.Types currentDirectionType) {
-        this.currentDirectionType = currentDirectionType;
-    }
-
     public Vector2 getPreviousDirection() {
         return previousDirection;
     }
 
-    public void setPreviousDirection(Vector2 previousDirection) {
-        this.previousDirection = previousDirection;
-        this.currentDirection = Path.opposite(previousDirection);
-        this.previousDirectionType = Path.getType(previousDirection);
-        this.currentDirectionType = Path.getType(this.currentDirection);
-    }
-
-    public Animator.Types getCurrentLevel1StateType() {
-        return currentLevel1StateType;
-    }
-
-    public void setCurrentLevel1StateType(Animator.Types currentLevel1StateType) {
-        this.currentLevel1StateType = currentLevel1StateType;
-    }
-
-    public Animator.Types getCurrentLevel2StateType() {
-        return currentLevel2StateType;
-    }
-
-    public void setCurrentLevel2StateType(Animator.Types currentLevel2StateType) {
-        this.currentLevel2StateType = currentLevel2StateType;
-    }
-
-    public Animator.Types getCurrentLevel3StateType() {
-        return currentLevel3StateType;
-    }
-
-    public void setCurrentLevel3StateType(Animator.Types currentLevel3StateType) {
-        this.currentLevel3StateType = currentLevel3StateType;
-    }
-
-    public Animator.Types getCurrentLevel4StateType() {
-        return currentLevel4StateType;
-    }
-
-    public void setCurrentLevel4StateType(Animator.Types currentLevel4StateType) {
-        this.currentLevel4StateType = currentLevel4StateType;
-    }
+//    public void setPreviousDirection(Vector2 previousDirection) {
+//        this.previousDirection = previousDirection;
+//        this.currentDirection = Path.opposite(previousDirection);
+//        this.previousDirectionType = Path.getType(previousDirection);
+//        this.currentDirectionType = Path.getType(this.currentDirection);
+//    }
 
     public Vector2 getCurrentPositionIndex() {
         return new Vector2(Math.round(this.getX()) / DDGame.TILE_HEIGHT, Math.round(this.getY()) / DDGame.TILE_HEIGHT);
@@ -331,23 +296,11 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
         return animator.getPoolable();
     }
 
-    public GameBattleStage getBattleStage() {
-        return battleStage;
-    }
-
-    public void setBattleStage(GameBattleStage stage_battle) {
-        this.battleStage = stage_battle;
-    }
-
     public void setPreviousPosition(float x, float y) {
         previousPosition.set(x, y);
     }
 
     public Vector2 getPreviousPosition() {
         return previousPosition;
-    }
-
-    public void setPreviousPosition(Vector2 vec) {
-        previousPosition = vec;
     }
 }

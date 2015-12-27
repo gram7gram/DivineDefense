@@ -86,7 +86,6 @@ public class TowerShop {
         tower.changeAnimation(Animator.Types.BUILD);
         tower.setPosition(x, y);
         game.getPlayer().chargeCoins(tower.getCost());
-        tower.setStageBattle(stage_battle);
         TowerGroup towerGroup = new TowerGroup(tower, game);
         tower.setTouchable(Touchable.disabled);
         towerGroup.setVisible(true);

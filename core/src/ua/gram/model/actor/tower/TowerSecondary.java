@@ -1,10 +1,9 @@
 package ua.gram.model.actor.tower;
 
-import com.badlogic.gdx.graphics.Color;
 import ua.gram.DDGame;
 import ua.gram.model.actor.enemy.Enemy;
-import ua.gram.model.actor.weapon.LaserWeapon;
-import ua.gram.model.prototype.LaserWeaponPrototype;
+import ua.gram.model.actor.weapon.BombWeapon;
+import ua.gram.model.prototype.BombWeaponPrototype;
 import ua.gram.model.prototype.TowerPrototype;
 
 /**
@@ -42,16 +41,15 @@ public final class TowerSecondary extends Tower implements Cloneable {
     }
 
     @Override
-    public LaserWeaponPrototype getWeaponPrototype() {
-        return (LaserWeaponPrototype) prototype.weapon;
+    public BombWeaponPrototype getWeaponPrototype() {
+        return (BombWeaponPrototype) prototype.weapon;
     }
 
     @Override
-    public LaserWeapon getWeapon() {
+    public BombWeapon getWeapon() {
         if (weapon == null) {
-            weapon = new LaserWeapon(game.getResources(), this, null);
-            ((LaserWeapon) weapon).setBackColor(Color.ORANGE);
+            weapon = new BombWeapon(game.getResources(), this.getParent(), null);
         }
-        return (LaserWeapon) weapon;
+        return (BombWeapon) weapon;
     }
 }

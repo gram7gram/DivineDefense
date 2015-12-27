@@ -41,15 +41,16 @@ public class EnemyGroup extends Group {
             this.addActor(origin);
             this.addActor(coordinates);
         }
-        this.setDebug(DDGame.DEBUG);
         Gdx.app.log("INFO", "Group for " + enemy + " is OK");
     }
 
     @Override
     public void act(float delta) {
         super.act(delta);
+        this.setDebug(DDGame.DEBUG);
+        this.setOrigin(enemy.getOriginX(), enemy.getOriginY());
         if (!DDGame.PAUSE) {
-            if (enemy != null && origin != null && coordinates != null) {
+            if (origin != null && coordinates != null) {
                 if (DDGame.DEBUG) {
                     origin.setVisible(true);
                     coordinates.setVisible(true);
@@ -96,5 +97,35 @@ public class EnemyGroup extends Group {
 
     public Enemy getEnemy() {
         return enemy;
+    }
+
+    @Override
+    public float getOriginX() {
+        return enemy.getOriginX();
+    }
+
+    @Override
+    public float getOriginY() {
+        return enemy.getOriginY();
+    }
+
+    @Override
+    public float getHeight() {
+        return enemy.getHeight();
+    }
+
+    @Override
+    public float getWidth() {
+        return enemy.getWidth();
+    }
+
+    @Override
+    public float getY() {
+        return enemy.getY();
+    }
+
+    @Override
+    public float getX() {
+        return enemy.getX();
     }
 }

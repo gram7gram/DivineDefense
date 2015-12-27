@@ -96,7 +96,6 @@ public final class EnemySpawner {
             EnemyGroup enemyGroup = new EnemyGroup(game, enemy);
             enemyGroup.setVisible(true);
             enemy.setGroup(enemyGroup);
-            enemy.setBattleStage(stage_battle);
             stage_battle.updateZIndexes(enemyGroup);
             stateManager.swapLevel1State(enemy, stateManager.getSpawnState());
         } catch (Exception e) {
@@ -133,7 +132,6 @@ public final class EnemySpawner {
             EnemyGroup enemyGroup = new EnemyGroup(game, enemy);
             enemyGroup.setVisible(true);
             enemy.setGroup(enemyGroup);
-            enemy.setBattleStage(stage_battle);
             stage_battle.updateZIndexes(enemyGroup);
             stateManager.getSpawnState().setSpawnPosition(spawn);
             stateManager.getSpawnState().setParent(parent);

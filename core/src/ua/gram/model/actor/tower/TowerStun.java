@@ -59,7 +59,7 @@ public final class TowerStun extends Tower implements Cloneable {
     @Override
     public LaserWeapon getWeapon() {
         if (weapon == null) {
-            weapon = new LaserWeapon(game.getResources(), this, null);
+            weapon = new LaserWeapon(game.getResources(), this.getParent(), null);
             ((LaserWeapon) weapon).setBackColor(Color.GREEN);
         }
         return (LaserWeapon) weapon;

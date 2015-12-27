@@ -79,6 +79,7 @@ public class GameUIStage extends AbstractStage {
     @Override
     public void act(float delta) {
         super.act(delta);
+        this.setDebugAll(DDGame.DEBUG);
         if (!DDGame.PAUSE) {
             if (level.isDefeated() && !victoryWindow.isVisible()) {
                 Gdx.app.log("INFO", "Player is dead");

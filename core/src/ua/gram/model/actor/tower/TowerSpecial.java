@@ -49,7 +49,7 @@ public final class TowerSpecial extends Tower implements Cloneable {
     @Override
     public LaserWeapon getWeapon() {
         if (weapon == null) {
-            weapon = new LaserWeapon(game.getResources(), this, null);
+            weapon = new LaserWeapon(game.getResources(), this.getParent(), null);
             ((LaserWeapon) weapon).setBackColor(Color.BLUE);
         }
         return (LaserWeapon) weapon;

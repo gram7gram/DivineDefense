@@ -25,7 +25,7 @@ import java.util.Arrays;
 public class GameBattleStage extends AbstractStage {
 
     private final Level level;
-    private GameUIStage stage_ui;
+    private GameUIStage gameUIStage;
     private volatile ArrayList<Group> indexes;
     private ToggleTowerControlsListener controlsListener;
     private ArrayList<int[]> towerPositions;
@@ -40,7 +40,6 @@ public class GameBattleStage extends AbstractStage {
             indexes.add(group);
             this.addActor(group);
         }
-        this.setDebugAll(DDGame.DEBUG);
         Gdx.app.log("INFO", indexes.size() + " indexes are OK");
         Gdx.app.log("INFO", "BattleStage is OK");
     }
@@ -48,11 +47,12 @@ public class GameBattleStage extends AbstractStage {
     @Override
     public void act(float delta) {
         super.act(delta);
+        this.setDebugAll(DDGame.DEBUG);
         if (!DDGame.PAUSE) {
             if (level.getStage() == null) {
                 level.setStage(this);
                 level.createSpawner();
-                controlsListener = new ToggleTowerControlsListener(this, stage_ui);
+                controlsListener = new ToggleTowerControlsListener(this, gameUIStage);
                 this.addListener(controlsListener);
             }
             level.update(delta);
@@ -68,11 +68,11 @@ public class GameBattleStage extends AbstractStage {
     public void updateZIndexes(Group newGroup) {
         for (Actor actor : newGroup.getChildren()) {
             if (actor instanceof Enemy || actor instanceof Tower) {
-                int index = DDGame.MAP_HEIGHT - Math.abs((int) (actor.getY() / DDGame.TILE_HEIGHT) - 1);
+                int index = (DDGame.MAP_HEIGHT - Math.abs((int) (actor.getY() / DDGame.TILE_HEIGHT) - 1));
                 Group group = indexes.get(index);
                 if (group != null) {
                     group.addActor(newGroup);
-                    Gdx.app.log("INFO", actor.getClass().getSimpleName() + " added to " + index + " index");
+                    Gdx.app.log("INFO", actor + " added to " + index + " index");
                     break;
                 } else {
                     Log.warn(this.getClass().getSimpleName() + " failed to get Group at " + index + " index");
@@ -149,6 +149,23 @@ public class GameBattleStage extends AbstractStage {
     }
 
     /**
+     * Get Enemies directly from stage and corresponding groups.
+     *
+     * @return enemies on map
+     */
+    public ArrayList<EnemyGroup> getEnemyGroupsOnMap() {
+        ArrayList<EnemyGroup> enemies = new ArrayList<>();
+        for (Group group : indexes) {
+            for (Actor actor : group.getChildren()) {
+                if (actor instanceof EnemyGroup) {
+                    enemies.add((EnemyGroup) actor);
+                }
+            }
+        }
+        return enemies;
+    }
+
+    /**
      * Get Towers directly from stage and corresponding groups.
      *
      * @return towers on map
@@ -191,16 +208,17 @@ public class GameBattleStage extends AbstractStage {
      *
      * @param enemy enemy and it's parent group to swap
      */
-    public void updateActorIndex(Enemy enemy) {
+    public void updateActorIndex(EnemyGroup enemy) {
         if (enemy.getParent() != null) {
             int index = (int) (DDGame.MAP_HEIGHT - (enemy.getY()) / DDGame.TILE_HEIGHT) - 1;
-            if (index != enemy.getParent().getZIndex()) {
-                enemy.getParent().remove();
-                Group enemyGroup = enemy.getParent();
+            if (index != enemy.getZIndex()) {
+                enemy.remove();
                 try {
                     Group indexGroup = indexes.get(index);
-                    if (enemyGroup != null && indexGroup != null) {
-                        indexGroup.addActor(enemyGroup);
+                    if (indexGroup != null) {
+                        indexGroup.addActor(enemy);
+                    } else {
+                        Log.crit("Could not swap " + enemy.getEnemy() + " between indexes");
                     }
                 } catch (IndexOutOfBoundsException e) {
                     Gdx.app.error("EXC", "GameBattleStage failed to update indexes"
@@ -211,7 +229,7 @@ public class GameBattleStage extends AbstractStage {
     }
 
     public void setUIStage(GameUIStage stage_ui) {
-        this.stage_ui = stage_ui;
+        this.gameUIStage = stage_ui;
     }
 
     public ToggleTowerControlsListener getControlsListener() {

@@ -27,9 +27,9 @@ public class EnemyAnimationChanger implements Runnable {
         if (enemy == null || type == null) throw new NullPointerException("Missing required parameters");
 
         if (enemy.getCurrentDirection() == dir && enemy.getAnimator().getType() == type) {
-            Log.warn("Ignored animation change from " + enemy.getAnimator().getType()
-                    + " to " + type
-                    + " on " + enemy);
+//            Log.warn("Ignored animation change from " + enemy.getAnimator().getType()
+//                    + " to " + type
+//                    + " on " + enemy);
             return;
         }
 

@@ -16,6 +16,7 @@ public class Player {
     public static int UNLOCKED_TOWER_STUN;
     public static int DEFAULT_HEALTH;
     public static int UNLOCKED_TOWER_SPECIAL;
+    public final PlayerPrototype prototype;
     private boolean isDefault;
     private int level;
     private int health;
@@ -26,14 +27,12 @@ public class Player {
 //    public static Tower.Strategy TOWER_STUN_STRATEGY;
 //    public static Tower.Strategy TOWER_SPECIAL_STRATEGY;
 
-    public Player() {
-    }
-
     public Player(PlayerPrototype prototype) {
+        this.prototype = prototype;
         this.setDefault(false);
-        this.setCoins(prototype.coins);
-        this.setGems(prototype.gems);
-        this.setHealth(prototype.health);
+        coins = prototype.coins;
+        gems = prototype.gems;
+        health = prototype.health;
         DEFAULT_HEALTH = prototype.health;
         UNLOCKED_TOWER_PRIMARY = prototype.unlockedTowerPrimary;
         UNLOCKED_TOWER_SECONDARY = prototype.unlockedTowerSecondary;
@@ -120,5 +119,13 @@ public class Player {
 
     public void addGems(int i) {
         this.gems += i;
+    }
+
+    /**
+     * NOTE Gems are not reseted
+     */
+    public void reset() {
+        coins = prototype.coins;
+        health = prototype.health;
     }
 }

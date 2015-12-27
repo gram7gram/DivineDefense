@@ -18,12 +18,12 @@ public class TowerGroup extends Group {
 
     public TowerGroup(Tower tower, DDGame game) {
         this.tower = tower;
+        this.addActor(tower);//NOTE Tower should have a parent, before getting a weapon
         this.weapon = tower.getWeapon();
-        this.addActor(tower);
-        this.addActor(weapon);
-        this.addActor(new ProgressBar(game.getResources().getSkin(), tower));
         weapon.setVisible(false);
         weapon.toFront();
+        this.addActor(weapon);
+        this.addActor(new ProgressBar(game.getResources().getSkin(), tower));
         if (DDGame.DEBUG) {
             Actor dummy = new Actor();
             dummy.setSize(3, 3);
@@ -43,4 +43,33 @@ public class TowerGroup extends Group {
         return weapon;
     }
 
+    @Override
+    public float getOriginX() {
+        return tower.getOriginX();
+    }
+
+    @Override
+    public float getOriginY() {
+        return tower.getOriginY();
+    }
+
+    @Override
+    public float getHeight() {
+        return tower.getHeight();
+    }
+
+    @Override
+    public float getWidth() {
+        return tower.getWidth();
+    }
+
+    @Override
+    public float getY() {
+        return tower.getY();
+    }
+
+    @Override
+    public float getX() {
+        return tower.getX();
+    }
 }

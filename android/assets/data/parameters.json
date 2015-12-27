@@ -34,7 +34,7 @@
   },
   "parameters": {
     "debugging": false,
-    "logLevel": 3,
+    "logLevel": 0,
     "title": "Divine Defense",
     "contact": "gram7gram@gmail.com",
     "author": "Dmitriy Bondarchuk (Gram) <{{ contact }}>",
@@ -290,7 +290,7 @@
       "name": "TowerPrimary",
       "towerLevel": 1,
       "powerLevel": 1,
-      "damage": 50,
+      "damage": 10,
       "range": 1.3,
       "rate": 1,
       "cost": 40,
@@ -325,31 +325,16 @@
       "powerLevel": 1,
       "damage": 5,
       "range": 1.3,
-      "rate": 0.5,
+      "rate": 1,
       "cost": 60,
       "width": 60,
       "height": 90,
       "weapon": {
-        "class": "ua.gram.model.prototype.LaserWeaponPrototype",
-        "type": "Laser",
-        "colorOver": {
-          "r": 1,
-          "g": 1,
-          "b": 1,
-          "a": 1
-        },
-        "colorBack": {
-          "r": 1,
-          "g": 0,
-          "b": 0,
-          "a": 1
-        },
-        "startBack": "data/images/misc/start_back.png",
-        "startOver": "data/images/misc/start_over.png",
-        "middleBack": "data/images/misc/middle_back.png",
-        "middleOver": "data/images/misc/middle_over.png",
-        "endBack": "data/images/misc/end_back.png",
-        "endOver": "data/images/misc/end_over.png"
+        "class": "ua.gram.model.prototype.BombWeaponPrototype",
+        "type": "Bomb",
+        "region": "TOWER_SECONDARY_WEAPON",
+        "delay": 0.07,
+        "frames": 12
       }
     },
     {

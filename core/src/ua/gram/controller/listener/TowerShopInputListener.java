@@ -84,15 +84,15 @@ public class TowerShopInputListener extends ClickListener {
         if (canBeBuild(X, Y)) {
             shop.build(tower, X, Y);
             Level level = stage_ui.getLevel();
-            if (!level.getWave().isStarted && !level.isCleared) {
-                try {
+            try {
+                if (level.getWave() == null || (!level.getWave().isStarted && !level.isCleared)) {
                     stage_ui.getLevel().nextWave();
                     stage_ui.getGameUIGroup().getCounterBut().setVisible(false);
-                } catch (IndexOutOfBoundsException e) {
-                    game.setScreen(new ErrorScreen(game,
-                            "Unappropriate wave [" + stage_ui.getLevel().getCurrentWave()
-                                    + "] in level " + stage_ui.getLevel().getCurrentLevel(), e));
                 }
+            } catch (Exception e) {
+                game.setScreen(new ErrorScreen(game,
+                        "Unappropriate wave [" + stage_ui.getLevel().getCurrentWave()
+                                + "] in level " + stage_ui.getLevel().getCurrentLevel(), e));
             }
         } else {
             shop.release(tower);

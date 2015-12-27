@@ -7,8 +7,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import ua.gram.DDGame;
 import ua.gram.controller.Resources;
-import ua.gram.model.actor.enemy.Enemy;
-import ua.gram.model.actor.tower.Tower;
+import ua.gram.model.group.EnemyGroup;
+import ua.gram.model.group.TowerGroup;
 import ua.gram.model.prototype.LaserWeaponPrototype;
 
 /**
@@ -18,7 +18,6 @@ import ua.gram.model.prototype.LaserWeaponPrototype;
  */
 public final class LaserWeapon extends Weapon {
 
-    private final Color color_back;
     private final Color color_over;
     private final Sprite start_back;
     private final Sprite start_over;
@@ -26,18 +25,24 @@ public final class LaserWeapon extends Weapon {
     private final Sprite middle_over;
     private final Sprite end_back;
     private final Sprite end_over;
+    private Color color_back;
 
-    public LaserWeapon(Resources resources, Tower tower, Enemy enemy) {
+    public LaserWeapon(Resources resources, TowerGroup tower, EnemyGroup enemy) {
         super(tower, enemy);
-        LaserWeaponPrototype prototype = (LaserWeaponPrototype) tower.getWeaponPrototype();
-        this.color_back = prototype.colorBack;
-        this.color_over = prototype.colorOver;
-        this.start_back = new Sprite(resources.getTexture(prototype.startBack));
-        this.start_over = new Sprite(resources.getTexture(prototype.startOver));
-        this.middle_back = new Sprite(resources.getTexture(prototype.middleBack));
-        this.middle_over = new Sprite(resources.getTexture(prototype.middleOver));
-        this.end_back = new Sprite(resources.getTexture(prototype.endBack));
-        this.end_over = new Sprite(resources.getTexture(prototype.endOver));
+        LaserWeaponPrototype proto = getPrototype();
+        this.color_back = proto.colorBack;
+        this.color_over = proto.colorOver;
+        this.start_back = new Sprite(resources.getTexture(proto.startBack));
+        this.start_over = new Sprite(resources.getTexture(proto.startOver));
+        this.middle_back = new Sprite(resources.getTexture(proto.middleBack));
+        this.middle_over = new Sprite(resources.getTexture(proto.middleOver));
+        this.end_back = new Sprite(resources.getTexture(proto.endBack));
+        this.end_over = new Sprite(resources.getTexture(proto.endOver));
+    }
+
+    @Override
+    public boolean isFinished() {
+        return true;
     }
 
     @Override
@@ -89,7 +94,8 @@ public final class LaserWeapon extends Weapon {
 
     @Override
     public void render(Batch batch) {
-        batch.end();// actual drawing is done on end(); if we do not end, we contaminate previous rendering.
+        //NOTE Actual drawing is done on end(); if we do not end, we contaminate previous rendering.
+        batch.end();
         batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE);
         batch.begin();
 
@@ -103,10 +109,20 @@ public final class LaserWeapon extends Weapon {
         batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
     }
 
+    @Override
+    public void reset() {
+        this.setSize(0, 0);
+        this.setPosition(tower.getOriginX(), tower.getOriginY());
+        this.setRotation(0);
+    }
+
+    @Override
+    public LaserWeaponPrototype getPrototype() {
+        return (LaserWeaponPrototype) prototype;
+    }
+
     public void setBackColor(Color color) {
-        start_back.setColor(color);
-        middle_back.setColor(DDGame.DEBUG ? Color.BLUE : color);
-        end_back.setColor(color);
+        color_back = DDGame.DEBUG ? Color.BLUE : color;
     }
 
 }

@@ -3,49 +3,75 @@ package ua.gram.model.actor.weapon;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import ua.gram.DDGame;
-import ua.gram.model.actor.enemy.Enemy;
-import ua.gram.model.actor.tower.Tower;
+import ua.gram.model.group.EnemyGroup;
+import ua.gram.model.group.TowerGroup;
+import ua.gram.model.prototype.WeaponPrototype;
 
 /**
+ * NOTE Set duartion in WeaponPrototype less then zero to display weapon until enemy is within the reach
+ *
  * @author Gram <gram7gram@gmail.com>
  */
 public abstract class Weapon extends Actor {
 
-    protected Tower tower;
-    protected Enemy target;
+    protected final WeaponPrototype prototype;
+    protected TowerGroup tower;
+    protected EnemyGroup target;
+    private float duration;
 
-    public Weapon(Tower tower, Enemy target) {
+    public Weapon(TowerGroup tower, EnemyGroup target) {
+        if (tower == null)
+            throw new NullPointerException("Empty weapon owner passed to " + this.getClass().getSimpleName());
+        this.prototype = tower.getTower().getWeaponPrototype();
         this.tower = tower;
         this.target = target;
-        this.setDebug(DDGame.DEBUG);
+        duration = 0;
     }
 
     /**
-     * Weapon should be start in it's start() method.
      * Weapon will be updated if game is not paused and there is a target.
-     *
-     * @param delta
      */
     @Override
     public void act(float delta) {
         super.act(delta);
-        if (!DDGame.PAUSE) {
-            if (target != null) {
+        this.setDebug(DDGame.DEBUG);
+        if (!DDGame.PAUSE && this.isVisible()) {
+            if (target != null && !(isWeaponDurationExceeded(duration) && isFinished())) {
+                duration += delta;
+
+                int index1 = target.getEnemy().getStage() != null ? target.getParent().getZIndex() : -1;
+                int index2 = tower.getTower().getStage() != null ? tower.getParent().getZIndex() : -1;
+
+                //NOTE Move Weapon from front to back to achieve pseudo-3d effect
+                if (index1 < index2)
+                    this.toBack();
+                else
+                    this.toFront();
+
+                System.err.println(tower.getTower().getClass().getSimpleName()
+                        + ":\t" + index1 + ":" + index2 + ":" + this.getZIndex());
+
                 update(delta);
                 this.setVisible(true);
-                this.setZIndex(target.getY() > tower.getY() ? 0 : tower.getZIndex() + 1);
             } else {
+                target = null;
+                duration = 0;
+                reset();
                 this.setVisible(false);
             }
         }
     }
 
+    public abstract boolean isFinished();
+
+    private boolean isWeaponDurationExceeded(float time) {
+        float duration = prototype.getDuration();
+        return !(duration > time || duration < 0);
+    }
+
     /**
      * Weapon should be drawn in it's render(Batch) method.
      * Weapon will be drawn if game is not paused and there is a target.
-     *
-     * @param batch
-     * @param parentAlpha
      */
     @Override
     public void draw(Batch batch, float parentAlpha) {
@@ -65,11 +91,18 @@ public abstract class Weapon extends Actor {
      */
     public abstract void render(Batch batch);
 
-    public void setTarget(Enemy target) {
+    /**
+     * Reset your weapon here. Resets if target is lost, or weapon duration is exceeded
+     */
+    public abstract void reset();
+
+    public abstract WeaponPrototype getPrototype();
+
+    public void setTarget(EnemyGroup target) {
         this.target = target;
     }
 
-    public void setSource(Tower source) {
+    public void setSource(TowerGroup source) {
         this.tower = source;
     }
 

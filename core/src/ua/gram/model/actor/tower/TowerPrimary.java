@@ -44,7 +44,7 @@ public final class TowerPrimary extends Tower implements Cloneable {
     @Override
     public LaserWeapon getWeapon() {
         if (weapon == null) {
-            weapon = new LaserWeapon(game.getResources(), this, null);
+            weapon = new LaserWeapon(game.getResources(), this.getParent(), null);
         }
         return (LaserWeapon) weapon;
     }

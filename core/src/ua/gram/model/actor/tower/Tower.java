@@ -18,12 +18,15 @@ import ua.gram.model.Animator;
 import ua.gram.model.actor.GameActor;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.actor.weapon.Weapon;
+import ua.gram.model.group.EnemyGroup;
+import ua.gram.model.group.TowerGroup;
 import ua.gram.model.prototype.TowerPrototype;
 import ua.gram.model.prototype.WeaponPrototype;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * TODO Different animations: IDLE, BUILDING, SELLING, SHOOTING
@@ -35,7 +38,7 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
 
     public static final float SELL_RATIO = .6f;
     public static final byte MAX_TOWER_LEVEL = 4;
-    public static final byte MAX_POWER_LEVEL = 4;
+    //    public static final byte MAX_POWER_LEVEL = 4;
     public final float build_delay = 2;
     protected final TowerPrototype prototype;
     private final EnemyDistanceComparator distanceComparator;
@@ -44,7 +47,6 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
     public boolean isBuilding;
     public float countBuilding = 0;
     protected DDGame game;
-    protected GameBattleStage stage_battle;
     protected TextureRegion currentFrame;
     protected TowerAnimationController controller;
     protected TowerLevelAnimationContainer container;
@@ -54,7 +56,7 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
     private float range;
     private float rate;
     private int cost;
-    private int power_lvl;
+    //    private int power_lvl;
     private int tower_lvl;
     private Strategy strategy;
     private float stateTime;
@@ -66,7 +68,7 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
         super(prototype);
         this.game = game;
         this.prototype = prototype;
-        this.power_lvl = prototype.powerLevel;
+//        this.power_lvl = prototype.powerLevel;
         this.tower_lvl = prototype.towerLevel;
         this.damage = prototype.damage;
         this.range = prototype.range;
@@ -83,15 +85,16 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        if (!DDGame.PAUSE) {
-            try {
-                stateTime += Gdx.graphics.getDeltaTime();
-                currentFrame = animation.getKeyFrame(stateTime, true);
-            } catch (NullPointerException e) {
-                //Prevent too soon rendering.
-            }
+        if (!DDGame.PAUSE || currentFrame == null) {
+            currentFrame = animation.getKeyFrame(stateTime, true);
+            stateTime += Gdx.graphics.getDeltaTime();
         }
         if (currentFrame != null) batch.draw(currentFrame, this.getX(), this.getY());
+    }
+
+    @Override
+    public TowerGroup getParent() {
+        return (TowerGroup) super.getParent();
     }
 
     /**
@@ -109,7 +112,7 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
                     isBuilding = false;
                     isActive = true;
                     this.setTouchable(Touchable.enabled);
-                    weapon.setSource(this);
+                    weapon.setSource(this.getParent());
                     Log.info(this + " is builded");
                 } else {
                     countBuilding += delta;
@@ -118,40 +121,44 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
                 if (count >= this.rate) {
                     count = 0;
                     if (victim == null) {
-                        ArrayList<Enemy> targets = scan();
+                        ArrayList<EnemyGroup> targets = scan();
                         if (!targets.isEmpty()) {
-                            List<Enemy> victims = chooseVictims(targets);
+                            List<EnemyGroup> victims = chooseVictims(targets);
                             if (!victims.isEmpty()) {
                                 int index = ++targetIndex <= victims.size() - 1 ? targetIndex : 0;
                                 //Get enemies from different sides of the array
-                                victim = victims.get(index % 2 == 0 && index != 0 ? index : victims.size() - index - 1);
+                                EnemyGroup victimGroup = victims.get(index % 2 == 0 && index != 0 ? index : victims.size() - index - 1);
+                                victim = victimGroup.getEnemy();
                                 if (isInRange(victim) && !victim.isDead) {
                                     preAttack(victim);
-                                    weapon.setTarget(victim);
+                                    weapon.setTarget(victimGroup);
                                     weapon.setVisible(true);
                                     victim.isAttacked = true;
-                                    weapon.toFront();
                                     victim.damage(this.damage);
                                     attack(victim);
                                 }
                             } else if (victim != null) {
-                                postAttack(victim);
-                                victim.isAttacked = false;
+                                looseTarget();
                             } else {
                                 Log.crit("Could not choose targets!");
                             }
                         }
                     } else {
-                        victim.isAttacked = false;
-                        weapon.resetTarget();
-                        victim = null;
-                        weapon.setVisible(false);
+                        looseTarget();
                     }
                 } else {
                     count += delta;
                 }
             }
         }
+    }
+
+    private void looseTarget() {
+        postAttack(victim);
+        victim.isAttacked = false;
+        weapon.resetTarget();
+        victim = null;
+        weapon.setVisible(false);
     }
 
     public abstract void update(float delta);
@@ -180,20 +187,16 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
     public abstract WeaponPrototype getWeaponPrototype();
 
     public abstract Weapon getWeapon();
-    
+
     /**
      * Grab Enemies in range.
      *
      * @return list of all Enemies in range, whose health is not zero.
      */
-    private ArrayList<Enemy> scan() {
-        ArrayList<Enemy> targets = new ArrayList<Enemy>();
-        for (Enemy enemy : stage_battle.getEnemiesOnMap()) {
-            if (isInRange(enemy) && enemy.health > 0) {
-                targets.add(enemy);
-            }
-        }
-        return targets;
+    private ArrayList<EnemyGroup> scan() {
+        return (ArrayList<EnemyGroup>) getStage().getEnemyGroupsOnMap().stream()
+                .filter(enemy -> isInRange(enemy.getEnemy()) && enemy.getEnemy().health > 0)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -202,8 +205,8 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
      * @param victims potential victims in range
      * @return actual victims
      */
-    private List<Enemy> chooseVictims(ArrayList<Enemy> victims) {
-        List<Enemy> enemyTargets = new ArrayList<Enemy>();
+    private List<EnemyGroup> chooseVictims(ArrayList<EnemyGroup> victims) {
+        List<EnemyGroup> enemyTargets = new ArrayList<>();
         switch (this.strategy) {
             case STRONGEST:
                 healthComparator.setType(EnemyHealthComparator.MAX);
@@ -270,40 +273,17 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
         Log.info(this.getClass().getSimpleName() + " was reset");
     }
 
-    public float getDamage() {
-        return damage;
-    }
-
-    public void setStageBattle(GameBattleStage stage_battle) {
-        this.stage_battle = stage_battle;
-    }
-
-    public float getRange() {
-        return range;
-    }
-
-    public float getRate() {
-        return rate;
+    @Override
+    public GameBattleStage getStage() {
+        return (GameBattleStage) super.getStage();
     }
 
     public int getCost() {
         return cost;
     }
 
-    public int getPowerLevel() {
-        return power_lvl;
-    }
-
     public int getTowerLevel() {
         return tower_lvl;
-    }
-
-    public Strategy getStrategy() {
-        return strategy;
-    }
-
-    public void setStrategy(Strategy strategy) {
-        this.strategy = strategy;
     }
 
     public TowerAnimationController getController() {
