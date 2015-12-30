@@ -32,7 +32,6 @@ Art: Евгений Ф. <yeugenyf@gmail.com>
 
 ### Concurrent state-machine (CSM)
 
-State is a representation of the object in the specific moment of time. 
 Finit, concurrent, stack state-machines are up to you to decide which is the best way.
 
 I have choosen the concurrent one.
@@ -64,7 +63,7 @@ public interface StateInterface<T extends Actor> {
 ```
 
 Basicaly, I have an Actor, which can have several states simultaneously.
-As a came accross gdx-AI ([gdx-ai]) I was pleased over the fact that we though in the same direction on implementing the state-machine.
+As a came across gdx-AI ([gdx-ai]) I was pleased over the fact that we though in the same direction on implementing the state-machine.
 
 Yet, whether my implementation is good is, again, UP TO YOU TO DECIDE.
 
@@ -72,7 +71,7 @@ Each state has:
  
  * smth that should be done before it becames the object's state (*preManage*, example: updating animation)
  
- * smth that shoud be done continiously(*manage*, example: move an Actor)
+ * smth that shoud be done continiously (*manage*, example: move an Actor)
  
  * smth to do if state is disabled (*postManage*, example: cleanup, unset variables).
 
@@ -128,7 +127,7 @@ public abstract class StateManager<A extends Actor> {
 }
 ```
 
-By division states into class hierarchy it is possible to reduce code-redundancy and improve scalability of the feature. 
+By dividing states into the class hierarchy it is possible to reduce code-redundancy and improve scalability of the feature. 
 
 Here are 4 levels of states:
 
