@@ -33,8 +33,8 @@
     }
   },
   "parameters": {
-    "debugging": false,
-    "logLevel": 0,
+    "debugging": true,
+    "logLevel": 3,
     "title": "Divine Defense",
     "contact": "gram7gram@gmail.com",
     "author": "Dmitriy Bondarchuk (Gram) <{{ contact }}>",

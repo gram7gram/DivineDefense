@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import ua.gram.DDGame;
+import ua.gram.controller.Log;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -15,15 +16,17 @@ public class DebugListener extends InputListener {
     public boolean keyDown(InputEvent event, int keycode) {
         switch (keycode) {
             case Input.Keys.PLUS:
+                if (DDGame.DEBUG) break;
                 DDGame.DEBUG = true;
-                Gdx.app.log("INFO", "Debuging is on");
+                Log.info("Debuging is on");
                 break;
             case Input.Keys.MINUS:
+                if (!DDGame.DEBUG) break;
                 DDGame.DEBUG = false;
-                Gdx.app.log("INFO", "Debuging is off");
+                Log.info("Debuging is off");
                 break;
             case Input.Keys.ESCAPE:
-                Gdx.app.log("WARN", "Pressed ESC in debug mode. Will exit");
+                Log.warn("Pressed ESC in debug mode. Will exit");
                 Gdx.app.exit();
                 break;
         }

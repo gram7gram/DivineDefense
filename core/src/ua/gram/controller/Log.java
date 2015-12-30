@@ -9,6 +9,9 @@ import java.util.Arrays;
  */
 public class Log {
 
+    /**
+     * Normal log
+     */
     public synchronized static void info(String msg) {
         Gdx.app.log("INFO",
 //                new SimpleDateFormat("HH:mm:ss").format(new Date()) + ": " +
@@ -19,10 +22,16 @@ public class Log {
         Gdx.app.log("WARN", msg);
     }
 
+    /**
+     * Log critical errors. Should not happen
+     */
     public synchronized static void crit(String msg) {
         Gdx.app.error("CRIT", msg);
     }
 
+    /**
+     * Log exceptions
+     */
     public synchronized static void exc(String msg, Exception e) {
         msg += "\nCLASS:\t" + e.getClass().getSimpleName();
         msg += "\nMSG:\t" + e.getMessage();

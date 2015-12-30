@@ -44,7 +44,7 @@ public class TowerControlsGroup extends Group {
     }
 
     public void setGroup(final TowerGroup group) {
-        tower = group.getTower();
+        tower = group.getRootActor();
         byte gap = 5;
         sellBut.setPosition(
                 tower.getX() - sellBut.getWidth() - gap,

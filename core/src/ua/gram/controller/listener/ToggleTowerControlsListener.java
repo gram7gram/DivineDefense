@@ -2,12 +2,12 @@ package ua.gram.controller.listener;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.controller.stage.GameUIStage;
 import ua.gram.model.actor.tower.Tower;
+import ua.gram.model.group.Layer;
 import ua.gram.model.group.TowerControlsGroup;
 import ua.gram.model.group.TowerGroup;
 
@@ -32,13 +32,13 @@ public class ToggleTowerControlsListener extends ClickListener {
     public void clicked(InputEvent event, float x, float y) {
         super.clicked(event, x, y);
         if (stage_battle.hasTowersOnMap()) {
-            for (Group group : stage_battle.getIndexes()) {
-                if (group.hasChildren()) {
-                    for (Actor actor : group.getChildren()) {
+            for (Layer layer : stage_battle.getIndexes()) {
+                if (layer.hasChildren()) {
+                    for (Actor actor : layer.getChildren()) {
                         if (actor instanceof TowerGroup) {
                             TowerGroup towerGroup = ((TowerGroup) actor);
                             TowerControlsGroup controls = stage_ui.getTowerControls();
-                            Tower tower = towerGroup.getTower();
+                            Tower tower = towerGroup.getRootActor();
                             if (controls.isVisible()
                                     && !contains(controls.getUpgradeBut(), x, y)
                                     && !contains(controls.getSellBut(), x, y)) {

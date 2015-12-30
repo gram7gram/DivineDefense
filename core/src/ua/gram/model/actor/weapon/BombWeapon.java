@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import ua.gram.DDGame;
 import ua.gram.controller.Resources;
 import ua.gram.model.group.EnemyGroup;
+import ua.gram.model.group.Layer;
 import ua.gram.model.group.TowerGroup;
 import ua.gram.model.prototype.BombWeaponPrototype;
 
@@ -18,6 +19,7 @@ public class BombWeapon extends Weapon {
     private Animation animation;
     private float stateTime = 0;
     private TextureRegion currentFrame;
+    private Layer currentLayer;
 
     public BombWeapon(Resources resources, TowerGroup tower, EnemyGroup target) {
         super(tower, target);
@@ -27,6 +29,17 @@ public class BombWeapon extends Weapon {
         TextureRegion[] tiles = region.split((int) this.getWidth(), (int) this.getHeight())[0];
         animation = new Animation(proto.delay, tiles);
         animation.setPlayMode(Animation.PlayMode.NORMAL);
+    }
+
+    @Override
+    protected void handleIndexes(int targetIndex, int parentIndex) {
+        if (targetIndex < parentIndex) {
+            this.setZIndex(0);
+            tower.getRootActor().setZIndex(1);
+        } else {
+            if (currentLayer == null)
+                currentLayer = tower.getRootActor().getStage().toggleZIndex(this, tower.getParent().getZIndex() + 1);
+        }
     }
 
     @Override
@@ -61,6 +74,9 @@ public class BombWeapon extends Weapon {
         this.setPosition(0, 0);
         stateTime = 0;
         currentFrame = null;
+        this.remove();
+        tower.addActor(this);
+        currentLayer = null;
     }
 
     @Override

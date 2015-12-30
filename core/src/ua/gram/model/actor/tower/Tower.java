@@ -9,8 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.utils.Pool;
 import ua.gram.DDGame;
 import ua.gram.controller.Log;
-import ua.gram.controller.comparator.EnemyDistanceComparator;
-import ua.gram.controller.comparator.EnemyHealthComparator;
 import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.controller.tower.TowerAnimationController;
 import ua.gram.controller.tower.TowerLevelAnimationContainer;
@@ -22,9 +20,10 @@ import ua.gram.model.group.EnemyGroup;
 import ua.gram.model.group.TowerGroup;
 import ua.gram.model.prototype.TowerPrototype;
 import ua.gram.model.prototype.WeaponPrototype;
+import ua.gram.model.strategy.Strategy;
+import ua.gram.model.strategy.StrategyManager;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,8 +40,7 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
     //    public static final byte MAX_POWER_LEVEL = 4;
     public final float build_delay = 2;
     protected final TowerPrototype prototype;
-    private final EnemyDistanceComparator distanceComparator;
-    private final EnemyHealthComparator healthComparator;
+    private final StrategyManager strategyManager;
     public boolean isActive;
     public boolean isBuilding;
     public float countBuilding = 0;
@@ -58,7 +56,7 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
     private int cost;
     //    private int power_lvl;
     private int tower_lvl;
-    private Strategy strategy;
+    private Strategy currentStrategy;
     private float stateTime;
     private float count = 0;
     private int targetIndex = -1;
@@ -74,12 +72,11 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
         this.range = prototype.range;
         this.rate = prototype.rate;
         this.cost = prototype.cost;
-        this.strategy = Strategy.STRONGEST;
         isActive = false;
         isBuilding = false;
         controller = new TowerAnimationController(game.getResources().getSkin(), this);
-        distanceComparator = new EnemyDistanceComparator(this);
-        healthComparator = new EnemyHealthComparator();
+        strategyManager = new StrategyManager(this);
+        currentStrategy = strategyManager.getStrongestStrategy();
     }
 
     @Override
@@ -123,12 +120,13 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
                     if (victim == null) {
                         ArrayList<EnemyGroup> targets = scan();
                         if (!targets.isEmpty()) {
-                            List<EnemyGroup> victims = chooseVictims(targets);
+                            currentStrategy.update();
+                            List<EnemyGroup> victims = currentStrategy.chooseVictims(targets);
                             if (!victims.isEmpty()) {
                                 int index = ++targetIndex <= victims.size() - 1 ? targetIndex : 0;
                                 //Get enemies from different sides of the array
                                 EnemyGroup victimGroup = victims.get(index % 2 == 0 && index != 0 ? index : victims.size() - index - 1);
-                                victim = victimGroup.getEnemy();
+                                victim = victimGroup.getRootActor();
                                 if (isInRange(victim) && !victim.isDead) {
                                     preAttack(victim);
                                     weapon.setTarget(victimGroup);
@@ -195,42 +193,8 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
      */
     private ArrayList<EnemyGroup> scan() {
         return (ArrayList<EnemyGroup>) getStage().getEnemyGroupsOnMap().stream()
-                .filter(enemy -> isInRange(enemy.getEnemy()) && enemy.getEnemy().health > 0)
+                .filter(enemy -> isInRange(enemy.getRootActor()) && enemy.getRootActor().health > 0)
                 .collect(Collectors.toList());
-    }
-
-    /**
-     * Choose Enemies according to Tower level and strategy.
-     *
-     * @param victims potential victims in range
-     * @return actual victims
-     */
-    private List<EnemyGroup> chooseVictims(ArrayList<EnemyGroup> victims) {
-        List<EnemyGroup> enemyTargets = new ArrayList<>();
-        switch (this.strategy) {
-            case STRONGEST:
-                healthComparator.setType(EnemyHealthComparator.MAX);
-                Collections.sort(victims, healthComparator);
-                break;
-            case WEAKEST:
-                healthComparator.setType(EnemyHealthComparator.MIN);
-                Collections.sort(victims, healthComparator);
-                break;
-            case NEAREST:
-                Collections.sort(victims, distanceComparator);
-                break;
-            case RANDOM:
-                int index = victims.size() > 1 ? (int) (Math.random() * (victims.size())) : 0;
-                enemyTargets.add(victims.get(index));
-                return enemyTargets;
-        }
-        if (this.getTowerLevel() > 1 && victims.size() > 1) {
-            enemyTargets = victims.subList(0, victims.size() > this.getTowerLevel() ?
-                    this.getTowerLevel() : victims.size());
-        } else {
-            enemyTargets.add(victims.get(0));
-        }
-        return enemyTargets;
     }
 
     private boolean isInRange(Enemy enemy) {
@@ -261,16 +225,16 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
      */
     public void changeAnimation(Animator.Types type) {
         Log.info(this + " animation changed to: " + tower_lvl + "_" + type.name());
-        type = Animator.Types.IDLE;//remove
+        type = Animator.Types.IDLE;//TODO remove
         this.setLevelAnimationContainer(tower_lvl);
         this.setAnimation(container.getAnimation(type));
     }
 
     @Override
     public void reset() {
-        this.strategy = Strategy.STRONGEST;
-        this.tower_lvl = 1;
-        Log.info(this.getClass().getSimpleName() + " was reset");
+        currentStrategy = strategyManager.getStrongestStrategy();
+        tower_lvl = 1;
+        Log.info(this + " was reset");
     }
 
     @Override
@@ -313,8 +277,4 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
         container = controller.getLevelAnimationContainer(level);
     }
 
-    public enum Strategy {
-
-        NEAREST, RANDOM, WEAKEST, STRONGEST
-    }
 }

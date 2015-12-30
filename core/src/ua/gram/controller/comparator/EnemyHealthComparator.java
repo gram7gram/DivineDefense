@@ -19,7 +19,7 @@ public class EnemyHealthComparator implements Comparator<EnemyGroup> {
 
     @Override
     public int compare(EnemyGroup enemy1, EnemyGroup enemy2) {
-        return (int) ((enemy1.getEnemy().health - enemy2.getEnemy().health) * type);
+        return (int) ((enemy1.getRootActor().health - enemy2.getRootActor().health) * type);
     }
 
     public void setType(int type) {

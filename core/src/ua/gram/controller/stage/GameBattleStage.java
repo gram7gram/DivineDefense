@@ -1,6 +1,5 @@
 package ua.gram.controller.stage;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import ua.gram.DDGame;
@@ -9,11 +8,12 @@ import ua.gram.controller.listener.ToggleTowerControlsListener;
 import ua.gram.model.Level;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.actor.tower.Tower;
+import ua.gram.model.group.ActorGroup;
 import ua.gram.model.group.EnemyGroup;
+import ua.gram.model.group.Layer;
 import ua.gram.model.group.TowerGroup;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Contains major game objects, like towers and enemies.
@@ -26,7 +26,7 @@ public class GameBattleStage extends AbstractStage {
 
     private final Level level;
     private GameUIStage gameUIStage;
-    private volatile ArrayList<Group> indexes;
+    private volatile ArrayList<Layer> indexes;
     private ToggleTowerControlsListener controlsListener;
     private ArrayList<int[]> towerPositions;
 
@@ -36,12 +36,12 @@ public class GameBattleStage extends AbstractStage {
         towerPositions = new ArrayList<>();
         indexes = new ArrayList<>();
         for (int i = 0; i < DDGame.MAP_HEIGHT; i++) {
-            Group group = new Group();
+            Layer group = new Layer();
             indexes.add(group);
             this.addActor(group);
         }
-        Gdx.app.log("INFO", indexes.size() + " indexes are OK");
-        Gdx.app.log("INFO", "BattleStage is OK");
+        Log.info(indexes.size() + " indexes are OK");
+        Log.info("BattleStage is OK");
     }
 
     @Override
@@ -65,23 +65,48 @@ public class GameBattleStage extends AbstractStage {
      *
      * @param newGroup group, which is added on the stage
      */
-    public void updateZIndexes(Group newGroup) {
-        for (Actor actor : newGroup.getChildren()) {
-            if (actor instanceof Enemy || actor instanceof Tower) {
-                int index = (DDGame.MAP_HEIGHT - Math.abs((int) (actor.getY() / DDGame.TILE_HEIGHT) - 1));
-                Group group = indexes.get(index);
-                if (group != null) {
-                    group.addActor(newGroup);
-                    Gdx.app.log("INFO", actor + " added to " + index + " index");
-                    break;
-                } else {
-                    Log.warn(this.getClass().getSimpleName() + " failed to get Group at " + index + " index");
-                }
-            }
+    public void updateZIndexes(ActorGroup newGroup) {
+        int index = getActorIndex(newGroup);
+        Group group = indexes.get(index);
+
+        if (group != null) {
+            group.addActor(newGroup);
+            Log.info(newGroup.getClass().getSimpleName() + " added to " + index + " index");
+        } else {
+            Log.warn(this.getClass().getSimpleName() + " failed to get Group at " + index + " index");
         }
 
         int count = countLayers();
-        Gdx.app.log("INFO", "Stage now has " + count + (count > 1 ? " layers" : " layer"));
+        Log.info("Stage now has " + count + (count > 1 ? " layers" : " layer"));
+    }
+
+    /**
+     * Swaps Enemies between Groups on Stage, that represent Z-indexes.
+     *
+     * @param enemy enemy and it's parent group to swap
+     */
+    public void updateActorIndex(ActorGroup enemy) {
+        if (enemy.getParent() != null) {
+            int index = getActorIndex(enemy);
+            if (index != enemy.getParent().getZIndex()) {
+                try {
+                    Group indexGroup = indexes.get(index);
+                    if (indexGroup != null) {
+                        enemy.remove();
+                        indexGroup.addActor(enemy);
+                    } else {
+                        Log.crit("Could not swap " + enemy.getRootActor() + " between indexes");
+                    }
+                } catch (IndexOutOfBoundsException e) {
+                    Log.exc(this.getClass().getSimpleName() + " failed to update indexes", e);
+                }
+            }
+        }
+    }
+
+    private int getActorIndex(Actor actor) {
+        int index = (DDGame.MAP_HEIGHT - Math.round(actor.getY() / DDGame.TILE_HEIGHT) - 1);
+        return index >= 0 ? index : 0;
     }
 
     public int countLayers() {
@@ -106,7 +131,7 @@ public class GameBattleStage extends AbstractStage {
                 }
             }
         }
-        Gdx.app.log("INFO", "No enemies on map!");
+        Log.info("No enemies on map!");
         return false;
     }
 
@@ -123,7 +148,7 @@ public class GameBattleStage extends AbstractStage {
                 }
             }
         }
-        Gdx.app.log("INFO", "No towers on map!");
+        Log.info("No towers on map!");
         return false;
     }
 
@@ -199,33 +224,8 @@ public class GameBattleStage extends AbstractStage {
         return true;
     }
 
-    public ArrayList<Group> getIndexes() {
+    public ArrayList<Layer> getIndexes() {
         return indexes;
-    }
-
-    /**
-     * Swaps Enemies between Groups on Stage, that represent Z-indexes.
-     *
-     * @param enemy enemy and it's parent group to swap
-     */
-    public void updateActorIndex(EnemyGroup enemy) {
-        if (enemy.getParent() != null) {
-            int index = (int) (DDGame.MAP_HEIGHT - (enemy.getY()) / DDGame.TILE_HEIGHT) - 1;
-            if (index != enemy.getZIndex()) {
-                enemy.remove();
-                try {
-                    Group indexGroup = indexes.get(index);
-                    if (indexGroup != null) {
-                        indexGroup.addActor(enemy);
-                    } else {
-                        Log.crit("Could not swap " + enemy.getEnemy() + " between indexes");
-                    }
-                } catch (IndexOutOfBoundsException e) {
-                    Gdx.app.error("EXC", "GameBattleStage failed to update indexes"
-                            + "\r\n" + Arrays.toString(e.getStackTrace()));
-                }
-            }
-        }
     }
 
     public void setUIStage(GameUIStage stage_ui) {
@@ -242,5 +242,18 @@ public class GameBattleStage extends AbstractStage {
 
     public void removeTowerPosition(Tower tower) {
         towerPositions.remove(new int[]{(int) tower.getX() / DDGame.TILE_HEIGHT, (int) tower.getY() / DDGame.TILE_HEIGHT});
+    }
+
+    public Layer toggleZIndex(Actor actor, int index) {
+        if (indexes.size() <= index)
+            throw new IllegalArgumentException("Cannot get " + index + " index from " + indexes.size() + " layers");
+
+        actor.remove();
+        Layer layer = indexes.get(index);
+
+        layer.addActor(actor);
+
+        return layer;
+
     }
 }

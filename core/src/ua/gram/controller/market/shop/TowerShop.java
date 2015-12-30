@@ -1,9 +1,9 @@
 package ua.gram.controller.market.shop;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.utils.Pool;
 import ua.gram.DDGame;
+import ua.gram.controller.Log;
 import ua.gram.controller.pool.TowerPool;
 import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.controller.stage.GameUIStage;
@@ -39,7 +39,7 @@ public class TowerShop {
         poolSpecial = new TowerPool<TowerSpecial>(game, "TowerSpecial");
         towerShopGroup = new TowerShopGroup(game, this);
         stage_ui.setTowerControls(new TowerControlsGroup(game.getResources().getSkin(), this));
-        Gdx.app.log("INFO", "TowerShop is OK");
+        Log.info("TowerShop is OK");
     }
 
     /**
@@ -86,14 +86,14 @@ public class TowerShop {
         tower.changeAnimation(Animator.Types.BUILD);
         tower.setPosition(x, y);
         game.getPlayer().chargeCoins(tower.getCost());
-        TowerGroup towerGroup = new TowerGroup(tower, game);
+        TowerGroup towerGroup = new TowerGroup(game, tower);
         tower.setTouchable(Touchable.disabled);
         towerGroup.setVisible(true);
         tower.setOrigin(tower.getX() + 20, tower.getY() + 42);
         stage_battle.updateZIndexes(towerGroup);
         stage_battle.addTowerPosition(tower);
         tower.isBuilding = true;
-        Gdx.app.log("INFO", tower + " is building...");
+        Log.info(tower + " is building...");
     }
 
     /**
@@ -108,11 +108,11 @@ public class TowerShop {
     }
 
     public void sell(TowerGroup group) {
-        stage_battle.removeTowerPosition(group.getTower());
-        int revenue = (int) (group.getTower().getCost() * SELL_RATIO);
-        Gdx.app.log("INFO", this.getClass().getSimpleName() + " is sold for: " + revenue + " coins");
+        stage_battle.removeTowerPosition(group.getRootActor());
+        int revenue = (int) (group.getRootActor().getCost() * SELL_RATIO);
+        Log.info(this.getClass().getSimpleName() + " is sold for: " + revenue + " coins");
         game.getPlayer().addCoins(revenue);
-        this.release(group.getTower());
+        this.release(group.getRootActor());
         group.remove();
     }
 
@@ -141,7 +141,7 @@ public class TowerShop {
      */
     public void free(Tower tower) {
         this.getPool(tower.getClass()).free(tower);
-        Gdx.app.log("INFO", tower.getClass().getSimpleName() + " is set free");
+        Log.info(tower.getClass().getSimpleName() + " is set free");
     }
 
     public TowerShopGroup getTowerShopGroup() {
