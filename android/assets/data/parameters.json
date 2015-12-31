@@ -381,26 +381,11 @@
       "width": 60,
       "height": 90,
       "weapon": {
-        "class": "ua.gram.model.prototype.LaserWeaponPrototype",
-        "type": "Laser",
-        "colorOver": {
-          "r": 1,
-          "g": 1,
-          "b": 1,
-          "a": 1
-        },
-        "colorBack": {
-          "r": 1,
-          "g": 0,
-          "b": 0,
-          "a": 1
-        },
-        "startBack": "data/images/misc/start_back.png",
-        "startOver": "data/images/misc/start_over.png",
-        "middleBack": "data/images/misc/middle_back.png",
-        "middleOver": "data/images/misc/middle_over.png",
-        "endBack": "data/images/misc/end_back.png",
-        "endOver": "data/images/misc/end_over.png"
+        "class": "ua.gram.model.prototype.FreezeWeaponPrototype",
+        "type": "Freeze",
+        "region": "TOWER_STUN_WEAPON",
+        "delay": 0.25,
+        "frames": 4
       }
     }
   ],

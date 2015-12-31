@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.utils.Pool;
 import ua.gram.DDGame;
 import ua.gram.controller.Log;
+import ua.gram.controller.market.shop.TowerShop;
 import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.controller.tower.TowerAnimationController;
 import ua.gram.controller.tower.TowerLevelAnimationContainer;
@@ -20,8 +21,7 @@ import ua.gram.model.group.EnemyGroup;
 import ua.gram.model.group.TowerGroup;
 import ua.gram.model.prototype.TowerPrototype;
 import ua.gram.model.prototype.WeaponPrototype;
-import ua.gram.model.strategy.Strategy;
-import ua.gram.model.strategy.StrategyManager;
+import ua.gram.model.strategy.tower.TowerStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +40,6 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
     //    public static final byte MAX_POWER_LEVEL = 4;
     public final float build_delay = 2;
     protected final TowerPrototype prototype;
-    private final StrategyManager strategyManager;
     public boolean isActive;
     public boolean isBuilding;
     public float countBuilding = 0;
@@ -48,6 +47,7 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
     protected TextureRegion currentFrame;
     protected TowerAnimationController controller;
     protected TowerLevelAnimationContainer container;
+    protected TowerShop towerShop;
     protected Animation animation;
     protected Weapon weapon;
     private float damage;
@@ -56,11 +56,9 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
     private int cost;
     //    private int power_lvl;
     private int tower_lvl;
-    private Strategy currentStrategy;
+    private TowerStrategy currentTowerStrategy;
     private float stateTime;
     private float count = 0;
-    private int targetIndex = -1;
-    private Enemy victim;
 
     public Tower(DDGame game, TowerPrototype prototype) {
         super(prototype);
@@ -75,8 +73,6 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
         isActive = false;
         isBuilding = false;
         controller = new TowerAnimationController(game.getResources().getSkin(), this);
-        strategyManager = new StrategyManager(this);
-        currentStrategy = strategyManager.getStrongestStrategy();
     }
 
     @Override
@@ -117,32 +113,22 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
             } else if (isActive) {
                 if (count >= this.rate) {
                     count = 0;
-                    if (victim == null) {
-                        ArrayList<EnemyGroup> targets = scan();
-                        if (!targets.isEmpty()) {
-                            currentStrategy.update();
-                            List<EnemyGroup> victims = currentStrategy.chooseVictims(targets);
-                            if (!victims.isEmpty()) {
-                                int index = ++targetIndex <= victims.size() - 1 ? targetIndex : 0;
-                                //Get enemies from different sides of the array
-                                EnemyGroup victimGroup = victims.get(index % 2 == 0 && index != 0 ? index : victims.size() - index - 1);
-                                victim = victimGroup.getRootActor();
-                                if (isInRange(victim) && !victim.isDead) {
+                    ArrayList<EnemyGroup> targets = scan();
+                    if (!targets.isEmpty()) {
+                        List<EnemyGroup> victims = currentTowerStrategy.chooseVictims(this, targets);
+                        if (victims != null && !victims.isEmpty()) {
+                            for (EnemyGroup victimGroup : victims) {
+                                Enemy victim = victimGroup.getRootActor();
+                                if (isInRange(victim)) {
                                     preAttack(victim);
                                     weapon.setTarget(victimGroup);
                                     weapon.setVisible(true);
-                                    victim.isAttacked = true;
-                                    victim.damage(this.damage);
                                     attack(victim);
+                                } else {
+                                    looseTarget(victim);
                                 }
-                            } else if (victim != null) {
-                                looseTarget();
-                            } else {
-                                Log.crit("Could not choose targets!");
                             }
                         }
-                    } else {
-                        looseTarget();
                     }
                 } else {
                     count += delta;
@@ -151,11 +137,10 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
         }
     }
 
-    private void looseTarget() {
+    private void looseTarget(Enemy victim) {
         postAttack(victim);
         victim.isAttacked = false;
         weapon.resetTarget();
-        victim = null;
         weapon.setVisible(false);
     }
 
@@ -166,21 +151,26 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
      *
      * @param victim the enemy to attack
      */
-    public abstract void preAttack(Enemy victim);
+    public void preAttack(Enemy victim) {
+    }
 
     /**
      * Perform tower-specific attack.
      *
      * @param victim the enemy to attack
      */
-    public abstract void attack(Enemy victim);
+    public void attack(Enemy victim) {
+        victim.isAttacked = true;
+        victim.damage(this.damage);
+    }
 
     /**
      * Perform Tower specific actions after attack.
      *
      * @param victim the enemy attacked
      */
-    public abstract void postAttack(Enemy victim);
+    public void postAttack(Enemy victim) {
+    }
 
     public abstract WeaponPrototype getWeaponPrototype();
 
@@ -198,10 +188,10 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
     }
 
     private boolean isInRange(Enemy enemy) {
-        Vector2 enemyPos = new Vector2(enemy.getX() + enemy.getWidth() / 2f, enemy.getY() + enemy.getHeight() / 2f);
-        Vector2 towerPos = new Vector2(this.getX() + this.getWidth() / 2f, this.getY() + this.getHeight() / 2f);
+        Vector2 enemyPos = new Vector2(enemy.getOriginX(), enemy.getOriginY());
+        Vector2 towerPos = new Vector2(this.getOriginX(), this.getOriginY());
         float distance = enemyPos.dst(towerPos);
-        return distance <= this.range * DDGame.TILE_HEIGHT;
+        return distance <= this.range * DDGame.TILE_HEIGHT * 1.5;
     }
 
     /**
@@ -225,14 +215,14 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
      */
     public void changeAnimation(Animator.Types type) {
         Log.info(this + " animation changed to: " + tower_lvl + "_" + type.name());
-        type = Animator.Types.IDLE;//TODO remove
+        type = Animator.Types.IDLE;
         this.setLevelAnimationContainer(tower_lvl);
         this.setAnimation(container.getAnimation(type));
     }
 
     @Override
     public void reset() {
-        currentStrategy = strategyManager.getStrongestStrategy();
+        currentTowerStrategy = towerShop != null ? towerShop.getStrategyManager().getDefault() : null;
         tower_lvl = 1;
         Log.info(this + " was reset");
     }
@@ -277,4 +267,23 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
         container = controller.getLevelAnimationContainer(level);
     }
 
+    public TowerPrototype getPrototype() {
+        return prototype;
+    }
+
+    public void setCurrentTowerStrategy(TowerStrategy currentTowerStrategy) {
+        this.currentTowerStrategy = currentTowerStrategy;
+    }
+
+    public void setDefaultStrategy() {
+        this.currentTowerStrategy = getDefaultStrategy();
+    }
+
+    public TowerStrategy getDefaultStrategy() {
+        return towerShop != null ? towerShop.getStrategyManager().getDefault() : null;
+    }
+
+    public void setTowerShop(TowerShop towerShop) {
+        this.towerShop = towerShop;
+    }
 }

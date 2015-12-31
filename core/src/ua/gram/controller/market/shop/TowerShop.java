@@ -12,6 +12,7 @@ import ua.gram.model.actor.tower.*;
 import ua.gram.model.group.TowerControlsGroup;
 import ua.gram.model.group.TowerGroup;
 import ua.gram.model.group.TowerShopGroup;
+import ua.gram.model.strategy.StrategyManager;
 
 import static ua.gram.model.actor.tower.Tower.SELL_RATIO;
 
@@ -24,6 +25,7 @@ public class TowerShop {
     private final GameBattleStage stage_battle;
     private final GameUIStage stage_ui;
     private final TowerShopGroup towerShopGroup;
+    private final StrategyManager strategyManager;
     private final Pool<Tower> poolPrimary;
     private final Pool<Tower> poolSecondary;
     private final Pool<Tower> poolStun;
@@ -39,6 +41,7 @@ public class TowerShop {
         poolSpecial = new TowerPool<TowerSpecial>(game, "TowerSpecial");
         towerShopGroup = new TowerShopGroup(game, this);
         stage_ui.setTowerControls(new TowerControlsGroup(game.getResources().getSkin(), this));
+        strategyManager = new StrategyManager();
         Log.info("TowerShop is OK");
     }
 
@@ -90,6 +93,8 @@ public class TowerShop {
         tower.setTouchable(Touchable.disabled);
         towerGroup.setVisible(true);
         tower.setOrigin(tower.getX() + 20, tower.getY() + 42);
+        tower.setTowerShop(this);
+        tower.setDefaultStrategy();
         stage_battle.updateZIndexes(towerGroup);
         stage_battle.addTowerPosition(tower);
         tower.isBuilding = true;
@@ -154,5 +159,9 @@ public class TowerShop {
 
     public GameUIStage getStageUi() {
         return stage_ui;
+    }
+
+    public StrategyManager getStrategyManager() {
+        return strategyManager;
     }
 }

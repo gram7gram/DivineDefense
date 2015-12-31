@@ -1,7 +1,6 @@
 package ua.gram.model.actor.tower;
 
 import ua.gram.DDGame;
-import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.actor.weapon.BombWeapon;
 import ua.gram.model.prototype.BombWeaponPrototype;
 import ua.gram.model.prototype.TowerPrototype;
@@ -18,21 +17,6 @@ public final class TowerSecondary extends Tower implements Cloneable {
     @Override
     public void update(float delta) {
         this.setOrigin(getX() + animationWidth / 2f, getY() + 78);
-    }
-
-    @Override
-    public void preAttack(Enemy victim) {
-
-    }
-
-    @Override
-    public void attack(Enemy victim) {
-
-    }
-
-    @Override
-    public void postAttack(Enemy victim) {
-
     }
 
     @Override

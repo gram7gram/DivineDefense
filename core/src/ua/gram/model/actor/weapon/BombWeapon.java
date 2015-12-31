@@ -1,10 +1,8 @@
 package ua.gram.model.actor.weapon;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import ua.gram.DDGame;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import ua.gram.controller.Resources;
 import ua.gram.model.group.EnemyGroup;
 import ua.gram.model.group.Layer;
@@ -16,19 +14,21 @@ import ua.gram.model.prototype.BombWeaponPrototype;
  */
 public class BombWeapon extends Weapon {
 
-    private Animation animation;
-    private float stateTime = 0;
-    private TextureRegion currentFrame;
     private Layer currentLayer;
 
     public BombWeapon(Resources resources, TowerGroup tower, EnemyGroup target) {
-        super(tower, target);
+        super(resources, tower, target);
+    }
+
+    @Override
+    protected Animation createAnimation(Skin skin) {
         BombWeaponPrototype proto = getPrototype();
-        TextureRegion region = resources.getSkin().getRegion(proto.region);
+        TextureRegion region = skin.getRegion(proto.region);
         this.setSize(region.getRegionWidth() / proto.frames, region.getRegionHeight());
         TextureRegion[] tiles = region.split((int) this.getWidth(), (int) this.getHeight())[0];
-        animation = new Animation(proto.delay, tiles);
+        Animation animation = new Animation(proto.delay, tiles);
         animation.setPlayMode(Animation.PlayMode.NORMAL);
+        return animation;
     }
 
     @Override
@@ -44,7 +44,7 @@ public class BombWeapon extends Weapon {
 
     @Override
     public void update(float delta) {
-        if (isNull()) {
+        if (isOutOfBounds()) {
             this.setPosition(
                     target.getOriginX() - this.getWidth() / 2f,
                     target.getOriginY() - this.getHeight() / 2f + 10);
@@ -52,28 +52,10 @@ public class BombWeapon extends Weapon {
     }
 
     @Override
-    public boolean isFinished() {
-        return animation.isAnimationFinished(stateTime);
-    }
-
-    @Override
-    public void render(Batch batch) {
-        if (!DDGame.PAUSE || currentFrame == null) {
-            currentFrame = animation.getKeyFrame(stateTime, true);
-            stateTime += Gdx.graphics.getDeltaTime();
-        }
-        if (currentFrame != null && !isNull()) batch.draw(currentFrame, getX(), getY());
-    }
-
-    private boolean isNull() {
-        return getX() == 0 && getY() == 0;
-    }
-
-    @Override
     public void reset() {
+        super.reset();
         this.setPosition(0, 0);
-        stateTime = 0;
-        currentFrame = null;
+        //Return Weapon to TowerGroup
         this.remove();
         tower.addActor(this);
         currentLayer = null;

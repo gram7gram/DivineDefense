@@ -13,7 +13,7 @@ public class EnemyDistanceComparator implements Comparator<EnemyGroup> {
 
     private Tower tower;
 
-    public EnemyDistanceComparator(Tower tower) {
+    public void update(Tower tower) {
         this.tower = tower;
     }
 
@@ -26,4 +26,6 @@ public class EnemyDistanceComparator implements Comparator<EnemyGroup> {
         float dist2 = pos2.dst(posTower);
         return (int) (dist1 - dist2);
     }
+
+
 }

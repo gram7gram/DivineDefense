@@ -2,11 +2,7 @@ package ua.gram.model.strategy;
 
 import ua.gram.controller.comparator.EnemyDistanceComparator;
 import ua.gram.controller.comparator.EnemyHealthComparator;
-import ua.gram.model.actor.tower.Tower;
-import ua.gram.model.strategy.tower.NearestStrategy;
-import ua.gram.model.strategy.tower.RandomStrategy;
-import ua.gram.model.strategy.tower.StrongestStrategy;
-import ua.gram.model.strategy.tower.WeakestStrategy;
+import ua.gram.model.strategy.tower.*;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -16,35 +12,41 @@ public class StrategyManager {
     private final EnemyDistanceComparator distanceComparator;
     private final EnemyHealthComparator healthComparator;
 
-    private final Strategy strongestStrategy;
-    private final Strategy weakestStrategy;
-    private final Strategy nearestStrategy;
-    private final Strategy randomStrategy;
+    private final TowerStrategy strongestTowerStrategy;
+    private final TowerStrategy weakestTowerStrategy;
+    private final TowerStrategy nearestTowerStrategy;
+    private final TowerStrategy randomTowerStrategy;
+    private final TowerStrategy allTowerStrategy;
 
-    public StrategyManager(Tower tower) {
-        distanceComparator = new EnemyDistanceComparator(tower);
+    public StrategyManager() {
+        distanceComparator = new EnemyDistanceComparator();
         healthComparator = new EnemyHealthComparator();
 
-        randomStrategy = new RandomStrategy();
-        nearestStrategy = new NearestStrategy(tower, this);
-        weakestStrategy = new WeakestStrategy(tower, this);
-        strongestStrategy = new StrongestStrategy(tower, this);
+        allTowerStrategy = new AllStrategy();
+        randomTowerStrategy = new RandomStrategy();
+        nearestTowerStrategy = new NearestStrategy(this);
+        weakestTowerStrategy = new WeakestStrategy(this);
+        strongestTowerStrategy = new StrongestStrategy(this);
     }
 
-    public Strategy getStrongestStrategy() {
-        return strongestStrategy;
+    public TowerStrategy getAllStrategy() {
+        return allTowerStrategy;
     }
 
-    public Strategy getWeakestStrategy() {
-        return weakestStrategy;
+    public TowerStrategy getStrongestTowerStrategy() {
+        return strongestTowerStrategy;
     }
 
-    public Strategy getNearestStrategy() {
-        return nearestStrategy;
+    public TowerStrategy getWeakestTowerStrategy() {
+        return weakestTowerStrategy;
     }
 
-    public Strategy getRandomStrategy() {
-        return randomStrategy;
+    public TowerStrategy getNearestTowerStrategy() {
+        return nearestTowerStrategy;
+    }
+
+    public TowerStrategy getRandomStrategy() {
+        return randomTowerStrategy;
     }
 
     public EnemyDistanceComparator getDistanceComparator() {
@@ -53,5 +55,9 @@ public class StrategyManager {
 
     public EnemyHealthComparator getHealthComparator() {
         return healthComparator;
+    }
+
+    public TowerStrategy getDefault() {
+        return strongestTowerStrategy;
     }
 }

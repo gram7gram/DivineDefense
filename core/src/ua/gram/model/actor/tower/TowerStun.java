@@ -1,11 +1,11 @@
 package ua.gram.model.actor.tower;
 
-import com.badlogic.gdx.graphics.Color;
 import ua.gram.DDGame;
 import ua.gram.model.actor.enemy.Enemy;
-import ua.gram.model.actor.weapon.LaserWeapon;
-import ua.gram.model.prototype.LaserWeaponPrototype;
+import ua.gram.model.actor.weapon.FreezeWeapon;
+import ua.gram.model.prototype.FreezeWeaponPrototype;
 import ua.gram.model.prototype.TowerPrototype;
+import ua.gram.model.strategy.tower.TowerStrategy;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -14,6 +14,11 @@ public final class TowerStun extends Tower implements Cloneable {
 
     public TowerStun(DDGame game, TowerPrototype prototype) {
         super(game, prototype);
+    }
+
+    @Override
+    public TowerStrategy getDefaultStrategy() {
+        return towerShop != null ? towerShop.getStrategyManager().getAllStrategy() : null;
     }
 
     @Override
@@ -33,6 +38,7 @@ public final class TowerStun extends Tower implements Cloneable {
      */
     @Override
     public void attack(Enemy victim) {
+        super.attack(victim);
         victim.isStunned = true;
     }
 
@@ -52,17 +58,16 @@ public final class TowerStun extends Tower implements Cloneable {
     }
 
     @Override
-    public LaserWeaponPrototype getWeaponPrototype() {
-        return (LaserWeaponPrototype) prototype.weapon;
+    public FreezeWeaponPrototype getWeaponPrototype() {
+        return (FreezeWeaponPrototype) prototype.weapon;
     }
 
     @Override
-    public LaserWeapon getWeapon() {
+    public FreezeWeapon getWeapon() {
         if (weapon == null) {
-            weapon = new LaserWeapon(game.getResources(), this.getParent(), null);
-            ((LaserWeapon) weapon).setBackColor(Color.GREEN);
+            weapon = new FreezeWeapon(game.getResources(), this.getParent(), null);
         }
-        return (LaserWeapon) weapon;
+        return (FreezeWeapon) weapon;
     }
 
 }

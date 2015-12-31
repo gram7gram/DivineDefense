@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool;
 import ua.gram.DDGame;
+import ua.gram.controller.Log;
 import ua.gram.controller.enemy.EnemyAnimationProvider;
 import ua.gram.controller.enemy.EnemySpawner;
 import ua.gram.controller.pool.animation.AnimationPool;
@@ -159,7 +160,7 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
         previousDirection = Vector2.Zero;
         originPosition = Vector2.Zero;
         previousPosition = Vector2.Zero;
-        Gdx.app.log("INFO", this + " was reset");
+        Log.info(this + " was reset");
     }
 
     public EnemyAnimationProvider getAnimationProvider() {
@@ -174,18 +175,18 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
         return animator.getPoolable().getAnimation();
     }
 
+    public void setAnimation(PollableAnimation animation) {
+        this.animator.setPollable(animation);
+    }
+
     public void setAnimation(Animator.Types type) {
         AnimationPool pool = animationProvider.get(this, type);
         this.setAnimation(pool.obtain());
     }
 
-    public void setAnimation(PollableAnimation animation) {
-        this.animator.setPollable(animation);
-    }
-
     public void damage(float damage) {
         this.health -= damage;
-        Gdx.app.log("INFO", this + " receives "
+        Log.info(this + " receives "
                 + (int) damage + " dmg, hp: " + this.health);
     }
 
@@ -265,8 +266,16 @@ public abstract class Enemy extends GameActor implements Pool.Poolable {
 //        this.previousDirectionType = Path.getType(this.previousDirection);
     }
 
-    public void alterSpeed(float deceleration) {
-        this.speed = defaultSpeed * deceleration;
+    public void increaseSpeed() {
+        this.speed = defaultSpeed / 2;
+    }
+
+    public void decreaseSpeed() {
+        this.speed = defaultSpeed * 2;
+    }
+
+    public void resetSpeed() {
+        this.speed = defaultSpeed;
     }
 
     public Path.Types getCurrentDirectionType() {

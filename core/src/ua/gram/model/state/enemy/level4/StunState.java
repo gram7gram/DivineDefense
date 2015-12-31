@@ -21,11 +21,12 @@ public class StunState extends Level4State {
 
     @Override
     public void manage(Enemy enemy, float delta) {
-        enemy.alterSpeed(1 / 2f);
+        enemy.decreaseSpeed();
     }
 
     @Override
     public void postManage(Enemy enemy) {
         enemy.isAffected = false;
+        enemy.resetSpeed();
     }
 }

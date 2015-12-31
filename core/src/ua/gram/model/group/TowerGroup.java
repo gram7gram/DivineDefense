@@ -1,9 +1,13 @@
 package ua.gram.model.group;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import ua.gram.DDGame;
+import ua.gram.controller.Log;
 import ua.gram.model.actor.misc.ProgressBar;
 import ua.gram.model.actor.tower.Tower;
 import ua.gram.model.actor.weapon.Weapon;
@@ -13,22 +17,24 @@ import ua.gram.model.actor.weapon.Weapon;
  */
 public class TowerGroup extends ActorGroup<Tower> {
 
-    private final Actor towerBack;
     private final Weapon weapon;
     private final DDGame game;
+    private ShapeRenderer shapeRenderer;
 
     public TowerGroup(DDGame game, Tower tower) {
         super(tower);
         this.game = game;
-        towerBack = new Actor();
-        this.addActor(towerBack);
-        this.addActor(tower);//NOTE Tower should have a parent, before getting a weapon
+        //NOTE Add dummy actor to have freedom in swapping z-indexes
+        this.addActor(new Actor());
+        //NOTE Tower should have a parent, before getting a weapon
+        this.addActor(tower);
         this.weapon = tower.getWeapon();
         weapon.setVisible(false);
         this.addActor(weapon);
         this.addActor(new ProgressBar(game.getResources().getSkin(), tower));
         tower.setZIndex(1);
-        Gdx.app.log("INFO", "Group for " + tower + " is OK");
+        shapeRenderer = new ShapeRenderer();
+        Log.info("Group for " + tower + " is OK");
     }
 
     @Override
@@ -38,11 +44,20 @@ public class TowerGroup extends ActorGroup<Tower> {
             game.getInfo().draw(batch, this.getParent().getZIndex() + "",
                     root.getX() - 8,
                     root.getY() + root.getHeight());
-        }
-    }
 
-    public Actor getTowerBack() {
-        return towerBack;
+            batch.end();
+
+            Gdx.gl.glEnable(GL20.GL_BLEND);
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+            shapeRenderer.setColor(Color.RED);
+            shapeRenderer.circle(this.getOriginX(), this.getOriginY(),
+                    this.getRootActor().getPrototype().range * DDGame.TILE_HEIGHT * 1.5f);
+            shapeRenderer.end();
+            Gdx.gl.glDisable(GL20.GL_BLEND);
+
+            batch.begin();
+
+        }
     }
 
     public Weapon getWeapon() {

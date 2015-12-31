@@ -28,7 +28,7 @@ public final class LaserWeapon extends Weapon {
     private Color color_back;
 
     public LaserWeapon(Resources resources, TowerGroup tower, EnemyGroup enemy) {
-        super(tower, enemy);
+        super(resources, tower, enemy);
         LaserWeaponPrototype proto = getPrototype();
         this.color_back = proto.colorBack;
         this.color_over = proto.colorOver;
@@ -38,11 +38,6 @@ public final class LaserWeapon extends Weapon {
         this.middle_over = new Sprite(resources.getTexture(proto.middleOver));
         this.end_back = new Sprite(resources.getTexture(proto.endBack));
         this.end_over = new Sprite(resources.getTexture(proto.endOver));
-    }
-
-    @Override
-    public boolean isFinished() {
-        return true;
     }
 
     @Override
@@ -93,27 +88,35 @@ public final class LaserWeapon extends Weapon {
     }
 
     @Override
-    public void render(Batch batch) {
-        //NOTE Actual drawing is done on end(); if we do not end, we contaminate previous rendering.
-        batch.end();
-        batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE);
-        batch.begin();
+    public void draw(Batch batch, float parentAlpha) {
+        if (!DDGame.PAUSE && target != null) {
+            //NOTE Actual drawing is done on end(); if we do not end, we contaminate previous rendering.
+            batch.end();
+            batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE);
+            batch.begin();
 
-        start_back.draw(batch);
-        start_over.draw(batch);
-        middle_back.draw(batch);
-        middle_over.draw(batch);
-        end_back.draw(batch);
-        end_over.draw(batch);
+            start_back.draw(batch);
+            start_over.draw(batch);
+            middle_back.draw(batch);
+            middle_over.draw(batch);
+            end_back.draw(batch);
+            end_over.draw(batch);
 
-        batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+            batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+        }
     }
 
     @Override
     public void reset() {
+        super.reset();
         this.setSize(0, 0);
         this.setPosition(tower.getOriginX(), tower.getOriginY());
         this.setRotation(0);
+    }
+
+    @Override
+    public boolean isFinished() {
+        return true;
     }
 
     @Override

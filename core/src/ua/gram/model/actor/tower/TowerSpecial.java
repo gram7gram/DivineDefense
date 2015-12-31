@@ -2,7 +2,6 @@ package ua.gram.model.actor.tower;
 
 import com.badlogic.gdx.graphics.Color;
 import ua.gram.DDGame;
-import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.actor.weapon.LaserWeapon;
 import ua.gram.model.prototype.LaserWeaponPrototype;
 import ua.gram.model.prototype.TowerPrototype;
@@ -19,21 +18,6 @@ public final class TowerSpecial extends Tower implements Cloneable {
     @Override
     public void update(float delta) {
         this.setOrigin(getX() + animationWidth / 2f, getY() + 78);
-    }
-
-    @Override
-    public void preAttack(Enemy victim) {
-
-    }
-
-    @Override
-    public void attack(Enemy victim) {
-
-    }
-
-    @Override
-    public void postAttack(Enemy victim) {
-
     }
 
     @Override

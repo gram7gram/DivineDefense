@@ -9,14 +9,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import ua.gram.controller.Log;
 import ua.gram.controller.Resources;
 import ua.gram.controller.security.SecurityHandler;
 import ua.gram.model.Player;
 import ua.gram.model.prototype.GamePrototype;
 import ua.gram.model.prototype.LevelPrototype;
 import ua.gram.model.prototype.ParametersPrototype;
-import ua.gram.services.Container;
-import ua.gram.services.NotificationService;
 import ua.gram.view.screen.ErrorScreen;
 import ua.gram.view.screen.LaunchLoadingScreen;
 
@@ -59,7 +58,6 @@ public class DDGame<P extends GamePrototype> extends Game {
     private Player player;
     private BitmapFont info;
     private float gameSpeed = 1;
-    private Container container;
 
     public DDGame(SecurityHandler security, P prototype) {
         this.security = security;
@@ -81,9 +79,6 @@ public class DDGame<P extends GamePrototype> extends Game {
         resources = new Resources(this);
         info = new BitmapFont();
         info.setColor(1, 1, 1, 1);
-        container = new Container(
-                new NotificationService()
-        );
         this.setScreen(new LaunchLoadingScreen(this, prototype));
     }
 
@@ -107,7 +102,7 @@ public class DDGame<P extends GamePrototype> extends Game {
 //      security.save();
         resources.dispose();
         batch.dispose();
-        Gdx.app.log("INFO", "Game disposed");
+        Log.info("Game disposed");
         sayGoodbye();
     }
 
@@ -207,10 +202,6 @@ public class DDGame<P extends GamePrototype> extends Game {
         this.gameSpeed = gameSpeed;
     }
 
-    public Container getContainer() {
-        return container;
-    }
-
     public float increaseGameSpeed() {
         gameSpeed = .5f;
         return gameSpeed;
@@ -231,13 +222,13 @@ public class DDGame<P extends GamePrototype> extends Game {
 
     private synchronized void sayGoodbye() {
         for (String text : parameters.consoleBye) {
-            Gdx.app.log("INFO", parameters.processString(text));
+            Log.info(parameters.processString(text));
         }
     }
 
     private synchronized void sayHello() {
         for (String text : parameters.consoleHello) {
-            Gdx.app.log("INFO", parameters.processString(text));
+            Log.info(parameters.processString(text));
         }
     }
 

@@ -1,8 +1,13 @@
 package ua.gram.model.actor.weapon;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import ua.gram.DDGame;
+import ua.gram.controller.Resources;
 import ua.gram.model.group.EnemyGroup;
 import ua.gram.model.group.TowerGroup;
 import ua.gram.model.prototype.WeaponPrototype;
@@ -18,13 +23,17 @@ public abstract class Weapon extends Actor {
     protected TowerGroup tower;
     protected EnemyGroup target;
     private float duration;
+    private Animation animation;
+    private float stateTime;
+    private TextureRegion currentFrame;
 
-    public Weapon(TowerGroup tower, EnemyGroup target) {
+    public Weapon(Resources resources, TowerGroup tower, EnemyGroup target) {
         if (tower == null)
             throw new NullPointerException("Empty weapon owner passed to " + this.getClass().getSimpleName());
         this.prototype = tower.getRootActor().getWeaponPrototype();
         this.tower = tower;
         this.target = target;
+        this.animation = createAnimation(resources.getSkin());
         duration = 0;
     }
 
@@ -71,8 +80,6 @@ public abstract class Weapon extends Actor {
         }
     }
 
-    public abstract boolean isFinished();
-
     private boolean isWeaponDurationExceeded(float time) {
         float duration = prototype.getDuration();
         return !(duration > time || duration < 0);
@@ -85,7 +92,11 @@ public abstract class Weapon extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        if (!DDGame.PAUSE && target != null) render(batch);
+        if (!DDGame.PAUSE || (currentFrame == null && animation != null)) {
+            currentFrame = animation.getKeyFrame(stateTime, true);
+            stateTime += Gdx.graphics.getDeltaTime();
+        }
+        if (currentFrame != null && !isOutOfBounds()) batch.draw(currentFrame, getX(), getY());
     }
 
     /**
@@ -93,17 +104,17 @@ public abstract class Weapon extends Actor {
      */
     public abstract void update(float delta);
 
-    /**
-     * Draw your weapon here.
-     *
-     * @param batch draw on it
-     */
-    public abstract void render(Batch batch);
+    public boolean isFinished() {
+        return animation.isAnimationFinished(stateTime);
+    }
 
     /**
      * Reset your weapon here. Resets if target is lost, or weapon duration is exceeded
      */
-    public abstract void reset();
+    public void reset() {
+        stateTime = 0;
+        currentFrame = null;
+    }
 
     public abstract WeaponPrototype getPrototype();
 
@@ -117,5 +128,13 @@ public abstract class Weapon extends Actor {
 
     public void resetTarget() {
         target = null;
+    }
+
+    protected boolean isOutOfBounds() {
+        return getX() == 0 && getY() == 0;
+    }
+
+    protected Animation createAnimation(Skin skin) {
+        return null;
     }
 }

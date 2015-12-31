@@ -21,8 +21,6 @@ public abstract class ActorGroup<A extends GameActor> extends Group {
         return root;
     }
 
-    ;
-
     @Override
     public void act(float delta) {
         super.act(delta);
@@ -36,6 +34,7 @@ public abstract class ActorGroup<A extends GameActor> extends Group {
                     origin.setVisible(true);
                     this.addActor(origin);
                 }
+                origin.setVisible(true);
                 origin.setPosition(root.getOriginX() - 1, root.getOriginY() - 1);
             } else {
                 if (origin != null) origin.setVisible(false);

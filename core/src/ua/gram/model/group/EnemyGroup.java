@@ -1,10 +1,10 @@
 package ua.gram.model.group;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import ua.gram.DDGame;
+import ua.gram.controller.Log;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.actor.misc.HealthBar;
 
@@ -27,7 +27,7 @@ public class EnemyGroup extends ActorGroup<Enemy> {
         this.addActor(new HealthBar(game.getResources().getSkin(), enemy));
         enemy.toFront();
         hasPathFinder = false;
-        Gdx.app.log("INFO", "Group for " + enemy + " is OK");
+        Log.info("Group for " + enemy + " is OK");
     }
 
     @Override
