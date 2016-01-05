@@ -3,6 +3,7 @@ package ua.gram.model.actor.weapon;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+
 import ua.gram.controller.Resources;
 import ua.gram.model.group.EnemyGroup;
 import ua.gram.model.group.Layer;
@@ -15,6 +16,10 @@ import ua.gram.model.prototype.BombWeaponPrototype;
 public class BombWeapon extends Weapon {
 
     private Layer currentLayer;
+
+    public BombWeapon(Resources resources, BombWeaponPrototype prototype) {
+        super(resources, prototype);
+    }
 
     public BombWeapon(Resources resources, TowerGroup tower, EnemyGroup target) {
         super(resources, tower, target);
@@ -35,10 +40,10 @@ public class BombWeapon extends Weapon {
     protected void handleIndexes(int targetIndex, int parentIndex) {
         if (targetIndex < parentIndex) {
             this.setZIndex(0);
-            tower.getRootActor().setZIndex(1);
+            towerGroup.getRootActor().setZIndex(1);
         } else {
             if (currentLayer == null)
-                currentLayer = tower.getRootActor().getStage().toggleZIndex(this, tower.getParent().getZIndex() + 1);
+                currentLayer = towerGroup.getRootActor().getStage().putOnLayer(this, towerGroup.getParent().getZIndex() + 1);
         }
     }
 
@@ -46,8 +51,8 @@ public class BombWeapon extends Weapon {
     public void update(float delta) {
         if (isOutOfBounds()) {
             this.setPosition(
-                    target.getOriginX() - this.getWidth() / 2f,
-                    target.getOriginY() - this.getHeight() / 2f + 10);
+                    targetGroup.getOriginX() - this.getWidth() / 2f,
+                    targetGroup.getOriginY() - this.getHeight() / 2f + 10);
         }
     }
 
@@ -57,7 +62,7 @@ public class BombWeapon extends Weapon {
         this.setPosition(0, 0);
         //Return Weapon to TowerGroup
         this.remove();
-        tower.addActor(this);
+        towerGroup.addActor(this);
         currentLayer = null;
     }
 

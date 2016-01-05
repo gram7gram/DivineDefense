@@ -2,6 +2,7 @@ package ua.gram.model.group;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+
 import ua.gram.DDGame;
 import ua.gram.model.actor.GameActor;
 
@@ -40,6 +41,10 @@ public abstract class ActorGroup<A extends GameActor> extends Group {
                 if (origin != null) origin.setVisible(false);
             }
         }
+    }
+
+    public Layer getLayer() {
+        return (Layer) super.getParent();
     }
 
     @Override

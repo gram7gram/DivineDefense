@@ -7,6 +7,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.utils.Pool;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import ua.gram.DDGame;
 import ua.gram.controller.Log;
 import ua.gram.controller.market.shop.TowerShop;
@@ -22,10 +27,6 @@ import ua.gram.model.group.TowerGroup;
 import ua.gram.model.prototype.TowerPrototype;
 import ua.gram.model.prototype.WeaponPrototype;
 import ua.gram.model.strategy.tower.TowerStrategy;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * TODO Different animations: IDLE, BUILDING, SELLING, SHOOTING
@@ -126,9 +127,14 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
                                     attack(victim);
                                 } else {
                                     looseTarget(victim);
+                                    weapon.reset();
                                 }
                             }
+                        } else {
+                            weapon.reset();
                         }
+                    } else {
+                        weapon.reset();
                     }
                 } else {
                     count += delta;
@@ -140,9 +146,9 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
     private void looseTarget(Enemy victim) {
         postAttack(victim);
         victim.isAttacked = false;
-        weapon.resetTarget();
-        weapon.setVisible(false);
+        weapon.reset();
     }
+
 
     public abstract void update(float delta);
 
@@ -155,7 +161,7 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
     }
 
     /**
-     * Perform tower-specific attack.
+     * Perform towerGroup-specific attack.
      *
      * @param victim the enemy to attack
      */
@@ -195,9 +201,9 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
     }
 
     /**
-     * Increases stats of the tower, according to the level and the tower type.
+     * Increases stats of the towerGroup, according to the level and the towerGroup type.
      * TODO Increase stats
-     * TODO Charge according to the next tower level
+     * TODO Charge according to the next towerGroup level
      * TODO Change Range radius
      */
     public void upgrade() {
@@ -224,6 +230,9 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
     public void reset() {
         currentTowerStrategy = towerShop != null ? towerShop.getStrategyManager().getDefault() : null;
         tower_lvl = 1;
+        isActive = false;
+        isBuilding = false;
+        this.setPosition(0, 0);
         Log.info(this + " was reset");
     }
 

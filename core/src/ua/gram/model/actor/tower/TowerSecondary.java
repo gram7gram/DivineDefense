@@ -32,7 +32,7 @@ public final class TowerSecondary extends Tower implements Cloneable {
     @Override
     public BombWeapon getWeapon() {
         if (weapon == null) {
-            weapon = new BombWeapon(game.getResources(), this.getParent(), null);
+            weapon = new BombWeapon(game.getResources(), this.getWeaponPrototype());
         }
         return (BombWeapon) weapon;
     }

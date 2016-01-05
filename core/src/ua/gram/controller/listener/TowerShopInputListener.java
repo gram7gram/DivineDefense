@@ -5,6 +5,7 @@ import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+
 import ua.gram.DDGame;
 import ua.gram.controller.market.shop.TowerShop;
 import ua.gram.controller.stage.GameBattleStage;
@@ -32,7 +33,7 @@ public class TowerShopInputListener extends ClickListener {
         this.game = game;
         this.shop = shop;
         this.type = type;
-        this.stage_ui = shop.getStageUi();
+        this.stage_ui = shop.getUiStage();
         this.stage_battle = shop.getStageBattle();
         this.layer = (TiledMapTileLayer) stage_battle.getLevel()
                 .getMap().getTiledMap().getLayers().get("Terrain");
@@ -74,8 +75,8 @@ public class TowerShopInputListener extends ClickListener {
 
     /**
      * Puts the Tower on the map if building is allowed.
-     * As soon as tower is put on map, display building animation for 1.5 sec.
-     * Then switch to idle animation and activate tower.
+     * As soon as towerGroup is put on map, display building animation for 1.5 sec.
+     * Then switch to idle animation and activate towerGroup.
      */
     @Override
     public void touchUp(InputEvent event, float x, float y, int pointer, int button) {

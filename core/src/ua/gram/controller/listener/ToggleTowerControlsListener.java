@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+
 import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.controller.stage.GameUIStage;
 import ua.gram.model.actor.tower.Tower;
@@ -12,9 +13,9 @@ import ua.gram.model.group.TowerControlsGroup;
 import ua.gram.model.group.TowerGroup;
 
 /**
- * Handles tower controls: if they are visible and player
- * clicks outside the tower and tower contols,
- * then tower controls are hidden.
+ * Handles towerGroup controls: if they are visible and player
+ * clicks outside the towerGroup and towerGroup contols,
+ * then towerGroup controls are hidden.
  *
  * @author Gram <gram7gram@gmail.com>
  */

@@ -16,7 +16,6 @@ allprojects {
     ext {
         appName = 'Divine Defense'
         gdxVersion = '1.6.4'
-        roboVMVersion = '1.0.0'
     }
 
     repositories {

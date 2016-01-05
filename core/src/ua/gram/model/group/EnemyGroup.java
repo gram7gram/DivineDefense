@@ -3,12 +3,13 @@ package ua.gram.model.group;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+
+import java.util.List;
+
 import ua.gram.DDGame;
 import ua.gram.controller.Log;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.actor.misc.HealthBar;
-
-import java.util.List;
 
 
 /**
@@ -77,8 +78,8 @@ public class EnemyGroup extends ActorGroup<Enemy> {
             game.getInfo().draw(batch, Math.round(root.getX()) + ":" + Math.round(root.getY()),
                     root.getX() - 24,
                     root.getY() - 8);
-            game.getInfo().draw(batch, this.getParent().getZIndex() + "",
-                    root.getX() - 8,
+            game.getInfo().draw(batch, this.getLayer().getZIndex() + ":" + this.getZIndex(),
+                    root.getX() - 16,
                     root.getY() + root.getHeight());
         }
     }

@@ -1,6 +1,7 @@
 package ua.gram.model.state.enemy.level4;
 
 import com.badlogic.gdx.Gdx;
+
 import ua.gram.DDGame;
 import ua.gram.model.actor.enemy.Enemy;
 
@@ -21,7 +22,7 @@ public class StunState extends Level4State {
 
     @Override
     public void manage(Enemy enemy, float delta) {
-        enemy.decreaseSpeed();
+//        enemy.decreaseSpeed();
     }
 
     @Override

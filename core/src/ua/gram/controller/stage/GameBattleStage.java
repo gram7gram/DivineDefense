@@ -2,6 +2,9 @@ package ua.gram.controller.stage;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+
+import java.util.ArrayList;
+
 import ua.gram.DDGame;
 import ua.gram.controller.Log;
 import ua.gram.controller.listener.ToggleTowerControlsListener;
@@ -13,12 +16,10 @@ import ua.gram.model.group.EnemyGroup;
 import ua.gram.model.group.Layer;
 import ua.gram.model.group.TowerGroup;
 
-import java.util.ArrayList;
-
 /**
  * Contains major game objects, like towers and enemies.
  * <p/>
- * TODO Check for occupied cells if tower is build.
+ * TODO Check for occupied cells if towerGroup is build.
  *
  * @author Gram <gram7gram@gmail.com>
  */
@@ -36,9 +37,9 @@ public class GameBattleStage extends AbstractStage {
         towerPositions = new ArrayList<>();
         indexes = new ArrayList<>();
         for (int i = 0; i < DDGame.MAP_HEIGHT; i++) {
-            Layer group = new Layer();
-            indexes.add(group);
-            this.addActor(group);
+            Layer layer = new Layer();
+            indexes.add(layer);
+            this.addActor(layer);
         }
         Log.info(indexes.size() + " indexes are OK");
         Log.info("BattleStage is OK");
@@ -77,7 +78,7 @@ public class GameBattleStage extends AbstractStage {
         }
 
         int count = countLayers();
-        Log.info("Stage now has " + count + (count > 1 ? " layers" : " layer"));
+        Log.info("Stage now has " + count + (count > 1 ? " layers" : " layer") + " with children");
     }
 
     /**
@@ -106,7 +107,7 @@ public class GameBattleStage extends AbstractStage {
 
     private int getActorIndex(Actor actor) {
         int index = (DDGame.MAP_HEIGHT - Math.round(actor.getY() / DDGame.TILE_HEIGHT) - 1);
-        return index >= 0 ? index : 0;
+        return index > 0 ? index : 0;
     }
 
     public int countLayers() {
@@ -244,11 +245,12 @@ public class GameBattleStage extends AbstractStage {
         towerPositions.remove(new int[]{(int) tower.getX() / DDGame.TILE_HEIGHT, (int) tower.getY() / DDGame.TILE_HEIGHT});
     }
 
-    public Layer toggleZIndex(Actor actor, int index) {
+    public Layer putOnLayer(Actor actor, int index) {
         if (indexes.size() <= index)
             throw new IllegalArgumentException("Cannot get " + index + " index from " + indexes.size() + " layers");
 
         actor.remove();
+
         Layer layer = indexes.get(index);
 
         layer.addActor(actor);

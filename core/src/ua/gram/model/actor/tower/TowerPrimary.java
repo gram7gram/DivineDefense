@@ -10,7 +10,6 @@ import ua.gram.model.prototype.TowerPrototype;
  */
 public final class TowerPrimary extends Tower implements Cloneable {
 
-
     public TowerPrimary(DDGame game, TowerPrototype prototype) {
         super(game, prototype);
     }
@@ -28,7 +27,7 @@ public final class TowerPrimary extends Tower implements Cloneable {
     @Override
     public LaserWeapon getWeapon() {
         if (weapon == null) {
-            weapon = new LaserWeapon(game.getResources(), this.getParent(), null);
+            weapon = new LaserWeapon(game.getResources(), this.getWeaponPrototype());
         }
         return (LaserWeapon) weapon;
     }

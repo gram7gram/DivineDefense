@@ -2,13 +2,18 @@ package ua.gram.controller.market.shop;
 
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.utils.Pool;
+
 import ua.gram.DDGame;
 import ua.gram.controller.Log;
 import ua.gram.controller.pool.TowerPool;
 import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.controller.stage.GameUIStage;
 import ua.gram.model.Animator;
-import ua.gram.model.actor.tower.*;
+import ua.gram.model.actor.tower.Tower;
+import ua.gram.model.actor.tower.TowerPrimary;
+import ua.gram.model.actor.tower.TowerSecondary;
+import ua.gram.model.actor.tower.TowerSpecial;
+import ua.gram.model.actor.tower.TowerStun;
 import ua.gram.model.group.TowerControlsGroup;
 import ua.gram.model.group.TowerGroup;
 import ua.gram.model.group.TowerShopGroup;
@@ -22,8 +27,8 @@ import static ua.gram.model.actor.tower.Tower.SELL_RATIO;
 public class TowerShop {
 
     private final DDGame game;
-    private final GameBattleStage stage_battle;
-    private final GameUIStage stage_ui;
+    private final GameBattleStage battleStage;
+    private final GameUIStage uiStage;
     private final TowerShopGroup towerShopGroup;
     private final StrategyManager strategyManager;
     private final Pool<Tower> poolPrimary;
@@ -31,28 +36,28 @@ public class TowerShop {
     private final Pool<Tower> poolStun;
     private final Pool<Tower> poolSpecial;
 
-    public TowerShop(DDGame game, GameBattleStage stage_battle, GameUIStage stage_ui) {
+    public TowerShop(DDGame game, GameBattleStage battleStage, GameUIStage uiStage) {
         this.game = game;
-        this.stage_ui = stage_ui;
-        this.stage_battle = stage_battle;
+        this.uiStage = uiStage;
+        this.battleStage = battleStage;
         poolPrimary = new TowerPool<TowerPrimary>(game, "TowerPrimary");
         poolSecondary = new TowerPool<TowerSecondary>(game, "TowerSecondary");
         poolStun = new TowerPool<TowerStun>(game, "TowerStun");
         poolSpecial = new TowerPool<TowerSpecial>(game, "TowerSpecial");
         towerShopGroup = new TowerShopGroup(game, this);
-        stage_ui.setTowerControls(new TowerControlsGroup(game.getResources().getSkin(), this));
+        this.uiStage.setTowerControls(new TowerControlsGroup(game.getResources().getSkin(), this));
         strategyManager = new StrategyManager();
         Log.info("TowerShop is OK");
     }
 
     /**
-     * Gets the tower from the pool, according to type.
-     * Does not charge tower cost from player.
+     * Gets the towerGroup from the pool, according to type.
+     * Does not charge towerGroup cost from player.
      *
      * @param type descendant of the Tower
      * @param x    initial appear point
      * @param y    initial appear point
-     * @return tower, obtained from pool
+     * @return towerGroup, obtained from pool
      * @throws CloneNotSupportedException
      */
     public Tower preorder(Class<? extends Tower> type, float x, float y) throws CloneNotSupportedException {
@@ -73,16 +78,16 @@ public class TowerShop {
         tower.setPosition(x, y);
         tower.setVisible(true);
         tower.setTouchable(Touchable.disabled);
-        stage_battle.addActor(tower);
+        battleStage.addActor(tower);
         return tower;
     }
 
     /**
-     * Puts the tower on the stage and charges tower cost from player.
+     * Puts the towerGroup on the stage and charges towerGroup cost from player.
      *
      * @param tower will be build on the stage
-     * @param x     x-axis of the tower
-     * @param y     y-axis of the tower
+     * @param x     x-axis of the towerGroup
+     * @param y     y-axis of the towerGroup
      */
     public void build(Tower tower, float x, float y) {
         tower.remove();
@@ -95,14 +100,14 @@ public class TowerShop {
         tower.setOrigin(tower.getX() + 20, tower.getY() + 42);
         tower.setTowerShop(this);
         tower.setDefaultStrategy();
-        stage_battle.updateZIndexes(towerGroup);
-        stage_battle.addTowerPosition(tower);
+        battleStage.updateZIndexes(towerGroup);
+        battleStage.addTowerPosition(tower);
         tower.isBuilding = true;
         Log.info(tower + " is building...");
     }
 
     /**
-     * Removes tower from stage and frees it to pool.
+     * Removes towerGroup from stage and frees it to pool.
      * Only if dragging is aborted.
      *
      * @param tower descendant of the Tower
@@ -113,7 +118,7 @@ public class TowerShop {
     }
 
     public void sell(TowerGroup group) {
-        stage_battle.removeTowerPosition(group.getRootActor());
+        battleStage.removeTowerPosition(group.getRootActor());
         int revenue = (int) (group.getRootActor().getCost() * SELL_RATIO);
         Log.info(this.getClass().getSimpleName() + " is sold for: " + revenue + " coins");
         game.getPlayer().addCoins(revenue);
@@ -122,7 +127,7 @@ public class TowerShop {
     }
 
     /**
-     * Get pool for corresponding tower Class.
+     * Get pool for corresponding towerGroup Class.
      *
      * @param type descendant of the Tower
      * @return corresponding Pool
@@ -142,7 +147,7 @@ public class TowerShop {
     }
 
     /**
-     * Puts the tower in corresponding Pool
+     * Puts the towerGroup in corresponding Pool
      */
     public void free(Tower tower) {
         this.getPool(tower.getClass()).free(tower);
@@ -154,11 +159,11 @@ public class TowerShop {
     }
 
     public GameBattleStage getStageBattle() {
-        return stage_battle;
+        return battleStage;
     }
 
-    public GameUIStage getStageUi() {
-        return stage_ui;
+    public GameUIStage getUiStage() {
+        return uiStage;
     }
 
     public StrategyManager getStrategyManager() {

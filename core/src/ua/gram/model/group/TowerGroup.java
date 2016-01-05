@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+
 import ua.gram.DDGame;
 import ua.gram.controller.Log;
 import ua.gram.model.actor.misc.ProgressBar;
@@ -17,23 +18,20 @@ import ua.gram.model.actor.weapon.Weapon;
  */
 public class TowerGroup extends ActorGroup<Tower> {
 
-    private final Weapon weapon;
     private final DDGame game;
-    private ShapeRenderer shapeRenderer;
+    private final ShapeRenderer shapeRenderer;
 
     public TowerGroup(DDGame game, Tower tower) {
         super(tower);
-        this.game = game;
-        //NOTE Add dummy actor to have freedom in swapping z-indexes
-        this.addActor(new Actor());
-        //NOTE Tower should have a parent, before getting a weapon
-        this.addActor(tower);
-        this.weapon = tower.getWeapon();
-        weapon.setVisible(false);
-        this.addActor(weapon);
-        this.addActor(new ProgressBar(game.getResources().getSkin(), tower));
-        tower.setZIndex(1);
         shapeRenderer = new ShapeRenderer();
+        this.game = game;
+        Weapon weapon = tower.getWeapon();
+        Actor bar = new ProgressBar(game.getResources().getSkin(), tower);
+        this.addActor(bar);
+        this.addActor(tower);
+        this.addActor(weapon);
+        weapon.setVisible(false);
+        weapon.setSource(this);
         Log.info("Group for " + tower + " is OK");
     }
 
@@ -41,8 +39,8 @@ public class TowerGroup extends ActorGroup<Tower> {
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         if (!DDGame.PAUSE && DDGame.DEBUG) {
-            game.getInfo().draw(batch, this.getParent().getZIndex() + "",
-                    root.getX() - 8,
+            game.getInfo().draw(batch, this.getLayer().getZIndex() + ":" + this.getZIndex(),
+                    root.getX() - 16,
                     root.getY() + root.getHeight());
 
             batch.end();
@@ -58,9 +56,5 @@ public class TowerGroup extends ActorGroup<Tower> {
             batch.begin();
 
         }
-    }
-
-    public Weapon getWeapon() {
-        return weapon;
     }
 }

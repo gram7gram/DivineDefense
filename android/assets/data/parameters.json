@@ -374,7 +374,7 @@
       "name": "TowerStun",
       "towerLevel": 1,
       "powerLevel": 1,
-      "damage": 5,
+      "damage": 1,
       "range": 1,
       "rate": 0.5,
       "cost": 50,
@@ -384,7 +384,7 @@
         "class": "ua.gram.model.prototype.FreezeWeaponPrototype",
         "type": "Freeze",
         "region": "TOWER_STUN_WEAPON",
-        "delay": 0.25,
+        "delay": 0.15,
         "frames": 4
       }
     }

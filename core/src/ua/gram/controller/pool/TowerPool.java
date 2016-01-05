@@ -2,11 +2,16 @@ package ua.gram.controller.pool;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Pool;
-import ua.gram.DDGame;
-import ua.gram.model.actor.tower.*;
-import ua.gram.model.prototype.TowerPrototype;
 
 import java.util.HashMap;
+
+import ua.gram.DDGame;
+import ua.gram.model.actor.tower.Tower;
+import ua.gram.model.actor.tower.TowerPrimary;
+import ua.gram.model.actor.tower.TowerSecondary;
+import ua.gram.model.actor.tower.TowerSpecial;
+import ua.gram.model.actor.tower.TowerStun;
+import ua.gram.model.prototype.TowerPrototype;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -32,16 +37,17 @@ public class TowerPool<T extends Tower> extends Pool<Tower> {
     @Override
     @SuppressWarnings("unchecked")
     protected T newObject() {
-        if (type.equals("TowerPrimary")) {
-            return (T) new TowerPrimary(game, map.get(type));
-        } else if (type.equals("TowerSecondary")) {
-            return (T) new TowerSecondary(game, map.get(type));
-        } else if (type.equals("TowerStun")) {
-            return (T) new TowerStun(game, map.get(type));
-        } else if (type.equals("TowerSpecial")) {
-            return (T) new TowerSpecial(game, map.get(type));
-        } else {
-            throw new NullPointerException("Couldn't get configuration for: " + type);
+        switch (type) {
+            case "TowerPrimary":
+                return (T) new TowerPrimary(game, map.get(type));
+            case "TowerSecondary":
+                return (T) new TowerSecondary(game, map.get(type));
+            case "TowerStun":
+                return (T) new TowerStun(game, map.get(type));
+            case "TowerSpecial":
+                return (T) new TowerSpecial(game, map.get(type));
+            default:
+                throw new NullPointerException("Couldn't get configuration for: " + type);
         }
     }
 }

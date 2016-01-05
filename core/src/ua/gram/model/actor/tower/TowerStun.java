@@ -44,8 +44,6 @@ public final class TowerStun extends Tower implements Cloneable {
 
     /**
      * Disable Stun flag for Enemy.
-     *
-     * @param victim
      */
     @Override
     public void postAttack(Enemy victim) {
@@ -65,7 +63,7 @@ public final class TowerStun extends Tower implements Cloneable {
     @Override
     public FreezeWeapon getWeapon() {
         if (weapon == null) {
-            weapon = new FreezeWeapon(game.getResources(), this.getParent(), null);
+            weapon = new FreezeWeapon(game.getResources(), this.getWeaponPrototype());
         }
         return (FreezeWeapon) weapon;
     }

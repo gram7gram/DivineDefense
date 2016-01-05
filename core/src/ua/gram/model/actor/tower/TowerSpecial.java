@@ -1,6 +1,7 @@
 package ua.gram.model.actor.tower;
 
 import com.badlogic.gdx.graphics.Color;
+
 import ua.gram.DDGame;
 import ua.gram.model.actor.weapon.LaserWeapon;
 import ua.gram.model.prototype.LaserWeaponPrototype;
@@ -33,7 +34,7 @@ public final class TowerSpecial extends Tower implements Cloneable {
     @Override
     public LaserWeapon getWeapon() {
         if (weapon == null) {
-            weapon = new LaserWeapon(game.getResources(), this.getParent(), null);
+            weapon = new LaserWeapon(game.getResources(), this.getWeaponPrototype());
             ((LaserWeapon) weapon).setBackColor(Color.BLUE);
         }
         return (LaserWeapon) weapon;
