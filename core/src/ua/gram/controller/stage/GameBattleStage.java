@@ -246,16 +246,10 @@ public class GameBattleStage extends AbstractStage {
     }
 
     public Layer putOnLayer(Actor actor, int index) {
-        if (indexes.size() <= index)
-            throw new IllegalArgumentException("Cannot get " + index + " index from " + indexes.size() + " layers");
-
+        if (indexes.size() <= index) index = indexes.size() - 1;
         actor.remove();
-
         Layer layer = indexes.get(index);
-
         layer.addActor(actor);
-
         return layer;
-
     }
 }

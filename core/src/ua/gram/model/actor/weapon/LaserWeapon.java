@@ -2,9 +2,11 @@ package ua.gram.model.actor.weapon;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import ua.gram.DDGame;
 import ua.gram.controller.Resources;
@@ -90,6 +92,11 @@ public final class LaserWeapon extends Weapon {
         this.setPosition(start_back.getX(), start_back.getY());
         this.setRotation(degrees);
         this.setVisible(true);
+    }
+
+    @Override
+    protected Animation createAnimation(Skin skin) {
+        return null;
     }
 
     @Override

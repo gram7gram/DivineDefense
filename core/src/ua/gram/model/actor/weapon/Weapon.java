@@ -24,15 +24,19 @@ public abstract class Weapon extends Actor {
     protected final WeaponPrototype prototype;
     protected TowerGroup towerGroup;
     protected EnemyGroup targetGroup;
-    private float duration;
-    private Animation animation;
-    private float stateTime;
-    private TextureRegion currentFrame;
+    protected float duration;
+    protected Animation animation;
+    protected float stateTime;
+    protected TextureRegion currentFrame;
+    protected float scaleX;
+    protected float scaleY;
 
     public Weapon(Resources resources, WeaponPrototype prototype) {
         this.prototype = prototype;
         this.animation = createAnimation(resources.getSkin());
         duration = 0;
+        scaleX = 1;
+        scaleY = 1;
         Log.info(this.getClass().getSimpleName() + " is OK");
     }
 
@@ -44,6 +48,8 @@ public abstract class Weapon extends Actor {
         this.targetGroup = target;
         this.animation = createAnimation(resources.getSkin());
         duration = 0;
+        scaleX = 1;
+        scaleY = 1;
         Log.info(this.getClass().getSimpleName() + " is OK");
     }
 
@@ -101,13 +107,16 @@ public abstract class Weapon extends Actor {
             currentFrame = animation.getKeyFrame(stateTime, true);
             stateTime += Gdx.graphics.getDeltaTime();
         }
-        if (currentFrame != null && !isOutOfBounds()) batch.draw(currentFrame, getX(), getY());
+        if (currentFrame != null && !isOutOfBounds()) batch.draw(currentFrame,
+                getX(), getY(), getWidth() * scaleX, getHeight() * scaleY);
     }
 
     /**
      * Update your weapon here.
      */
     public abstract void update(float delta);
+
+    protected abstract Animation createAnimation(Skin skin);
 
     public boolean isFinished() {
         return animation.isAnimationFinished(stateTime);
@@ -119,6 +128,8 @@ public abstract class Weapon extends Actor {
     public void reset() {
         duration = 0;
         stateTime = 0;
+        scaleX = 1;
+        scaleY = 1;
         targetGroup = null;
         currentFrame = null;
         this.setVisible(false);
@@ -139,8 +150,8 @@ public abstract class Weapon extends Actor {
         return getX() == 0 && getY() == 0;
     }
 
-    protected Animation createAnimation(Skin skin) {
-        return null;
+    public void scale(float x, float y) {
+        this.scaleX = x;
+        this.scaleY = y;
     }
-
 }
