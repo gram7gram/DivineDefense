@@ -2,12 +2,13 @@ package ua.gram.controller.pool.animation;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Pool;
-import ua.gram.model.PollableAnimation;
+
+import ua.gram.model.PoolableAnimation;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class AnimationPool extends Pool<PollableAnimation> {
+public class AnimationPool extends Pool<PoolableAnimation> {
 
     private final TextureRegion[] tiles;
     private float delay = .1f;
@@ -19,8 +20,8 @@ public class AnimationPool extends Pool<PollableAnimation> {
     }
 
     @Override
-    public PollableAnimation newObject() {
-        return new PollableAnimation(delay, tiles);
+    public PoolableAnimation newObject() {
+        return new PoolableAnimation(delay, tiles);
     }
 
     public void setDelay(float delay) {

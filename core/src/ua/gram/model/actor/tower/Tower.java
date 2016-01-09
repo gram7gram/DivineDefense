@@ -14,58 +14,57 @@ import java.util.stream.Collectors;
 
 import ua.gram.DDGame;
 import ua.gram.controller.Log;
-import ua.gram.controller.market.shop.TowerShop;
 import ua.gram.controller.stage.GameBattleStage;
-import ua.gram.controller.tower.TowerAnimationController;
-import ua.gram.controller.tower.TowerLevelAnimationContainer;
-import ua.gram.model.Animator;
+import ua.gram.controller.tower.TowerShop;
+import ua.gram.model.PoolableAnimation;
 import ua.gram.model.actor.GameActor;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.actor.weapon.Weapon;
+import ua.gram.model.enums.Types;
 import ua.gram.model.group.EnemyGroup;
 import ua.gram.model.group.TowerGroup;
 import ua.gram.model.prototype.TowerPrototype;
 import ua.gram.model.prototype.WeaponPrototype;
+import ua.gram.model.state.tower.TowerStateHolder;
+import ua.gram.model.state.tower.TowerStateManager;
 import ua.gram.model.strategy.tower.TowerStrategy;
 
 /**
  * TODO Different animations: IDLE, BUILDING, SELLING, SHOOTING
- * NOTE The amount of Tower tagets depends on it's tower_level.
+ * NOTE The amount of TowerState tagets depends on it's tower_level.
  *
  * @author Gram <gram7gram@gmail.com>
  */
-public abstract class Tower extends GameActor implements Pool.Poolable {
+public abstract class Tower extends GameActor<Types.TowerState, Types.TowerLevels, TowerStateManager>
+        implements Pool.Poolable {
 
+    //    public static final byte MAX_POWER_LEVEL = 4;
     public static final float SELL_RATIO = .6f;
     public static final byte MAX_TOWER_LEVEL = 4;
-    //    public static final byte MAX_POWER_LEVEL = 4;
     public final float build_delay = 2;
     protected final TowerPrototype prototype;
+    protected final TowerStateHolder stateHolder;
     public boolean isActive;
     public boolean isBuilding;
     public float countBuilding = 0;
     protected DDGame game;
     protected TextureRegion currentFrame;
-    protected TowerAnimationController controller;
-    protected TowerLevelAnimationContainer container;
     protected TowerShop towerShop;
-    protected Animation animation;
     protected Weapon weapon;
     private float damage;
     private float range;
     private float rate;
     private int cost;
-    //    private int power_lvl;
     private int tower_lvl;
     private TowerStrategy currentTowerStrategy;
     private float stateTime;
     private float count = 0;
+//    private int power_lvl;
 
     public Tower(DDGame game, TowerPrototype prototype) {
         super(prototype);
         this.game = game;
         this.prototype = prototype;
-//        this.power_lvl = prototype.powerLevel;
         this.tower_lvl = prototype.towerLevel;
         this.damage = prototype.damage;
         this.range = prototype.range;
@@ -73,14 +72,15 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
         this.cost = prototype.cost;
         isActive = false;
         isBuilding = false;
-        controller = new TowerAnimationController(game.getResources().getSkin(), this);
+//        this.power_lvl = prototype.powerLevel;
+        stateHolder = new TowerStateHolder();
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        if (!DDGame.PAUSE || currentFrame == null) {
-            currentFrame = animation.getKeyFrame(stateTime, true);
+        if ((!DDGame.PAUSE || currentFrame == null) && animator.getAnimation() != null) {
+            currentFrame = animator.getAnimation().getKeyFrame(stateTime, true);
             stateTime += Gdx.graphics.getDeltaTime();
         }
         if (currentFrame != null) batch.draw(currentFrame, this.getX(), this.getY());
@@ -92,7 +92,7 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
     }
 
     /**
-     * Tower logic is here.
+     * TowerState logic is here.
      * TODO Make TowerStateManager
      */
     @Override
@@ -153,7 +153,7 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
     public abstract void update(float delta);
 
     /**
-     * Perform Tower specific preparations before attack.
+     * Perform TowerState specific preparations before attack.
      *
      * @param victim the enemy to attack
      */
@@ -171,7 +171,7 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
     }
 
     /**
-     * Perform Tower specific actions after attack.
+     * Perform TowerState specific actions after attack.
      *
      * @param victim the enemy attacked
      */
@@ -207,24 +207,24 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
      * TODO Change Range radius
      */
     public void upgrade() {
-        ++tower_lvl;
-        this.setLevelAnimationContainer(tower_lvl);
-        changeAnimation(Animator.Types.BUILD);
-        game.getPlayer().chargeCoins(30);
-        Log.info(this + " is upgraded to " + tower_lvl + " level");
+//        ++tower_lvl;
+//        this.setLevelAnimationContainer(tower_lvl);
+//        changeAnimation(Types.TowerState.BUILD);
+//        game.getPlayer().chargeCoins(30);
+//        Log.info(this + " is upgraded to " + tower_lvl + " level");
     }
 
-    /**
-     * TODO Set corresponding type.
-     *
-     * @param type desired animation type
-     */
-    public void changeAnimation(Animator.Types type) {
-        Log.info(this + " animation changed to: " + tower_lvl + "_" + type.name());
-        type = Animator.Types.IDLE;
-        this.setLevelAnimationContainer(tower_lvl);
-        this.setAnimation(container.getAnimation(type));
-    }
+//    /**
+//     * TODO Set corresponding type.
+//     *
+//     * @param type desired animation type
+//     */
+//    public void changeAnimation(Types.TowerState type) {
+//        Log.info(this + " animation changed to: " + tower_lvl + "_" + type.name());
+//        type = Types.TowerState.IDLE;
+//        this.setLevelAnimationContainer(tower_lvl);
+//        this.setAnimation(container.getAnimation(type));
+//    }
 
     @Override
     public void reset() {
@@ -249,20 +249,12 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
         return tower_lvl;
     }
 
-    public TowerAnimationController getController() {
-        return controller;
-    }
-
-    public void setController(TowerAnimationController controller) {
-        this.controller = controller;
-    }
-
     public Animation getAnimation() {
-        return animation;
+        return animator.getAnimation();
     }
 
-    public void setAnimation(Animation animation) {
-        this.animation = animation;
+    public void setAnimation(PoolableAnimation animation) {
+        animator.setPollable(animation);
     }
 
     public Vector2 getCenterPoint() {
@@ -270,10 +262,6 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
                 this.getX() + (this.getWidth() / 2f),
                 this.getY() + (this.getHeight() / 2f)
         );
-    }
-
-    public void setLevelAnimationContainer(int level) {
-        container = controller.getLevelAnimationContainer(level);
     }
 
     public TowerPrototype getPrototype() {
@@ -292,7 +280,21 @@ public abstract class Tower extends GameActor implements Pool.Poolable {
         return towerShop != null ? towerShop.getStrategyManager().getDefault() : null;
     }
 
+    public TowerShop getTowerShop() {
+        return towerShop;
+    }
+
     public void setTowerShop(TowerShop towerShop) {
         this.towerShop = towerShop;
+    }
+
+    @Override
+    public TowerStateManager getStateManager() {
+        if (towerShop == null) throw new NullPointerException("Missing TowerShop");
+        return towerShop.getStateManager();
+    }
+
+    public TowerStateHolder getStateHolder() {
+        return stateHolder;
     }
 }

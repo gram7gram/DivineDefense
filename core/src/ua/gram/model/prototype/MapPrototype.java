@@ -9,4 +9,6 @@ public class MapPrototype implements Prototype {
     public String walkableProperty;
     public String spawnProperty;
     public String baseProperty;
+    public String blockedProperty;
+    public String mapObject;
 }

@@ -1,15 +1,13 @@
 package ua.gram.controller.pool.animation;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import ua.gram.model.Animator;
-import ua.gram.model.PollableAnimation;
-import ua.gram.model.actor.GameActor;
-import ua.gram.model.map.Path;
+
+import ua.gram.model.prototype.GameActorPrototype;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public interface AnimationControllerInterface<A extends GameActor> {
+public interface AnimationControllerInterface<A extends GameActorPrototype, T, D> {
 
     /**
      * Gets corresponding Atlas region from
@@ -18,10 +16,10 @@ public interface AnimationControllerInterface<A extends GameActor> {
      *
      * @return splitted array of tiles
      */
-    TextureRegion[] getAnimationRegion(Animator.Types type, Path.Types direction) throws Exception;
+    TextureRegion[] getAnimationRegion(A prototype, T type1, D type2);
 
-    void init(A actor);
+    boolean init(A prototype);
 
-    PollableAnimation obtain(Animator.Types type, Path.Types direction) throws Exception;
+    AnimationPool get(T type1, D type2);
 
 }

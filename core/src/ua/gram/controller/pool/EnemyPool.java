@@ -2,16 +2,18 @@ package ua.gram.controller.pool;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Pool;
-import ua.gram.DDGame;
-import ua.gram.model.actor.enemy.*;
-import ua.gram.model.prototype.EnemyPrototype;
 
 import java.util.HashMap;
+
+import ua.gram.DDGame;
+import ua.gram.controller.factory.EnemyFactory;
+import ua.gram.model.actor.enemy.Enemy;
+import ua.gram.model.prototype.EnemyPrototype;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class EnemyPool<T extends Enemy> extends Pool<Enemy> {
+public class EnemyPool extends Pool<Enemy> {
 
     private final String type;
     private final DDGame game;
@@ -30,21 +32,7 @@ public class EnemyPool<T extends Enemy> extends Pool<Enemy> {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    protected T newObject() {
-        switch (type) {
-            case "EnemyRunner":
-                return (T) new EnemyRunner(game, map.get(type));
-            case "EnemySoldier":
-                return (T) new EnemySoldier(game, map.get(type));
-            case "EnemySoldierArmored":
-                return (T) new EnemySoldierArmored(game, map.get(type));
-            case "EnemySummoner":
-                return (T) new EnemySummoner(game, map.get(type));
-            case "EnemyWarrior":
-                return (T) new EnemyWarrior(game, map.get(type));
-            default:
-                throw new NullPointerException("Couldn't get configuration for: " + type);
-        }
+    protected Enemy newObject() {
+        return EnemyFactory.create(game, map.get(type));
     }
 }

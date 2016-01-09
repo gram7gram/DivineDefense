@@ -2,8 +2,9 @@ package ua.gram.controller.stage;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
+
 import ua.gram.DDGame;
-import ua.gram.controller.market.shop.TowerShop;
+import ua.gram.controller.tower.TowerShop;
 import ua.gram.model.Level;
 import ua.gram.model.group.GameUIGroup;
 import ua.gram.model.group.TowerControlsGroup;

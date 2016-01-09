@@ -6,7 +6,6 @@ import ua.gram.model.actor.GameActor;
  * Handles state-logic on Actor update.
  *
  * NOTE States should not contain Actor-dependant properties!
- * If you need some counter or flag - add it to Actor.
  *
  * @author Gram <gram7gram@gmail.com>
  */

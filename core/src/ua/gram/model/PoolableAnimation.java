@@ -7,11 +7,11 @@ import com.badlogic.gdx.utils.Pool;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class PollableAnimation implements Pool.Poolable {
+public class PoolableAnimation implements Pool.Poolable {
 
     private final Animation a;
 
-    public PollableAnimation(float delay, TextureRegion[] tiles) {
+    public PoolableAnimation(float delay, TextureRegion[] tiles) {
         this.a = new Animation(delay, tiles);
         this.a.setPlayMode(Animation.PlayMode.LOOP);
     }

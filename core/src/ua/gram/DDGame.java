@@ -6,9 +6,9 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+
 import ua.gram.controller.Log;
 import ua.gram.controller.Resources;
 import ua.gram.controller.security.SecurityHandler;
@@ -16,7 +16,6 @@ import ua.gram.model.Player;
 import ua.gram.model.prototype.GamePrototype;
 import ua.gram.model.prototype.LevelPrototype;
 import ua.gram.model.prototype.ParametersPrototype;
-import ua.gram.view.screen.ErrorScreen;
 import ua.gram.view.screen.LaunchLoadingScreen;
 
 /**
@@ -126,35 +125,11 @@ public class DDGame<P extends GamePrototype> extends Game {
         view.apply();
     }
 
-    /**
-     * Creates FactoryInterface from Json representation of desired class.
-     *
-     * @param file     name of the Json file, that holds information about T class
-     * @param type     desired type of class to load
-     * @param <T>      class that is named in type variable.
-     * @param throwExc should screen be switched to ErrorScreen in case of Exception
-     * @return new object of the desired class with values from Json
-     */
-    public <T> T deserialize(String file, Class<T> type, boolean throwExc) {
-        try {
-            Json json = new Json();
-            json.setTypeName(null);
-            json.setUsePrototypes(false);
-            json.setIgnoreUnknownFields(true);
-            return json.fromJson(type, Gdx.files.internal(file));
-        } catch (Exception e) {
-            if (throwExc)
-                this.setScreen(
-                        new ErrorScreen(this, "Could not load: " + file, e));
-        }
-        return null;
-    }
-
     public BitmapFont getInfo() {
         return info;
     }
 
-    public <PP extends ParametersPrototype> PP getParameters() {
+    public ParametersPrototype getParameters() {
         return prototype.getParameters();
     }
 

@@ -1,53 +1,41 @@
 package ua.gram.model;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
-import ua.gram.model.map.Path;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class Animator {
+public class Animator<T1, T2> {
 
-    private PollableAnimation pollableAnimation;
-    private Path.Types direction;
-    private Types type;
+    private PoolableAnimation poolableAnimation;
+    private T1 primaryType;
+    private T2 secondaryType;
 
-    public PollableAnimation getPoolable() {
-        return pollableAnimation;
+    public PoolableAnimation getPoolable() {
+        return poolableAnimation;
     }
 
     public Animation getAnimation() {
-        return pollableAnimation.getAnimation();
+        return poolableAnimation != null ? poolableAnimation.getAnimation() : null;
     }
 
-    public void setPollable(PollableAnimation pollable) {
-        this.pollableAnimation = pollable;
+    public void setPollable(PoolableAnimation pollable) {
+        this.poolableAnimation = pollable;
     }
 
-    public Path.Types getDirection() {
-        return direction;
+    public T1 getPrimaryType() {
+        return primaryType;
     }
 
-    public void setDirection(Path.Types direction) {
-        this.direction = direction;
+    public void setPrimaryType(T1 primaryType) {
+        this.primaryType = primaryType;
     }
 
-    public Types getType() {
-        return type;
+    public T2 getSecondaryType() {
+        return secondaryType;
     }
 
-    public void setType(Types type) {
-        this.type = type;
-    }
-
-    /**
-     * The states of Actors in the game,
-     * including Enemy and Tower.
-     */
-    public enum Types {
-        //For Tower
-        IDLE, SHOOT, BUILD, SELL, LAND, AIR, LANDAIR,
-        //For Enemy
-        WALKING, STUN, ABILITY, DEAD, FINISH, SPAWN,
+    public void setSecondaryType(T2 secondaryType) {
+        this.secondaryType = secondaryType;
     }
 }

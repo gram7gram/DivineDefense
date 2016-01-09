@@ -1,14 +1,14 @@
 package ua.gram.model.state;
 
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import ua.gram.DDGame;
+import ua.gram.model.actor.GameActor;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class AbstractState<A extends Actor> {
+public class AbstractState<A extends GameActor> implements StateInterface<A> {
 
-    private DDGame game;
+    protected final DDGame game;
 
     public AbstractState(DDGame game) {
         this.game = game;
@@ -18,12 +18,23 @@ public class AbstractState<A extends Actor> {
         return game;
     }
 
-    public void setGame(DDGame game) {
-        this.game = game;
-    }
-
     @Override
     public String toString() {
         return this.getClass().getSimpleName();
+    }
+
+    @Override
+    public void preManage(A actor) {
+
+    }
+
+    @Override
+    public void manage(A actor, float delta) {
+
+    }
+
+    @Override
+    public void postManage(A actor) {
+
     }
 }

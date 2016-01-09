@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
+
 import ua.gram.DDGame;
 import ua.gram.model.actor.enemy.Enemy;
 
@@ -59,7 +60,7 @@ public class HealthBar extends Actor {
     }
 
     /**
-     * HealthBar is displayed only if the Enemy's health is not 100%.
+     * HealthBar is displayed only if the EnemyState's health is not 100%.
      * Color varies on health coeficient.
      */
     @Override

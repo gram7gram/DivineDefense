@@ -6,14 +6,15 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 import com.badlogic.gdx.utils.Json;
+
+import java.net.NetworkInterface;
+import java.util.Enumeration;
+
 import ua.gram.DDGame;
 import ua.gram.controller.security.SecurityHandler;
 import ua.gram.desktop.prototype.DesktopGamePrototype;
 import ua.gram.desktop.prototype.DesktopParametersPrototype;
 import ua.gram.model.prototype.TexturePackerPrototype;
-
-import java.net.NetworkInterface;
-import java.util.Enumeration;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -67,7 +68,7 @@ public class DesktopLauncher {
                 }
             }
         } catch (Exception e) {
-            System.out.println("WARN: Could not get MAC-address: " + e.getClass().getSimpleName() + ". Set to 'undefined'");
+            System.out.println("WARN: Could not getPool MAC-address: " + e.getClass().getSimpleName() + ". Set to 'undefined'");
         }
         return "undefined";
     }

@@ -2,12 +2,17 @@ package ua.gram.model.strategy;
 
 import ua.gram.controller.comparator.EnemyDistanceComparator;
 import ua.gram.controller.comparator.EnemyHealthComparator;
-import ua.gram.model.strategy.tower.*;
+import ua.gram.model.strategy.tower.AllStrategy;
+import ua.gram.model.strategy.tower.NearestStrategy;
+import ua.gram.model.strategy.tower.RandomStrategy;
+import ua.gram.model.strategy.tower.StrongestStrategy;
+import ua.gram.model.strategy.tower.TowerStrategy;
+import ua.gram.model.strategy.tower.WeakestStrategy;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class StrategyManager {
+public class TowerStrategyManager {
 
     private final EnemyDistanceComparator distanceComparator;
     private final EnemyHealthComparator healthComparator;
@@ -18,7 +23,7 @@ public class StrategyManager {
     private final TowerStrategy randomTowerStrategy;
     private final TowerStrategy allTowerStrategy;
 
-    public StrategyManager() {
+    public TowerStrategyManager() {
         distanceComparator = new EnemyDistanceComparator();
         healthComparator = new EnemyHealthComparator();
 

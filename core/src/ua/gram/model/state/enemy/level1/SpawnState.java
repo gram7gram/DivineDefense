@@ -3,10 +3,11 @@ package ua.gram.model.state.enemy.level1;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+
 import ua.gram.DDGame;
 import ua.gram.controller.enemy.EnemySpawner;
-import ua.gram.model.Animator;
 import ua.gram.model.actor.enemy.Enemy;
+import ua.gram.model.enums.Types;
 import ua.gram.model.map.Path;
 import ua.gram.model.state.enemy.EnemyStateManager;
 
@@ -24,6 +25,11 @@ public class SpawnState extends InactiveState {
     }
 
     @Override
+    protected Types.EnemyState getType() {
+        return Types.EnemyState.SPAWN;
+    }
+
+    @Override
     public void preManage(Enemy enemy) throws GdxRuntimeException {
         super.preManage(enemy);
         EnemySpawner spawner = enemy.getSpawner();
@@ -32,7 +38,7 @@ public class SpawnState extends InactiveState {
         enemy.setCurrentDirection(parent == null || parent.getCurrentDirection() == null
                 ? initial : parent.getCurrentDirection());
 
-        initAnimation(enemy, Animator.Types.SPAWN);
+        initAnimation(enemy);
 
         Vector2 pos = spawnPosition == null
                 ? spawner.getSpawnPosition()
@@ -50,7 +56,7 @@ public class SpawnState extends InactiveState {
 
         enemy.setVisible(true);
 
-        Gdx.app.log("INFO", enemy + " state: " + enemy.getAnimator().getType());
+        Gdx.app.log("INFO", enemy + " state: " + enemy.getAnimator().getPrimaryType());
     }
 
     @Override

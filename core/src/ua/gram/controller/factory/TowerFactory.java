@@ -1,18 +1,22 @@
 package ua.gram.controller.factory;
 
 import com.badlogic.gdx.Gdx;
+
 import ua.gram.DDGame;
-import ua.gram.model.actor.tower.*;
+import ua.gram.model.actor.tower.Tower;
+import ua.gram.model.actor.tower.TowerPrimary;
+import ua.gram.model.actor.tower.TowerSecondary;
+import ua.gram.model.actor.tower.TowerSpecial;
+import ua.gram.model.actor.tower.TowerStun;
 import ua.gram.model.prototype.TowerPrototype;
 
 /**
  *
  * @author Gram <gram7gram@gmail.com>
  */
-public class TowerFactory implements FactoryInterface<Tower, TowerPrototype> {
+public class TowerFactory {
 
-    @Override
-    public Tower create(DDGame game, TowerPrototype prototype) {
+    public static Tower create(DDGame game, TowerPrototype prototype) {
         Tower towerType;
         String type = prototype.type;
         if (type.equals("TowerPrimary")) {

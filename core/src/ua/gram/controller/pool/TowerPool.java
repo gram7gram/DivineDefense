@@ -3,8 +3,6 @@ package ua.gram.controller.pool;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Pool;
 
-import java.util.HashMap;
-
 import ua.gram.DDGame;
 import ua.gram.model.actor.tower.Tower;
 import ua.gram.model.actor.tower.TowerPrimary;
@@ -16,38 +14,31 @@ import ua.gram.model.prototype.TowerPrototype;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class TowerPool<T extends Tower> extends Pool<Tower> {
+public class TowerPool extends Pool<Tower> {
 
-    private final String type;
+    private final TowerPrototype prototype;
     private final DDGame game;
-    private HashMap<String, TowerPrototype> map;
 
-    public TowerPool(DDGame game, String type) {
+    public TowerPool(DDGame game, TowerPrototype prototype) {
         super(5, DDGame.MAX_ENTITIES);
         this.game = game;
-        this.type = type;
-        map = new HashMap<String, TowerPrototype>();
-        TowerPrototype[] prototypes = game.getPrototype().towers;
-        for (TowerPrototype prototype : prototypes) {
-            map.put(prototype.name, prototype);
-        }
-        Gdx.app.log("INFO", "Pool for " + type + " is created");
+        this.prototype = prototype;
+        Gdx.app.log("INFO", "Pool for " + prototype.name + " is created");
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    protected T newObject() {
-        switch (type) {
+    protected Tower newObject() {
+        switch (prototype.name) {
             case "TowerPrimary":
-                return (T) new TowerPrimary(game, map.get(type));
+                return new TowerPrimary(game, prototype);
             case "TowerSecondary":
-                return (T) new TowerSecondary(game, map.get(type));
+                return new TowerSecondary(game, prototype);
             case "TowerStun":
-                return (T) new TowerStun(game, map.get(type));
+                return new TowerStun(game, prototype);
             case "TowerSpecial":
-                return (T) new TowerSpecial(game, map.get(type));
+                return new TowerSpecial(game, prototype);
             default:
-                throw new NullPointerException("Couldn't get configuration for: " + type);
+                throw new NullPointerException("Unknown TowerState type: " + prototype.name);
         }
     }
 }

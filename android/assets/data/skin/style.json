@@ -190,19 +190,19 @@
       "up": "button-demon-disabled",
       "disabled": "button-demon-disabled"
     },
-    "shopitem-tower-primary": {
+    "shopitem-towerprimary": {
       "up": "shopitem-tower-primary",
       "disabled": "shopitem-tower-primary-disabled"
     },
-    "shopitem-tower-secondary": {
+    "shopitem-towersecondary": {
       "up": "shopitem-tower-secondary",
       "disabled": "shopitem-tower-secondary-disabled"
     },
-    "shopitem-tower-stun": {
+    "shopitem-towerstun": {
       "up": "shopitem-tower-stun",
       "disabled": "shopitem-tower-stun-disabled"
     },
-    "shopitem-tower-special": {
+    "shopitem-towerspecial": {
       "up": "shopitem-tower-special",
       "disabled": "shopitem-tower-special-disabled"
     },

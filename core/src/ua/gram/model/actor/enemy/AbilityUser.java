@@ -1,7 +1,7 @@
 package ua.gram.model.actor.enemy;
 
 import ua.gram.DDGame;
-import ua.gram.model.prototype.EnemyPrototype;
+import ua.gram.model.prototype.AbilityUserPrototype;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -15,7 +15,7 @@ public abstract class AbilityUser extends Enemy implements AbilityUserInterface 
     protected boolean isAbilityExecuted;
     protected boolean isInterrupted;
 
-    public AbilityUser(DDGame game, EnemyPrototype prototype) {
+    public AbilityUser(DDGame game, AbilityUserPrototype prototype) {
         super(game, prototype);
         abilityDelay = prototype.abilityDelay;
         abilityDuration = prototype.abilityDuration;

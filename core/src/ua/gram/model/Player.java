@@ -1,6 +1,7 @@
 package ua.gram.model;
 
 import com.badlogic.gdx.Gdx;
+
 import ua.gram.model.prototype.PlayerPrototype;
 
 /**
@@ -22,10 +23,10 @@ public class Player {
     private int health;
     private int coins;
     private int gems;
-//    public static Tower.Strategy TOWER_PRIMARY_STRATEGY;
-//    public static Tower.Strategy TOWER_SECONDARY_STRATEGY;
-//    public static Tower.Strategy TOWER_STUN_STRATEGY;
-//    public static Tower.Strategy TOWER_SPECIAL_STRATEGY;
+//    public static TowerState.Strategy TOWER_PRIMARY_STRATEGY;
+//    public static TowerState.Strategy TOWER_SECONDARY_STRATEGY;
+//    public static TowerState.Strategy TOWER_STUN_STRATEGY;
+//    public static TowerState.Strategy TOWER_SPECIAL_STRATEGY;
 
     public Player(PlayerPrototype prototype) {
         this.prototype = prototype;

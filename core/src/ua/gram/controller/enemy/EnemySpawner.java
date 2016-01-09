@@ -1,19 +1,25 @@
 package ua.gram.controller.enemy;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Stack;
+
 import ua.gram.DDGame;
 import ua.gram.controller.Log;
 import ua.gram.controller.pool.EnemyPool;
 import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.model.EnemyPath;
 import ua.gram.model.Level;
-import ua.gram.model.actor.enemy.*;
+import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.group.EnemyGroup;
+import ua.gram.model.prototype.EnemyPrototype;
 import ua.gram.model.state.enemy.EnemyStateManager;
-
-import java.util.Stack;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -21,25 +27,39 @@ import java.util.Stack;
 public final class EnemySpawner {
 
     private final DDGame game;
-    private final GameBattleStage stage_battle;
     private final Level level;
-    private final EnemyAnimationProvider animationProvider;
+    private final GameBattleStage stage_battle;
     private final EnemyStateManager stateManager;
+    private final EnemyAnimationProvider animationProvider;
+    private final Map<String, Pool<Enemy>> identityMap;
+    private final Stack<String> enemiesToSpawn;
     private float count;
-    private Pool<Enemy> poolWarrior;
-    private Pool<Enemy> poolSoldier;
-    private Pool<Enemy> poolSoldierArmored;
-    private Pool<Enemy> poolSummoner;
-    private Pool<Enemy> poolRunner;
-    private Stack<String> enemiesToSpawn;
 
     public EnemySpawner(DDGame game, Level level, GameBattleStage stage) {
         this.game = game;
         this.stage_battle = stage;
         this.level = level;
+
+        EnemyPrototype[] prototypes = game.getPrototype().enemies;
+        if (prototypes.length == 0)
+            throw new NullPointerException("Nothing to register");
+
+        identityMap = Collections.synchronizedMap(new HashMap<>(prototypes.length));
+        registerAll(prototypes);
+
+        enemiesToSpawn = new Stack<>();
         stateManager = new EnemyStateManager(game);
-        animationProvider = new EnemyAnimationProvider(game.getResources().getSkin());
-        Gdx.app.log("INFO", "EnemySpawner is OK");
+        animationProvider = new EnemyAnimationProvider(
+                game.getResources().getSkin(),
+                prototypes);
+
+        Log.info("EnemySpawner is OK");
+    }
+
+    private void registerAll(EnemyPrototype[] prototypes) {
+        for (EnemyPrototype prototype : prototypes) {
+            identityMap.put(prototype.name, new EnemyPool(game, prototype.name));
+        }
     }
 
     /**
@@ -68,14 +88,14 @@ public final class EnemySpawner {
     }
 
     /**
-     * Spawns obtained from pool and cloned Enemy,
+     * Spawns obtained from pool and cloned EnemyState,
      * places it at the Spawn position and gives it the path to go.
      * Spawn takes place in Group with the coresponding HealthBar.
      *
-     * @param type  the Enemy ancestor to spawn.
+     * @param type  the EnemyState ancestor to spawn.
      * @param spawn map tile position to spawn at (not in pixels)
      * @throws CloneNotSupportedException - error occcured at cloning.
-     * @throws NullPointerException       - type does not belong to known Enemy ancestor.
+     * @throws NullPointerException       - type does not belong to known EnemyState ancestor.
      */
     public void spawn(String type, Vector2 spawn) throws CloneNotSupportedException, NullPointerException {
         Enemy enemy;
@@ -86,9 +106,7 @@ public final class EnemySpawner {
             return;
         }
         stateManager.init(enemy);
-        animationProvider.init(enemy);
         enemy.setSpawner(this);
-        enemy.setAnimationProvider(animationProvider);
         stateManager.swapLevel1State(enemy, stateManager.getInactiveState());
         stateManager.swapLevel2State(enemy, stateManager.getIdleState());
         try {
@@ -104,14 +122,14 @@ public final class EnemySpawner {
     }
 
     /**
-     * Spawns obtained from pool and cloned Enemy,
+     * Spawns obtained from pool and cloned EnemyState,
      * places it at the Spawn position and gives it the path to go.
      * Spawn takes place in Group with the coresponding HealthBar.
      *
-     * @param type  the Enemy ancestor to spawn.
+     * @param type  the EnemyState ancestor to spawn.
      * @param spawn map tile position to spawn at (not in pixels)
      * @throws CloneNotSupportedException - error occcured at cloning.
-     * @throws NullPointerException       - type does not belong to known Enemy ancestor.
+     * @throws NullPointerException       - type does not belong to known EnemyState ancestor.
      */
     public void spawnChild(Enemy parent, String type, Vector2 spawn) throws CloneNotSupportedException, NullPointerException {
         Enemy enemy;
@@ -122,9 +140,7 @@ public final class EnemySpawner {
             return;
         }
         stateManager.init(enemy);
-        animationProvider.init(enemy);
         enemy.setSpawner(this);
-        enemy.setAnimationProvider(animationProvider);
         stateManager.swapLevel1State(enemy, stateManager.getInactiveState());
         stateManager.swapLevel2State(enemy, stateManager.getIdleState());
         try {
@@ -142,8 +158,8 @@ public final class EnemySpawner {
     }
 
     /**
-     * Sets the Actions for Enemy to do to walk the path
-     * FIX Bigger speed - slower walk of Enemy
+     * Sets the Actions for EnemyState to do to walk the path
+     * FIX Bigger speed - slower walk of EnemyState
      */
     public void setActionPath(final Enemy enemy, Vector2 spawn, Vector2 previous) {
         EnemyPath path = level.getMap().normalizePath(previous, spawn);
@@ -154,79 +170,30 @@ public final class EnemySpawner {
         }
     }
 
-    private Stack<String> convertList(String[] list) {
-        Stack<String> enemies = new Stack<>();
-        for (String type : list) {
-            enemies.add(type);
-            if (type.equals("EnemyWarrior") && poolWarrior == null) {
-                poolWarrior = new EnemyPool<EnemyWarrior>(game, "EnemyWarrior");
-            } else if (type.equals("EnemyRunner") && poolRunner == null) {
-                poolRunner = new EnemyPool<EnemyRunner>(game, "EnemyRunner");
-            } else if (type.equals("EnemySoldier") && poolSoldier == null) {
-                poolSoldier = new EnemyPool<EnemySoldier>(game, "EnemySoldier");
-            } else if (type.equals("EnemySoldierArmored") && poolSoldierArmored == null) {
-                poolSoldierArmored = new EnemyPool<EnemySoldierArmored>(game, "EnemySoldierArmored");
-            } else if (type.equals("EnemySummoner") && poolSummoner == null) {
-                poolSummoner = new EnemyPool<EnemySummoner>(game, "EnemySummoner");
-            }
-        }
-        return enemies;
+    public void setEnemiesToSpawn(String[] types) {
+        for (String type : types) enemiesToSpawn.push(type);
+        Log.info("Enemies for wave " + level.getCurrentWave()
+                + " are prepared. Size: " + enemiesToSpawn.size());
     }
 
-    public void setEnemiesToSpawn(String[] enemiesToSpawn) {
-        this.enemiesToSpawn = convertList(enemiesToSpawn);
-        Gdx.app.log("INFO", "Enemies for wave " + level.getCurrentWave()
-                + " are prepared. Size: " + enemiesToSpawn.length);
-    }
+    public Pool<Enemy> getPool(String type) {
+        Optional<String> entity = identityMap.keySet().stream()
+                .filter(name -> Objects.equals(name, type))
+                .findFirst();
 
-    public Pool<Enemy> getPool(Class<? extends Enemy> type) {
-        if (type.equals(EnemyWarrior.class)) {
-            return poolWarrior;
-        } else if (type.equals(EnemySoldier.class)) {
-            return poolSoldier;
-        } else if (type.equals(EnemySoldierArmored.class)) {
-            return poolSoldierArmored;
-        } else if (type.equals(EnemyRunner.class)) {
-            return poolRunner;
-        } else if (type.equals(EnemySummoner.class)) {
-            return poolSummoner;
-        } else {
-            throw new NullPointerException("Unknown pool for: " + type.getSimpleName());
-        }
+        if (!entity.isPresent())
+            throw new NullPointerException("Couldn't build tower: " + type);
+
+        return identityMap.get(entity.get());
     }
 
     public void free(Enemy enemy) {
-        this.getPool(enemy.getClass()).free(enemy);
-        Gdx.app.log("INFO", enemy + " is set free");
+        this.getPool(enemy.getName()).free(enemy);
+        Log.info(enemy + " is set free");
     }
 
     public Enemy obtain(String type) throws CloneNotSupportedException {
-        Enemy enemy;
-        switch (type) {
-            case "EnemyWarrior":
-                if (poolWarrior == null) poolWarrior = new EnemyPool<EnemyWarrior>(game, type);
-                enemy = ((EnemyWarrior) (poolWarrior.obtain())).clone();
-                break;
-            case "EnemyRunner":
-                if (poolRunner == null) poolRunner = new EnemyPool<EnemyRunner>(game, type);
-                enemy = ((EnemyRunner) (poolRunner.obtain())).clone();
-                break;
-            case "EnemySoldier":
-                if (poolSoldier == null) poolSoldier = new EnemyPool<EnemySoldier>(game, type);
-                enemy = ((EnemySoldier) (poolSoldier.obtain())).clone();
-                break;
-            case "EnemySoldierArmored":
-                if (poolSoldierArmored == null) poolSoldierArmored = new EnemyPool<EnemySoldierArmored>(game, type);
-                enemy = ((EnemySoldierArmored) (poolSoldierArmored.obtain())).clone();
-                break;
-            case "EnemySummoner":
-                if (poolSummoner == null) poolSummoner = new EnemyPool<EnemySummoner>(game, type);
-                enemy = ((EnemySummoner) (poolSummoner.obtain())).clone();
-                break;
-            default:
-                throw new NullPointerException("Couldn't add enemy: " + type);
-        }
-        return enemy;
+        return getPool(type).obtain();
     }
 
     public EnemyAnimationProvider getAnimationProvider() {

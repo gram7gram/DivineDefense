@@ -5,8 +5,9 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+
 import ua.gram.DDGame;
-import ua.gram.controller.market.shop.TowerShop;
+import ua.gram.controller.tower.TowerShop;
 import ua.gram.model.actor.tower.Tower;
 
 /**
@@ -56,7 +57,7 @@ public class TowerControlsGroup extends Group {
             public void clicked(InputEvent event, float x, float y) {
                 if (tower != null) {
                     setVisible(false);
-                    shop.sell(group);
+                    shop.sell(tower);
                     tower = null;
                 }
             }

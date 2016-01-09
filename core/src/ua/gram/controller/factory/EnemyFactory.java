@@ -1,33 +1,34 @@
 package ua.gram.controller.factory;
 
-import com.badlogic.gdx.Gdx;
 import ua.gram.DDGame;
-import ua.gram.model.actor.enemy.*;
+import ua.gram.model.actor.enemy.Enemy;
+import ua.gram.model.actor.enemy.EnemyRunner;
+import ua.gram.model.actor.enemy.EnemySoldier;
+import ua.gram.model.actor.enemy.EnemySoldierArmored;
+import ua.gram.model.actor.enemy.EnemySummoner;
+import ua.gram.model.actor.enemy.EnemyWarrior;
+import ua.gram.model.prototype.AbilityUserPrototype;
 import ua.gram.model.prototype.EnemyPrototype;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class EnemyFactory implements FactoryInterface<Enemy, EnemyPrototype> {
+public class EnemyFactory {
 
-    @Override
-    public Enemy create(DDGame game, EnemyPrototype prototype) {
-        Enemy enemyType;
-        String type = prototype.type;
-        if (type.equals("EnemyWarrior")) {
-            enemyType = new EnemyWarrior(game, prototype);
-        } else if (type.equals("EnemySoldier")) {
-            enemyType = new EnemySoldier(game, prototype);
-        } else if (type.equals("EnemySoldierArmored")) {
-            enemyType = new EnemySoldierArmored(game, prototype);
-        } else if (type.equals("EnemySummoner")) {
-            enemyType = new EnemySummoner(game, prototype);
-        } else if (type.equals("EnemyRunner")) {
-            enemyType = new EnemyRunner(game, prototype);
-        } else {
-            throw new NullPointerException("EnemyFactory couldn't create: " + type);
+    public static Enemy create(DDGame game, EnemyPrototype prototype) {
+        switch (prototype.name) {
+            case "EnemyWarrior":
+                return new EnemyWarrior(game, prototype);
+            case "EnemySoldier":
+                return new EnemySoldier(game, prototype);
+            case "EnemySoldierArmored":
+                return new EnemySoldierArmored(game, prototype);
+            case "EnemySummoner":
+                return new EnemySummoner(game, (AbilityUserPrototype) prototype);
+            case "EnemyRunner":
+                return new EnemyRunner(game, prototype);
+            default:
+                throw new NullPointerException("EnemyFactory couldn't create: " + prototype.name);
         }
-        Gdx.app.log("INFO", "EnemyFactory creates: " + type);
-        return enemyType;
     }
 }

@@ -7,7 +7,35 @@
     "texturePacker": {
       "config": {
         "maxWidth": 4096,
-        "maxHeight": 4096
+        "maxHeight": 4096,
+        "combineSubdirectories": true,
+        "pot": true,
+        "paddingX": 2,
+        "paddingY": 2,
+        "bleed": true,
+        "edgePadding": true,
+        "duplicatePadding": false,
+        "rotation": false,
+        "square": false,
+        "stripWhitespaceX": false,
+        "stripWhitespaceY": false,
+        "alphaThreshold": 0,
+        "filterMin": "Nearest",
+        "filterMag": "Nearest",
+        "wrapX": "ClampToEdge",
+        "wrapY": "ClampToEdge",
+        "format": "RGBA8888",
+        "outputFormat": "png",
+        "alias": true,
+        "jpegQuality": 0.9,
+        "ignoreBlankImages": true,
+        "fast": false,
+        "debug": false,
+        "flattenPaths": false,
+        "premultiplyAlpha": false,
+        "useIndexes": true,
+        "limitMemory": true,
+        "grid": false
       },
       "from": "toPack/all",
       "to": "data/skin",
@@ -82,6 +110,8 @@
           "walkableProperty": "walkable",
           "spawnProperty": "spawn",
           "baseProperty": "base",
+          "blockedProperty": "blocked",
+          "mapObject": "Gates",
           "name": "data/levels/maps/level1@60.tmx"
         },
         "difficulty": 1,
@@ -125,6 +155,8 @@
           "walkableProperty": "walkable",
           "spawnProperty": "spawn",
           "baseProperty": "base",
+          "blockedProperty": "blocked",
+          "mapObject": null,
           "name": "data/levels/maps/level2@60.tmx"
         },
         "difficulty": 1,
@@ -153,6 +185,8 @@
           "walkableProperty": "walkable",
           "spawnProperty": "spawn",
           "baseProperty": "base",
+          "blockedProperty": "blocked",
+          "mapObject": null,
           "name": "data/levels/maps/level3@60.tmx"
         },
         "difficulty": 1,
@@ -181,6 +215,8 @@
           "walkableProperty": "walkable",
           "spawnProperty": "spawn",
           "baseProperty": "base",
+          "blockedProperty": "blocked",
+          "mapObject": null,
           "name": "data/levels/maps/level4@60.tmx"
         },
         "difficulty": 1,
@@ -242,6 +278,7 @@
       "frameDuration": 0.1
     },
     {
+      "class": "ua.gram.model.prototype.AbilityUserPrototype",
       "name": "EnemySummoner",
       "health": 110,
       "speed": 3.5,
@@ -332,7 +369,7 @@
       "weapon": {
         "class": "ua.gram.model.prototype.BombWeaponPrototype",
         "type": "Bomb",
-        "region": "TOWER_SECONDARY_WEAPON",
+        "region": "weapons/SECONDARY_WEAPON",
         "delay": 0.07,
         "frames": 12
       }
@@ -350,7 +387,7 @@
       "weapon": {
         "class": "ua.gram.model.prototype.LightningWeaponPrototype",
         "type": "Lightning",
-        "region": "TOWER_SPECIAL_WEAPON",
+        "region": "weapons/SPECIAL_WEAPON",
         "delay": 0.05,
         "frames": 10
       }
@@ -368,7 +405,7 @@
       "weapon": {
         "class": "ua.gram.model.prototype.FreezeWeaponPrototype",
         "type": "Freeze",
-        "region": "TOWER_STUN_WEAPON",
+        "region": "weapons/STUN_WEAPON",
         "delay": 0.15,
         "frames": 4
       }

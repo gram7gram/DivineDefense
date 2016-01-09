@@ -32,7 +32,7 @@ public final class TowerStun extends Tower implements Cloneable {
     }
 
     /**
-     * Enable Stun flag for Enemy.
+     * Enable Stun flag for EnemyState.
      *
      * @param victim the enemy to attack
      */
@@ -43,7 +43,7 @@ public final class TowerStun extends Tower implements Cloneable {
     }
 
     /**
-     * Disable Stun flag for Enemy.
+     * Disable Stun flag for EnemyState.
      */
     @Override
     public void postAttack(Enemy victim) {

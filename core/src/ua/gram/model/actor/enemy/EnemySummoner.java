@@ -1,11 +1,12 @@
 package ua.gram.model.actor.enemy;
 
 import com.badlogic.gdx.math.Vector2;
+
 import ua.gram.DDGame;
 import ua.gram.controller.Log;
 import ua.gram.model.map.Map;
 import ua.gram.model.map.Path;
-import ua.gram.model.prototype.EnemyPrototype;
+import ua.gram.model.prototype.AbilityUserPrototype;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -14,7 +15,7 @@ public final class EnemySummoner extends AbilityUser implements Cloneable {
 
     private Vector2 previousBadPosition;
 
-    public EnemySummoner(DDGame game, EnemyPrototype prototype) {
+    public EnemySummoner(DDGame game, AbilityUserPrototype prototype) {
         super(game, prototype);
         previousBadPosition = Vector2.Zero;
     }

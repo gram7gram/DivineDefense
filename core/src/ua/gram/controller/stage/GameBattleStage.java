@@ -19,7 +19,7 @@ import ua.gram.model.group.TowerGroup;
 /**
  * Contains major game objects, like towers and enemies.
  * <p/>
- * TODO Check for occupied cells if towerGroup is build.
+ * TODO Check for occupied cells if towerGroup is buy.
  *
  * @author Gram <gram7gram@gmail.com>
  */
@@ -74,7 +74,7 @@ public class GameBattleStage extends AbstractStage {
             group.addActor(newGroup);
             Log.info(newGroup.getClass().getSimpleName() + " added to " + index + " index");
         } else {
-            Log.warn(this.getClass().getSimpleName() + " failed to get Group at " + index + " index");
+            Log.warn(this.getClass().getSimpleName() + " failed to getPool Group at " + index + " index");
         }
 
         int count = countLayers();
@@ -122,7 +122,7 @@ public class GameBattleStage extends AbstractStage {
      * If there is at least one instance of EnemyGroup in
      * corresponding Group, true is returned.
      *
-     * @return true - at least one Enemy
+     * @return true - at least one EnemyState
      */
     public boolean hasEnemiesOnMap() {
         for (Group group : indexes) {
@@ -139,7 +139,7 @@ public class GameBattleStage extends AbstractStage {
     /**
      * If there is at least one instance of TowerGroup in corresponding Group, true is returned.
      *
-     * @return true - at least one Tower
+     * @return true - at least one TowerState
      */
     public boolean hasTowersOnMap() {
         for (Group group : indexes) {
@@ -218,7 +218,8 @@ public class GameBattleStage extends AbstractStage {
 
     public boolean isPositionEmpty(float x, float y) {
         for (int[] position : towerPositions) {
-            if (position[0] == (int) x / DDGame.TILE_HEIGHT && position[1] == (int) y / DDGame.TILE_HEIGHT) {
+            if (position[0] == (int) x / DDGame.TILE_HEIGHT
+                    && position[1] == (int) y / DDGame.TILE_HEIGHT) {
                 return false;
             }
         }

@@ -5,7 +5,7 @@ import ua.gram.model.prototype.GamePrototype;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class DesktopGamePrototype extends GamePrototype {
+public class DesktopGamePrototype extends GamePrototype<DesktopParametersPrototype> {
     public DesktopParametersPrototype parameters;
     public DesktopConfigPrototype config;
 
@@ -15,7 +15,6 @@ public class DesktopGamePrototype extends GamePrototype {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public DesktopParametersPrototype getParameters() {
         return parameters;
     }

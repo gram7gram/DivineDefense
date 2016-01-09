@@ -78,7 +78,7 @@ public abstract class Weapon extends Actor {
     /**
      * Each weapon may require different z-indexes to be displayed properly.
      * Move Weapon from front to back to achieve pseudo-3d effect.
-     * Current implementaion toggles Tower and Weapon z-indexes, so that they won't overlap.
+     * Current implementaion toggles TowerState and Weapon z-indexes, so that they won't overlap.
      */
     protected void handleIndexes(int targetIndex, int parentIndex) {
         //NOTE toFront/toBack methods cause overlap in towerGroup and weapon animations, so used this...

@@ -10,6 +10,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+
 import ua.gram.DDGame;
 import ua.gram.view.screen.ErrorScreen;
 
@@ -38,7 +39,7 @@ public class Resources implements Disposable {
      * Will display ErrorScreen it was not able to load skin.
      *
      * @param file - name of the Json
-     * @return - new Skin, build with Json and Atlas, that matches Json file without extension
+     * @return - new Skin, buy with Json and Atlas, that matches Json file without extension
      */
     public Skin loadSkin(String file) throws GdxRuntimeException {
         Skin skin = null;

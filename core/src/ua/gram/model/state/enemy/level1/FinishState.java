@@ -1,10 +1,12 @@
 package ua.gram.model.state.enemy.level1;
 
 import com.badlogic.gdx.Gdx;
+
 import ua.gram.DDGame;
 import ua.gram.controller.enemy.EnemySpawner;
 import ua.gram.model.Player;
 import ua.gram.model.actor.enemy.Enemy;
+import ua.gram.model.enums.Types;
 import ua.gram.model.group.EnemyGroup;
 
 /**
@@ -17,14 +19,19 @@ public class FinishState extends InactiveState {
     }
 
     @Override
+    protected Types.EnemyState getType() {
+        return Types.EnemyState.FINISH;
+    }
+
+    @Override
     public void preManage(Enemy enemy) {
         super.preManage(enemy);
 
         enemy.isRemoved = true;
 
         Gdx.app.log("INFO", enemy + " reaches the Base");
-        enemy.getAnimationProvider().get(enemy).free(enemy);
-        Gdx.app.log("INFO", enemy + " frees animation");
+//        enemy.getAnimationProvider().get(enemy).free(enemy);
+//        Gdx.app.log("INFO", enemy + " frees animation");
 
         EnemySpawner spawner = enemy.getSpawner();
         EnemyGroup group = enemy.getEnemyGroup();

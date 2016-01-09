@@ -3,15 +3,11 @@ package ua.gram.model.group;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import ua.gram.DDGame;
-import ua.gram.controller.market.shop.TowerShop;
-import ua.gram.model.actor.market.TowerShopItem;
-import ua.gram.model.actor.tower.TowerPrimary;
-import ua.gram.model.actor.tower.TowerSecondary;
-import ua.gram.model.actor.tower.TowerSpecial;
-import ua.gram.model.actor.tower.TowerStun;
 
-import java.util.ArrayList;
+import ua.gram.DDGame;
+import ua.gram.controller.tower.TowerShop;
+import ua.gram.model.actor.market.TowerShopItem;
+import ua.gram.model.prototype.TowerPrototype;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -20,22 +16,17 @@ public class TowerShopGroup extends Group {
 
     public TowerShopGroup(DDGame game, TowerShop shop) {
 
-        ArrayList<TowerShopItem> items = new ArrayList<TowerShopItem>();
-        items.add(new TowerShopItem(game, shop, TowerPrimary.class, "shopitem-tower-primary"));
-        items.add(new TowerShopItem(game, shop, TowerSecondary.class, "shopitem-tower-secondary"));
-        items.add(new TowerShopItem(game, shop, TowerStun.class, "shopitem-tower-stun"));
-        items.add(new TowerShopItem(game, shop, TowerSpecial.class, "shopitem-tower-special"));
-
-        for (int i = 0; i < items.size(); i++) {
-            TowerShopItem item = items.get(i);
-            item.setIndex(items.size() - i);
+        int i = 1;
+        for (TowerPrototype prototype : shop.getRegisteredTowers()) {
+            TowerShopItem item = new TowerShopItem(game, shop, prototype,
+                    "shopitem-" + prototype.name.toLowerCase());
             item.addAction(
                     Actions.sequence(
                             Actions.parallel(
                                     Actions.alpha(0),
                                     Actions.moveBy(0, -item.getHeight())
                             ),
-                            Actions.delay(.2f * (1 + i)),
+                            Actions.delay(.2f * i),
                             Actions.parallel(
                                     Actions.alpha(1, .15f),
                                     Actions.moveBy(0, item.getHeight(), .2f)
@@ -43,8 +34,15 @@ public class TowerShopGroup extends Group {
                     )
             );
             this.addActor(item);
+            item.setIndex(i);
+            ++i;
         }
-        this.setDebug(DDGame.DEBUG);
         Gdx.app.log("INFO", "TowerShopGroup is OK");
+    }
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        if (!DDGame.PAUSE) this.setDebug(DDGame.DEBUG);
     }
 }

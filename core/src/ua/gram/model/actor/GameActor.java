@@ -2,65 +2,46 @@ package ua.gram.model.actor;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import ua.gram.DDGame;
-import ua.gram.model.prototype.GameActorPrototype;
 
-public class GameActor extends Actor {
+import ua.gram.DDGame;
+import ua.gram.model.Animator;
+import ua.gram.model.map.Path;
+import ua.gram.model.prototype.GameActorPrototype;
+import ua.gram.model.state.StateManager;
+
+public abstract class GameActor<T1, T2, M extends StateManager> extends Actor {
 
     protected final float animationWidth;
     protected final float animationHeight;
-    private final Types originType;
+    protected final Animator<T1, T2> animator;
     protected int updateIterationCount;
     protected Vector2 currentPosition;
+    protected Vector2 currentDirection;
+    protected Vector2 previousDirection;
+    protected Path.Types currentDirectionType;
+    protected Path.Types previousDirectionType;
 
     public GameActor(GameActorPrototype prototype) {
-        this.animationHeight = prototype.height;
+        this.setName(prototype.name);
         this.animationWidth = prototype.width;
+        this.animationHeight = prototype.height;
         this.setSize(prototype.width, prototype.height);
-        this.setBounds(this.getX(), this.getY(), prototype.width, prototype.height);
-
-        switch (prototype.name) {
-            case "EnemyWarrior":
-                originType = Types.WARRIOR;
-                break;
-            case "EnemySummoner":
-                originType = Types.SUMMONER;
-                break;
-            case "EnemySoldier":
-                originType = Types.SOLDIER;
-                break;
-            case "EnemySoldierArmored":
-                originType = Types.SOLDIER_ARMORED;
-                break;
-            case "EnemyRunner":
-                originType = Types.RUNNER;
-                break;
-            case "TowerPrimary":
-                originType = Types.PRIMARY;
-                break;
-            case "TowerSpecial":
-                originType = Types.SPECIAL;
-                break;
-            case "TowerSecondary":
-                originType = Types.SECONDARY;
-                break;
-            case "TowerStun":
-                originType = Types.STUN;
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown GameActor origin: " + prototype.name);
-        }
+        currentDirection = Vector2.Zero;
+        previousDirection = Vector2.Zero;
+        currentPosition = new Vector2(getX(), getY());
+        animator = new Animator<>();
     }
+
+    public abstract M getStateManager();
 
     @Override
     public void act(float delta) {
         super.act(delta);
-        if (!DDGame.PAUSE) {
-            this.setDebug(DDGame.DEBUG);
-        }
+        if (!DDGame.PAUSE) this.setDebug(DDGame.DEBUG);
     }
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         return this.getClass().getSimpleName() + "#" + this.hashCode();
     }
 
@@ -70,10 +51,6 @@ public class GameActor extends Actor {
 
     public float getAnimationHeight() {
         return animationHeight;
-    }
-
-    public Types getOriginType() {
-        return originType;
     }
 
     public Vector2 getCurrentPosition() {
@@ -100,8 +77,29 @@ public class GameActor extends Actor {
         this.updateIterationCount += updateIterationCount;
     }
 
-    public enum Types  {
-        WARRIOR, SUMMONER, SOLDIER, SOLDIER_ARMORED, RUNNER,
-        STUN,SECONDARY,PRIMARY,SPECIAL
+    public Path.Types getCurrentDirectionType() {
+        return currentDirectionType;
+    }
+
+    public Vector2 getCurrentDirection() {
+        return currentDirection;
+    }
+
+    public void setCurrentDirection(Vector2 currentDirection) {
+        this.currentDirection = currentDirection;
+        this.previousDirection = Path.opposite(currentDirection);
+        this.currentDirectionType = Path.getType(currentDirection);
+        this.previousDirectionType = Path.getType(this.previousDirection);
+    }
+
+    public void setPreviousDirection(Vector2 previousDirection) {
+        this.previousDirection = previousDirection;
+        this.currentDirection = Path.opposite(previousDirection);
+        this.previousDirectionType = Path.getType(previousDirection);
+        this.currentDirectionType = Path.getType(this.currentDirection);
+    }
+
+    public Animator<T1, T2> getAnimator() {
+        return animator;
     }
 }

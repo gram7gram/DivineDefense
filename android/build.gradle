@@ -40,7 +40,7 @@ tasks.withType(com.android.build.gradle.tasks.PackageApplication) { pkgTask ->
 }
 // called every time gradle gets executed, takes the native dependencies of
 // the natives configuration, and extracts them to the proper libs/ folders
-// so they get packed with the APK.
+// so they getPool packed with the APK.
 task copyAndroidNatives() {
     file("libs/armeabi/").mkdirs();
     file("libs/armeabi-v7a/").mkdirs();
@@ -82,7 +82,7 @@ task run(type: Exec) {
     commandLine "$adb", 'shell', 'am', 'start', '-n', 'ua.gram.android.AndroidLauncher'
 }
 
-// sets up the Android Idea project, using the old Ant based build.
+// sets up the Android Idea project, using the old Ant based buy.
 idea {
     module {
         sourceDirs += file("src");

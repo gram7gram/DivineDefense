@@ -1,10 +1,11 @@
 package ua.gram.model.state.enemy.level3;
 
 import com.badlogic.gdx.Gdx;
+
 import ua.gram.DDGame;
-import ua.gram.model.Animator;
 import ua.gram.model.actor.enemy.AbilityUser;
 import ua.gram.model.actor.enemy.Enemy;
+import ua.gram.model.enums.Types;
 import ua.gram.model.state.enemy.EnemyStateManager;
 
 /**
@@ -17,13 +18,18 @@ public class AbilityState extends Level3State {
     }
 
     @Override
+    protected Types.EnemyState getType() {
+        return Types.EnemyState.ABILITY;
+    }
+
+    @Override
     public void preManage(Enemy enemy) {
         check(enemy);
         AbilityUser user = (AbilityUser) enemy;
-        initAnimation(enemy, Animator.Types.ABILITY);
+        initAnimation(enemy);
         user.setAbilityExecuted(false);
         user.setAbilityDurationCount(0);
-        Gdx.app.log("INFO", enemy + " state: " + enemy.getAnimator().getType());
+        Gdx.app.log("INFO", enemy + " state: " + enemy.getAnimator().getPrimaryType());
     }
 
     @Override
