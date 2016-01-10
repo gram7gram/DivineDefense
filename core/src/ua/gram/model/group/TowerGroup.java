@@ -12,6 +12,7 @@ import ua.gram.controller.Log;
 import ua.gram.model.actor.misc.ProgressBar;
 import ua.gram.model.actor.tower.Tower;
 import ua.gram.model.actor.weapon.Weapon;
+import ua.gram.model.state.tower.TowerStateHolder;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -39,9 +40,19 @@ public class TowerGroup extends ActorGroup<Tower> {
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         if (!DDGame.PAUSE && DDGame.DEBUG) {
+            float x = root.getX() + root.getWidth() + 2;
+            float y = root.getY() + 2;
+
+            TowerStateHolder holder = root.getStateHolder();
             game.getInfo().draw(batch, this.getLayer().getZIndex() + ":" + this.getZIndex(),
                     root.getX() - 16,
                     root.getY() + root.getHeight());
+            game.getInfo().draw(batch, holder.getCurrentLevel1State() + "", x, y + 12);
+            game.getInfo().draw(batch, holder.getCurrentLevel2State() + "", x, y + 24);
+            game.getInfo().draw(batch, holder.getCurrentLevel3State() + "", x, y + 36);
+            game.getInfo().draw(batch, Math.round(root.getX()) + ":" + Math.round(root.getY()),
+                    root.getX() - 24,
+                    root.getY() - 8);
 
             batch.end();
 

@@ -10,5 +10,6 @@ public class TowerPrototype extends GameActorPrototype {
     public int cost;
     public int powerLevel;
     public int towerLevel;
+    public float buildDelay;
     public WeaponPrototype weapon;
 }

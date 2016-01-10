@@ -3,17 +3,21 @@ package ua.gram.model.state.tower;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import ua.gram.DDGame;
+import ua.gram.controller.Log;
 import ua.gram.model.actor.tower.Tower;
 import ua.gram.model.state.StateInterface;
 import ua.gram.model.state.StateManager;
 import ua.gram.model.state.tower.level1.ActiveState;
 import ua.gram.model.state.tower.level1.BuildingState;
 import ua.gram.model.state.tower.level1.InactiveState;
+import ua.gram.model.state.tower.level1.Level1State;
 import ua.gram.model.state.tower.level1.PreorderState;
 import ua.gram.model.state.tower.level1.SellingState;
 import ua.gram.model.state.tower.level2.AttackState;
 import ua.gram.model.state.tower.level2.IdleState;
+import ua.gram.model.state.tower.level2.Level2State;
 import ua.gram.model.state.tower.level2.SearchState;
+import ua.gram.model.state.tower.level3.Level3State;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -46,18 +50,62 @@ public class TowerStateManager extends StateManager<Tower> {
     }
 
     @Override
-    public void update(Tower actor, float delta) {
+    public void update(Tower tower, float delta) {
+        if (tower == null) return;
 
+        TowerStateHolder holder = tower.getStateHolder();
+
+        if (holder.getCurrentLevel1State() != null) try {
+            holder.getCurrentLevel1State().manage(tower, delta);
+        } catch (Exception e) {
+            Log.exc("Could not manage Level1State on " + tower, e);
+        }
+        if (holder.getCurrentLevel2State() != null) try {
+            holder.getCurrentLevel2State().manage(tower, delta);
+        } catch (Exception e) {
+            Log.exc("Could not manage Level2State on " + tower, e);
+        }
+        if (holder.getCurrentLevel3State() != null) try {
+            holder.getCurrentLevel3State().manage(tower, delta);
+        } catch (Exception e) {
+            Log.exc("Could not manage Level3State on " + tower, e);
+        }
     }
 
     @Override
-    public void persist(Tower actor, StateInterface newState, int level) throws NullPointerException, GdxRuntimeException {
-
+    public void persist(Tower tower, StateInterface<Tower> newState, int level) throws NullPointerException, GdxRuntimeException {
+        TowerStateHolder holder = tower.getStateHolder();
+        if (newState instanceof Level1State) {
+            holder.setCurrentLevel1State((Level1State) newState);
+        } else if (newState instanceof Level2State) {
+            holder.setCurrentLevel2State((Level2State) newState);
+        } else if (newState instanceof Level3State) {
+            holder.setCurrentLevel3State((Level3State) newState);
+        } else {
+            switch (level) {
+                case 1:
+                    holder.setCurrentLevel1State(null);
+                    break;
+                case 2:
+                    holder.setCurrentLevel2State(null);
+                    break;
+                case 3:
+                    holder.setCurrentLevel3State(null);
+                    break;
+                default:
+                    throw new NullPointerException("Unknown " + tower + " level " + level + " state");
+            }
+            Log.warn(tower + " level " + level + " state is set to NULL");
+        }
     }
 
     @Override
-    public void reset(Tower actor) {
-
+    public void reset(Tower tower) {
+        TowerStateHolder holder = tower.getStateHolder();
+        holder.setCurrentLevel1State(null);
+        holder.setCurrentLevel2State(null);
+        holder.setCurrentLevel3State(null);
+        Log.info(tower + " states have been reset");
     }
 
     public TowerState getActiveState() {

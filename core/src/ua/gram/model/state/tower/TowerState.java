@@ -1,6 +1,7 @@
 package ua.gram.model.state.tower;
 
 import ua.gram.DDGame;
+import ua.gram.controller.Log;
 import ua.gram.controller.enemy.StateSwapper;
 import ua.gram.controller.pool.animation.AnimationPool;
 import ua.gram.controller.tower.TowerAnimationProvider;
@@ -21,6 +22,7 @@ public abstract class TowerState extends AbstractState<Tower> {
     public TowerState(DDGame game) {
         super(game);
         stateSwapper = new StateSwapper<>();
+        Log.info("Tower " + this.getClass().getSimpleName() + " state is OK");
     }
 
     public void initAnimation(Tower tower) {

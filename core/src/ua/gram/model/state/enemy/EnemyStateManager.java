@@ -107,7 +107,7 @@ public final class EnemyStateManager extends StateManager<Enemy> {
     }
 
     @Override
-    public void persist(Enemy enemy, StateInterface newState, int level) throws NullPointerException, GdxRuntimeException {
+    public void persist(Enemy enemy, StateInterface<Enemy> newState, int level) throws NullPointerException, GdxRuntimeException {
         EnemyStateHolder holder = enemy.getStateHolder();
         if (newState instanceof Level1State) {
             holder.setCurrentLevel1State((Level1State) newState);

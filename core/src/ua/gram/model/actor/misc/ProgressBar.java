@@ -6,8 +6,10 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
+
 import ua.gram.DDGame;
 import ua.gram.model.actor.tower.Tower;
+import ua.gram.model.state.tower.level1.BuildingState;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -34,8 +36,8 @@ public class ProgressBar extends Actor {
     @Override
     public void act(float delta) {
         super.act(delta);
-        if (!DDGame.PAUSE && tower.isBuilding) {
-            this.setVisible(tower.countBuilding <= tower.build_delay);
+        if (!DDGame.PAUSE && tower.getStateHolder().getCurrentLevel1State() instanceof BuildingState) {
+            this.setVisible(tower.buildCount <= tower.getPrototype().buildDelay);
             if (!this.isVisible()) {
                 this.remove();
             }
@@ -45,8 +47,10 @@ public class ProgressBar extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        if (this.isVisible() && tower.isBuilding) {
-            progressBar.draw(batch, this.getX(), this.getY(), (tower.countBuilding / tower.build_delay) * maxWidth, this.getHeight());
+        if (this.isVisible() && tower.getStateHolder().getCurrentLevel1State() instanceof BuildingState) {
+            progressBar.draw(batch, this.getX(), this.getY(),
+                    (tower.buildCount / tower.getPrototype().buildDelay) * maxWidth,
+                    this.getHeight());
         }
     }
 }

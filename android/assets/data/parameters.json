@@ -1,8 +1,5 @@
 {
   "config": {
-    "logo128": "logo_min128.png",
-    "logo32": "logo_min32.png",
-    "logo16": "logo_min16.png",
     "reloadTextures": false,
     "texturePacker": {
       "config": {
@@ -58,7 +55,10 @@
       "useAccelerometer": false,
       "useCompass": false,
       "hideStatusBar": true
-    }
+    },
+    "logo128": "logo_min128.png",
+    "logo32": "logo_min32.png",
+    "logo16": "logo_min16.png"
   },
   "parameters": {
     "debugging": true,
@@ -327,6 +327,7 @@
       "name": "TowerPrimary",
       "towerLevel": 1,
       "powerLevel": 1,
+      "buildDelay": 2,
       "damage": 10,
       "range": 1.3,
       "rate": 1,
@@ -360,6 +361,7 @@
       "name": "TowerSecondary",
       "towerLevel": 1,
       "powerLevel": 1,
+      "buildDelay": 2,
       "damage": 5,
       "range": 1.3,
       "rate": 1,
@@ -378,6 +380,7 @@
       "name": "TowerSpecial",
       "towerLevel": 1,
       "powerLevel": 1,
+      "buildDelay": 2,
       "damage": 5,
       "range": 2,
       "rate": 0.5,
@@ -396,6 +399,7 @@
       "name": "TowerStun",
       "towerLevel": 1,
       "powerLevel": 1,
+      "buildDelay": 2,
       "damage": 1,
       "range": 1,
       "rate": 0.5,

@@ -8,6 +8,7 @@ import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.model.actor.tower.Tower;
 import ua.gram.model.enums.Types;
 import ua.gram.model.group.TowerGroup;
+import ua.gram.model.state.tower.TowerStateManager;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -29,28 +30,36 @@ public final class BuildingState extends ActiveState {
         tower.remove();
         game.getPlayer().chargeCoins(tower.getCost());
         tower.setOrigin(tower.getX() + 20, tower.getY() + 42);
-        tower.isBuilding = true;
         tower.setDefaultStrategy();
         GameBattleStage battleStage = tower.getTowerShop().getStageBattle();
         TowerGroup towerGroup = new TowerGroup(game, tower);
         towerGroup.setVisible(true);
         battleStage.updateZIndexes(towerGroup);
         battleStage.addTowerPosition(tower);
-
         Log.info(tower + " is building...");
     }
 
     @Override
     public void manage(Tower tower, float delta) {
         super.manage(tower, delta);
-        tower.setTouchable(Touchable.disabled);
-        tower.isBuilding = true;
+        if (tower.buildCount >= tower.getPrototype().buildDelay) {
+            tower.buildCount = 0;
+            tower.setTouchable(Touchable.enabled);
+            tower.getWeapon().setSource(tower.getParent());
+            Log.info(tower + " is builded");
+            TowerStateManager manager = tower.getTowerShop().getStateManager();
+            manager.swap(tower, tower.getStateHolder().getCurrentLevel1State(), manager.getActiveState(), 1);
+            manager.swap(tower, tower.getStateHolder().getCurrentLevel2State(), manager.getSearchState(), 2);
+        } else {
+            tower.setTouchable(Touchable.disabled);
+            tower.buildCount += delta;
+        }
 
     }
 
     @Override
     public void postManage(Tower tower) {
         super.postManage(tower);
-        tower.isBuilding = false;
+        tower.buildCount = 0;
     }
 }

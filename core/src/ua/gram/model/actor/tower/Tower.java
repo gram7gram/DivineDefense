@@ -5,12 +5,9 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.utils.Pool;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import ua.gram.DDGame;
 import ua.gram.controller.Log;
@@ -38,41 +35,26 @@ import ua.gram.model.strategy.tower.TowerStrategy;
 public abstract class Tower extends GameActor<Types.TowerState, Types.TowerLevels, TowerStateManager>
         implements Pool.Poolable {
 
-    //    public static final byte MAX_POWER_LEVEL = 4;
     public static final float SELL_RATIO = .6f;
     public static final byte MAX_TOWER_LEVEL = 4;
-    public final float build_delay = 2;
     protected final TowerPrototype prototype;
     protected final TowerStateHolder stateHolder;
-    public boolean isActive;
-    public boolean isBuilding;
-    public float countBuilding = 0;
+    public float buildCount = 0;
+    public float attackCount = 0;
     protected DDGame game;
     protected TextureRegion currentFrame;
     protected TowerShop towerShop;
     protected Weapon weapon;
-    private float damage;
-    private float range;
-    private float rate;
-    private int cost;
-    private int tower_lvl;
+    private List<EnemyGroup> victims;
     private TowerStrategy currentTowerStrategy;
     private float stateTime;
-    private float count = 0;
-//    private int power_lvl;
+    private int tower_lvl;
 
     public Tower(DDGame game, TowerPrototype prototype) {
         super(prototype);
         this.game = game;
         this.prototype = prototype;
         this.tower_lvl = prototype.towerLevel;
-        this.damage = prototype.damage;
-        this.range = prototype.range;
-        this.rate = prototype.rate;
-        this.cost = prototype.cost;
-        isActive = false;
-        isBuilding = false;
-//        this.power_lvl = prototype.powerLevel;
         stateHolder = new TowerStateHolder();
     }
 
@@ -91,113 +73,26 @@ public abstract class Tower extends GameActor<Types.TowerState, Types.TowerLevel
         return (TowerGroup) super.getParent();
     }
 
-    /**
-     * TowerState logic is here.
-     * TODO Make TowerStateManager
-     */
     @Override
     public void act(float delta) {
         super.act(delta);
         if (!DDGame.PAUSE) {
             update(delta);
-            if (isBuilding) {
-                if (countBuilding >= build_delay) {
-                    countBuilding = 0;
-                    isBuilding = false;
-                    isActive = true;
-                    this.setTouchable(Touchable.enabled);
-                    weapon.setSource(this.getParent());
-                    Log.info(this + " is builded");
-                } else {
-                    countBuilding += delta;
-                }
-            } else if (isActive) {
-                if (count >= this.rate) {
-                    count = 0;
-                    ArrayList<EnemyGroup> targets = scan();
-                    if (!targets.isEmpty()) {
-                        List<EnemyGroup> victims = currentTowerStrategy.chooseVictims(this, targets);
-                        if (victims != null && !victims.isEmpty()) {
-                            for (EnemyGroup victimGroup : victims) {
-                                Enemy victim = victimGroup.getRootActor();
-                                if (isInRange(victim)) {
-                                    preAttack(victim);
-                                    weapon.setTarget(victimGroup);
-                                    weapon.setVisible(true);
-                                    attack(victim);
-                                } else {
-                                    looseTarget(victim);
-                                    weapon.reset();
-                                }
-                            }
-                        } else {
-                            weapon.reset();
-                        }
-                    } else {
-                        weapon.reset();
-                    }
-                } else {
-                    count += delta;
-                }
-            }
+            getStateManager().update(this, delta);
         }
     }
 
-    private void looseTarget(Enemy victim) {
-        postAttack(victim);
-        victim.isAttacked = false;
-        weapon.reset();
-    }
-
-
     public abstract void update(float delta);
-
-    /**
-     * Perform TowerState specific preparations before attack.
-     *
-     * @param victim the enemy to attack
-     */
-    public void preAttack(Enemy victim) {
-    }
-
-    /**
-     * Perform towerGroup-specific attack.
-     *
-     * @param victim the enemy to attack
-     */
-    public void attack(Enemy victim) {
-        victim.isAttacked = true;
-        victim.damage(this.damage);
-    }
-
-    /**
-     * Perform TowerState specific actions after attack.
-     *
-     * @param victim the enemy attacked
-     */
-    public void postAttack(Enemy victim) {
-    }
 
     public abstract WeaponPrototype getWeaponPrototype();
 
     public abstract Weapon getWeapon();
 
-    /**
-     * Grab Enemies in range.
-     *
-     * @return list of all Enemies in range, whose health is not zero.
-     */
-    private ArrayList<EnemyGroup> scan() {
-        return (ArrayList<EnemyGroup>) getStage().getEnemyGroupsOnMap().stream()
-                .filter(enemy -> isInRange(enemy.getRootActor()) && enemy.getRootActor().health > 0)
-                .collect(Collectors.toList());
-    }
-
-    private boolean isInRange(Enemy enemy) {
+    public boolean isInRange(Enemy enemy) {
         Vector2 enemyPos = new Vector2(enemy.getOriginX(), enemy.getOriginY());
         Vector2 towerPos = new Vector2(this.getOriginX(), this.getOriginY());
         float distance = enemyPos.dst(towerPos);
-        return distance <= this.range * DDGame.TILE_HEIGHT * 1.5;
+        return distance <= prototype.range * DDGame.TILE_HEIGHT * 1.5;
     }
 
     /**
@@ -214,24 +109,10 @@ public abstract class Tower extends GameActor<Types.TowerState, Types.TowerLevel
 //        Log.info(this + " is upgraded to " + tower_lvl + " level");
     }
 
-//    /**
-//     * TODO Set corresponding type.
-//     *
-//     * @param type desired animation type
-//     */
-//    public void changeAnimation(Types.TowerState type) {
-//        Log.info(this + " animation changed to: " + tower_lvl + "_" + type.name());
-//        type = Types.TowerState.IDLE;
-//        this.setLevelAnimationContainer(tower_lvl);
-//        this.setAnimation(container.getAnimation(type));
-//    }
-
     @Override
     public void reset() {
         currentTowerStrategy = towerShop != null ? towerShop.getStrategyManager().getDefault() : null;
         tower_lvl = 1;
-        isActive = false;
-        isBuilding = false;
         this.setPosition(0, 0);
         Log.info(this + " was reset");
     }
@@ -242,7 +123,7 @@ public abstract class Tower extends GameActor<Types.TowerState, Types.TowerLevel
     }
 
     public int getCost() {
-        return cost;
+        return prototype.cost;
     }
 
     public int getTowerLevel() {
@@ -266,10 +147,6 @@ public abstract class Tower extends GameActor<Types.TowerState, Types.TowerLevel
 
     public TowerPrototype getPrototype() {
         return prototype;
-    }
-
-    public void setCurrentTowerStrategy(TowerStrategy currentTowerStrategy) {
-        this.currentTowerStrategy = currentTowerStrategy;
     }
 
     public void setDefaultStrategy() {
@@ -296,5 +173,26 @@ public abstract class Tower extends GameActor<Types.TowerState, Types.TowerLevel
 
     public TowerStateHolder getStateHolder() {
         return stateHolder;
+    }
+
+    public List<EnemyGroup> getVictims() {
+        return victims;
+    }
+
+    public void setVictims(List<EnemyGroup> victims) {
+        this.victims = victims;
+    }
+
+    public TowerStrategy getCurrentTowerStrategy() {
+        return currentTowerStrategy;
+    }
+
+    public void setCurrentTowerStrategy(TowerStrategy currentTowerStrategy) {
+        this.currentTowerStrategy = currentTowerStrategy;
+    }
+
+    public void resetVictims() {
+        victims.clear();
+        weapon.reset();
     }
 }

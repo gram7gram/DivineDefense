@@ -23,6 +23,10 @@ public class AbstractState<A extends GameActor> implements StateInterface<A> {
         return this.getClass().getSimpleName();
     }
 
+    public String name() {
+        return this.getClass().getSimpleName();
+    }
+
     @Override
     public void preManage(A actor) {
 

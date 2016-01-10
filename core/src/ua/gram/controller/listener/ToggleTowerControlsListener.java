@@ -1,16 +1,17 @@
 package ua.gram.controller.listener;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
+import ua.gram.controller.Log;
 import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.controller.stage.GameUIStage;
 import ua.gram.model.actor.tower.Tower;
 import ua.gram.model.group.Layer;
 import ua.gram.model.group.TowerControlsGroup;
 import ua.gram.model.group.TowerGroup;
+import ua.gram.model.state.tower.level1.ActiveState;
 
 /**
  * Handles towerGroup controls: if they are visible and player
@@ -44,15 +45,15 @@ public class ToggleTowerControlsListener extends ClickListener {
                                     && !contains(controls.getUpgradeBut(), x, y)
                                     && !contains(controls.getSellBut(), x, y)) {
                                 controls.setVisible(false);
-                                Gdx.app.log("INFO", "Controls are hidden by stage");
+                                Log.info("Controls are hidden by stage");
                                 return;
                             } else if (!controls.isVisible()
                                     && contains(tower, x, y)
-                                    && tower.isActive) {
+                                    && tower.getStateHolder().getCurrentLevel1State() instanceof ActiveState) {
                                 controls.setGroup(towerGroup);
                                 controls.setVisible(true);
                                 controls.toFront();
-                                Gdx.app.log("INFO", tower + " controls are "
+                                Log.info(tower + " controls are "
                                         + (controls.isVisible() ? "" : "in") + "visible");
                                 return;
                             }

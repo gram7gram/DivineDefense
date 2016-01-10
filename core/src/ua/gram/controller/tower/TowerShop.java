@@ -79,7 +79,9 @@ public class TowerShop implements ShopInterface<Tower> {
         tower.setPosition(x, y);
         tower.setTowerShop(this);
         stateManager.init(tower);
-        stateManager.swap(tower, null, stateManager.getPreorderState(), 1);
+        stateManager.swap(tower,
+                tower.getStateHolder().getCurrentLevel1State(),
+                stateManager.getPreorderState(), 1);
         battleStage.addActor(tower);
         return tower;
     }
@@ -96,28 +98,29 @@ public class TowerShop implements ShopInterface<Tower> {
         stateManager.swap(tower,
                 tower.getStateHolder().getCurrentLevel1State(),
                 stateManager.getBuildingState(), 1);
+        Log.info(tower + " is bought from TowerShop");
     }
 
     public void sell(Tower tower) {
         stateManager.swap(tower,
                 tower.getStateHolder().getCurrentLevel1State(),
                 stateManager.getSellingState(), 1);
+        Log.info(tower + " is returned to TowerShop");
     }
 
-    /**
-     * Get pool for corresponding towerGroup Class.
-     *
-     * @param type descendant of the TowerState
-     * @return corresponding Pool
-     */
-    public Pool<Tower> getPool(String type) {
-        return identityMap.get(type);
+    public Pool<Tower> getPool(TowerPrototype prototype) {
+        return identityMap.get(prototype);
     }
 
     @Override
     public void refund(Tower tower) {
-        this.getPool(tower.getName()).free(tower);
-        Log.info(tower + " is set free");
+        Pool<Tower> pool = this.getPool(tower.getPrototype());
+        if (pool == null) {
+            Log.crit("Missing prototype in identity map");
+        } else {
+            pool.free(tower);
+            Log.info(tower + " is set free");
+        }
     }
 
     public TowerShopGroup getTowerShopGroup() {

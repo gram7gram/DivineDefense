@@ -22,10 +22,10 @@ public class PreorderState extends InactiveState {
     }
 
     @Override
-    public void preManage(Tower actor) {
-        super.preManage(actor);
-        actor.setVisible(true);
-        actor.setTouchable(Touchable.disabled);
-        Log.info(actor + " state: " + getType());
+    public void preManage(Tower tower) {
+        super.preManage(tower);
+        tower.setVisible(true);
+        tower.setTouchable(Touchable.disabled);
+        Log.info(tower + " state: " + this.name());
     }
 }
