@@ -3,6 +3,9 @@ package ua.gram.controller.pool.animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.EnumMap;
 import java.util.EnumSet;
 
@@ -44,6 +47,7 @@ public class TowerAnimationController implements AnimationControllerInterface<To
     }
 
     @Override
+    @NotNull
     public TextureRegion[] getAnimationRegion(TowerPrototype prototype,
                                               Types.TowerState type,
                                               Types.TowerLevels level) {
@@ -71,16 +75,20 @@ public class TowerAnimationController implements AnimationControllerInterface<To
     }
 
     @Override
+    @Contract("null, _ -> fail")
+    @NotNull
     public AnimationPool get(Types.TowerState type, Types.TowerLevels lvl) {
         return this.getPool(type).get(lvl);
     }
 
+    @Contract("null -> fail")
+    @NotNull("Identity map does not contain pool for provided type")
     private TowerLevelAnimationPool getPool(Types.TowerState type) {
         if (identityMap.isEmpty())
             throw new NullPointerException("Put some pools to indentity map first to use getPool()");
         TowerLevelAnimationPool pool = identityMap.get(type);
-        if (pool == null)
-            throw new NullPointerException("Identity map does not contain pool for type: " + type.name());
+//        if (pool == null)
+//            throw new NullPointerException("Identity map does not contain pool for type: " + type);
         return pool;
     }
 }

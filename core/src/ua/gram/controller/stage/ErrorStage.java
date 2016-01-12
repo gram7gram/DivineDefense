@@ -6,9 +6,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import ua.gram.DDGame;
 
 import java.util.Arrays;
+
+import ua.gram.DDGame;
+import ua.gram.controller.Log;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -19,7 +21,7 @@ public class ErrorStage extends AbstractStage {
         super(game);
         this.setDebugAll(DDGame.DEBUG);
         byte gap = 5;
-        Gdx.app.error("ERROR", e.getMessage() + "\n" + Arrays.toString(e.getStackTrace()));
+        Log.exc(error, e);
         Label errorLabel = new Label("ERROR", game.getResources().getSkin(), "header1altwhite");
         errorLabel.setPosition((DDGame.WORLD_WIDTH - errorLabel.getWidth()) / 2f, DDGame.WORLD_HEIGHT / 2f + 20);
         errorLabel.setVisible(true);

@@ -1,6 +1,6 @@
 package ua.gram.model;
 
-import com.badlogic.gdx.Gdx;
+import ua.gram.controller.Log;
 import ua.gram.model.prototype.WavePrototype;
 
 /**
@@ -18,18 +18,18 @@ public class Wave {
         isStarted = false;
         enemies = prototype.enemies;
         index = prototype.index;
-        Gdx.app.log("INFO", "Wave is OK");
+        Log.info("Wave is OK");
     }
 
     /**
      * Set flags for the finish wave. If wave was the last - the level is cleared.
      */
     public void finish() {
-        Gdx.app.log("INFO", "Wave " + (index + 1) + "/" + level.getMaxWaves() + " is finished");
+        Log.info("Wave " + index + "/" + level.getMaxWaves() + " is finished");
         isStarted = false;
         if (index == level.getMaxWaves()) {
             level.isCleared = true;
-            Gdx.app.log("INFO", "Level " + level.getCurrentLevel() + " is cleared");
+            Log.info("Level " + level.getCurrentLevel() + " is cleared");
         }
     }
 

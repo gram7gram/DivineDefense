@@ -10,6 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import ua.gram.DDGame;
 import ua.gram.controller.Log;
 import ua.gram.controller.Resources;
+import ua.gram.model.actor.enemy.Enemy;
+import ua.gram.model.actor.tower.Tower;
 import ua.gram.model.group.EnemyGroup;
 import ua.gram.model.group.TowerGroup;
 import ua.gram.model.prototype.WeaponPrototype;
@@ -24,10 +26,10 @@ public abstract class Weapon extends Actor {
     protected final WeaponPrototype prototype;
     protected TowerGroup towerGroup;
     protected EnemyGroup targetGroup;
-    protected float duration;
-    protected Animation animation;
-    protected float stateTime;
     protected TextureRegion currentFrame;
+    protected Animation animation;
+    protected float duration;
+    protected float stateTime;
     protected float scaleX;
     protected float scaleY;
 
@@ -71,7 +73,9 @@ public abstract class Weapon extends Actor {
 
                 update(delta);
                 this.setVisible(true);
-            } else reset();
+            } else if (targetGroup != null) {
+                reset();
+            }
         }
     }
 
@@ -107,8 +111,13 @@ public abstract class Weapon extends Actor {
             currentFrame = animation.getKeyFrame(stateTime, true);
             stateTime += Gdx.graphics.getDeltaTime();
         }
-        if (currentFrame != null && !isOutOfBounds()) batch.draw(currentFrame,
-                getX(), getY(), getWidth() * scaleX, getHeight() * scaleY);
+        if (currentFrame != null && !isOutOfBounds())
+            batch.draw(
+                    currentFrame,
+                    getX(),
+                    getY(),
+                    getWidth() * scaleX,
+                    getHeight() * scaleY);
     }
 
     /**
@@ -119,7 +128,7 @@ public abstract class Weapon extends Actor {
     protected abstract Animation createAnimation(Skin skin);
 
     public boolean isFinished() {
-        return animation.isAnimationFinished(stateTime);
+        return stateTime == 0 || animation.isAnimationFinished(stateTime);
     }
 
     /**
@@ -153,5 +162,35 @@ public abstract class Weapon extends Actor {
     public void scale(float x, float y) {
         this.scaleX = x;
         this.scaleY = y;
+    }
+
+    /**
+     * Perform TowerState specific preparations before attack.
+     *
+     * @param victim the enemy to attack
+     */
+    public void preAttack(Tower tower, Enemy victim) {
+        Weapon weapon = tower.getWeapon();
+        weapon.setTarget(victim.getParent());
+        weapon.setVisible(true);
+    }
+
+    /**
+     * Perform towerGroup-specific attack.
+     *
+     * @param victim the enemy to attack
+     */
+    public void attack(Tower tower, Enemy victim) {
+        victim.isAttacked = true;
+        victim.damage(tower.getPrototype().damage);
+    }
+
+    /**
+     * Perform TowerState specific actions after attack.
+     *
+     * @param victim the enemy attacked
+     */
+    public void postAttack(Tower tower, Enemy victim) {
+        victim.isAttacked = false;
     }
 }

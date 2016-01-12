@@ -1,5 +1,7 @@
 package ua.gram.model.state.tower.level2;
 
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+
 import java.util.List;
 
 import ua.gram.DDGame;
@@ -34,24 +36,30 @@ public class AttackState extends Level2State {
     @Override
     public void manage(Tower tower, float delta) {
         super.manage(tower, delta);
-        if (tower.attackCount >= tower.getPrototype().rate) {
+        Weapon weapon = tower.getWeapon();
+        if (tower.attackCount >= tower.getPrototype().rate && weapon.isFinished()) {
             List<EnemyGroup> victims = tower.getVictims();
-            Weapon weapon = tower.getWeapon();
             if (victims != null && !victims.isEmpty()) {
                 for (EnemyGroup victimGroup : victims) {
                     Enemy victim = victimGroup.getRootActor();
                     if (tower.isInRange(victim)) {
-                        preAttack(tower, victim);
-                        attack(tower, victim);
-                    } else {
-                        postAttack(tower, victim);
-                        weapon.reset();
-                        TowerStateManager manager = tower.getTowerShop().getStateManager();
-                        manager.swap(tower,
-                                tower.getStateHolder().getCurrentLevel2State(),
-                                manager.getSearchState(), 2);
+                        weapon.addAction(
+                                Actions.sequence(
+                                        Actions.run(() -> weapon.preAttack(tower, victim)),
+                                        Actions.run(() -> weapon.attack(tower, victim))
+                                )
+                        );
                     }
+
+                    weapon.addAction(
+                            Actions.run(() -> weapon.postAttack(tower, victim))
+                    );
                 }
+
+                TowerStateManager manager = tower.getTowerShop().getStateManager();
+                manager.swap(tower,
+                        tower.getStateHolder().getCurrentLevel2State(),
+                        manager.getSearchState(), 2);
             } else {
                 tower.resetVictims();
             }
@@ -67,34 +75,4 @@ public class AttackState extends Level2State {
         tower.attackCount = 0;
     }
 
-
-    /**
-     * Perform TowerState specific preparations before attack.
-     *
-     * @param victim the enemy to attack
-     */
-    private void preAttack(Tower tower, Enemy victim) {
-        Weapon weapon = tower.getWeapon();
-        weapon.setTarget(victim.getParent());
-        weapon.setVisible(true);
-    }
-
-    /**
-     * Perform towerGroup-specific attack.
-     *
-     * @param victim the enemy to attack
-     */
-    private void attack(Tower tower, Enemy victim) {
-        victim.isAttacked = true;
-        victim.damage(tower.getPrototype().damage);
-    }
-
-    /**
-     * Perform TowerState specific actions after attack.
-     *
-     * @param victim the enemy attacked
-     */
-    private void postAttack(Tower tower, Enemy victim) {
-        victim.isAttacked = false;
-    }
 }

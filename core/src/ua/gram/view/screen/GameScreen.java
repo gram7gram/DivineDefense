@@ -4,7 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+
 import ua.gram.DDGame;
+import ua.gram.controller.Log;
 import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.controller.stage.GameUIStage;
 import ua.gram.model.Level;
@@ -32,12 +34,12 @@ public class GameScreen extends AbstractScreen {
         stage_ui = new GameUIStage(game, level);
         stage_battle.setUIStage(stage_ui);
         stage_ui.setBattleStage(stage_battle);
-        Gdx.app.log("INFO", "GameScreen is OK");
+        Log.info("GameScreen is OK");
     }
 
     @Override
     public void show() {
-        Gdx.app.log("INFO", "Screen set to GameScreen");
+        Log.info("Screen set to GameScreen");
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(stage_ui);
         inputMultiplexer.addProcessor(stage_battle);

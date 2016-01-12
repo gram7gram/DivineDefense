@@ -1,10 +1,10 @@
 package ua.gram.model.group;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
 import ua.gram.DDGame;
+import ua.gram.controller.Log;
 import ua.gram.controller.tower.TowerShop;
 import ua.gram.model.actor.market.TowerShopItem;
 import ua.gram.model.prototype.TowerPrototype;
@@ -37,12 +37,14 @@ public class TowerShopGroup extends Group {
             item.setIndex(i);
             ++i;
         }
-        Gdx.app.log("INFO", "TowerShopGroup is OK");
+        Log.info("TowerShopGroup is OK");
     }
 
     @Override
     public void act(float delta) {
         super.act(delta);
-        if (!DDGame.PAUSE) this.setDebug(DDGame.DEBUG);
+        if (!DDGame.PAUSE) {
+            this.setDebug(DDGame.DEBUG);
+        }
     }
 }

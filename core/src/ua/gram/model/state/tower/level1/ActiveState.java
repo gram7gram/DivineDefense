@@ -14,7 +14,7 @@ public class ActiveState extends Level1State {
 
     @Override
     protected Types.TowerState getType() {
-        return null;
+        return Types.TowerState.IDLE;
     }
 
 }

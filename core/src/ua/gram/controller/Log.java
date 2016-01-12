@@ -33,7 +33,7 @@ public class Log {
      * Log exceptions
      */
     public synchronized static void exc(String msg, Exception e) {
-        msg += "\nCLASS:\t" + e.getClass().getSimpleName();
+        msg += "\r\nCLASS:\t" + e.getClass().getSimpleName();
         msg += "\nMSG:\t" + e.getMessage();
         msg += "\nTRACE:\t" + Arrays.toString(e.getStackTrace()) + "\r\n";
         Gdx.app.error("EXC",

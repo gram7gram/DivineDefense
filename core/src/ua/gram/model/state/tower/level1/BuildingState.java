@@ -36,7 +36,7 @@ public final class BuildingState extends ActiveState {
         towerGroup.setVisible(true);
         battleStage.updateZIndexes(towerGroup);
         battleStage.addTowerPosition(tower);
-        Log.info(tower + " is building...");
+        Log.info(tower + " is being built...");
     }
 
     @Override
@@ -46,7 +46,7 @@ public final class BuildingState extends ActiveState {
             tower.buildCount = 0;
             tower.setTouchable(Touchable.enabled);
             tower.getWeapon().setSource(tower.getParent());
-            Log.info(tower + " is builded");
+            Log.info(tower + " is built");
             TowerStateManager manager = tower.getTowerShop().getStateManager();
             manager.swap(tower, tower.getStateHolder().getCurrentLevel1State(), manager.getActiveState(), 1);
             manager.swap(tower, tower.getStateHolder().getCurrentLevel2State(), manager.getSearchState(), 2);

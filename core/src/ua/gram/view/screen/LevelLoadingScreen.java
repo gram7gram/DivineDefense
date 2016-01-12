@@ -1,6 +1,7 @@
 package ua.gram.view.screen;
 
 import com.badlogic.gdx.Gdx;
+
 import ua.gram.DDGame;
 import ua.gram.controller.Resources;
 import ua.gram.model.Level;
@@ -39,7 +40,7 @@ public class LevelLoadingScreen extends AbstractLoadingScreen {
 
     @Override
     public void doAction() throws Exception {
-        stage_ui.update(progress);
+        uiStage.update(progress);
         Level level = new Level(game, prototype);
         this.getGame().setScreen(new GameScreen(this.getGame(), level));
     }

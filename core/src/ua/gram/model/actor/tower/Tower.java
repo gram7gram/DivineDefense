@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ua.gram.DDGame;
@@ -56,6 +57,7 @@ public abstract class Tower extends GameActor<Types.TowerState, Types.TowerLevel
         this.prototype = prototype;
         this.tower_lvl = prototype.towerLevel;
         stateHolder = new TowerStateHolder();
+        victims = new ArrayList<>(10);
     }
 
     @Override
@@ -192,7 +194,7 @@ public abstract class Tower extends GameActor<Types.TowerState, Types.TowerLevel
     }
 
     public void resetVictims() {
-        victims.clear();
-        weapon.reset();
+        if (!victims.isEmpty()) victims.clear();
+        if (weapon.isVisible()) weapon.reset();
     }
 }

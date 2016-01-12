@@ -26,20 +26,25 @@ public class SearchState extends IdleState {
 
     @Override
     public void manage(Tower tower, float delta) {
-        List<EnemyGroup> victims = tower.getStage().getEnemyGroupsOnMap().stream()
-                .filter(group -> tower.isInRange(group.getRootActor())
-                        && group.getRootActor().health > 0)
-                .collect(Collectors.toList());
-        if (victims.isEmpty()) tower.resetVictims();
-        else {
-            List<EnemyGroup> filteredVictims = tower.getCurrentTowerStrategy().chooseVictims(tower, victims);
-            if (!filteredVictims.isEmpty()) {
-                tower.setVictims(filteredVictims);
-                TowerStateManager manager = tower.getTowerShop().getStateManager();
-                manager.swap(tower,
-                        tower.getStateHolder().getCurrentLevel2State(),
-                        manager.getAttackState(), 2);
-            } else tower.resetVictims();
+        if (tower.attackCount >= tower.getPrototype().rate) {
+            tower.attackCount = 0;
+            List<EnemyGroup> victims = tower.getStage().getEnemyGroupsOnMap().stream()
+                    .filter(group -> tower.isInRange(group.getRootActor())
+                            && group.getRootActor().health > 0)
+                    .collect(Collectors.toList());
+            if (victims.isEmpty()) tower.resetVictims();
+            else {
+                List<EnemyGroup> filteredVictims = tower.getCurrentTowerStrategy().chooseVictims(tower, victims);
+                if (!filteredVictims.isEmpty()) {
+                    tower.setVictims(filteredVictims);
+                    TowerStateManager manager = tower.getTowerShop().getStateManager();
+                    manager.swap(tower,
+                            tower.getStateHolder().getCurrentLevel2State(),
+                            manager.getAttackState(), 2);
+                } else tower.resetVictims();
+            }
+        } else {
+            tower.attackCount += delta;
         }
     }
 }

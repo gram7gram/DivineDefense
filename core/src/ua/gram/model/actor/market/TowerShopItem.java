@@ -2,6 +2,7 @@ package ua.gram.model.actor.market;
 
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -50,7 +51,16 @@ public class TowerShopItem extends Group {
         if (!DDGame.PAUSE && item.isVisible()) {
             int money = game.getPlayer().getCoins();
             int cost = Integer.parseInt(price.getText().toString());
+            Touchable touchBefore = item.getTouchable();
             item.setTouchable(money < cost ? Touchable.disabled : Touchable.enabled);
+            item.setDisabled(money < cost);
+            if (touchBefore != item.getTouchable())
+                item.addAction(
+                        Actions.parallel(
+                                Actions.moveBy(0, money < cost ? -20 : 20, .5f),
+                                Actions.alpha(money < cost ? 0.8f : 1, .5f)
+                        )
+                );
         }
     }
 
