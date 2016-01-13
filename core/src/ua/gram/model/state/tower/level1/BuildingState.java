@@ -27,16 +27,16 @@ public final class BuildingState extends ActiveState {
     @Override
     public void preManage(Tower tower) {
         super.preManage(tower);
-        tower.remove();
+        Log.info(tower + " is being built...");
         game.getPlayer().chargeCoins(tower.getCost());
         tower.setOrigin(tower.getX() + 20, tower.getY() + 42);
         tower.setDefaultStrategy();
         GameBattleStage battleStage = tower.getTowerShop().getStageBattle();
-        TowerGroup towerGroup = new TowerGroup(game, tower);
+        TowerGroup towerGroup = tower.getParent();
         towerGroup.setVisible(true);
         battleStage.updateZIndexes(towerGroup);
         battleStage.addTowerPosition(tower);
-        Log.info(tower + " is being built...");
+        Log.info(tower + " is built");
     }
 
     @Override

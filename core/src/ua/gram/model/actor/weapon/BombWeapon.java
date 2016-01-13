@@ -42,8 +42,9 @@ public class BombWeapon extends Weapon {
             this.setZIndex(0);
             towerGroup.getRootActor().setZIndex(1);
         } else {
-            if (currentLayer == null)
-                currentLayer = towerGroup.getRootActor().getStage().putOnLayer(this, towerGroup.getParent().getZIndex() + 1);
+            if (currentLayer == null && towerGroup.getLayer() != null)
+                currentLayer = towerGroup.getRootActor().getStage()
+                        .putOnLayer(this, towerGroup.getLayer().getZIndex() + 1);
         }
     }
 

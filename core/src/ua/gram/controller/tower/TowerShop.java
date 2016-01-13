@@ -16,6 +16,7 @@ import ua.gram.controller.stage.GameUIStage;
 import ua.gram.model.ShopInterface;
 import ua.gram.model.actor.tower.Tower;
 import ua.gram.model.group.TowerControlsGroup;
+import ua.gram.model.group.TowerGroup;
 import ua.gram.model.group.TowerShopGroup;
 import ua.gram.model.prototype.TowerPrototype;
 import ua.gram.model.state.tower.TowerStateManager;
@@ -26,7 +27,7 @@ import ua.gram.model.strategy.TowerStrategyManager;
  * Handles managing TowerStates, purchasing and refunding.
  * @author Gram <gram7gram@gmail.com>
  */
-public class TowerShop implements ShopInterface<Tower> {
+public class TowerShop implements ShopInterface<TowerGroup> {
 
     private final DDGame game;
     private final GameUIStage uiStage;
@@ -69,31 +70,37 @@ public class TowerShop implements ShopInterface<Tower> {
      * @param y    initial appear point
      * @return towerGroup, obtained from pool
      */
-    public Tower preorder(String type, float x, float y) {
+    public TowerGroup preorder(String type, float x, float y) {
         Optional<TowerPrototype> prototype = identityMap.keySet().stream()
                 .filter(proto -> Objects.equals(proto.name, type))
                 .findFirst();
-        if (!prototype.isPresent()) throw new NullPointerException("Couldn't buy tower: " + type);
+        if (!prototype.isPresent())
+            throw new NullPointerException("Couldn't preorder tower: " + type);
 
         Tower tower = identityMap.get(prototype.get()).obtain();
+        Log.info(type + " is going to be preordered from TowerShop...");
         tower.setPosition(x, y);
         tower.setTowerShop(this);
         stateManager.init(tower);
         stateManager.swap(tower,
                 tower.getStateHolder().getCurrentLevel1State(),
                 stateManager.getPreorderState(), 1);
-        battleStage.addActor(tower);
-        return tower;
+        TowerGroup group = new TowerGroup(game, tower);
+        battleStage.addActor(group);
+        Log.info(tower + " is preordered from TowerShop");
+        return group;
     }
 
     /**
      * Puts the towerGroup on the stage and charges towerGroup cost from player.
      *
-     * @param tower will be buy on the stage
+     * @param group will be put on the stage
      * @param x     x-axis of the towerGroup
      * @param y     y-axis of the towerGroup
      */
-    public void buy(Tower tower, float x, float y) {
+    public void buy(TowerGroup group, float x, float y) {
+        Tower tower = group.getRootActor();
+        Log.info(tower + " is going to be bought from TowerShop...");
         tower.setPosition(x, y);
         stateManager.swap(tower,
                 tower.getStateHolder().getCurrentLevel1State(),
@@ -101,11 +108,13 @@ public class TowerShop implements ShopInterface<Tower> {
         Log.info(tower + " is bought from TowerShop");
     }
 
-    public void sell(Tower tower) {
+    public void sell(TowerGroup group) {
+        Tower tower = group.getRootActor();
+        Log.info(tower + " is going to be sold to TowerShop...");
         stateManager.swap(tower,
                 tower.getStateHolder().getCurrentLevel1State(),
                 stateManager.getSellingState(), 1);
-        Log.info(tower + " is returned to TowerShop");
+        Log.info(tower + " is sold to TowerShop");
     }
 
     public Pool<Tower> getPool(TowerPrototype prototype) {
@@ -113,7 +122,8 @@ public class TowerShop implements ShopInterface<Tower> {
     }
 
     @Override
-    public void refund(Tower tower) {
+    public void refund(TowerGroup group) {
+        Tower tower = group.getRootActor();
         Pool<Tower> pool = this.getPool(tower.getPrototype());
         if (pool == null) {
             Log.crit("Missing prototype in identity map");

@@ -66,8 +66,12 @@ public abstract class Weapon extends Actor {
             if (!(isWeaponDurationExceeded(duration) && isFinished())) {
                 duration += delta;
 
-                int index1 = targetGroup.getRootActor().getStage() != null ? targetGroup.getParent().getZIndex() : -1;
-                int index2 = towerGroup.getRootActor().getStage() != null ? towerGroup.getParent().getZIndex() : -1;
+                int index1 = targetGroup.getRootActor().getStage() != null
+                        && targetGroup.getLayer() != null
+                        ? targetGroup.getLayer().getZIndex() : -1;
+                int index2 = towerGroup.getRootActor().getStage() != null
+                        && towerGroup.getLayer() != null
+                        ? towerGroup.getLayer().getZIndex() : -1;
 
                 handleIndexes(index1, index2);
 

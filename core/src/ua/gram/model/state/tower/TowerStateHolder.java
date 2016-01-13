@@ -9,9 +9,9 @@ import ua.gram.model.state.tower.level3.Level3State;
  */
 public class TowerStateHolder {
 
-    private Level1State currentLevel1State;
-    private Level2State currentLevel2State;
-    private Level3State currentLevel3State;
+    private volatile Level1State currentLevel1State;
+    private volatile Level2State currentLevel2State;
+    private volatile Level3State currentLevel3State;
 
     public Level1State getCurrentLevel1State() {
         return currentLevel1State;

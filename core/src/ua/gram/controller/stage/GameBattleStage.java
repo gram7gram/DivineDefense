@@ -87,9 +87,9 @@ public class GameBattleStage extends AbstractStage {
      * @param enemy enemy and it's parent group to swap
      */
     public void updateActorIndex(ActorGroup enemy) {
-        if (enemy.getParent() != null) {
+        if (enemy.getLayer() != null) {
             int index = getActorIndex(enemy);
-            if (index != enemy.getParent().getZIndex()) {
+            if (index != enemy.getLayer().getZIndex()) {
                 try {
                     Group indexGroup = indexes.get(index);
                     if (indexGroup != null) {

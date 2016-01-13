@@ -44,12 +44,7 @@ public abstract class ActorGroup<A extends GameActor> extends Group {
     }
 
     public Layer getLayer() {
-        return (Layer) super.getParent();
-    }
-
-    @Override
-    public Layer getParent() {
-        return (Layer) super.getParent();
+        return super.getParent() instanceof Layer ? (Layer) super.getParent() : null;
     }
 
     @Override
@@ -82,4 +77,9 @@ public abstract class ActorGroup<A extends GameActor> extends Group {
         return root.getX();
     }
 
+    @Override
+    public void setVisible(boolean visible) {
+        super.setVisible(visible);
+        getRootActor().setVisible(visible);
+    }
 }

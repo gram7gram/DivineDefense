@@ -5,6 +5,8 @@ import ua.gram.controller.Log;
 import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.model.actor.tower.Tower;
 import ua.gram.model.enums.Types;
+import ua.gram.model.state.tower.TowerState;
+import ua.gram.model.state.tower.TowerStateManager;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -23,12 +25,26 @@ public class SellingState extends InactiveState {
     @Override
     public void preManage(Tower tower) {
         super.preManage(tower);
-        GameBattleStage stage = tower.getTowerShop().getStageBattle();
-        stage.removeTowerPosition(tower);
-        int revenue = (int) (tower.getCost() * Tower.SELL_RATIO);
-        game.getPlayer().addCoins(revenue);
-        tower.getParent().remove();
-        tower.getTowerShop().refund(tower);
-        Log.info(tower + " is sold for: " + revenue + " coins");
+        TowerStateManager manager = tower.getTowerShop().getStateManager();
+        TowerState state2 = tower.getStateHolder().getCurrentLevel3State();
+        if (state2 != null) manager.swap(tower, state2, null, 2);
+        TowerState state3 = tower.getStateHolder().getCurrentLevel3State();
+        if (state3 != null) manager.swap(tower, state3, null, 3);
+    }
+
+    @Override
+    public void manage(Tower tower, float delta) {
+        super.manage(tower, delta);
+        if (tower.buildCount >= tower.getPrototype().buildDelay / 2) {
+            GameBattleStage stage = tower.getTowerShop().getStageBattle();
+            stage.removeTowerPosition(tower);
+            int revenue = (int) (tower.getCost() * Tower.SELL_RATIO);
+            game.getPlayer().addCoins(revenue);
+            tower.getTowerShop().refund(tower.getParent());
+            tower.getParent().remove();
+            Log.info(tower + " is sold for: " + revenue + " coins");
+        } else {
+            tower.buildCount += delta;
+        }
     }
 }

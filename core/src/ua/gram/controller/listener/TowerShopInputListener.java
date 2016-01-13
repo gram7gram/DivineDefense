@@ -13,6 +13,7 @@ import ua.gram.controller.stage.GameUIStage;
 import ua.gram.controller.tower.TowerShop;
 import ua.gram.model.Level;
 import ua.gram.model.actor.tower.Tower;
+import ua.gram.model.group.TowerGroup;
 import ua.gram.model.map.Map;
 import ua.gram.model.prototype.MapPrototype;
 import ua.gram.view.screen.ErrorScreen;
@@ -29,12 +30,10 @@ public class TowerShopInputListener extends ClickListener {
     private final String type;
     private final TowerShop shop;
     private TiledMapTileLayer layerObject;
-    private Tower tower;
+    private TowerGroup towerGroup;
     private MapPrototype prototype;
 
-    public TowerShopInputListener(DDGame game,
-                                  TowerShop shop,
-                                  String type) {
+    public TowerShopInputListener(DDGame game, TowerShop shop, String type) {
         this.game = game;
         this.shop = shop;
         this.type = type;
@@ -44,7 +43,8 @@ public class TowerShopInputListener extends ClickListener {
         MapLayers layers = map.getTiledMap().getLayers();
         prototype = map.getPrototype();
         layer = (TiledMapTileLayer) layers.get(prototype.layer);
-        layerObject = prototype.mapObject != null ? (TiledMapTileLayer) layers.get(prototype.mapObject) : null;
+        layerObject = prototype.mapObject != null
+                ? (TiledMapTileLayer) layers.get(prototype.mapObject) : null;
     }
 
     /**
@@ -55,7 +55,7 @@ public class TowerShopInputListener extends ClickListener {
         float X = event.getStageX() - event.getStageX() % DDGame.TILE_HEIGHT;
         float Y = event.getStageY() - event.getStageY() % DDGame.TILE_HEIGHT;
         try {
-            tower = shop.preorder(type, X, Y);
+            towerGroup = shop.preorder(type, X, Y);
             return true;
         } catch (Exception e) {
             Log.exc("Could not get Tower from Shop: " + type, e);
@@ -70,7 +70,10 @@ public class TowerShopInputListener extends ClickListener {
     public void touchDragged(InputEvent event, float x, float y, int pointer) {
         float X = event.getStageX() - event.getStageX() % DDGame.TILE_HEIGHT;
         float Y = event.getStageY() - event.getStageY() % DDGame.TILE_HEIGHT;
-        if (canBeBuild(X, Y)) {
+        if (canBeBuild(X, Y)
+                && !(Float.compare(X, towerGroup.getX()) == 0
+                && Float.compare(Y, towerGroup.getY()) == 0)) {
+            Tower tower = towerGroup.getRootActor();
             tower.setPosition(X, Y);
             tower.toFront();
         }
@@ -86,7 +89,7 @@ public class TowerShopInputListener extends ClickListener {
         float X = event.getStageX() - event.getStageX() % DDGame.TILE_HEIGHT;
         float Y = event.getStageY() - event.getStageY() % DDGame.TILE_HEIGHT;
         if (canBeBuild(X, Y)) {
-            shop.buy(tower, X, Y);
+            shop.buy(towerGroup, X, Y);
             Level level = uiStage.getLevel();
             try {
                 if (level.getWave() == null || (!level.getWave().isStarted && !level.isCleared)) {
@@ -99,7 +102,7 @@ public class TowerShopInputListener extends ClickListener {
                                 + "] in level " + uiStage.getLevel().getCurrentLevel(), e));
             }
         } else {
-            shop.refund(tower);
+            shop.refund(towerGroup);
         }
     }
 

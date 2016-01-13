@@ -44,9 +44,7 @@ public class TowerGroup extends ActorGroup<Tower> {
             float y = root.getY() + 2;
 
             TowerStateHolder holder = root.getStateHolder();
-            game.getInfo().draw(batch, this.getLayer().getZIndex() + ":" + this.getZIndex(),
-                    root.getX() - 16,
-                    root.getY() + root.getHeight());
+
             game.getInfo().draw(batch, holder.getCurrentLevel1State() + "", x, y + 12);
             game.getInfo().draw(batch, holder.getCurrentLevel2State() + "", x, y + 24);
             game.getInfo().draw(batch, holder.getCurrentLevel3State() + "", x, y + 36);
@@ -54,18 +52,23 @@ public class TowerGroup extends ActorGroup<Tower> {
                     root.getX() - 24,
                     root.getY() - 8);
 
-            batch.end();
+            if (this.getLayer() != null) {
+                game.getInfo().draw(batch, this.getLayer().getZIndex() + ":" + this.getZIndex(),
+                        root.getX() - 16,
+                        root.getY() + root.getHeight());
 
-            Gdx.gl.glEnable(GL20.GL_BLEND);
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-            shapeRenderer.setColor(Color.RED);
-            shapeRenderer.circle(this.getOriginX(), this.getOriginY(),
-                    this.getRootActor().getPrototype().range * DDGame.TILE_HEIGHT * 1.5f);
-            shapeRenderer.end();
-            Gdx.gl.glDisable(GL20.GL_BLEND);
+                batch.end();
 
-            batch.begin();
+                Gdx.gl.glEnable(GL20.GL_BLEND);
+                shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+                shapeRenderer.setColor(Color.RED);
+                shapeRenderer.circle(this.getOriginX(), this.getOriginY(),
+                        this.getRootActor().getPrototype().range * DDGame.TILE_HEIGHT * 1.5f);
+                shapeRenderer.end();
+                Gdx.gl.glDisable(GL20.GL_BLEND);
 
+                batch.begin();
+            }
         }
     }
 }

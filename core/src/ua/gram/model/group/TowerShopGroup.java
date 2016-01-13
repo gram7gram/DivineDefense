@@ -23,8 +23,8 @@ public class TowerShopGroup extends Group {
             item.addAction(
                     Actions.sequence(
                             Actions.parallel(
-                                    Actions.alpha(0),
-                                    Actions.moveBy(0, -item.getHeight())
+                                    Actions.alpha(0, .15f),
+                                    Actions.moveBy(0, -item.getHeight(), .2f)
                             ),
                             Actions.delay(.2f * i),
                             Actions.parallel(
