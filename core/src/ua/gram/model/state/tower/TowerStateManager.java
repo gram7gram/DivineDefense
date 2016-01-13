@@ -17,7 +17,6 @@ import ua.gram.model.state.tower.level2.AttackState;
 import ua.gram.model.state.tower.level2.IdleState;
 import ua.gram.model.state.tower.level2.Level2State;
 import ua.gram.model.state.tower.level2.SearchState;
-import ua.gram.model.state.tower.level3.Level3State;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -65,11 +64,6 @@ public class TowerStateManager extends StateManager<Tower> {
         } catch (Exception e) {
             Log.exc("Could not manage Level2State on " + tower, e);
         }
-        if (holder.getCurrentLevel3State() != null) try {
-            holder.getCurrentLevel3State().manage(tower, delta);
-        } catch (Exception e) {
-            Log.exc("Could not manage Level3State on " + tower, e);
-        }
     }
 
     @Override
@@ -79,8 +73,6 @@ public class TowerStateManager extends StateManager<Tower> {
             holder.setCurrentLevel1State((Level1State) newState);
         } else if (newState instanceof Level2State) {
             holder.setCurrentLevel2State((Level2State) newState);
-        } else if (newState instanceof Level3State) {
-            holder.setCurrentLevel3State((Level3State) newState);
         } else {
             switch (level) {
                 case 1:
@@ -88,9 +80,6 @@ public class TowerStateManager extends StateManager<Tower> {
                     break;
                 case 2:
                     holder.setCurrentLevel2State(null);
-                    break;
-                case 3:
-                    holder.setCurrentLevel3State(null);
                     break;
                 default:
                     throw new NullPointerException("Unknown " + tower + " level " + level + " state");
@@ -104,7 +93,6 @@ public class TowerStateManager extends StateManager<Tower> {
         TowerStateHolder holder = tower.getStateHolder();
         holder.setCurrentLevel1State(null);
         holder.setCurrentLevel2State(null);
-        holder.setCurrentLevel3State(null);
         Log.info(tower + " states have been reset");
     }
 

@@ -47,7 +47,6 @@ public class TowerGroup extends ActorGroup<Tower> {
 
             game.getInfo().draw(batch, holder.getCurrentLevel1State() + "", x, y + 12);
             game.getInfo().draw(batch, holder.getCurrentLevel2State() + "", x, y + 24);
-            game.getInfo().draw(batch, holder.getCurrentLevel3State() + "", x, y + 36);
             game.getInfo().draw(batch, Math.round(root.getX()) + ":" + Math.round(root.getY()),
                     root.getX() - 24,
                     root.getY() - 8);

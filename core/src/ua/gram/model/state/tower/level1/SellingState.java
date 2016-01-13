@@ -26,10 +26,8 @@ public class SellingState extends InactiveState {
     public void preManage(Tower tower) {
         super.preManage(tower);
         TowerStateManager manager = tower.getTowerShop().getStateManager();
-        TowerState state2 = tower.getStateHolder().getCurrentLevel3State();
+        TowerState state2 = tower.getStateHolder().getCurrentLevel2State();
         if (state2 != null) manager.swap(tower, state2, null, 2);
-        TowerState state3 = tower.getStateHolder().getCurrentLevel3State();
-        if (state3 != null) manager.swap(tower, state3, null, 3);
     }
 
     @Override
