@@ -41,6 +41,8 @@ public class SellingState extends InactiveState {
             tower.getTowerShop().refund(tower.getParent());
             tower.getParent().remove();
             Log.info(tower + " is sold for: " + revenue + " coins");
+            TowerStateManager manager = tower.getTowerShop().getStateManager();
+            manager.swap(tower, tower.getStateHolder().getCurrentLevel1State(), null, 1);
         } else {
             tower.buildCount += delta;
         }
