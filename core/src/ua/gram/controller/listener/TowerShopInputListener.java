@@ -12,6 +12,7 @@ import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.controller.stage.GameUIStage;
 import ua.gram.controller.tower.TowerShop;
 import ua.gram.model.Level;
+import ua.gram.model.actor.PositionMarker;
 import ua.gram.model.actor.tower.Tower;
 import ua.gram.model.group.TowerGroup;
 import ua.gram.model.map.Map;
@@ -74,8 +75,11 @@ public class TowerShopInputListener extends ClickListener {
                 && !(Float.compare(X, towerGroup.getX()) == 0
                 && Float.compare(Y, towerGroup.getY()) == 0)) {
             Tower tower = towerGroup.getRootActor();
-            tower.setPosition(X, Y);
+            tower.setPosition(X, Y + 40);
             tower.toFront();
+            PositionMarker marker = shop.getMarker();
+            marker.setPosition(X, Y);
+            marker.setVisible(true);
         }
     }
 
@@ -101,6 +105,9 @@ public class TowerShopInputListener extends ClickListener {
                         "Unappropriate wave [" + uiStage.getLevel().getCurrentWave()
                                 + "] in level " + uiStage.getLevel().getCurrentLevel(), e));
             }
+            PositionMarker marker = shop.getMarker();
+            marker.setPosition(0, 0);
+            marker.setVisible(false);
         } else {
             shop.refund(towerGroup);
         }

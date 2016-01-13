@@ -14,6 +14,7 @@ import ua.gram.controller.pool.TowerPool;
 import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.controller.stage.GameUIStage;
 import ua.gram.model.ShopInterface;
+import ua.gram.model.actor.PositionMarker;
 import ua.gram.model.actor.tower.Tower;
 import ua.gram.model.group.TowerControlsGroup;
 import ua.gram.model.group.TowerGroup;
@@ -37,6 +38,7 @@ public class TowerShop implements ShopInterface<TowerGroup> {
     private final TowerStateManager stateManager;
     private final TowerAnimationProvider animationProvider;
     private final HashMap<TowerPrototype, Pool<Tower>> identityMap;
+    private final PositionMarker marker;
 
     public TowerShop(DDGame game, GameBattleStage battleStage, GameUIStage uiStage) {
         this.game = game;
@@ -52,7 +54,11 @@ public class TowerShop implements ShopInterface<TowerGroup> {
         towerShopGroup = new TowerShopGroup(game, this);
         strategyManager = new TowerStrategyManager();
         stateManager = new TowerStateManager(game);
-        this.uiStage.setTowerControls(new TowerControlsGroup(skin, this));
+        uiStage.setTowerControls(new TowerControlsGroup(skin, this));
+
+        marker = new PositionMarker(skin, "position-marker");
+        battleStage.addActor(marker);
+
         Log.info("TowerShop is OK");
     }
 
@@ -159,5 +165,9 @@ public class TowerShop implements ShopInterface<TowerGroup> {
 
     public TowerAnimationProvider getAnimationProvider() {
         return animationProvider;
+    }
+
+    public PositionMarker getMarker() {
+        return marker;
     }
 }
