@@ -1,4 +1,4 @@
-package ua.gram.model.prototype;
+package ua.gram.model.prototype.weapon;
 
 import com.badlogic.gdx.graphics.Color;
 

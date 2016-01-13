@@ -75,8 +75,7 @@
     "skin": "data/skin/style.json",
     "consoleBye": [
       "Thank you for choosing {{ title }}!",
-      "Visit {{ repository }} to view sources",
-      "Run [ $ git clone {{ git }} ] to get latest version",
+      "Visit {{ repository }} to view sources or to fork repository",
       "I hope you enjoyed it. Bye-bye (^ω^) /"
     ],
     "consoleHello": [
@@ -335,7 +334,7 @@
       "width": 60,
       "height": 90,
       "weapon": {
-        "class": "ua.gram.model.prototype.LaserWeaponPrototype",
+        "class": "ua.gram.model.prototype.weapon.LaserWeaponPrototype",
         "type": "Laser",
         "colorOver": {
           "r": 1,
@@ -369,11 +368,12 @@
       "width": 60,
       "height": 90,
       "weapon": {
-        "class": "ua.gram.model.prototype.BombWeaponPrototype",
+        "class": "ua.gram.model.prototype.weapon.BombWeaponPrototype",
         "type": "Bomb",
         "region": "weapons/SECONDARY_WEAPON",
         "delay": 0.07,
-        "frames": 12
+        "frames": 12,
+        "aoeRange": 60
       }
     },
     {
@@ -388,7 +388,7 @@
       "width": 60,
       "height": 90,
       "weapon": {
-        "class": "ua.gram.model.prototype.LightningWeaponPrototype",
+        "class": "ua.gram.model.prototype.weapon.LightningWeaponPrototype",
         "type": "Lightning",
         "region": "weapons/SPECIAL_WEAPON",
         "delay": 0.05,
@@ -407,11 +407,12 @@
       "width": 60,
       "height": 90,
       "weapon": {
-        "class": "ua.gram.model.prototype.FreezeWeaponPrototype",
+        "class": "ua.gram.model.prototype.weapon.FreezeWeaponPrototype",
         "type": "Freeze",
         "region": "weapons/STUN_WEAPON",
         "delay": 0.15,
-        "frames": 4
+        "frames": 4,
+        "aoeRange": 180
       }
     }
   ],

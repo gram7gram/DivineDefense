@@ -1,9 +1,9 @@
-package ua.gram.model.prototype;
+package ua.gram.model.prototype.weapon;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class FreezeWeaponPrototype extends WeaponPrototype {
+public class LightningWeaponPrototype extends WeaponPrototype {
     public String region;
     public float delay;
     public int frames;

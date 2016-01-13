@@ -8,8 +8,8 @@ import ua.gram.DDGame;
 import ua.gram.controller.Resources;
 import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.model.group.Layer;
-import ua.gram.model.prototype.LightningWeaponPrototype;
-import ua.gram.model.prototype.WeaponPrototype;
+import ua.gram.model.prototype.weapon.LightningWeaponPrototype;
+import ua.gram.model.prototype.weapon.WeaponPrototype;
 
 /**
  * @author Gram <gram7gram@gmail.com>

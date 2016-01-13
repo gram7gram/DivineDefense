@@ -1,9 +1,9 @@
-package ua.gram.model.prototype;
+package ua.gram.model.prototype.weapon;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class BombWeaponPrototype extends WeaponPrototype {
+public class BombWeaponPrototype extends AOEWeaponPrototype {
     public String region;
     public float delay;
     public int frames;

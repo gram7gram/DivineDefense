@@ -2,8 +2,8 @@ package ua.gram.model.actor.tower;
 
 import ua.gram.DDGame;
 import ua.gram.model.actor.weapon.FreezeWeapon;
-import ua.gram.model.prototype.FreezeWeaponPrototype;
 import ua.gram.model.prototype.TowerPrototype;
+import ua.gram.model.prototype.weapon.FreezeWeaponPrototype;
 import ua.gram.model.strategy.tower.TowerStrategy;
 
 /**

@@ -2,6 +2,7 @@ package ua.gram.model.strategy;
 
 import ua.gram.controller.comparator.EnemyDistanceComparator;
 import ua.gram.controller.comparator.EnemyHealthComparator;
+import ua.gram.model.strategy.tower.AOEStrategy;
 import ua.gram.model.strategy.tower.AllStrategy;
 import ua.gram.model.strategy.tower.NearestStrategy;
 import ua.gram.model.strategy.tower.RandomStrategy;
@@ -22,31 +23,33 @@ public class TowerStrategyManager {
     private final TowerStrategy nearestTowerStrategy;
     private final TowerStrategy randomTowerStrategy;
     private final TowerStrategy allTowerStrategy;
+    private final TowerStrategy aoeStrategy;
 
     public TowerStrategyManager() {
         distanceComparator = new EnemyDistanceComparator();
         healthComparator = new EnemyHealthComparator();
 
-        allTowerStrategy = new AllStrategy();
+        allTowerStrategy = new AllStrategy(this);
         randomTowerStrategy = new RandomStrategy();
         nearestTowerStrategy = new NearestStrategy(this);
         weakestTowerStrategy = new WeakestStrategy(this);
         strongestTowerStrategy = new StrongestStrategy(this);
+        aoeStrategy = new AOEStrategy(this);
     }
 
     public TowerStrategy getAllStrategy() {
         return allTowerStrategy;
     }
 
-    public TowerStrategy getStrongestTowerStrategy() {
+    public TowerStrategy getStrongestStrategy() {
         return strongestTowerStrategy;
     }
 
-    public TowerStrategy getWeakestTowerStrategy() {
+    public TowerStrategy getWeakestStrategy() {
         return weakestTowerStrategy;
     }
 
-    public TowerStrategy getNearestTowerStrategy() {
+    public TowerStrategy getNearestStrategy() {
         return nearestTowerStrategy;
     }
 
@@ -65,4 +68,9 @@ public class TowerStrategyManager {
     public TowerStrategy getDefault() {
         return strongestTowerStrategy;
     }
+
+    public TowerStrategy getAoeStrategy() {
+        return aoeStrategy;
+    }
+
 }

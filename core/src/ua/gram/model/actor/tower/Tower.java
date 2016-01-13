@@ -22,7 +22,7 @@ import ua.gram.model.enums.Types;
 import ua.gram.model.group.EnemyGroup;
 import ua.gram.model.group.TowerGroup;
 import ua.gram.model.prototype.TowerPrototype;
-import ua.gram.model.prototype.WeaponPrototype;
+import ua.gram.model.prototype.weapon.WeaponPrototype;
 import ua.gram.model.state.tower.TowerStateHolder;
 import ua.gram.model.state.tower.TowerStateManager;
 import ua.gram.model.strategy.tower.TowerStrategy;
@@ -113,7 +113,7 @@ public abstract class Tower extends GameActor<Types.TowerState, Types.TowerLevel
 
     @Override
     public void reset() {
-        currentTowerStrategy = towerShop != null ? towerShop.getStrategyManager().getDefault() : null;
+        currentTowerStrategy = getDefaultStrategy();
         tower_lvl = 1;
         this.setPosition(0, 0);
         Log.info(this + " was reset");

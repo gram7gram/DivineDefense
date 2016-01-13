@@ -5,24 +5,18 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import ua.gram.controller.Resources;
-import ua.gram.model.group.EnemyGroup;
 import ua.gram.model.group.Layer;
-import ua.gram.model.group.TowerGroup;
-import ua.gram.model.prototype.BombWeaponPrototype;
+import ua.gram.model.prototype.weapon.BombWeaponPrototype;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class BombWeapon extends Weapon {
+public class BombWeapon extends Weapon implements AOEWeapon {
 
     private Layer currentLayer;
 
     public BombWeapon(Resources resources, BombWeaponPrototype prototype) {
         super(resources, prototype);
-    }
-
-    public BombWeapon(Resources resources, TowerGroup tower, EnemyGroup target) {
-        super(resources, tower, target);
     }
 
     @Override
@@ -71,4 +65,11 @@ public class BombWeapon extends Weapon {
     public BombWeaponPrototype getPrototype() {
         return (BombWeaponPrototype) prototype;
     }
+
+    @Override
+    public float getAOERange() {
+        return getPrototype().aoeRange;
+    }
+
+
 }

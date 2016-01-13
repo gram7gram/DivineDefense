@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import ua.gram.DDGame;
 import ua.gram.controller.Resources;
-import ua.gram.model.prototype.LaserWeaponPrototype;
+import ua.gram.model.prototype.weapon.LaserWeaponPrototype;
 
 /**
  * Weapon for TowerSecondary

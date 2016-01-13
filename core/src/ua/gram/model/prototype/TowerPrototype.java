@@ -11,5 +11,5 @@ public class TowerPrototype extends GameActorPrototype {
     public int powerLevel;
     public int towerLevel;
     public float buildDelay;
-    public WeaponPrototype weapon;
+    public ua.gram.model.prototype.weapon.WeaponPrototype weapon;
 }

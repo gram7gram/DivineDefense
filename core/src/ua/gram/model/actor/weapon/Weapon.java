@@ -14,7 +14,7 @@ import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.actor.tower.Tower;
 import ua.gram.model.group.EnemyGroup;
 import ua.gram.model.group.TowerGroup;
-import ua.gram.model.prototype.WeaponPrototype;
+import ua.gram.model.prototype.weapon.WeaponPrototype;
 
 /**
  * NOTE Set duration in WeaponPrototype less then zero to display weapon until enemy is within the reach
@@ -35,19 +35,6 @@ public abstract class Weapon extends Actor {
 
     public Weapon(Resources resources, WeaponPrototype prototype) {
         this.prototype = prototype;
-        this.animation = createAnimation(resources.getSkin());
-        duration = 0;
-        scaleX = 1;
-        scaleY = 1;
-        Log.info(this.getClass().getSimpleName() + " is OK");
-    }
-
-    public Weapon(Resources resources, TowerGroup tower, EnemyGroup target) {
-        if (tower == null)
-            throw new NullPointerException("Empty weapon owner passed to " + this.getClass().getSimpleName());
-        this.prototype = tower.getRootActor().getWeaponPrototype();
-        this.towerGroup = tower;
-        this.targetGroup = target;
         this.animation = createAnimation(resources.getSkin());
         duration = 0;
         scaleX = 1;

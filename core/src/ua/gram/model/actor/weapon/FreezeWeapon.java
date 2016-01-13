@@ -7,13 +7,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import ua.gram.controller.Resources;
 import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.model.group.Layer;
-import ua.gram.model.prototype.FreezeWeaponPrototype;
-import ua.gram.model.prototype.WeaponPrototype;
+import ua.gram.model.prototype.weapon.FreezeWeaponPrototype;
+import ua.gram.model.prototype.weapon.WeaponPrototype;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class FreezeWeapon extends Weapon {
+public class FreezeWeapon extends Weapon implements AOEWeapon {
 
     private Layer currentLayer;
 
@@ -64,5 +64,10 @@ public class FreezeWeapon extends Weapon {
     @Override
     public FreezeWeaponPrototype getPrototype() {
         return (FreezeWeaponPrototype) prototype;
+    }
+
+    @Override
+    public float getAOERange() {
+        return getPrototype().aoeRange;
     }
 }
