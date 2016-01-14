@@ -8,7 +8,7 @@ import ua.gram.model.actor.tower.TowerPrimary;
 import ua.gram.model.actor.tower.TowerSecondary;
 import ua.gram.model.actor.tower.TowerSpecial;
 import ua.gram.model.actor.tower.TowerStun;
-import ua.gram.model.prototype.TowerPrototype;
+import ua.gram.model.prototype.tower.TowerPrototype;
 
 /**
  *

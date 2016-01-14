@@ -6,7 +6,7 @@ import ua.gram.controller.pool.animation.AnimationControllerInterface;
 import ua.gram.controller.pool.animation.AnimationProvider;
 import ua.gram.controller.pool.animation.TowerAnimationController;
 import ua.gram.model.enums.Types;
-import ua.gram.model.prototype.TowerPrototype;
+import ua.gram.model.prototype.tower.TowerPrototype;
 
 /**
  * @author Gram <gram7gram@gmail.com>

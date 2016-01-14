@@ -19,7 +19,7 @@ import ua.gram.model.actor.tower.Tower;
 import ua.gram.model.group.TowerControlsGroup;
 import ua.gram.model.group.TowerGroup;
 import ua.gram.model.group.TowerShopGroup;
-import ua.gram.model.prototype.TowerPrototype;
+import ua.gram.model.prototype.tower.TowerPrototype;
 import ua.gram.model.state.tower.TowerStateManager;
 import ua.gram.model.strategy.TowerStrategyManager;
 

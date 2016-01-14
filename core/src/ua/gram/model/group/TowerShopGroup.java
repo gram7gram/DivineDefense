@@ -7,7 +7,7 @@ import ua.gram.DDGame;
 import ua.gram.controller.Log;
 import ua.gram.controller.tower.TowerShop;
 import ua.gram.model.actor.market.TowerShopItem;
-import ua.gram.model.prototype.TowerPrototype;
+import ua.gram.model.prototype.tower.TowerPrototype;
 
 /**
  * @author Gram <gram7gram@gmail.com>

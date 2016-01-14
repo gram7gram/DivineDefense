@@ -7,8 +7,8 @@ import ua.gram.model.actor.enemy.EnemySoldier;
 import ua.gram.model.actor.enemy.EnemySoldierArmored;
 import ua.gram.model.actor.enemy.EnemySummoner;
 import ua.gram.model.actor.enemy.EnemyWarrior;
-import ua.gram.model.prototype.AbilityUserPrototype;
-import ua.gram.model.prototype.EnemyPrototype;
+import ua.gram.model.prototype.enemy.AbilityUserPrototype;
+import ua.gram.model.prototype.enemy.EnemyPrototype;
 
 /**
  * @author Gram <gram7gram@gmail.com>

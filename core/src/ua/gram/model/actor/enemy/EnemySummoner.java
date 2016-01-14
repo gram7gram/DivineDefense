@@ -6,7 +6,7 @@ import ua.gram.DDGame;
 import ua.gram.controller.Log;
 import ua.gram.model.map.Map;
 import ua.gram.model.map.Path;
-import ua.gram.model.prototype.AbilityUserPrototype;
+import ua.gram.model.prototype.enemy.AbilityUserPrototype;
 
 /**
  * @author Gram <gram7gram@gmail.com>

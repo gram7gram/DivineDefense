@@ -6,7 +6,7 @@ import java.util.EnumSet;
 import ua.gram.controller.Log;
 import ua.gram.model.enums.Types;
 import ua.gram.model.map.Path;
-import ua.gram.model.prototype.EnemyPrototype;
+import ua.gram.model.prototype.enemy.EnemyPrototype;
 
 /**
  * Holds pools for Enemy and each direction, available in the game.

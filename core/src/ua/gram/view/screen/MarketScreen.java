@@ -2,9 +2,10 @@ package ua.gram.view.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+
 import ua.gram.DDGame;
 import ua.gram.controller.stage.MarketStage;
-import ua.gram.model.prototype.MarketPrototype;
+import ua.gram.model.prototype.market.MarketPrototype;
 import ua.gram.view.AbstractScreen;
 
 /**

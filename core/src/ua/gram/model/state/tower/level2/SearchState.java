@@ -26,7 +26,7 @@ public class SearchState extends IdleState {
 
     @Override
     public void manage(Tower tower, float delta) {
-        if (tower.attackCount >= tower.getPrototype().rate) {
+        if (tower.attackCount >= tower.getProperty().getRate()) {
             tower.attackCount = 0;
             List<EnemyGroup> victims = tower.getStage().getEnemyGroupsOnMap().stream()
                     .filter(group -> tower.isInRange(group.getRootActor())

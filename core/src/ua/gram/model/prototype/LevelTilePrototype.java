@@ -3,7 +3,7 @@ package ua.gram.model.prototype;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public final class LevelTilePrototype implements Prototype {
+public final class LevelTilePrototype implements PrototypeInterface {
     /**
      * Map file to load
      */

@@ -1,9 +1,11 @@
-package ua.gram.model.prototype;
+package ua.gram.model.prototype.market;
+
+import ua.gram.model.prototype.PrototypeInterface;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public final class MarketItemPrototype implements Prototype {
+public final class MarketItemPrototype implements PrototypeInterface {
     /**
      * Item header
      */

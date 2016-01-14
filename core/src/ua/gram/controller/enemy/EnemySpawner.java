@@ -18,7 +18,7 @@ import ua.gram.model.EnemyPath;
 import ua.gram.model.Level;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.group.EnemyGroup;
-import ua.gram.model.prototype.EnemyPrototype;
+import ua.gram.model.prototype.enemy.EnemyPrototype;
 import ua.gram.model.state.enemy.EnemyStateManager;
 
 /**

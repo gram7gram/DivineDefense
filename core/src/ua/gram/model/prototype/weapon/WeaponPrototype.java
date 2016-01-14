@@ -1,11 +1,11 @@
 package ua.gram.model.prototype.weapon;
 
-import ua.gram.model.prototype.Prototype;
+import ua.gram.model.prototype.PrototypeInterface;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public abstract class WeaponPrototype implements Prototype {
+public abstract class WeaponPrototype implements PrototypeInterface {
     public String type;
     protected float duration;
 

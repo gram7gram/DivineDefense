@@ -13,7 +13,7 @@ import ua.gram.controller.Log;
 import ua.gram.controller.tower.TowerLevelAnimationPool;
 import ua.gram.model.Player;
 import ua.gram.model.enums.Types;
-import ua.gram.model.prototype.TowerPrototype;
+import ua.gram.model.prototype.tower.TowerPrototype;
 
 /**
  * @author Gram <gram7gram@gmail.com>

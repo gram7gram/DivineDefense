@@ -2,7 +2,7 @@ package ua.gram.model.actor.tower;
 
 import ua.gram.DDGame;
 import ua.gram.model.actor.weapon.LaserWeapon;
-import ua.gram.model.prototype.TowerPrototype;
+import ua.gram.model.prototype.tower.TowerPrototype;
 import ua.gram.model.prototype.weapon.LaserWeaponPrototype;
 
 /**

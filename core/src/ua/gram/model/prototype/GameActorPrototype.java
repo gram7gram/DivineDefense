@@ -1,11 +1,9 @@
 package ua.gram.model.prototype;
 
-import ua.gram.model.actor.GameActor;
-
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class GameActorPrototype implements Prototype{
+public class GameActorPrototype implements PrototypeInterface {
     public String type;
     public String name;
     public float height;

@@ -37,7 +37,7 @@ public class AttackState extends Level2State {
     public void manage(Tower tower, float delta) {
         super.manage(tower, delta);
         Weapon weapon = tower.getWeapon();
-        if (tower.attackCount >= tower.getPrototype().rate && weapon.isFinished()) {
+        if (tower.attackCount >= tower.getProperty().getRate() && weapon.isFinished()) {
             List<EnemyGroup> victims = tower.getVictims();
             if (victims != null && !victims.isEmpty()) {
                 for (EnemyGroup victimGroup : victims) {

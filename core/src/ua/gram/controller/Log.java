@@ -13,9 +13,7 @@ public class Log {
      * Normal log
      */
     public synchronized static void info(String msg) {
-        Gdx.app.log("INFO",
-//                new SimpleDateFormat("HH:mm:ss").format(new Date()) + ": " +
-                msg);
+        Gdx.app.log("INFO", msg);
     }
 
     public synchronized static void warn(String msg) {
@@ -36,8 +34,11 @@ public class Log {
         msg += "\r\nCLASS:\t" + e.getClass().getSimpleName();
         msg += "\nMSG:\t" + e.getMessage();
         msg += "\nTRACE:\t" + Arrays.toString(e.getStackTrace()) + "\r\n";
-        Gdx.app.error("EXC",
-//                new SimpleDateFormat("HH:mm:ss").format(new Date()) + ": " +
-                msg);
+        Gdx.app.error("\nEXC", msg);
+    }
+
+    private String getTime() {
+        return new java.text.SimpleDateFormat("HH:mm:ss", java.util.Locale.ENGLISH)
+                .format(new java.util.Date());
     }
 }

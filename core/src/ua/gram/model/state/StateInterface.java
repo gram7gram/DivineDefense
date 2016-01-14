@@ -5,7 +5,7 @@ import ua.gram.model.actor.GameActor;
 /**
  * Handles state-logic on Actor update.
  *
- * NOTE States should not contain Actor-dependant properties!
+ * NOTE States should not contain Actor-dependant property!
  *
  * @author Gram <gram7gram@gmail.com>
  */

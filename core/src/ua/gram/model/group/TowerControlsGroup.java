@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import ua.gram.DDGame;
+import ua.gram.controller.Log;
 import ua.gram.controller.tower.TowerShop;
 import ua.gram.model.actor.tower.Tower;
 
@@ -38,7 +39,7 @@ public class TowerControlsGroup extends Group {
         super.act(delta);
         if (!DDGame.PAUSE && tower != null) {
             this.toFront();
-            if (tower.getTowerLevel() == Tower.MAX_TOWER_LEVEL) {
+            if (tower.getProperty().getTowerLevel() == Tower.MAX_TOWER_LEVEL) {
                 upgradeBut.setVisible(false);
             }
         }
@@ -72,8 +73,13 @@ public class TowerControlsGroup extends Group {
             public void clicked(InputEvent event, float x, float y) {
                 if (tower != null) {
                     setVisible(false);
-                    tower.upgrade();
-                    tower = null;
+                    try {
+                        tower.upgrade();
+                    } catch (IllegalArgumentException e) {
+                        Log.exc("Could not upgrade " + tower, e);
+                    } finally {
+                        tower = null;
+                    }
                 }
             }
         });

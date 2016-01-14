@@ -173,7 +173,7 @@ public abstract class Weapon extends Actor {
      */
     public void attack(Tower tower, Enemy victim) {
         victim.isAttacked = true;
-        victim.damage(tower.getPrototype().damage);
+        victim.damage(tower.getProperty().getDamage());
     }
 
     /**

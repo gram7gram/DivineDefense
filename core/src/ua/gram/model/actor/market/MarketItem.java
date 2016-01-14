@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -12,19 +11,19 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
-import com.badlogic.gdx.utils.Align;
+
 import ua.gram.DDGame;
 import ua.gram.model.actor.misc.CustomLabel;
-import ua.gram.model.prototype.MarketItemPrototype;
+import ua.gram.model.prototype.market.MarketItemPrototype;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
 public class MarketItem extends Table {
 
+    byte gap = 10;
     private NinePatchDrawable background;
     private TextureRegion preview;
-    byte gap = 10;
 
     public MarketItem(final DDGame game, MarketItemPrototype prototype) {
         Skin skin = game.getResources().getSkin();

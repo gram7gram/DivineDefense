@@ -62,7 +62,7 @@ public class TowerGroup extends ActorGroup<Tower> {
                 shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
                 shapeRenderer.setColor(Color.RED);
                 shapeRenderer.circle(this.getOriginX(), this.getOriginY(),
-                        this.getRootActor().getPrototype().range * DDGame.TILE_HEIGHT * 1.5f);
+                        this.getRootActor().getProperty().getRange() * DDGame.TILE_HEIGHT * 1.5f);
                 shapeRenderer.end();
                 Gdx.gl.glDisable(GL20.GL_BLEND);
 

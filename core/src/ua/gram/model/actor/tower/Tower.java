@@ -15,13 +15,15 @@ import ua.gram.controller.Log;
 import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.controller.tower.TowerShop;
 import ua.gram.model.PoolableAnimation;
+import ua.gram.model.TowerProperty;
 import ua.gram.model.actor.GameActor;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.actor.weapon.Weapon;
 import ua.gram.model.enums.Types;
 import ua.gram.model.group.EnemyGroup;
 import ua.gram.model.group.TowerGroup;
-import ua.gram.model.prototype.TowerPrototype;
+import ua.gram.model.prototype.tower.TowerPropertyPrototype;
+import ua.gram.model.prototype.tower.TowerPrototype;
 import ua.gram.model.prototype.weapon.WeaponPrototype;
 import ua.gram.model.state.tower.TowerStateHolder;
 import ua.gram.model.state.tower.TowerStateManager;
@@ -39,6 +41,7 @@ public abstract class Tower extends GameActor<Types.TowerState, Types.TowerLevel
     public static final float SELL_RATIO = .6f;
     public static final byte MAX_TOWER_LEVEL = 4;
     protected final TowerPrototype prototype;
+    protected final TowerProperty property;
     protected final TowerStateHolder stateHolder;
     public float buildCount = 0;
     public float attackCount = 0;
@@ -49,13 +52,12 @@ public abstract class Tower extends GameActor<Types.TowerState, Types.TowerLevel
     private List<EnemyGroup> victims;
     private TowerStrategy currentTowerStrategy;
     private float stateTime;
-    private int tower_lvl;
 
     public Tower(DDGame game, TowerPrototype prototype) {
         super(prototype);
         this.game = game;
         this.prototype = prototype;
-        this.tower_lvl = prototype.towerLevel;
+        this.property = new TowerProperty(prototype.getFirstProperty());
         stateHolder = new TowerStateHolder();
         victims = new ArrayList<>(10);
     }
@@ -94,27 +96,30 @@ public abstract class Tower extends GameActor<Types.TowerState, Types.TowerLevel
         Vector2 enemyPos = new Vector2(enemy.getOriginX(), enemy.getOriginY());
         Vector2 towerPos = new Vector2(this.getOriginX(), this.getOriginY());
         float distance = enemyPos.dst(towerPos);
-        return distance <= prototype.range * DDGame.TILE_HEIGHT * 1.5;
+        return distance <= property.getRange() * DDGame.TILE_HEIGHT * 1.5;
     }
 
-    /**
-     * Increases stats of the towerGroup, according to the level and the towerGroup type.
-     * TODO Increase stats
-     * TODO Charge according to the next towerGroup level
-     * TODO Change Range radius
-     */
     public void upgrade() {
-//        ++tower_lvl;
-//        this.setLevelAnimationContainer(tower_lvl);
-//        changeAnimation(Types.TowerState.BUILD);
-//        game.getPlayer().chargeCoins(30);
-//        Log.info(this + " is upgraded to " + tower_lvl + " level");
+        int price = property.getCost();
+        int nextLevel = property.getTowerLevel() + 1;
+
+        if (nextLevel > MAX_TOWER_LEVEL)
+            throw new IllegalArgumentException("Cannot update to higher value, then expected");
+
+        try {
+            TowerPropertyPrototype nextProperty = prototype.getProperty(nextLevel);
+            property.setPrototype(nextProperty);
+            game.getPlayer().chargeCoins(price);
+            Log.info(this + " is upgraded to " + nextLevel + " level");
+        } catch (Exception e) {
+            Log.exc("Could not upgrade " + this + " to level " + nextLevel, e);
+        }
     }
 
     @Override
     public void reset() {
         currentTowerStrategy = getDefaultStrategy();
-        tower_lvl = 1;
+        property.setPrototype(prototype.getFirstProperty());
         this.setPosition(0, 0);
         Log.info(this + " was reset");
     }
@@ -122,14 +127,6 @@ public abstract class Tower extends GameActor<Types.TowerState, Types.TowerLevel
     @Override
     public GameBattleStage getStage() {
         return (GameBattleStage) super.getStage();
-    }
-
-    public int getCost() {
-        return prototype.cost;
-    }
-
-    public int getTowerLevel() {
-        return tower_lvl;
     }
 
     public Animation getAnimation() {
@@ -189,12 +186,12 @@ public abstract class Tower extends GameActor<Types.TowerState, Types.TowerLevel
         return currentTowerStrategy;
     }
 
-    public void setCurrentTowerStrategy(TowerStrategy currentTowerStrategy) {
-        this.currentTowerStrategy = currentTowerStrategy;
-    }
-
     public void resetVictims() {
         if (!victims.isEmpty()) victims.clear();
         if (weapon.isVisible()) weapon.reset();
+    }
+
+    public TowerProperty getProperty() {
+        return property;
     }
 }

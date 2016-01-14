@@ -26,7 +26,7 @@ public class StrongestStrategy implements TowerStrategy {
 
         Collections.sort(victims, healthComparator);
 
-        return victims.size() > 0 ? victims.subList(0, tower.getTowerLevel()) : null;
+        return victims.size() > 0 ? victims.subList(0, tower.getProperty().getTowerLevel()) : null;
     }
 
 }

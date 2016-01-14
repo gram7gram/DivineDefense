@@ -4,8 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+
 import ua.gram.DDGame;
-import ua.gram.model.prototype.MarketCategoryPrototype;
+import ua.gram.model.prototype.market.MarketCategoryPrototype;
 
 /**
  * @author Gram <gram7gram@gmail.com>

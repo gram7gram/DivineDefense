@@ -1,4 +1,6 @@
-package ua.gram.model.prototype;
+package ua.gram.model.prototype.enemy;
+
+import ua.gram.model.prototype.GameActorPrototype;
 
 /**
  * @author Gram <gram7gram@gmail.com>

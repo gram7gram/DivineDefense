@@ -3,8 +3,8 @@ package ua.gram.controller.stage;
 import ua.gram.DDGame;
 import ua.gram.model.group.MarketTable;
 import ua.gram.model.group.PlayerDataTable;
-import ua.gram.model.prototype.MarketCategoryPrototype;
-import ua.gram.model.prototype.MarketPrototype;
+import ua.gram.model.prototype.market.MarketCategoryPrototype;
+import ua.gram.model.prototype.market.MarketPrototype;
 
 /**
  * @author Gram <gram7gram@gmail.com>

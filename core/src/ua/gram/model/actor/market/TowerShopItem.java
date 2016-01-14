@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import ua.gram.DDGame;
 import ua.gram.controller.listener.TowerShopInputListener;
 import ua.gram.controller.tower.TowerShop;
-import ua.gram.model.prototype.TowerPrototype;
+import ua.gram.model.prototype.tower.TowerPrototype;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -26,7 +26,7 @@ public class TowerShopItem extends Group {
         Skin skin = game.getResources().getSkin();
         item = new Button(skin, style);
         item.setSize(DDGame.DEFAULT_BUTTON_HEIGHT, DDGame.DEFAULT_BUTTON_HEIGHT);
-        price = new Label("" + prototype.cost, skin, "16_tinted");
+        price = new Label("" + prototype.getFirstProperty().cost, skin, "16_tinted");
         price.setVisible(true);
         item.setVisible(true);
 
@@ -54,7 +54,8 @@ public class TowerShopItem extends Group {
             Touchable touchBefore = item.getTouchable();
             item.setTouchable(money < cost ? Touchable.disabled : Touchable.enabled);
             item.setDisabled(money < cost);
-            if (touchBefore != item.getTouchable())
+            boolean isTouchableChanged = touchBefore != item.getTouchable();
+            if (isTouchableChanged)
                 item.addAction(
                         Actions.parallel(
                                 Actions.moveBy(0, money < cost ? -20 : 20, .5f),

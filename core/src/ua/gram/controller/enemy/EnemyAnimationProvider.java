@@ -7,7 +7,7 @@ import ua.gram.controller.pool.animation.AnimationProvider;
 import ua.gram.controller.pool.animation.EnemyAnimationController;
 import ua.gram.model.enums.Types;
 import ua.gram.model.map.Path;
-import ua.gram.model.prototype.EnemyPrototype;
+import ua.gram.model.prototype.enemy.EnemyPrototype;
 
 /**
  * @author Gram <gram7gram@gmail.com>

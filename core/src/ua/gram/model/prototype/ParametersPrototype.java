@@ -8,7 +8,7 @@ import java.util.HashMap;
  *
  * @author Gram <gram7gram@gmail.com>
  */
-public abstract class ParametersPrototype implements Prototype {
+public abstract class ParametersPrototype implements PrototypeInterface {
 
     public String[] consoleHello;
     public String[] consoleBye;

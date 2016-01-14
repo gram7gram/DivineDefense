@@ -10,8 +10,8 @@ import ua.gram.controller.Log;
 import ua.gram.model.Player;
 import ua.gram.model.enums.Types;
 import ua.gram.model.map.Path;
-import ua.gram.model.prototype.AbilityUserPrototype;
-import ua.gram.model.prototype.EnemyPrototype;
+import ua.gram.model.prototype.enemy.AbilityUserPrototype;
+import ua.gram.model.prototype.enemy.EnemyPrototype;
 
 /**
  * @author Gram <gram7gram@gmail.com>

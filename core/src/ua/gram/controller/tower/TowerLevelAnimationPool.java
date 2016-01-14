@@ -8,7 +8,7 @@ import ua.gram.controller.Log;
 import ua.gram.controller.pool.animation.AnimationPool;
 import ua.gram.controller.pool.animation.TowerAnimationController;
 import ua.gram.model.enums.Types;
-import ua.gram.model.prototype.TowerPrototype;
+import ua.gram.model.prototype.tower.TowerPrototype;
 
 /**
  * Holds Pools of Animations for each level and state of the TowerState.

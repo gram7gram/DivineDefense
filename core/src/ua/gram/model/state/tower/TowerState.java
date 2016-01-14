@@ -32,14 +32,14 @@ public abstract class TowerState extends AbstractState<Tower> {
         setUncheckedType(tower);
 
         AnimationPool pool = provider.get(tower.getPrototype(), getType(),
-                getType(tower.getTowerLevel()));
+                getType(tower.getProperty().getTowerLevel()));
         tower.setAnimation(pool.obtain());
     }
 
     @SuppressWarnings("unchecked")
     private void setUncheckedType(Tower tower) {
         tower.getAnimator().setPrimaryType(getType());
-        tower.getAnimator().setSecondaryType(getType(tower.getTowerLevel()));
+        tower.getAnimator().setSecondaryType(getType(tower.getProperty().getTowerLevel()));
     }
 
     private Types.TowerLevels getType(int level) {

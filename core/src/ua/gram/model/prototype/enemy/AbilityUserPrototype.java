@@ -1,4 +1,4 @@
-package ua.gram.model.prototype;
+package ua.gram.model.prototype.enemy;
 
 /**
  * @author Gram <gram7gram@gmail.com>

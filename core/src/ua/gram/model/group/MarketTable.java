@@ -4,17 +4,22 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Cell;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
+
+import java.util.ArrayList;
+
 import ua.gram.DDGame;
 import ua.gram.model.actor.market.MarketCategoryContainer;
 import ua.gram.model.actor.misc.CustomLabel;
-import ua.gram.model.prototype.MarketCategoryPrototype;
+import ua.gram.model.prototype.market.MarketCategoryPrototype;
 import ua.gram.view.screen.LevelSelectScreen;
-
-import java.util.ArrayList;
 
 /**
  * @author Gram <gram7gram@gmail.com>
