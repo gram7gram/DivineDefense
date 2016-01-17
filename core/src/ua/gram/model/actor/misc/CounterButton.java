@@ -83,8 +83,8 @@ public class CounterButton extends AnimatedActor<CounterButtonPrototype> {
             if (this.getParent() instanceof GameUIGroup)
                 ((GameUIGroup) this.getParent()).showNotification(text);
             else
-                Log.warn("Could not display notification \"" + text
-                        + "\". Parent is not of the GameUIGroup");
+                Log.warn("Could not display notification \"" + text + "\"."
+                        + " Parent is not of the GameUIGroup");
         } else {
             Log.warn("Passed " + index + " wave index to notification. Ignored");
         }
@@ -107,6 +107,10 @@ public class CounterButton extends AnimatedActor<CounterButtonPrototype> {
         counter = 0;
         this.setVisible(false);
         Log.info("Counter button was reset");
+    }
+
+    public float getCounter() {
+        return counter;
     }
 
     public Level getLevel() {
