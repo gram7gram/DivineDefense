@@ -28,7 +28,7 @@ public class MarketScreen extends AbstractScreen {
     }
 
     @Override
-    public void render_ui(float delta) {
+    public void renderUiElements(float delta) {
         Gdx.gl.glClearColor(45 / 255f, 25 / 255f, 0 / 255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
         stage.act(delta);
@@ -36,7 +36,7 @@ public class MarketScreen extends AbstractScreen {
     }
 
     @Override
-    public void render_other(float delta) {
+    public void renderOtherElements(float delta) {
 
     }
 

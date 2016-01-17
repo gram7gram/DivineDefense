@@ -8,10 +8,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+
 import ua.gram.DDGame;
 import ua.gram.controller.Log;
 import ua.gram.controller.listener.ContinueListener;
-import ua.gram.controller.listener.RestartListener;
+import ua.gram.controller.listener.RestartClickListener;
 import ua.gram.controller.stage.GameUIStage;
 import ua.gram.model.Player;
 import ua.gram.view.screen.MarketScreen;
@@ -41,7 +42,7 @@ public class DefeatWindow extends Window {
 
         Button option1 = new Button(skin, "button-defeat-restart");
         option1.setSize(200, 335);
-        option1.addListener(new RestartListener(game, game.getPlayer().getLevel()));
+        option1.addListener(new RestartClickListener(game, game.getPlayer().getLevel()));
 
         option2 = new Button(skin, "button-defeat-continue-part");
         option2.setSize(200, 335);
@@ -106,7 +107,7 @@ public class DefeatWindow extends Window {
     }
 
     /**
-     * Displays 'doors' to Market if Player has not enough gems to continue level.
+     * Displays 'doors' to Market if Player has not enough gems to continue levelConfig.
      */
     public void update() {
         option2.setDisabled(game.getPlayer().getGems() < 2);

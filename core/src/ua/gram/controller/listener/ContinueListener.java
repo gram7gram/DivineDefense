@@ -3,11 +3,12 @@ package ua.gram.controller.listener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+
 import ua.gram.DDGame;
 import ua.gram.controller.stage.GameUIStage;
 
 /**
- * Continue playing the level with additional health.
+ * Continue playing the levelConfig with additional health.
  *
  * @author gram
  */

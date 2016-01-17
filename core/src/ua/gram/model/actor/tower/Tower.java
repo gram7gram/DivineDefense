@@ -153,7 +153,9 @@ public abstract class Tower extends GameActor<Types.TowerState, Types.TowerLevel
     }
 
     public TowerStrategy getDefaultStrategy() {
-        return towerShop != null ? towerShop.getStrategyManager().getDefault() : null;
+        if (towerShop == null)
+            throw new NullPointerException(this + " has no assocciated tower shop");
+        return towerShop.getStrategyManager().getDefault();
     }
 
     public TowerShop getTowerShop() {
@@ -166,7 +168,8 @@ public abstract class Tower extends GameActor<Types.TowerState, Types.TowerLevel
 
     @Override
     public TowerStateManager getStateManager() {
-        if (towerShop == null) throw new NullPointerException("Missing TowerShop");
+        if (towerShop == null)
+            throw new NullPointerException("Missing TowerShop");
         return towerShop.getStateManager();
     }
 

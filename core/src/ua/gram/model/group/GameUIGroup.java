@@ -9,12 +9,14 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+
 import ua.gram.DDGame;
 import ua.gram.controller.Toggler;
 import ua.gram.controller.stage.GameUIStage;
 import ua.gram.model.Level;
 import ua.gram.model.actor.misc.CounterButton;
 import ua.gram.model.actor.misc.CustomLabel;
+import ua.gram.model.prototype.CounterButtonPrototype;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -31,7 +33,7 @@ public class GameUIGroup extends Group {
     private final Toggler toggler;
     private CounterButton counter;
 
-    public GameUIGroup(final DDGame game, final GameUIStage stage_ui, final Level level) {
+    public GameUIGroup(final DDGame game, final GameUIStage gameUIStage, final Level level) {
         super();
         this.game = game;
         this.level = level;
@@ -47,13 +49,20 @@ public class GameUIGroup extends Group {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 DDGame.PAUSE = true;
-                stage_ui.toggleWindow(stage_ui.getPauseWindow());
+                gameUIStage.toggleWindow(gameUIStage.getPauseWindow());
             }
         });
 
         Vector2 pos = level.getMap().getSpawn().getPosition();
 
-        counter = new CounterButton(game, level, new Vector2(pos.x, pos.y));
+        CounterButtonPrototype prototype = new CounterButtonPrototype();
+        prototype.height = 40;
+        prototype.width = 40;
+        prototype.frameDuration = 1;
+        prototype.region = "button-countdown";
+        prototype.tilePosition = new Vector2(pos.x, pos.y);
+
+        counter = new CounterButton(game, level, prototype);
 
         healthLabel = new CustomLabel("HEALTH: " + game.getPlayer().getHealth(), skin, "small_tinted");
         gemsLabel = new CustomLabel("GEMS: " + game.getPlayer().getGems(), skin, "small_tinted");
@@ -77,11 +86,8 @@ public class GameUIGroup extends Group {
                 DDGame.WORLD_HEIGHT - healthLabel.getHeight() - gap
         );
 
-        waveLabel = new CustomLabel("WAVE: "
-                + (level.getCurrentWave() <= 0 ? "-" : level.getCurrentWave())
-                + "/" + level.getMaxWaves(),
-                skin, "small_tinted");
-        waveLabel.setVisible(true);
+        waveLabel = new CustomLabel("", skin, "small_tinted");
+        waveLabel.setVisible(false);
         waveLabel.setPosition(
                 DDGame.WORLD_WIDTH / 2f + gap + healthLabel.getWidth() + gap,
                 DDGame.WORLD_HEIGHT - waveLabel.getHeight() - gap
@@ -89,7 +95,6 @@ public class GameUIGroup extends Group {
 
         notificationLabel = new CustomLabel("", skin, "header1white");
         notificationLabel.setVisible(false);
-
 
         toggler = new Toggler(notificationLabel);
 
@@ -120,7 +125,8 @@ public class GameUIGroup extends Group {
             speedBut.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    float speed = game.getGameSpeed() < 1 ? game.decreaseGameSpeed() : game.increaseGameSpeed();
+                    if (game.getGameSpeed() < 1) game.decreaseGameSpeed();
+                    else game.increaseGameSpeed();
                 }
             });
             this.addActor(speedBut);
@@ -179,7 +185,9 @@ public class GameUIGroup extends Group {
     }
 
     public void updateWaveLabel() {
-        waveLabel.updateText("WAVE: " + (level.getCurrentWave() <= 0 ? "-" : level.getCurrentWave()) + "/" + level.getMaxWaves());
+        int index = level.getCurrentWaveIndex();
+        waveLabel.setVisible(index > 0);
+        waveLabel.updateText("WAVE: " + (index > 0 ? index : "-") + "/" + level.getMaxWaves());
     }
 
     public void updateMoneyLabel() {

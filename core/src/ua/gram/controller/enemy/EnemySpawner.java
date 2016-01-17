@@ -89,11 +89,11 @@ public final class EnemySpawner {
 
     /**
      * Spawns obtained from pool and cloned EnemyState,
-     * places it at the Spawn position and gives it the path to go.
+     * places it at the Spawn positionIndex and gives it the path to go.
      * Spawn takes place in Group with the coresponding HealthBar.
      *
      * @param type  the EnemyState ancestor to spawn.
-     * @param spawn map tile position to spawn at (not in pixels)
+     * @param spawn map tile positionIndex to spawn at (not in pixels)
      * @throws CloneNotSupportedException - error occcured at cloning.
      * @throws NullPointerException       - type does not belong to known EnemyState ancestor.
      */
@@ -123,11 +123,11 @@ public final class EnemySpawner {
 
     /**
      * Spawns obtained from pool and cloned EnemyState,
-     * places it at the Spawn position and gives it the path to go.
+     * places it at the Spawn positionIndex and gives it the path to go.
      * Spawn takes place in Group with the coresponding HealthBar.
      *
      * @param type  the EnemyState ancestor to spawn.
-     * @param spawn map tile position to spawn at (not in pixels)
+     * @param spawn map tile positionIndex to spawn at (not in pixels)
      * @throws CloneNotSupportedException - error occcured at cloning.
      * @throws NullPointerException       - type does not belong to known EnemyState ancestor.
      */
@@ -172,7 +172,7 @@ public final class EnemySpawner {
 
     public void setEnemiesToSpawn(String[] types) {
         for (String type : types) enemiesToSpawn.push(type);
-        Log.info("Enemies for wave " + level.getCurrentWave()
+        Log.info("Enemies for wave " + level.getCurrentWaveIndex()
                 + " are prepared. Size: " + enemiesToSpawn.size());
     }
 

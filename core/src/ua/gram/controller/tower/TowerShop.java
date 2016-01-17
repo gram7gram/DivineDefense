@@ -57,6 +57,7 @@ public class TowerShop implements ShopInterface<TowerGroup> {
         uiStage.setTowerControls(new TowerControlsGroup(skin, this));
 
         marker = new PositionMarker(skin, "position-marker");
+        marker.setVisible(false);
         battleStage.addActor(marker);
 
         Log.info("TowerShop is OK");

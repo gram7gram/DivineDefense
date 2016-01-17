@@ -29,7 +29,7 @@ public abstract class StateManager<A extends GameActor> {
      * @param actor the actor which will be managed
      * @param before current state; nullable
      * @param after new state; nullable
-     * @param level integer represetation of the state level, aka 1-4
+     * @param level integer represetation of the state levelConfig, aka 1-4
      */
     public synchronized void swap(A actor, StateInterface<A> before, StateInterface<A> after, int level) {
         if (actor == null) return;
@@ -74,7 +74,7 @@ public abstract class StateManager<A extends GameActor> {
      * Save actor-specific state
      * @param actor the actor which will be managed
      * @param newState new state of the actor
-     * @param level level of the state
+     * @param level levelConfig of the state
      */
     public abstract void persist(A actor, StateInterface<A> newState, int level) throws NullPointerException, GdxRuntimeException;
 

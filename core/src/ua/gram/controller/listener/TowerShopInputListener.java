@@ -102,7 +102,7 @@ public class TowerShopInputListener extends ClickListener {
                 }
             } catch (Exception e) {
                 game.setScreen(new ErrorScreen(game,
-                        "Unappropriate wave [" + uiStage.getLevel().getCurrentWave()
+                        "Unappropriate wave [" + uiStage.getLevel().getCurrentWaveIndex()
                                 + "] in level " + uiStage.getLevel().getCurrentLevel(), e));
             }
             PositionMarker marker = shop.getMarker();

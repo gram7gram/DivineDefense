@@ -22,7 +22,7 @@ public class Wave {
     }
 
     /**
-     * Set flags for the finish wave. If wave was the last - the level is cleared.
+     * Set flags for the finish wave. If wave was the last - the levelConfig is cleared.
      */
     public void finish() {
         Log.info("Wave " + index + "/" + level.getMaxWaves() + " is finished");

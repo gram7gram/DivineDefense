@@ -21,11 +21,11 @@ public final class LevelTilePrototype implements PrototypeInterface {
      */
     public byte difficulty;
     /**
-     * Players achievements on the level
+     * Players achievements on the levelConfig
      */
     public byte stars;
     /**
-     * Essential resources to load for the level
+     * Essential resources to load for the levelConfig
      */
     public String[] resources;
 }

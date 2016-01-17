@@ -11,7 +11,7 @@ import ua.gram.model.enums.Types;
 import ua.gram.model.prototype.tower.TowerPrototype;
 
 /**
- * Holds Pools of Animations for each level and state of the TowerState.
+ * Holds Pools of Animations for each levelConfig and state of the TowerState.
  *
  * @author Gram <gram7gram@gmail.com>
  */

@@ -74,7 +74,7 @@ public class DDGame<P extends GamePrototype> extends Game {
         MAP_WIDTH = WORLD_WIDTH / TILE_HEIGHT;
         MAP_HEIGHT = WORLD_HEIGHT / TILE_HEIGHT;
         MAX_ENTITIES = MAP_WIDTH * MAP_HEIGHT;//Maximum entities on the map
-        MAX_LEVELS = prototype.level.levels.length;
+        MAX_LEVELS = prototype.levelConfig.levels.length;
         resources = new Resources(this);
         info = new BitmapFont();
         info.setColor(1, 1, 1, 1);
@@ -149,7 +149,7 @@ public class DDGame<P extends GamePrototype> extends Game {
         return camera;
     }
 
-    public AssetManager getManager() {
+    public AssetManager getAssetManager() {
         return resources.getManager();
     }
 
@@ -191,8 +191,13 @@ public class DDGame<P extends GamePrototype> extends Game {
         return prototype;
     }
 
-    public LevelPrototype getPrototype(int lvl) {
-        return prototype.level.levels[lvl - 1];
+    public LevelPrototype getLevelPrototype(int lvl) {
+        LevelPrototype[] prototypes = prototype.levelConfig.levels;
+
+        if (lvl <= 0 || prototypes.length < lvl)
+            throw new IndexOutOfBoundsException("Cannot get level prototype");
+
+        return prototypes[lvl - 1];
     }
 
     private synchronized void sayGoodbye() {

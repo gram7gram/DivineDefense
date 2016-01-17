@@ -1,7 +1,9 @@
 package ua.gram.view;
 
 import com.badlogic.gdx.Screen;
+
 import ua.gram.DDGame;
+import ua.gram.controller.Log;
 import ua.gram.model.prototype.GamePrototype;
 
 /**
@@ -25,24 +27,20 @@ public abstract class AbstractScreen implements Screen {
     @Override
     public void render(float delta) {
         if (!DDGame.PAUSE) {
-            render_other(delta);
+            renderOtherElements(delta);
         }
-        render_ui(delta);
+        renderUiElements(delta);
     }
 
     /**
      * Allways renders
-     *
-     * @param delta
      */
-    public abstract void render_ui(float delta);
+    public abstract void renderUiElements(float delta);
 
     /**
      * Renders only if the game is not on PAUSE
-     *
-     * @param delta
      */
-    public abstract void render_other(float delta);
+    public abstract void renderOtherElements(float delta);
 
     @Override
     public void resize(int width, int height) {
@@ -61,20 +59,16 @@ public abstract class AbstractScreen implements Screen {
 
     @Override
     public void show() {
-
+        Log.info("Screen set to " + this.getClass().getSimpleName());
     }
 
     @Override
     public void hide() {
-
+        Log.warn("Hiding " + this.getClass().getSimpleName());
     }
 
     @Override
     public void dispose() {
-
-    }
-
-    public DDGame getGame() {
-        return game;
+        Log.warn("Disposing " + this.getClass().getSimpleName());
     }
 }

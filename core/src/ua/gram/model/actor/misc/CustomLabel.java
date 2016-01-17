@@ -3,6 +3,7 @@ package ua.gram.model.actor.misc;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.StringBuilder;
+
 import ua.gram.DDGame;
 
 /**
@@ -10,24 +11,33 @@ import ua.gram.DDGame;
  */
 public class CustomLabel extends Label {
 
-    private StringBuilder label = new StringBuilder();
+    private StringBuilder label;
+    private CharSequence previousValue;
 
     public CustomLabel(String text, Skin skin, String styleName) {
-        super(text, skin, styleName);
+        super(text.toUpperCase(), skin, styleName);
+        label = new StringBuilder();
         label.append(text);
-        this.setDebug(DDGame.DEBUG);
+        previousValue = null;
     }
 
     @Override
     public void act(float delta) {
         this.setText(label);
+        this.setDebug(DDGame.DEBUG);
         super.act(delta);
     }
 
     public void updateText(CharSequence text) {
         invalidate();
-        label.setLength(0);
-        this.label = label.append(text);
+        if (!text.equals(previousValue)) {
+            label.setLength(0);
+            label = label.append(text);
+            if (previousValue == null) setVisible(true);
+            previousValue = text;
+            setSize(getPrefWidth(), getPrefHeight());
+            setY(DDGame.WORLD_HEIGHT - getHeight() - 5);
+        }
     }
 
 }

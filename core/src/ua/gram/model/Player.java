@@ -1,7 +1,6 @@
 package ua.gram.model;
 
-import com.badlogic.gdx.Gdx;
-
+import ua.gram.controller.Log;
 import ua.gram.model.prototype.PlayerPrototype;
 
 /**
@@ -34,7 +33,6 @@ public class Player {
         coins = prototype.coins;
         gems = prototype.gems;
         health = prototype.health;
-        DEFAULT_HEALTH = prototype.health;
         UNLOCKED_TOWER_PRIMARY = prototype.unlockedTowerPrimary;
         UNLOCKED_TOWER_SECONDARY = prototype.unlockedTowerSecondary;
         UNLOCKED_TOWER_STUN = prototype.unlockedTowerStun;
@@ -47,27 +45,27 @@ public class Player {
 
     public void chargeCoins(int amount) {
         if (coins < amount) throw new IllegalArgumentException("Unable to charge " + amount + " coins");
-        Gdx.app.log("INFO", "Player had: " + this.coins + " coins. Now has: " + (this.coins -= amount));
+        Log.info("Player had: " + this.coins + " coins. Now has: " + (coins -= amount));
     }
 
     public void chargeGems(int amount) {
         if (gems < amount) throw new IllegalArgumentException("Unable to charge " + amount + " gems");
-        Gdx.app.log("INFO", "Player had: " + this.gems + " gems. Now has: " + (this.gems -= amount));
+        Log.info("Player had: " + this.gems + " gems. Now has: " + (gems -= amount));
     }
 
     public void addCoins(int amount) {
-        if (this.coins < 0) throw new IllegalArgumentException("Player cannot have less then 0 coin");
-        Gdx.app.log("INFO", "Player had: " + this.coins + " coins. Now has: " + (this.coins += amount));
+        if (coins < 0) throw new IllegalArgumentException("Player cannot have less then 0 coin");
+        Log.info("Player had: " + coins + " coins. Now has: " + (coins += amount));
     }
 
     public void decreaseHealth() {
-        if (this.health <= 0) throw new IllegalArgumentException("Player cannot have less than 0 life");
-        Gdx.app.log("INFO", "Player received 1 damage! His health is: " + (this.health -= 1));
+        if (health <= 0) throw new IllegalArgumentException("Player cannot have less than 0 life");
+        Log.info("Player received 1 damage! His health is: " + (health -= 1));
     }
 
     public void restoreHealth() {
-        this.health = DEFAULT_HEALTH;
-        Gdx.app.log("INFO", "Player's health is restored to " + DEFAULT_HEALTH + " lives");
+        health = prototype.health;
+        Log.info("Player's health is restored to " + health + " lives");
     }
 
     public boolean isDefault() {
@@ -114,8 +112,9 @@ public class Player {
         return this.health == 0;
     }
 
-    public void nextLevel() {
-        this.level += 1;
+    public int nextLevel() {
+        level += 1;
+        return level;
     }
 
     public void addGems(int i) {
@@ -127,6 +126,6 @@ public class Player {
      */
     public void reset() {
         coins = prototype.coins;
-        health = prototype.health;
+        restoreHealth();
     }
 }

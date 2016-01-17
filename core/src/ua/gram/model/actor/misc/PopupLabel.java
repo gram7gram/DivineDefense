@@ -5,6 +5,8 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
+import ua.gram.controller.Log;
+
 /**
  * @author Gram <gram7gram@gmail.com>
  */
@@ -16,7 +18,7 @@ public class PopupLabel extends Label {
         this.setPosition(
                 target.getX() + (target.getWidth() - this.getWidth()) / 2f,
                 target.getY() + target.getHeight() + 5);
-        target.getParent().addActor(this);
+        target.getStage().addActor(this);
         this.addAction(Actions.sequence(
                         Actions.alpha(0),
                         Actions.parallel(
@@ -29,13 +31,9 @@ public class PopupLabel extends Label {
                                 Actions.fadeOut(.4f)
                         ),
                         Actions.alpha(0),
-                        Actions.run(new Runnable() {
-                            @Override
-                            public void run() {
-                                remove();
-                            }
-                        })
+                        Actions.run(this::remove)
                 )
         );
+        Log.info("Displayed small popup \"" + text + "\"");
     }
 }

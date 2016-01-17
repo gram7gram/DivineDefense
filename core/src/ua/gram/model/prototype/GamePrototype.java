@@ -1,16 +1,19 @@
 package ua.gram.model.prototype;
 
+import ua.gram.model.prototype.enemy.EnemyPrototype;
+import ua.gram.model.prototype.market.MarketPrototype;
+import ua.gram.model.prototype.tower.TowerPrototype;
+
 /**
  * @author Gram <gram7gram@gmail.com>
  */
 public abstract class GamePrototype<P extends ParametersPrototype> implements PrototypeInterface {
     public PlayerPrototype player;
     public MapPrototype map;
-    public ua.gram.model.prototype.market.MarketPrototype market;
-    public LevelConfigPrototype level;
-    public WavePrototype[] waves;
-    public ua.gram.model.prototype.enemy.EnemyPrototype[] enemies;
-    public ua.gram.model.prototype.tower.TowerPrototype[] towers;
+    public MarketPrototype market;
+    public LevelConfigPrototype levelConfig;
+    public EnemyPrototype[] enemies;
+    public TowerPrototype[] towers;
 
     public abstract String getConfigPath();
 

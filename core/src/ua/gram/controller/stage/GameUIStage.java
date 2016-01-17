@@ -13,7 +13,7 @@ import ua.gram.model.window.PauseWindow;
 import ua.gram.model.window.VictoryWindow;
 
 /**
- * TODO Display Current level at the beginning.
+ * TODO Display Current levelConfig at the beginning.
  * FIXME Change stats representation.
  *
  * @author Gram <gram7gram@gmail.com>

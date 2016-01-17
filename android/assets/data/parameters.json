@@ -89,7 +89,7 @@
     "gems": 7,
     "fraction": null
   },
-  "level": {
+  "levelConfig": {
     "resources": [
       "data/images/misc/background.jpg",
       "data/images/misc/start_back.png",
@@ -126,22 +126,12 @@
           {
             "index": 1,
             "enemies": [
-              "EnemyWarrior",
-              "EnemyRunner",
-              "EnemyWarrior",
-              "EnemySummoner",
-              "EnemySummoner"
+              "EnemyRunner"
             ]
           },
           {
             "index": 2,
             "enemies": [
-              "EnemySoldier",
-              "EnemyWarrior",
-              "EnemyWarrior",
-              "EnemySummoner",
-              "EnemySummoner",
-              "EnemySoldierArmored",
               "EnemyRunner"
             ]
           }
@@ -174,6 +164,12 @@
               "EnemyRunner",
               "EnemyWarrior"
             ]
+          },
+          {
+            "index": 2,
+            "enemies": [
+              "EnemyRunner",
+            ]
           }
         ]
       },
@@ -195,7 +191,7 @@
         "locked": true,
         "initialDirection": {
           "x": 0,
-          "y": 1
+          "y": -1
         },
         "waves": [
           {

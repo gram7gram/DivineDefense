@@ -56,7 +56,7 @@ public class Resources implements Disposable {
     }
 
     /**
-     * Load tiled map for specified level by file.
+     * Load tiled map for specified levelConfig by file.
      * Will display ErrorScreen it was not able to load map.
      */
     public void loadMap(String file) {

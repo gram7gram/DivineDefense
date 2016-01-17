@@ -30,18 +30,19 @@ public abstract class AbstractLoadingScreen extends AbstractScreen {
 
     @Override
     public void show() {
+        super.show();
         uiStage = new LoadingStage(game);
     }
 
     @Override
-    public void render_ui(float delta) {
+    public void renderUiElements(float delta) {
         Gdx.gl.glClearColor(.9f, .9f, .7f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        progress = (int) game.getManager().getProgress() * 100;
+        progress = (int) game.getAssetManager().getProgress() * 100;
         uiStage.update(progress);
         uiStage.act(delta);
         uiStage.draw();
-        if (game.getManager().update()) {
+        if (game.getAssetManager().update()) {
             try {
                 doAction();
             } catch (Exception e) {
@@ -51,15 +52,15 @@ public abstract class AbstractLoadingScreen extends AbstractScreen {
     }
 
     @Override
-    public void render_other(float delta) {
-        //Does not contain other stuff
+    public void renderOtherElements(float delta) {
+
     }
 
     /**
      * Executes only if AssetManager finishes loading the resources,
      * required for the following Screen ancestor.
      */
-    public void doAction() throws Exception {
+    public void doAction() {
         uiStage.update(progress);
         Log.info("Loading " + progress + "%");
         game.setScreen(new MainMenuScreen(game));
@@ -67,12 +68,7 @@ public abstract class AbstractLoadingScreen extends AbstractScreen {
 
     @Override
     public void hide() {
-        Log.warn("Hiding LoadingScreen");
+        super.hide();
         progress = 0;
-    }
-
-    @Override
-    public void dispose() {
-        Log.warn("LoadingScreen disposed");
     }
 }

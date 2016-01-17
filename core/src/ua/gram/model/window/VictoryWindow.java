@@ -3,17 +3,18 @@ package ua.gram.model.window;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
+
 import ua.gram.DDGame;
+import ua.gram.controller.listener.NextLevelClickListener;
 import ua.gram.model.Level;
-import ua.gram.model.prototype.LevelPrototype;
-import ua.gram.view.screen.LevelLoadingScreen;
-import ua.gram.view.screen.MainMenuScreen;
 
 /**
- * TODO Add reward for level
+ * TODO Add reward for levelConfig
  * NOTE Add social integration?
  *
  * @author Gram <gram7gram@gmail.com>
@@ -43,22 +44,7 @@ public class VictoryWindow extends Window {
         nextLevel.setSize(250, 80);
         nextLevel.setPosition((DDGame.WORLD_WIDTH - nextLevel.getWidth()) / 2f, this.getY());
         nextLevel.setVisible(true);
-        nextLevel.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                if (!level.isLast()) {
-                    game.getPlayer().nextLevel();
-                    Gdx.app.log("INFO", "Switching to level " + game.getPlayer().getLevel());
-                    setVisible(false);
-                    DDGame.PAUSE = false;
-                    LevelPrototype prototype = game.getPrototype().level.levels[game.getPlayer().getLevel()];
-                    game.setScreen(new LevelLoadingScreen(game, prototype));
-                } else {
-                    game.setScreen(new MainMenuScreen(game));
-//                    game.setScreen(new FinalScreen(game));
-                }
-            }
-        });
+        nextLevel.addListener(new NextLevelClickListener(game, level));
 
         Label reward = new Label("Reward: +2 gems", skin, "header2black");
         reward.setPosition(originX + 55, originY + 95);

@@ -1,14 +1,14 @@
 package ua.gram.model;
 
-import com.badlogic.gdx.Gdx;
+import java.util.ArrayList;
+
 import ua.gram.DDGame;
+import ua.gram.controller.Log;
 import ua.gram.controller.enemy.EnemySpawner;
 import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.model.map.Map;
 import ua.gram.model.prototype.LevelPrototype;
 import ua.gram.model.prototype.WavePrototype;
-
-import java.util.ArrayList;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -26,10 +26,10 @@ public class Level {
     private GameBattleStage stage_battle;
     private int currentLevel;
 
-    public Level(DDGame game, LevelPrototype prototype) throws Exception {
+    public Level(DDGame game, LevelPrototype prototype) {
+        if (prototype.waves.length == 0) throw new NullPointerException("Missing waves");
         this.game = game;
         this.prototype = prototype;
-        if (prototype.waves.length == 0) throw new Exception("Missing waves");
         MAX_WAVES = prototype.waves.length;
         waves = new ArrayList<>(prototype.waves.length);
         for (WavePrototype proto : prototype.waves) {
@@ -38,7 +38,7 @@ public class Level {
         isCleared = false;
         currentLevel = prototype.level;
         map = new Map(game, prototype.map);
-        Gdx.app.log("INFO", "Level " + currentLevel + " is OK");
+        Log.info("Level " + currentLevel + " is OK");
     }
 
     public void createSpawner() {
@@ -61,8 +61,10 @@ public class Level {
         currentWave = waves.get(waves.indexOf(currentWave) + 1);
         spawner.setEnemiesToSpawn(currentWave.getEnemies());
         currentWave.isStarted = true;
-        Gdx.app.log("INFO", "Wave " + currentWave.getIndex()
-                + "(" + currentWave.getEnemies().length + ") / " + MAX_WAVES + " has started");
+        Log.info("Wave " + currentWave.getIndex()
+                + "(" + currentWave.getEnemies().length
+                + ") / " + MAX_WAVES
+                + " has started");
     }
 
     /**
@@ -93,8 +95,8 @@ public class Level {
         return map;
     }
 
-    public int getCurrentWave() {
-        return currentWave != null ? currentWave.getIndex() : 0;
+    public int getCurrentWaveIndex() {
+        return currentWave != null ? currentWave.getIndex() : -1;
     }
 
     public int getMaxWaves() {

@@ -2,13 +2,14 @@ package ua.gram.model;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.GdxRuntimeException;
-import ua.gram.DDGame;
-import ua.gram.model.map.Path;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
+
+import ua.gram.DDGame;
+import ua.gram.model.map.Path;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -97,8 +98,8 @@ public class EnemyPath {
     }
 
     /**
-     * @param posToSpawn actual position of an Actor in pixels
-     * @return next position in the path
+     * @param posToSpawn actual positionIndex of an Actor in pixels
+     * @return next positionIndex in the path
      */
     public Vector2 getNextPosition(Vector2 posToSpawn) {
         int count = 0;
