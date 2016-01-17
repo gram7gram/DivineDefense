@@ -2,6 +2,7 @@ package ua.gram.controller.listener;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import ua.gram.DDGame;
@@ -35,8 +36,8 @@ public class WaveCounterClickListener extends ClickListener {
             } else {
                 Log.info("No reward for player");
             }
-            level.nextWave();
             button.reset();
+            level.nextWave();
         } catch (Exception e) {
             game.setScreen(new ErrorScreen(game, "Inappropriate wave "
                     + level.getCurrentWaveIndex()
@@ -50,9 +51,13 @@ public class WaveCounterClickListener extends ClickListener {
         int reward = Math.abs((int) value);
 
         if (reward > 0) {
-            Log.info("Player receives " + reward + " coins as reward");
+            Log.info("Player receives " + reward + " coins as reward for interruption");
             game.getPlayer().addCoins(reward);
-            new PopupLabel("+" + reward, game.getResources().getSkin(), "smallpopupwhite", button);
+            button.addAction(
+                    Actions.run(
+                            new PopupLabel("+" + reward,
+                                    game.getResources().getSkin(),
+                                    "smallpopupwhite", button)));
         }
     }
 }

@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import ua.gram.DDGame;
+import ua.gram.controller.Log;
 import ua.gram.controller.Toggler;
 import ua.gram.controller.stage.GameUIStage;
 import ua.gram.model.Level;
@@ -133,7 +134,6 @@ public class GameUIGroup extends Group {
         }
 
         this.addActor(pauseBut);
-        this.addActor(notificationLabel);
         this.addActor(counter);
         this.addActor(labels);
     }
@@ -160,20 +160,22 @@ public class GameUIGroup extends Group {
     }
 
     public void showNotification(String message) {
+        notificationLabel.clearActions();
         notificationLabel.updateText(message);
         notificationLabel.setPosition(
                 (DDGame.WORLD_WIDTH - notificationLabel.getWidth()) / 2f,
                 (DDGame.WORLD_HEIGHT - notificationLabel.getHeight()) / 2f);
+        notificationLabel.setVisible(true);
         notificationLabel.addAction(
                 Actions.sequence(
-                        Actions.run(toggler),
                         Actions.alpha(0),
                         Actions.alpha(1, .6f),
                         Actions.delay(1),
                         Actions.alpha(0, .6f),
-                        Actions.run(toggler)
+                        Actions.run(notificationLabel::remove)
                 ));
-        Gdx.app.log("INFO", "Showed notification: " + message);
+        getStage().addActor(notificationLabel);
+        Log.info("Showed notification: " + message);
     }
 
     public void updateHealthLabel() {

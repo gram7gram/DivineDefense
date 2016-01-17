@@ -8,8 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 
 import ua.gram.DDGame;
+import ua.gram.controller.Log;
 import ua.gram.model.actor.tower.Tower;
-import ua.gram.model.state.tower.level1.BuildingState;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -24,21 +24,21 @@ public class ProgressBar extends Actor {
         this.tower = tower;
         progressBar = new NinePatchDrawable(
                 new NinePatch(skin.getRegion("health-bar-100"), 0, 0, 0, 0));
-        this.setDebug(DDGame.DEBUG);
         this.setTouchable(Touchable.disabled);
         this.setSize(tower.getWidth(), 3);
-        this.setPosition(tower.getX(), tower.getY() - this.getHeight() - 2);
-        this.setBounds(this.getX(), this.getY(), this.getWidth(), this.getHeight());
         maxWidth = this.getWidth();
     }
-
 
     @Override
     public void act(float delta) {
         super.act(delta);
-        if (!DDGame.PAUSE && tower.getStateHolder().getCurrentLevel1State() instanceof BuildingState) {
-            this.setVisible(tower.buildCount <= tower.getPrototype().buildDelay);
-            if (!this.isVisible()) {
+        this.setDebug(DDGame.DEBUG);
+        if (!DDGame.PAUSE) {
+            boolean isVisible = tower.buildCount <= tower.getPrototype().buildDelay;
+            this.setVisible(isVisible);
+            this.setPosition(tower.getX(), tower.getY() - this.getHeight() - 2);
+            if (!isVisible) {
+                Log.info("ProgressBar for " + tower + " removed");
                 this.remove();
             }
         }
@@ -47,7 +47,7 @@ public class ProgressBar extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        if (this.isVisible() && tower.getStateHolder().getCurrentLevel1State() instanceof BuildingState) {
+        if (!DDGame.PAUSE && this.isVisible()) {
             progressBar.draw(batch, this.getX(), this.getY(),
                     (tower.buildCount / tower.getPrototype().buildDelay) * maxWidth,
                     this.getHeight());

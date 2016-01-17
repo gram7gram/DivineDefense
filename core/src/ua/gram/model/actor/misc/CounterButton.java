@@ -8,7 +8,6 @@ import ua.gram.controller.Log;
 import ua.gram.controller.listener.WaveCounterClickListener;
 import ua.gram.model.Level;
 import ua.gram.model.actor.AnimatedActor;
-import ua.gram.model.group.GameUIGroup;
 import ua.gram.model.prototype.CounterButtonPrototype;
 
 /**
@@ -65,28 +64,12 @@ public class CounterButton extends AnimatedActor<CounterButtonPrototype> {
                 }
                 if (animation.isAnimationFinished(counter)) {
                     Log.info("Countdown finished");
-                    showNotification();
+                    reset();
                     level.nextWave();
-                    this.setVisible(false);
                 } else {
                     counter += delta;
                 }
             }
-        }
-    }
-
-    private void showNotification() {
-        int index = level.getCurrentWaveIndex();
-        if (index > 0) {
-            String text = "WAVE " + index;
-
-            if (this.getParent() instanceof GameUIGroup)
-                ((GameUIGroup) this.getParent()).showNotification(text);
-            else
-                Log.warn("Could not display notification \"" + text + "\"."
-                        + " Parent is not of the GameUIGroup");
-        } else {
-            Log.warn("Passed " + index + " wave index to notification. Ignored");
         }
     }
 

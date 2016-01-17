@@ -6,6 +6,7 @@ import ua.gram.DDGame;
 import ua.gram.controller.Log;
 import ua.gram.controller.enemy.EnemySpawner;
 import ua.gram.controller.stage.GameBattleStage;
+import ua.gram.controller.stage.GameUIStage;
 import ua.gram.model.map.Map;
 import ua.gram.model.prototype.LevelPrototype;
 import ua.gram.model.prototype.WavePrototype;
@@ -23,7 +24,7 @@ public class Level {
     private Map map;
     private DDGame game;
     private EnemySpawner spawner;
-    private GameBattleStage stage_battle;
+    private GameBattleStage battleStage;
     private int currentLevel;
 
     public Level(DDGame game, LevelPrototype prototype) {
@@ -42,7 +43,7 @@ public class Level {
     }
 
     public void createSpawner() {
-        spawner = new EnemySpawner(game, this, stage_battle);
+        spawner = new EnemySpawner(game, this, battleStage);
     }
 
     public void update(float delta) {
@@ -61,10 +62,26 @@ public class Level {
         currentWave = waves.get(waves.indexOf(currentWave) + 1);
         spawner.setEnemiesToSpawn(currentWave.getEnemies());
         currentWave.isStarted = true;
+        showNextWaveNotification();
         Log.info("Wave " + currentWave.getIndex()
                 + "(" + currentWave.getEnemies().length
                 + ") / " + MAX_WAVES
                 + " has started");
+    }
+
+    private void showNextWaveNotification() {
+        int index = getCurrentWaveIndex();
+        if (index > 0) {
+            String text = "WAVE " + index;
+            GameUIStage stage = battleStage.getGameUIStage();
+            if (stage != null) {
+                stage.getGameUIGroup().showNotification(text);
+            } else {
+                Log.crit("GameBattleStage does not know about GameUIStage");
+            }
+        } else {
+            Log.warn("Passed " + index + " wave index to notification. Ignored");
+        }
     }
 
     /**
@@ -73,7 +90,7 @@ public class Level {
     public boolean isVictorious() {
         return !game.getPlayer().isDead()
                 && isCleared
-                && !stage_battle.hasEnemiesOnMap();
+                && !battleStage.hasEnemiesOnMap();
     }
 
     public boolean isLast() {
@@ -108,11 +125,11 @@ public class Level {
     }
 
     public GameBattleStage getStage() {
-        return stage_battle;
+        return battleStage;
     }
 
     public void setStage(GameBattleStage stage) {
-        this.stage_battle = stage;
+        this.battleStage = stage;
     }
 
     public LevelPrototype getPrototype() {

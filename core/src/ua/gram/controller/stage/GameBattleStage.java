@@ -253,4 +253,8 @@ public class GameBattleStage extends AbstractStage {
         layer.addActor(actor);
         return layer;
     }
+
+    public GameUIStage getGameUIStage() {
+        return gameUIStage;
+    }
 }

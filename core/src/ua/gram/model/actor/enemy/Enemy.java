@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Pool;
 
 import java.util.Random;
@@ -19,6 +20,7 @@ import ua.gram.model.Animator;
 import ua.gram.model.EnemyPath;
 import ua.gram.model.PoolableAnimation;
 import ua.gram.model.actor.GameActor;
+import ua.gram.model.actor.misc.PopupLabel;
 import ua.gram.model.enums.Types;
 import ua.gram.model.group.EnemyGroup;
 import ua.gram.model.map.Path;
@@ -177,19 +179,25 @@ public abstract class Enemy extends GameActor<Types.EnemyState, Path.Types, Enem
         return animator.getPoolable().getAnimation();
     }
 
-    public void setAnimation(PoolableAnimation animation) {
-        this.animator.setPollable(animation);
-    }
-
     public void setAnimation(Types.EnemyState type) {
         AnimationPool pool = getAnimationProvider().get(prototype, type, getCurrentDirectionType());
         this.setAnimation(pool.obtain());
     }
 
+    public void setAnimation(PoolableAnimation animation) {
+        this.animator.setPollable(animation);
+    }
+
     public void damage(float damage) {
         health -= damage;
-        Log.info(this
-                + " receives " + (int) damage
+
+        addAction(
+                Actions.run(new PopupLabel("-" + (int) damage,
+                        game.getResources().getSkin(),
+                        "smallest-popup-red",
+                        this)));
+
+        Log.info(this + " receives " + (int) damage
                 + " dmg, hp: " + health);
     }
 

@@ -85,6 +85,9 @@
     },
     "archery16white": {
       "file": "data/skin/fonts/16/SfArchery16white.fnt"
+    },
+    "archery16red": {
+      "file": "data/skin/fonts/16/SfArchery16red.fnt"
     }
   },
   "com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle": {
@@ -120,6 +123,9 @@
     },
     "smallpopupwhite": {
       "font": "komika24white"
+    },
+    "smallest-popup-red": {
+      "font": "archery16red"
     },
     "small_tinted": {
       "font": "archery32white",
@@ -285,7 +291,7 @@
   },
   "com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle": {
     "default": {
-        "background": "label-background-0.25"
+      "background": "label-background-0.25"
     }
   },
   "com.badlogic.gdx.scenes.scene2d.ui.Table": {
