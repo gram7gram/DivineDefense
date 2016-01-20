@@ -16,6 +16,7 @@ import ua.gram.model.Player;
 import ua.gram.model.prototype.GamePrototype;
 import ua.gram.model.prototype.LevelPrototype;
 import ua.gram.model.prototype.ParametersPrototype;
+import ua.gram.model.shader.ShaderManager;
 import ua.gram.view.screen.LaunchLoadingScreen;
 
 /**
@@ -56,6 +57,7 @@ public class DDGame<P extends GamePrototype> extends Game {
     private Viewport view;
     private Player player;
     private BitmapFont info;
+    private ShaderManager shaderManager;
     private float gameSpeed = 1;
 
     public DDGame(SecurityHandler security, P prototype) {
@@ -78,6 +80,7 @@ public class DDGame<P extends GamePrototype> extends Game {
         resources = new Resources(this);
         info = new BitmapFont();
         info.setColor(1, 1, 1, 1);
+        shaderManager = new ShaderManager(prototype.shaders);
         this.setScreen(new LaunchLoadingScreen(this, prototype));
     }
 
@@ -214,5 +217,9 @@ public class DDGame<P extends GamePrototype> extends Game {
 
     public void resetGameSpeed() {
         this.gameSpeed = 1;
+    }
+
+    public ShaderManager getShaderManager() {
+        return shaderManager;
     }
 }

@@ -12,6 +12,7 @@ import java.util.List;
 
 import ua.gram.DDGame;
 import ua.gram.controller.Log;
+import ua.gram.controller.listener.TowerHoverListener;
 import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.controller.tower.TowerShop;
 import ua.gram.model.PoolableAnimation;
@@ -25,6 +26,7 @@ import ua.gram.model.group.TowerGroup;
 import ua.gram.model.prototype.tower.TowerPropertyPrototype;
 import ua.gram.model.prototype.tower.TowerPrototype;
 import ua.gram.model.prototype.weapon.WeaponPrototype;
+import ua.gram.model.shader.AbstractShader;
 import ua.gram.model.state.tower.TowerStateHolder;
 import ua.gram.model.state.tower.TowerStateManager;
 import ua.gram.model.strategy.tower.TowerStrategy;
@@ -38,20 +40,20 @@ import ua.gram.model.strategy.tower.TowerStrategy;
 public abstract class Tower extends GameActor<Types.TowerState, Types.TowerLevels, TowerStateManager>
         implements Pool.Poolable {
 
-    public static final float SELL_RATIO = .6f;
-    public static final byte MAX_TOWER_LEVEL = 4;
+    protected final DDGame game;
     protected final TowerPrototype prototype;
     protected final TowerProperty property;
     protected final TowerStateHolder stateHolder;
+    private final AbstractShader shader;
     public float buildCount = 0;
     public float attackCount = 0;
-    protected DDGame game;
     protected TextureRegion currentFrame;
     protected TowerShop towerShop;
     protected Weapon weapon;
     private List<EnemyGroup> victims;
     private TowerStrategy currentTowerStrategy;
     private float stateTime;
+    private boolean isAllowedShader;
 
     public Tower(DDGame game, TowerPrototype prototype) {
         super(prototype);
@@ -60,6 +62,9 @@ public abstract class Tower extends GameActor<Types.TowerState, Types.TowerLevel
         this.property = new TowerProperty(prototype.getFirstProperty());
         stateHolder = new TowerStateHolder();
         victims = new ArrayList<>(10);
+        shader = game.getShaderManager().get("OUTLINE");
+        isAllowedShader = false;
+        addListener(new TowerHoverListener(this));
     }
 
     @Override
@@ -69,7 +74,11 @@ public abstract class Tower extends GameActor<Types.TowerState, Types.TowerLevel
             currentFrame = animator.getAnimation().getKeyFrame(stateTime, true);
             stateTime += Gdx.graphics.getDeltaTime();
         }
-        if (currentFrame != null) batch.draw(currentFrame, this.getX(), this.getY());
+        if (currentFrame != null) {
+            if (isAllowedShader())
+                shader.draw(currentFrame, this, batch);
+            batch.draw(currentFrame, getX(), getY());
+        }
     }
 
     @Override
@@ -103,7 +112,7 @@ public abstract class Tower extends GameActor<Types.TowerState, Types.TowerLevel
         int price = property.getCost();
         int nextLevel = property.getTowerLevel() + 1;
 
-        if (nextLevel > MAX_TOWER_LEVEL)
+        if (nextLevel > TowerShop.MAX_TOWER_LEVEL)
             throw new IllegalArgumentException("Cannot update to higher value, then expected");
 
         try {
@@ -196,5 +205,21 @@ public abstract class Tower extends GameActor<Types.TowerState, Types.TowerLevel
 
     public TowerProperty getProperty() {
         return property;
+    }
+
+    public TextureRegion getCurrentFrame() {
+        return currentFrame;
+    }
+
+    public AbstractShader getShader() {
+        return shader;
+    }
+
+    public boolean isAllowedShader() {
+        return isAllowedShader;
+    }
+
+    public void setIsAllowedShader(boolean isAllowedShader) {
+        this.isAllowedShader = isAllowedShader;
     }
 }

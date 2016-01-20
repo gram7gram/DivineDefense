@@ -39,7 +39,7 @@ public class TowerControlsGroup extends Group {
         super.act(delta);
         if (!DDGame.PAUSE && tower != null) {
             this.toFront();
-            if (tower.getProperty().getTowerLevel() == Tower.MAX_TOWER_LEVEL) {
+            if (tower.getProperty().getTowerLevel() == TowerShop.MAX_TOWER_LEVEL) {
                 upgradeBut.setVisible(false);
             }
         }

@@ -168,7 +168,7 @@
           {
             "index": 2,
             "enemies": [
-              "EnemyRunner",
+              "EnemyRunner"
             ]
           }
         ]
@@ -731,5 +731,19 @@
         ]
       }
     ]
-  }
+  },
+  "shaders": [
+    {
+      "name": "OUTLINE",
+      "fragmentFile": "data/shaders/outline/outline.frag",
+      "vertexFile": "data/shaders/outline/outline.vert",
+      "step": 0.2,
+      "offset": 2,
+      "color": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      }
+    }
+  ]
 }

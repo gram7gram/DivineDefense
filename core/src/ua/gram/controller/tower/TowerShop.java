@@ -30,6 +30,9 @@ import ua.gram.model.strategy.TowerStrategyManager;
  */
 public class TowerShop implements ShopInterface<TowerGroup> {
 
+    public static final int MAX_TOWER_LEVEL = 4;
+    public static final float SELL_RATIO = .6f;
+
     private final DDGame game;
     private final GameUIStage uiStage;
     private final GameBattleStage battleStage;
