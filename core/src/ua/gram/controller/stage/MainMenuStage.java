@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+
 import ua.gram.DDGame;
 import ua.gram.view.screen.LevelSelectScreen;
 import ua.gram.view.screen.MarketScreen;
@@ -37,21 +38,21 @@ public class MainMenuStage extends AbstractStage {
                 Gdx.app.exit();
             }
         });
-        Button continueBut = new TextButton("PLAY", skin, "pretty-button");
+        Button continueBut = new TextButton("PLAY", skin, "diablo-red");
         continueBut.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(new LevelSelectScreen(game, game.getPrototype()));
             }
         });
-        Button marketBut = new TextButton("MARKET", skin, "pretty-button");
+        Button marketBut = new TextButton("MARKET", skin, "diablo-green");
         marketBut.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(new MarketScreen(game, game.getPrototype().market));
             }
         });
-        Button aboutBut = new TextButton("ABOUT", skin, "pretty-button");
+        Button aboutBut = new TextButton("ABOUT", skin, "diablo-red");
         aboutBut.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -59,7 +60,7 @@ public class MainMenuStage extends AbstractStage {
 //                game.setScreen(new AboutScreen(game));
             }
         });
-        Button settingsBut = new TextButton("SETTINGS", skin, "pretty-button");
+        Button settingsBut = new TextButton("SETTINGS", skin, "diablo-green");
         settingsBut.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -73,10 +74,10 @@ public class MainMenuStage extends AbstractStage {
         table.setDebug(DDGame.DEBUG);
         table.setSize(DDGame.WORLD_WIDTH / 2f, DDGame.WORLD_HEIGHT);
 
-        table.add(continueBut).width(butWidth).row();
-        table.add(marketBut).width(butWidth).row();
-        table.add(settingsBut).width(butWidth).row();
-        table.add(aboutBut).width(butWidth).row();
+        table.add(continueBut).width(butWidth).padBottom(10).height(butHeight).row();
+        table.add(marketBut).width(butWidth).padBottom(10).height(butHeight).row();
+        table.add(settingsBut).width(butWidth).padBottom(10).height(butHeight).row();
+        table.add(aboutBut).width(butWidth).height(butHeight).row();
 
         this.addActor(table);
     }

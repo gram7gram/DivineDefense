@@ -1,6 +1,7 @@
 package ua.gram.model.actor.misc;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -15,7 +16,8 @@ public class PopupLabel extends Label implements Runnable {
         this.setPosition(
                 target.getX() + (target.getWidth() - this.getWidth()) / 2f,
                 target.getY() + target.getHeight() - 5);
-        target.getStage().addActor(this);
+        Stage stage = target.getStage();
+        if (stage != null) stage.addActor(this);
     }
 
     @Override

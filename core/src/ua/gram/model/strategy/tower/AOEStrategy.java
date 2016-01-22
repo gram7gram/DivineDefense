@@ -27,6 +27,9 @@ public class AOEStrategy implements TowerStrategy {
 
     @Override
     public List<EnemyGroup> chooseVictims(Tower tower, List<EnemyGroup> victims) {
+
+        if (victims.size() == 1) return victims;
+
         Weapon weapon = tower.getWeapon();
 
         if (!(weapon instanceof AOEWeapon))

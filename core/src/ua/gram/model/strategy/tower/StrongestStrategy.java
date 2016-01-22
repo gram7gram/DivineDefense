@@ -22,11 +22,18 @@ public class StrongestStrategy implements TowerStrategy {
     @Override
     public List<EnemyGroup> chooseVictims(Tower tower, List<EnemyGroup> victims) {
 
+        if (victims.size() == 1) return victims;
+
         healthComparator.setType(EnemyHealthComparator.MAX);
 
         Collections.sort(victims, healthComparator);
 
-        return victims.size() > 0 ? victims.subList(0, tower.getProperty().getTowerLevel()) : null;
+        int lvl = tower.getProperty().getTowerLevel();
+        int index = lvl > victims.size() ? victims.size() - 1 : lvl - 1;
+
+        return victims.size() > 0
+                ? victims.subList(0, index)
+                : Collections.emptyList();
     }
 
 }

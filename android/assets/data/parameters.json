@@ -285,24 +285,7 @@
       "frameDuration": 0.1,
       "abilityDuration": 3,
       "abilityDelay": 4,
-      "ability": true,
-      "abilityConfig": {
-        "type": "SUMMON",
-        "content": [
-          {
-            "origin": "EnemySoldier",
-            "probability": 0.7,
-            "amount": 1
-          },
-          {
-            "origin": "EnemySoldierArmored",
-            "probability": 0.1,
-            "amount": 1
-          }
-        ],
-        "abilityDuration": 2,
-        "abilityDelay": 2
-      }
+      "ability": true
     },
     {
       "name": "EnemyWarrior",
