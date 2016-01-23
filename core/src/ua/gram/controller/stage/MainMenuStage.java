@@ -45,14 +45,14 @@ public class MainMenuStage extends AbstractStage {
                 game.setScreen(new LevelSelectScreen(game, game.getPrototype()));
             }
         });
-        Button marketBut = new TextButton("MARKET", skin, "diablo-green");
+        Button marketBut = new TextButton("MARKET", skin, "diablo-yellow");
         marketBut.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(new MarketScreen(game, game.getPrototype().market));
             }
         });
-        Button aboutBut = new TextButton("ABOUT", skin, "diablo-red");
+        Button aboutBut = new TextButton("ABOUT", skin, "diablo-yellow");
         aboutBut.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -60,7 +60,7 @@ public class MainMenuStage extends AbstractStage {
 //                game.setScreen(new AboutScreen(game));
             }
         });
-        Button settingsBut = new TextButton("SETTINGS", skin, "diablo-green");
+        Button settingsBut = new TextButton("SETTINGS", skin, "diablo-yellow");
         settingsBut.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {

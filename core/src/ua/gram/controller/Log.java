@@ -13,18 +13,30 @@ public class Log {
      * Normal log
      */
     public synchronized static void info(String msg) {
-        Gdx.app.log("INFO", msg);
+        if (Gdx.app != null) {
+            Gdx.app.log("INFO", msg);
+        } else {
+            System.out.println("INFO " + msg);
+        }
     }
 
     public synchronized static void warn(String msg) {
-        Gdx.app.log("WARN", msg);
+        if (Gdx.app != null) {
+            Gdx.app.log("WARN", msg);
+        } else {
+            System.out.println("WARN " + msg);
+        }
     }
 
     /**
      * Log critical errors. Should not happen
      */
     public synchronized static void crit(String msg) {
-        Gdx.app.error("CRIT", msg);
+        if (Gdx.app != null) {
+            Gdx.app.error("CRIT", msg);
+        } else {
+            System.err.println("CRIT " + msg);
+        }
     }
 
     /**
@@ -34,7 +46,11 @@ public class Log {
         msg += "\r\nCLASS:\t" + e.getClass().getSimpleName();
         msg += "\nMSG:\t" + e.getMessage();
         msg += "\nTRACE:\t" + Arrays.toString(e.getStackTrace()) + "\r\n";
-        Gdx.app.error("\nEXC", msg);
+        if (Gdx.app != null) {
+            Gdx.app.error("\nEXC", msg);
+        } else {
+            System.err.println("\nEXC " + msg);
+        }
     }
 
     private String getTime() {

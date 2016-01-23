@@ -14,6 +14,7 @@ public abstract class GamePrototype<P extends ParametersPrototype> implements Pr
     public LevelConfigPrototype levelConfig;
     public EnemyPrototype[] enemies;
     public TowerPrototype[] towers;
+    public RemoteConfigurationPrototype remoteConfig;
 
     public abstract String getConfigPath();
 

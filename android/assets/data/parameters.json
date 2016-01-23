@@ -58,7 +58,12 @@
     },
     "logo128": "logo_min128.png",
     "logo32": "logo_min32.png",
-    "logo16": "logo_min16.png"
+    "logo16": "logo_min16.png",
+    "remoteConfig": {
+      "host": "",
+      "port": "",
+      "method": ""
+    }
   },
   "parameters": {
     "debugging": true,
@@ -73,6 +78,7 @@
     "maxLevel": 8,
     "maxRanking": 3,
     "skin": "data/skin/style.json",
+    "configPath": ".config/dd",
     "consoleBye": [
       "Thank you for choosing {{ title }}!",
       "Visit {{ repository }} to view sources or to fork repository",
@@ -216,7 +222,67 @@
         },
         "difficulty": 1,
         "ranking": 0,
-        "preview": "level-2-preview",
+        "preview": "level-3-preview",
+        "resources": [],
+        "locked": true,
+        "initialDirection": {
+          "x": 0,
+          "y": 1
+        },
+        "waves": [
+          {
+            "index": 1,
+            "enemies": [
+              "EnemyRunner",
+              "EnemyWarrior"
+            ]
+          }
+        ]
+      },
+      {
+        "level": 5,
+        "map": {
+          "layer": "Terrain",
+          "walkableProperty": "walkable",
+          "spawnProperty": "spawn",
+          "baseProperty": "base",
+          "blockedProperty": "blocked",
+          "mapObject": null,
+          "name": "data/levels/maps/level4@60.tmx"
+        },
+        "difficulty": 1,
+        "ranking": 0,
+        "preview": "level-3-preview",
+        "resources": [],
+        "locked": true,
+        "initialDirection": {
+          "x": 0,
+          "y": 1
+        },
+        "waves": [
+          {
+            "index": 1,
+            "enemies": [
+              "EnemyRunner",
+              "EnemyWarrior"
+            ]
+          }
+        ]
+      },
+      {
+        "level": 6,
+        "map": {
+          "layer": "Terrain",
+          "walkableProperty": "walkable",
+          "spawnProperty": "spawn",
+          "baseProperty": "base",
+          "blockedProperty": "blocked",
+          "mapObject": null,
+          "name": "data/levels/maps/level4@60.tmx"
+        },
+        "difficulty": 1,
+        "ranking": 0,
+        "preview": "level-3-preview",
         "resources": [],
         "locked": true,
         "initialDirection": {

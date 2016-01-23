@@ -35,9 +35,9 @@ public class CustomLabel extends Label {
             label = label.append(text);
             if (previousValue == null) setVisible(true);
             previousValue = text;
-            setSize(getPrefWidth(), getPrefHeight());
             setY(DDGame.WORLD_HEIGHT - getHeight() - 5);
         }
+        setSize(getPrefWidth(), getPrefHeight());
     }
 
 }

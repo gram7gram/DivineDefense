@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+
 import ua.gram.DDGame;
 
 /**
@@ -22,7 +23,7 @@ public class ConfirmationGroup extends Group {
         WindowGroup window = new WindowGroup(skin, "default", this, action0);
         window.setVisible(true);
 
-        Button cont = new TextButton(action1Text, skin, "green-button");
+        Button cont = new TextButton(action1Text, skin, "diablo-green");
         cont.setSize(180, 60);
         cont.setTouchable(Touchable.enabled);
         cont.setVisible(true);
@@ -43,7 +44,7 @@ public class ConfirmationGroup extends Group {
             window.addActor(rest);
         }
 
-        Label messageLabel = new Label(message, skin, "header1black");
+        Label messageLabel = new Label(message, skin, "header1white");
         messageLabel.setPosition((DDGame.WORLD_WIDTH - messageLabel.getWidth()) / 2f, DDGame.WORLD_HEIGHT / 2f - 10);
         messageLabel.setVisible(true);
         messageLabel.setWrap(true);

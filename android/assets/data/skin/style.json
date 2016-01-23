@@ -193,6 +193,18 @@
       "up": "ui/buttons/diablo-green-normal",
       "down": "ui/buttons/diablo-green-pressed",
       "over": "ui/buttons/diablo-green-pressed"
+    },
+    "diablo-yellow": {
+      "font": "archery32white",
+      "up": "ui/buttons/diablo-yellow-normal",
+      "down": "ui/buttons/diablo-yellow-pressed",
+      "over": "ui/buttons/diablo-yellow-pressed"
+    },
+    "diablo-blue": {
+      "font": "archery32white",
+      "up": "ui/buttons/diablo-blue-normal",
+      "down": "ui/buttons/diablo-blue-pressed",
+      "over": "ui/buttons/diablo-blue-pressed"
     }
   },
   "com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle": {

@@ -42,7 +42,7 @@ button-blue-down
   index: -1
 button-blue-up
   rotate: false
-  xy: 2406, 1181
+  xy: 2326, 1101
   size: 78, 78
   split: 16, 61, 13, 11
   orig: 78, 78
@@ -57,7 +57,7 @@ button-buy-down
   index: -1
 button-buy-up
   rotate: false
-  xy: 1942, 1137
+  xy: 1942, 929
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
@@ -178,7 +178,7 @@ button-goto-shop-up
   index: -1
 button-green-down
   rotate: false
-  xy: 1942, 1037
+  xy: 1942, 829
   size: 98, 98
   split: 14, 16, 14, 16
   orig: 98, 98
@@ -186,7 +186,7 @@ button-green-down
   index: -1
 button-green-up
   rotate: false
-  xy: 2044, 1139
+  xy: 2044, 931
   size: 98, 98
   split: 12, 13, 15, 14
   orig: 98, 98
@@ -194,7 +194,7 @@ button-green-up
   index: -1
 button-pause-down
   rotate: false
-  xy: 1942, 855
+  xy: 1942, 647
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
@@ -216,7 +216,7 @@ button-pretty-down
   index: -1
 button-pretty-up
   rotate: false
-  xy: 1942, 773
+  xy: 1942, 565
   size: 80, 80
   split: 14, 11, 18, 26
   orig: 80, 80
@@ -231,7 +231,7 @@ button-quit-down
   index: -1
 button-quit-up
   rotate: false
-  xy: 1942, 691
+  xy: 1942, 483
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
@@ -252,14 +252,14 @@ button-sell-up
   index: -1
 button-speed-down
   rotate: false
-  xy: 1942, 609
+  xy: 1942, 401
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
 button-speed-up
   rotate: false
-  xy: 1942, 527
+  xy: 1942, 319
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
@@ -308,28 +308,28 @@ enemies/EnemyRunner/Demon/STUN/LEFT
   index: -1
 enemies/EnemyRunner/Demon/IDLE/RIGHT
   rotate: false
-  xy: 2926, 1537
+  xy: 2530, 1169
   size: 60, 90
   orig: 60, 90
   offset: 0, 0
   index: -1
 enemies/EnemyRunner/Demon/STUN/RIGHT
   rotate: false
-  xy: 2926, 1537
+  xy: 2530, 1169
   size: 60, 90
   orig: 60, 90
   offset: 0, 0
   index: -1
 enemies/EnemyRunner/Demon/IDLE/UP
   rotate: false
-  xy: 2024, 477
+  xy: 2592, 1067
   size: 60, 90
   orig: 60, 90
   offset: 0, 0
   index: -1
 enemies/EnemyRunner/Demon/STUN/UP
   rotate: false
-  xy: 2024, 477
+  xy: 2592, 1067
   size: 60, 90
   orig: 60, 90
   offset: 0, 0
@@ -341,14 +341,14 @@ enemies/EnemyRunner/Demon/SPAWN/DOWN
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemyRunner/Demon/FINISH/DOWN
+enemies/EnemyRunner/Demon/DEAD/DOWN
   rotate: false
   xy: 1196, 1323
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemyRunner/Demon/DEAD/DOWN
+enemies/EnemyRunner/Demon/FINISH/DOWN
   rotate: false
   xy: 1196, 1323
   size: 540, 90
@@ -369,7 +369,7 @@ enemies/EnemyRunner/Demon/SPAWN/LEFT
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemyRunner/Demon/WALKING/LEFT
+enemies/EnemyRunner/Demon/FINISH/LEFT
   rotate: false
   xy: 996, 771
   size: 540, 90
@@ -383,7 +383,7 @@ enemies/EnemyRunner/Demon/DEAD/LEFT
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemyRunner/Demon/FINISH/LEFT
+enemies/EnemyRunner/Demon/WALKING/LEFT
   rotate: false
   xy: 996, 771
   size: 540, 90
@@ -391,6 +391,13 @@ enemies/EnemyRunner/Demon/FINISH/LEFT
   offset: 0, 0
   index: -1
 enemies/EnemyRunner/Demon/SPAWN/RIGHT
+  rotate: false
+  xy: 948, 219
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemyRunner/Demon/WALKING/RIGHT
   rotate: false
   xy: 948, 219
   size: 540, 90
@@ -411,28 +418,7 @@ enemies/EnemyRunner/Demon/DEAD/RIGHT
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemyRunner/Demon/WALKING/RIGHT
-  rotate: false
-  xy: 948, 219
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
 enemies/EnemyRunner/Demon/SPAWN/UP
-  rotate: false
-  xy: 2158, 1527
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
-enemies/EnemyRunner/Demon/WALKING/UP
-  rotate: false
-  xy: 2158, 1527
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
-enemies/EnemyRunner/Demon/DEAD/UP
   rotate: false
   xy: 2158, 1527
   size: 540, 90
@@ -446,30 +432,44 @@ enemies/EnemyRunner/Demon/FINISH/UP
   orig: 540, 90
   offset: 0, 0
   index: -1
+enemies/EnemyRunner/Demon/DEAD/UP
+  rotate: false
+  xy: 2158, 1527
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemyRunner/Demon/WALKING/UP
+  rotate: false
+  xy: 2158, 1527
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
 enemies/EnemySoldier/Demon/IDLE/RIGHT
   rotate: false
-  xy: 2326, 1089
+  xy: 2326, 1009
   size: 60, 90
   orig: 60, 90
   offset: 0, 0
   index: -1
 enemies/EnemySoldier/Demon/STUN/RIGHT
   rotate: false
-  xy: 2326, 1089
+  xy: 2326, 1009
   size: 60, 90
   orig: 60, 90
   offset: 0, 0
   index: -1
 enemies/EnemySoldier/Demon/IDLE/UP
   rotate: false
-  xy: 2024, 661
+  xy: 2468, 1077
   size: 60, 90
   orig: 60, 90
   offset: 0, 0
   index: -1
 enemies/EnemySoldier/Demon/STUN/UP
   rotate: false
-  xy: 2024, 661
+  xy: 2468, 1077
   size: 60, 90
   orig: 60, 90
   offset: 0, 0
@@ -481,7 +481,7 @@ enemies/EnemySoldier/Demon/SPAWN/DOWN
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemySoldier/Demon/WALKING/DOWN
+enemies/EnemySoldier/Demon/DEAD/DOWN
   rotate: false
   xy: 406, 47
   size: 540, 90
@@ -502,14 +502,14 @@ enemies/EnemySoldier/Demon/STUN/DOWN
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemySoldier/Demon/DEAD/DOWN
+enemies/EnemySoldier/Demon/IDLE/DOWN
   rotate: false
   xy: 406, 47
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemySoldier/Demon/IDLE/DOWN
+enemies/EnemySoldier/Demon/WALKING/DOWN
   rotate: false
   xy: 406, 47
   size: 540, 90
@@ -523,21 +523,7 @@ enemies/EnemySoldier/Demon/SPAWN/LEFT
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemySoldier/Demon/WALKING/LEFT
-  rotate: false
-  xy: 996, 1047
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
-enemies/EnemySoldier/Demon/DEAD/LEFT
-  rotate: false
-  xy: 996, 1047
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
-enemies/EnemySoldier/Demon/FINISH/LEFT
+enemies/EnemySoldier/Demon/IDLE/LEFT
   rotate: false
   xy: 996, 1047
   size: 540, 90
@@ -551,7 +537,21 @@ enemies/EnemySoldier/Demon/STUN/LEFT
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemySoldier/Demon/IDLE/LEFT
+enemies/EnemySoldier/Demon/DEAD/LEFT
+  rotate: false
+  xy: 996, 1047
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySoldier/Demon/WALKING/LEFT
+  rotate: false
+  xy: 996, 1047
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySoldier/Demon/FINISH/LEFT
   rotate: false
   xy: 996, 1047
   size: 540, 90
@@ -565,14 +565,14 @@ enemies/EnemySoldier/Demon/SPAWN/RIGHT
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemySoldier/Demon/FINISH/RIGHT
+enemies/EnemySoldier/Demon/DEAD/RIGHT
   rotate: false
   xy: 996, 495
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemySoldier/Demon/DEAD/RIGHT
+enemies/EnemySoldier/Demon/FINISH/RIGHT
   rotate: false
   xy: 996, 495
   size: 540, 90
@@ -593,7 +593,7 @@ enemies/EnemySoldier/Demon/SPAWN/UP
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemySoldier/Demon/WALKING/UP
+enemies/EnemySoldier/Demon/FINISH/UP
   rotate: false
   xy: 2206, 1803
   size: 540, 90
@@ -607,7 +607,7 @@ enemies/EnemySoldier/Demon/DEAD/UP
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemySoldier/Demon/FINISH/UP
+enemies/EnemySoldier/Demon/WALKING/UP
   rotate: false
   xy: 2206, 1803
   size: 540, 90
@@ -644,28 +644,28 @@ enemies/EnemySoldierArmored/Demon/STUN/LEFT
   index: -1
 enemies/EnemySoldierArmored/Demon/IDLE/RIGHT
   rotate: false
-  xy: 2024, 845
+  xy: 2592, 1159
   size: 60, 90
   orig: 60, 90
   offset: 0, 0
   index: -1
 enemies/EnemySoldierArmored/Demon/STUN/RIGHT
   rotate: false
-  xy: 2024, 845
+  xy: 2592, 1159
   size: 60, 90
   orig: 60, 90
   offset: 0, 0
   index: -1
 enemies/EnemySoldierArmored/Demon/IDLE/UP
   rotate: false
-  xy: 2024, 385
+  xy: 2926, 1537
   size: 60, 90
   orig: 60, 90
   offset: 0, 0
   index: -1
 enemies/EnemySoldierArmored/Demon/STUN/UP
   rotate: false
-  xy: 2024, 385
+  xy: 2926, 1537
   size: 60, 90
   orig: 60, 90
   offset: 0, 0
@@ -677,14 +677,14 @@ enemies/EnemySoldierArmored/Demon/SPAWN/DOWN
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemySoldierArmored/Demon/DEAD/DOWN
+enemies/EnemySoldierArmored/Demon/FINISH/DOWN
   rotate: false
   xy: 1168, 1231
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemySoldierArmored/Demon/FINISH/DOWN
+enemies/EnemySoldierArmored/Demon/DEAD/DOWN
   rotate: false
   xy: 1168, 1231
   size: 540, 90
@@ -705,14 +705,14 @@ enemies/EnemySoldierArmored/Demon/SPAWN/LEFT
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemySoldierArmored/Demon/DEAD/LEFT
+enemies/EnemySoldierArmored/Demon/FINISH/LEFT
   rotate: false
   xy: 996, 679
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemySoldierArmored/Demon/FINISH/LEFT
+enemies/EnemySoldierArmored/Demon/DEAD/LEFT
   rotate: false
   xy: 996, 679
   size: 540, 90
@@ -733,14 +733,14 @@ enemies/EnemySoldierArmored/Demon/SPAWN/RIGHT
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemySoldierArmored/Demon/DEAD/RIGHT
+enemies/EnemySoldierArmored/Demon/WALKING/RIGHT
   rotate: false
   xy: 948, 127
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemySoldierArmored/Demon/WALKING/RIGHT
+enemies/EnemySoldierArmored/Demon/DEAD/RIGHT
   rotate: false
   xy: 948, 127
   size: 540, 90
@@ -761,13 +761,6 @@ enemies/EnemySoldierArmored/Demon/SPAWN/UP
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemySoldierArmored/Demon/DEAD/UP
-  rotate: false
-  xy: 1950, 1435
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
 enemies/EnemySoldierArmored/Demon/WALKING/UP
   rotate: false
   xy: 1950, 1435
@@ -776,6 +769,13 @@ enemies/EnemySoldierArmored/Demon/WALKING/UP
   offset: 0, 0
   index: -1
 enemies/EnemySoldierArmored/Demon/FINISH/UP
+  rotate: false
+  xy: 1950, 1435
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySoldierArmored/Demon/DEAD/UP
   rotate: false
   xy: 1950, 1435
   size: 540, 90
@@ -840,28 +840,28 @@ enemies/EnemySummoner/Demon/STUN/LEFT
   index: -1
 enemies/EnemySummoner/Demon/IDLE/RIGHT
   rotate: false
-  xy: 2388, 1089
+  xy: 2468, 1169
   size: 60, 90
   orig: 60, 90
   offset: 0, 0
   index: -1
 enemies/EnemySummoner/Demon/STUN/RIGHT
   rotate: false
-  xy: 2388, 1089
+  xy: 2468, 1169
   size: 60, 90
   orig: 60, 90
   offset: 0, 0
   index: -1
 enemies/EnemySummoner/Demon/IDLE/UP
   rotate: false
-  xy: 2024, 569
+  xy: 2530, 1077
   size: 60, 90
   orig: 60, 90
   offset: 0, 0
   index: -1
 enemies/EnemySummoner/Demon/STUN/UP
   rotate: false
-  xy: 2024, 569
+  xy: 2530, 1077
   size: 60, 90
   orig: 60, 90
   offset: 0, 0
@@ -880,13 +880,6 @@ enemies/EnemySummoner/Demon/DEAD/DOWN
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemySummoner/Demon/WALKING/DOWN
-  rotate: false
-  xy: 3048, 1860
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
 enemies/EnemySummoner/Demon/FINISH/DOWN
   rotate: false
   xy: 3048, 1860
@@ -894,7 +887,21 @@ enemies/EnemySummoner/Demon/FINISH/DOWN
   orig: 540, 90
   offset: 0, 0
   index: -1
+enemies/EnemySummoner/Demon/WALKING/DOWN
+  rotate: false
+  xy: 3048, 1860
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
 enemies/EnemySummoner/Demon/SPAWN/LEFT
+  rotate: false
+  xy: 996, 955
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySummoner/Demon/FINISH/LEFT
   rotate: false
   xy: 996, 955
   size: 540, 90
@@ -915,13 +922,6 @@ enemies/EnemySummoner/Demon/DEAD/LEFT
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemySummoner/Demon/FINISH/LEFT
-  rotate: false
-  xy: 996, 955
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
 enemies/EnemySummoner/Demon/SPAWN/RIGHT
   rotate: false
   xy: 996, 403
@@ -936,14 +936,14 @@ enemies/EnemySummoner/Demon/DEAD/RIGHT
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemySummoner/Demon/FINISH/RIGHT
+enemies/EnemySummoner/Demon/WALKING/RIGHT
   rotate: false
   xy: 996, 403
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemySummoner/Demon/WALKING/RIGHT
+enemies/EnemySummoner/Demon/FINISH/RIGHT
   rotate: false
   xy: 996, 403
   size: 540, 90
@@ -957,7 +957,7 @@ enemies/EnemySummoner/Demon/SPAWN/UP
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemySummoner/Demon/DEAD/UP
+enemies/EnemySummoner/Demon/FINISH/UP
   rotate: false
   xy: 2158, 1711
   size: 540, 90
@@ -971,7 +971,7 @@ enemies/EnemySummoner/Demon/WALKING/UP
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemySummoner/Demon/FINISH/UP
+enemies/EnemySummoner/Demon/DEAD/UP
   rotate: false
   xy: 2158, 1711
   size: 540, 90
@@ -994,42 +994,42 @@ enemies/EnemyWarrior/Demon/STUN/DOWN
   index: -1
 enemies/EnemyWarrior/Demon/IDLE/LEFT
   rotate: false
-  xy: 2486, 1169
+  xy: 2406, 1169
   size: 60, 90
   orig: 60, 90
   offset: 0, 0
   index: -1
 enemies/EnemyWarrior/Demon/STUN/LEFT
   rotate: false
-  xy: 2486, 1169
+  xy: 2406, 1169
   size: 60, 90
   orig: 60, 90
   offset: 0, 0
   index: -1
 enemies/EnemyWarrior/Demon/IDLE/RIGHT
   rotate: false
-  xy: 2024, 753
+  xy: 2406, 1077
   size: 60, 90
   orig: 60, 90
   offset: 0, 0
   index: -1
 enemies/EnemyWarrior/Demon/STUN/RIGHT
   rotate: false
-  xy: 2024, 753
+  xy: 2406, 1077
   size: 60, 90
   orig: 60, 90
   offset: 0, 0
   index: -1
 enemies/EnemyWarrior/Demon/IDLE/UP
   rotate: false
-  xy: 3672, 1848
+  xy: 1952, 227
   size: 60, 90
   orig: 60, 90
   offset: 0, 0
   index: -1
 enemies/EnemyWarrior/Demon/STUN/UP
   rotate: false
-  xy: 3672, 1848
+  xy: 1952, 227
   size: 60, 90
   orig: 60, 90
   offset: 0, 0
@@ -1076,14 +1076,14 @@ enemies/EnemyWarrior/Demon/FINISH/LEFT
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemyWarrior/Demon/WALKING/LEFT
+enemies/EnemyWarrior/Demon/DEAD/LEFT
   rotate: false
   xy: 996, 587
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemyWarrior/Demon/DEAD/LEFT
+enemies/EnemyWarrior/Demon/WALKING/LEFT
   rotate: false
   xy: 996, 587
   size: 540, 90
@@ -1097,7 +1097,7 @@ enemies/EnemyWarrior/Demon/SPAWN/RIGHT
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemyWarrior/Demon/DEAD/RIGHT
+enemies/EnemyWarrior/Demon/WALKING/RIGHT
   rotate: false
   xy: 948, 35
   size: 540, 90
@@ -1111,7 +1111,7 @@ enemies/EnemyWarrior/Demon/FINISH/RIGHT
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemyWarrior/Demon/WALKING/RIGHT
+enemies/EnemyWarrior/Demon/DEAD/RIGHT
   rotate: false
   xy: 948, 35
   size: 540, 90
@@ -1132,14 +1132,14 @@ enemies/EnemyWarrior/Demon/WALKING/UP
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemyWarrior/Demon/DEAD/UP
+enemies/EnemyWarrior/Demon/FINISH/UP
   rotate: false
   xy: 1950, 1343
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemyWarrior/Demon/FINISH/UP
+enemies/EnemyWarrior/Demon/DEAD/UP
   rotate: false
   xy: 1950, 1343
   size: 540, 90
@@ -1216,126 +1216,126 @@ level_lock
   index: -1
 market-category1
   rotate: false
-  xy: 1942, 445
+  xy: 2244, 1199
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
 market-category1-enabled
   rotate: false
-  xy: 2352, 1261
+  xy: 2244, 953
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
 market-category2
   rotate: false
-  xy: 1942, 363
+  xy: 2244, 1117
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
 market-category3
   rotate: false
-  xy: 2244, 1199
+  xy: 2244, 1035
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
 market-item-category1-item1
   rotate: false
-  xy: 2434, 1261
-  size: 80, 80
-  orig: 80, 80
-  offset: 0, 0
-  index: -1
-market-item-category1-item2
-  rotate: false
-  xy: 2434, 1261
-  size: 80, 80
-  orig: 80, 80
-  offset: 0, 0
-  index: -1
-market-item-category1-item3
-  rotate: false
-  xy: 2434, 1261
-  size: 80, 80
-  orig: 80, 80
-  offset: 0, 0
-  index: -1
-market-item-category2-item6
-  rotate: false
-  xy: 2434, 1261
-  size: 80, 80
-  orig: 80, 80
-  offset: 0, 0
-  index: -1
-market-item-category1-item4
-  rotate: false
-  xy: 2434, 1261
-  size: 80, 80
-  orig: 80, 80
-  offset: 0, 0
-  index: -1
-market-item-category2-item8
-  rotate: false
-  xy: 2434, 1261
-  size: 80, 80
-  orig: 80, 80
-  offset: 0, 0
-  index: -1
-market-item-category1-item6
-  rotate: false
-  xy: 2434, 1261
-  size: 80, 80
-  orig: 80, 80
-  offset: 0, 0
-  index: -1
-market-item-category2-item7
-  rotate: false
-  xy: 2434, 1261
-  size: 80, 80
-  orig: 80, 80
-  offset: 0, 0
-  index: -1
-market-item-category2-item3
-  rotate: false
-  xy: 2434, 1261
-  size: 80, 80
-  orig: 80, 80
-  offset: 0, 0
-  index: -1
-market-item-category2-item4
-  rotate: false
-  xy: 2434, 1261
+  xy: 2352, 1261
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
 market-item-category2-item2
   rotate: false
-  xy: 2434, 1261
-  size: 80, 80
-  orig: 80, 80
-  offset: 0, 0
-  index: -1
-market-item-category1-item5
-  rotate: false
-  xy: 2434, 1261
-  size: 80, 80
-  orig: 80, 80
-  offset: 0, 0
-  index: -1
-market-item-category2-item1
-  rotate: false
-  xy: 2434, 1261
+  xy: 2352, 1261
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
 market-item-category2-item5
   rotate: false
-  xy: 2434, 1261
+  xy: 2352, 1261
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+market-item-category2-item8
+  rotate: false
+  xy: 2352, 1261
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+market-item-category1-item5
+  rotate: false
+  xy: 2352, 1261
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+market-item-category1-item3
+  rotate: false
+  xy: 2352, 1261
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+market-item-category1-item2
+  rotate: false
+  xy: 2352, 1261
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+market-item-category2-item1
+  rotate: false
+  xy: 2352, 1261
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+market-item-category2-item6
+  rotate: false
+  xy: 2352, 1261
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+market-item-category1-item6
+  rotate: false
+  xy: 2352, 1261
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+market-item-category2-item4
+  rotate: false
+  xy: 2352, 1261
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+market-item-category2-item7
+  rotate: false
+  xy: 2352, 1261
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+market-item-category1-item4
+  rotate: false
+  xy: 2352, 1261
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+market-item-category2-item3
+  rotate: false
+  xy: 2352, 1261
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
@@ -1370,14 +1370,14 @@ position-marker
   index: -1
 shopitem-tower-primary
   rotate: false
-  xy: 2516, 1261
+  xy: 2434, 1261
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
 shopitem-tower-primary-disabled
   rotate: false
-  xy: 2244, 1117
+  xy: 2516, 1261
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
@@ -1452,13 +1452,6 @@ towers/TowerPrimary/Angel/Lvl1/ATTACK
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerPrimary/Angel/Lvl1/IDLE
-  rotate: false
-  xy: 454, 783
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
 towers/TowerPrimary/Angel/Lvl1/SELL
   rotate: false
   xy: 454, 783
@@ -1467,6 +1460,13 @@ towers/TowerPrimary/Angel/Lvl1/SELL
   offset: 0, 0
   index: -1
 towers/TowerPrimary/Angel/Lvl1/BUILD
+  rotate: false
+  xy: 454, 783
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/TowerPrimary/Angel/Lvl1/IDLE
   rotate: false
   xy: 454, 783
   size: 540, 90
@@ -1515,14 +1515,14 @@ towers/TowerPrimary/Angel/Lvl3/SELL
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerPrimary/Angel/Lvl3/BUILD
+towers/TowerPrimary/Angel/Lvl3/IDLE
   rotate: false
   xy: 454, 691
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerPrimary/Angel/Lvl3/IDLE
+towers/TowerPrimary/Angel/Lvl3/BUILD
   rotate: false
   xy: 454, 691
   size: 540, 90
@@ -1543,13 +1543,6 @@ towers/TowerPrimary/Angel/Lvl4/BUILD
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerPrimary/Angel/Lvl4/SELL
-  rotate: false
-  xy: 454, 875
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
 towers/TowerPrimary/Angel/Lvl4/IDLE
   rotate: false
   xy: 454, 875
@@ -1557,7 +1550,21 @@ towers/TowerPrimary/Angel/Lvl4/IDLE
   orig: 540, 90
   offset: 0, 0
   index: -1
+towers/TowerPrimary/Angel/Lvl4/SELL
+  rotate: false
+  xy: 454, 875
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
 towers/TowerSecondary/Angel/Lvl1/ATTACK
+  rotate: false
+  xy: 454, 415
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/TowerSecondary/Angel/Lvl1/IDLE
   rotate: false
   xy: 454, 415
   size: 540, 90
@@ -1578,14 +1585,14 @@ towers/TowerSecondary/Angel/Lvl1/SELL
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerSecondary/Angel/Lvl1/IDLE
+towers/TowerSecondary/Angel/Lvl2/ATTACK
   rotate: false
-  xy: 454, 415
+  xy: 454, 599
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerSecondary/Angel/Lvl2/ATTACK
+towers/TowerSecondary/Angel/Lvl2/SELL
   rotate: false
   xy: 454, 599
   size: 540, 90
@@ -1606,28 +1613,7 @@ towers/TowerSecondary/Angel/Lvl2/IDLE
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerSecondary/Angel/Lvl2/SELL
-  rotate: false
-  xy: 454, 599
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
 towers/TowerSecondary/Angel/Lvl3/ATTACK
-  rotate: false
-  xy: 2506, 1895
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
-towers/TowerSecondary/Angel/Lvl3/SELL
-  rotate: false
-  xy: 2506, 1895
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
-towers/TowerSecondary/Angel/Lvl3/BUILD
   rotate: false
   xy: 2506, 1895
   size: 540, 90
@@ -1641,7 +1627,28 @@ towers/TowerSecondary/Angel/Lvl3/IDLE
   orig: 540, 90
   offset: 0, 0
   index: -1
+towers/TowerSecondary/Angel/Lvl3/BUILD
+  rotate: false
+  xy: 2506, 1895
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/TowerSecondary/Angel/Lvl3/SELL
+  rotate: false
+  xy: 2506, 1895
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
 towers/TowerSecondary/Angel/Lvl4/ATTACK
+  rotate: false
+  xy: 454, 507
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/TowerSecondary/Angel/Lvl4/SELL
   rotate: false
   xy: 454, 507
   size: 540, 90
@@ -1662,14 +1669,14 @@ towers/TowerSecondary/Angel/Lvl4/BUILD
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerSecondary/Angel/Lvl4/SELL
+towers/TowerSpecial/Angel/Lvl1/ATTACK
   rotate: false
-  xy: 454, 507
+  xy: 3154, 1952
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerSpecial/Angel/Lvl1/ATTACK
+towers/TowerSpecial/Angel/Lvl1/SELL
   rotate: false
   xy: 3154, 1952
   size: 540, 90
@@ -1690,13 +1697,6 @@ towers/TowerSpecial/Angel/Lvl1/BUILD
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerSpecial/Angel/Lvl1/SELL
-  rotate: false
-  xy: 3154, 1952
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
 towers/TowerSpecial/Angel/Lvl2/ATTACK
   rotate: false
   xy: 1404, 1691
@@ -1711,14 +1711,14 @@ towers/TowerSpecial/Angel/Lvl2/SELL
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerSpecial/Angel/Lvl2/BUILD
+towers/TowerSpecial/Angel/Lvl2/IDLE
   rotate: false
   xy: 1404, 1691
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerSpecial/Angel/Lvl2/IDLE
+towers/TowerSpecial/Angel/Lvl2/BUILD
   rotate: false
   xy: 1404, 1691
   size: 540, 90
@@ -1732,14 +1732,14 @@ towers/TowerSpecial/Angel/Lvl3/ATTACK
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerSpecial/Angel/Lvl3/IDLE
+towers/TowerSpecial/Angel/Lvl3/BUILD
   rotate: false
   xy: 454, 1059
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerSpecial/Angel/Lvl3/BUILD
+towers/TowerSpecial/Angel/Lvl3/IDLE
   rotate: false
   xy: 454, 1059
   size: 540, 90
@@ -1767,14 +1767,14 @@ towers/TowerSpecial/Angel/Lvl4/SELL
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerSpecial/Angel/Lvl4/IDLE
+towers/TowerSpecial/Angel/Lvl4/BUILD
   rotate: false
   xy: 1404, 1599
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerSpecial/Angel/Lvl4/BUILD
+towers/TowerSpecial/Angel/Lvl4/IDLE
   rotate: false
   xy: 1404, 1599
   size: 540, 90
@@ -1795,14 +1795,14 @@ towers/TowerStun/Angel/Lvl1/BUILD
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerStun/Angel/Lvl1/SELL
+towers/TowerStun/Angel/Lvl1/IDLE
   rotate: false
   xy: 406, 231
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerStun/Angel/Lvl1/IDLE
+towers/TowerStun/Angel/Lvl1/SELL
   rotate: false
   xy: 406, 231
   size: 540, 90
@@ -1851,13 +1851,6 @@ towers/TowerStun/Angel/Lvl3/IDLE
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerStun/Angel/Lvl3/SELL
-  rotate: false
-  xy: 406, 139
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
 towers/TowerStun/Angel/Lvl3/BUILD
   rotate: false
   xy: 406, 139
@@ -1865,7 +1858,21 @@ towers/TowerStun/Angel/Lvl3/BUILD
   orig: 540, 90
   offset: 0, 0
   index: -1
+towers/TowerStun/Angel/Lvl3/SELL
+  rotate: false
+  xy: 406, 139
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
 towers/TowerStun/Angel/Lvl4/ATTACK
+  rotate: false
+  xy: 1404, 1507
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/TowerStun/Angel/Lvl4/SELL
   rotate: false
   xy: 1404, 1507
   size: 540, 90
@@ -1886,14 +1893,7 @@ towers/TowerStun/Angel/Lvl4/BUILD
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerStun/Angel/Lvl4/SELL
-  rotate: false
-  xy: 1404, 1507
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
-ui/buttons/diablo-green-normal
+ui/buttons/diablo-blue-normal
   rotate: false
   xy: 3696, 1992
   size: 300, 50
@@ -1902,7 +1902,7 @@ ui/buttons/diablo-green-normal
   orig: 300, 50
   offset: 0, 0
   index: -1
-ui/buttons/diablo-green-pressed
+ui/buttons/diablo-blue-pressed
   rotate: false
   xy: 3696, 1940
   size: 300, 50
@@ -1910,9 +1910,26 @@ ui/buttons/diablo-green-pressed
   orig: 300, 50
   offset: 0, 0
   index: -1
-ui/buttons/diablo-red-normal
+ui/buttons/diablo-green-normal
   rotate: false
   xy: 1950, 1291
+  size: 300, 50
+  split: 24, 26, 12, 9
+  pad: -1, -1, 12, 9
+  orig: 300, 50
+  offset: 0, 0
+  index: -1
+ui/buttons/diablo-green-pressed
+  rotate: false
+  xy: 1942, 1239
+  size: 300, 50
+  split: 23, 22, 9, 8
+  orig: 300, 50
+  offset: 0, 0
+  index: -1
+ui/buttons/diablo-red-normal
+  rotate: false
+  xy: 1942, 1187
   size: 300, 50
   split: 23, 20, 10, 9
   pad: 23, 21, 9, 8
@@ -1921,9 +1938,26 @@ ui/buttons/diablo-red-normal
   index: -1
 ui/buttons/diablo-red-pressed
   rotate: false
-  xy: 1942, 1239
+  xy: 1942, 1135
   size: 300, 50
   split: 22, 21, 9, 8
+  orig: 300, 50
+  offset: 0, 0
+  index: -1
+ui/buttons/diablo-yellow-normal
+  rotate: false
+  xy: 1942, 1083
+  size: 300, 50
+  split: 24, 26, 12, 9
+  pad: -1, -1, 12, 9
+  orig: 300, 50
+  offset: 0, 0
+  index: -1
+ui/buttons/diablo-yellow-pressed
+  rotate: false
+  xy: 1942, 1031
+  size: 300, 50
+  split: 23, 22, 9, 8
   orig: 300, 50
   offset: 0, 0
   index: -1
@@ -1950,7 +1984,7 @@ weapons/STUN_WEAPON
   index: -1
 window-pretty
   rotate: false
-  xy: 2144, 1139
+  xy: 2144, 931
   size: 98, 98
   split: 33, 32, 34, 33
   orig: 98, 98
@@ -1958,7 +1992,7 @@ window-pretty
   index: -1
 window-pretty-header
   rotate: false
-  xy: 1942, 937
+  xy: 1942, 729
   size: 98, 98
   split: 49, 48, 64, 33
   orig: 98, 98

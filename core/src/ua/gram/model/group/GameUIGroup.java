@@ -12,7 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import ua.gram.DDGame;
 import ua.gram.controller.Log;
-import ua.gram.controller.Toggler;
 import ua.gram.controller.stage.GameUIStage;
 import ua.gram.model.Level;
 import ua.gram.model.actor.misc.CounterButton;
@@ -31,7 +30,6 @@ public class GameUIGroup extends Group {
     private final CustomLabel waveLabel;
     private final CustomLabel gemsLabel;
     private final CustomLabel notificationLabel;
-    private final Toggler toggler;
     private CounterButton counter;
 
     public GameUIGroup(final DDGame game, final GameUIStage gameUIStage, final Level level) {
@@ -96,8 +94,6 @@ public class GameUIGroup extends Group {
 
         notificationLabel = new CustomLabel("", skin, "header1white");
         notificationLabel.setVisible(false);
-
-        toggler = new Toggler(notificationLabel);
 
         Group labels = new Group();
         labels.addActor(gemsLabel);
