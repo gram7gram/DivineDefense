@@ -10,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import ua.gram.DDGame;
 import ua.gram.view.screen.LevelSelectScreen;
-import ua.gram.view.screen.MarketScreen;
 
 /**
  *
@@ -45,13 +44,6 @@ public class MainMenuStage extends AbstractStage {
                 game.setScreen(new LevelSelectScreen(game, game.getPrototype()));
             }
         });
-        Button marketBut = new TextButton("MARKET", skin, "diablo-yellow");
-        marketBut.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new MarketScreen(game, game.getPrototype().market));
-            }
-        });
         Button aboutBut = new TextButton("ABOUT", skin, "diablo-yellow");
         aboutBut.addListener(new ClickListener() {
             @Override
@@ -75,7 +67,6 @@ public class MainMenuStage extends AbstractStage {
         table.setSize(DDGame.WORLD_WIDTH / 2f, DDGame.WORLD_HEIGHT);
 
         table.add(continueBut).width(butWidth).padBottom(10).height(butHeight).row();
-        table.add(marketBut).width(butWidth).padBottom(10).height(butHeight).row();
         table.add(settingsBut).width(butWidth).padBottom(10).height(butHeight).row();
         table.add(aboutBut).width(butWidth).height(butHeight).row();
 

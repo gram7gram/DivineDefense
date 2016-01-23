@@ -15,7 +15,6 @@ import ua.gram.controller.listener.ContinueListener;
 import ua.gram.controller.listener.RestartClickListener;
 import ua.gram.controller.stage.GameUIStage;
 import ua.gram.model.Player;
-import ua.gram.view.screen.MarketScreen;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -58,7 +57,7 @@ public class DefeatWindow extends Window {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                game.setScreen(new MarketScreen(game, game.getPrototype().market));
+//                game.setScreen(new MarketScreen(game, game.getPrototype().market));
             }
 
         });
