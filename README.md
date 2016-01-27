@@ -46,7 +46,7 @@ Dmitriy Bondarchuk (Gram) <gram7gram@gmail.com>
 
 **Dimension**: 2.5D (pseudo 3D)
 
-![First level. Angel’s POV](https://github.com/gram7gram/DivineDefense/blob/mainstream/art/v1/level1_2.jpg?raw=true)
+![First level. Angel’s POV](https://github.com/gram7gram/DivineDefense/blob/mainstream/art/v1.0/level1_2.jpg?raw=true)
 
 __First level. Angel’s POV__
 
