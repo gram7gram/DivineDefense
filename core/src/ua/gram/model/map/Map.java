@@ -72,12 +72,15 @@ public class Map {
         HashMap<String, Vector2> map = new HashMap<>(2);
         for (int x = 0; x < layer.getWidth(); x++) {
             for (int y = 0; y < layer.getHeight(); y++) {
-                properties = layer.getCell(x, y).getTile().getProperties();
-                if (properties.containsKey(prototype.spawnProperty)) {
-                    map.put(prototype.spawnProperty, new Vector2(x, y));
-                } else if (properties.containsKey(prototype.baseProperty)) {
-                    map.put(prototype.baseProperty, new Vector2(x, y));
-                    break;
+                TiledMapTileLayer.Cell cell = layer.getCell(x, y);
+                if (cell != null) {
+                    properties = cell.getTile().getProperties();
+                    if (properties.containsKey(prototype.spawnProperty)) {
+                        map.put(prototype.spawnProperty, new Vector2(x, y));
+                    } else if (properties.containsKey(prototype.baseProperty)) {
+                        map.put(prototype.baseProperty, new Vector2(x, y));
+                        break;
+                    }
                 }
             }
         }
@@ -117,26 +120,28 @@ public class Map {
                             || (direction.equals(Path.NORTH) && position.y < layer.getHeight() - 1)) {
                         int currentX = (int) (position.x + direction.x);
                         int currentY = (int) (position.y + direction.y);
-                        properties = layer.getCell(currentX, currentY)
-                                .getTile().getProperties();
-                        if (properties.containsKey(prototype.walkableProperty)) {
-                            path.addDirection(direction);
-                            path.addPath(new Vector2(currentX, currentY));
-                            position.add(direction);
-                            lastDir = Path.opposite(direction);
-                            if (properties.containsKey(prototype.baseProperty)) {
-                                isFound = true;
-                                break;
-                            } else if (properties.containsKey(prototype.spawnProperty)) {
-                                ++recursion;
-                                if (recursion < 2) {
-                                    Log.warn("Path normalization was reversed: search was in the wrong direction");
-                                    return normalizePath(Path.opposite(lastDir), start);
-                                } else
-                                    throw new GdxRuntimeException("Path normalization error: parsing in wrong direction");
+                        TiledMapTileLayer.Cell cell = layer.getCell(currentX, currentY);
+                        if (cell != null) {
+                            properties = cell.getTile().getProperties();
+                            if (properties.containsKey(prototype.walkableProperty)) {
+                                path.addDirection(direction);
+                                path.addPath(new Vector2(currentX, currentY));
+                                position.add(direction);
+                                lastDir = Path.opposite(direction);
+                                if (properties.containsKey(prototype.baseProperty)) {
+                                    isFound = true;
+                                    break;
+                                } else if (properties.containsKey(prototype.spawnProperty)) {
+                                    ++recursion;
+                                    if (recursion < 2) {
+                                        Log.warn("Path normalization was reversed: search was in the wrong direction");
+                                        return normalizePath(Path.opposite(lastDir), start);
+                                    } else
+                                        throw new GdxRuntimeException("Path normalization error: parsing in wrong direction");
+                                }
                             }
+                            ++count;
                         }
-                        ++count;
                     }
                 }
             }

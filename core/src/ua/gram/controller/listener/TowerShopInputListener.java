@@ -115,6 +115,7 @@ public class TowerShopInputListener extends ClickListener {
 
     private boolean canBeBuild(float X, float Y) {
         TiledMapTileLayer.Cell cell1 = layer.getCell((int) (X / DDGame.TILE_HEIGHT), (int) (Y / DDGame.TILE_HEIGHT));
+        if (cell1 == null) return false;
         MapProperties prop1 = cell1.getTile().getProperties();
         if (layerObject != null) {
             TiledMapTileLayer.Cell cell2 = layerObject.getCell(
