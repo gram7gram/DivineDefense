@@ -29,11 +29,11 @@ public abstract class AbstractModule<P extends GamePrototype> {
         try {
             actualPrototype = getFromExternal(factory, type);
         } catch (Exception e1) {
-            Log.crit("Could not get external game configuration");
+            Log.warn("Could not get external game configuration");
             try {
                 actualPrototype = getFromRemote(factory, type);
             } catch (Exception e2) {
-                Log.crit("Could not get remote game configuration. Used default");
+                Log.warn("Could not get remote game configuration. Used default");
                 actualPrototype = defaultPrototype;
             }
         }

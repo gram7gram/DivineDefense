@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="15" height="10" tilewidth="60" tileheight="60">
- <tileset firstgid="1" name="1" tilewidth="60" tileheight="60">
-  <image source="terrain.png" width="512" height="256"/>
+<map height="10" nextobjectid="1" orientation="orthogonal" renderorder="right-down" tileheight="60"
+    tilewidth="60" version="1.0" width="15">
+ <tileset name="grass@60" firstgid="1" tileheight="60" tilewidth="60">
+  <image height="256" source="terrain/grass@60.png" width="512" />
   <tile id="10">
    <properties>
     <property name="base" value=""/>
@@ -20,272 +21,322 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="33" name="map_900x600" tilewidth="60" tileheight="60">
-  <image source="map_900x600.png" width="900" height="600"/>
+ <tileset name="gates@60" firstgid="33" tileheight="60" tilewidth="60">
+  <image height="256" source="terrain/gates@60.png" width="1024" />
   <tile id="0">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="1" />
    </properties>
   </tile>
   <tile id="1">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="1" />
    </properties>
   </tile>
   <tile id="2">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="1" />
    </properties>
   </tile>
   <tile id="3">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="1" />
    </properties>
   </tile>
   <tile id="4">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="1" />
    </properties>
   </tile>
   <tile id="5">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="1" />
    </properties>
   </tile>
   <tile id="6">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="1" />
    </properties>
   </tile>
   <tile id="7">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="1" />
    </properties>
   </tile>
   <tile id="8">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="1" />
    </properties>
   </tile>
   <tile id="9">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="1" />
    </properties>
   </tile>
   <tile id="10">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="1" />
    </properties>
   </tile>
   <tile id="11">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="1" />
    </properties>
   </tile>
   <tile id="12">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="1" />
    </properties>
   </tile>
   <tile id="13">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="1" />
    </properties>
   </tile>
   <tile id="14">
    <properties>
-    <property name="blocked" value=""/>
-   </properties>
-  </tile>
-  <tile id="15">
-   <properties>
-    <property name="blocked" value=""/>
-   </properties>
-  </tile>
-  <tile id="16">
-   <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="1" />
    </properties>
   </tile>
   <tile id="17">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="1" />
    </properties>
   </tile>
   <tile id="18">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="1" />
    </properties>
   </tile>
   <tile id="19">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="1" />
    </properties>
   </tile>
   <tile id="20">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="1" />
    </properties>
   </tile>
   <tile id="21">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="1" />
    </properties>
   </tile>
   <tile id="22">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="1" />
    </properties>
   </tile>
   <tile id="23">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="1" />
    </properties>
   </tile>
   <tile id="24">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="1" />
    </properties>
   </tile>
   <tile id="25">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="1" />
    </properties>
   </tile>
   <tile id="26">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="1" />
    </properties>
   </tile>
   <tile id="27">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="1" />
    </properties>
   </tile>
   <tile id="28">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="1" />
    </properties>
   </tile>
   <tile id="29">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="1" />
    </properties>
   </tile>
   <tile id="30">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="1" />
    </properties>
   </tile>
   <tile id="31">
    <properties>
-    <property name="blocked" value=""/>
-   </properties>
-  </tile>
-  <tile id="32">
-   <properties>
-    <property name="blocked" value=""/>
-   </properties>
-  </tile>
-  <tile id="33">
-   <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="1" />
    </properties>
   </tile>
   <tile id="34">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="1" />
    </properties>
   </tile>
   <tile id="35">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="1" />
    </properties>
   </tile>
   <tile id="36">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="1" />
    </properties>
   </tile>
   <tile id="37">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="1" />
    </properties>
   </tile>
   <tile id="38">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="1" />
    </properties>
   </tile>
   <tile id="39">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="1" />
    </properties>
   </tile>
   <tile id="40">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="1" />
    </properties>
   </tile>
   <tile id="41">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="1" />
    </properties>
   </tile>
   <tile id="42">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="1" />
    </properties>
   </tile>
   <tile id="43">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="1" />
    </properties>
   </tile>
   <tile id="44">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="1" />
    </properties>
   </tile>
-  <tile id="90">
+  <tile id="45">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="1" />
    </properties>
   </tile>
-  <tile id="91">
+  <tile id="46">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="1" />
    </properties>
   </tile>
-  <tile id="92">
+  <tile id="47">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="1" />
    </properties>
   </tile>
-  <tile id="93">
+  <tile id="48">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="1" />
    </properties>
   </tile>
-  <tile id="94">
+  <tile id="51">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="1" />
    </properties>
   </tile>
-  <tile id="95">
+  <tile id="52">
    <properties>
-    <property name="blocked" value=""/>
+    <property name="blocked" value="1" />
+   </properties>
+  </tile>
+  <tile id="53">
+   <properties>
+    <property name="blocked" value="1" />
+   </properties>
+  </tile>
+  <tile id="54">
+   <properties>
+    <property name="blocked" value="1" />
+   </properties>
+  </tile>
+  <tile id="55">
+   <properties>
+    <property name="blocked" value="1" />
+   </properties>
+  </tile>
+  <tile id="56">
+   <properties>
+    <property name="blocked" value="1" />
+   </properties>
+  </tile>
+  <tile id="57">
+   <properties>
+    <property name="blocked" value="1" />
+   </properties>
+  </tile>
+  <tile id="58">
+   <properties>
+    <property name="blocked" value="1" />
+   </properties>
+  </tile>
+  <tile id="59">
+   <properties>
+    <property name="blocked" value="1" />
+   </properties>
+  </tile>
+  <tile id="60">
+   <properties>
+    <property name="blocked" value="1" />
+   </properties>
+  </tile>
+  <tile id="61">
+   <properties>
+    <property name="blocked" value="1" />
+   </properties>
+  </tile>
+  <tile id="62">
+   <properties>
+    <property name="blocked" value="1" />
+   </properties>
+  </tile>
+  <tile id="63">
+   <properties>
+    <property name="blocked" value="1" />
+   </properties>
+  </tile>
+  <tile id="64">
+   <properties>
+    <property name="blocked" value="1" />
+   </properties>
+  </tile>
+  <tile id="65">
+   <properties>
+    <property name="blocked" value="1" />
    </properties>
   </tile>
  </tileset>
- <layer name="Terrain" width="15" height="10">
-  <data encoding="base64" compression="zlib">
-   eJydkEEKwCAMBHNoLVJ76EV7aV+oL/DzjZBASI1CD4OCO7isBwBvEAdvI25kR56f7jFxK5KJnrtSd0Zm2IkKdjW6Ry/XMok4kWviOmRTXRfj3wzfXayujjqwV4xNUwevvEpnc4Nwi9heZvnOvAxHEGw=
+ <layer name="Back" height="10" width="15">
+  <data compression="zlib" encoding="base64">
+   eJzjZGBg4BximBFKMyGxOdHY2PQwDZB7ybUX3X+khhE59jIiYWzmYZNjQpMH0QDOGwSY
   </data>
  </layer>
- <layer name="Gates" width="15" height="10">
-  <data encoding="base64" compression="zlib">
-   eJztw8WRAgEAALBtBXd3d+5wd/qvg1TBi8wkFARB2IhRY8ZNmDRl2oxZc+YtWLRk2YpVa9Zt2LRl245de/YdOHTk2IlTZ87989+FS1eu3bh1596DR0+evXj15t2HT1++g59v+QB/Pg6n
+ <layer name="Terrain" height="10" width="15">
+  <data compression="zlib" encoding="base64">
+   eJxjYMAOZIBYDIilccjjA7JAzA3EcmTq5aVQLysDxO0wjOwHGTQ5mDxMLzpGdgc2NTB5cSAWhGIJPHrZgJgdzZ0sRNorh8edbFA3gLAkDr0MSGrEcahHBiC9PAzkxQUAeMYGIQ==
+  </data>
+ </layer>
+ <layer name="Gates" height="10" width="15">
+  <data compression="zlib" encoding="base64">
+   eJztw1WKQgEAAMB3FbsV7Faw3bXAbr3/IZxT+OXAhIIgCBsxasy4CZOmTJsxa868BYuWLFuxas26DZu2bNuxa8++A4eOHDtx6sy5f/67cOnKtRu37tx78OjJsxev3rz78OnLd/DzLR+vDQ9b
   </data>
  </layer>
 </map>

@@ -52,4 +52,9 @@ public class PositionMarker extends Actor {
         }
         if (currentFrame != null) batch.draw(currentFrame, getX(), getY(), getWidth(), getHeight());
     }
+
+    public void reset() {
+        setPosition(0, 0);
+        setVisible(false);
+    }
 }
