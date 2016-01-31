@@ -1,6 +1,5 @@
 package ua.gram.controller.stage;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
@@ -10,7 +9,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+
 import ua.gram.DDGame;
+import ua.gram.controller.Log;
 import ua.gram.model.Player;
 import ua.gram.model.group.ConfirmationGroup;
 import ua.gram.view.screen.MainMenuScreen;
@@ -143,8 +144,8 @@ public class FractionStage extends AbstractStage {
                 new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
-                        Gdx.app.log("INFO", "Player Fraction set to " + Player.PLAYER_FRACTION);
-                        Gdx.app.log("INFO", "System Fraction set to " + Player.SYSTEM_FRACTION);
+                        Log.info("Player Fraction set to " + Player.PLAYER_FRACTION);
+                        Log.info("System Fraction set to " + Player.SYSTEM_FRACTION);
                         game.setScreen(new MainMenuScreen(game));
                     }
                 }, null,
@@ -157,7 +158,7 @@ public class FractionStage extends AbstractStage {
     private void displayConfirmation(Group group) {
         fractions.setTouchable(fractions.isTouchable() ? Touchable.disabled : Touchable.enabled);
         group.setVisible(!group.isVisible());
-        Gdx.app.log("INFO", group.getClass().getSimpleName() + " is " + (group.isVisible() ? "" : "in") + "visible");
+        Log.info(group.getClass().getSimpleName() + " is " + (group.isVisible() ? "" : "in") + "visible");
     }
 
     public ConfirmationGroup getGroup() {

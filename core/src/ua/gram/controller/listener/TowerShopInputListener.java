@@ -1,8 +1,5 @@
 package ua.gram.controller.listener;
 
-import com.badlogic.gdx.maps.MapLayers;
-import com.badlogic.gdx.maps.MapProperties;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
@@ -11,12 +8,10 @@ import ua.gram.controller.Log;
 import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.controller.stage.GameUIStage;
 import ua.gram.controller.tower.TowerShop;
+import ua.gram.controller.voter.TiledMapVoter;
 import ua.gram.model.Level;
-import ua.gram.model.actor.PositionMarker;
 import ua.gram.model.actor.tower.Tower;
 import ua.gram.model.group.TowerGroup;
-import ua.gram.model.map.Map;
-import ua.gram.model.prototype.MapPrototype;
 import ua.gram.view.screen.ErrorScreen;
 
 /**
@@ -27,12 +22,10 @@ public class TowerShopInputListener extends ClickListener {
     private final DDGame game;
     private final GameUIStage uiStage;
     private final GameBattleStage battleStage;
-    private final TiledMapTileLayer layer;
     private final String type;
     private final TowerShop shop;
-    private TiledMapTileLayer layerObject;
+    private final TiledMapVoter voter;
     private TowerGroup towerGroup;
-    private MapPrototype prototype;
 
     public TowerShopInputListener(DDGame game, TowerShop shop, String type) {
         this.game = game;
@@ -40,16 +33,11 @@ public class TowerShopInputListener extends ClickListener {
         this.type = type;
         this.uiStage = shop.getUiStage();
         this.battleStage = shop.getStageBattle();
-        Map map = battleStage.getLevel().getMap();
-        MapLayers layers = map.getTiledMap().getLayers();
-        prototype = map.getPrototype();
-        layer = (TiledMapTileLayer) layers.get(prototype.layer);
-        layerObject = prototype.mapObject != null
-                ? (TiledMapTileLayer) layers.get(prototype.mapObject) : null;
+        voter = new TiledMapVoter(battleStage.getLevel().getMap());
     }
 
     /**
-     * Put the TowerState under the cursor.
+     * Put the Tower under the cursor
      */
     @Override
     public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -64,27 +52,26 @@ public class TowerShopInputListener extends ClickListener {
         }
     }
 
-    /**
-     * Move the TowerState across the map.
-     */
+    /** Move the Tower across the map */
     @Override
     public void touchDragged(InputEvent event, float x, float y, int pointer) {
         float X = event.getStageX() - event.getStageX() % DDGame.TILE_HEIGHT;
         float Y = event.getStageY() - event.getStageY() % DDGame.TILE_HEIGHT;
-        if (canBeBuild(X, Y)
+        boolean canBeBuild = voter.canBeBuildOnAllLayers(X, Y);
+        boolean isFree = battleStage.isPositionEmpty(X, Y);
+        if (canBeBuild && isFree
                 && !(Float.compare(X, towerGroup.getX()) == 0
                 && Float.compare(Y, towerGroup.getY()) == 0)) {
             Tower tower = towerGroup.getRootActor();
             tower.setPosition(X, Y + 40);
             tower.toFront();
-            PositionMarker marker = shop.getMarker();
-            marker.setPosition(X, Y);
-            marker.setVisible(true);
+            shop.getMarker().setPosition(X, Y);
+            shop.getMarker().setVisible(true);
         }
     }
 
     /**
-     * Puts the TowerState on the map if building is allowed.
+     * Puts the Tower on the map if building is allowed.
      * As soon as towerGroup is put on map, display building animation for 1.5 sec.
      * Then switch to idle animation and activate towerGroup.
      */
@@ -92,7 +79,9 @@ public class TowerShopInputListener extends ClickListener {
     public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
         float X = event.getStageX() - event.getStageX() % DDGame.TILE_HEIGHT;
         float Y = event.getStageY() - event.getStageY() % DDGame.TILE_HEIGHT;
-        if (canBeBuild(X, Y)) {
+        boolean canBeBuild = voter.canBeBuildOnAllLayers(X, Y);
+        boolean isFree = battleStage.isPositionEmpty(X, Y);
+        if (canBeBuild && isFree) {
             shop.buy(towerGroup, X, Y);
             Level level = uiStage.getLevel();
             try {
@@ -105,34 +94,9 @@ public class TowerShopInputListener extends ClickListener {
                         "Unappropriate wave [" + uiStage.getLevel().getCurrentWaveIndex()
                                 + "] in level " + uiStage.getLevel().getCurrentLevel(), e));
             }
-            PositionMarker marker = shop.getMarker();
-            marker.setPosition(0, 0);
-            marker.setVisible(false);
         } else {
             shop.refund(towerGroup);
         }
-    }
-
-    private boolean canBeBuild(float X, float Y) {
-        TiledMapTileLayer.Cell cell1 = layer.getCell((int) (X / DDGame.TILE_HEIGHT), (int) (Y / DDGame.TILE_HEIGHT));
-        if (cell1 == null) return false;
-        MapProperties prop1 = cell1.getTile().getProperties();
-        if (layerObject != null) {
-            TiledMapTileLayer.Cell cell2 = layerObject.getCell(
-                    (int) (X / DDGame.TILE_HEIGHT),
-                    (int) (Y / DDGame.TILE_HEIGHT));
-            if (cell2 != null) {
-                MapProperties prop2 = cell2.getTile().getProperties();
-                if (prop2 != null) {
-                    return !prop1.containsKey(prototype.walkableProperty)
-                            && !prop2.containsKey(prototype.blockedProperty)
-                            && battleStage.isPositionEmpty(X, Y);
-                }
-            }
-        }
-        return !prop1.containsKey(prototype.walkableProperty)
-                && !prop1.containsKey(prototype.blockedProperty)
-                && battleStage.isPositionEmpty(X, Y);
-
+        shop.getMarker().reset();
     }
 }

@@ -218,8 +218,8 @@ public class GameBattleStage extends AbstractStage {
 
     public boolean isPositionEmpty(float x, float y) {
         for (int[] position : towerPositions) {
-            if (position[0] == (int) x / DDGame.TILE_HEIGHT
-                    && position[1] == (int) y / DDGame.TILE_HEIGHT) {
+            if (position[0] == (int) (x / DDGame.TILE_HEIGHT)
+                    && position[1] == (int) (y / DDGame.TILE_HEIGHT)) {
                 return false;
             }
         }
