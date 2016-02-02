@@ -1,8 +1,8 @@
 package ua.gram.controller.loader;
 
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.utils.Json;
 
+import ua.gram.controller.Json;
 import ua.gram.model.prototype.RemoteConfigurationPrototype;
 
 /**
@@ -18,11 +18,12 @@ public class DeviceStorageLoader implements LoaderInterface {
     }
 
     @Override
-    public Object load(Class type, String url) {
-        return json.fromJson(type, new FileHandle(url));
+    public Object load(Class type, String path) {
+        return json.fromJson(type, new FileHandle(path));
     }
 
     @Override
+    @Deprecated
     public Object load(Class type, RemoteConfigurationPrototype remote) {
         throw new IllegalStateException("Remote configuration not supported for storage loader");
     }

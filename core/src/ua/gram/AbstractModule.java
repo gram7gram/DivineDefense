@@ -11,7 +11,7 @@ import ua.gram.model.prototype.GamePrototype;
  */
 public abstract class AbstractModule<P extends GamePrototype> {
 
-    private GamePrototype defaultPrototype;
+    private P defaultPrototype;
 
     protected abstract void initModule();
 
@@ -19,29 +19,31 @@ public abstract class AbstractModule<P extends GamePrototype> {
      * Load default internal prototype first.
      * Try to load external saved configuration or, if failed, a remote one.
      */
-    @SuppressWarnings("unchecked")
     protected P loadPrototype(Class<P> type, String fallback) {
         LoaderFactory factory = new LoaderFactory();
 
         defaultPrototype = getFromInternal(fallback, factory, type);
 
-        GamePrototype actualPrototype;
+        P actualPrototype;
         try {
-            actualPrototype = getFromExternal(factory, type);
+            actualPrototype = getFromRemote(factory, type);
+            Log.info("Received game configuration from remote source");
         } catch (Exception e1) {
-            Log.warn("Could not get external game configuration");
+            Log.warn("Could not get remote game configuration");
             try {
-                actualPrototype = getFromRemote(factory, type);
+                actualPrototype = getFromExternal(factory, type);
+                Log.info("Received game configuration from external source");
             } catch (Exception e2) {
-                Log.warn("Could not get remote game configuration. Used default");
+                Log.exc("Could not get external game configuration", e2);
                 actualPrototype = defaultPrototype;
+                Log.warn("Used default game configuration");
             }
         }
 
         if (actualPrototype == null)
-            throw new GdxRuntimeException("Unable to load game prototype from any storage!");
+            throw new GdxRuntimeException("Unable to load game prototype from any source!");
 
-        return (P) actualPrototype;
+        return actualPrototype;
     }
 
     @SuppressWarnings("unchecked")
@@ -59,15 +61,13 @@ public abstract class AbstractModule<P extends GamePrototype> {
     private P getFromRemote(LoaderFactory factory, Class<P> type) {
         if (defaultPrototype == null)
             throw new GdxRuntimeException("Could not get remote configuration: missing default prototype");
-        return (P) factory
-                .create(LoaderFactory.Type.INTERNET)
+        return (P) factory.create(LoaderFactory.Type.INTERNET)
                 .load(type, defaultPrototype.remoteConfig);
     }
 
     @SuppressWarnings("unchecked")
     private P getFromExternal(LoaderFactory factory, Class<P> type) {
-        return (P) factory
-                .create(LoaderFactory.Type.STORAGE)
-                .load(type, defaultPrototype.getParameters().configPath);
+        return (P) factory.create(LoaderFactory.Type.STORAGE)
+                .load(type, defaultPrototype.getFullConfigPath());
     }
 }

@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class CounterButtonPrototype implements PrototypeInterface {
+public class CounterButtonPrototype extends Prototype {
     public int width;
     public int height;
     public String region;

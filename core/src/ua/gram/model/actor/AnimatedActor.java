@@ -8,12 +8,12 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import ua.gram.DDGame;
-import ua.gram.model.prototype.PrototypeInterface;
+import ua.gram.model.prototype.Prototype;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public abstract class AnimatedActor<T extends PrototypeInterface> extends Actor {
+public abstract class AnimatedActor<T extends Prototype> extends Actor {
 
     protected final Skin skin;
     protected final Animation animation;

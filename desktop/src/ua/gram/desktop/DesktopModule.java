@@ -37,15 +37,16 @@ public class DesktopModule extends AbstractModule<DesktopGamePrototype> {
     }
 
     private LwjglApplicationConfiguration initConfig() {
-        if (prototype == null) throw new GdxRuntimeException("Game prototype was not loaded");
+        if (prototype == null || prototype.gameConfig == null)
+            throw new GdxRuntimeException("Game prototype was not loaded");
 
-        LwjglApplicationConfiguration graphics = prototype.config.desktop;
-        graphics.addIcon(prototype.config.logo128, Files.FileType.Internal);
-        graphics.addIcon(prototype.config.logo32, Files.FileType.Internal);
-        graphics.addIcon(prototype.config.logo16, Files.FileType.Internal);
+        LwjglApplicationConfiguration graphics = prototype.gameConfig.desktop;
+        graphics.addIcon(prototype.gameConfig.logo128, Files.FileType.Internal);
+        graphics.addIcon(prototype.gameConfig.logo32, Files.FileType.Internal);
+        graphics.addIcon(prototype.gameConfig.logo16, Files.FileType.Internal);
 
-        if (prototype.config.reloadTextures) {
-            TexturePackerPrototype packer = prototype.config.texturePacker;
+        if (prototype.gameConfig.reloadTextures) {
+            TexturePackerPrototype packer = prototype.gameConfig.texturePacker;
             TexturePacker.process(packer.config, packer.from, packer.to, packer.name);
         }
 
@@ -60,7 +61,6 @@ public class DesktopModule extends AbstractModule<DesktopGamePrototype> {
         parameters.gameModule = "Desktop";
         parameters.osName = System.getProperty("os.name");
         parameters.osVersion = System.getProperty("os.version");
-        parameters.configPath = "";
     }
 
     private String getMAC() {

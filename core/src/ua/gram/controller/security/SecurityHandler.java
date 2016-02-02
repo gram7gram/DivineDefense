@@ -1,10 +1,9 @@
 package ua.gram.controller.security;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter;
 
+import ua.gram.controller.Json;
 import ua.gram.controller.Log;
 import ua.gram.model.prototype.GamePrototype;
 
@@ -27,9 +26,10 @@ public class SecurityHandler<P extends GamePrototype> {
     }
 
     public void save() {
+        String path = prototype.getFullConfigPath();
         try {
-            json.toJson(prototype, new FileHandle(getPrototypePath()));
-            Log.info("Player saved successfully");
+            json.toJson(prototype, new FileHandle(path));
+            Log.info("Player saved successfully to: " + path);
         } catch (Exception e) {
             Log.exc("Could not save player", e);
         }
@@ -37,9 +37,5 @@ public class SecurityHandler<P extends GamePrototype> {
 
     public boolean sendBugReport(String error) {
         return new BugReport(prototype.getParameters()).sendReport(error);
-    }
-
-    public String getPrototypePath() {
-        return Gdx.files.getExternalStoragePath() + prototype.getConfigPath() + "/parameters";
     }
 }

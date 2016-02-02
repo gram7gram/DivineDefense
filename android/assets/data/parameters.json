@@ -1,7 +1,10 @@
 {
-  "config": {
+  "class": "ua.gram.desktop.prototype.DesktopGamePrototype",
+  "gameConfig": {
+    "class": "ua.gram.desktop.prototype.DesktopConfigPrototype",
     "reloadTextures": false,
     "texturePacker": {
+      "class": "ua.gram.model.prototype.TexturePackerPrototype",
       "config": {
         "maxWidth": 4096,
         "maxHeight": 4096,
@@ -39,6 +42,7 @@
       "name": "style"
     },
     "desktop": {
+      "class": "com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration",
       "title": "Divine Defense",
       "useGL30": false,
       "resizable": true,
@@ -60,14 +64,15 @@
     "logo32": "logo_min32.png",
     "logo16": "logo_min16.png",
     "remoteConfig": {
-      "host": "",
-      "port": "",
-      "method": ""
+      "host": null,
+      "port": null,
+      "method": null
     }
   },
   "parameters": {
+    "class": "ua.gram.desktop.prototype.DesktopParametersPrototype",
     "debugging": true,
-    "logLevel": 0,
+    "logLevel": 3,
     "title": "Divine Defense",
     "contact": "gram7gram@gmail.com",
     "author": "Dmitriy Bondarchuk (Gram) <gram7gram@gmail.com>",
@@ -78,7 +83,7 @@
     "maxLevel": 8,
     "maxRanking": 3,
     "skin": "data/skin/style.json",
-    "configPath": ".config/dd",
+    "configPath": ".config/dd/",
     "consoleBye": [
       "Thank you for choosing {{ title }}!",
       "Visit {{ repository }} to view sources or to fork repository",
@@ -89,6 +94,7 @@
     ]
   },
   "player": {
+    "class": "ua.gram.model.prototype.PlayerPrototype",
     "id": 0,
     "health": 1000,
     "coins": 250,
@@ -96,6 +102,7 @@
     "fraction": null
   },
   "levelConfig": {
+    "class": "ua.gram.model.prototype.LevelConfigPrototype",
     "resources": [
       "data/images/misc/background.jpg",
       "data/images/misc/start_back.png",
