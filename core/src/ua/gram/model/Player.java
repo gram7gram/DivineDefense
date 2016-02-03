@@ -104,6 +104,10 @@ public class Player {
         return level;
     }
 
+    public String getPrototypeFraction() {
+        return prototype.fraction;
+    }
+
     public void addGems(int i) {
         this.gems += i;
     }

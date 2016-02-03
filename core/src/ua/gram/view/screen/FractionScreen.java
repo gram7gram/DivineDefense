@@ -6,14 +6,13 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import ua.gram.DDGame;
+import ua.gram.controller.Log;
 import ua.gram.controller.Resources;
 import ua.gram.model.stage.FractionStage;
 import ua.gram.view.AbstractScreen;
 
 /**
- * TODO On following launches display Unlock button for opposite fraction
- *
- * @author Gram
+ * @author Gram gram7gram@gmail.com
  */
 public class FractionScreen extends AbstractScreen {
 
@@ -26,12 +25,12 @@ public class FractionScreen extends AbstractScreen {
         stage_ui = new FractionStage(game);
         batch = game.getBatch();
         background = new Sprite(game.getResources().getTexture(Resources.BACKGROUND_TEXTURE));
-        Gdx.app.log("INFO", "FractionScreen is OK");
+        Log.info("FractionScreen is OK");
     }
 
     @Override
     public void show() {
-        Gdx.app.log("INFO", "Screen set to FractionScreen");
+        Log.info("Screen set to FractionScreen");
         Gdx.input.setInputProcessor(stage_ui);
         background.setSize(DDGame.WORLD_WIDTH, DDGame.WORLD_HEIGHT);
         background.setPosition(0, 0);
@@ -53,12 +52,7 @@ public class FractionScreen extends AbstractScreen {
     }
 
     @Override
-    public void hide() {
-        Gdx.input.setInputProcessor(null);
-    }
-
-    @Override
     public void dispose() {
-        Gdx.app.log("WARN", "FractionScreen disposed!");
+        Log.warn("FractionScreen disposed!");
     }
 }

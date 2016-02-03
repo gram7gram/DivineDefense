@@ -99,7 +99,7 @@ public class DDGame<P extends GamePrototype> extends Game {
 
     @Override
     public void dispose() {
-//        security.save();
+        security.save();
         resources.dispose();
         batch.dispose();
         Log.info("Game disposed");
