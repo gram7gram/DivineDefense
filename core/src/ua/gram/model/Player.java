@@ -1,5 +1,8 @@
 package ua.gram.model;
 
+import com.badlogic.gdx.utils.GdxRuntimeException;
+
+import ua.gram.DDGame;
 import ua.gram.controller.Log;
 import ua.gram.model.prototype.PlayerPrototype;
 
@@ -11,21 +14,13 @@ public class Player {
 
     public static String PLAYER_FRACTION;
     public static String SYSTEM_FRACTION;
-    public static int UNLOCKED_TOWER_PRIMARY;
-    public static int UNLOCKED_TOWER_SECONDARY;
-    public static int UNLOCKED_TOWER_STUN;
     public static int DEFAULT_HEALTH;
-    public static int UNLOCKED_TOWER_SPECIAL;
     public final PlayerPrototype prototype;
     private boolean isDefault;
     private int level;
     private int health;
     private int coins;
     private int gems;
-//    public static TowerState.Strategy TOWER_PRIMARY_STRATEGY;
-//    public static TowerState.Strategy TOWER_SECONDARY_STRATEGY;
-//    public static TowerState.Strategy TOWER_STUN_STRATEGY;
-//    public static TowerState.Strategy TOWER_SPECIAL_STRATEGY;
 
     public Player(PlayerPrototype prototype) {
         this.prototype = prototype;
@@ -33,14 +28,6 @@ public class Player {
         coins = prototype.coins;
         gems = prototype.gems;
         health = prototype.health;
-        UNLOCKED_TOWER_PRIMARY = prototype.unlockedTowerPrimary;
-        UNLOCKED_TOWER_SECONDARY = prototype.unlockedTowerSecondary;
-        UNLOCKED_TOWER_STUN = prototype.unlockedTowerStun;
-        UNLOCKED_TOWER_SPECIAL = prototype.unlockedTowerSpecial;
-//        Player.TOWER_PRIMARY_STRATEGY = prototype.towerPrimaryStrategy;
-//        Player.TOWER_SECONDARY_STRATEGY = prototype.towerSecondaryStrategy;
-//        Player.TOWER_STUN_STRATEGY = prototype.towerStunStrategy;
-//        Player.TOWER_SPECIAL_STRATEGY = prototype.towerSpecialStrategy;
     }
 
     public void chargeCoins(int amount) {
@@ -127,5 +114,29 @@ public class Player {
     public void reset() {
         coins = prototype.coins;
         restoreHealth();
+    }
+
+    public void setFraction(String fraction) {
+        prototype.fraction = fraction;
+        PLAYER_FRACTION = fraction;
+        SYSTEM_FRACTION = getOppositeFraction(fraction);
+    }
+
+    public void resetFraction() {
+        prototype.fraction = null;
+        PLAYER_FRACTION = null;
+        SYSTEM_FRACTION = null;
+        Log.warn("Game fraction were reset!");
+    }
+
+    public String getOppositeFraction(String name) {
+        switch (name) {
+            case DDGame.ANGEL:
+                return DDGame.DEMON;
+            case DDGame.DEMON:
+                return DDGame.ANGEL;
+            default:
+                throw new GdxRuntimeException("No fraction registered as " + name);
+        }
     }
 }

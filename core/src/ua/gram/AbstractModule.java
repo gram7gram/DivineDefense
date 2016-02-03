@@ -25,18 +25,23 @@ public abstract class AbstractModule<P extends GamePrototype> {
         defaultPrototype = getFromInternal(fallback, factory, type);
 
         P actualPrototype;
-        try {
-            actualPrototype = getFromRemote(factory, type);
-            Log.info("Received game configuration from remote source");
-        } catch (Exception e1) {
-            Log.warn("Could not get remote game configuration");
+        if (DDGame.DEBUG) {
+            actualPrototype = defaultPrototype;
+            Log.warn("Debugging is ON. Used default game configuration");
+        } else {
             try {
-                actualPrototype = getFromExternal(factory, type);
-                Log.info("Received game configuration from external source");
-            } catch (Exception e2) {
-                Log.exc("Could not get external game configuration", e2);
-                actualPrototype = defaultPrototype;
-                Log.warn("Used default game configuration");
+                actualPrototype = getFromRemote(factory, type);
+                Log.info("Received game configuration from remote source");
+            } catch (Exception e1) {
+                Log.warn("Could not get remote game configuration");
+                try {
+                    actualPrototype = getFromExternal(factory, type);
+                    Log.info("Received game configuration from external source");
+                } catch (Exception e2) {
+                    Log.warn("Could not get external game configuration");
+                    actualPrototype = defaultPrototype;
+                    Log.warn("Used default game configuration");
+                }
             }
         }
 

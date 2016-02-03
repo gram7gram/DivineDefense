@@ -129,198 +129,197 @@
     },
     "small_tinted": {
       "font": "archery32white",
-      "background": "label-background-0.25"
+      "background": "ui/label/background-0.25"
     },
     "16_tinted": {
       "font": "archery16white",
-      "background": "label-background-0.25"
+      "background": "ui/label/background-0.25"
     }
   },
   "com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {
     "default": {
       "font": "archery32black",
-      "up": "button-default-up",
-      "down": "button-default-down"
+      "up": "ui/button/button-default-up",
+      "down": "ui/button/button-default-down"
     },
     "tower": {
       "font": "archery32black",
-      "up": "button-default-up",
-      "down": "button-default-down"
+      "up": "ui/button/button-default-up",
+      "down": "ui/button/button-default-down"
     },
     "green-button": {
       "font": "archery32white",
-      "up": "button-green-up",
-      "down": "button-green-down"
+      "up": "ui/button/button-green-up",
+      "down": "ui/button/button-green-down"
     },
     "green-button-smaller": {
       "font": "komika24grey",
-      "up": "button-green-up",
-      "down": "button-green-down"
+      "up": "ui/button/button-green-up",
+      "down": "ui/button/button-green-down"
     },
     "blue-button": {
       "font": "archery32white",
-      "up": "button-blue-up",
-      "down": "button-blue-down"
+      "up": "ui/button/button-blue-up",
+      "down": "ui/button/button-blue-down"
     },
     "blue-button-big": {
       "font": "archery32white",
-      "up": "button-blue-up",
-      "down": "button-blue-down"
+      "up": "ui/button/button-blue-up",
+      "down": "ui/button/button-blue-down"
     },
     "blue-button-medium": {
       "font": "komika24white",
-      "up": "button-blue-up",
-      "down": "button-blue-down"
+      "up": "ui/button/button-blue-up",
+      "down": "ui/button/button-blue-down"
     },
     "blue-button-small": {
       "font": "archery16white",
-      "up": "button-blue-up",
-      "down": "button-blue-down"
+      "up": "ui/button/button-blue-up",
+      "down": "ui/button/button-blue-down"
     },
     "pretty-button": {
       "font": "archery32black",
-      "up": "button-pretty-up",
-      "down": "button-pretty-down"
+      "up": "ui/button/button-pretty-up",
+      "down": "ui/button/button-pretty-down"
     },
     "diablo-red": {
       "font": "archery32white",
-      "up": "ui/buttons/diablo-red-normal",
-      "down": "ui/buttons/diablo-red-pressed",
-      "over": "ui/buttons/diablo-red-pressed"
+      "up": "ui/button/diablo-red-normal",
+      "down": "ui/button/diablo-red-pressed",
+      "over": "ui/button/diablo-red-pressed"
     },
     "diablo-green": {
       "font": "archery32white",
-      "up": "ui/buttons/diablo-green-normal",
-      "down": "ui/buttons/diablo-green-pressed",
-      "over": "ui/buttons/diablo-green-pressed"
+      "up": "ui/button/diablo-green-normal",
+      "down": "ui/button/diablo-green-pressed",
+      "over": "ui/button/diablo-green-pressed"
     },
     "diablo-yellow": {
       "font": "archery32white",
-      "up": "ui/buttons/diablo-yellow-normal",
-      "down": "ui/buttons/diablo-yellow-pressed",
-      "over": "ui/buttons/diablo-yellow-pressed"
+      "up": "ui/button/diablo-yellow-normal",
+      "down": "ui/button/diablo-yellow-pressed",
+      "over": "ui/button/diablo-yellow-pressed"
     },
     "diablo-blue": {
       "font": "archery32white",
-      "up": "ui/buttons/diablo-blue-normal",
-      "down": "ui/buttons/diablo-blue-pressed",
-      "over": "ui/buttons/diablo-blue-pressed"
+      "up": "ui/button/diablo-blue-normal",
+      "down": "ui/button/diablo-blue-pressed",
+      "over": "ui/button/diablo-blue-pressed"
     }
   },
   "com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle": {
     "default": {
-      "up": "button-default-up",
-      "down": "button-default-down"
+      "up": "ui/button/button-default-up",
+      "down": "ui/button/button-default-down"
     },
     "angel": {
-      "up": "button-angel-up",
-      "down": "button-angel-up"
+      "up": "ui/static/fraction-angel",
+      "down": "ui/static/fraction-angel"
     },
     "demon": {
-      "up": "button-demon-disabled",
-      "disabled": "button-demon-disabled"
+      "up": "ui/static/fraction-demon",
+      "disabled": "ui/static/fraction-demon"
+    },
+    "unknown-fraction-1": {
+      "up": "ui/static/fraction-unknown-1",
+      "down": "ui/static/fraction-unknown-1"
+    },
+    "unknown-fraction-2": {
+      "up": "ui/static/fraction-unknown-2",
+      "down": "ui/static/fraction-unknown-2"
+    },
+    "fraction-1": {
+      "up": "ui/static/fraction-unknown-1",
+      "down": "ui/static/fraction-unknown-1"
+    },
+    "fraction-2": {
+      "up": "ui/static/fraction-unknown-2",
+      "down": "ui/static/fraction-unknown-2"
     },
     "shopitem-towerprimary": {
-      "up": "shopitem-tower-primary",
-      "disabled": "shopitem-tower-primary-disabled"
+      "up": "ui/button/tower-shop/tower-primary",
+      "disabled": "ui/button/tower-shop/tower-primary-disabled"
     },
     "shopitem-towersecondary": {
-      "up": "shopitem-tower-secondary",
-      "disabled": "shopitem-tower-secondary-disabled"
+      "up": "ui/button/tower-shop/tower-secondary",
+      "disabled": "ui/button/tower-shop/tower-secondary-disabled"
     },
     "shopitem-towerstun": {
-      "up": "shopitem-tower-stun",
-      "disabled": "shopitem-tower-stun-disabled"
+      "up": "ui/button/tower-shop/tower-stun",
+      "disabled": "ui/button/tower-shop/tower-stun-disabled"
     },
     "shopitem-towerspecial": {
-      "up": "shopitem-tower-special",
-      "disabled": "shopitem-tower-special-disabled"
+      "up": "ui/button/tower-shop/tower-special",
+      "disabled": "ui/button/tower-shop/tower-special-disabled"
     },
     "sell-button": {
-      "up": "button-sell-up",
-      "down": "button-sell-down"
+      "up": "ui/button/button-sell-up",
+      "down": "ui/button/button-sell-down"
     },
     "upgrade-button": {
-      "up": "button-upgrade-up",
-      "down": "button-upgrade-down"
+      "up": "ui/button/button-upgrade-up",
+      "down": "ui/button/button-upgrade-down"
     },
     "close-button": {
-      "up": "button-close-up",
-      "down": "button-close-down"
+      "up": "ui/button/button-close-up",
+      "down": "ui/button/button-close-down"
     },
     "pause-button": {
-      "up": "button-pause-up",
-      "down": "button-pause-down"
+      "up": "ui/button/button-pause-up",
+      "down": "ui/button/button-pause-down"
     },
     "speed-button": {
-      "up": "button-speed-up",
-      "down": "button-speed-down"
+      "up": "ui/button/button-speed-up",
+      "down": "ui/button/button-speed-down"
     },
     "quit-button": {
-      "up": "button-quit-up",
-      "down": "button-quit-down"
+      "up": "ui/button/button-quit-up",
+      "down": "ui/button/button-quit-down"
     },
     "back-button": {
-      "up": "button-back-up",
-      "down": "button-back-down"
-    },
-    "buy-button": {
-      "up": "button-buy-up",
-      "down": "button-buy-down"
+      "up": "ui/button/button-back-up",
+      "down": "ui/button/button-back-down"
     },
     "button-defeat-restart": {
-      "up": "button-defeat-1-up",
-      "down": "button-defeat-1-down",
-      "over": "button-defeat-1-down"
+      "up": "ui/button/button-defeat-1-up",
+      "down": "ui/button/button-defeat-1-down",
+      "over": "ui/button/button-defeat-1-down"
     },
     "button-defeat-continue-part": {
-      "up": "button-defeat-2-up",
-      "down": "button-defeat-2-down",
-      "over": "button-defeat-2-down",
-      "disabled": "button-defeat-2-disabled"
+      "up": "ui/button/button-defeat-2-up",
+      "down": "ui/button/button-defeat-2-down",
+      "over": "ui/button/button-defeat-2-down",
+      "disabled": "ui/button/button-defeat-2-disabled"
     },
     "button-defeat-continue-full": {
-      "up": "button-defeat-3-up",
-      "down": "button-defeat-3-down",
-      "over": "button-defeat-3-down",
-      "disabled": "button-defeat-3-disabled"
-    },
-    "button-goto-shop": {
-      "up": "button-goto-shop-up",
-      "down": "button-goto-shop-down"
-    },
-    "market-category1": {
-      "up": "market-category1",
-      "down": "market-category1",
-      "checked": "market-category1-enabled"
-    },
-    "market-category2": {
-      "up": "market-category2",
-      "down": "market-category2"
-    },
-    "level-star-small": {
-      "up": "star_small_enabled",
-      "disabled": "star_small_disabled"
+      "up": "ui/button/button-defeat-3-up",
+      "down": "ui/button/button-defeat-3-down",
+      "over": "ui/button/button-defeat-3-down",
+      "disabled": "ui/button/button-defeat-3-disabled"
     }
   },
   "com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle": {
     "default": {
       "titleFont": "default",
-      "background": "window-pretty"
+      "background": "ui/window/window-pretty"
     },
     "window-pretty-header": {
       "titleFont": "action40black",
-      "background": "window-pretty-header"
+      "background": "ui/header"
+    },
+    "window-dark": {
+      "titleFont": "archery32white",
+      "background": "ui/window/window-dark"
     }
   },
   "com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle": {
     "default": {
-      "background": "label-background-0.25"
+      "background": "ui/label/background-0.25"
     }
   },
   "com.badlogic.gdx.scenes.scene2d.ui.Table": {
     "default": {
-      "background": "window-pretty"
+      "background": "ui/window/window-pretty"
     }
   }
 }

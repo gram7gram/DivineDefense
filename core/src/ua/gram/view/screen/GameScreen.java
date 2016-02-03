@@ -7,9 +7,9 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 import ua.gram.DDGame;
 import ua.gram.controller.Log;
-import ua.gram.controller.stage.GameBattleStage;
-import ua.gram.controller.stage.GameUIStage;
 import ua.gram.model.Level;
+import ua.gram.model.stage.GameBattleStage;
+import ua.gram.model.stage.GameUIStage;
 import ua.gram.view.AbstractScreen;
 
 /**

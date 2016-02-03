@@ -13,8 +13,8 @@ import ua.gram.DDGame;
 import ua.gram.controller.Log;
 import ua.gram.controller.listener.ContinueListener;
 import ua.gram.controller.listener.RestartClickListener;
-import ua.gram.controller.stage.GameUIStage;
 import ua.gram.model.Player;
+import ua.gram.model.stage.GameUIStage;
 
 /**
  * @author Gram <gram7gram@gmail.com>

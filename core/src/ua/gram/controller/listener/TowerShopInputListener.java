@@ -5,13 +5,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import ua.gram.DDGame;
 import ua.gram.controller.Log;
-import ua.gram.controller.stage.GameBattleStage;
-import ua.gram.controller.stage.GameUIStage;
 import ua.gram.controller.tower.TowerShop;
 import ua.gram.controller.voter.TiledMapVoter;
 import ua.gram.model.Level;
 import ua.gram.model.actor.tower.Tower;
 import ua.gram.model.group.TowerGroup;
+import ua.gram.model.stage.GameBattleStage;
+import ua.gram.model.stage.GameUIStage;
 import ua.gram.view.screen.ErrorScreen;
 
 /**

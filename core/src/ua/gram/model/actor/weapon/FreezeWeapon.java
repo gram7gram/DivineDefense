@@ -5,10 +5,10 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import ua.gram.controller.Resources;
-import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.model.group.Layer;
 import ua.gram.model.prototype.weapon.FreezeWeaponPrototype;
 import ua.gram.model.prototype.weapon.WeaponPrototype;
+import ua.gram.model.stage.GameBattleStage;
 
 /**
  * @author Gram <gram7gram@gmail.com>

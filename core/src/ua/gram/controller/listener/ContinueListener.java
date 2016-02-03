@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import ua.gram.DDGame;
-import ua.gram.controller.stage.GameUIStage;
+import ua.gram.model.stage.GameUIStage;
 
 /**
  * Continue playing the levelConfig with additional health.

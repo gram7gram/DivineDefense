@@ -10,5 +10,4 @@ public class MapPrototype extends Prototype {
     public String spawnProperty;
     public String baseProperty;
     public String blockedProperty;
-    public String mapObject;
 }

@@ -2,9 +2,9 @@ package ua.gram.model.state.tower.level1;
 
 import ua.gram.DDGame;
 import ua.gram.controller.Log;
-import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.model.actor.tower.Tower;
 import ua.gram.model.enums.Types;
+import ua.gram.model.stage.GameBattleStage;
 import ua.gram.model.state.tower.TowerState;
 import ua.gram.model.state.tower.TowerStateManager;
 

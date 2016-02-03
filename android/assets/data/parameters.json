@@ -123,13 +123,11 @@
           "spawnProperty": "spawn",
           "baseProperty": "base",
           "blockedProperty": "blocked",
-          "mapObject": "Gates",
           "name": "data/levels/maps/level1@60.tmx"
         },
         "difficulty": 1,
         "ranking": 3,
-        "preview": "level-1-preview",
-        "resources": [],
+        "preview": "preview/level-1-preview",
         "locked": false,
         "initialDirection": {
           "x": 0,
@@ -158,13 +156,11 @@
           "spawnProperty": "spawn",
           "baseProperty": "base",
           "blockedProperty": "blocked",
-          "mapObject": null,
-          "name": "data/levels/maps/level_last@60.tmx"
+          "name": "data/levels/maps/level2@60.tmx"
         },
         "difficulty": 1,
         "ranking": 0,
-        "preview": "level-2-preview",
-        "resources": [],
+        "preview": "preview/level-2-preview",
         "locked": false,
         "initialDirection": {
           "x": 1,
@@ -228,6 +224,7 @@
     {
       "class": "ua.gram.model.prototype.enemy.AbilityUserPrototype",
       "name": "EnemySummoner",
+      "ability": true,
       "health": 110,
       "speed": 3.5,
       "armor": 10,
@@ -237,8 +234,7 @@
       "spawnDuration": 1.5,
       "frameDuration": 0.1,
       "abilityDuration": 3,
-      "abilityDelay": 4,
-      "ability": true
+      "abilityDelay": 4
     },
     {
       "name": "EnemyWarrior",

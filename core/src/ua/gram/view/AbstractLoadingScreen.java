@@ -5,8 +5,8 @@ import com.badlogic.gdx.graphics.GL20;
 
 import ua.gram.DDGame;
 import ua.gram.controller.Log;
-import ua.gram.controller.stage.LoadingStage;
 import ua.gram.model.prototype.GamePrototype;
+import ua.gram.model.stage.LoadingStage;
 import ua.gram.view.screen.ErrorScreen;
 import ua.gram.view.screen.MainMenuScreen;
 
