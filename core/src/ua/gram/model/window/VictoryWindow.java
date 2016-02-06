@@ -22,7 +22,6 @@ import ua.gram.model.Level;
 public class VictoryWindow extends Window {
 
     private final Sprite victoryBanner;
-    private final Sprite star;
 
     public VictoryWindow(final DDGame game, final Level level) {
         super("", game.getResources().getSkin(), "default");
@@ -37,8 +36,6 @@ public class VictoryWindow extends Window {
         victoryBanner = new Sprite(skin.getRegion("banner-victory"));
         victoryBanner.setSize(500, 250);
         victoryBanner.setPosition(originX - 50, originY + 225);
-
-        star = new Sprite(skin.getRegion("star_big"));
 
         Button nextLevel = new TextButton("NEXT LEVEL", skin, "pretty-button");
         nextLevel.setSize(250, 80);
@@ -58,9 +55,6 @@ public class VictoryWindow extends Window {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        batch.draw(star, this.getX() + 45, this.getY() + 190, 100, 100);
-        batch.draw(star, this.getX() + 150, this.getY() + 190, 100, 100);
-        batch.draw(star, this.getX() + 255, this.getY() + 190, 100, 100);
         victoryBanner.draw(batch);
     }
 }

@@ -1,16 +1,15 @@
 package ua.gram.model.group;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+
 import ua.gram.DDGame;
+import ua.gram.controller.Log;
 import ua.gram.model.prototype.LevelPrototype;
 import ua.gram.view.screen.LevelLoadingScreen;
 
@@ -31,7 +30,7 @@ public class LevelTile extends Table {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 game.getPlayer().setLevel(lvl);
-                Gdx.app.log("INFO", "Level " + game.getPlayer().getLevel() + " is selected");
+                Log.info("Level " + game.getPlayer().getLevel() + " is selected");
                 game.setScreen(new LevelLoadingScreen(game, prototype));
             }
         });
@@ -45,24 +44,8 @@ public class LevelTile extends Table {
 
         this.setBackground(skin.getDrawable(prototype.preview));
         this.pad(10);
-        this.add().expand().colspan(game.getParameters().maxRanking).row();
 
-        if (prototype.ranking > 0) {
-            TextureRegion starEnabled = skin.getRegion("star_small_enabled");
-            for (byte i = 0; i < prototype.ranking; i++) {
-                this.add(new Image(starEnabled));
-            }
-        }
-
-        int rank = game.getParameters().maxRanking - prototype.ranking;
-        if (rank > 0) {
-            TextureRegion starDisabled = skin.getRegion("star_small_disabled");
-            for (byte i = 0; i < rank; i++) {
-                this.add(new Image(starDisabled));
-            }
-        }
-
-        Gdx.app.log("INFO", "Level tile " + lvl + " is OK");
+        Log.info("Level tile " + lvl + " is OK");
     }
 
     @Override
