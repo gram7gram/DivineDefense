@@ -9,10 +9,10 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 import java.net.NetworkInterface;
 import java.util.Enumeration;
 
-import ua.gram.AbstractModule;
 import ua.gram.DDGame;
+import ua.gram.ModuleInterface;
 import ua.gram.controller.Log;
-import ua.gram.controller.security.SecurityHandler;
+import ua.gram.controller.security.SecurityManager;
 import ua.gram.desktop.prototype.DesktopGamePrototype;
 import ua.gram.desktop.prototype.DesktopParametersPrototype;
 import ua.gram.model.prototype.TexturePackerPrototype;
@@ -20,32 +20,36 @@ import ua.gram.model.prototype.TexturePackerPrototype;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class DesktopModule extends AbstractModule<DesktopGamePrototype> {
+public class DesktopModule implements ModuleInterface {
 
     private final DesktopGamePrototype prototype;
     private final LwjglApplicationConfiguration config;
+    private final SecurityManager<DesktopGamePrototype> securityManager;
 
     public DesktopModule() {
-        prototype = loadPrototype(DesktopGamePrototype.class, "data/parameters.json");
+        securityManager = new SecurityManager<>();
+        prototype = securityManager.load(DesktopGamePrototype.class, "data/parameters.json");
+        securityManager.init(prototype);
         initParameters();
         config = initConfig();
     }
 
     @Override
     public void initModule() {
-        new LwjglApplication(new DDGame<>(new SecurityHandler<>(prototype), prototype), config);
+        new LwjglApplication(new DDGame<>(securityManager, prototype), config);
     }
 
     private LwjglApplicationConfiguration initConfig() {
-        if (prototype == null) throw new GdxRuntimeException("Game prototype was not loaded");
+        if (prototype == null || prototype.gameConfig == null)
+            throw new GdxRuntimeException("Game prototype was not loaded");
 
-        LwjglApplicationConfiguration graphics = prototype.config.desktop;
-        graphics.addIcon(prototype.config.logo128, Files.FileType.Internal);
-        graphics.addIcon(prototype.config.logo32, Files.FileType.Internal);
-        graphics.addIcon(prototype.config.logo16, Files.FileType.Internal);
+        LwjglApplicationConfiguration graphics = prototype.gameConfig.desktop;
+        graphics.addIcon(prototype.gameConfig.logo128, Files.FileType.Internal);
+        graphics.addIcon(prototype.gameConfig.logo32, Files.FileType.Internal);
+        graphics.addIcon(prototype.gameConfig.logo16, Files.FileType.Internal);
 
-        if (prototype.config.reloadTextures) {
-            TexturePackerPrototype packer = prototype.config.texturePacker;
+        if (prototype.gameConfig.reloadTextures) {
+            TexturePackerPrototype packer = prototype.gameConfig.texturePacker;
             TexturePacker.process(packer.config, packer.from, packer.to, packer.name);
         }
 
@@ -60,7 +64,6 @@ public class DesktopModule extends AbstractModule<DesktopGamePrototype> {
         parameters.gameModule = "Desktop";
         parameters.osName = System.getProperty("os.name");
         parameters.osVersion = System.getProperty("os.version");
-        parameters.configPath = "";
     }
 
     private String getMAC() {

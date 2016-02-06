@@ -5,8 +5,8 @@ import com.badlogic.gdx.graphics.GL20;
 
 import ua.gram.DDGame;
 import ua.gram.controller.Log;
-import ua.gram.controller.stage.LoadingStage;
 import ua.gram.model.prototype.GamePrototype;
+import ua.gram.model.stage.LoadingStage;
 import ua.gram.view.screen.ErrorScreen;
 import ua.gram.view.screen.MainMenuScreen;
 
@@ -36,7 +36,7 @@ public abstract class AbstractLoadingScreen extends AbstractScreen {
 
     @Override
     public void renderUiElements(float delta) {
-        Gdx.gl.glClearColor(.9f, .9f, .7f, 1);
+        Gdx.gl.glClearColor(.2f, .2f, .1f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         progress = (int) game.getAssetManager().getProgress() * 100;
         uiStage.update(progress);

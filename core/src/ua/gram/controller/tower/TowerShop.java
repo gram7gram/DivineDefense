@@ -11,8 +11,6 @@ import java.util.Set;
 import ua.gram.DDGame;
 import ua.gram.controller.Log;
 import ua.gram.controller.pool.TowerPool;
-import ua.gram.controller.stage.GameBattleStage;
-import ua.gram.controller.stage.GameUIStage;
 import ua.gram.model.ShopInterface;
 import ua.gram.model.actor.PositionMarker;
 import ua.gram.model.actor.tower.Tower;
@@ -20,6 +18,8 @@ import ua.gram.model.group.TowerControlsGroup;
 import ua.gram.model.group.TowerGroup;
 import ua.gram.model.group.TowerShopGroup;
 import ua.gram.model.prototype.tower.TowerPrototype;
+import ua.gram.model.stage.GameBattleStage;
+import ua.gram.model.stage.GameUIStage;
 import ua.gram.model.state.tower.TowerStateManager;
 import ua.gram.model.strategy.TowerStrategyManager;
 

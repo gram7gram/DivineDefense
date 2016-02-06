@@ -49,7 +49,7 @@ public class Resources implements Disposable {
             manager.finishLoading();
             skin = manager.get(file, Skin.class);
         } catch (Exception e) {
-            Log.crit("Missing skin file: \r\n" + file + "\r\n" + e);
+            Log.exc("Missing skin file", e);
             Gdx.app.exit();
         }
         return skin;

@@ -1,11 +1,11 @@
 package ua.gram.model.prototype.tower;
 
-import ua.gram.model.prototype.PrototypeInterface;
+import ua.gram.model.prototype.Prototype;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class TowerPropertyPrototype implements PrototypeInterface {
+public class TowerPropertyPrototype extends Prototype {
     public float damage;
     public float range;
     public float rate;

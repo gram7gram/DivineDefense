@@ -8,7 +8,7 @@ import java.util.HashMap;
  *
  * @author Gram <gram7gram@gmail.com>
  */
-public abstract class ParametersPrototype implements PrototypeInterface {
+public abstract class ParametersPrototype extends Prototype {
 
     public String[] consoleHello;
     public String[] consoleBye;
@@ -29,7 +29,6 @@ public abstract class ParametersPrototype implements PrototypeInterface {
     public int maxLevels;
     public int maxRanking;
     public int logLevel;
-    public MapPrototype map;
 
     private HashMap<String, Object> config;
 

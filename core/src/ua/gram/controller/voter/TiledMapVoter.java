@@ -24,7 +24,7 @@ public class TiledMapVoter {
     public TiledMapVoter(Map map) {
         this.map = map;
         layers = map.getTiledMap().getLayers();
-        voter = VoterPolicyFactory.create(Voter.Policy.UNANIMOUS);
+        voter = ua.gram.controller.factory.VoterPolicyFactory.create(Voter.Policy.UNANIMOUS);
     }
 
     public boolean canBeBuildOnAllLayers(float X, float Y) {

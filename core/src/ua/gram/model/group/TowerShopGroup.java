@@ -15,7 +15,6 @@ import ua.gram.model.prototype.tower.TowerPrototype;
 public class TowerShopGroup extends Group {
 
     public TowerShopGroup(DDGame game, TowerShop shop) {
-
         int i = 1;
         for (TowerPrototype prototype : shop.getRegisteredTowers()) {
             TowerShopItem item = new TowerShopItem(game, shop, prototype,

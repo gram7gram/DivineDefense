@@ -12,7 +12,6 @@ import java.util.List;
 
 import ua.gram.DDGame;
 import ua.gram.controller.Log;
-import ua.gram.controller.stage.GameBattleStage;
 import ua.gram.controller.tower.TowerShop;
 import ua.gram.model.PoolableAnimation;
 import ua.gram.model.TowerProperty;
@@ -25,6 +24,7 @@ import ua.gram.model.group.TowerGroup;
 import ua.gram.model.prototype.tower.TowerPropertyPrototype;
 import ua.gram.model.prototype.tower.TowerPrototype;
 import ua.gram.model.prototype.weapon.WeaponPrototype;
+import ua.gram.model.stage.GameBattleStage;
 import ua.gram.model.state.tower.TowerStateHolder;
 import ua.gram.model.state.tower.TowerStateManager;
 import ua.gram.model.strategy.tower.TowerStrategy;

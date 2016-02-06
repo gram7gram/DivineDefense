@@ -1,6 +1,7 @@
-package ua.gram.controller.stage;
+package ua.gram.model.stage;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+
 import ua.gram.DDGame;
 
 /**

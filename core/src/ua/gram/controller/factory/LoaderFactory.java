@@ -1,6 +1,10 @@
-package ua.gram.controller.loader;
+package ua.gram.controller.factory;
 
 import com.badlogic.gdx.utils.GdxRuntimeException;
+
+import ua.gram.controller.loader.DeviceStorageLoader;
+import ua.gram.controller.loader.LoaderInterface;
+import ua.gram.controller.loader.RemoteLoader;
 
 /**
  * @author Gram <gram7gram@gmail.com>

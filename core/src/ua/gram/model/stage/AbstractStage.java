@@ -1,6 +1,7 @@
-package ua.gram.controller.stage;
+package ua.gram.model.stage;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
+
 import ua.gram.DDGame;
 import ua.gram.controller.listener.DebugListener;
 
@@ -14,7 +15,7 @@ public abstract class AbstractStage extends Stage {
     public AbstractStage(DDGame game) {
         super(game.getViewport(), game.getBatch());
         this.game = game;
-        if (DDGame.DEBUG) this.addListener(new DebugListener());
+        this.addListener(new DebugListener());
     }
 
     @Override

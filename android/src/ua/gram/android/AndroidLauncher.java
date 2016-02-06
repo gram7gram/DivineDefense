@@ -2,15 +2,17 @@ package ua.gram.android;
 
 import android.os.Build;
 import android.os.Bundle;
+
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 import com.badlogic.gdx.utils.Json;
+
 import ua.gram.DDGame;
 import ua.gram.android.prototype.AndroidGamePrototype;
 import ua.gram.android.prototype.AndroidParametersPrototype;
-import ua.gram.controller.security.SecurityHandler;
+import ua.gram.controller.security.SecurityManager;
 import ua.gram.model.prototype.TexturePackerPrototype;
 
 public class AndroidLauncher extends AndroidApplication {
@@ -40,6 +42,6 @@ public class AndroidLauncher extends AndroidApplication {
             TexturePacker.process(packer.config, packer.from, packer.to, packer.name);
         }
 
-        initialize(new DDGame(new SecurityHandler(prototype), prototype), config);
+        initialize(new DDGame(new SecurityManager(prototype), prototype), config);
     }
 }

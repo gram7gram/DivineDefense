@@ -1,4 +1,4 @@
-package ua.gram.controller.stage;
+package ua.gram.model.stage;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -26,7 +26,7 @@ import ua.gram.model.group.TowerGroup;
 public class GameBattleStage extends AbstractStage {
 
     private final Level level;
-    private GameUIStage gameUIStage;
+    private ua.gram.model.stage.GameUIStage gameUIStage;
     private volatile ArrayList<Layer> indexes;
     private ToggleTowerControlsListener controlsListener;
     private ArrayList<int[]> towerPositions;
@@ -230,7 +230,7 @@ public class GameBattleStage extends AbstractStage {
         return indexes;
     }
 
-    public void setUIStage(GameUIStage stage_ui) {
+    public void setUIStage(ua.gram.model.stage.GameUIStage stage_ui) {
         this.gameUIStage = stage_ui;
     }
 
@@ -254,7 +254,7 @@ public class GameBattleStage extends AbstractStage {
         return layer;
     }
 
-    public GameUIStage getGameUIStage() {
+    public ua.gram.model.stage.GameUIStage getGameUIStage() {
         return gameUIStage;
     }
 }

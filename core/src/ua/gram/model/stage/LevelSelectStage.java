@@ -1,4 +1,4 @@
-package ua.gram.controller.stage;
+package ua.gram.model.stage;
 
 import com.badlogic.gdx.Gdx;
 

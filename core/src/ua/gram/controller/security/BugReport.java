@@ -1,7 +1,7 @@
 package ua.gram.controller.security;
 
-import com.badlogic.gdx.Gdx;
-import ua.gram.model.prototype.ParametersPrototype;
+import java.util.HashMap;
+import java.util.Properties;
 
 import javax.activation.CommandMap;
 import javax.activation.DataHandler;
@@ -14,8 +14,9 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.util.ByteArrayDataSource;
-import java.util.HashMap;
-import java.util.Properties;
+
+import ua.gram.controller.Log;
+import ua.gram.model.prototype.ParametersPrototype;
 
 /**
  * TODO Include log file to mail
@@ -84,10 +85,10 @@ public class BugReport {
             transport.sendMessage(msg, msg.getAllRecipients());
             transport.close();
 
-            Gdx.app.log("INFO", "Email send successfully!");
+            Log.info("Email send successfully!");
             return true;
         } catch (MessagingException exc) {
-            Gdx.app.error("EXC", "Could not send email: " + exc.getMessage());
+            Log.exc("Could not send email", exc);
             return false;
         }
     }

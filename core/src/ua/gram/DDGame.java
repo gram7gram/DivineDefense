@@ -11,7 +11,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import ua.gram.controller.Log;
 import ua.gram.controller.Resources;
-import ua.gram.controller.security.SecurityHandler;
+import ua.gram.controller.security.SecurityManager;
 import ua.gram.model.Player;
 import ua.gram.model.prototype.GamePrototype;
 import ua.gram.model.prototype.LevelPrototype;
@@ -20,16 +20,27 @@ import ua.gram.view.screen.LaunchLoadingScreen;
 
 /**
  * Game enter point
- * <p/>
+ * <br/>
  * TODO Make different assets for 4x3 and 16x9(16x10) screens
+ * <br/>
  * TODO For 16x9(16x10) make StretchViewport
+ * <br/>
  * TODO Add to JSON pressed and disabled drawable for buttons
+ * <br/>
  * TODO Add copyrights
+ * <br/>
  * TODO Handle Android Menu, Back click events
+ * <br/>
  * FIXME Logotype
+ * <br/>
  * FIXME Switch 16pt font with 20pt
+ * <br/>
  * NOTE Enemies should be tough because the amount of towers is unlimited
+ * <br/>
  * NOTE Skin should not contain nonexistent values
+ * <br/>
+ * NOTE Gdx is initialized only on create()
+ * <br/>
  *
  * @author Gram <gram7gram@gmail.com>
  */
@@ -49,7 +60,7 @@ public class DDGame<P extends GamePrototype> extends Game {
     public static int MAX_LEVELS;
     private final P prototype;
     private final ParametersPrototype parameters;
-    private SecurityHandler security;
+    private SecurityManager security;
     private Resources resources;
     private SpriteBatch batch;
     private OrthographicCamera camera;
@@ -58,7 +69,7 @@ public class DDGame<P extends GamePrototype> extends Game {
     private BitmapFont info;
     private float gameSpeed = 1;
 
-    public DDGame(SecurityHandler security, P prototype) {
+    public DDGame(SecurityManager security, P prototype) {
         this.security = security;
         this.prototype = prototype;
         this.parameters = prototype.getParameters();
@@ -87,18 +98,8 @@ public class DDGame<P extends GamePrototype> extends Game {
     }
 
     @Override
-    public void pause() {
-        //PAUSE = true;
-    }
-
-    @Override
-    public void resume() {
-        //PAUSE = false;
-    }
-
-    @Override
     public void dispose() {
-//      security.save();
+        security.save();
         resources.dispose();
         batch.dispose();
         Log.info("Game disposed");
@@ -157,7 +158,7 @@ public class DDGame<P extends GamePrototype> extends Game {
         return batch;
     }
 
-    public SecurityHandler getSecurity() {
+    public SecurityManager getSecurity() {
         return security;
     }
 
@@ -187,6 +188,10 @@ public class DDGame<P extends GamePrototype> extends Game {
         return gameSpeed;
     }
 
+    public void resetGameSpeed() {
+        this.gameSpeed = 1;
+    }
+
     public GamePrototype getPrototype() {
         return prototype;
     }
@@ -210,9 +215,5 @@ public class DDGame<P extends GamePrototype> extends Game {
         for (String text : parameters.consoleHello) {
             Log.info(parameters.processString(text));
         }
-    }
-
-    public void resetGameSpeed() {
-        this.gameSpeed = 1;
     }
 }
