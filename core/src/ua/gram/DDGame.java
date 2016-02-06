@@ -11,7 +11,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import ua.gram.controller.Log;
 import ua.gram.controller.Resources;
-import ua.gram.controller.security.SecurityHandler;
+import ua.gram.controller.security.SecurityManager;
 import ua.gram.model.Player;
 import ua.gram.model.prototype.GamePrototype;
 import ua.gram.model.prototype.LevelPrototype;
@@ -60,7 +60,7 @@ public class DDGame<P extends GamePrototype> extends Game {
     public static int MAX_LEVELS;
     private final P prototype;
     private final ParametersPrototype parameters;
-    private SecurityHandler security;
+    private SecurityManager security;
     private Resources resources;
     private SpriteBatch batch;
     private OrthographicCamera camera;
@@ -69,7 +69,7 @@ public class DDGame<P extends GamePrototype> extends Game {
     private BitmapFont info;
     private float gameSpeed = 1;
 
-    public DDGame(SecurityHandler security, P prototype) {
+    public DDGame(SecurityManager security, P prototype) {
         this.security = security;
         this.prototype = prototype;
         this.parameters = prototype.getParameters();
@@ -158,7 +158,7 @@ public class DDGame<P extends GamePrototype> extends Game {
         return batch;
     }
 
-    public SecurityHandler getSecurity() {
+    public SecurityManager getSecurity() {
         return security;
     }
 

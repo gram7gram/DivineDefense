@@ -296,6 +296,9 @@
       "down": "ui/button/button-defeat-3-down",
       "over": "ui/button/button-defeat-3-down",
       "disabled": "ui/button/button-defeat-3-disabled"
+    },
+    "button-lock": {
+      "up": "ui/static/lock"
     }
   },
   "com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle": {

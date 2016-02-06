@@ -1,5 +1,9 @@
-package ua.gram.controller.voter;
+package ua.gram.controller.factory;
 
+import ua.gram.controller.voter.AffirmativeVoterPolicy;
+import ua.gram.controller.voter.ConsensusVoterPolicy;
+import ua.gram.controller.voter.UnanimousVoterPolicy;
+import ua.gram.controller.voter.VoterPolicyInterface;
 import ua.gram.model.enums.Voter;
 
 /**

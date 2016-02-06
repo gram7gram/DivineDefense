@@ -5,7 +5,8 @@ import ua.gram.model.prototype.GamePrototype;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class AndroidGamePrototype extends GamePrototype<AndroidParametersAbstractPrototype> {
+public class AndroidGamePrototype extends GamePrototype<AndroidParametersPrototype> {
+
     public AndroidParametersPrototype parameters;
     public AndroidConfigPrototype config;
 

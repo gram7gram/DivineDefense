@@ -10,7 +10,7 @@ import ua.gram.model.prototype.PlayerPrototype;
  *
  * @author Gram <gram7gram@gmail.com>
  */
-public class Player {
+public class Player implements ResetableInterface {
 
     public static String PLAYER_FRACTION;
     public static String SYSTEM_FRACTION;
@@ -113,8 +113,9 @@ public class Player {
     }
 
     /**
-     * NOTE Gems are not reseted
+     * NOTE Gems are not reset
      */
+    @Override
     public void reset() {
         coins = prototype.coins;
         restoreHealth();

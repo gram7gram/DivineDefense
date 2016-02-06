@@ -29,19 +29,24 @@ public class FractionStage extends AbstractStage {
 
         Label header = new Label("Choose your fraction", skin, "header1white");
         header.setVisible(true);
-        header.setPosition((DDGame.WORLD_WIDTH - header.getWidth()) / 2f, DDGame.WORLD_HEIGHT - header.getHeight() - 10);
+        header.setPosition((DDGame.WORLD_WIDTH - header.getWidth()) / 2f,
+                DDGame.WORLD_HEIGHT - header.getHeight() - 10);
 
         Button option1 = new Button(skin, "fraction-1");
-        option1.setPosition(0, 0);
-        option1.setVisible(true);
-        option1.setSize(DDGame.WORLD_WIDTH / 2, DDGame.WORLD_HEIGHT);
+        option1.setBounds(0, 0, DDGame.WORLD_WIDTH / 2, DDGame.WORLD_HEIGHT);
         option1.setTouchable(Touchable.disabled);
         option1.setName(DDGame.DEMON);
 
+        Button lock = new Button(skin, "button-lock");
+        lock.setTouchable(Touchable.disabled);
+        lock.setPosition(
+                option1.getX() + (option1.getWidth() - lock.getWidth()) / 2,
+                option1.getY() + (option1.getHeight() - lock.getHeight()) / 2);
+        option1.addActor(lock);
+
         Button option2 = new Button(skin, "fraction-2");
-        option2.setPosition(DDGame.WORLD_WIDTH / 2, 0);
-        option2.setVisible(true);
-        option2.setSize(DDGame.WORLD_WIDTH / 2, DDGame.WORLD_HEIGHT);
+        option2.setBounds(DDGame.WORLD_WIDTH / 2, 0,
+                DDGame.WORLD_WIDTH / 2, DDGame.WORLD_HEIGHT);
         option2.setTouchable(Touchable.enabled);
         option2.setName(DDGame.ANGEL);
         option2.addListener(new ClickListener() {
@@ -68,7 +73,6 @@ public class FractionStage extends AbstractStage {
             }
         });
 
-
         Group fractions = new Group();
 
         option1.addAction(
@@ -93,6 +97,7 @@ public class FractionStage extends AbstractStage {
                                 Actions.moveTo(450, 0, 0.5f))
                 )
         );
+
         fractions.addActor(option1);
         fractions.addActor(option2);
         fractions.addActor(header);
