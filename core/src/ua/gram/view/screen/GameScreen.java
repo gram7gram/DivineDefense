@@ -26,7 +26,7 @@ public class GameScreen extends AbstractScreen {
         super(game);
         this.level = level;
         DDGame.PAUSE = false;
-        game.resetGameSpeed();
+        game.getSpeed().reset();
         game.getPlayer().reset();
         renderer = new OrthogonalTiledMapRenderer(level.getMap().getTiledMap());
         renderer.setView(game.getCamera());
