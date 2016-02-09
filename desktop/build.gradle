@@ -3,7 +3,7 @@ sourceCompatibility = 1.8
 sourceSets.main.java.srcDirs = ["src/"]
 project.ext.mainClassName = "ua.gram.desktop.DesktopLauncher"
 project.ext.mainClass = "ua.gram.desktop.DesktopLauncher"
-project.ext.assetsDir = new File("../android/assets");
+project.ext.assetsDir = new File("../android/res");
 task run(dependsOn: classes, type: JavaExec) {
     main = project.mainClassName
     classpath = sourceSets.main.runtimeClasspath

@@ -3,7 +3,6 @@ package ua.gram.controller;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
@@ -19,20 +18,18 @@ public class Log {
     static final String WARN = "WARN";
     static final String CRIT = "CRIT";
     static final String EXC = "EXC";
-    private static final ArrayList<String> unloggedMessages = new ArrayList<>();
     private static final BlockingQueue<Message> messages = new ArrayBlockingQueue<>(100);
     static FileHandle logFile;
 
     public static void init(String path) {
         if (Gdx.files == null) throw new NullPointerException("Gdx is not initialized yet");
-//        if (Gdx.files.isLocalStorageAvailable()) {
-//            logFile = Gdx.files.local(path);
-//            System.out.println("Log file will write to local: " + logFile.path());
-//        } else
-//        if (Gdx.files.isExternalStorageAvailable()) {
-        logFile = Gdx.files.external(Gdx.files.getExternalStoragePath() + path);
-        System.out.println("Log file will write to external: " + logFile.path());
-//        }
+        if (Gdx.files.isExternalStorageAvailable()) {
+            logFile = Gdx.files.external(Gdx.files.getExternalStoragePath() + path);
+            System.out.println("Log file will write to external: " + logFile.path());
+        } else if (Gdx.files.isLocalStorageAvailable()) {
+            logFile = Gdx.files.local(path);
+            System.out.println("Log file will write to local: " + logFile.path());
+        }
     }
 
     public synchronized static void info(String msg) {
@@ -60,17 +57,6 @@ public class Log {
         return value ? "+" : "-";
     }
 
-    private static void writeUnloggedMessages() {
-        if (unloggedMessages.isEmpty()) return;
-        synchronized (unloggedMessages) {
-            for (String message : unloggedMessages) {
-                boolean result = logToFile(null, message);
-                if (result) {
-                    unloggedMessages.remove(message);
-                }
-            }
-        }
-    }
 
     public static String buildExceptionMessage(String msg, Exception e) {
         msg += "\r\nCLASS:\t" + e.getClass().getSimpleName();
@@ -104,20 +90,17 @@ public class Log {
 
         String prefix = getPrefix(result) + level;
 
-        if (!result) unloggedMessages.add(prefix + ": " + msg);
-        else writeUnloggedMessages();
-
         switch (level) {
             case CRIT:
             case EXC:
-                if (Gdx.app != null) Gdx.app.error(level, msg);
-                else System.err.println(level + ": " + msg);
+                if (Gdx.app != null) Gdx.app.error(prefix, msg);
+                else System.err.println(prefix + ": " + msg);
                 break;
             case INFO:
             case WARN:
             default:
-                if (Gdx.app != null) Gdx.app.log(level, msg);
-                else System.out.println(level + ": " + msg);
+                if (Gdx.app != null) Gdx.app.log(prefix, msg);
+                else System.out.println(prefix + ": " + msg);
                 break;
         }
     }

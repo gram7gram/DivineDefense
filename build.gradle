@@ -15,7 +15,7 @@ allprojects {
     version = '0.01'
     ext {
         appName = 'Divine Defense'
-        gdxVersion = '1.6.4'
+        gdxVersion = '1.9.2'
     }
 
     repositories {
