@@ -9,8 +9,8 @@ import ua.gram.model.actor.tower.Tower;
 import ua.gram.model.group.Layer;
 import ua.gram.model.group.TowerControlsGroup;
 import ua.gram.model.group.TowerGroup;
-import ua.gram.model.stage.GameBattleStage;
-import ua.gram.model.stage.GameUIStage;
+import ua.gram.model.stage.BattleStage;
+import ua.gram.model.stage.UIStage;
 import ua.gram.model.state.tower.level1.ActiveState;
 
 /**
@@ -22,10 +22,10 @@ import ua.gram.model.state.tower.level1.ActiveState;
  */
 public class ToggleTowerControlsListener extends ClickListener {
 
-    private final GameBattleStage stage_battle;
-    private final GameUIStage stage_ui;
+    private final BattleStage stage_battle;
+    private final UIStage stage_ui;
 
-    public ToggleTowerControlsListener(GameBattleStage stage, GameUIStage stage_ui) {
+    public ToggleTowerControlsListener(BattleStage stage, UIStage stage_ui) {
         this.stage_battle = stage;
         this.stage_ui = stage_ui;
     }

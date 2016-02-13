@@ -4,7 +4,6 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.JsonWriter;
 
-import ua.gram.DDGame;
 import ua.gram.controller.Json;
 import ua.gram.controller.Log;
 import ua.gram.controller.factory.LoaderFactory;
@@ -33,7 +32,7 @@ public class SecurityManager<P extends GamePrototype> {
         prototype = getFromInternal(fallback, factory, type);
 
         P actualPrototype;
-        if (DDGame.DEBUG) {
+        if (prototype.getParameters().debugging) {
             actualPrototype = prototype;
             Log.warn("Debugging is ON. Used default game configuration");
         } else {

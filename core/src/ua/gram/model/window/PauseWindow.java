@@ -1,6 +1,5 @@
 package ua.gram.model.window;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -8,16 +7,21 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import ua.gram.DDGame;
-import ua.gram.model.stage.GameUIStage;
+import ua.gram.controller.Log;
+import ua.gram.model.Initializer;
+import ua.gram.model.stage.StageHolder;
+import ua.gram.model.stage.UIStage;
 import ua.gram.view.screen.MainMenuScreen;
 
 /**
- *
  * @author Gram <gram7gram@gmail.com>
  */
-public class PauseWindow extends Window {
+public class PauseWindow extends Window implements Initializer {
 
-    public PauseWindow(final DDGame game, final GameUIStage stage_ui) {
+    private final Button continueBut;
+    private StageHolder stageHolder;
+
+    public PauseWindow(final DDGame game) {
         super("", game.getResources().getSkin(), "default");
 
         final byte butHeight = 60;
@@ -27,15 +31,8 @@ public class PauseWindow extends Window {
         this.setVisible(true);
         this.setMovable(false);
 
-        Button continueBut = new TextButton("C", game.getResources().getSkin(), "default");
+        continueBut = new TextButton("C", game.getResources().getSkin(), "default");
         continueBut.setVisible(true);
-        continueBut.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                DDGame.PAUSE = false;
-                stage_ui.toggleWindow(stage_ui.getPauseWindow());
-            }
-        });
 
         Button soundBut = new TextButton("S", game.getResources().getSkin(), "default");
         soundBut.setVisible(true);
@@ -70,7 +67,23 @@ public class PauseWindow extends Window {
                 .padRight(30)
                 .expandX().expandY();
 
-        Gdx.app.log("INFO", this.getClass().getSimpleName() + " is OK");
+        Log.info(this.getClass().getSimpleName() + " is OK");
     }
 
+    public void setStageHolder(StageHolder stageHolder) {
+        this.stageHolder = stageHolder;
+    }
+
+    @Override
+    public void init() {
+        continueBut.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                DDGame.PAUSE = false;
+                UIStage stage = stageHolder.getUiStage();
+                stage.toggleWindow(stage.getPauseWindow());
+            }
+        });
+
+    }
 }

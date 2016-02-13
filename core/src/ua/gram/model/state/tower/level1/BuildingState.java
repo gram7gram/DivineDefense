@@ -7,7 +7,7 @@ import ua.gram.controller.Log;
 import ua.gram.model.actor.tower.Tower;
 import ua.gram.model.enums.Types;
 import ua.gram.model.group.TowerGroup;
-import ua.gram.model.stage.GameBattleStage;
+import ua.gram.model.stage.BattleStage;
 import ua.gram.model.state.tower.TowerStateManager;
 
 /**
@@ -31,7 +31,7 @@ public final class BuildingState extends ActiveState {
         game.getPlayer().chargeCoins(tower.getProperty().getCost());
         tower.setOrigin(tower.getX() + 20, tower.getY() + 42);
         tower.setDefaultStrategy();
-        GameBattleStage battleStage = tower.getTowerShop().getStageBattle();
+        BattleStage battleStage = tower.getTowerShop().getBattleStage();
         TowerGroup towerGroup = tower.getParent();
         towerGroup.setVisible(true);
         battleStage.updateZIndexes(towerGroup);

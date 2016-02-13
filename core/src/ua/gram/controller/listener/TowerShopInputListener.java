@@ -10,8 +10,8 @@ import ua.gram.controller.voter.TiledMapVoter;
 import ua.gram.model.Level;
 import ua.gram.model.actor.tower.Tower;
 import ua.gram.model.group.TowerGroup;
-import ua.gram.model.stage.GameBattleStage;
-import ua.gram.model.stage.GameUIStage;
+import ua.gram.model.stage.BattleStage;
+import ua.gram.model.stage.UIStage;
 import ua.gram.view.screen.ErrorScreen;
 
 /**
@@ -20,8 +20,8 @@ import ua.gram.view.screen.ErrorScreen;
 public class TowerShopInputListener extends ClickListener {
 
     private final DDGame game;
-    private final GameUIStage uiStage;
-    private final GameBattleStage battleStage;
+    private final UIStage uiStage;
+    private final BattleStage battleStage;
     private final String type;
     private final TowerShop shop;
     private final TiledMapVoter voter;
@@ -32,7 +32,7 @@ public class TowerShopInputListener extends ClickListener {
         this.shop = shop;
         this.type = type;
         this.uiStage = shop.getUiStage();
-        this.battleStage = shop.getStageBattle();
+        this.battleStage = shop.getBattleStage();
         voter = new TiledMapVoter(battleStage.getLevel().getMap());
     }
 

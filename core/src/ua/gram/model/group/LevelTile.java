@@ -18,14 +18,14 @@ import ua.gram.view.screen.LevelLoadingScreen;
  */
 public class LevelTile extends Table {
 
-    private Sprite lock_level;
+    private Sprite lockIcon;
 
     public LevelTile(final DDGame game, final LevelPrototype prototype) {
         super(game.getResources().getSkin());
         Skin skin = game.getResources().getSkin();
 
         final byte lvl = prototype.level;
-        this.addListener(new ClickListener() {
+        addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
@@ -35,15 +35,15 @@ public class LevelTile extends Table {
             }
         });
 
-        if (!prototype.locked) {
-            this.setTouchable(Touchable.enabled);
+        if (lvl <= game.getPlayer().getLastUnlockedLevel()) {
+            setTouchable(Touchable.enabled);
         } else {
-            this.setTouchable(Touchable.disabled);
-            lock_level = new Sprite(skin.getRegion("level_lock"));
+            setTouchable(Touchable.disabled);
+            lockIcon = new Sprite(skin.getRegion("level_lock"));
         }
 
-        this.setBackground(skin.getDrawable(prototype.preview));
-        this.pad(10);
+        setBackground(skin.getDrawable(prototype.preview));
+        pad(10);
 
         Log.info("Level tile " + lvl + " is OK");
     }
@@ -51,7 +51,9 @@ public class LevelTile extends Table {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        if (lock_level != null) batch.draw(lock_level,
-                this.getX(), this.getY(), this.getWidth(), this.getHeight());
+        if (lockIcon != null)
+            batch.draw(lockIcon,
+                    this.getX(), this.getY(),
+                    this.getWidth(), this.getHeight());
     }
 }

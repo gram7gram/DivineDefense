@@ -24,7 +24,7 @@ import ua.gram.model.enums.Types;
 import ua.gram.model.group.EnemyGroup;
 import ua.gram.model.map.Path;
 import ua.gram.model.prototype.enemy.EnemyPrototype;
-import ua.gram.model.stage.GameBattleStage;
+import ua.gram.model.stage.BattleStage;
 import ua.gram.model.state.enemy.EnemyStateHolder;
 import ua.gram.model.state.enemy.EnemyStateManager;
 
@@ -88,8 +88,8 @@ public abstract class Enemy extends GameActor<Types.EnemyState, Path.Types, Enem
     }
 
     @Override
-    public GameBattleStage getStage() {
-        return (GameBattleStage) super.getStage();
+    public BattleStage getStage() {
+        return (BattleStage) super.getStage();
     }
 
     @Override
@@ -179,13 +179,13 @@ public abstract class Enemy extends GameActor<Types.EnemyState, Path.Types, Enem
         return animator.getPoolable().getAnimation();
     }
 
+    public void setAnimation(PoolableAnimation animation) {
+        this.animator.setPollable(animation);
+    }
+
     public void setAnimation(Types.EnemyState type) {
         AnimationPool pool = getAnimationProvider().get(prototype, type, getCurrentDirectionType());
         this.setAnimation(pool.obtain());
-    }
-
-    public void setAnimation(PoolableAnimation animation) {
-        this.animator.setPollable(animation);
     }
 
     public void damage(float damage) {

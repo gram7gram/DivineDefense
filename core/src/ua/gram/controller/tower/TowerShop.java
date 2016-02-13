@@ -11,15 +11,18 @@ import java.util.Set;
 import ua.gram.DDGame;
 import ua.gram.controller.Log;
 import ua.gram.controller.pool.TowerPool;
+import ua.gram.model.Initializer;
 import ua.gram.model.ShopInterface;
 import ua.gram.model.actor.PositionMarker;
 import ua.gram.model.actor.tower.Tower;
 import ua.gram.model.group.TowerControlsGroup;
 import ua.gram.model.group.TowerGroup;
 import ua.gram.model.group.TowerShopGroup;
+import ua.gram.model.prototype.shop.TowerShopConfigPrototype;
 import ua.gram.model.prototype.tower.TowerPrototype;
-import ua.gram.model.stage.GameBattleStage;
-import ua.gram.model.stage.GameUIStage;
+import ua.gram.model.stage.BattleStage;
+import ua.gram.model.stage.StageHolder;
+import ua.gram.model.stage.UIStage;
 import ua.gram.model.state.tower.TowerStateManager;
 import ua.gram.model.strategy.TowerStrategyManager;
 
@@ -28,39 +31,46 @@ import ua.gram.model.strategy.TowerStrategyManager;
  * Handles managing TowerStates, purchasing and refunding.
  * @author Gram <gram7gram@gmail.com>
  */
-public class TowerShop implements ShopInterface<TowerGroup> {
+public class TowerShop implements ShopInterface<TowerGroup>, Initializer {
 
     private final DDGame game;
-    private final GameUIStage uiStage;
-    private final GameBattleStage battleStage;
+    private final StageHolder stageHolder;
     private final TowerShopGroup towerShopGroup;
     private final TowerStrategyManager strategyManager;
     private final TowerStateManager stateManager;
     private final TowerAnimationProvider animationProvider;
     private final HashMap<TowerPrototype, Pool<Tower>> identityMap;
     private final PositionMarker marker;
+    private final Skin skin;
+    private final TowerShopConfigPrototype prototype;
 
-    public TowerShop(DDGame game, GameBattleStage battleStage, GameUIStage uiStage) {
+    public TowerShop(DDGame game, StageHolder stageHolder, TowerShopConfigPrototype prototype) {
         this.game = game;
-        this.uiStage = uiStage;
-        this.battleStage = battleStage;
-        Skin skin = game.getResources().getSkin();
+        this.prototype = prototype;
+        this.stageHolder = stageHolder;
+        skin = game.getResources().getSkin();
         TowerPrototype[] prototypes = game.getPrototype().towers;
         identityMap = new HashMap<>(prototypes.length);
 
         registerAll(prototypes);
 
         animationProvider = new TowerAnimationProvider(skin, prototypes);
-        towerShopGroup = new TowerShopGroup(game, this);
         strategyManager = new TowerStrategyManager();
         stateManager = new TowerStateManager(game);
-        uiStage.setTowerControls(new TowerControlsGroup(skin, this));
+        towerShopGroup = new TowerShopGroup(game, prototype);
 
         marker = new PositionMarker(skin, "position-marker");
         marker.setVisible(false);
-        battleStage.addActor(marker);
 
         Log.info("TowerShop is OK");
+    }
+
+    @Override
+    public void init() {
+        towerShopGroup.setTowerShop(this);
+        towerShopGroup.init();
+        stageHolder.getUiStage().setTowerControls(new TowerControlsGroup(skin, this));
+        stageHolder.getBattleStage().addActor(marker);
     }
 
     private void registerAll(TowerPrototype[] prototypes) {
@@ -78,13 +88,8 @@ public class TowerShop implements ShopInterface<TowerGroup> {
      * @return towerGroup, obtained from pool
      */
     public TowerGroup preorder(String type, float x, float y) {
-        Optional<TowerPrototype> prototype = identityMap.keySet().stream()
-                .filter(proto -> Objects.equals(proto.name, type))
-                .findFirst();
-        if (!prototype.isPresent())
-            throw new NullPointerException("Couldn't preorder tower: " + type);
-
-        Tower tower = identityMap.get(prototype.get()).obtain();
+        TowerPrototype prototype = findByName(type);
+        Tower tower = identityMap.get(prototype).obtain();
         Log.info(type + " is going to be preordered from TowerShop...");
         tower.setPosition(x, y);
         tower.setTowerShop(this);
@@ -93,9 +98,18 @@ public class TowerShop implements ShopInterface<TowerGroup> {
                 tower.getStateHolder().getCurrentLevel1State(),
                 stateManager.getPreorderState(), 1);
         TowerGroup group = new TowerGroup(game, tower);
-        battleStage.addActor(group);
+        stageHolder.getBattleStage().addActor(group);
         Log.info(tower + " is preordered from TowerShop");
         return group;
+    }
+
+    public TowerPrototype findByName(String name) {
+        Optional<TowerPrototype> prototype = identityMap.keySet().stream()
+                .filter(proto -> Objects.equals(proto.name, name))
+                .findFirst();
+        if (!prototype.isPresent())
+            throw new NullPointerException("Couldn't preorder tower: " + name);
+        return prototype.get();
     }
 
     /**
@@ -140,16 +154,17 @@ public class TowerShop implements ShopInterface<TowerGroup> {
         }
     }
 
+
     public TowerShopGroup getTowerShopGroup() {
         return towerShopGroup;
     }
 
-    public GameBattleStage getStageBattle() {
-        return battleStage;
+    public BattleStage getBattleStage() {
+        return stageHolder.getBattleStage();
     }
 
-    public GameUIStage getUiStage() {
-        return uiStage;
+    public UIStage getUiStage() {
+        return stageHolder.getUiStage();
     }
 
     public TowerStrategyManager getStrategyManager() {
@@ -170,5 +185,9 @@ public class TowerShop implements ShopInterface<TowerGroup> {
 
     public PositionMarker getMarker() {
         return marker;
+    }
+
+    public TowerShopConfigPrototype getPrototype() {
+        return prototype;
     }
 }

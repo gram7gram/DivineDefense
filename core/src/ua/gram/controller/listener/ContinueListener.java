@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import ua.gram.DDGame;
-import ua.gram.model.stage.GameUIStage;
+import ua.gram.model.stage.UIStage;
 
 /**
  * Continue playing the levelConfig with additional health.
@@ -18,9 +18,9 @@ public class ContinueListener extends ClickListener {
     private final int amountHealth;
     private final int amountGems;
     private final Window window;
-    private final GameUIStage stage_ui;
+    private final UIStage stage_ui;
 
-    public ContinueListener(DDGame game, int health, int gems, Window window, GameUIStage stage_ui) {
+    public ContinueListener(DDGame game, int health, int gems, Window window, UIStage stage_ui) {
         this.game = game;
         this.amountHealth = health;
         this.amountGems = gems;

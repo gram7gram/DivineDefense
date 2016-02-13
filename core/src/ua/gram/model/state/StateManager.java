@@ -68,8 +68,6 @@ public abstract class StateManager<A extends GameActor> {
         }
     }
 
-    ;
-
     /**
      * Save actor-specific state
      * @param actor the actor which will be managed

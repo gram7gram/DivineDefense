@@ -18,7 +18,7 @@ import ua.gram.model.Level;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.group.EnemyGroup;
 import ua.gram.model.prototype.enemy.EnemyPrototype;
-import ua.gram.model.stage.GameBattleStage;
+import ua.gram.model.stage.BattleStage;
 import ua.gram.model.state.enemy.EnemyStateManager;
 
 /**
@@ -28,14 +28,14 @@ public final class EnemySpawner {
 
     private final DDGame game;
     private final Level level;
-    private final GameBattleStage stage_battle;
+    private final BattleStage stage_battle;
     private final EnemyStateManager stateManager;
     private final EnemyAnimationProvider animationProvider;
     private final Map<String, Pool<Enemy>> identityMap;
     private final Stack<String> enemiesToSpawn;
     private float count;
 
-    public EnemySpawner(DDGame game, Level level, GameBattleStage stage) {
+    public EnemySpawner(DDGame game, Level level, BattleStage stage) {
         this.game = game;
         this.stage_battle = stage;
         this.level = level;

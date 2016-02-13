@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import ua.gram.DDGame;
 import ua.gram.controller.Log;
 import ua.gram.controller.listener.WaveCounterClickListener;
+import ua.gram.model.Initializer;
 import ua.gram.model.Level;
 import ua.gram.model.actor.AnimatedActor;
 import ua.gram.model.prototype.CounterButtonPrototype;
@@ -13,13 +14,15 @@ import ua.gram.model.prototype.CounterButtonPrototype;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class CounterButton extends AnimatedActor<CounterButtonPrototype> {
+public class CounterButton extends AnimatedActor<CounterButtonPrototype> implements Initializer {
 
+    private final DDGame game;
     private final Level level;
     private float counter = 0;
 
     public CounterButton(final DDGame game, Level level, CounterButtonPrototype prototype) {
         super(game.getResources().getSkin(), prototype);
+        this.game = game;
         this.level = level;
 
         this.setVisible(false);
@@ -28,9 +31,12 @@ public class CounterButton extends AnimatedActor<CounterButtonPrototype> {
                 prototype.tilePosition.y * DDGame.TILE_HEIGHT + 10
         );
 
-        this.addListener(new WaveCounterClickListener(game, this));
-
         Log.info("Counter button is OK");
+    }
+
+    @Override
+    public void init() {
+        addListener(new WaveCounterClickListener(game, this));
     }
 
     @Override
@@ -38,8 +44,6 @@ public class CounterButton extends AnimatedActor<CounterButtonPrototype> {
         this.setSize(prototype.width, prototype.height);
 
         TextureRegion region = skin.getRegion(prototype.region);
-        if (region == null)
-            throw new NullPointerException("Missing region in skin: " + prototype.region);
 
         TextureRegion[][] regions = region.split(prototype.width, prototype.height);
 
@@ -99,4 +103,5 @@ public class CounterButton extends AnimatedActor<CounterButtonPrototype> {
     public Level getLevel() {
         return level;
     }
+
 }

@@ -1,5 +1,7 @@
 package ua.gram.model.prototype;
 
+import ua.gram.model.prototype.progress.ProgressPrototype;
+
 /**
  * @author Gram <gram7gram@gmail.com>
  */
@@ -9,12 +11,5 @@ public final class PlayerPrototype extends Prototype {
     public int coins;
     public int gems;
     public String fraction;
-    public int towerPrimaryStrategy;
-    public int towerSecondaryStrategy;
-    public int towerStunStrategy;
-    public int towerSpecialStrategy;
-    public int unlockedTowerPrimary;
-    public int unlockedTowerSecondary;
-    public int unlockedTowerStun;
-    public int unlockedTowerSpecial;
+    public ProgressPrototype progress;
 }

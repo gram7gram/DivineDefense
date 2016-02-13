@@ -24,7 +24,7 @@ import ua.gram.model.group.TowerGroup;
 import ua.gram.model.prototype.tower.TowerPropertyPrototype;
 import ua.gram.model.prototype.tower.TowerPrototype;
 import ua.gram.model.prototype.weapon.WeaponPrototype;
-import ua.gram.model.stage.GameBattleStage;
+import ua.gram.model.stage.BattleStage;
 import ua.gram.model.state.tower.TowerStateHolder;
 import ua.gram.model.state.tower.TowerStateManager;
 import ua.gram.model.strategy.tower.TowerStrategy;
@@ -57,7 +57,7 @@ public abstract class Tower extends GameActor<Types.TowerState, Types.TowerLevel
         super(prototype);
         this.game = game;
         this.prototype = prototype;
-        this.property = new TowerProperty(prototype.getFirstProperty());
+        this.property = new TowerProperty(prototype.getFirstLevelProperty());
         stateHolder = new TowerStateHolder();
         victims = new ArrayList<>(10);
     }
@@ -119,14 +119,14 @@ public abstract class Tower extends GameActor<Types.TowerState, Types.TowerLevel
     @Override
     public void reset() {
         currentTowerStrategy = getDefaultStrategy();
-        property.setPrototype(prototype.getFirstProperty());
+        property.setPrototype(prototype.getFirstLevelProperty());
         this.setPosition(0, 0);
         Log.info(this + " was reset");
     }
 
     @Override
-    public GameBattleStage getStage() {
-        return (GameBattleStage) super.getStage();
+    public BattleStage getStage() {
+        return (BattleStage) super.getStage();
     }
 
     public Animation getAnimation() {

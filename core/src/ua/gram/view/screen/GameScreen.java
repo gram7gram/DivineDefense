@@ -8,8 +8,9 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import ua.gram.DDGame;
 import ua.gram.controller.Log;
 import ua.gram.model.Level;
-import ua.gram.model.stage.GameBattleStage;
-import ua.gram.model.stage.GameUIStage;
+import ua.gram.model.stage.BattleStage;
+import ua.gram.model.stage.StageHolder;
+import ua.gram.model.stage.UIStage;
 import ua.gram.view.AbstractScreen;
 
 /**
@@ -18,9 +19,10 @@ import ua.gram.view.AbstractScreen;
 public class GameScreen extends AbstractScreen {
 
     private final OrthogonalTiledMapRenderer renderer;
-    private final GameBattleStage stage_battle;
-    private final GameUIStage stage_ui;
+    private final BattleStage battleStage;
+    private final UIStage uiStage;
     private final Level level;
+    private final StageHolder stageHolder;
 
     public GameScreen(DDGame game, Level level) {
         super(game);
@@ -30,21 +32,24 @@ public class GameScreen extends AbstractScreen {
         game.getPlayer().reset();
         renderer = new OrthogonalTiledMapRenderer(level.getMap().getTiledMap());
         renderer.setView(game.getCamera());
-        stage_battle = new GameBattleStage(game, level);
-        stage_ui = new GameUIStage(game, level);
-        stage_battle.setUIStage(stage_ui);
-        stage_ui.setBattleStage(stage_battle);
+        battleStage = new BattleStage(game, level);
+        uiStage = new UIStage(game, level);
+        stageHolder = new StageHolder(uiStage, battleStage);
+        battleStage.setStageHolder(stageHolder);
+        uiStage.setStageHolder(stageHolder);
         Log.info("GameScreen is OK");
     }
 
     @Override
     public void show() {
         Log.info("Screen set to GameScreen");
+        battleStage.init();
+        uiStage.init();
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
-        inputMultiplexer.addProcessor(stage_ui);
-        inputMultiplexer.addProcessor(stage_battle);
+        inputMultiplexer.addProcessor(uiStage);
+        inputMultiplexer.addProcessor(battleStage);
         Gdx.input.setInputProcessor(inputMultiplexer);
-        stage_ui.getGameUIGroup().showNotification("LEVEL " + (level.getCurrentLevel()));
+        uiStage.getGameUIGroup().showNotification("LEVEL " + (level.getCurrentLevel()));
     }
 
     @Override
@@ -52,25 +57,25 @@ public class GameScreen extends AbstractScreen {
         Gdx.gl.glClearColor(0, 111 / 255f, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
         renderer.render(); //show tile map
-        stage_battle.draw();
-        stage_ui.act(delta);
-        stage_ui.draw();
+        battleStage.draw();
+        uiStage.act(delta);
+        uiStage.draw();
     }
 
     /**
-     * act() is placed in separated method due to stage_battle
+     * act() is placed in separated method due to battleStage
      * should not be updated if game is paused.
      *
      * @param delta
      */
     @Override
     public void renderOtherElements(float delta) {
-        stage_battle.act(delta);
+        battleStage.act(delta);
     }
 
     @Override
     public void hide() {
-        Gdx.app.log("WARN", "Hiding GameScreen");
+        Log.warn("Hiding GameScreen");
         Gdx.input.setInputProcessor(null);
         dispose();
     }
@@ -78,7 +83,7 @@ public class GameScreen extends AbstractScreen {
     @Override
     public void dispose() {
         renderer.dispose();
-        Gdx.app.log("WARN", "GameScreen disposed");
+        Log.warn("GameScreen disposed");
     }
 
 }

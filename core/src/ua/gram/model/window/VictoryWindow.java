@@ -33,7 +33,7 @@ public class VictoryWindow extends Window {
         this.setVisible(true);
         this.setMovable(false);
 
-        victoryBanner = new Sprite(skin.getRegion("banner-victory"));
+        victoryBanner = new Sprite(skin.getRegion("ui/static/banner-victory"));
         victoryBanner.setSize(500, 250);
         victoryBanner.setPosition(originX - 50, originY + 225);
 

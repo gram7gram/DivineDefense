@@ -16,7 +16,7 @@ public class TowerPrototype extends GameActorPrototype {
     public WeaponPrototype weapon;
     public TowerPropertyPrototype[] properties;
 
-    public TowerPropertyPrototype getFirstProperty() {
+    public TowerPropertyPrototype getFirstLevelProperty() {
         return getProperty(1);
     }
 

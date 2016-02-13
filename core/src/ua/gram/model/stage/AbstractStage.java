@@ -11,6 +11,7 @@ import ua.gram.controller.listener.DebugListener;
 public abstract class AbstractStage extends Stage {
 
     protected final DDGame game;
+    protected StageHolder stageHolder;
 
     public AbstractStage(DDGame game) {
         super(game.getViewport(), game.getBatch());
@@ -22,5 +23,13 @@ public abstract class AbstractStage extends Stage {
     public void act() {
         super.act();
         this.setDebugAll(DDGame.DEBUG);
+    }
+
+    public StageHolder getStageHolder() {
+        return stageHolder;
+    }
+
+    public void setStageHolder(StageHolder stageHolder) {
+        this.stageHolder = stageHolder;
     }
 }

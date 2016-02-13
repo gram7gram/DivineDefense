@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 import ua.gram.DDGame;
 import ua.gram.controller.Log;
 import ua.gram.model.prototype.PlayerPrototype;
+import ua.gram.model.prototype.progress.ProgressPrototype;
 
 /**
  *
@@ -143,5 +144,25 @@ public class Player implements ResetableInterface {
             default:
                 throw new GdxRuntimeException("No fraction registered as " + name);
         }
+    }
+
+    public ProgressPrototype getProgress() {
+        return prototype.progress;
+    }
+
+    public int getLastUnlockedLevel() {
+        int defaultLevel = 1;
+
+        if (prototype.progress == null || prototype.progress.level == null)
+            return defaultLevel;
+
+        return prototype.progress.level.lastUnlocked;
+    }
+
+    public void incrementLastUnlockedLevel() {
+        if (prototype.progress == null || prototype.progress.level == null)
+            throw new GdxRuntimeException("Missing player progress");
+
+        ++prototype.progress.level.lastUnlocked;
     }
 }

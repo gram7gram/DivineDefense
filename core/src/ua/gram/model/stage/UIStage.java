@@ -1,13 +1,15 @@
 package ua.gram.model.stage;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 
 import ua.gram.DDGame;
+import ua.gram.controller.Log;
 import ua.gram.controller.tower.TowerShop;
+import ua.gram.model.Initializer;
 import ua.gram.model.Level;
 import ua.gram.model.group.GameUIGroup;
 import ua.gram.model.group.TowerControlsGroup;
+import ua.gram.model.prototype.shop.TowerShopConfigPrototype;
 import ua.gram.model.window.DefeatWindow;
 import ua.gram.model.window.PauseWindow;
 import ua.gram.model.window.VictoryWindow;
@@ -18,36 +20,47 @@ import ua.gram.model.window.VictoryWindow;
  *
  * @author Gram <gram7gram@gmail.com>
  */
-public class GameUIStage extends AbstractStage {
+public class UIStage extends AbstractStage implements Initializer {
 
     private final DDGame game;
-    private final GameUIGroup gameUIGroup;
     private final Level level;
     private final PauseWindow pauseWindow;
     private final VictoryWindow victoryWindow;
     private final DefeatWindow defeatWindow;
+    private final GameUIGroup gameUIGroup;
     private TowerShop towerShop;
-    private GameBattleStage stage_battle;
     private TowerControlsGroup towerControls;
 
-    public GameUIStage(DDGame game, Level level) {
+    public UIStage(DDGame game, Level level) {
         super(game);
-        this.setDebugAll(DDGame.DEBUG);
         this.game = game;
         this.level = level;
         gameUIGroup = new GameUIGroup(game, this, level);
         victoryWindow = new VictoryWindow(game, level);
-        pauseWindow = new PauseWindow(game, this);
-        defeatWindow = new DefeatWindow(game, this);
+        pauseWindow = new PauseWindow(game);
+        defeatWindow = new DefeatWindow(game);
         gameUIGroup.setVisible(true);
         victoryWindow.setVisible(false);
         pauseWindow.setVisible(false);
         defeatWindow.setVisible(false);
-        this.addActor(gameUIGroup);
-        this.addActor(victoryWindow);
-        this.addActor(pauseWindow);
-        this.addActor(defeatWindow);
-        Gdx.app.log("INFO", "GameUIStage is OK");
+        Log.info("GameUIStage is OK");
+    }
+
+    @Override
+    public void init() {
+        defeatWindow.setStageHolder(stageHolder);
+        defeatWindow.init();
+        pauseWindow.setStageHolder(stageHolder);
+        pauseWindow.init();
+        TowerShopConfigPrototype config = game.getPrototype().levelConfig.towerShopConfig;
+        towerShop = new TowerShop(game, stageHolder, config);
+        towerShop.init();
+        towerShop.getTowerShopGroup().setVisible(true);
+        addActor(gameUIGroup);
+        addActor(victoryWindow);
+        addActor(pauseWindow);
+        addActor(defeatWindow);
+        addActor(towerShop.getTowerShopGroup());
     }
 
     /**
@@ -56,39 +69,34 @@ public class GameUIStage extends AbstractStage {
      * @param window show/hide this
      */
     public void toggleWindow(Window window) {
-        Gdx.app.log("INFO", "Pause: " + DDGame.PAUSE);
+        Log.info("Pause: " + DDGame.PAUSE);
         window.setVisible(!window.isVisible());
         gameUIGroup.setVisible(!window.isVisible());
         towerShop.getTowerShopGroup().setVisible(!window.isVisible());
+        BattleStage battleStage = stageHolder.getBattleStage();
         if (window.isVisible()) {
             if (window instanceof DefeatWindow) {
                 ((DefeatWindow) window).update();
             }
-            stage_battle.removeListener(stage_battle.getControlsListener());
+            battleStage.removeListener(battleStage.getControlsListener());
         } else {
-            stage_battle.addListener(stage_battle.getControlsListener());
+            battleStage.addListener(battleStage.getControlsListener());
         }
-        Gdx.app.log("INFO", window.getClass().getSimpleName() + " is " + (window.isVisible() ? "" : "in") + "visible");
+        Log.info(window.getClass().getSimpleName() + " is " + (window.isVisible() ? "" : "in") + "visible");
     }
 
-
-    /**
-     * Checks if Player is Dead or Victorious.
-     *
-     * @param delta
-     */
     @Override
     public void act(float delta) {
         super.act(delta);
-        this.setDebugAll(DDGame.DEBUG);
+        setDebugAll(DDGame.DEBUG);
         if (!DDGame.PAUSE) {
             if (level.isDefeated() && !victoryWindow.isVisible()) {
-                Gdx.app.log("INFO", "Player is dead");
+                Log.info("Player is dead");
                 DDGame.PAUSE = true;
                 toggleWindow(defeatWindow);
             } else if (level.isVictorious() && !defeatWindow.isVisible()) {
-                Gdx.app.log("INFO", "Player is victorious");
-                stage_battle.clear();
+                Log.info("Player is victorious");
+                stageHolder.getBattleStage().clear();
                 DDGame.PAUSE = true;
                 toggleWindow(victoryWindow);
             }
@@ -99,21 +107,11 @@ public class GameUIStage extends AbstractStage {
         return towerControls;
     }
 
-    public void setTowerControls(TowerControlsGroup towerControls) {
-        this.towerControls = towerControls;
-        towerControls.setVisible(false);
-        this.addActor(towerControls);
-    }
-
-    public GameBattleStage getBattleStage() {
-        return stage_battle;
-    }
-
-    public void setBattleStage(GameBattleStage stage_battle) {
-        this.stage_battle = stage_battle;
-        towerShop = new TowerShop(game, stage_battle, this);
-        towerShop.getTowerShopGroup().setVisible(true);
-        this.addActor(towerShop.getTowerShopGroup());
+    public void setTowerControls(TowerControlsGroup controls) {
+        if (towerControls != null) throw new IllegalArgumentException("Already initialized");
+        towerControls = controls;
+        controls.setVisible(false);
+        addActor(controls);
     }
 
     public Level getLevel() {
@@ -126,5 +124,9 @@ public class GameUIStage extends AbstractStage {
 
     public GameUIGroup getGameUIGroup() {
         return gameUIGroup;
+    }
+
+    public TowerShop getTowerShop() {
+        return towerShop;
     }
 }

@@ -20,23 +20,29 @@ public class TowerShopItem extends Group {
     private final DDGame game;
     private final Button item;
     private final Label price;
+    private int indexInShop;
 
     public TowerShopItem(DDGame game, TowerShop shop, TowerPrototype prototype, String style) {
         this.game = game;
         Skin skin = game.getResources().getSkin();
         item = new Button(skin, style);
         item.setSize(DDGame.DEFAULT_BUTTON_HEIGHT, DDGame.DEFAULT_BUTTON_HEIGHT);
-        price = new Label("" + prototype.getFirstProperty().cost, skin, "16_tinted");
+        price = new Label("" + prototype.getFirstLevelProperty().cost, skin, "16_tinted");
         price.setVisible(true);
         item.setVisible(true);
 
         item.addListener(new TowerShopInputListener(game, shop, prototype.name));
 
-        this.addActor(item);
-        this.addActor(price);
+        addActor(item);
+        addActor(price);
     }
 
-    public void setIndex(int index) {
+    public int getIndexInShop() {
+        return indexInShop;
+    }
+
+    public void setIndexInShop(int index) {
+        indexInShop = index;
         item.setPosition(DDGame.WORLD_WIDTH - DDGame.DEFAULT_BUTTON_HEIGHT * index - 5 * index, 5);
         price.setPosition(
                 item.getX() + item.getWidth() - price.getWidth(),

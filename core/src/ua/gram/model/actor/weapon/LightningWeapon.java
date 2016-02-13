@@ -9,7 +9,7 @@ import ua.gram.controller.Resources;
 import ua.gram.model.group.Layer;
 import ua.gram.model.prototype.weapon.LightningWeaponPrototype;
 import ua.gram.model.prototype.weapon.WeaponPrototype;
-import ua.gram.model.stage.GameBattleStage;
+import ua.gram.model.stage.BattleStage;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -53,7 +53,7 @@ public class LightningWeapon extends Weapon {
     @Override
     protected void handleIndexes(int targetIndex, int parentIndex) {
         if (currentLayer == null) {
-            GameBattleStage stage = towerGroup.getRootActor().getStage();
+            BattleStage stage = towerGroup.getRootActor().getStage();
             currentLayer = stage.putOnLayer(this, parentIndex + 1);
             this.toFront();
         }

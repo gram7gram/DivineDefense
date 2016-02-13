@@ -8,8 +8,8 @@ import ua.gram.controller.enemy.EnemySpawner;
 import ua.gram.model.map.Map;
 import ua.gram.model.prototype.LevelPrototype;
 import ua.gram.model.prototype.WavePrototype;
-import ua.gram.model.stage.GameBattleStage;
-import ua.gram.model.stage.GameUIStage;
+import ua.gram.model.stage.BattleStage;
+import ua.gram.model.stage.UIStage;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -24,7 +24,7 @@ public class Level {
     private Map map;
     private DDGame game;
     private EnemySpawner spawner;
-    private GameBattleStage battleStage;
+    private BattleStage battleStage;
     private int currentLevel;
 
     public Level(DDGame game, LevelPrototype prototype) {
@@ -73,7 +73,7 @@ public class Level {
         int index = getCurrentWaveIndex();
         if (index > 0) {
             String text = "WAVE " + index;
-            GameUIStage stage = battleStage.getGameUIStage();
+            UIStage stage = battleStage.getStageHolder().getUiStage();
             if (stage != null) {
                 stage.getGameUIGroup().showNotification(text);
             } else {
@@ -124,11 +124,11 @@ public class Level {
         return currentWave;
     }
 
-    public GameBattleStage getStage() {
+    public BattleStage getStage() {
         return battleStage;
     }
 
-    public void setStage(GameBattleStage stage) {
+    public void setStage(BattleStage stage) {
         this.battleStage = stage;
     }
 

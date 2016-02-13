@@ -79,7 +79,7 @@
     "reportConfig": {
       "title": "Divine Defense Bug Report",
       "sender": "divine.defense@i.ua",
-      "recipient": "{{ contact }}",
+      "recipient": "gram7gram@gmail.com",
       "password": "cxmmjGtdLmucADN",
       "host": "smtp.i.ua",
       "port": 465
@@ -102,11 +102,15 @@
   },
   "player": {
     "class": "ua.gram.model.prototype.PlayerPrototype",
-    "id": 0,
     "health": 1000,
     "coins": 250,
     "gems": 7,
-    "fraction": null
+    "fraction": null,
+    "progress": {
+      "level": {
+        "lastUnlocked": 1
+      }
+    }
   },
   "levelConfig": {
     "class": "ua.gram.model.prototype.LevelConfigPrototype",
@@ -132,10 +136,7 @@
           "blockedProperty": "blocked",
           "name": "data/levels/maps/level1@60.tmx"
         },
-        "difficulty": 1,
-        "ranking": 3,
         "preview": "preview/level-1-preview",
-        "locked": false,
         "initialDirection": {
           "x": 0,
           "y": 1
@@ -165,10 +166,7 @@
           "blockedProperty": "blocked",
           "name": "data/levels/maps/level2@60.tmx"
         },
-        "difficulty": 1,
-        "ranking": 0,
         "preview": "preview/level-2-preview",
-        "locked": false,
         "initialDirection": {
           "x": 1,
           "y": 0
@@ -189,7 +187,39 @@
           }
         ]
       }
-    ]
+    ],
+    "towerShopConfig": {
+      "class": "ua.gram.model.prototype.shop.TowerShopConfigPrototype",
+      "items": [
+        {
+          "name": "TowerPrimary",
+          "unlocked": true,
+          "order": 1
+        },
+        {
+          "name": "TowerSecondary",
+          "unlocked": true,
+          "order": 2
+        },
+        {
+          "name": "TowerStun",
+          "unlocked": true,
+          "order": 3
+        },
+        {
+          "name": "TowerSpecial",
+          "unlocked": true,
+          "order": 4
+        }
+      ]
+    },
+    "counterButtonConfig": {
+      "class": "ua.gram.model.prototype.CounterButtonPrototype",
+      "width": 40,
+      "height": 40,
+      "region": "ui/static/button-countdown",
+      "frameDuration": 1
+    }
   },
   "enemies": [
     {

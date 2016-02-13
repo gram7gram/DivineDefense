@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import ua.gram.DDGame;
 import ua.gram.controller.Log;
 import ua.gram.controller.listener.ToggleTowerControlsListener;
+import ua.gram.model.Initializer;
 import ua.gram.model.Level;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.actor.tower.Tower;
@@ -18,20 +19,17 @@ import ua.gram.model.group.TowerGroup;
 
 /**
  * Contains major game objects, like towers and enemies.
- * <p/>
- * TODO Check for occupied cells if towerGroup is buy.
  *
  * @author Gram <gram7gram@gmail.com>
  */
-public class GameBattleStage extends AbstractStage {
+public class BattleStage extends AbstractStage implements Initializer {
 
     private final Level level;
-    private ua.gram.model.stage.GameUIStage gameUIStage;
     private volatile ArrayList<Layer> indexes;
     private ToggleTowerControlsListener controlsListener;
     private ArrayList<int[]> towerPositions;
 
-    public GameBattleStage(DDGame game, Level level) {
+    public BattleStage(DDGame game, Level level) {
         super(game);
         this.level = level;
         towerPositions = new ArrayList<>();
@@ -39,10 +37,15 @@ public class GameBattleStage extends AbstractStage {
         for (int i = 0; i < DDGame.MAP_HEIGHT; i++) {
             Layer layer = new Layer();
             indexes.add(layer);
-            this.addActor(layer);
+            addActor(layer);
         }
         Log.info(indexes.size() + " indexes are OK");
         Log.info("BattleStage is OK");
+    }
+
+    @Override
+    public void init() {
+
     }
 
     @Override
@@ -53,7 +56,7 @@ public class GameBattleStage extends AbstractStage {
             if (level.getStage() == null) {
                 level.setStage(this);
                 level.createSpawner();
-                controlsListener = new ToggleTowerControlsListener(this, gameUIStage);
+                controlsListener = new ToggleTowerControlsListener(this, stageHolder.getUiStage());
                 this.addListener(controlsListener);
             }
             level.update(delta);
@@ -230,10 +233,6 @@ public class GameBattleStage extends AbstractStage {
         return indexes;
     }
 
-    public void setUIStage(ua.gram.model.stage.GameUIStage stage_ui) {
-        this.gameUIStage = stage_ui;
-    }
-
     public ToggleTowerControlsListener getControlsListener() {
         return controlsListener;
     }
@@ -254,7 +253,4 @@ public class GameBattleStage extends AbstractStage {
         return layer;
     }
 
-    public ua.gram.model.stage.GameUIStage getGameUIStage() {
-        return gameUIStage;
-    }
 }

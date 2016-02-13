@@ -51,6 +51,7 @@ public class DesktopModule implements ModuleInterface {
         if (prototype.gameConfig.reloadTextures) {
             TexturePackerPrototype packer = prototype.gameConfig.texturePacker;
             TexturePacker.process(packer.config, packer.from, packer.to, packer.name);
+            prototype.gameConfig.reloadTextures = false;
         }
 
         return graphics;

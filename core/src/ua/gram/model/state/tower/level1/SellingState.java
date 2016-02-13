@@ -4,7 +4,7 @@ import ua.gram.DDGame;
 import ua.gram.controller.Log;
 import ua.gram.model.actor.tower.Tower;
 import ua.gram.model.enums.Types;
-import ua.gram.model.stage.GameBattleStage;
+import ua.gram.model.stage.BattleStage;
 import ua.gram.model.state.tower.TowerState;
 import ua.gram.model.state.tower.TowerStateManager;
 
@@ -34,7 +34,7 @@ public class SellingState extends InactiveState {
     public void manage(Tower tower, float delta) {
         super.manage(tower, delta);
         if (tower.buildCount >= tower.getPrototype().buildDelay / 2) {
-            GameBattleStage stage = tower.getTowerShop().getStageBattle();
+            BattleStage stage = tower.getTowerShop().getBattleStage();
             stage.removeTowerPosition(tower);
             int revenue = (int) (tower.getProperty().getCost() * Tower.SELL_RATIO);
             game.getPlayer().addCoins(revenue);

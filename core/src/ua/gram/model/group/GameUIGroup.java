@@ -16,7 +16,7 @@ import ua.gram.model.Level;
 import ua.gram.model.actor.misc.CounterButton;
 import ua.gram.model.actor.misc.CustomLabel;
 import ua.gram.model.prototype.CounterButtonPrototype;
-import ua.gram.model.stage.GameUIStage;
+import ua.gram.model.stage.UIStage;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -30,9 +30,9 @@ public class GameUIGroup extends Group {
     private final CustomLabel waveLabel;
     private final CustomLabel gemsLabel;
     private final CustomLabel notificationLabel;
-    private CounterButton counter;
+    private final CounterButton counter;
 
-    public GameUIGroup(final DDGame game, final GameUIStage gameUIStage, final Level level) {
+    public GameUIGroup(final DDGame game, final UIStage uiStage, final Level level) {
         super();
         this.game = game;
         this.level = level;
@@ -48,20 +48,17 @@ public class GameUIGroup extends Group {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 DDGame.PAUSE = true;
-                gameUIStage.toggleWindow(gameUIStage.getPauseWindow());
+                uiStage.toggleWindow(uiStage.getPauseWindow());
             }
         });
 
         Vector2 pos = level.getMap().getSpawn().getPosition();
 
-        CounterButtonPrototype prototype = new CounterButtonPrototype();
-        prototype.height = 40;
-        prototype.width = 40;
-        prototype.frameDuration = 1;
-        prototype.region = "button-countdown";
+        CounterButtonPrototype prototype = game.getPrototype().levelConfig.counterButtonConfig;
         prototype.tilePosition = new Vector2(pos.x, pos.y);
 
         counter = new CounterButton(game, level, prototype);
+        counter.init();
 
         healthLabel = new CustomLabel("HEALTH: " + game.getPlayer().getHealth(), skin, "small_tinted");
         gemsLabel = new CustomLabel("GEMS: " + game.getPlayer().getGems(), skin, "small_tinted");

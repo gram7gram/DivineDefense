@@ -42,6 +42,6 @@ public class AndroidLauncher extends AndroidApplication {
             TexturePacker.process(packer.config, packer.from, packer.to, packer.name);
         }
 
-        initialize(new DDGame(new SecurityManager(), prototype), config);
+        initialize(new DDGame<>(new SecurityManager(), prototype), config);
     }
 }

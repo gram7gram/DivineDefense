@@ -8,7 +8,7 @@ import ua.gram.controller.Resources;
 import ua.gram.model.group.Layer;
 import ua.gram.model.prototype.weapon.FreezeWeaponPrototype;
 import ua.gram.model.prototype.weapon.WeaponPrototype;
-import ua.gram.model.stage.GameBattleStage;
+import ua.gram.model.stage.BattleStage;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -43,7 +43,7 @@ public class FreezeWeapon extends Weapon implements AOEWeapon {
     @Override
     protected void handleIndexes(int targetIndex, int parentIndex) {
         if (currentLayer == null) {
-            GameBattleStage stage = towerGroup.getRootActor().getStage();
+            BattleStage stage = towerGroup.getRootActor().getStage();
             currentLayer = stage.putOnLayer(this, parentIndex > 0 ? parentIndex - 1 : 0);
             this.toBack();
         }
