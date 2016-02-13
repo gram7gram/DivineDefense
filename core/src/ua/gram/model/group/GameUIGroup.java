@@ -122,8 +122,10 @@ public class GameUIGroup extends Group {
             speedBut.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    if (game.getGameSpeed() < 1) game.decreaseGameSpeed();
-                    else game.increaseGameSpeed();
+                    if (game.getSpeed().isIncreased())
+                        game.getSpeed().decrease();
+                    else
+                        game.getSpeed().increase();
                 }
             });
             this.addActor(speedBut);

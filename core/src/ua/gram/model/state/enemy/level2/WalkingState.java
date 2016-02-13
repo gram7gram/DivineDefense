@@ -127,7 +127,7 @@ public class WalkingState extends Level2State {
         return Actions.moveBy(
                 enemy.speed > 0 ? (int) (dir.x * DDGame.TILE_HEIGHT) : 0,
                 enemy.speed > 0 ? (int) (dir.y * DDGame.TILE_HEIGHT) : 0,
-                enemy.speed * getGame().getGameSpeed());
+                enemy.speed * getGame().getSpeed().getValue());
     }
 
     protected final void remove(Enemy enemy) {
@@ -141,7 +141,7 @@ public class WalkingState extends Level2State {
     }
 
     protected final boolean isIterationAllowed(int iteration) {
-        return getGame().getGameSpeed() < 1 ? iteration > 2 : iteration > 4;
+        return getGame().getSpeed().isIncreased() ? iteration > 2 : iteration > 4;
     }
 
     protected final void reset(Enemy enemy) {

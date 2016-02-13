@@ -11,8 +11,10 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import ua.gram.controller.Log;
 import ua.gram.controller.Resources;
+import ua.gram.controller.StringProcessor;
 import ua.gram.controller.security.SecurityManager;
 import ua.gram.model.Player;
+import ua.gram.model.Speed;
 import ua.gram.model.prototype.GamePrototype;
 import ua.gram.model.prototype.LevelPrototype;
 import ua.gram.model.prototype.ParametersPrototype;
@@ -60,6 +62,7 @@ public class DDGame<P extends GamePrototype> extends Game {
     public static int MAX_LEVELS;
     private final P prototype;
     private final ParametersPrototype parameters;
+    private final Speed gameSpeed;
     private SecurityManager security;
     private Resources resources;
     private SpriteBatch batch;
@@ -67,12 +70,12 @@ public class DDGame<P extends GamePrototype> extends Game {
     private Viewport view;
     private Player player;
     private BitmapFont info;
-    private float gameSpeed = 1;
 
     public DDGame(SecurityManager security, P prototype) {
         this.security = security;
         this.prototype = prototype;
         this.parameters = prototype.getParameters();
+        gameSpeed = new Speed();
         DEBUG = parameters.debugging;
     }
 
@@ -80,16 +83,20 @@ public class DDGame<P extends GamePrototype> extends Game {
     public void create() {
         Gdx.app.setLogLevel(parameters.logLevel);
         sayHello();
+        initGameValues();
+        resources = new Resources(this);
+        info = new BitmapFont();
+        info.setColor(1, 1, 1, 1);
+        setScreen(new LaunchLoadingScreen(this, prototype));
+    }
+
+    private void initGameValues() {
         WORLD_WIDTH = Gdx.graphics.getWidth();
         WORLD_HEIGHT = Gdx.graphics.getHeight();
         MAP_WIDTH = WORLD_WIDTH / TILE_HEIGHT;
         MAP_HEIGHT = WORLD_HEIGHT / TILE_HEIGHT;
         MAX_ENTITIES = MAP_WIDTH * MAP_HEIGHT;//Maximum entities on the map
         MAX_LEVELS = prototype.levelConfig.levels.length;
-        resources = new Resources(this);
-        info = new BitmapFont();
-        info.setColor(1, 1, 1, 1);
-        this.setScreen(new LaunchLoadingScreen(this, prototype));
     }
 
     @Override
@@ -121,7 +128,7 @@ public class DDGame<P extends GamePrototype> extends Game {
 
     public void createViewport() {
         if (view != null) return;
-        float RATIO = (float) (Gdx.graphics.getHeight() / Gdx.graphics.getWidth());
+        float RATIO = (float) (WORLD_WIDTH / WORLD_HEIGHT);
         view = new ExtendViewport(WORLD_WIDTH * RATIO, WORLD_HEIGHT, camera);
         view.apply();
     }
@@ -132,10 +139,6 @@ public class DDGame<P extends GamePrototype> extends Game {
 
     public ParametersPrototype getParameters() {
         return prototype.getParameters();
-    }
-
-    public ParametersPrototype getAbstractParameters() {
-        return parameters;
     }
 
     public Resources getResources() {
@@ -170,26 +173,8 @@ public class DDGame<P extends GamePrototype> extends Game {
         this.player = player;
     }
 
-    public float getGameSpeed() {
+    public Speed getSpeed() {
         return gameSpeed;
-    }
-
-    public void setGameSpeed(float gameSpeed) {
-        this.gameSpeed = gameSpeed;
-    }
-
-    public float increaseGameSpeed() {
-        gameSpeed = .5f;
-        return gameSpeed;
-    }
-
-    public float decreaseGameSpeed() {
-        gameSpeed = 1;
-        return gameSpeed;
-    }
-
-    public void resetGameSpeed() {
-        this.gameSpeed = 1;
     }
 
     public GamePrototype getPrototype() {
@@ -207,13 +192,13 @@ public class DDGame<P extends GamePrototype> extends Game {
 
     private synchronized void sayGoodbye() {
         for (String text : parameters.consoleBye) {
-            Log.info(parameters.processString(text));
+            Log.info(StringProcessor.processString(parameters, text));
         }
     }
 
     private synchronized void sayHello() {
         for (String text : parameters.consoleHello) {
-            Log.info(parameters.processString(text));
+            Log.info(StringProcessor.processString(parameters, text));
         }
     }
 }

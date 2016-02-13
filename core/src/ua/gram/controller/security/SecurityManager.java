@@ -76,7 +76,7 @@ public class SecurityManager<P extends GamePrototype> {
     }
 
     public boolean sendBugReport(String error) {
-        return new BugReport(prototype.getParameters()).sendReport(error);
+        return new BugReport(prototype).sendReport(error);
     }
 
     @SuppressWarnings("unchecked")

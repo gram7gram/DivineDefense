@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="15" height="10" tilewidth="60" tileheight="60" nextobjectid="1">
- <tileset firstgid="1" name="lava@60" tilewidth="60" tileheight="60">
-  <image source="terrain/lava@60.png" width="540" height="360"/>
+<map height="10" nextobjectid="1" orientation="orthogonal" renderorder="right-down" tileheight="60"
+    tilewidth="60" version="1.0" width="15">
+ <tileset name="lava@60" firstgid="1" tileheight="60" tilewidth="60">
+  <image height="360" source="terrain/lava@60.png" width="540" />
   <tile id="0">
    <properties>
     <property name="blocked" value=""/>
@@ -240,13 +241,13 @@
    </properties>
   </tile>
  </tileset>
- <layer name="Back" width="15" height="10">
-  <data encoding="base64" compression="zlib">
+ <layer name="Back" height="10" width="15">
+  <data compression="zlib" encoding="base64">
    eJwzZmBgMB7Fo5jKGABFAR3j
   </data>
  </layer>
- <layer name="Terrain" width="15" height="10">
-  <data encoding="base64" compression="zlib">
+ <layer name="Terrain" height="10" width="15">
+  <data compression="zlib" encoding="base64">
    eJxtj80KwkAMhLfWKtSfiy16qIUetCqIuH3/d3MWJjCGBD66O8lkp++UUgNe6b8qMIEBXMEK3ElN7el8DbUNvTfOz+y31Go3b3tK/xFk0RqCd7VOoAc5oHjXco92j0EvM/dCsuhZ+rP0NMcBXMQTffVsOWzPFLzn79775bl4t+5/LFsrms3vQAf24AjOpOSvgmydzH+EH51VDaI=
   </data>
  </layer>

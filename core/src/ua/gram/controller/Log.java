@@ -9,6 +9,11 @@ import java.util.Arrays;
  */
 public class Log {
 
+    public static final String INFO = "INFO";
+    public static final String WARN = "WARN";
+    public static final String CRIT = "CRIT";
+    public static final String EXC = "EXC";
+
     /**
      * Normal log
      */
@@ -43,14 +48,19 @@ public class Log {
      * Log exceptions
      */
     public synchronized static void exc(String msg, Exception e) {
+        String message = buildExceptionMessage(msg, e);
+        if (Gdx.app != null) {
+            Gdx.app.error("\nEXC", message);
+        } else {
+            System.err.println("\nEXC " + message);
+        }
+    }
+
+    public static String buildExceptionMessage(String msg, Exception e) {
         msg += "\r\nCLASS:\t" + e.getClass().getSimpleName();
         msg += "\nMSG:\t" + e.getMessage();
         msg += "\nTRACE:\t" + Arrays.toString(e.getStackTrace()) + "\r\n";
-        if (Gdx.app != null) {
-            Gdx.app.error("\nEXC", msg);
-        } else {
-            System.err.println("\nEXC " + msg);
-        }
+        return msg;
     }
 
     private String getTime() {

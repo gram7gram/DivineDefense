@@ -1,7 +1,6 @@
 package ua.gram.model.prototype;
 
-import java.lang.reflect.Field;
-import java.util.HashMap;
+import com.badlogic.gdx.Gdx;
 
 /**
  * TODO Split into Global and Game configuration
@@ -25,43 +24,14 @@ public abstract class ParametersPrototype extends Prototype {
     public String title;
     public String git;
     public String skin;
+    public String logFile;
     public boolean debugging;
     public int maxLevels;
     public int maxRanking;
     public int logLevel;
+    public ReportPrototype reportConfig;
 
-    private HashMap<String, Object> config;
-
-    public HashMap<String, Object> toMap() {
-        config = new HashMap<>();
-        config.put("id", id);
-        config.put("maxLevels", maxLevels);
-        config.put("maxRanking", maxRanking);
-        config.put("configPath", configPath);
-        config.put("gameModule", gameModule);
-        config.put("osName", osName);
-        config.put("deviceId", deviceId);
-        return config;
-    }
-
-    public String processString(String text) {
-        for (Field field : this.getClass().getFields()) {
-            Class type = field.getType();
-            if (type.equals(String.class)
-                    || type.equals(Integer.class)
-                    || type.equals(Boolean.class)) {
-                try {
-                    String value = field.get(this) == null ? "?" : field.get(this).toString();
-                    text = text.replace("{{ " + field.getName() + " }}", value);
-                } catch (IllegalAccessException e) {
-                    //ignore
-                }
-            }
-        }
-        return text;
-    }
-
-    protected HashMap<String, Object> getConfig() {
-        return config;
+    public String getLogFilePath() {
+        return Gdx.files.getExternalStoragePath() + logFile;
     }
 }
