@@ -1,6 +1,6 @@
 DIVINE DEFENSE
 
-![GAME ICON](https://github.com/gram7gram/DivineDefense/blob/mainstream/logo_small.png?raw=true)
+![GAME ICON](https://github.com/gram7gram/DivineDefense/blob/master/logo_small.png?raw=true)
 
 #Concept
 
@@ -46,11 +46,11 @@ Dmitriy Bondarchuk (Gram) <gram7gram@gmail.com>
 
 **Dimension**: 2.5D (pseudo 3D)
 
-![First level. Angel’s POV](https://github.com/gram7gram/DivineDefense/blob/mainstream/art/v1.0/level1_2.jpg?raw=true)
+![First level. Angel’s POV](https://github.com/gram7gram/DivineDefense/blob/master/art/v1.0/level1_2.jpg?raw=true)
 
 __First level. Angel’s POV__
 
-![Near boss’s chambers. Angel’s POV](https://github.com/gram7gram/DivineDefense/blob/mainstream/art/v1.0/level2.jpg?raw=true)
+![Near boss’s chambers. Angel’s POV](https://github.com/gram7gram/DivineDefense/blob/master/art/v1.0/level2.jpg?raw=true)
 
 __Near boss’s chambers. Angel’s POV__
 
@@ -299,7 +299,7 @@ public class DeadState extends InactiveState {
 
 States diagramm:
 
-![states image](https://github.com/gram7gram/DivineDefense/blob/mainstream/misc/states.png?raw=true)
+![states image](https://github.com/gram7gram/DivineDefense/blob/master/misc/states.png?raw=true)
 
 References:
 
