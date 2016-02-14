@@ -14,11 +14,12 @@ import ua.gram.model.stage.UIStage;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class Level {
+public class Level implements Initializer {
 
     public static int MAX_WAVES;
     private final ArrayList<Wave> waves;
     private final LevelPrototype prototype;
+    private final Object lock;
     public boolean isCleared;
     private Wave currentWave;
     private Map map;
@@ -28,30 +29,39 @@ public class Level {
     private int currentLevel;
 
     public Level(DDGame game, LevelPrototype prototype) {
-        if (prototype.waves.length == 0) throw new NullPointerException("Missing waves");
+        if (prototype.waves == null || prototype.waves.length == 0)
+            throw new NullPointerException("Missing waves");
+        lock = new Object();
         this.game = game;
         this.prototype = prototype;
-        MAX_WAVES = prototype.waves.length;
-        waves = new ArrayList<>(prototype.waves.length);
-        for (WavePrototype proto : prototype.waves) {
-            waves.add(new Wave(this, proto));
-        }
-        isCleared = false;
         currentLevel = prototype.level;
+        MAX_WAVES = prototype.waves.length;
+        isCleared = false;
+        waves = new ArrayList<>(prototype.waves.length);
         map = new Map(game, prototype.map);
         Log.info("Level " + currentLevel + " is OK");
     }
 
-    public void createSpawner() {
+    @Override
+    public void init() {
+        for (WavePrototype proto : prototype.waves) {
+            waves.add(new Wave(this, proto));
+        }
+    }
+
+    public EnemySpawner createSpawner() {
         spawner = new EnemySpawner(game, this, battleStage);
+        return spawner;
     }
 
     public void update(float delta) {
         if (currentWave != null) {
             if (currentWave.getIndex() <= MAX_WAVES) {
                 if (currentWave.isStarted) {
-                    if (spawner == null)
-                        createSpawner();
+                    synchronized (lock) {
+                        if (spawner == null)
+                            createSpawner();
+                    }
                     spawner.update(delta);
                 }
             }

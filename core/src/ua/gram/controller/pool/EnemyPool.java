@@ -1,11 +1,11 @@
 package ua.gram.controller.pool;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Pool;
 
 import java.util.HashMap;
 
 import ua.gram.DDGame;
+import ua.gram.controller.Log;
 import ua.gram.controller.factory.EnemyFactory;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.prototype.enemy.EnemyPrototype;
@@ -28,7 +28,7 @@ public class EnemyPool extends Pool<Enemy> {
         for (EnemyPrototype prototype : prototypes) {
             map.put(prototype.name, prototype);
         }
-        Gdx.app.log("INFO", "Pool for " + type + " is created");
+        Log.info("Pool for " + type + " is created");
     }
 
     @Override

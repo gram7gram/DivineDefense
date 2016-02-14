@@ -29,6 +29,10 @@ public class Player implements ResetableInterface {
         coins = prototype.coins;
         gems = prototype.gems;
         health = prototype.health;
+        if (prototype.fraction != null) {
+            setFraction(prototype.fraction);
+            Log.info("Player fraction restored to " + PLAYER_FRACTION);
+        }
     }
 
     public void chargeCoins(int amount) {

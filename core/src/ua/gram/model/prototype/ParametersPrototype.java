@@ -17,8 +17,6 @@ public abstract class ParametersPrototype extends Prototype {
     public String osName;
     public String deviceId;
     public String contact;
-    public String token;
-    public String client;
     public String author;
     public String repository;
     public String title;
@@ -27,7 +25,6 @@ public abstract class ParametersPrototype extends Prototype {
     public String logFile;
     public boolean debugging;
     public int maxLevels;
-    public int maxRanking;
     public int logLevel;
     public ReportPrototype reportConfig;
 
