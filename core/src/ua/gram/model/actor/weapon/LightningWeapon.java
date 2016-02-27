@@ -6,10 +6,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import ua.gram.DDGame;
 import ua.gram.controller.Resources;
+import ua.gram.controller.stage.BattleStage;
 import ua.gram.model.group.Layer;
 import ua.gram.model.prototype.weapon.LightningWeaponPrototype;
 import ua.gram.model.prototype.weapon.WeaponPrototype;
-import ua.gram.model.stage.BattleStage;
 
 /**
  * @author Gram <gram7gram@gmail.com>

@@ -27,6 +27,7 @@ public abstract class ParametersPrototype extends Prototype {
     public int maxLevels;
     public int logLevel;
     public ReportPrototype reportConfig;
+    public ConstantsPrototype constants;
 
     public String getLogFilePath() {
         return Gdx.files.getExternalStoragePath() + logFile;

@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import ua.gram.DDGame;
 import ua.gram.controller.Log;
 import ua.gram.controller.enemy.EnemySpawner;
+import ua.gram.controller.stage.BattleStage;
+import ua.gram.controller.stage.UIStage;
 import ua.gram.model.map.Map;
 import ua.gram.model.prototype.LevelPrototype;
 import ua.gram.model.prototype.WavePrototype;
-import ua.gram.model.stage.BattleStage;
-import ua.gram.model.stage.UIStage;
 
 /**
  * @author Gram <gram7gram@gmail.com>

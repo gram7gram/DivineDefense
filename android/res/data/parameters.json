@@ -98,7 +98,12 @@
     ],
     "consoleHello": [
       "Welcome to {{ title }}, by {{ author }}"
-    ]
+    ],
+    "constants": {
+      "buttonHeight": 80,
+      "fraction1": "Angel",
+      "fraction2": "Demon"
+    }
   },
   "player": {
     "class": "ua.gram.model.prototype.PlayerPrototype",

@@ -10,9 +10,9 @@ import ua.gram.DDGame;
 import ua.gram.controller.Log;
 import ua.gram.controller.listener.ContinueListener;
 import ua.gram.controller.listener.RestartClickListener;
+import ua.gram.controller.stage.StageHolder;
 import ua.gram.model.Initializer;
 import ua.gram.model.Player;
-import ua.gram.model.stage.StageHolder;
 
 /**
  * @author Gram <gram7gram@gmail.com>

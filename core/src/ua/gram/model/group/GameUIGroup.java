@@ -12,11 +12,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import ua.gram.DDGame;
 import ua.gram.controller.Log;
+import ua.gram.controller.stage.UIStage;
 import ua.gram.model.Level;
 import ua.gram.model.actor.misc.CounterButton;
 import ua.gram.model.actor.misc.CustomLabel;
 import ua.gram.model.prototype.CounterButtonPrototype;
-import ua.gram.model.stage.UIStage;
 
 /**
  * @author Gram <gram7gram@gmail.com>

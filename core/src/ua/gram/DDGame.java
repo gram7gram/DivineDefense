@@ -48,12 +48,12 @@ import ua.gram.view.screen.LaunchLoadingScreen;
  */
 public class DDGame<P extends GamePrototype> extends Game {
 
-    public static final String ANGEL = "Angel";
-    public static final String DEMON = "Demon";
-    public static final byte TILE_HEIGHT = 60;
-    public static final byte DEFAULT_BUTTON_HEIGHT = 80;
+    public static String FRACTION1;
+    public static String FRACTION2;
+    public static byte TILE_HEIGHT = 60;
     public static boolean DEBUG;
     public static boolean PAUSE = false;
+    public static int DEFAULT_BUTTON_HEIGHT;
     public static int WORLD_WIDTH;
     public static int WORLD_HEIGHT;
     public static int MAP_WIDTH;
@@ -85,8 +85,6 @@ public class DDGame<P extends GamePrototype> extends Game {
         sayHello();
         initGameValues();
         resources = new Resources(this);
-        info = new BitmapFont();
-        info.setColor(1, 1, 1, 1);
         setScreen(new LaunchLoadingScreen(this, prototype));
     }
 
@@ -97,11 +95,11 @@ public class DDGame<P extends GamePrototype> extends Game {
         MAP_HEIGHT = WORLD_HEIGHT / TILE_HEIGHT;
         MAX_ENTITIES = MAP_WIDTH * MAP_HEIGHT;//Maximum entities on the map
         MAX_LEVELS = prototype.levelConfig.levels.length;
-    }
-
-    @Override
-    public void render() {
-        super.render();
+        DEFAULT_BUTTON_HEIGHT = parameters.constants.buttonHeight;
+        FRACTION1 = parameters.constants.fraction1;
+        FRACTION2 = parameters.constants.fraction2;
+        info = new BitmapFont();
+        info.setColor(1, 1, 1, 1);
     }
 
     @Override

@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import ua.gram.DDGame;
 import ua.gram.controller.Resources;
-import ua.gram.model.stage.MainMenuStage;
+import ua.gram.controller.stage.MainMenuStage;
 import ua.gram.view.AbstractScreen;
 
 /**

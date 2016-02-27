@@ -1,10 +1,10 @@
-package ua.gram.model.stage;
+package ua.gram.controller.stage;
 
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
 
 import ua.gram.DDGame;
-import ua.gram.model.group.MainMenuGroup;
+import ua.gram.model.group.MainMenuWindow;
 
 /**
  *
@@ -15,8 +15,8 @@ public class MainMenuStage extends AbstractStage {
     public MainMenuStage(DDGame game) {
         super(game);
         Skin skin = game.getResources().getSkin();
-        Group group = new MainMenuGroup(game, skin);
-        addActor(group);
+        Window window = new MainMenuWindow(game, skin);
+        addActor(window);
     }
 
 }

@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import ua.gram.DDGame;
 import ua.gram.controller.Log;
-import ua.gram.model.stage.ErrorStage;
+import ua.gram.controller.stage.ErrorStage;
 import ua.gram.view.AbstractScreen;
 
 /**

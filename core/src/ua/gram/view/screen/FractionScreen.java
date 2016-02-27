@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import ua.gram.DDGame;
 import ua.gram.controller.Log;
 import ua.gram.controller.Resources;
-import ua.gram.model.stage.FractionStage;
+import ua.gram.controller.stage.FractionStage;
 import ua.gram.view.AbstractScreen;
 
 /**

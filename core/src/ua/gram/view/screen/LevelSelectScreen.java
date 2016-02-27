@@ -5,9 +5,10 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import ua.gram.DDGame;
+import ua.gram.controller.Log;
 import ua.gram.controller.Resources;
+import ua.gram.controller.stage.LevelSelectStage;
 import ua.gram.model.prototype.GamePrototype;
-import ua.gram.model.stage.LevelSelectStage;
 import ua.gram.view.AbstractScreen;
 
 /**
@@ -22,12 +23,12 @@ public class LevelSelectScreen extends AbstractScreen {
         super(game, prototype);
         stage = new LevelSelectStage(game, prototype);
         background = new Sprite(game.getResources().getTexture(Resources.BACKGROUND_TEXTURE));
-        Gdx.app.log("INFO", "LevelSelectScreen is OK");
+        Log.info("LevelSelectScreen is OK");
     }
 
     @Override
     public void show() {
-        Gdx.app.log("INFO", "Screen set to LevelSelectScreen");
+        Log.info("Screen set to LevelSelectScreen");
         Gdx.input.setInputProcessor(stage);
         background.setSize(DDGame.WORLD_WIDTH, DDGame.WORLD_HEIGHT);
     }
@@ -50,12 +51,12 @@ public class LevelSelectScreen extends AbstractScreen {
 
     @Override
     public void hide() {
-        Gdx.app.log("WARN", "Hiding LevelSelectScreen");
+        Log.warn("Hiding LevelSelectScreen");
         Gdx.input.setInputProcessor(null);
     }
 
     @Override
     public void dispose() {
-        Gdx.app.log("WARN", "LevelSelectScreen disposed");
+        Log.warn("LevelSelectScreen disposed");
     }
 }

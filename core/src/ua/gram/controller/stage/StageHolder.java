@@ -1,4 +1,4 @@
-package ua.gram.model.stage;
+package ua.gram.controller.stage;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -6,9 +6,9 @@ package ua.gram.model.stage;
 public class StageHolder {
 
     private final UIStage uiStage;
-    private final BattleStage battleStage;
+    private final ua.gram.controller.stage.BattleStage battleStage;
 
-    public StageHolder(UIStage uiStage, BattleStage battleStage) {
+    public StageHolder(UIStage uiStage, ua.gram.controller.stage.BattleStage battleStage) {
         this.uiStage = uiStage;
         this.battleStage = battleStage;
     }
@@ -17,7 +17,7 @@ public class StageHolder {
         return uiStage;
     }
 
-    public BattleStage getBattleStage() {
+    public ua.gram.controller.stage.BattleStage getBattleStage() {
         return battleStage;
     }
 }

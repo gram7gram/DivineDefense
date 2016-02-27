@@ -8,9 +8,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import ua.gram.DDGame;
 import ua.gram.controller.Log;
+import ua.gram.controller.stage.StageHolder;
+import ua.gram.controller.stage.UIStage;
 import ua.gram.model.Initializer;
-import ua.gram.model.stage.StageHolder;
-import ua.gram.model.stage.UIStage;
 import ua.gram.view.screen.MainMenuScreen;
 
 /**

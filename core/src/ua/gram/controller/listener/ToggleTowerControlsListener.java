@@ -5,12 +5,12 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import ua.gram.controller.Log;
+import ua.gram.controller.stage.BattleStage;
+import ua.gram.controller.stage.UIStage;
 import ua.gram.model.actor.tower.Tower;
 import ua.gram.model.group.Layer;
 import ua.gram.model.group.TowerControlsGroup;
 import ua.gram.model.group.TowerGroup;
-import ua.gram.model.stage.BattleStage;
-import ua.gram.model.stage.UIStage;
 import ua.gram.model.state.tower.level1.ActiveState;
 
 /**

@@ -1,4 +1,4 @@
-package ua.gram.model.stage;
+package ua.gram.controller.stage;
 
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -35,7 +35,7 @@ public class FractionStage extends AbstractStage {
         Button option1 = new Button(skin, "fraction-1");
         option1.setBounds(0, 0, DDGame.WORLD_WIDTH / 2, DDGame.WORLD_HEIGHT);
         option1.setTouchable(Touchable.disabled);
-        option1.setName(DDGame.DEMON);
+        option1.setName(DDGame.FRACTION2);
 
         Button lock = new Button(skin, "button-lock");
         lock.setTouchable(Touchable.disabled);
@@ -48,7 +48,7 @@ public class FractionStage extends AbstractStage {
         option2.setBounds(DDGame.WORLD_WIDTH / 2, 0,
                 DDGame.WORLD_WIDTH / 2, DDGame.WORLD_HEIGHT);
         option2.setTouchable(Touchable.enabled);
-        option2.setName(DDGame.ANGEL);
+        option2.setName(DDGame.FRACTION1);
         option2.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {

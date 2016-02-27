@@ -1,7 +1,5 @@
 package ua.gram.model.group;
 
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -10,14 +8,16 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import ua.gram.DDGame;
+import ua.gram.model.window.AbstractWindow;
 import ua.gram.view.screen.LevelSelectScreen;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class MainMenuGroup extends Group {
+public class MainMenuWindow extends AbstractWindow {
 
-    public MainMenuGroup(final DDGame game, Skin skin) {
+    public MainMenuWindow(final DDGame game, Skin skin) {
+        super("Main Menu", skin);
         int butHeight = 80;
         int butWidth = 300;
 
@@ -47,19 +47,12 @@ public class MainMenuGroup extends Group {
 
         Table table = new Table(skin);
 
-        table.setSize(DDGame.WORLD_WIDTH / 2f, DDGame.WORLD_HEIGHT);
+        table.setSize(getWidth() / 2f, getHeight());
 
         table.add(continueBut).width(butWidth).padBottom(10).height(butHeight).row();
         table.add(settingsBut).width(butWidth).padBottom(10).height(butHeight).row();
         table.add(aboutBut).width(butWidth).height(butHeight).row();
 
-        this.addActor(table);
-    }
-
-    @Override
-    public void act(float delta) {
-        super.act(delta);
-        this.setDebug(DDGame.DEBUG);
-        for (Actor child : this.getChildren()) child.setDebug(DDGame.DEBUG);
+        addActor(table);
     }
 }

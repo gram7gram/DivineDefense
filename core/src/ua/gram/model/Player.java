@@ -8,7 +8,6 @@ import ua.gram.model.prototype.PlayerPrototype;
 import ua.gram.model.prototype.progress.ProgressPrototype;
 
 /**
- *
  * @author Gram <gram7gram@gmail.com>
  */
 public class Player implements ResetableInterface {
@@ -36,12 +35,14 @@ public class Player implements ResetableInterface {
     }
 
     public void chargeCoins(int amount) {
-        if (coins < amount) throw new IllegalArgumentException("Unable to charge " + amount + " coins");
+        if (coins < amount)
+            throw new IllegalArgumentException("Unable to charge " + amount + " coins");
         Log.info("Player had: " + this.coins + " coins. Now has: " + (coins -= amount));
     }
 
     public void chargeGems(int amount) {
-        if (gems < amount) throw new IllegalArgumentException("Unable to charge " + amount + " gems");
+        if (gems < amount)
+            throw new IllegalArgumentException("Unable to charge " + amount + " gems");
         Log.info("Player had: " + this.gems + " gems. Now has: " + (gems -= amount));
     }
 
@@ -140,14 +141,10 @@ public class Player implements ResetableInterface {
     }
 
     public String getOppositeFraction(String name) {
-        switch (name) {
-            case DDGame.ANGEL:
-                return DDGame.DEMON;
-            case DDGame.DEMON:
-                return DDGame.ANGEL;
-            default:
-                throw new GdxRuntimeException("No fraction registered as " + name);
-        }
+        if (name.equals(DDGame.FRACTION1)) return DDGame.FRACTION2;
+        else if (name.equals(DDGame.FRACTION2)) return DDGame.FRACTION1;
+        else throw new GdxRuntimeException("No fraction registered as " + name);
+
     }
 
     public ProgressPrototype getProgress() {

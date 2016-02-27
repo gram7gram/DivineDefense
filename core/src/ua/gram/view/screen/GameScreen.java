@@ -7,10 +7,10 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 import ua.gram.DDGame;
 import ua.gram.controller.Log;
+import ua.gram.controller.stage.BattleStage;
+import ua.gram.controller.stage.StageHolder;
+import ua.gram.controller.stage.UIStage;
 import ua.gram.model.Level;
-import ua.gram.model.stage.BattleStage;
-import ua.gram.model.stage.StageHolder;
-import ua.gram.model.stage.UIStage;
 import ua.gram.view.AbstractScreen;
 
 /**
