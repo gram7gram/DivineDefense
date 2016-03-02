@@ -35,7 +35,12 @@ public class PopupLabel extends Label implements Runnable {
                                 Actions.fadeOut(.4f)
                         ),
                         Actions.alpha(0),
-                        Actions.run(this::remove)
+                        Actions.run(new Runnable() {
+                            @Override
+                            public void run() {
+                                remove();
+                            }
+                        })
                 )
         );
     }

@@ -61,7 +61,7 @@ public class Map {
      * If found one, new Spawn object is created and search is aborted.
      */
     private HashMap<String, Vector2> findMapPoints() {
-        HashMap<String, Vector2> map = new HashMap<>(2);
+        HashMap<String, Vector2> map = new HashMap<String, Vector2>(2);
         MapProperties properties;
         for (int x = 0; x < layer.getWidth(); x++) {
             for (int y = 0; y < layer.getHeight(); y++) {

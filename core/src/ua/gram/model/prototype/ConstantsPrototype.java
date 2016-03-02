@@ -5,6 +5,7 @@ package ua.gram.model.prototype;
  */
 public class ConstantsPrototype extends Prototype {
     public int buttonHeight;
-    public String fraction1;
-    public String fraction2;
+    public String faction1;
+    public String faction2;
+    public int tileHeight;
 }

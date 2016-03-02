@@ -23,7 +23,7 @@ public class EnemyAnimationController implements AnimationControllerInterface<En
 
     public EnemyAnimationController(Skin skin, EnemyPrototype prototype) {
         this.skin = skin;
-        identityMap = new EnumMap<>(Types.EnemyState.class);
+        identityMap = new EnumMap<Types.EnemyState, EnemyDirectionAnimationPool>(Types.EnemyState.class);
         init(prototype);
     }
 
@@ -61,7 +61,7 @@ public class EnemyAnimationController implements AnimationControllerInterface<En
 
         String region = "enemies"
                 + "/" + prototype.name
-                + "/" + Player.SYSTEM_FRACTION
+                + "/" + Player.SYSTEM_FACTION
                 + "/" + type
                 + "/" + direction;
 

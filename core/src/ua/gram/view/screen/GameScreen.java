@@ -22,7 +22,6 @@ public class GameScreen extends AbstractScreen {
     private final BattleStage battleStage;
     private final UIStage uiStage;
     private final Level level;
-    private final StageHolder stageHolder;
 
     public GameScreen(DDGame game, Level level) {
         super(game);
@@ -34,7 +33,7 @@ public class GameScreen extends AbstractScreen {
         renderer.setView(game.getCamera());
         battleStage = new BattleStage(game, level);
         uiStage = new UIStage(game, level);
-        stageHolder = new StageHolder(uiStage, battleStage);
+        StageHolder stageHolder = new StageHolder(uiStage, battleStage);
         battleStage.setStageHolder(stageHolder);
         uiStage.setStageHolder(stageHolder);
         Log.info("GameScreen is OK");
@@ -65,8 +64,6 @@ public class GameScreen extends AbstractScreen {
     /**
      * act() is placed in separated method due to battleStage
      * should not be updated if game is paused.
-     *
-     * @param delta
      */
     @Override
     public void renderOtherElements(float delta) {

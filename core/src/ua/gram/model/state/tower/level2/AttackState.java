@@ -34,25 +34,40 @@ public class AttackState extends Level2State {
     }
 
     @Override
-    public void manage(Tower tower, float delta) {
+    public void manage(final Tower tower, float delta) {
         super.manage(tower, delta);
-        Weapon weapon = tower.getWeapon();
+        final Weapon weapon = tower.getWeapon();
         if (tower.attackCount >= tower.getProperty().getRate() && weapon.isFinished()) {
             List<EnemyGroup> victims = tower.getVictims();
             if (victims != null && !victims.isEmpty()) {
                 for (EnemyGroup victimGroup : victims) {
-                    Enemy victim = victimGroup.getRootActor();
+                    final Enemy victim = victimGroup.getRootActor();
                     if (tower.isInRange(victim)) {
                         weapon.addAction(
                                 Actions.sequence(
-                                        Actions.run(() -> weapon.preAttack(tower, victim)),
-                                        Actions.run(() -> weapon.attack(tower, victim))
+                                        Actions.run(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                weapon.preAttack(tower, victim);
+                                            }
+                                        }),
+                                        Actions.run(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                weapon.attack(tower, victim);
+                                            }
+                                        })
                                 )
                         );
                     }
 
                     weapon.addAction(
-                            Actions.run(() -> weapon.postAttack(tower, victim))
+                            Actions.run(new Runnable() {
+                                @Override
+                                public void run() {
+                                    weapon.postAttack(tower, victim);
+                                }
+                            })
                     );
                 }
 

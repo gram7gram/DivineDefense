@@ -1,9 +1,9 @@
 apply plugin: "java"
-sourceCompatibility = 1.8
+sourceCompatibility = 1.7
 sourceSets.main.java.srcDirs = ["src/"]
 project.ext.mainClassName = "ua.gram.desktop.DesktopLauncher"
 project.ext.mainClass = "ua.gram.desktop.DesktopLauncher"
-project.ext.assetsDir = new File("../android/res");
+project.ext.assetsDir = new File("../android/assets");
 task run(dependsOn: classes, type: JavaExec) {
     main = project.mainClassName
     classpath = sourceSets.main.runtimeClasspath

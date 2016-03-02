@@ -28,7 +28,7 @@ public class TiledMapVoter {
     }
 
     public boolean canBeBuildOnAllLayers(float X, float Y) {
-        List<Voter.Value> values = new ArrayList<>(layers.getCount());
+        List<Voter.Value> values = new ArrayList<Voter.Value>(layers.getCount());
 
         for (MapLayer layer : layers) {
             values.add(canBeBuild((TiledMapTileLayer) layer, X, Y));

@@ -27,7 +27,7 @@ public class DesktopModule implements ModuleInterface {
     private final SecurityManager<DesktopGamePrototype> securityManager;
 
     public DesktopModule() {
-        securityManager = new SecurityManager<>();
+        securityManager = new SecurityManager<DesktopGamePrototype>();
         prototype = securityManager.load(DesktopGamePrototype.class, "data/parameters.json");
         securityManager.init(prototype);
         initParameters();
@@ -36,7 +36,7 @@ public class DesktopModule implements ModuleInterface {
 
     @Override
     public void initModule() {
-        new LwjglApplication(new DDGame<>(securityManager, prototype), config);
+        new LwjglApplication(new DDGame<DesktopGamePrototype>(securityManager, prototype), config);
     }
 
     private LwjglApplicationConfiguration initConfig() {

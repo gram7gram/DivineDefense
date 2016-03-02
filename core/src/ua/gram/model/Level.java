@@ -37,7 +37,7 @@ public class Level implements Initializer {
         currentLevel = prototype.level;
         MAX_WAVES = prototype.waves.length;
         isCleared = false;
-        waves = new ArrayList<>(prototype.waves.length);
+        waves = new ArrayList<Wave>(prototype.waves.length);
         map = new Map(game, prototype.map);
         Log.info("Level " + currentLevel + " is OK");
     }
@@ -84,11 +84,7 @@ public class Level implements Initializer {
         if (index > 0) {
             String text = "WAVE " + index;
             UIStage stage = battleStage.getStageHolder().getUiStage();
-            if (stage != null) {
-                stage.getGameUIGroup().showNotification(text);
-            } else {
-                Log.crit("GameBattleStage does not know about GameUIStage");
-            }
+            stage.getGameUIGroup().showNotification(text);
         } else {
             Log.warn("Passed " + index + " wave index to notification. Ignored");
         }

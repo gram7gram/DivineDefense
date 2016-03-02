@@ -23,7 +23,7 @@ public class EnemyPool extends Pool<Enemy> {
         super(5, DDGame.MAX_ENTITIES);
         this.game = game;
         this.type = type;
-        map = new HashMap<>();
+        map = new HashMap<String, EnemyPrototype>();
         EnemyPrototype[] prototypes = game.getPrototype().enemies;
         for (EnemyPrototype prototype : prototypes) {
             map.put(prototype.name, prototype);

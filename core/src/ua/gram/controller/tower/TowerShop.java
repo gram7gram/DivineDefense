@@ -5,7 +5,6 @@ import com.badlogic.gdx.utils.Pool;
 
 import java.util.HashMap;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 import ua.gram.DDGame;
@@ -50,7 +49,7 @@ public class TowerShop implements ShopInterface<TowerGroup>, Initializer {
         this.stageHolder = stageHolder;
         skin = game.getResources().getSkin();
         TowerPrototype[] prototypes = game.getPrototype().towers;
-        identityMap = new HashMap<>(prototypes.length);
+        identityMap = new HashMap<TowerPrototype, Pool<Tower>>(prototypes.length);
 
         registerAll(prototypes);
 
@@ -104,12 +103,16 @@ public class TowerShop implements ShopInterface<TowerGroup>, Initializer {
     }
 
     public TowerPrototype findByName(String name) {
-        Optional<TowerPrototype> prototype = identityMap.keySet().stream()
-                .filter(proto -> Objects.equals(proto.name, name))
-                .findFirst();
-        if (!prototype.isPresent())
+        TowerPrototype prototype = null;
+        for (TowerPrototype p : identityMap.keySet()) {
+            if (Objects.equals(p.name, name)) {
+                prototype = p;
+                break;
+            }
+        }
+        if (prototype == null)
             throw new NullPointerException("Couldn't preorder tower: " + name);
-        return prototype.get();
+        return prototype;
     }
 
     /**

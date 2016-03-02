@@ -10,6 +10,6 @@ public final class PlayerPrototype extends Prototype {
     public int health;
     public int coins;
     public int gems;
-    public String fraction;
+    public String faction;
     public ProgressPrototype progress;
 }

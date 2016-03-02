@@ -3,7 +3,6 @@ package ua.gram.controller.pool.animation;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -23,8 +22,8 @@ public abstract class AnimationProvider<P extends GameActorPrototype, T, D> {
 
     public AnimationProvider(Skin skin, P[] set) {
         this.skin = skin;
-        identityMap = Collections.synchronizedMap(new HashMap<>(set.length));
-        registeredTypes = new HashSet<>(Arrays.asList(set));
+        identityMap = new HashMap<String, AnimationControllerInterface<P, T, D>>(set.length);
+        registeredTypes = new HashSet<P>(Arrays.asList(set));
         if (init()) Log.info(this.getClass().getSimpleName() + " is OK");
         else Log.crit(this.getClass().getSimpleName() + " IS NOT OK");
     }

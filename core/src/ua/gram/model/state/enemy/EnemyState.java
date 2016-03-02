@@ -20,7 +20,7 @@ public abstract class EnemyState extends AbstractState<Enemy> {
 
     public EnemyState(DDGame game) {
         super(game);
-        stateSwapper = new StateSwapper<>();
+        stateSwapper = new StateSwapper<Enemy>();
     }
 
     public void initAnimation(Enemy enemy) {

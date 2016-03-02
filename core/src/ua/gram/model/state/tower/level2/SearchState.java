@@ -1,7 +1,7 @@
 package ua.gram.model.state.tower.level2;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import ua.gram.DDGame;
 import ua.gram.controller.Log;
@@ -28,10 +28,15 @@ public class SearchState extends IdleState {
     public void manage(Tower tower, float delta) {
         if (tower.attackCount >= tower.getProperty().getRate()) {
             tower.attackCount = 0;
-            List<EnemyGroup> victims = tower.getStage().getEnemyGroupsOnMap().stream()
-                    .filter(group -> tower.isInRange(group.getRootActor())
-                            && group.getRootActor().health > 0)
-                    .collect(Collectors.toList());
+
+            List<EnemyGroup> victims = new ArrayList<EnemyGroup>(5);
+            for (EnemyGroup group : tower.getStage().getEnemyGroupsOnMap()) {
+                if (tower.isInRange(group.getRootActor())
+                        && group.getRootActor().health > 0) {
+                    victims.add(group);
+                }
+            }
+
             if (victims.isEmpty()) tower.resetVictims();
             else {
                 List<EnemyGroup> filteredVictims = tower.getCurrentTowerStrategy().chooseVictims(tower, victims);

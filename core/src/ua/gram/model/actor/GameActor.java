@@ -29,7 +29,7 @@ public abstract class GameActor<T1, T2, M extends StateManager> extends Actor {
         currentDirection = Vector2.Zero;
         previousDirection = Vector2.Zero;
         currentPosition = new Vector2(getX(), getY());
-        animator = new Animator<>();
+        animator = new Animator<T1, T2>();
     }
 
     public abstract M getStateManager();

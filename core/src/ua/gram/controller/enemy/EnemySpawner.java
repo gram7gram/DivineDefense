@@ -3,11 +3,9 @@ package ua.gram.controller.enemy;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Stack;
 
 import ua.gram.DDGame;
@@ -44,10 +42,10 @@ public final class EnemySpawner {
         if (prototypes.length == 0)
             throw new NullPointerException("Nothing to register");
 
-        identityMap = Collections.synchronizedMap(new HashMap<>(prototypes.length));
+        identityMap = new HashMap<String, Pool<Enemy>>(prototypes.length);
         registerAll(prototypes);
 
-        enemiesToSpawn = new Stack<>();
+        enemiesToSpawn = new Stack<String>();
         stateManager = new EnemyStateManager(game);
         animationProvider = new EnemyAnimationProvider(
                 game.getResources().getSkin(),
@@ -177,14 +175,18 @@ public final class EnemySpawner {
     }
 
     public Pool<Enemy> getPool(String type) {
-        Optional<String> entity = identityMap.keySet().stream()
-                .filter(name -> Objects.equals(name, type))
-                .findFirst();
+        Pool<Enemy> pool = null;
+        for (String name : identityMap.keySet()) {
+            if (Objects.equals(name, type)) {
+                pool = identityMap.get(name);
+                break;
+            }
+        }
 
-        if (!entity.isPresent())
+        if (pool == null)
             throw new NullPointerException("Couldn't build tower: " + type);
 
-        return identityMap.get(entity.get());
+        return pool;
     }
 
     public void free(Enemy enemy) {

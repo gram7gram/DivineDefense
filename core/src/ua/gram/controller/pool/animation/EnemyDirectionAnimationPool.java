@@ -19,7 +19,7 @@ public class EnemyDirectionAnimationPool implements DirectionPoolInterface {
     public EnemyDirectionAnimationPool(EnemyPrototype prototype,
                                        EnemyAnimationController provider,
                                        Types.EnemyState type) {
-        identityMap = new EnumMap<>(Path.Types.class);
+        identityMap = new EnumMap<Path.Types, AnimationPool>(Path.Types.class);
 
         for (Path.Types direction : EnumSet.allOf(Path.Types.class)) {
             identityMap.put(direction, new AnimationPool(

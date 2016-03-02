@@ -1,9 +1,5 @@
 package ua.gram.model.prototype.tower;
 
-import java.util.Arrays;
-import java.util.Optional;
-import java.util.function.Predicate;
-
 import ua.gram.model.prototype.GameActorPrototype;
 import ua.gram.model.prototype.weapon.WeaponPrototype;
 
@@ -21,15 +17,16 @@ public class TowerPrototype extends GameActorPrototype {
     }
 
     public TowerPropertyPrototype getProperty(int lvl) {
-        Optional<TowerPropertyPrototype> optional = find(prototype -> prototype.towerLevel == lvl);
-        return optional.get();
-    }
-
-    private Optional<TowerPropertyPrototype> find(Predicate<TowerPropertyPrototype> predicate) {
-        Optional<TowerPropertyPrototype> optional = Arrays.asList(properties)
-                .stream().filter(predicate).findFirst();
-        if (!optional.isPresent())
+        TowerPropertyPrototype prototype = null;
+        for (TowerPropertyPrototype p : properties) {
+            if (p.towerLevel == lvl) {
+                prototype = p;
+                break;
+            }
+        }
+        if (prototype == null)
             throw new NullPointerException("Missing first tower property");
-        return optional;
+
+        return prototype;
     }
 }

@@ -36,7 +36,7 @@ public abstract class AbstractLoadingScreen extends AbstractScreen {
 
     @Override
     public void renderUiElements(float delta) {
-        Gdx.gl.glClearColor(.2f, .2f, .1f, 1);
+        Gdx.gl.glClearColor(.44f, .62f, .8f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         progress = (int) game.getAssetManager().getProgress() * 100;
         uiStage.update(progress);

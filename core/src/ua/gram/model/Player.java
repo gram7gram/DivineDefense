@@ -12,8 +12,8 @@ import ua.gram.model.prototype.progress.ProgressPrototype;
  */
 public class Player implements ResetableInterface {
 
-    public static String PLAYER_FRACTION;
-    public static String SYSTEM_FRACTION;
+    public static String PLAYER_FACTION;
+    public static String SYSTEM_FACTION;
     public static int DEFAULT_HEALTH;
     public final PlayerPrototype prototype;
     private boolean isDefault;
@@ -28,9 +28,9 @@ public class Player implements ResetableInterface {
         coins = prototype.coins;
         gems = prototype.gems;
         health = prototype.health;
-        if (prototype.fraction != null) {
-            setFraction(prototype.fraction);
-            Log.info("Player fraction restored to " + PLAYER_FRACTION);
+        if (prototype.faction != null) {
+            setFraction(prototype.faction);
+            Log.info("Player faction restored to " + PLAYER_FACTION);
         }
     }
 
@@ -111,7 +111,7 @@ public class Player implements ResetableInterface {
     }
 
     public String getPrototypeFraction() {
-        return prototype.fraction;
+        return prototype.faction;
     }
 
     public void addGems(int i) {
@@ -128,22 +128,22 @@ public class Player implements ResetableInterface {
     }
 
     public void setFraction(String fraction) {
-        prototype.fraction = fraction;
-        PLAYER_FRACTION = fraction;
-        SYSTEM_FRACTION = getOppositeFraction(fraction);
+        prototype.faction = fraction;
+        PLAYER_FACTION = fraction;
+        SYSTEM_FACTION = getOppositeFaction(fraction);
     }
 
     public void resetFraction() {
-        prototype.fraction = null;
-        PLAYER_FRACTION = null;
-        SYSTEM_FRACTION = null;
-        Log.warn("Game fraction were reset!");
+        prototype.faction = null;
+        PLAYER_FACTION = null;
+        SYSTEM_FACTION = null;
+        Log.warn("Game faction were reset!");
     }
 
-    public String getOppositeFraction(String name) {
-        if (name.equals(DDGame.FRACTION1)) return DDGame.FRACTION2;
-        else if (name.equals(DDGame.FRACTION2)) return DDGame.FRACTION1;
-        else throw new GdxRuntimeException("No fraction registered as " + name);
+    public String getOppositeFaction(String name) {
+        if (name.equals(DDGame.FACTION1)) return DDGame.FACTION2;
+        else if (name.equals(DDGame.FACTION2)) return DDGame.FACTION1;
+        else throw new GdxRuntimeException("No faction registered as " + name);
 
     }
 

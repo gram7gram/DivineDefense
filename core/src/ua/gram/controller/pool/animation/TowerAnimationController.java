@@ -22,7 +22,7 @@ public class TowerAnimationController implements AnimationControllerInterface<To
 
     public TowerAnimationController(Skin skin, TowerPrototype prototype) {
         this.skin = skin;
-        identityMap = new EnumMap<>(Types.TowerState.class);
+        identityMap = new EnumMap<Types.TowerState, TowerLevelAnimationPool>(Types.TowerState.class);
         init(prototype);
     }
 
@@ -52,7 +52,7 @@ public class TowerAnimationController implements AnimationControllerInterface<To
 
         String region = "towers"
                 + "/" + prototype.name
-                + "/" + Player.PLAYER_FRACTION
+                + "/" + Player.PLAYER_FACTION
                 + "/" + level.name()
                 + "/" + type.name();
 

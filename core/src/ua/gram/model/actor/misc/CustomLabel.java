@@ -11,33 +11,32 @@ import ua.gram.DDGame;
  */
 public class CustomLabel extends Label {
 
-    private StringBuilder label;
-    private CharSequence previousValue;
+    private final StringBuilder labelText;
+    private CharSequence previousText;
 
-    public CustomLabel(String text, Skin skin, String styleName) {
-        super(text.toUpperCase(), skin, styleName);
-        label = new StringBuilder();
-        label.append(text);
-        previousValue = null;
+    public CustomLabel(CharSequence text, Skin skin, String styleName) {
+        super(text, skin, styleName);
+        labelText = new StringBuilder();
+        previousText = null;
+        updateText(text);
+        setWrap(false);
     }
 
     @Override
     public void act(float delta) {
-        this.setText(label);
-        this.setDebug(DDGame.DEBUG);
+        setText(labelText);
+        setDebug(DDGame.DEBUG);
         super.act(delta);
     }
 
     public void updateText(CharSequence text) {
+        if (text.equals(previousText)) return;
         invalidate();
-        if (!text.equals(previousValue)) {
-            label.setLength(0);
-            label = label.append(text);
-            if (previousValue == null) setVisible(true);
-            previousValue = text;
-            setY(DDGame.WORLD_HEIGHT - getHeight() - 5);
-        }
+        labelText.setLength(0);
+        labelText.append(text);
+        previousText = text;
         setSize(getPrefWidth(), getPrefHeight());
     }
+
 
 }

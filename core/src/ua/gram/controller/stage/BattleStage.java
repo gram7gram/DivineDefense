@@ -32,8 +32,8 @@ public class BattleStage extends AbstractStage implements Initializer {
     public BattleStage(DDGame game, Level level) {
         super(game);
         this.level = level;
-        towerPositions = new ArrayList<>();
-        indexes = new ArrayList<>();
+        towerPositions = new ArrayList<int[]>();
+        indexes = new ArrayList<Layer>();
         for (int i = 0; i < DDGame.MAP_HEIGHT; i++) {
             Layer layer = new Layer();
             indexes.add(layer);
@@ -162,7 +162,7 @@ public class BattleStage extends AbstractStage implements Initializer {
      * @return enemies on map
      */
     public ArrayList<Enemy> getEnemiesOnMap() {
-        ArrayList<Enemy> enemies = new ArrayList<>();
+        ArrayList<Enemy> enemies = new ArrayList<Enemy>();
         for (Group group : indexes) {
             for (Actor actor : group.getChildren()) {
                 if (actor instanceof EnemyGroup) {
@@ -183,7 +183,7 @@ public class BattleStage extends AbstractStage implements Initializer {
      * @return enemies on map
      */
     public ArrayList<EnemyGroup> getEnemyGroupsOnMap() {
-        ArrayList<EnemyGroup> enemies = new ArrayList<>();
+        ArrayList<EnemyGroup> enemies = new ArrayList<EnemyGroup>();
         for (Group group : indexes) {
             for (Actor actor : group.getChildren()) {
                 if (actor instanceof EnemyGroup) {
@@ -200,7 +200,7 @@ public class BattleStage extends AbstractStage implements Initializer {
      * @return towers on map
      */
     public ArrayList<Tower> getTowersOnMap() {
-        ArrayList<Tower> towers = new ArrayList<>();
+        ArrayList<Tower> towers = new ArrayList<Tower>();
         for (Group group : indexes) {
             for (Actor actor : group.getChildren()) {
                 if (actor instanceof TowerGroup) {

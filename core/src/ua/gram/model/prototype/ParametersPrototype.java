@@ -22,6 +22,7 @@ public abstract class ParametersPrototype extends Prototype {
     public String title;
     public String git;
     public String skin;
+    public String atlas;
     public String logFile;
     public boolean debugging;
     public int maxLevels;

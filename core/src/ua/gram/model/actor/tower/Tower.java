@@ -59,7 +59,7 @@ public abstract class Tower extends GameActor<Types.TowerState, Types.TowerLevel
         this.prototype = prototype;
         this.property = new TowerProperty(prototype.getFirstLevelProperty());
         stateHolder = new TowerStateHolder();
-        victims = new ArrayList<>(10);
+        victims = new ArrayList<EnemyGroup>(5);
     }
 
     @Override

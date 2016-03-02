@@ -21,7 +21,7 @@ public abstract class TowerState extends AbstractState<Tower> {
 
     public TowerState(DDGame game) {
         super(game);
-        stateSwapper = new StateSwapper<>();
+        stateSwapper = new StateSwapper<Tower>();
         Log.info("Tower " + this.getClass().getSimpleName() + " state is OK");
     }
 

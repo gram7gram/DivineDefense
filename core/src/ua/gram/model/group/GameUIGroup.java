@@ -12,7 +12,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import ua.gram.DDGame;
 import ua.gram.controller.Log;
+import ua.gram.controller.stage.StageHolder;
 import ua.gram.controller.stage.UIStage;
+import ua.gram.model.Initializer;
 import ua.gram.model.Level;
 import ua.gram.model.actor.misc.CounterButton;
 import ua.gram.model.actor.misc.CustomLabel;
@@ -21,7 +23,7 @@ import ua.gram.model.prototype.CounterButtonPrototype;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class GameUIGroup extends Group {
+public class GameUIGroup extends Group implements Initializer {
 
     private final DDGame game;
     private final Level level;
@@ -31,26 +33,22 @@ public class GameUIGroup extends Group {
     private final CustomLabel gemsLabel;
     private final CustomLabel notificationLabel;
     private final CounterButton counter;
+    private final Button pauseBut;
+    private StageHolder stageHolder;
 
-    public GameUIGroup(final DDGame game, final UIStage uiStage, final Level level) {
+    public GameUIGroup(final DDGame game, final Level level) {
         super();
         this.game = game;
         this.level = level;
+
         byte gap = 5;
         int butHeight = DDGame.DEFAULT_BUTTON_HEIGHT;
         Skin skin = game.getResources().getSkin();
 
-        Button pauseBut = new Button(skin, "pause-button");
+        pauseBut = new Button(skin, "pause-big");
         pauseBut.setPosition(DDGame.WORLD_WIDTH - butHeight - gap, DDGame.WORLD_HEIGHT - butHeight - gap);
         pauseBut.setSize(butHeight, butHeight);
         pauseBut.setVisible(true);
-        pauseBut.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                DDGame.PAUSE = true;
-                uiStage.toggleWindow(uiStage.getPauseWindow());
-            }
-        });
 
         Vector2 pos = level.getMap().getSpawn().getPosition();
 
@@ -89,7 +87,9 @@ public class GameUIGroup extends Group {
                 DDGame.WORLD_HEIGHT - waveLabel.getHeight() - gap
         );
 
-        notificationLabel = new CustomLabel("", skin, "header1white");
+        //NOTE Workaround about 0 width of the notification label at first launch
+        //notificationLabel = new CustomLabel("", skin, "header1white");
+        notificationLabel = new CustomLabel("LEVEL " + game.getPlayer().getLevel(), skin, "header1white");
         notificationLabel.setVisible(false);
 
         Group labels = new Group();
@@ -111,37 +111,42 @@ public class GameUIGroup extends Group {
                 )
         );
 
-        if (DDGame.DEBUG) {
-            Button speedBut = new Button(skin, "speed-button");
-            speedBut.setPosition(gap, DDGame.WORLD_HEIGHT - butHeight - gap);
-            speedBut.setSize(butHeight, butHeight);
-            speedBut.setVisible(true);
-            speedBut.addListener(new ClickListener() {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    if (game.getSpeed().isIncreased())
-                        game.getSpeed().decrease();
-                    else
-                        game.getSpeed().increase();
-                }
-            });
-            this.addActor(speedBut);
-        }
+        addActor(pauseBut);
+        addActor(counter);
+        addActor(labels);
+    }
 
-        this.addActor(pauseBut);
-        this.addActor(counter);
-        this.addActor(labels);
+    public void setStageHolder(StageHolder stageHolder) {
+        this.stageHolder = stageHolder;
+    }
+
+    @Override
+    public void init() {
+        if (stageHolder == null) throw new NullPointerException("Missing UIStage");
+        pauseBut.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                notificationLabel.remove();
+                DDGame.PAUSE = true;
+                UIStage uiStage = stageHolder.getUiStage();
+                uiStage.toggleWindow(uiStage.getPauseWindow());
+            }
+        });
     }
 
     @Override
     public void act(float delta) {
-        if (!DDGame.PAUSE && !(level.isCleared | game.getPlayer().isDead())) {
+        if (canBeUpdated()) {
             super.act(delta);
             updateHealthLabel();
             updateMoneyLabel();
             updateGemsLabel();
             updateWaveLabel();
         }
+    }
+
+    private boolean canBeUpdated() {
+        return !DDGame.PAUSE && !(level.isCleared | game.getPlayer().isDead());
     }
 
     @Override
@@ -155,11 +160,14 @@ public class GameUIGroup extends Group {
     }
 
     public void showNotification(String message) {
+        notificationLabel.remove();
         notificationLabel.clearActions();
         notificationLabel.updateText(message);
+        float width = notificationLabel.getPrefWidth();
+        float height = notificationLabel.getPrefHeight();
         notificationLabel.setPosition(
-                (DDGame.WORLD_WIDTH - notificationLabel.getWidth()) / 2f,
-                (DDGame.WORLD_HEIGHT - notificationLabel.getHeight()) / 2f);
+                (DDGame.WORLD_WIDTH - width) / 2f,
+                (DDGame.WORLD_HEIGHT - height) / 2f);
         notificationLabel.setVisible(true);
         notificationLabel.addAction(
                 Actions.sequence(
@@ -167,9 +175,15 @@ public class GameUIGroup extends Group {
                         Actions.alpha(1, .6f),
                         Actions.delay(1),
                         Actions.alpha(0, .6f),
-                        Actions.run(notificationLabel::remove)
+                        Actions.run(new Runnable() {
+                            @Override
+                            public void run() {
+                                notificationLabel.remove();
+                            }
+                        })
                 ));
         getStage().addActor(notificationLabel);
+        notificationLabel.toFront();
         Log.info("Showed notification: " + message);
     }
 
@@ -194,5 +208,4 @@ public class GameUIGroup extends Group {
     public CounterButton getCounterBut() {
         return counter;
     }
-
 }

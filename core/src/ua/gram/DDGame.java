@@ -6,6 +6,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -48,11 +49,11 @@ import ua.gram.view.screen.LaunchLoadingScreen;
  */
 public class DDGame<P extends GamePrototype> extends Game {
 
-    public static String FRACTION1;
-    public static String FRACTION2;
-    public static byte TILE_HEIGHT = 60;
+    public static String FACTION1;
+    public static String FACTION2;
     public static boolean DEBUG;
     public static boolean PAUSE = false;
+    public static int TILE_HEIGHT;
     public static int DEFAULT_BUTTON_HEIGHT;
     public static int WORLD_WIDTH;
     public static int WORLD_HEIGHT;
@@ -84,29 +85,35 @@ public class DDGame<P extends GamePrototype> extends Game {
         Gdx.app.setLogLevel(parameters.logLevel);
         sayHello();
         initGameValues();
-        resources = new Resources(this);
-        setScreen(new LaunchLoadingScreen(this, prototype));
+        try {
+            resources = new Resources(this);
+            setScreen(new LaunchLoadingScreen(this, prototype));
+        } catch (GdxRuntimeException e) {
+            Log.exc("Missing skin file", e);
+            Gdx.app.exit();
+        }
     }
 
     private void initGameValues() {
         WORLD_WIDTH = Gdx.graphics.getWidth();
         WORLD_HEIGHT = Gdx.graphics.getHeight();
+        TILE_HEIGHT = parameters.constants.tileHeight;
         MAP_WIDTH = WORLD_WIDTH / TILE_HEIGHT;
         MAP_HEIGHT = WORLD_HEIGHT / TILE_HEIGHT;
         MAX_ENTITIES = MAP_WIDTH * MAP_HEIGHT;//Maximum entities on the map
         MAX_LEVELS = prototype.levelConfig.levels.length;
         DEFAULT_BUTTON_HEIGHT = parameters.constants.buttonHeight;
-        FRACTION1 = parameters.constants.fraction1;
-        FRACTION2 = parameters.constants.fraction2;
+        FACTION1 = parameters.constants.faction1;
+        FACTION2 = parameters.constants.faction2;
         info = new BitmapFont();
         info.setColor(1, 1, 1, 1);
     }
 
     @Override
     public void dispose() {
-        security.save();
-        resources.dispose();
-        batch.dispose();
+        if (security != null) security.save();
+        if (resources != null) resources.dispose();
+        if (batch != null) batch.dispose();
         Log.info("Game disposed");
         sayGoodbye();
     }

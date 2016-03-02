@@ -8,7 +8,7 @@ import ua.gram.DDGame;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class AbstractWindow extends Window {
+public abstract class AbstractWindow extends Window {
 
     public AbstractWindow(String title, Skin skin) {
         this(title, skin, "window-dark-gold");

@@ -1,6 +1,5 @@
 package ua.gram.controller;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
@@ -41,18 +40,17 @@ public class Resources implements Disposable {
      * @param file - name of the Json
      * @return - new Skin, buy with Json and Atlas, that matches Json file without extension
      */
-    public Skin loadSkin(String file) throws GdxRuntimeException {
-        Skin skin = null;
-        try {
-            String atlas = file.substring(0, file.lastIndexOf(".")) + ".atlas";
-            manager.load(file, Skin.class, new SkinLoader.SkinParameter(atlas));
-            manager.finishLoading();
-            skin = manager.get(file, Skin.class);
-        } catch (Exception e) {
-            Log.exc("Missing skin file", e);
-            Gdx.app.exit();
+    public Skin loadSkin(String file) {
+        String atlas = game.getParameters().atlas;
+        if (atlas == null) {
+            String name = file.substring(0, file.lastIndexOf("."));
+            atlas = name + ".atlas";
+            Log.warn("Atlas file not specified. Trying: " + atlas);
         }
-        return skin;
+        manager.load(file, Skin.class, new SkinLoader.SkinParameter(atlas));
+        manager.finishLoading();
+
+        return manager.get(file, Skin.class);
     }
 
     /**

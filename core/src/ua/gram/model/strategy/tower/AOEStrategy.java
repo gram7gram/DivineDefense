@@ -43,7 +43,7 @@ public class AOEStrategy implements TowerStrategy {
     protected List<EnemyGroup> getVictimsInRange(List<EnemyGroup> victims, AOEWeapon weapon) {
         EnemyGroup mainVictim = victims.get(0);
 
-        ArrayList<EnemyGroup> victimInRange = new ArrayList<>(5);
+        ArrayList<EnemyGroup> victimInRange = new ArrayList<EnemyGroup>(5);
 
         for (EnemyGroup victim : victims) {
             if (victim == mainVictim) continue;
