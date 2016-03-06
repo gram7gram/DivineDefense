@@ -1,6 +1,6 @@
 package ua.gram.controller.stage;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import ua.gram.DDGame;
 import ua.gram.controller.Log;
@@ -35,7 +35,7 @@ public class UIStage extends AbstractStage implements Initializer {
         super(game);
         this.game = game;
         this.level = level;
-        gameUIGroup = new GameUIGroup(game, this, level);
+        gameUIGroup = new GameUIGroup(game, level);
         victoryWindow = new VictoryWindow(game, level);
         pauseWindow = new PauseWindow(game);
         defeatWindow = new DefeatWindow(game);
@@ -43,11 +43,13 @@ public class UIStage extends AbstractStage implements Initializer {
         victoryWindow.setVisible(false);
         pauseWindow.setVisible(false);
         defeatWindow.setVisible(false);
-        Log.info("GameUIStage is OK");
+        Log.info("UIStage is OK");
     }
 
     @Override
     public void init() {
+        gameUIGroup.setStageHolder(stageHolder);
+        gameUIGroup.init();
         defeatWindow.setStageHolder(stageHolder);
         defeatWindow.init();
         pauseWindow.setStageHolder(stageHolder);
@@ -68,7 +70,7 @@ public class UIStage extends AbstractStage implements Initializer {
      *
      * @param window show/hide this
      */
-    public void toggleWindow(Window window) {
+    public void toggleWindow(Actor window) {
         Log.info("Pause: " + DDGame.PAUSE);
         window.setVisible(!window.isVisible());
         gameUIGroup.setVisible(!window.isVisible());

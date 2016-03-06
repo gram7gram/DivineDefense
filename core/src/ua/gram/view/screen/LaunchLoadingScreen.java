@@ -33,7 +33,7 @@ public class LaunchLoadingScreen extends AbstractLoadingScreen {
         if (game.getPlayer().getPrototypeFraction() != null) {
             game.setScreen(new MainMenuScreen(game));
         } else {
-            game.setScreen(new FractionScreen(game));
+            game.setScreen(new FactionScreen(game));
         }
     }
 

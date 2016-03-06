@@ -29,4 +29,8 @@ public class TowerPrototype extends GameActorPrototype {
 
         return prototype;
     }
+
+    public WeaponPrototype getWeapon() {
+        return weapon;
+    }
 }

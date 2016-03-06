@@ -59,7 +59,9 @@ public class Log {
     public static String buildExceptionMessage(String msg, Exception e) {
         msg += "\r\nCLASS:\t" + e.getClass().getSimpleName();
         msg += "\nMSG:\t" + e.getMessage();
-        msg += "\nTRACE:\t" + Arrays.toString(e.getStackTrace()) + "\r\n";
+        msg += "\nTRACE:\t" + Arrays.toString(e.getStackTrace());
+        msg += "\nCAUSE:\t" + e.getCause();
+        msg += "\r\n";
         return msg;
     }
 

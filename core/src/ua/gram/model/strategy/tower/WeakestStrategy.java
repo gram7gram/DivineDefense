@@ -1,5 +1,6 @@
 package ua.gram.model.strategy.tower;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class WeakestStrategy implements TowerStrategy {
 
         return victims.size() > 0
                 ? victims.subList(0, index)
-                : Collections.emptyList();
+                : new ArrayList<EnemyGroup>(0);
     }
 
 }

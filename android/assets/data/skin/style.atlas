@@ -67,14 +67,14 @@ enemies/EnemyRunner/Demon/SPAWN/DOWN
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemyRunner/Demon/DEAD/DOWN
+enemies/EnemyRunner/Demon/FINISH/DOWN
   rotate: false
   xy: 2788, 1858
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemyRunner/Demon/FINISH/DOWN
+enemies/EnemyRunner/Demon/DEAD/DOWN
   rotate: false
   xy: 2788, 1858
   size: 540, 90
@@ -95,6 +95,13 @@ enemies/EnemyRunner/Demon/SPAWN/LEFT
   orig: 540, 90
   offset: 0, 0
   index: -1
+enemies/EnemyRunner/Demon/FINISH/LEFT
+  rotate: false
+  xy: 2690, 1766
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
 enemies/EnemyRunner/Demon/WALKING/LEFT
   rotate: false
   xy: 2690, 1766
@@ -109,21 +116,7 @@ enemies/EnemyRunner/Demon/DEAD/LEFT
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemyRunner/Demon/FINISH/LEFT
-  rotate: false
-  xy: 2690, 1766
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
 enemies/EnemyRunner/Demon/SPAWN/RIGHT
-  rotate: false
-  xy: 2690, 1582
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
-enemies/EnemyRunner/Demon/FINISH/RIGHT
   rotate: false
   xy: 2690, 1582
   size: 540, 90
@@ -138,6 +131,13 @@ enemies/EnemyRunner/Demon/DEAD/RIGHT
   offset: 0, 0
   index: -1
 enemies/EnemyRunner/Demon/WALKING/RIGHT
+  rotate: false
+  xy: 2690, 1582
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemyRunner/Demon/FINISH/RIGHT
   rotate: false
   xy: 2690, 1582
   size: 540, 90
@@ -207,21 +207,7 @@ enemies/EnemySoldier/Demon/SPAWN/DOWN
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemySoldier/Demon/FINISH/DOWN
-  rotate: false
-  xy: 906, 319
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
 enemies/EnemySoldier/Demon/WALKING/DOWN
-  rotate: false
-  xy: 906, 319
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
-enemies/EnemySoldier/Demon/IDLE/DOWN
   rotate: false
   xy: 906, 319
   size: 540, 90
@@ -242,14 +228,21 @@ enemies/EnemySoldier/Demon/DEAD/DOWN
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemySoldier/Demon/SPAWN/LEFT
+enemies/EnemySoldier/Demon/IDLE/DOWN
   rotate: false
-  xy: 1606, 1674
+  xy: 906, 319
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemySoldier/Demon/DEAD/LEFT
+enemies/EnemySoldier/Demon/FINISH/DOWN
+  rotate: false
+  xy: 906, 319
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySoldier/Demon/SPAWN/LEFT
   rotate: false
   xy: 1606, 1674
   size: 540, 90
@@ -270,7 +263,7 @@ enemies/EnemySoldier/Demon/STUN/LEFT
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemySoldier/Demon/IDLE/LEFT
+enemies/EnemySoldier/Demon/DEAD/LEFT
   rotate: false
   xy: 1606, 1674
   size: 540, 90
@@ -284,7 +277,21 @@ enemies/EnemySoldier/Demon/WALKING/LEFT
   orig: 540, 90
   offset: 0, 0
   index: -1
+enemies/EnemySoldier/Demon/IDLE/LEFT
+  rotate: false
+  xy: 1606, 1674
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
 enemies/EnemySoldier/Demon/SPAWN/RIGHT
+  rotate: false
+  xy: 3232, 1674
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySoldier/Demon/WALKING/RIGHT
   rotate: false
   xy: 3232, 1674
   size: 540, 90
@@ -305,13 +312,6 @@ enemies/EnemySoldier/Demon/DEAD/RIGHT
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemySoldier/Demon/WALKING/RIGHT
-  rotate: false
-  xy: 3232, 1674
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
 enemies/EnemySoldier/Demon/SPAWN/UP
   rotate: false
   xy: 744, 135
@@ -319,7 +319,7 @@ enemies/EnemySoldier/Demon/SPAWN/UP
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemySoldier/Demon/WALKING/UP
+enemies/EnemySoldier/Demon/FINISH/UP
   rotate: false
   xy: 744, 135
   size: 540, 90
@@ -333,7 +333,7 @@ enemies/EnemySoldier/Demon/DEAD/UP
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemySoldier/Demon/FINISH/UP
+enemies/EnemySoldier/Demon/WALKING/UP
   rotate: false
   xy: 744, 135
   size: 540, 90
@@ -431,14 +431,14 @@ enemies/EnemySoldierArmored/Demon/SPAWN/LEFT
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemySoldierArmored/Demon/FINISH/LEFT
+enemies/EnemySoldierArmored/Demon/DEAD/LEFT
   rotate: false
   xy: 2690, 1674
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemySoldierArmored/Demon/DEAD/LEFT
+enemies/EnemySoldierArmored/Demon/FINISH/LEFT
   rotate: false
   xy: 2690, 1674
   size: 540, 90
@@ -459,7 +459,7 @@ enemies/EnemySoldierArmored/Demon/SPAWN/RIGHT
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemySoldierArmored/Demon/WALKING/RIGHT
+enemies/EnemySoldierArmored/Demon/FINISH/RIGHT
   rotate: false
   xy: 3232, 1582
   size: 540, 90
@@ -473,7 +473,7 @@ enemies/EnemySoldierArmored/Demon/DEAD/RIGHT
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemySoldierArmored/Demon/FINISH/RIGHT
+enemies/EnemySoldierArmored/Demon/WALKING/RIGHT
   rotate: false
   xy: 3232, 1582
   size: 540, 90
@@ -481,13 +481,6 @@ enemies/EnemySoldierArmored/Demon/FINISH/RIGHT
   offset: 0, 0
   index: -1
 enemies/EnemySoldierArmored/Demon/SPAWN/UP
-  rotate: false
-  xy: 1950, 1398
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
-enemies/EnemySoldierArmored/Demon/FINISH/UP
   rotate: false
   xy: 1950, 1398
   size: 540, 90
@@ -502,6 +495,13 @@ enemies/EnemySoldierArmored/Demon/DEAD/UP
   offset: 0, 0
   index: -1
 enemies/EnemySoldierArmored/Demon/WALKING/UP
+  rotate: false
+  xy: 1950, 1398
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySoldierArmored/Demon/FINISH/UP
   rotate: false
   xy: 1950, 1398
   size: 540, 90
@@ -627,13 +627,6 @@ enemies/EnemySummoner/Demon/SPAWN/LEFT
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemySummoner/Demon/DEAD/LEFT
-  rotate: false
-  xy: 2148, 1766
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
 enemies/EnemySummoner/Demon/WALKING/LEFT
   rotate: false
   xy: 2148, 1766
@@ -648,6 +641,13 @@ enemies/EnemySummoner/Demon/FINISH/LEFT
   orig: 540, 90
   offset: 0, 0
   index: -1
+enemies/EnemySummoner/Demon/DEAD/LEFT
+  rotate: false
+  xy: 2148, 1766
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
 enemies/EnemySummoner/Demon/SPAWN/RIGHT
   rotate: false
   xy: 1606, 1582
@@ -655,14 +655,14 @@ enemies/EnemySummoner/Demon/SPAWN/RIGHT
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemySummoner/Demon/WALKING/RIGHT
+enemies/EnemySummoner/Demon/DEAD/RIGHT
   rotate: false
   xy: 1606, 1582
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemySummoner/Demon/DEAD/RIGHT
+enemies/EnemySummoner/Demon/WALKING/RIGHT
   rotate: false
   xy: 1606, 1582
   size: 540, 90
@@ -683,7 +683,7 @@ enemies/EnemySummoner/Demon/SPAWN/UP
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemySummoner/Demon/FINISH/UP
+enemies/EnemySummoner/Demon/DEAD/UP
   rotate: false
   xy: 1408, 1490
   size: 540, 90
@@ -697,7 +697,7 @@ enemies/EnemySummoner/Demon/WALKING/UP
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemySummoner/Demon/DEAD/UP
+enemies/EnemySummoner/Demon/FINISH/UP
   rotate: false
   xy: 1408, 1490
   size: 540, 90
@@ -767,13 +767,6 @@ enemies/EnemyWarrior/Demon/SPAWN/DOWN
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemyWarrior/Demon/FINISH/DOWN
-  rotate: false
-  xy: 1606, 1766
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
 enemies/EnemyWarrior/Demon/DEAD/DOWN
   rotate: false
   xy: 1606, 1766
@@ -788,7 +781,21 @@ enemies/EnemyWarrior/Demon/WALKING/DOWN
   orig: 540, 90
   offset: 0, 0
   index: -1
+enemies/EnemyWarrior/Demon/FINISH/DOWN
+  rotate: false
+  xy: 1606, 1766
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
 enemies/EnemyWarrior/Demon/SPAWN/LEFT
+  rotate: false
+  xy: 3232, 1766
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemyWarrior/Demon/WALKING/LEFT
   rotate: false
   xy: 3232, 1766
   size: 540, 90
@@ -809,14 +816,14 @@ enemies/EnemyWarrior/Demon/DEAD/LEFT
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemyWarrior/Demon/WALKING/LEFT
+enemies/EnemyWarrior/Demon/SPAWN/RIGHT
   rotate: false
-  xy: 3232, 1766
+  xy: 744, 227
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemyWarrior/Demon/SPAWN/RIGHT
+enemies/EnemyWarrior/Demon/WALKING/RIGHT
   rotate: false
   xy: 744, 227
   size: 540, 90
@@ -837,14 +844,14 @@ enemies/EnemyWarrior/Demon/FINISH/RIGHT
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemyWarrior/Demon/WALKING/RIGHT
+enemies/EnemyWarrior/Demon/SPAWN/UP
   rotate: false
-  xy: 744, 227
+  xy: 2492, 1490
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-enemies/EnemyWarrior/Demon/SPAWN/UP
+enemies/EnemyWarrior/Demon/FINISH/UP
   rotate: false
   xy: 2492, 1490
   size: 540, 90
@@ -859,13 +866,6 @@ enemies/EnemyWarrior/Demon/DEAD/UP
   offset: 0, 0
   index: -1
 enemies/EnemyWarrior/Demon/WALKING/UP
-  rotate: false
-  xy: 2492, 1490
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
-enemies/EnemyWarrior/Demon/FINISH/UP
   rotate: false
   xy: 2492, 1490
   size: 540, 90
@@ -945,7 +945,7 @@ towers/TowerPrimary/Angel/Lvl1/ATTACK
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerPrimary/Angel/Lvl1/BUILD
+towers/TowerPrimary/Angel/Lvl1/SELL
   rotate: false
   xy: 906, 1239
   size: 540, 90
@@ -959,7 +959,7 @@ towers/TowerPrimary/Angel/Lvl1/IDLE
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerPrimary/Angel/Lvl1/SELL
+towers/TowerPrimary/Angel/Lvl1/BUILD
   rotate: false
   xy: 906, 1239
   size: 540, 90
@@ -967,13 +967,6 @@ towers/TowerPrimary/Angel/Lvl1/SELL
   offset: 0, 0
   index: -1
 towers/TowerPrimary/Angel/Lvl2/ATTACK
-  rotate: false
-  xy: 2788, 1950
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
-towers/TowerPrimary/Angel/Lvl2/IDLE
   rotate: false
   xy: 2788, 1950
   size: 540, 90
@@ -994,21 +987,14 @@ towers/TowerPrimary/Angel/Lvl2/SELL
   orig: 540, 90
   offset: 0, 0
   index: -1
+towers/TowerPrimary/Angel/Lvl2/IDLE
+  rotate: false
+  xy: 2788, 1950
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
 towers/TowerPrimary/Angel/Lvl3/ATTACK
-  rotate: false
-  xy: 906, 1147
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
-towers/TowerPrimary/Angel/Lvl3/IDLE
-  rotate: false
-  xy: 906, 1147
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
-towers/TowerPrimary/Angel/Lvl3/BUILD
   rotate: false
   xy: 906, 1147
   size: 540, 90
@@ -1022,7 +1008,28 @@ towers/TowerPrimary/Angel/Lvl3/SELL
   orig: 540, 90
   offset: 0, 0
   index: -1
+towers/TowerPrimary/Angel/Lvl3/BUILD
+  rotate: false
+  xy: 906, 1147
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/TowerPrimary/Angel/Lvl3/IDLE
+  rotate: false
+  xy: 906, 1147
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
 towers/TowerPrimary/Angel/Lvl4/ATTACK
+  rotate: false
+  xy: 3330, 1950
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/TowerPrimary/Angel/Lvl4/IDLE
   rotate: false
   xy: 3330, 1950
   size: 540, 90
@@ -1043,28 +1050,7 @@ towers/TowerPrimary/Angel/Lvl4/BUILD
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerPrimary/Angel/Lvl4/IDLE
-  rotate: false
-  xy: 3330, 1950
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
 towers/TowerSecondary/Angel/Lvl1/ATTACK
-  rotate: false
-  xy: 906, 871
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
-towers/TowerSecondary/Angel/Lvl1/IDLE
-  rotate: false
-  xy: 906, 871
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
-towers/TowerSecondary/Angel/Lvl1/BUILD
   rotate: false
   xy: 906, 871
   size: 540, 90
@@ -1078,6 +1064,20 @@ towers/TowerSecondary/Angel/Lvl1/SELL
   orig: 540, 90
   offset: 0, 0
   index: -1
+towers/TowerSecondary/Angel/Lvl1/BUILD
+  rotate: false
+  xy: 906, 871
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/TowerSecondary/Angel/Lvl1/IDLE
+  rotate: false
+  xy: 906, 871
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
 towers/TowerSecondary/Angel/Lvl2/ATTACK
   rotate: false
   xy: 906, 1055
@@ -1085,14 +1085,14 @@ towers/TowerSecondary/Angel/Lvl2/ATTACK
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerSecondary/Angel/Lvl2/IDLE
+towers/TowerSecondary/Angel/Lvl2/SELL
   rotate: false
   xy: 906, 1055
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerSecondary/Angel/Lvl2/SELL
+towers/TowerSecondary/Angel/Lvl2/IDLE
   rotate: false
   xy: 906, 1055
   size: 540, 90
@@ -1113,6 +1113,13 @@ towers/TowerSecondary/Angel/Lvl3/ATTACK
   orig: 540, 90
   offset: 0, 0
   index: -1
+towers/TowerSecondary/Angel/Lvl3/IDLE
+  rotate: false
+  xy: 906, 779
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
 towers/TowerSecondary/Angel/Lvl3/SELL
   rotate: false
   xy: 906, 779
@@ -1127,14 +1134,14 @@ towers/TowerSecondary/Angel/Lvl3/BUILD
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerSecondary/Angel/Lvl3/IDLE
+towers/TowerSecondary/Angel/Lvl4/ATTACK
   rotate: false
-  xy: 906, 779
+  xy: 906, 963
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerSecondary/Angel/Lvl4/ATTACK
+towers/TowerSecondary/Angel/Lvl4/SELL
   rotate: false
   xy: 906, 963
   size: 540, 90
@@ -1155,13 +1162,6 @@ towers/TowerSecondary/Angel/Lvl4/BUILD
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerSecondary/Angel/Lvl4/SELL
-  rotate: false
-  xy: 906, 963
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
 towers/TowerSpecial/Angel/Lvl1/ATTACK
   rotate: false
   xy: 2246, 1950
@@ -1169,14 +1169,14 @@ towers/TowerSpecial/Angel/Lvl1/ATTACK
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerSpecial/Angel/Lvl1/BUILD
+towers/TowerSpecial/Angel/Lvl1/SELL
   rotate: false
   xy: 2246, 1950
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerSpecial/Angel/Lvl1/SELL
+towers/TowerSpecial/Angel/Lvl1/BUILD
   rotate: false
   xy: 2246, 1950
   size: 540, 90
@@ -1197,13 +1197,6 @@ towers/TowerSpecial/Angel/Lvl2/ATTACK
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerSpecial/Angel/Lvl2/SELL
-  rotate: false
-  xy: 1704, 1950
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
 towers/TowerSpecial/Angel/Lvl2/BUILD
   rotate: false
   xy: 1704, 1950
@@ -1212,6 +1205,13 @@ towers/TowerSpecial/Angel/Lvl2/BUILD
   offset: 0, 0
   index: -1
 towers/TowerSpecial/Angel/Lvl2/IDLE
+  rotate: false
+  xy: 1704, 1950
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/TowerSpecial/Angel/Lvl2/SELL
   rotate: false
   xy: 1704, 1950
   size: 540, 90
@@ -1253,14 +1253,14 @@ towers/TowerSpecial/Angel/Lvl4/ATTACK
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerSpecial/Angel/Lvl4/IDLE
+towers/TowerSpecial/Angel/Lvl4/BUILD
   rotate: false
   xy: 2, 105
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerSpecial/Angel/Lvl4/BUILD
+towers/TowerSpecial/Angel/Lvl4/IDLE
   rotate: false
   xy: 2, 105
   size: 540, 90
@@ -1281,6 +1281,13 @@ towers/TowerStun/Angel/Lvl1/ATTACK
   orig: 540, 90
   offset: 0, 0
   index: -1
+towers/TowerStun/Angel/Lvl1/SELL
+  rotate: false
+  xy: 906, 503
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
 towers/TowerStun/Angel/Lvl1/BUILD
   rotate: false
   xy: 906, 503
@@ -1289,13 +1296,6 @@ towers/TowerStun/Angel/Lvl1/BUILD
   offset: 0, 0
   index: -1
 towers/TowerStun/Angel/Lvl1/IDLE
-  rotate: false
-  xy: 906, 503
-  size: 540, 90
-  orig: 540, 90
-  offset: 0, 0
-  index: -1
-towers/TowerStun/Angel/Lvl1/SELL
   rotate: false
   xy: 906, 503
   size: 540, 90
@@ -1316,14 +1316,14 @@ towers/TowerStun/Angel/Lvl2/SELL
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerStun/Angel/Lvl2/BUILD
+towers/TowerStun/Angel/Lvl2/IDLE
   rotate: false
   xy: 906, 687
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerStun/Angel/Lvl2/IDLE
+towers/TowerStun/Angel/Lvl2/BUILD
   rotate: false
   xy: 906, 687
   size: 540, 90
@@ -1337,7 +1337,7 @@ towers/TowerStun/Angel/Lvl3/ATTACK
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerStun/Angel/Lvl3/SELL
+towers/TowerStun/Angel/Lvl3/BUILD
   rotate: false
   xy: 906, 411
   size: 540, 90
@@ -1351,7 +1351,7 @@ towers/TowerStun/Angel/Lvl3/IDLE
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerStun/Angel/Lvl3/BUILD
+towers/TowerStun/Angel/Lvl3/SELL
   rotate: false
   xy: 906, 411
   size: 540, 90
@@ -1365,14 +1365,14 @@ towers/TowerStun/Angel/Lvl4/ATTACK
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerStun/Angel/Lvl4/IDLE
+towers/TowerStun/Angel/Lvl4/SELL
   rotate: false
   xy: 906, 595
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerStun/Angel/Lvl4/SELL
+towers/TowerStun/Angel/Lvl4/IDLE
   rotate: false
   xy: 906, 595
   size: 540, 90

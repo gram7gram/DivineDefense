@@ -1,6 +1,6 @@
 package ua.gram.controller.stage;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import ua.gram.DDGame;
 import ua.gram.controller.Log;
@@ -14,7 +14,7 @@ public class LevelSelectStage extends AbstractStage {
 
     public LevelSelectStage(DDGame game, GamePrototype prototype) {
         super(game);
-        Window window = new LevelSelectWindow(game, prototype.levelConfig.levels);
+        Actor window = new LevelSelectWindow(game, prototype.levelConfig.levels);
         window.setVisible(true);
         addActor(window);
         Log.info("LevelSelectStage is OK");
