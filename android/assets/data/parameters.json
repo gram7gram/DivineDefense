@@ -1,46 +1,5 @@
 {
-  "class": "ua.gram.desktop.prototype.DesktopGamePrototype",
   "gameConfig": {
-    "class": "ua.gram.desktop.prototype.DesktopConfigPrototype",
-    "reloadTextures": false,
-    "texturePacker": {
-      "class": "ua.gram.model.prototype.TexturePackerPrototype",
-      "config": {
-        "maxWidth": 4096,
-        "maxHeight": 4096,
-        "combineSubdirectories": true,
-        "pot": true,
-        "paddingX": 2,
-        "paddingY": 2,
-        "bleed": true,
-        "edgePadding": true,
-        "duplicatePadding": false,
-        "rotation": false,
-        "square": false,
-        "stripWhitespaceX": false,
-        "stripWhitespaceY": false,
-        "alphaThreshold": 0,
-        "filterMin": "Nearest",
-        "filterMag": "Nearest",
-        "wrapX": "ClampToEdge",
-        "wrapY": "ClampToEdge",
-        "format": "RGBA8888",
-        "outputFormat": "png",
-        "alias": true,
-        "jpegQuality": 0.9,
-        "ignoreBlankImages": true,
-        "fast": false,
-        "debug": false,
-        "flattenPaths": false,
-        "premultiplyAlpha": false,
-        "useIndexes": true,
-        "limitMemory": true,
-        "grid": false
-      },
-      "from": "toPack/all",
-      "to": "data/skin",
-      "name": "style"
-    },
     "desktop": {
       "class": "com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration",
       "title": "Divine Defense",
@@ -70,8 +29,7 @@
     }
   },
   "parameters": {
-    "class": "ua.gram.desktop.prototype.DesktopParametersPrototype",
-    "debugging": true,
+    "debugging": false,
     "logLevel": 3,
     "title": "Divine Defense",
     "contact": "gram7gram@gmail.com",

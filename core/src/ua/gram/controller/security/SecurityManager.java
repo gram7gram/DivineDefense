@@ -1,5 +1,6 @@
 package ua.gram.controller.security;
 
+import com.badlogic.gdx.Files;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.JsonWriter;
@@ -16,6 +17,7 @@ public class SecurityManager<P extends GamePrototype> {
 
     private final Json json;
     private P prototype;
+    private Files fileHandle;
 
     public SecurityManager() {
         json = new Json();
@@ -26,30 +28,36 @@ public class SecurityManager<P extends GamePrototype> {
         Log.info("Security initialized");
     }
 
-    public P load(Class<P> type, String fallback) {
-        LoaderFactory factory = new LoaderFactory();
+    public P load(Class<P> type, String path) {
+        if (fileHandle == null)
+            throw new NullPointerException("Register handlers before using the method");
 
-        prototype = getFromInternal(fallback, factory, type);
+        LoaderFactory.Type loader = LoaderFactory.Type.INTERNAL;
+        FileHandle internal = fileHandle.internal(path);
+        if (internal == null)
+            throw new NullPointerException("FileHandle for " + loader.name() + " not specified");
+
+        prototype = get(internal, loader, type);
+        if (prototype == null) throw new GdxRuntimeException("Cannot load prototype");
 
         P actualPrototype;
-        if (prototype.getParameters().debugging) {
+        if (!prototype.getParameters().debugging) {
+            loader = LoaderFactory.Type.EXTERNAL;
+            FileHandle external = fileHandle.external(prototype.getFullConfigPath());
+            if (external == null)
+                throw new NullPointerException("FileHandle for " + loader.name() + " not specified");
+
+            try {
+                actualPrototype = get(external, loader, type);
+                Log.info("Recieved game configuration from " + loader.name() + " source");
+            } catch (Exception e2) {
+                Log.warn("Could not get " + loader.name() + " game configuration");
+                actualPrototype = prototype;
+                Log.warn("Used default game configuration");
+            }
+        } else {
             actualPrototype = prototype;
             Log.warn("Debugging is ON. Used default game configuration");
-        } else {
-            try {
-                actualPrototype = getFromRemote(factory, type);
-                Log.info("Recieved game configuration from remote source");
-            } catch (Exception e1) {
-                Log.warn("Could not get remote game configuration");
-                try {
-                    actualPrototype = getFromExternal(factory, type);
-                    Log.info("Recieved game configuration from external source");
-                } catch (Exception e2) {
-                    Log.warn("Could not get external game configuration");
-                    actualPrototype = prototype;
-                    Log.warn("Used default game configuration");
-                }
-            }
         }
 
         if (actualPrototype == null)
@@ -60,7 +68,7 @@ public class SecurityManager<P extends GamePrototype> {
         return actualPrototype;
     }
 
-    public void init(P prototype) {
+    public void setPrototype(P prototype) {
         this.prototype = prototype;
     }
 
@@ -79,9 +87,8 @@ public class SecurityManager<P extends GamePrototype> {
     }
 
     @SuppressWarnings("unchecked")
-    private P getFromInternal(String path, LoaderFactory factory, Class<P> type) {
-        Object prototype = factory.create(LoaderFactory.Type.STORAGE)
-                .load(type, path);
+    private P get(FileHandle path, LoaderFactory.Type loaderType, Class<P> type) {
+        Object prototype = LoaderFactory.create(loaderType).load(type, path);
 
         if (prototype == null)
             throw new GdxRuntimeException("Could not load prototype from internal storage");
@@ -89,18 +96,11 @@ public class SecurityManager<P extends GamePrototype> {
         return (P) prototype;
     }
 
-    @SuppressWarnings("unchecked")
-    private P getFromRemote(LoaderFactory factory, Class<P> type) {
-        if (prototype == null)
-            throw new GdxRuntimeException("Could not get remote configuration: missing default prototype");
-        return (P) factory.create(LoaderFactory.Type.INTERNET)
-                .load(type, prototype.remoteConfig);
+    public void setFileHandle(Files fileHandle) {
+        this.fileHandle = fileHandle;
     }
 
-    @SuppressWarnings("unchecked")
-    private P getFromExternal(LoaderFactory factory, Class<P> type) {
-        return (P) factory.create(LoaderFactory.Type.STORAGE)
-                .load(type, prototype.getFullConfigPath());
+    public void cleanup() {
+        fileHandle = null;
     }
-
 }

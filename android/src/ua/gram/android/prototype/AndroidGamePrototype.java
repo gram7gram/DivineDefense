@@ -8,7 +8,7 @@ import ua.gram.model.prototype.GamePrototype;
 public class AndroidGamePrototype extends GamePrototype<AndroidParametersPrototype> {
 
     public AndroidParametersPrototype parameters;
-    public AndroidConfigPrototype config;
+    public AndroidConfigPrototype gameConfig;
 
     @Override
     public String getConfigPath() {

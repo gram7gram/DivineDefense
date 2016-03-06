@@ -18,8 +18,8 @@ public class DeviceStorageLoader implements LoaderInterface {
     }
 
     @Override
-    public Object load(Class type, String path) {
-        return json.fromJson(type, new FileHandle(path));
+    public Object load(Class type, FileHandle file) {
+        return json.fromJson(type, file);
     }
 
     @Override

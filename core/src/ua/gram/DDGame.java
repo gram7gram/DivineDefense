@@ -3,12 +3,16 @@ package ua.gram;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.BufferUtils;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+
+import java.nio.IntBuffer;
 
 import ua.gram.controller.Log;
 import ua.gram.controller.Resources;
@@ -82,6 +86,10 @@ public class DDGame<P extends GamePrototype> extends Game {
 
     @Override
     public void create() {
+        IntBuffer intBuffer = BufferUtils.newIntBuffer(16);
+        Gdx.gl20.glGetIntegerv(GL20.GL_MAX_TEXTURE_SIZE, intBuffer);
+        System.out.println(intBuffer.get());
+
         Gdx.app.setLogLevel(parameters.logLevel);
         sayHello();
         initGameValues();

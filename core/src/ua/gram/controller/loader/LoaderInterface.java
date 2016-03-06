@@ -1,5 +1,7 @@
 package ua.gram.controller.loader;
 
+import com.badlogic.gdx.files.FileHandle;
+
 import ua.gram.model.prototype.RemoteConfigurationPrototype;
 
 /**
@@ -7,7 +9,7 @@ import ua.gram.model.prototype.RemoteConfigurationPrototype;
  */
 public interface LoaderInterface {
 
-    Object load(Class type, String url);
+    Object load(Class type, FileHandle file);
 
     Object load(Class type, RemoteConfigurationPrototype remote);
 }

@@ -4,25 +4,24 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import ua.gram.controller.loader.DeviceStorageLoader;
 import ua.gram.controller.loader.LoaderInterface;
-import ua.gram.controller.loader.RemoteLoader;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
 public class LoaderFactory {
 
-    public LoaderInterface create(Type type) {
+    public static LoaderInterface create(Type type) {
         switch (type) {
-            case STORAGE:
+            case INTERNAL:
+            case EXTERNAL:
                 return new DeviceStorageLoader();
-            case INTERNET:
-                return new RemoteLoader();
+            case NETWORK:
             default:
                 throw new GdxRuntimeException(type.name() + " loader not implemented");
         }
     }
 
     public enum Type {
-        INTERNET, STORAGE
+        NETWORK, EXTERNAL, INTERNAL
     }
 }

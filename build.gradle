@@ -33,8 +33,7 @@ project(":desktop") {
         compile project(":core")
         compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-        compile name: "javax.mail"
-        compile name: "gdx-tools"
+        compile fileTree(dir: 'libs', include: '*.jar')
     }
 }
 
@@ -49,18 +48,15 @@ project(":android") {
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86"
-        compile name: "javax.mail"
-        compile name: "gdx-tools"
+        compile fileTree(dir: 'libs', include: '*.jar')
     }
 }
 
 project(":core") {
     apply plugin: "java"
 
-
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
-        compile name: "javax.mail"
-        compile name: "gdx-tools"
+        compile fileTree(dir: 'libs', include: '*.jar')
     }
 }
