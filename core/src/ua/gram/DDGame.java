@@ -65,6 +65,7 @@ public class DDGame<P extends GamePrototype> extends Game {
     public static int MAP_HEIGHT;
     public static int MAX_ENTITIES;
     public static int MAX_LEVELS;
+    public static int MAX_TEXTURE_SIZE;
     private final P prototype;
     private final ParametersPrototype parameters;
     private final Speed gameSpeed;
@@ -86,10 +87,6 @@ public class DDGame<P extends GamePrototype> extends Game {
 
     @Override
     public void create() {
-        IntBuffer intBuffer = BufferUtils.newIntBuffer(16);
-        Gdx.gl20.glGetIntegerv(GL20.GL_MAX_TEXTURE_SIZE, intBuffer);
-        System.out.println(intBuffer.get());
-
         Gdx.app.setLogLevel(parameters.logLevel);
         sayHello();
         initGameValues();
@@ -115,6 +112,10 @@ public class DDGame<P extends GamePrototype> extends Game {
         FACTION2 = parameters.constants.faction2;
         info = new BitmapFont();
         info.setColor(1, 1, 1, 1);
+        IntBuffer intBuffer = BufferUtils.newIntBuffer(16);
+        Gdx.gl20.glGetIntegerv(GL20.GL_MAX_TEXTURE_SIZE, intBuffer);
+        MAX_TEXTURE_SIZE = intBuffer.get();
+        Log.info("Max texture size for device: " + MAX_TEXTURE_SIZE);
     }
 
     @Override
