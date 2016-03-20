@@ -28,7 +28,7 @@ public class LevelSelectScreen extends AbstractScreen {
 
     @Override
     public void show() {
-        Log.info("Screen set to LevelSelectScreen");
+        super.show();
         background.setSize(DDGame.WORLD_WIDTH, DDGame.WORLD_HEIGHT);
         LevelPrototype[] prototypes = getPrototype().levelConfig.levels;
         stage = new LevelSelectStage(game, prototypes);
@@ -49,16 +49,5 @@ public class LevelSelectScreen extends AbstractScreen {
     @Override
     public void renderOtherElements(float delta) {
 
-    }
-
-    @Override
-    public void hide() {
-        Log.warn("Hiding LevelSelectScreen");
-        Gdx.input.setInputProcessor(null);
-    }
-
-    @Override
-    public void dispose() {
-        Log.warn("LevelSelectScreen disposed");
     }
 }

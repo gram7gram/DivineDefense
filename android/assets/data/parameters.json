@@ -38,7 +38,7 @@
       "title": "Divine Defense Bug Report",
       "sender": "divine.defense@i.ua",
       "recipient": "gram7gram@gmail.com",
-      "password": "cxmmjGtdLmucADN",
+      "password": "****************",
       "host": "smtp.i.ua",
       "port": 465
     },
@@ -73,7 +73,7 @@
     "faction": null,
     "progress": {
       "level": {
-        "lastUnlocked": 1
+        "lastUnlocked": 3
       }
     }
   },
@@ -147,6 +147,130 @@
         "initialDirection": {
           "x": 1,
           "y": 0
+        },
+        "waves": [
+          {
+            "index": 1,
+            "enemies": [
+              "EnemyRunner",
+              "EnemyWarrior"
+            ]
+          },
+          {
+            "index": 2,
+            "enemies": [
+              "EnemyRunner"
+            ]
+          }
+        ]
+      },
+      {
+        "level": 3,
+        "map": {
+          "layer": "Terrain",
+          "walkableProperty": "walkable",
+          "spawnProperty": "spawn",
+          "baseProperty": "base",
+          "blockedProperty": "blocked",
+          "name": "data/levels/maps/level3@60.tmx"
+        },
+        "preview": "preview/level-3-preview@256",
+        "initialDirection": {
+          "x": 0,
+          "y": -1
+        },
+        "waves": [
+          {
+            "index": 1,
+            "enemies": [
+              "EnemyRunner",
+              "EnemyWarrior"
+            ]
+          },
+          {
+            "index": 2,
+            "enemies": [
+              "EnemyRunner"
+            ]
+          }
+        ]
+      },
+      {
+        "level": 4,
+        "map": {
+          "layer": "Terrain",
+          "walkableProperty": "walkable",
+          "spawnProperty": "spawn",
+          "baseProperty": "base",
+          "blockedProperty": "blocked",
+          "name": "data/levels/maps/level3@60.tmx"
+        },
+        "preview": "preview/level-3-preview@256",
+        "initialDirection": {
+          "x": 0,
+          "y": -1
+        },
+        "waves": [
+          {
+            "index": 1,
+            "enemies": [
+              "EnemyRunner",
+              "EnemyWarrior"
+            ]
+          },
+          {
+            "index": 2,
+            "enemies": [
+              "EnemyRunner"
+            ]
+          }
+        ]
+      },
+      {
+        "level": 5,
+        "map": {
+          "layer": "Terrain",
+          "walkableProperty": "walkable",
+          "spawnProperty": "spawn",
+          "baseProperty": "base",
+          "blockedProperty": "blocked",
+          "name": "data/levels/maps/level3@60.tmx"
+        },
+        "preview": "preview/level-3-preview@256",
+        "initialDirection": {
+          "x": 0,
+          "y": -1
+        },
+        "waves": [
+          {
+            "index": 1,
+            "enemies": [
+              "EnemyRunner",
+              "EnemyWarrior"
+            ]
+          },
+          {
+            "index": 2,
+            "enemies": [
+              "EnemyRunner"
+            ]
+          }
+        ]
+      },
+      {
+        "level": 6,
+        "map": {
+          "layer": "Terrain",
+          "walkableProperty": "walkable",
+          "spawnProperty": "spawn",
+          "baseProperty": "base",
+          "blockedProperty": "blocked",
+          "name": "data/levels/maps/level3@60.tmx"
+        },
+        "preview": "preview/level-3-preview@256",
+        "initialDirection": {
+          "x": 0,
+          "y": -1
         },
         "waves": [
           {

@@ -20,8 +20,19 @@
   </tile>
   <tile id="3">
    <properties>
+    <property name="blocked" value="" />
     <property name="spawn" value=""/>
     <property name="walkable" value=""/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="blocked" value="" />
+   </properties>
+  </tile>
+  <tile id="5">
+   <properties>
+    <property name="blocked" value="" />
    </properties>
   </tile>
   <tile id="6">
@@ -57,7 +68,18 @@
   <tile id="12">
    <properties>
     <property name="base" value=""/>
+    <property name="blocked" value="" />
     <property name="walkable" value=""/>
+   </properties>
+  </tile>
+  <tile id="13">
+   <properties>
+    <property name="blocked" value="" />
+   </properties>
+  </tile>
+  <tile id="14">
+   <properties>
+    <property name="blocked" value="" />
    </properties>
   </tile>
   <tile id="15">
@@ -220,9 +242,20 @@
     <property name="blocked" value=""/>
    </properties>
   </tile>
+  <tile id="48">
+   <properties>
+    <property name="blocked" value="" />
+   </properties>
+  </tile>
   <tile id="49">
    <properties>
+    <property name="blocked" value="" />
     <property name="walkable" value=""/>
+   </properties>
+  </tile>
+  <tile id="50">
+   <properties>
+    <property name="blocked" value="" />
    </properties>
   </tile>
   <tile id="51">
@@ -241,14 +274,14 @@
    </properties>
   </tile>
  </tileset>
- <layer name="Back" height="10" width="15">
-  <data compression="zlib" encoding="base64">
-   eJwzZmBgMB7Fo5jKGABFAR3j
-  </data>
- </layer>
  <layer name="Terrain" height="10" width="15">
   <data compression="zlib" encoding="base64">
-   eJxtj80KwkAMhLfWKtSfiy16qIUetCqIuH3/d3MWJjCGBD66O8lkp++UUgNe6b8qMIEBXMEK3ElN7el8DbUNvTfOz+y31Go3b3tK/xFk0RqCd7VOoAc5oHjXco92j0EvM/dCsuhZ+rP0NMcBXMQTffVsOWzPFLzn79775bl4t+5/LFsrms3vQAf24AjOpOSvgmydzH+EH51VDaI=
+   eJxTYGBgUIBiIyQ2qZgcvUZImFS1pNiHrtYIBybTXwso0EuJvTj9QUk8UgsDAEO/FVk=
+  </data>
+ </layer>
+ <layer name="Cliffs" height="10" width="15">
+  <data compression="zlib" encoding="base64">
+   eJxjYEAAFiDWBmIdIOYEYmU0zAHEulC1Mgy4gTZUPweSWSpI8qp49IKAEpJ6ZDYI8FKgV5gCvTD/SgKxFBKWRlIvCBUTwqEXpAZbmMDCHIZ1cejF5TZsAORXHiT34HIbNgCyU5YBM/6VkczBhkFhAYpbZiAGAFgWCYg=
   </data>
  </layer>
 </map>

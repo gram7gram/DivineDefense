@@ -18,7 +18,7 @@ public class Wave {
         isStarted = false;
         enemies = prototype.enemies;
         index = prototype.index;
-        Log.info("Wave is OK");
+        Log.info("Wave " + index + " is OK");
     }
 
     /**

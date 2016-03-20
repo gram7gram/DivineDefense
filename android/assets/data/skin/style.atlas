@@ -69,6 +69,13 @@ preview/level-2-preview@256
   orig: 256, 256
   offset: 0, 0
   index: -1
+preview/level-3-preview@256
+  rotate: false
+  xy: 515, 1
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
 
 style3.png
 size: 256,64

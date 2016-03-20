@@ -1,5 +1,6 @@
 package ua.gram.model.map;
 
+import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -30,7 +31,7 @@ public class Map {
 
     public Map(DDGame game, MapPrototype prototype) {
         this.prototype = prototype;
-        this.tiledMap = game.getResources().getMap(prototype.name);
+        tiledMap = game.getResources().getMap(prototype.name);
         parseLimit = 3 * DDGame.MAX_ENTITIES;
         path = new Path();
         layer = (TiledMapTileLayer) tiledMap.getLayers().get(prototype.layer);
@@ -63,21 +64,29 @@ public class Map {
     private HashMap<String, Vector2> findMapPoints() {
         HashMap<String, Vector2> map = new HashMap<String, Vector2>(2);
         MapProperties properties;
-        for (int x = 0; x < layer.getWidth(); x++) {
-            for (int y = 0; y < layer.getHeight(); y++) {
-                TiledMapTileLayer.Cell cell = layer.getCell(x, y);
-                if (cell == null) continue;
+        for (MapLayer mapLayer : tiledMap.getLayers()) {
 
-                properties = cell.getTile().getProperties();
+            if (!(mapLayer instanceof TiledMapTileLayer))
+                throw new IllegalArgumentException("Provided map is not a TiledMap");
+            TiledMapTileLayer layer = (TiledMapTileLayer) mapLayer;
 
-                if (!map.containsKey(prototype.spawnProperty) && isSpawn(properties)) {
-                    map.put(prototype.spawnProperty, new Vector2(x, y));
-                } else if (!map.containsKey(prototype.baseProperty) && isBase(properties)) {
-                    map.put(prototype.baseProperty, new Vector2(x, y));
+            for (int x = 0; x < layer.getWidth(); x++) {
+                for (int y = 0; y < layer.getHeight(); y++) {
+
+                    TiledMapTileLayer.Cell cell = layer.getCell(x, y);
+                    if (cell == null) continue;
+
+                    properties = cell.getTile().getProperties();
+
+                    if (!map.containsKey(prototype.spawnProperty) && isSpawn(properties)) {
+                        map.put(prototype.spawnProperty, new Vector2(x, y));
+                    } else if (!map.containsKey(prototype.baseProperty) && isBase(properties)) {
+                        map.put(prototype.baseProperty, new Vector2(x, y));
+                    }
+
+                    if (map.containsKey(prototype.baseProperty) && map.containsKey(prototype.spawnProperty))
+                        break;
                 }
-
-                if (map.containsKey(prototype.baseProperty) && map.containsKey(prototype.spawnProperty))
-                    break;
             }
         }
         return map;
@@ -97,7 +106,7 @@ public class Map {
      */
     public EnemyPath normalizePath(Vector2 lastDir, Vector2 start) {
         if (lastDir == null || start == null)
-            throw new NullPointerException("Path normalization impossible");
+            throw new NullPointerException("Path normalization is impossible");
 
         EnemyPath path = new EnemyPath();
 
@@ -112,31 +121,38 @@ public class Map {
         int count = 0;
 
         while (!isFound && count < parseLimit) {
-            for (Vector2 direction : Path.DIRECTIONS) {
-                if (!direction.equals(lastDir) && isInMapBounds(direction, position)) {
-                    int currentX = (int) (position.x + direction.x);
-                    int currentY = (int) (position.y + direction.y);
-                    TiledMapTileLayer.Cell cell = layer.getCell(currentX, currentY);
-                    if (cell == null) continue;
-                    properties = cell.getTile().getProperties();
-                    if (isWalkable(properties)) {
-                        path.addDirection(direction);
-                        path.addPath(new Vector2(currentX, currentY));
-                        position.add(direction);
-                        lastDir = Path.opposite(direction);
-                        if (isBase(properties)) {
-                            isFound = true;
-                            break;
-                        } else if (isSpawn(properties)) {
-                            ++recursion;
-                            if (recursion < 2) {
-                                Log.warn("Path normalization was reversed: search was in the wrong direction");
-                                return normalizePath(Path.opposite(lastDir), start);
-                            } else
-                                throw new GdxRuntimeException("Path normalization error: parsing in wrong direction");
+            for (MapLayer mapLayer : tiledMap.getLayers()) {
+
+                if (!(mapLayer instanceof TiledMapTileLayer))
+                    throw new IllegalArgumentException("Provided map is not a TiledMap");
+                TiledMapTileLayer layer = (TiledMapTileLayer) mapLayer;
+
+                for (Vector2 direction : Path.DIRECTIONS) {
+                    if (!direction.equals(lastDir) && isInMapBounds(direction, position)) {
+                        int currentX = (int) (position.x + direction.x);
+                        int currentY = (int) (position.y + direction.y);
+                        TiledMapTileLayer.Cell cell = layer.getCell(currentX, currentY);
+                        if (cell == null) continue;
+                        properties = cell.getTile().getProperties();
+                        if (isWalkable(properties)) {
+                            path.addDirection(direction);
+                            path.addPath(new Vector2(currentX, currentY));
+                            position.add(direction);
+                            lastDir = Path.opposite(direction);
+                            if (isBase(properties)) {
+                                isFound = true;
+                                break;
+                            } else if (isSpawn(properties)) {
+                                ++recursion;
+                                if (recursion < 2) {
+                                    Log.warn("Path normalization was reversed: search was in the wrong direction");
+                                    return normalizePath(Path.opposite(lastDir), start);
+                                } else
+                                    throw new GdxRuntimeException("Path normalization error: parsing in wrong direction");
+                            }
                         }
+                        ++count;
                     }
-                    ++count;
                 }
             }
         }

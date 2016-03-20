@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import ua.gram.DDGame;
+import ua.gram.controller.factory.LevelTileFactory;
 import ua.gram.model.prototype.LevelPrototype;
 import ua.gram.model.window.WindowGroup;
 import ua.gram.view.screen.MainMenuScreen;
@@ -26,7 +27,7 @@ public class LevelSelectWindow extends WindowGroup {
         Table nested = new Table();
         nested.setVisible(true);
         for (LevelPrototype prototype : prototypes) {
-            Actor tile1 = new LevelTile(game, prototype);
+            Actor tile1 = LevelTileFactory.create(game, prototype);
             tile1.setVisible(true);
             nested.add(tile1).pad(10)
                     .width(DDGame.DEFAULT_BUTTON_HEIGHT * 2.5f)

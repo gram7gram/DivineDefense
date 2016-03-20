@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import ua.gram.DDGame;
 import ua.gram.controller.Log;
@@ -51,6 +52,7 @@ public class GameUIGroup extends Group implements Initializer {
         pauseBut.setVisible(true);
 
         Vector2 pos = level.getMap().getSpawn().getPosition();
+        if (pos == null) throw new GdxRuntimeException("Missing map spawn point");
 
         CounterButtonPrototype prototype = game.getPrototype().levelConfig.counterButtonConfig;
         prototype.tilePosition = new Vector2(pos.x, pos.y);
@@ -89,7 +91,7 @@ public class GameUIGroup extends Group implements Initializer {
 
         //NOTE Workaround about 0 width of the notification label at first launch
         //notificationLabel = new CustomLabel("", skin, "header1white");
-        notificationLabel = new CustomLabel("LEVEL " + game.getPlayer().getLevel(), skin, "header1white");
+        notificationLabel = new CustomLabel("LEVEL " + level.getIndex(), skin, "header1white");
         notificationLabel.setVisible(false);
 
         Group labels = new Group();

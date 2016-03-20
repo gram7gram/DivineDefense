@@ -1,7 +1,8 @@
 package ua.gram.model.map;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+
+import ua.gram.controller.Log;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -12,7 +13,7 @@ public class Spawn {
 
     public Spawn(Vector2 spawnPosition) {
         this.spawnPosition = spawnPosition;
-        Gdx.app.log("INFO", "Spawn is OK");
+        Log.info("Spawn is OK");
     }
 
     public Vector2 getPosition() {

@@ -149,4 +149,8 @@ public class Level implements Initializer {
     public boolean isFinished() {
         return isCleared || (currentWave != null && currentWave.getIndex() == MAX_WAVES);
     }
+
+    public int getIndex() {
+        return prototype.level;
+    }
 }

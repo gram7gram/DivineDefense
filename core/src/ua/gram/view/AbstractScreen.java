@@ -1,5 +1,6 @@
 package ua.gram.view;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 
 import ua.gram.DDGame;
@@ -65,6 +66,7 @@ public abstract class AbstractScreen implements Screen {
     @Override
     public void hide() {
         Log.warn("Hiding " + this.getClass().getSimpleName());
+        Gdx.input.setInputProcessor(null);
     }
 
     @Override

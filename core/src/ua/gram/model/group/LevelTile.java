@@ -1,7 +1,5 @@
 package ua.gram.model.group;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -18,8 +16,6 @@ import ua.gram.view.screen.LevelLoadingScreen;
  */
 public class LevelTile extends Table {
 
-    private Sprite lockIcon;
-
     public LevelTile(final DDGame game, final LevelPrototype prototype) {
         super(game.getResources().getSkin());
         Skin skin = game.getResources().getSkin();
@@ -35,25 +31,10 @@ public class LevelTile extends Table {
             }
         });
 
-        if (lvl <= game.getPlayer().getLastUnlockedLevel()) {
-            setTouchable(Touchable.enabled);
-        } else {
-            setTouchable(Touchable.disabled);
-            lockIcon = new Sprite(skin.getRegion("level_lock"));
-        }
+        setTouchable(Touchable.enabled);
 
         setBackground(skin.getDrawable(prototype.preview));
-        pad(10);
 
         Log.info("Level tile " + lvl + " is OK");
-    }
-
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        super.draw(batch, parentAlpha);
-        if (lockIcon != null)
-            batch.draw(lockIcon,
-                    getX(), getY(),
-                    getWidth(), getHeight());
     }
 }

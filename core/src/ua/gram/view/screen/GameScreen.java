@@ -48,7 +48,7 @@ public class GameScreen extends AbstractScreen {
         inputMultiplexer.addProcessor(uiStage);
         inputMultiplexer.addProcessor(battleStage);
         Gdx.input.setInputProcessor(inputMultiplexer);
-        uiStage.getGameUIGroup().showNotification("LEVEL " + (level.getCurrentLevel()));
+        uiStage.getGameUIGroup().showNotification("LEVEL " + (level.getIndex()));
     }
 
     @Override
