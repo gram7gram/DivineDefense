@@ -21,7 +21,7 @@ public class MainMenuScreen extends AbstractScreen {
     public MainMenuScreen(DDGame game) {
         super(game);
         stage_ui = new MainMenuStage(game);
-        background = new Sprite(game.getResources().getTexture(Resources.BACKGROUND_TEXTURE));
+        background = new Sprite(game.getResources().getRegisteredTexture(Resources.BACKGROUND_TEXTURE));
         Gdx.app.log("INFO", "MainMenuScreen is OK");
     }
 

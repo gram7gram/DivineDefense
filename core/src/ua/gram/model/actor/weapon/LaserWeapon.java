@@ -32,12 +32,12 @@ public final class LaserWeapon extends Weapon {
         super(resources, prototype);
         this.color_back = prototype.colorBack;
         this.color_over = prototype.colorOver;
-        this.start_back = new Sprite(resources.getTexture(prototype.startBack));
-        this.start_over = new Sprite(resources.getTexture(prototype.startOver));
-        this.middle_back = new Sprite(resources.getTexture(prototype.middleBack));
-        this.middle_over = new Sprite(resources.getTexture(prototype.middleOver));
-        this.end_back = new Sprite(resources.getTexture(prototype.endBack));
-        this.end_over = new Sprite(resources.getTexture(prototype.endOver));
+        this.start_back = new Sprite(resources.getRegisteredTexture(prototype.startBack));
+        this.start_over = new Sprite(resources.getRegisteredTexture(prototype.startOver));
+        this.middle_back = new Sprite(resources.getRegisteredTexture(prototype.middleBack));
+        this.middle_over = new Sprite(resources.getRegisteredTexture(prototype.middleOver));
+        this.end_back = new Sprite(resources.getRegisteredTexture(prototype.endBack));
+        this.end_over = new Sprite(resources.getRegisteredTexture(prototype.endOver));
     }
 
     @Override

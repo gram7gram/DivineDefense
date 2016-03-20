@@ -9,6 +9,7 @@ import ua.gram.controller.Log;
 import ua.gram.controller.Resources;
 import ua.gram.controller.stage.LevelSelectStage;
 import ua.gram.model.prototype.GamePrototype;
+import ua.gram.model.prototype.LevelPrototype;
 import ua.gram.view.AbstractScreen;
 
 /**
@@ -16,21 +17,22 @@ import ua.gram.view.AbstractScreen;
  */
 public class LevelSelectScreen extends AbstractScreen {
 
-    private final LevelSelectStage stage;
     private final Sprite background;
+    private LevelSelectStage stage;
 
     public LevelSelectScreen(DDGame game, GamePrototype prototype) {
         super(game, prototype);
-        stage = new LevelSelectStage(game, prototype);
-        background = new Sprite(game.getResources().getTexture(Resources.BACKGROUND_TEXTURE));
+        background = new Sprite(game.getResources().getRegisteredTexture(Resources.BACKGROUND_TEXTURE));
         Log.info("LevelSelectScreen is OK");
     }
 
     @Override
     public void show() {
         Log.info("Screen set to LevelSelectScreen");
-        Gdx.input.setInputProcessor(stage);
         background.setSize(DDGame.WORLD_WIDTH, DDGame.WORLD_HEIGHT);
+        LevelPrototype[] prototypes = getPrototype().levelConfig.levels;
+        stage = new LevelSelectStage(game, prototypes);
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override

@@ -448,6 +448,9 @@
     },
     "button-lock": {
       "up": "ui/static/lock"
+    },
+    "tile-bordered": {
+      "up": "ui/border"
     }
   },
   "com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle": {

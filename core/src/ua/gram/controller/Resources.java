@@ -95,7 +95,7 @@ public class Resources implements Disposable {
         return manager.get(map, TiledMap.class);
     }
 
-    public Texture getTexture(String file) {
+    public Texture getRegisteredTexture(String file) {
         return manager.get(file, Texture.class);
     }
 
@@ -103,11 +103,6 @@ public class Resources implements Disposable {
         return skin.getRegion(region).getTexture();
     }
 
-    /**
-     * If there was an error in loading the resources, and DDGame did not create
-     * nor Camera, nor Viewport, nor Batch - this method will create them for you,
-     * so that you are able to display ErrorScreen and did not terminate the application.
-     */
     private void createDisplayComponents() {
         game.createCamera();
         game.createViewport();

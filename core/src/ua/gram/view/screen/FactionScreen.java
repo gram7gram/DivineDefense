@@ -24,7 +24,7 @@ public class FactionScreen extends AbstractScreen {
         super(game);
         stage_ui = new FactionStage(game);
         batch = game.getBatch();
-        background = new Sprite(game.getResources().getTexture(Resources.BACKGROUND_TEXTURE));
+        background = new Sprite(game.getResources().getRegisteredTexture(Resources.BACKGROUND_TEXTURE));
         Log.info("FractionScreen is OK");
     }
 

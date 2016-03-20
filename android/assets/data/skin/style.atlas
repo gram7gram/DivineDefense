@@ -51,37 +51,38 @@ position-marker
   index: -1
 
 style2.png
-size: 1024,256
+size: 1024,512
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-preview/level-1-preview
+preview/level-1-preview@256
   rotate: false
   xy: 1, 1
-  size: 210, 210
-  orig: 210, 210
+  size: 256, 256
+  orig: 256, 256
   offset: 0, 0
   index: -1
-preview/level-2-preview
+preview/level-2-preview@256
   rotate: false
-  xy: 212, 1
-  size: 210, 210
-  orig: 210, 210
-  offset: 0, 0
-  index: -1
-preview/level-3-preview
-  rotate: false
-  xy: 423, 1
-  size: 210, 210
-  orig: 210, 210
+  xy: 258, 1
+  size: 256, 256
+  orig: 256, 256
   offset: 0, 0
   index: -1
 
 style3.png
-size: 128,64
+size: 256,64
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+ui/border
+  rotate: false
+  xy: 100, 26
+  size: 35, 35
+  split: 14, 14, 14, 13
+  orig: 35, 35
+  offset: 0, 0
+  index: -1
 ui/header
   rotate: false
   xy: 1, 1

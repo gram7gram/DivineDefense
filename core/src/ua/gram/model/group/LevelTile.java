@@ -53,7 +53,7 @@ public class LevelTile extends Table {
         super.draw(batch, parentAlpha);
         if (lockIcon != null)
             batch.draw(lockIcon,
-                    this.getX(), this.getY(),
-                    this.getWidth(), this.getHeight());
+                    getX(), getY(),
+                    getWidth(), getHeight());
     }
 }

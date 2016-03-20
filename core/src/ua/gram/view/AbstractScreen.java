@@ -11,8 +11,8 @@ import ua.gram.model.prototype.GamePrototype;
  */
 public abstract class AbstractScreen implements Screen {
 
-    protected DDGame game;
-    protected GamePrototype prototype;
+    protected final DDGame game;
+    protected final GamePrototype prototype;
 
     public AbstractScreen(DDGame game, GamePrototype prototype) {
         this.game = game;
@@ -70,5 +70,13 @@ public abstract class AbstractScreen implements Screen {
     @Override
     public void dispose() {
         Log.warn("Disposing " + this.getClass().getSimpleName());
+    }
+
+    public GamePrototype getPrototype() {
+        return prototype;
+    }
+
+    public DDGame getGame() {
+        return game;
     }
 }
