@@ -11,12 +11,14 @@ import ua.gram.controller.listener.DebugListener;
 public abstract class AbstractStage extends Stage {
 
     protected final DDGame game;
+    protected final DebugListener debugListener;
     protected StageHolder stageHolder;
 
     public AbstractStage(DDGame game) {
         super(game.getViewport(), game.getBatch());
         this.game = game;
-        addListener(new DebugListener());
+        debugListener = new DebugListener();
+        addListener(debugListener);
     }
 
     @Override
@@ -32,4 +34,6 @@ public abstract class AbstractStage extends Stage {
     public void setStageHolder(StageHolder stageHolder) {
         this.stageHolder = stageHolder;
     }
+
+
 }

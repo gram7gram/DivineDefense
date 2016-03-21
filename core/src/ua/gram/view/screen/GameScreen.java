@@ -28,11 +28,11 @@ public class GameScreen extends AbstractScreen {
         this.level = level;
         DDGame.PAUSE = false;
         game.getSpeed().reset();
-        game.getPlayer().reset();
+        game.getPlayer().resetObject();
         renderer = new OrthogonalTiledMapRenderer(level.getMap().getTiledMap());
         renderer.setView(game.getCamera());
         battleStage = new BattleStage(game, level);
-        uiStage = new UIStage(game, level);
+        uiStage = new UIStage(game, level, game.getPrototype().ui);
         StageHolder stageHolder = new StageHolder(uiStage, battleStage);
         battleStage.setStageHolder(stageHolder);
         uiStage.setStageHolder(stageHolder);

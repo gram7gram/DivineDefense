@@ -122,7 +122,7 @@ public class Player implements ResetableInterface {
      * NOTE Gems are not reset
      */
     @Override
-    public void reset() {
+    public void resetObject() {
         coins = prototype.coins;
         restoreHealth();
     }

@@ -1,11 +1,10 @@
 package ua.gram.controller.listener;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import ua.gram.DDGame;
-import ua.gram.controller.stage.UIStage;
+import ua.gram.model.Player;
 
 /**
  * Continue playing the levelConfig with additional health.
@@ -17,15 +16,11 @@ public class ContinueListener extends ClickListener {
     private final DDGame game;
     private final int amountHealth;
     private final int amountGems;
-    private final Window window;
-    private final UIStage stage_ui;
 
-    public ContinueListener(DDGame game, int health, int gems, Window window, UIStage stage_ui) {
+    public ContinueListener(DDGame game, int health, int gems) {
         this.game = game;
-        this.amountHealth = health;
+        this.amountHealth = health == -1 ? Player.DEFAULT_HEALTH : health;
         this.amountGems = gems;
-        this.window = window;
-        this.stage_ui = stage_ui;
     }
 
     @Override
@@ -34,7 +29,6 @@ public class ContinueListener extends ClickListener {
         game.getPlayer().setHealth(amountHealth);
         game.getSecurity().save();
         DDGame.PAUSE = false;
-        stage_ui.toggleWindow(window);
     }
 
 }

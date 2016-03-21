@@ -13,6 +13,7 @@ public abstract class GamePrototype<P extends ParametersPrototype> extends Proto
     public TowerPrototype[] towers;
     public LevelConfigPrototype levelConfig;
     public RemoteConfigurationPrototype remoteConfig;
+    public UIPrototype ui;
 
     public abstract String getConfigPath();
 

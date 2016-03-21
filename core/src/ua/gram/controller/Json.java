@@ -18,7 +18,7 @@ public class Json extends com.badlogic.gdx.utils.Json {
         }
 
         if (object instanceof ResetableInterface) {
-            ((ResetableInterface) object).reset();
+            ((ResetableInterface) object).resetObject();
         }
 
         super.writeFields(object);

@@ -581,5 +581,60 @@
         }
       ]
     }
-  ]
+  ],
+  "ui": {
+    "windows": [
+      {
+        "class": "ua.gram.model.prototype.ui.window.DefeatWindowPrototype",
+        "name": "defeat",
+        "style": "window-dark-gold",
+        "headerText": "You were defeated...",
+        "headerTextStyle": "header1altblack",
+        "subHeaderText": "Get the revenge and be victorious :",
+        "subHeaderTextStyle": "header2black",
+        "width": 760,
+        "height": 520,
+        "options": [
+          {
+            "style": "button-defeat-restart",
+            "delay": 10,
+            "width": 200,
+            "height": 335,
+            "order": 0
+          },
+          {
+            "style": "button-defeat-continue-part",
+            "health": 3,
+            "cost": 3,
+            "width": 200,
+            "height": 335,
+            "order": 1
+          },
+          {
+            "style": "button-defeat-continue-full",
+            "health": -1,
+            "cost": 5,
+            "width": 200,
+            "height": 335,
+            "order": 2
+          }
+        ]
+      },
+      {
+        "class": "ua.gram.model.prototype.ui.window.VictoryWindowPrototype",
+        "name": "victory",
+        "style": "window-dark-gold",
+        "buttonText": "NEXT LEVEL",
+        "buttonTextStyle": "diablo-yellow",
+        "titleRegion": "ui/static/banner-victory",
+        "width": 400,
+        "height": 375,
+        "buttonWidth": 250,
+        "buttonHeight": 80,
+        "rewardTextStyle": "header2black",
+        "minimumReward": 0,
+        "maximumReward": 3
+      }
+    ]
+  }
 }

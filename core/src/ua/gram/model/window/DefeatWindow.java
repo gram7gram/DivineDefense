@@ -1,57 +1,61 @@
 package ua.gram.model.window;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.SnapshotArray;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import ua.gram.DDGame;
 import ua.gram.controller.Log;
-import ua.gram.controller.listener.ContinueListener;
-import ua.gram.controller.listener.RestartClickListener;
+import ua.gram.controller.factory.DefeatOptionFactory;
 import ua.gram.controller.stage.StageHolder;
 import ua.gram.model.Initializer;
-import ua.gram.model.Player;
+import ua.gram.model.ResetableInterface;
+import ua.gram.model.actor.misc.DefeatOption;
+import ua.gram.model.prototype.ui.DefeatOptionPrototype;
+import ua.gram.model.prototype.ui.window.DefeatWindowPrototype;
+import ua.gram.model.prototype.ui.window.WindowPrototype;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class DefeatWindow extends Window implements Initializer {
+public class DefeatWindow extends Window implements Initializer, ResetableInterface {
 
     private final DDGame game;
-    private final Button option2;
-    private final Button option3;
+    private final DefeatWindowPrototype prototype;
     private StageHolder stageHolder;
 
-    public DefeatWindow(final DDGame game) {
-        super("", game.getResources().getSkin(), "window-pretty-header");
+    public DefeatWindow(final DDGame game, WindowPrototype proto) {
+        super("", game.getResources().getSkin(), proto.style);
+
+        if (!(proto instanceof DefeatWindowPrototype))
+            throw new IllegalArgumentException("Prototype is not instance of DefeatWindowPrototype");
+
         this.game = game;
+        this.prototype = (DefeatWindowPrototype) proto;
+
         Skin skin = game.getResources().getSkin();
 
-        this.setSize(760, 520);
-        this.setPosition(DDGame.WORLD_WIDTH / 2f - this.getWidth() / 2f, DDGame.WORLD_HEIGHT / 2f - this.getHeight() / 2f);
-        this.setVisible(true);
-        this.setMovable(false);
+        setSize(prototype.width, prototype.height);
+        setPosition(
+                DDGame.WORLD_WIDTH / 2f - this.getWidth() / 2f,
+                DDGame.WORLD_HEIGHT / 2f - this.getHeight() / 2f);
+        setVisible(true);
+        setMovable(false);
 
-        Label title1 = new Label("You were defeated...", skin, "header1altblack");
-        Label title2 = new Label("Get the revenge and be victorious :", skin, "header2black");
-
-        Button option1 = new Button(skin, "button-defeat-restart");
-        option1.setSize(200, 335);
-        option1.addListener(new RestartClickListener(game, game.getPlayer().getLevel()));
-
-        option2 = new Button(skin, "button-defeat-continue-part");
-        option2.setSize(200, 335);
-
-        option3 = new Button(skin, "button-defeat-continue-full");
-        option3.setSize(200, 335);
+        Label title1 = new Label(prototype.headerText, skin, prototype.headerTextStyle);
+        Label title2 = new Label(prototype.subHeaderText, skin, prototype.subHeaderTextStyle);
 
         title1.setVisible(true);
         title2.setVisible(true);
-        option1.setVisible(true);
-        option2.setVisible(true);
-        option3.setVisible(true);
 
         padLeft(40).padRight(40).padTop(15).padBottom(15);
         add(title1).expandX().fillX().colspan(3).padTop(5)
@@ -62,32 +66,15 @@ public class DefeatWindow extends Window implements Initializer {
                 .width(title2.getWidth())
                 .height(title2.getHeight())
                 .center().row();
-        add(option1)
-                .width(option1.getWidth())
-                .height(option1.getHeight())
-                .center();
-        add(option2)
-                .width(option2.getWidth())
-                .height(option2.getHeight())
-                .center();
-        add(option3)
-                .width(option3.getWidth())
-                .height(option3.getHeight())
-                .center().row();
-        update();
+
         addAction(
                 Actions.parallel(
                         Actions.alpha(0),
                         Actions.alpha(1, .8f)
                 )
         );
-        Log.info(this.getClass().getSimpleName() + " is OK");
-    }
 
-    public void update() {
-        option2.setDisabled(game.getPlayer().getGems() < 2);
-        option3.setDisabled(game.getPlayer().getGems() < 3);
-        Log.info(this.getClass().getSimpleName() + " is updated");
+        Log.info("DefeatWindow is OK");
     }
 
     public void setStageHolder(StageHolder stageHolder) {
@@ -96,8 +83,43 @@ public class DefeatWindow extends Window implements Initializer {
 
     @Override
     public void init() {
-        if (stageHolder == null) throw new NullPointerException("StageHolder is not initialized");
-        option2.addListener(new ContinueListener(game, 3, 2, this, stageHolder.getUiStage()));
-        option3.addListener(new ContinueListener(game, Player.DEFAULT_HEALTH, 3, this, stageHolder.getUiStage()));
+        if (stageHolder == null) throw new NullPointerException("Missing stage holder");
+
+        List<DefeatOptionPrototype> options = new ArrayList<>(prototype.options.length);
+        for (DefeatOptionPrototype p : prototype.options) {
+            options.add(p.order, p);
+        }
+
+        for (DefeatOptionPrototype optionPrototype : options) {
+            final DefeatOption option = DefeatOptionFactory.create(game, optionPrototype);
+            add(option)
+                    .width(option.getWidth())
+                    .height(option.getHeight())
+                    .center();
+
+            option.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    super.clicked(event, x, y);
+                    if (!option.getButton().isDisabled())
+                        stageHolder.getUiStage().toggleDefeatWindow();
+                }
+            });
+        }
+    }
+
+    @Override
+    public void resetObject() {
+        resetActors(getChildren());
+    }
+
+    private void resetActors(SnapshotArray<Actor> actors) {
+        for (Actor actor : actors) {
+            if (actor instanceof Group) {
+                resetActors(((Group) actor).getChildren());
+            } else if (actor instanceof ResetableInterface) {
+                ((ResetableInterface) actor).resetObject();
+            }
+        }
     }
 }

@@ -9,6 +9,7 @@ import ua.gram.model.Initializer;
 import ua.gram.model.Level;
 import ua.gram.model.group.GameUIGroup;
 import ua.gram.model.group.TowerControlsGroup;
+import ua.gram.model.prototype.UIPrototype;
 import ua.gram.model.prototype.shop.TowerShopConfigPrototype;
 import ua.gram.model.window.DefeatWindow;
 import ua.gram.model.window.PauseWindow;
@@ -31,14 +32,14 @@ public class UIStage extends AbstractStage implements Initializer {
     private TowerShop towerShop;
     private TowerControlsGroup towerControls;
 
-    public UIStage(DDGame game, Level level) {
+    public UIStage(DDGame game, Level level, UIPrototype prototype) {
         super(game);
         this.game = game;
         this.level = level;
         gameUIGroup = new GameUIGroup(game, level);
-        victoryWindow = new VictoryWindow(game, level);
+        victoryWindow = new VictoryWindow(game, level, prototype.getWindow("victory"));
         pauseWindow = new PauseWindow(game);
-        defeatWindow = new DefeatWindow(game);
+        defeatWindow = new DefeatWindow(game, prototype.getWindow("defeat"));
         gameUIGroup.setVisible(true);
         victoryWindow.setVisible(false);
         pauseWindow.setVisible(false);
@@ -48,6 +49,7 @@ public class UIStage extends AbstractStage implements Initializer {
 
     @Override
     public void init() {
+        debugListener.setStageHolder(stageHolder);
         gameUIGroup.setStageHolder(stageHolder);
         gameUIGroup.init();
         defeatWindow.setStageHolder(stageHolder);
@@ -63,6 +65,7 @@ public class UIStage extends AbstractStage implements Initializer {
         addActor(pauseWindow);
         addActor(defeatWindow);
         addActor(towerShop.getTowerShopGroup());
+        Log.info("UIStage is initialized");
     }
 
     /**
@@ -77,9 +80,6 @@ public class UIStage extends AbstractStage implements Initializer {
         towerShop.getTowerShopGroup().setVisible(!window.isVisible());
         BattleStage battleStage = stageHolder.getBattleStage();
         if (window.isVisible()) {
-            if (window instanceof DefeatWindow) {
-                ((DefeatWindow) window).update();
-            }
             battleStage.removeListener(battleStage.getControlsListener());
         } else {
             battleStage.addListener(battleStage.getControlsListener());
@@ -130,5 +130,30 @@ public class UIStage extends AbstractStage implements Initializer {
 
     public TowerShop getTowerShop() {
         return towerShop;
+    }
+
+    public void hideAllWindows() {
+        pauseWindow.setVisible(false);
+        victoryWindow.setVisible(false);
+        defeatWindow.setVisible(false);
+    }
+
+    public void toggleDefeatWindow() {
+        victoryWindow.setVisible(false);
+        pauseWindow.setVisible(false);
+        defeatWindow.resetObject();
+        defeatWindow.setVisible(!defeatWindow.isVisible());
+    }
+
+    public void toggleVictoryWindow() {
+        defeatWindow.setVisible(false);
+        pauseWindow.setVisible(false);
+        victoryWindow.setVisible(!victoryWindow.isVisible());
+    }
+
+    public void togglePauseWindow() {
+        defeatWindow.setVisible(false);
+        victoryWindow.setVisible(false);
+        pauseWindow.setVisible(!pauseWindow.isVisible());
     }
 }
