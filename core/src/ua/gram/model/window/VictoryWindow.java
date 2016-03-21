@@ -1,11 +1,9 @@
 package ua.gram.model.window;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.Align;
 
@@ -19,14 +17,12 @@ import ua.gram.model.prototype.ui.window.VictoryWindowPrototype;
 import ua.gram.model.prototype.ui.window.WindowPrototype;
 
 /**
- * TODO Add reward for levelConfig
  * NOTE Add social integration?
  *
  * @author Gram <gram7gram@gmail.com>
  */
 public class VictoryWindow extends Window implements ResetableInterface {
 
-    private final Sprite victoryBanner;
     private final CustomLabel reward;
     private final DDGame game;
     private final VictoryWindowPrototype prototype;
@@ -55,12 +51,10 @@ public class VictoryWindow extends Window implements ResetableInterface {
         if (region == null)
             throw new NullPointerException("Missing texture region: " + prototype.titleRegion);
 
-        victoryBanner = new Sprite(region);
+        Image victoryBanner = new Image(region);
         victoryBanner.setSize(region.getRegionWidth(), region.getRegionHeight());
-        victoryBanner.setPosition(originX - 50, originY + region.getRegionHeight() / 2f);
 
-        Button nextLevel = new TextButton(prototype.buttonText, skin, prototype.buttonTextStyle);
-        nextLevel.setSize(prototype.buttonWidth, prototype.buttonHeight);
+        Button nextLevel = new Button(skin, prototype.buttonTextStyle);
         nextLevel.setVisible(true);
         nextLevel.addListener(new NextLevelClickListener(game, level));
 
@@ -68,18 +62,15 @@ public class VictoryWindow extends Window implements ResetableInterface {
         reward.setVisible(true);
         reward.setAlignment(Align.center);
 
-        add(reward).padTop(170).height(40).fillX().row();
-        add(nextLevel).fillX().padTop(20).height(80).width(200);
+        add(victoryBanner).height(120).expandX().row();
+        add(reward).height(40).expand().row();
+        add(nextLevel).expandX().padTop(20)
+                .width(120)
+                .height(120);
 
         resetObject();
 
         Log.info("VictoryWindow is OK");
-    }
-
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        super.draw(batch, parentAlpha);
-        victoryBanner.draw(batch);
     }
 
     @Override

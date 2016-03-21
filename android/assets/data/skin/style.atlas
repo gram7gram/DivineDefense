@@ -171,8 +171,8 @@ repeat: none
 ui/static/banner-victory
   rotate: false
   xy: 1, 42
-  size: 500, 250
-  orig: 500, 250
+  size: 500, 150
+  orig: 500, 150
   offset: 0, 0
   index: -1
 ui/static/button-countdown
@@ -184,35 +184,35 @@ ui/static/button-countdown
   index: -1
 ui/static/faction-angel
   rotate: false
-  xy: 1, 293
+  xy: 1, 193
   size: 450, 600
   orig: 450, 600
   offset: 0, 0
   index: -1
 ui/static/faction-demon
   rotate: false
-  xy: 452, 293
+  xy: 452, 193
   size: 450, 600
   orig: 450, 600
   offset: 0, 0
   index: -1
 ui/static/faction-unknown-1
   rotate: false
-  xy: 903, 293
+  xy: 903, 193
   size: 450, 600
   orig: 450, 600
   offset: 0, 0
   index: -1
 ui/static/faction-unknown-2
   rotate: false
-  xy: 1354, 293
+  xy: 1354, 193
   size: 450, 600
   orig: 450, 600
   offset: 0, 0
   index: -1
 ui/static/lock
   rotate: false
-  xy: 1805, 743
+  xy: 1805, 643
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
@@ -511,7 +511,27 @@ ui/button/diablo-yellow-pressed
   index: -1
 
 style7.png
-size: 1024,256
+size: 128,128
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ui/button/dark/120/button-fight
+  rotate: false
+  xy: 1, 1
+  size: 120, 120
+  orig: 120, 120
+  offset: 0, 0
+  index: -1
+ui/button/dark/120/button-fight-clicked
+  rotate: false
+  xy: 1, 1
+  size: 120, 120
+  orig: 120, 120
+  offset: 0, 0
+  index: -1
+
+style8.png
+size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -557,218 +577,232 @@ ui/button/dark/80/button-down-clicked
   orig: 80, 80
   offset: 0, 0
   index: -1
-ui/button/dark/80/button-info
+ui/button/dark/80/button-fight
   rotate: false
   xy: 82, 1
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
-ui/button/dark/80/button-info-clicked
+ui/button/dark/80/button-fight-clicked
   rotate: false
   xy: 163, 82
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
-ui/button/dark/80/button-left
+ui/button/dark/80/button-info
   rotate: false
   xy: 244, 163
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
-ui/button/dark/80/button-left-clicked
+ui/button/dark/80/button-info-clicked
   rotate: false
   xy: 163, 1
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
-ui/button/dark/80/button-list
+ui/button/dark/80/button-left
   rotate: false
   xy: 244, 82
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
-ui/button/dark/80/button-list-clicked
+ui/button/dark/80/button-left-clicked
   rotate: false
   xy: 325, 163
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
-ui/button/dark/80/button-lock
+ui/button/dark/80/button-list
   rotate: false
   xy: 244, 1
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
-ui/button/dark/80/button-lock-clicked
+ui/button/dark/80/button-list-clicked
   rotate: false
   xy: 325, 82
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
-ui/button/dark/80/button-minus
+ui/button/dark/80/button-lock
   rotate: false
   xy: 406, 163
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
-ui/button/dark/80/button-minus-clicked
+ui/button/dark/80/button-lock-clicked
   rotate: false
   xy: 325, 1
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
-ui/button/dark/80/button-ok
+ui/button/dark/80/button-minus
   rotate: false
   xy: 406, 82
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
-ui/button/dark/80/button-ok-clicked
+ui/button/dark/80/button-minus-clicked
   rotate: false
   xy: 487, 163
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
-ui/button/dark/80/button-pause
+ui/button/dark/80/button-ok
   rotate: false
   xy: 406, 1
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
-ui/button/dark/80/button-pause-clicked
+ui/button/dark/80/button-ok-clicked
   rotate: false
   xy: 487, 82
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
-ui/button/dark/80/button-play
+ui/button/dark/80/button-pause
   rotate: false
   xy: 568, 163
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
-ui/button/dark/80/button-play-clicked
+ui/button/dark/80/button-pause-clicked
   rotate: false
   xy: 487, 1
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
-ui/button/dark/80/button-plus
+ui/button/dark/80/button-play
   rotate: false
   xy: 568, 82
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
-ui/button/dark/80/button-plus-clicked
+ui/button/dark/80/button-play-clicked
   rotate: false
   xy: 649, 163
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
-ui/button/dark/80/button-reload
+ui/button/dark/80/button-plus
   rotate: false
   xy: 568, 1
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
-ui/button/dark/80/button-reload-clicked
+ui/button/dark/80/button-plus-clicked
   rotate: false
   xy: 649, 82
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
-ui/button/dark/80/button-right
+ui/button/dark/80/button-reload
   rotate: false
   xy: 730, 163
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
-ui/button/dark/80/button-right-clicked
+ui/button/dark/80/button-reload-clicked
   rotate: false
   xy: 649, 1
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
-ui/button/dark/80/button-settings
+ui/button/dark/80/button-right
   rotate: false
   xy: 730, 82
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
-ui/button/dark/80/button-settings-clicked
+ui/button/dark/80/button-right-clicked
   rotate: false
   xy: 811, 163
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
-ui/button/dark/80/button-sound-off
+ui/button/dark/80/button-settings
   rotate: false
   xy: 730, 1
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
-ui/button/dark/80/button-sound-off-clicked
+ui/button/dark/80/button-settings-clicked
   rotate: false
   xy: 811, 82
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
-ui/button/dark/80/button-sound-on
+ui/button/dark/80/button-sound-off
   rotate: false
   xy: 892, 163
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
-ui/button/dark/80/button-sound-on-clicked
+ui/button/dark/80/button-sound-off-clicked
   rotate: false
   xy: 811, 1
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
-ui/button/dark/80/button-up
+ui/button/dark/80/button-sound-on
   rotate: false
   xy: 892, 82
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
-ui/button/dark/80/button-up-clicked
+ui/button/dark/80/button-sound-on-clicked
+  rotate: false
+  xy: 973, 163
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+ui/button/dark/80/button-up
   rotate: false
   xy: 892, 1
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
+ui/button/dark/80/button-up-clicked
+  rotate: false
+  xy: 973, 82
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
 
-style8.png
+style9.png
 size: 2048,128
 format: RGBA8888
 filter: Nearest,Nearest
@@ -815,218 +849,232 @@ ui/button/dark/60/button-down-clicked
   orig: 60, 60
   offset: 0, 0
   index: -1
-ui/button/dark/60/button-info
+ui/button/dark/60/button-fight
   rotate: false
   xy: 184, 62
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-ui/button/dark/60/button-info-clicked
+ui/button/dark/60/button-fight-clicked
   rotate: false
   xy: 184, 1
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-ui/button/dark/60/button-left
+ui/button/dark/60/button-info
   rotate: false
   xy: 245, 62
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-ui/button/dark/60/button-left-clicked
+ui/button/dark/60/button-info-clicked
   rotate: false
   xy: 245, 1
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-ui/button/dark/60/button-list
+ui/button/dark/60/button-left
   rotate: false
   xy: 306, 62
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-ui/button/dark/60/button-list-clicked
+ui/button/dark/60/button-left-clicked
   rotate: false
   xy: 306, 1
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-ui/button/dark/60/button-lock
+ui/button/dark/60/button-list
   rotate: false
   xy: 367, 62
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-ui/button/dark/60/button-lock-clicked
+ui/button/dark/60/button-list-clicked
   rotate: false
   xy: 367, 1
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-ui/button/dark/60/button-minus
+ui/button/dark/60/button-lock
   rotate: false
   xy: 428, 62
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-ui/button/dark/60/button-minus-clicked
+ui/button/dark/60/button-lock-clicked
   rotate: false
   xy: 428, 1
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-ui/button/dark/60/button-ok
+ui/button/dark/60/button-minus
   rotate: false
   xy: 489, 62
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-ui/button/dark/60/button-ok-clicked
+ui/button/dark/60/button-minus-clicked
   rotate: false
   xy: 489, 1
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-ui/button/dark/60/button-pause
+ui/button/dark/60/button-ok
   rotate: false
   xy: 550, 62
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-ui/button/dark/60/button-pause-clicked
+ui/button/dark/60/button-ok-clicked
   rotate: false
   xy: 550, 1
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-ui/button/dark/60/button-play
+ui/button/dark/60/button-pause
   rotate: false
   xy: 611, 62
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-ui/button/dark/60/button-play-clicked
+ui/button/dark/60/button-pause-clicked
   rotate: false
   xy: 611, 1
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-ui/button/dark/60/button-plus
+ui/button/dark/60/button-play
   rotate: false
   xy: 672, 62
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-ui/button/dark/60/button-plus-clicked
+ui/button/dark/60/button-play-clicked
   rotate: false
   xy: 672, 1
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-ui/button/dark/60/button-reload
+ui/button/dark/60/button-plus
   rotate: false
   xy: 733, 62
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-ui/button/dark/60/button-reload-clicked
+ui/button/dark/60/button-plus-clicked
   rotate: false
   xy: 733, 1
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-ui/button/dark/60/button-right
+ui/button/dark/60/button-reload
   rotate: false
   xy: 794, 62
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-ui/button/dark/60/button-right-clicked
+ui/button/dark/60/button-reload-clicked
   rotate: false
   xy: 794, 1
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-ui/button/dark/60/button-settings
+ui/button/dark/60/button-right
   rotate: false
   xy: 855, 62
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-ui/button/dark/60/button-settings-clicked
+ui/button/dark/60/button-right-clicked
   rotate: false
   xy: 855, 1
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-ui/button/dark/60/button-sound-off
+ui/button/dark/60/button-settings
   rotate: false
   xy: 916, 62
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-ui/button/dark/60/button-sound-off-clicked
+ui/button/dark/60/button-settings-clicked
   rotate: false
   xy: 916, 1
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-ui/button/dark/60/button-sound-on
+ui/button/dark/60/button-sound-off
   rotate: false
   xy: 977, 62
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-ui/button/dark/60/button-sound-on-clicked
+ui/button/dark/60/button-sound-off-clicked
   rotate: false
   xy: 977, 1
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-ui/button/dark/60/button-up
+ui/button/dark/60/button-sound-on
   rotate: false
   xy: 1038, 62
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-ui/button/dark/60/button-up-clicked
+ui/button/dark/60/button-sound-on-clicked
   rotate: false
   xy: 1038, 1
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
+ui/button/dark/60/button-up
+  rotate: false
+  xy: 1099, 62
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+ui/button/dark/60/button-up-clicked
+  rotate: false
+  xy: 1099, 1
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
 
-style9.png
+style10.png
 size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1088,7 +1136,7 @@ ui/button/tower-shop/tower-stun-disabled
   offset: 0, 0
   index: -1
 
-style10.png
+style11.png
 size: 64,64
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1102,7 +1150,7 @@ ui/label/background-0.25
   offset: 0, 0
   index: -1
 
-style11.png
+style12.png
 size: 2048,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1129,7 +1177,7 @@ weapons/STUN_WEAPON
   offset: 0, 0
   index: -1
 
-style12.png
+style13.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1163,7 +1211,7 @@ enemies/EnemySoldier/Demon/SPAWN/UP
   offset: 0, 0
   index: -1
 
-style13.png
+style14.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1197,7 +1245,7 @@ enemies/EnemySoldier/Demon/DEAD/UP
   offset: 0, 0
   index: -1
 
-style14.png
+style15.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1231,7 +1279,7 @@ enemies/EnemySoldier/Demon/FINISH/UP
   offset: 0, 0
   index: -1
 
-style15.png
+style16.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1265,7 +1313,7 @@ enemies/EnemySoldier/Demon/WALKING/UP
   offset: 0, 0
   index: -1
 
-style16.png
+style17.png
 size: 2048,128
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1299,7 +1347,7 @@ enemies/EnemySoldier/Demon/IDLE/UP
   offset: 0, 0
   index: -1
 
-style17.png
+style18.png
 size: 2048,128
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1333,7 +1381,7 @@ enemies/EnemySoldier/Demon/STUN/UP
   offset: 0, 0
   index: -1
 
-style18.png
+style19.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1367,7 +1415,7 @@ enemies/EnemySummoner/Demon/SPAWN/UP
   offset: 0, 0
   index: -1
 
-style19.png
+style20.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1401,7 +1449,7 @@ enemies/EnemySummoner/Demon/DEAD/UP
   offset: 0, 0
   index: -1
 
-style20.png
+style21.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1435,7 +1483,7 @@ enemies/EnemySummoner/Demon/FINISH/UP
   offset: 0, 0
   index: -1
 
-style21.png
+style22.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1469,7 +1517,7 @@ enemies/EnemySummoner/Demon/ABILITY/UP
   offset: 0, 0
   index: -1
 
-style22.png
+style23.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1503,7 +1551,7 @@ enemies/EnemySummoner/Demon/WALKING/UP
   offset: 0, 0
   index: -1
 
-style23.png
+style24.png
 size: 64,512
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1537,7 +1585,7 @@ enemies/EnemySummoner/Demon/IDLE/UP
   offset: 0, 0
   index: -1
 
-style24.png
+style25.png
 size: 64,512
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1571,7 +1619,7 @@ enemies/EnemySummoner/Demon/STUN/UP
   offset: 0, 0
   index: -1
 
-style25.png
+style26.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1605,7 +1653,7 @@ enemies/EnemyRunner/Demon/SPAWN/UP
   offset: 0, 0
   index: -1
 
-style26.png
+style27.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1639,7 +1687,7 @@ enemies/EnemyRunner/Demon/DEAD/UP
   offset: 0, 0
   index: -1
 
-style27.png
+style28.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1673,7 +1721,7 @@ enemies/EnemyRunner/Demon/FINISH/UP
   offset: 0, 0
   index: -1
 
-style28.png
+style29.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1707,7 +1755,7 @@ enemies/EnemyRunner/Demon/WALKING/UP
   offset: 0, 0
   index: -1
 
-style29.png
+style30.png
 size: 64,512
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1741,7 +1789,7 @@ enemies/EnemyRunner/Demon/IDLE/UP
   offset: 0, 0
   index: -1
 
-style30.png
+style31.png
 size: 64,512
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1775,7 +1823,7 @@ enemies/EnemyRunner/Demon/STUN/UP
   offset: 0, 0
   index: -1
 
-style31.png
+style32.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1809,7 +1857,7 @@ enemies/EnemySoldierArmored/Demon/SPAWN/UP
   offset: 0, 0
   index: -1
 
-style32.png
+style33.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1843,7 +1891,7 @@ enemies/EnemySoldierArmored/Demon/DEAD/UP
   offset: 0, 0
   index: -1
 
-style33.png
+style34.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1877,7 +1925,7 @@ enemies/EnemySoldierArmored/Demon/FINISH/UP
   offset: 0, 0
   index: -1
 
-style34.png
+style35.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1911,7 +1959,7 @@ enemies/EnemySoldierArmored/Demon/WALKING/UP
   offset: 0, 0
   index: -1
 
-style35.png
+style36.png
 size: 64,512
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1945,7 +1993,7 @@ enemies/EnemySoldierArmored/Demon/IDLE/UP
   offset: 0, 0
   index: -1
 
-style36.png
+style37.png
 size: 64,512
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1979,7 +2027,7 @@ enemies/EnemySoldierArmored/Demon/STUN/UP
   offset: 0, 0
   index: -1
 
-style37.png
+style38.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2013,7 +2061,7 @@ enemies/EnemyWarrior/Demon/SPAWN/UP
   offset: 0, 0
   index: -1
 
-style38.png
+style39.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2047,7 +2095,7 @@ enemies/EnemyWarrior/Demon/DEAD/UP
   offset: 0, 0
   index: -1
 
-style39.png
+style40.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2081,7 +2129,7 @@ enemies/EnemyWarrior/Demon/FINISH/UP
   offset: 0, 0
   index: -1
 
-style40.png
+style41.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2115,7 +2163,7 @@ enemies/EnemyWarrior/Demon/WALKING/UP
   offset: 0, 0
   index: -1
 
-style41.png
+style42.png
 size: 64,512
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2149,7 +2197,7 @@ enemies/EnemyWarrior/Demon/IDLE/UP
   offset: 0, 0
   index: -1
 
-style42.png
+style43.png
 size: 64,512
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2183,7 +2231,7 @@ enemies/EnemyWarrior/Demon/STUN/UP
   offset: 0, 0
   index: -1
 
-style43.png
+style44.png
 size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2217,7 +2265,7 @@ towers/TowerSpecial/Angel/Lvl2/SELL
   offset: 0, 0
   index: -1
 
-style44.png
+style45.png
 size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2251,7 +2299,7 @@ towers/TowerSpecial/Angel/Lvl4/SELL
   offset: 0, 0
   index: -1
 
-style45.png
+style46.png
 size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2285,7 +2333,7 @@ towers/TowerSpecial/Angel/Lvl1/SELL
   offset: 0, 0
   index: -1
 
-style46.png
+style47.png
 size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2319,7 +2367,7 @@ towers/TowerSpecial/Angel/Lvl3/SELL
   offset: 0, 0
   index: -1
 
-style47.png
+style48.png
 size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2353,7 +2401,7 @@ towers/TowerPrimary/Angel/Lvl2/SELL
   offset: 0, 0
   index: -1
 
-style48.png
+style49.png
 size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2387,7 +2435,7 @@ towers/TowerPrimary/Angel/Lvl4/SELL
   offset: 0, 0
   index: -1
 
-style49.png
+style50.png
 size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2421,7 +2469,7 @@ towers/TowerPrimary/Angel/Lvl1/SELL
   offset: 0, 0
   index: -1
 
-style50.png
+style51.png
 size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2455,7 +2503,7 @@ towers/TowerPrimary/Angel/Lvl3/SELL
   offset: 0, 0
   index: -1
 
-style51.png
+style52.png
 size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2489,7 +2537,7 @@ towers/TowerSecondary/Angel/Lvl2/SELL
   offset: 0, 0
   index: -1
 
-style52.png
+style53.png
 size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2523,7 +2571,7 @@ towers/TowerSecondary/Angel/Lvl4/SELL
   offset: 0, 0
   index: -1
 
-style53.png
+style54.png
 size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2557,7 +2605,7 @@ towers/TowerSecondary/Angel/Lvl1/SELL
   offset: 0, 0
   index: -1
 
-style54.png
+style55.png
 size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2591,7 +2639,7 @@ towers/TowerSecondary/Angel/Lvl3/SELL
   offset: 0, 0
   index: -1
 
-style55.png
+style56.png
 size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2625,7 +2673,7 @@ towers/TowerStun/Angel/Lvl2/SELL
   offset: 0, 0
   index: -1
 
-style56.png
+style57.png
 size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2659,7 +2707,7 @@ towers/TowerStun/Angel/Lvl4/SELL
   offset: 0, 0
   index: -1
 
-style57.png
+style58.png
 size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2693,7 +2741,7 @@ towers/TowerStun/Angel/Lvl1/SELL
   offset: 0, 0
   index: -1
 
-style58.png
+style59.png
 size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest

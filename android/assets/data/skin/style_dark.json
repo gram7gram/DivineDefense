@@ -429,6 +429,18 @@
       "up": "ui/button/dark/60/button-sound-off",
       "down": "ui/button/dark/60/button-sound-off-clicked"
     },
+    "fight-great": {
+      "up": "ui/button/dark/120/button-fight",
+      "down": "ui/button/dark/120/button-fight-clicked"
+    },
+    "fight-big": {
+      "up": "ui/button/dark/80/button-fight",
+      "down": "ui/button/dark/80/button-fight-clicked"
+    },
+    "fight-small": {
+      "up": "ui/button/dark/60/button-fight",
+      "down": "ui/button/dark/60/button-fight-clicked"
+    },
     "button-defeat-restart": {
       "up": "ui/button/button-defeat-1-up",
       "down": "ui/button/button-defeat-1-down",
