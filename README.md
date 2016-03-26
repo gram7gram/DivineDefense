@@ -133,6 +133,8 @@ The game is considered finished when the Player clears last level.
 
 
 
+__end of concept__
+
 
 
 # Concurrent state-machine (CSM)
