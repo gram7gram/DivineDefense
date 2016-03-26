@@ -92,7 +92,7 @@ public class DDGame<P extends GamePrototype> extends Game {
         initGameValues();
         try {
             resources = new Resources(this);
-            setScreen(new LaunchLoadingScreen(this, prototype));
+            setScreen(new LaunchLoadingScreen(this));
         } catch (GdxRuntimeException e) {
             Log.exc("Missing skin file", e);
             Gdx.app.exit();

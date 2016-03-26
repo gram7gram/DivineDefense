@@ -1,6 +1,7 @@
 package ua.gram.controller.stage;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import ua.gram.DDGame;
 import ua.gram.controller.listener.DebugListener;
@@ -18,7 +19,8 @@ public abstract class AbstractStage extends Stage {
         super(game.getViewport(), game.getBatch());
         this.game = game;
         debugListener = new DebugListener();
-        addListener(debugListener);
+        if (DDGame.DEBUG)
+            addListener(debugListener);
     }
 
     @Override
@@ -35,5 +37,7 @@ public abstract class AbstractStage extends Stage {
         this.stageHolder = stageHolder;
     }
 
-
+    protected Skin getSkin() {
+        return game.getResources().getSkin();
+    }
 }

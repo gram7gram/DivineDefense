@@ -4,7 +4,6 @@ import ua.gram.DDGame;
 import ua.gram.controller.Log;
 import ua.gram.controller.Resources;
 import ua.gram.model.Player;
-import ua.gram.model.prototype.GamePrototype;
 import ua.gram.view.AbstractLoadingScreen;
 
 /**
@@ -13,8 +12,8 @@ import ua.gram.view.AbstractLoadingScreen;
  */
 public class LaunchLoadingScreen extends AbstractLoadingScreen {
 
-    public LaunchLoadingScreen(DDGame game, GamePrototype prototype) {
-        super(game, prototype);
+    public LaunchLoadingScreen(DDGame game) {
+        super(game);
         Log.info("LaunchLoadingScreen is OK");
     }
 

@@ -15,6 +15,7 @@ import ua.gram.controller.Vector4;
  * @author Gram <gram7gram@gmail.com>
  */
 public class WindowGroup extends Group {
+
     private final Table layout;
     private Table content;
     private Table actions;

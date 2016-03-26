@@ -51,13 +51,13 @@ public class BattleStage extends AbstractStage implements Initializer {
     @Override
     public void act(float delta) {
         super.act(delta);
-        this.setDebugAll(DDGame.DEBUG);
+        setDebugAll(DDGame.DEBUG);
         if (!DDGame.PAUSE) {
             if (level.getStage() == null) {
                 level.setStage(this);
                 level.createSpawner();
                 controlsListener = new ToggleTowerControlsListener(this, stageHolder.getUiStage());
-                this.addListener(controlsListener);
+                addListener(controlsListener);
             }
             level.update(delta);
         }

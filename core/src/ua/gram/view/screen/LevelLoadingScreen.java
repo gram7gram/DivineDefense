@@ -38,7 +38,7 @@ public class LevelLoadingScreen extends AbstractLoadingScreen {
         for (String resource : config.resources) {
             resources.loadTexture(resource);
         }
-        Log.info("Loaded nessesary " + config.resources.length + " recources for the level");
+        Log.info("Loaded nessesary " + config.resources.length + " resources for the level");
     }
 
     @Override

@@ -21,15 +21,10 @@
     },
     "logo128": "logo_min128.png",
     "logo32": "logo_min32.png",
-    "logo16": "logo_min16.png",
-    "remoteConfig": {
-      "host": null,
-      "port": null,
-      "method": null
-    }
+    "logo16": "logo_min16.png"
   },
   "parameters": {
-    "debugging": false,
+    "debugging": true,
     "logLevel": 3,
     "title": "Divine Defense",
     "contact": "gram7gram@gmail.com",
@@ -631,6 +626,78 @@
         "rewardTextStyle": "header2black",
         "minimumReward": 0,
         "maximumReward": 3
+      },
+      {
+        "class": "ua.gram.model.prototype.ui.window.CreditsWindowPrototype",
+        "name": "credits",
+        "style": "window-dark-gold",
+        "header": {
+          "text": "CREDITS",
+          "style": "header2altwhite"
+        },
+        "background": "data/images/misc/background.jpg",
+        "content": {
+          "links": [
+            {
+              "order": 0,
+              "text": "Sources",
+              "href": "{{ repository }}"
+            },
+            {
+              "order": 1,
+              "text": "Twitter",
+              "href": "https://twitter.com/DivineDefense"
+            }
+          ],
+          "description": {
+            "text": "Angels and Demons, Rage and Kindness, Good and Evil - there are two eternal fractions, battling over and over in Divine Defense. Choose your faction and join the divine battle for world domination! Each has unique weaponry and stats. Defend from invasion of the opposite faction, gain game progress, gold and upgrades!",
+            "style": "smallpopupwhite"
+          },
+          "participants": [
+            {
+              "roles": [
+                "Author",
+                "Developer",
+                "UI design"
+              ],
+              "name": "Dmitriy Bondarchuk"
+            },
+            {
+              "roles": [
+                "Character design"
+              ],
+              "name": "Eugeniy Fedorenko"
+            }
+          ]
+        }
+      },
+      {
+        "class": "ua.gram.model.prototype.ui.window.MainMenuWindowPrototype",
+        "name": "main-menu",
+        "style": "window-dark-gold",
+        "headerText": "MAIN MENU",
+        "headerTextStyle": "header2altwhite",
+        "background": "data/images/misc/background.jpg",
+        "actions": [
+          {
+            "class": "ua.gram.model.prototype.ui.ScreenButtonPrototype",
+            "title": "PLAY",
+            "target": "LevelSelectScreen",
+            "style": "diablo-red",
+            "width": 300,
+            "height": 80,
+            "order": 0
+          },
+          {
+            "class": "ua.gram.model.prototype.ui.ScreenButtonPrototype",
+            "title": "CREDITS",
+            "target": "CreditsScreen",
+            "style": "diablo-yellow",
+            "width": 300,
+            "height": 80,
+            "order": 1
+          }
+        ]
       }
     ]
   }

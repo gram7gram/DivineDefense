@@ -15,11 +15,6 @@ public abstract class AbstractScreen implements Screen {
     protected final DDGame game;
     protected final GamePrototype prototype;
 
-    public AbstractScreen(DDGame game, GamePrototype prototype) {
-        this.game = game;
-        this.prototype = prototype;
-    }
-
     public AbstractScreen(DDGame game) {
         this.game = game;
         this.prototype = game.getPrototype();

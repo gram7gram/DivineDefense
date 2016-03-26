@@ -39,4 +39,7 @@ public class CustomLabel extends Label {
     }
 
 
+    public void append(String s) {
+        updateText(getText() + s);
+    }
 }
