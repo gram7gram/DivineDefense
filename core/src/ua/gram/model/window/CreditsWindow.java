@@ -79,14 +79,18 @@ public class CreditsWindow extends WindowGroup {
         Table nested = new Table();
         nested.add(description).width(DDGame.WORLD_WIDTH / 2.5f).expandY();
 
-        ScrollPane scroll = new ScrollPane(nested);
-        scroll.setScrollingDisabled(true, false);
-        scroll.setVisible(true);
+        ScrollPane descriptionScroll = new ScrollPane(nested);
+        descriptionScroll.setScrollingDisabled(true, false);
+        descriptionScroll.setVisible(true);
+
+        ScrollPane creditsScroll = new ScrollPane(credits);
+        creditsScroll.setScrollingDisabled(true, false);
+        creditsScroll.setVisible(true);
 
         setActionRight(back);
         setTitle(new Label(prototype.header.text, skin, prototype.header.style));
-        getContent().add(credits).fill().expand();
-        getContent().add(scroll).expand();
+        getContent().add(creditsScroll).fill().expand();
+        getContent().add(descriptionScroll).expand();
     }
 
     private List<String> getUniqueRoles(ParticipantPrototype[] prototypes) {
