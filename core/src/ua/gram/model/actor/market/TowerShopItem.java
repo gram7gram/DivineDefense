@@ -43,7 +43,6 @@ public class TowerShopItem extends Group {
 
     public void setIndexInShop(int index) {
         indexInShop = index;
-        item.setPosition(DDGame.WORLD_WIDTH - DDGame.DEFAULT_BUTTON_HEIGHT * index - 5 * index, 5);
         price.setPosition(
                 item.getX() + item.getWidth() - price.getWidth(),
                 item.getY()

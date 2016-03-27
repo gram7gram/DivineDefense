@@ -102,7 +102,13 @@ public class FactionStage extends AbstractStage {
         fractions.addActor(option2);
         fractions.addActor(header);
 
-        this.addActor(fractions);
+        addActor(fractions);
+    }
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        setDebugAll(DDGame.DEBUG);
     }
 
     private void createDialog(ClickListener onConfirm, ClickListener onCancel) {

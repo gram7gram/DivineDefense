@@ -1,7 +1,7 @@
 package ua.gram.model.group;
 
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 import ua.gram.DDGame;
 import ua.gram.controller.Log;
@@ -15,7 +15,7 @@ import ua.gram.model.prototype.tower.TowerPrototype;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class TowerShopGroup extends Group implements Initializer {
+public class TowerShopGroup extends Table implements Initializer {
 
     private final TowerShopConfigPrototype prototype;
     private final DDGame game;
@@ -35,30 +35,28 @@ public class TowerShopGroup extends Group implements Initializer {
             TowerShopItem item = new TowerShopItem(game, towerShop,
                     proto, "shopitem-" + shopItem.name.toLowerCase());
             item.setIndexInShop(total - shopItem.order + 1);
-
+            item.setVisible(true);
             item.addAction(
                     Actions.sequence(
                             Actions.parallel(
-                                    Actions.alpha(0, .15f),
-                                    Actions.moveBy(0, -item.getHeight(), .2f)
+                                    Actions.alpha(0)
+//                                    Actions.moveBy(0, -DDGame.DEFAULT_BUTTON_HEIGHT)
                             ),
                             Actions.delay(.2f * item.getIndexInShop()),
                             Actions.parallel(
-                                    Actions.alpha(1, .15f),
-                                    Actions.moveBy(0, item.getHeight(), .2f)
+                                    Actions.alpha(1, .15f)
+//                                    Actions.moveBy(0, DDGame.DEFAULT_BUTTON_HEIGHT, .2f)
                             )
                     )
             );
-            addActor(item);
+            add(item).size(DDGame.DEFAULT_BUTTON_HEIGHT).pad(5);
         }
     }
 
     @Override
     public void act(float delta) {
         super.act(delta);
-        if (!DDGame.PAUSE) {
-            setDebug(DDGame.DEBUG);
-        }
+        setDebug(DDGame.DEBUG, true);
     }
 
     public void setTowerShop(TowerShop towerShop) {

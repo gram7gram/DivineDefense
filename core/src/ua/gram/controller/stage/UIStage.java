@@ -1,14 +1,19 @@
 package ua.gram.controller.stage;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import ua.gram.DDGame;
 import ua.gram.controller.Log;
 import ua.gram.controller.tower.TowerShop;
 import ua.gram.model.Initializer;
 import ua.gram.model.Level;
+import ua.gram.model.actor.misc.CounterButton;
 import ua.gram.model.group.GameUIGroup;
 import ua.gram.model.group.TowerControlsGroup;
+import ua.gram.model.prototype.CounterButtonPrototype;
 import ua.gram.model.prototype.UIPrototype;
 import ua.gram.model.prototype.shop.TowerShopConfigPrototype;
 import ua.gram.model.window.DefeatWindow;
@@ -29,6 +34,7 @@ public class UIStage extends AbstractStage implements Initializer {
     private final VictoryWindow victoryWindow;
     private final DefeatWindow defeatWindow;
     private final GameUIGroup gameUIGroup;
+    private final CounterButton counter;
     private TowerShop towerShop;
     private TowerControlsGroup towerControls;
 
@@ -36,35 +42,58 @@ public class UIStage extends AbstractStage implements Initializer {
         super(game);
         this.game = game;
         this.level = level;
+
         gameUIGroup = new GameUIGroup(game, level);
         victoryWindow = new VictoryWindow(game, level, prototype.getWindow("victory"));
         pauseWindow = new PauseWindow(game);
         defeatWindow = new DefeatWindow(game, prototype.getWindow("defeat"));
+
         gameUIGroup.setVisible(true);
         victoryWindow.setVisible(false);
         pauseWindow.setVisible(false);
         defeatWindow.setVisible(false);
+
+        Vector2 pos = level.getMap().getSpawn().getPosition();
+        if (pos == null) throw new GdxRuntimeException("Missing map spawn point");
+
+        CounterButtonPrototype counterPrototype = game.getPrototype().levelConfig.counterButtonConfig;
+        counterPrototype.tilePosition = new Vector2(pos.x, pos.y);
+
+        counter = new CounterButton(game, level, counterPrototype);
+
         Log.info("UIStage is OK");
     }
 
     @Override
     public void init() {
         debugListener.setStageHolder(stageHolder);
+
         gameUIGroup.setStageHolder(stageHolder);
         gameUIGroup.init();
+
         defeatWindow.setStageHolder(stageHolder);
         defeatWindow.init();
+
         pauseWindow.setStageHolder(stageHolder);
         pauseWindow.init();
+
+        counter.init();
+
         TowerShopConfigPrototype config = game.getPrototype().levelConfig.towerShopConfig;
         towerShop = new TowerShop(game, stageHolder, config);
         towerShop.init();
         towerShop.getTowerShopGroup().setVisible(true);
+
         addActor(gameUIGroup);
         addActor(victoryWindow);
         addActor(pauseWindow);
         addActor(defeatWindow);
-        addActor(towerShop.getTowerShopGroup());
+        addActor(counter);
+
+        gameUIGroup.add(towerShop.getTowerShopGroup())
+                .colspan(3)
+                .expand()
+                .align(Align.bottomRight);
         Log.info("UIStage is initialized");
     }
 
@@ -155,5 +184,9 @@ public class UIStage extends AbstractStage implements Initializer {
         defeatWindow.setVisible(false);
         victoryWindow.setVisible(false);
         pauseWindow.setVisible(!pauseWindow.isVisible());
+    }
+
+    public CounterButton getCounter() {
+        return counter;
     }
 }

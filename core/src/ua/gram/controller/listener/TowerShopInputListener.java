@@ -87,7 +87,7 @@ public class TowerShopInputListener extends ClickListener {
             try {
                 if (level.getWave() == null || (!level.getWave().isStarted && !level.isCleared)) {
                     uiStage.getLevel().nextWave();
-                    uiStage.getGameUIGroup().getCounterBut().setVisible(false);
+                    uiStage.getCounter().setVisible(false);
                 }
             } catch (Exception e) {
                 game.setScreen(new ErrorScreen(game,

@@ -25,8 +25,8 @@ public class CounterButton extends AnimatedActor<CounterButtonPrototype> impleme
         this.game = game;
         this.level = level;
 
-        this.setVisible(false);
-        this.setPosition(
+        setVisible(false);
+        setPosition(
                 prototype.tilePosition.x * DDGame.TILE_HEIGHT + 10,
                 prototype.tilePosition.y * DDGame.TILE_HEIGHT + 10
         );
@@ -59,10 +59,10 @@ public class CounterButton extends AnimatedActor<CounterButtonPrototype> impleme
     @Override
     public void act(float delta) {
         super.act(delta);
-        this.setDebug(DDGame.DEBUG);
+        setDebug(DDGame.DEBUG);
         if (!DDGame.PAUSE) {
             if (!level.isActiveWave() && !level.isFinished()) {
-                if (!this.isVisible()) {
+                if (!isVisible()) {
                     reset();
                     start(getCounterFrameDuration());
                 }
@@ -84,7 +84,7 @@ public class CounterButton extends AnimatedActor<CounterButtonPrototype> impleme
 
     public void start(float duration) {
         animation.setFrameDuration(duration);
-        this.setVisible(true);
+        setVisible(true);
         Log.info("Countdown started");
     }
 
@@ -92,7 +92,7 @@ public class CounterButton extends AnimatedActor<CounterButtonPrototype> impleme
     public void reset() {
         super.reset();
         counter = 0;
-        this.setVisible(false);
+        setVisible(false);
         Log.info("Counter button was reset");
     }
 

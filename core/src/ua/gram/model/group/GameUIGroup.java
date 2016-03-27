@@ -2,14 +2,13 @@ package ua.gram.model.group;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.GdxRuntimeException;
+import com.badlogic.gdx.utils.Align;
 
 import ua.gram.DDGame;
 import ua.gram.controller.Log;
@@ -17,14 +16,12 @@ import ua.gram.controller.stage.StageHolder;
 import ua.gram.controller.stage.UIStage;
 import ua.gram.model.Initializer;
 import ua.gram.model.Level;
-import ua.gram.model.actor.misc.CounterButton;
 import ua.gram.model.actor.misc.CustomLabel;
-import ua.gram.model.prototype.CounterButtonPrototype;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class GameUIGroup extends Group implements Initializer {
+public class GameUIGroup extends Table implements Initializer {
 
     private final DDGame game;
     private final Level level;
@@ -33,7 +30,6 @@ public class GameUIGroup extends Group implements Initializer {
     private final CustomLabel waveLabel;
     private final CustomLabel gemsLabel;
     private final CustomLabel notificationLabel;
-    private final CounterButton counter;
     private final Button pauseBut;
     private StageHolder stageHolder;
 
@@ -47,75 +43,72 @@ public class GameUIGroup extends Group implements Initializer {
         Skin skin = game.getResources().getSkin();
 
         pauseBut = new Button(skin, "pause-big");
-        pauseBut.setPosition(DDGame.WORLD_WIDTH - butHeight - gap, DDGame.WORLD_HEIGHT - butHeight - gap);
-        pauseBut.setSize(butHeight, butHeight);
+//        pauseBut.setPosition(DDGame.WORLD_WIDTH - butHeight - gap, DDGame.WORLD_HEIGHT - butHeight - gap);
+//        pauseBut.setSize(butHeight, butHeight);
         pauseBut.setVisible(true);
-
-        Vector2 pos = level.getMap().getSpawn().getPosition();
-        if (pos == null) throw new GdxRuntimeException("Missing map spawn point");
-
-        CounterButtonPrototype prototype = game.getPrototype().levelConfig.counterButtonConfig;
-        prototype.tilePosition = new Vector2(pos.x, pos.y);
-
-        counter = new CounterButton(game, level, prototype);
-        counter.init();
 
         healthLabel = new CustomLabel("HEALTH: " + game.getPlayer().getHealth(), skin, "small_tinted");
         gemsLabel = new CustomLabel("GEMS: " + game.getPlayer().getGems(), skin, "small_tinted");
         moneyLabel = new CustomLabel("MONEY: " + game.getPlayer().getCoins(), skin, "small_tinted");
 
         moneyLabel.setVisible(true);
-        moneyLabel.setPosition(
-                DDGame.WORLD_WIDTH / 2f - gap - gemsLabel.getWidth() - gap - moneyLabel.getWidth() - gap,
-                DDGame.WORLD_HEIGHT - moneyLabel.getHeight() - gap
-        );
+//        moneyLabel.setPosition(
+//                DDGame.WORLD_WIDTH / 2f - gap - gemsLabel.getWidth() - gap - moneyLabel.getWidth() - gap,
+//                DDGame.WORLD_HEIGHT - moneyLabel.getHeight() - gap
+//        );
 
         gemsLabel.setVisible(true);
-        gemsLabel.setPosition(
-                DDGame.WORLD_WIDTH / 2f - gap - gemsLabel.getWidth(),
-                DDGame.WORLD_HEIGHT - gemsLabel.getHeight() - gap
-        );
+//        gemsLabel.setPosition(
+//                DDGame.WORLD_WIDTH / 2f - gap - gemsLabel.getWidth(),
+//                DDGame.WORLD_HEIGHT - gemsLabel.getHeight() - gap
+//        );
 
         healthLabel.setVisible(true);
-        healthLabel.setPosition(
-                DDGame.WORLD_WIDTH / 2f + gap,
-                DDGame.WORLD_HEIGHT - healthLabel.getHeight() - gap
-        );
+//        healthLabel.setPosition(
+//                DDGame.WORLD_WIDTH / 2f + gap,
+//                DDGame.WORLD_HEIGHT - healthLabel.getHeight() - gap
+//        );
 
         waveLabel = new CustomLabel("", skin, "small_tinted");
         waveLabel.setVisible(false);
-        waveLabel.setPosition(
-                DDGame.WORLD_WIDTH / 2f + gap + healthLabel.getWidth() + gap,
-                DDGame.WORLD_HEIGHT - waveLabel.getHeight() - gap
-        );
+//        waveLabel.setPosition(
+//                DDGame.WORLD_WIDTH / 2f + gap + healthLabel.getWidth() + gap,
+//                DDGame.WORLD_HEIGHT - waveLabel.getHeight() - gap
+//        );
 
         //NOTE Workaround about 0 width of the notification label at first launch
         //notificationLabel = new CustomLabel("", skin, "header1white");
         notificationLabel = new CustomLabel("LEVEL " + level.getIndex(), skin, "header1white");
         notificationLabel.setVisible(false);
 
-        Group labels = new Group();
-        labels.addActor(gemsLabel);
-        labels.addActor(moneyLabel);
-        labels.addActor(healthLabel);
-        labels.addActor(waveLabel);
-        labels.addAction(
+        Table nested = new Table();
+        nested.add(gemsLabel).pad(5);
+        nested.add(moneyLabel).pad(5);
+        nested.add(healthLabel).pad(5);
+        nested.add(waveLabel).pad(5);
+        nested.addAction(
                 Actions.sequence(
                         Actions.parallel(
-                                Actions.alpha(0),
-                                Actions.moveBy(0, gemsLabel.getHeight())
+                                Actions.alpha(0)
+//                                Actions.moveBy(0, gemsLabel.getPrefHeight())
                         ),
                         Actions.delay(.5f),
                         Actions.parallel(
-                                Actions.alpha(1, .2f),
-                                Actions.moveBy(0, -gemsLabel.getHeight(), .2f)
+                                Actions.alpha(1, .2f)
+//                                Actions.moveBy(0, -gemsLabel.getPrefHeight(), .2f)
                         )
                 )
         );
 
-        addActor(pauseBut);
-        addActor(counter);
-        addActor(labels);
+        add().pad(5)
+                .size(DDGame.DEFAULT_BUTTON_HEIGHT);
+        add(nested).expandX()
+                .height(DDGame.DEFAULT_BUTTON_HEIGHT)
+                .align(Align.top);
+        add(pauseBut).pad(5)
+                .size(DDGame.DEFAULT_BUTTON_HEIGHT).row();
+
+        setFillParent(true);
     }
 
     public void setStageHolder(StageHolder stageHolder) {
@@ -154,6 +147,7 @@ public class GameUIGroup extends Group implements Initializer {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
+        setDebug(DDGame.DEBUG, true);
         if (DDGame.DEBUG) {
             game.getInfo().draw(batch,
                     "FPS: " + Gdx.graphics.getFramesPerSecond(),
@@ -207,7 +201,4 @@ public class GameUIGroup extends Group implements Initializer {
         moneyLabel.updateText("MONEY: " + game.getPlayer().getCoins());
     }
 
-    public CounterButton getCounterBut() {
-        return counter;
-    }
 }
