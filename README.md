@@ -1,5 +1,7 @@
 DIVINE DEFENSE
 
+[![YOUTUBE: DIVINE DEFENSE progress](https://img.youtube.com/vi/JLvl0AFW3kc/0.jpg)](https://www.youtube.com/watch?v=JLvl0AFW3kc)
+
 ![GAME ICON](https://github.com/gram7gram/DivineDefense/blob/master/logo_small.png?raw=true)
 
 #Concept
