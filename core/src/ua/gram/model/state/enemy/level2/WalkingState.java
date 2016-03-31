@@ -90,7 +90,7 @@ public class WalkingState extends Level2State {
             return;
         }
 
-        if (Float.compare(x % DDGame.TILE_HEIGHT, 0) == 0 && Float.compare(x % DDGame.TILE_HEIGHT, 0) == 0) {
+        if (Float.compare(x % DDGame.TILE_HEIGHT, 0) == 0 && Float.compare(y % DDGame.TILE_HEIGHT, 0) == 0) {
             if (isIterationAllowed(enemy.getUpdateIterationCount())) {
 
                 Map map = enemy.getSpawner().getLevel().getMap();
@@ -142,7 +142,7 @@ public class WalkingState extends Level2State {
     }
 
     protected final boolean isIterationAllowed(int iteration) {
-        return getGame().getSpeed().isIncreased() ? iteration > 2 : iteration > 4;
+        return getGame().getSpeed().isIncreased() ? iteration > 2 : iteration > 3;
     }
 
     protected final void reset(Enemy enemy) {
