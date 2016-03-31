@@ -71,14 +71,10 @@ public class WalkingState extends Level2State {
         }
     }
 
-    private int round(float value) {
-        return value - (int) value > 0.4f ? (int) value + 1 : (int) value;
-    }
-
     @Override
     public void manage(final Enemy enemy, float delta) {
-        int x = round(enemy.getX());
-        int y = round(enemy.getY());
+        int x = Math.round(enemy.getX());
+        int y = Math.round(enemy.getY());
 
         if (enemy.isRemoved) return;
 
