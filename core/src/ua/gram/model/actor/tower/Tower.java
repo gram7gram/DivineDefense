@@ -27,6 +27,7 @@ import ua.gram.model.prototype.tower.TowerPrototype;
 import ua.gram.model.prototype.weapon.WeaponPrototype;
 import ua.gram.model.state.tower.TowerStateHolder;
 import ua.gram.model.state.tower.TowerStateManager;
+import ua.gram.model.state.tower.level1.ActiveState;
 import ua.gram.model.strategy.tower.TowerStrategy;
 
 /**
@@ -197,7 +198,15 @@ public abstract class Tower extends GameActor<Types.TowerState, Types.TowerLevel
         if (weapon.isVisible()) weapon.reset();
     }
 
+    public boolean isControlsVisible() {
+        return towerShop.getUiStage().getTowerControls().getTower() == this;
+    }
+
     public TowerProperty getProperty() {
         return property;
+    }
+
+    public boolean isActiveState() {
+        return getStateHolder().getCurrentLevel1State() instanceof ActiveState;
     }
 }

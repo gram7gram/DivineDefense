@@ -9,13 +9,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import ua.gram.DDGame;
 import ua.gram.controller.Log;
 import ua.gram.controller.tower.TowerShop;
+import ua.gram.model.ResetableInterface;
 import ua.gram.model.actor.tower.Tower;
 
 /**
- *
  * @author Gram <gram7gram@gmail.com>
  */
-public class TowerControlsGroup extends Group {
+public class TowerControlsGroup extends Group implements ResetableInterface {
 
     private final Button sellBut;
     private final Button upgradeBut;
@@ -30,15 +30,15 @@ public class TowerControlsGroup extends Group {
         float butHeight = 45;
         sellBut.setSize(butHeight, butHeight);
         upgradeBut.setSize(butHeight, butHeight);
-        this.addActor(sellBut);
-        this.addActor(upgradeBut);
+        addActor(sellBut);
+        addActor(upgradeBut);
     }
 
     @Override
     public void act(float delta) {
         super.act(delta);
         if (!DDGame.PAUSE && tower != null) {
-            this.toFront();
+            toFront();
             if (tower.getProperty().getTowerLevel() == Tower.MAX_TOWER_LEVEL) {
                 upgradeBut.setVisible(false);
             }
@@ -56,11 +56,9 @@ public class TowerControlsGroup extends Group {
         sellBut.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if (tower != null) {
-                    setVisible(false);
-                    shop.sell(group);
-                    tower = null;
-                }
+                if (tower == null) throw new NullPointerException("Sell failed: no tower");
+                shop.sell(group);
+                resetObject();
             }
         });
         upgradeBut.setPosition(
@@ -71,15 +69,14 @@ public class TowerControlsGroup extends Group {
         upgradeBut.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if (tower != null) {
-                    setVisible(false);
-                    try {
-                        tower.upgrade();
-                    } catch (IllegalArgumentException e) {
-                        Log.exc("Could not upgrade " + tower, e);
-                    } finally {
-                        tower = null;
-                    }
+                if (tower == null) throw new NullPointerException("Upgrade failed: no tower");
+
+                try {
+                    tower.upgrade();
+                } catch (IllegalArgumentException e) {
+                    Log.exc("Could not upgrade " + tower, e);
+                } finally {
+                    resetObject();
                 }
             }
         });
@@ -94,5 +91,15 @@ public class TowerControlsGroup extends Group {
 
     public Button getSellBut() {
         return sellBut;
+    }
+
+    public Tower getTower() {
+        return tower;
+    }
+
+    @Override
+    public void resetObject() {
+        tower = null;
+        setVisible(false);
     }
 }

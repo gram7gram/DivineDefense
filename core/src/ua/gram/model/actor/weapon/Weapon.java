@@ -63,7 +63,7 @@ public abstract class Weapon extends Actor {
                 handleIndexes(index1, index2);
 
                 update(delta);
-                this.setVisible(true);
+                setVisible(true);
             } else if (targetGroup != null) {
                 reset();
             }
@@ -132,8 +132,8 @@ public abstract class Weapon extends Actor {
         scaleY = 1;
         targetGroup = null;
         currentFrame = null;
-        this.setVisible(false);
-        Log.info(this.getClass().getSimpleName() + " was reset");
+        setVisible(false);
+        Log.info(getClass().getSimpleName() + " was reset");
     }
 
     public abstract WeaponPrototype getPrototype();

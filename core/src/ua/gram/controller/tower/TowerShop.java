@@ -97,6 +97,7 @@ public class TowerShop implements ShopInterface<TowerGroup>, Initializer {
                 tower.getStateHolder().getCurrentLevel1State(),
                 stateManager.getPreorderState(), 1);
         TowerGroup group = new TowerGroup(game, tower);
+        group.init();
         stageHolder.getBattleStage().addActor(group);
         Log.info(tower + " is preordered from TowerShop");
         return group;

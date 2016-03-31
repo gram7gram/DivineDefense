@@ -199,16 +199,12 @@ public class BattleStage extends AbstractStage implements Initializer {
      *
      * @return towers on map
      */
-    public ArrayList<Tower> getTowersOnMap() {
-        ArrayList<Tower> towers = new ArrayList<Tower>();
+    public ArrayList<TowerGroup> getTowersOnMap() {
+        ArrayList<TowerGroup> towers = new ArrayList<>();
         for (Group group : indexes) {
             for (Actor actor : group.getChildren()) {
                 if (actor instanceof TowerGroup) {
-                    for (Actor actor2 : ((TowerGroup) actor).getChildren()) {
-                        if (actor2 instanceof Tower) {
-                            towers.add((Tower) actor2);
-                        }
-                    }
+                    towers.add((TowerGroup) actor);
                 }
             }
         }
