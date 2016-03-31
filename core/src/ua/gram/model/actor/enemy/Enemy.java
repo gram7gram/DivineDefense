@@ -179,13 +179,13 @@ public abstract class Enemy extends GameActor<Types.EnemyState, Path.Types, Enem
         return animator.getPoolable().getAnimation();
     }
 
+    public void setAnimation(PoolableAnimation animation) {
+        this.animator.setPollable(animation);
+    }
+
     public void setAnimation(Types.EnemyState type) {
         AnimationPool pool = getAnimationProvider().get(prototype, type, getCurrentDirectionType());
         this.setAnimation(pool.obtain());
-    }
-
-    public void setAnimation(PoolableAnimation animation) {
-        this.animator.setPollable(animation);
     }
 
     public void damage(float damage) {
@@ -282,5 +282,9 @@ public abstract class Enemy extends GameActor<Types.EnemyState, Path.Types, Enem
 
     public EnemyStateHolder getStateHolder() {
         return stateHolder;
+    }
+
+    public boolean isAlive() {
+        return health > 0;
     }
 }

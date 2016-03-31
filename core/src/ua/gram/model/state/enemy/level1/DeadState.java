@@ -1,11 +1,11 @@
 package ua.gram.model.state.enemy.level1;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import java.util.Random;
 
 import ua.gram.DDGame;
+import ua.gram.controller.Log;
 import ua.gram.controller.enemy.EnemySpawner;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.enums.Types;
@@ -30,7 +30,7 @@ public class DeadState extends InactiveState {
         super.preManage(enemy);
 
 //        enemy.getAnimationProvider().get(enemy.getPrototype()).free(enemy);
-//        Gdx.app.log("INFO", enemy + " frees animation");
+//        Log.info(enemy + " frees animation");
 
         EnemySpawner spawner = enemy.getSpawner();
         EnemyGroup group = enemy.getEnemyGroup();
@@ -39,7 +39,7 @@ public class DeadState extends InactiveState {
         spawner.free(enemy);
         group.clear();
         group.remove();
-        Gdx.app.log("INFO", enemy + " is dead");
+        Log.info(enemy + " is dead");
     }
 
     @Override
@@ -50,7 +50,7 @@ public class DeadState extends InactiveState {
         //10% chance to getPool a gem
         if (value >= .45 && value < .55) {
             getGame().getPlayer().addGems(1);
-            Gdx.app.log("INFO", "Player got 1 gem");
+            Log.info("Player got 1 gem");
         }
     }
 }

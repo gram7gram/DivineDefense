@@ -19,8 +19,7 @@ public abstract class AbstractStage extends Stage {
         super(game.getViewport(), game.getBatch());
         this.game = game;
         debugListener = new DebugListener();
-        if (DDGame.DEBUG)
-            addListener(debugListener);
+        addListener(debugListener);
     }
 
     @Override

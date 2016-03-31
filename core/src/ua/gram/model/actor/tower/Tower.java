@@ -190,7 +190,10 @@ public abstract class Tower extends GameActor<Types.TowerState, Types.TowerLevel
     }
 
     public void resetVictims() {
-        if (!victims.isEmpty()) victims.clear();
+        if (!victims.isEmpty()) {
+            Log.info(this + " resets victims");
+            victims.clear();
+        }
         if (weapon.isVisible()) weapon.reset();
     }
 

@@ -1,13 +1,11 @@
 package ua.gram.model.strategy.tower;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import ua.gram.controller.comparator.EnemyHealthComparator;
 import ua.gram.model.actor.tower.Tower;
 import ua.gram.model.group.EnemyGroup;
-import ua.gram.model.strategy.TowerStrategyManager;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -16,8 +14,8 @@ public class StrongestStrategy implements TowerStrategy {
 
     private final EnemyHealthComparator healthComparator;
 
-    public StrongestStrategy(TowerStrategyManager manager) {
-        this.healthComparator = manager.getHealthComparator();
+    public StrongestStrategy(EnemyHealthComparator healthComparator) {
+        this.healthComparator = healthComparator;
     }
 
     @Override
@@ -30,11 +28,8 @@ public class StrongestStrategy implements TowerStrategy {
         Collections.sort(victims, healthComparator);
 
         int lvl = tower.getProperty().getTowerLevel();
-        int index = lvl > victims.size() ? victims.size() - 1 : lvl - 1;
 
-        return victims.size() > 0
-                ? victims.subList(0, index)
-                : new ArrayList<EnemyGroup>(0);
+        return victims.subList(0, lvl);
     }
 
 }

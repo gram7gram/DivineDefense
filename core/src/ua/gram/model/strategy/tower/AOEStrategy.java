@@ -3,27 +3,17 @@ package ua.gram.model.strategy.tower;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import ua.gram.controller.comparator.EnemyHealthComparator;
 import ua.gram.model.actor.tower.Tower;
 import ua.gram.model.actor.weapon.AOEWeapon;
 import ua.gram.model.actor.weapon.Weapon;
 import ua.gram.model.group.EnemyGroup;
-import ua.gram.model.strategy.TowerStrategyManager;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
 public class AOEStrategy implements TowerStrategy {
-
-    private final EnemyHealthComparator healthComparator;
-
-    public AOEStrategy(TowerStrategyManager manager) {
-        this.healthComparator = manager.getHealthComparator();
-        healthComparator.setType(EnemyHealthComparator.MAX);
-    }
 
     @Override
     public List<EnemyGroup> chooseVictims(Tower tower, List<EnemyGroup> victims) {
@@ -34,8 +24,6 @@ public class AOEStrategy implements TowerStrategy {
 
         if (!(weapon instanceof AOEWeapon))
             throw new IllegalArgumentException("Non-AOE weapon should not have access to this method");
-
-        Collections.sort(victims, healthComparator);
 
         return getVictimsInRange(victims, (AOEWeapon) weapon);
     }

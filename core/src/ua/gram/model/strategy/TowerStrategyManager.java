@@ -11,12 +11,10 @@ import ua.gram.model.strategy.tower.TowerStrategy;
 import ua.gram.model.strategy.tower.WeakestStrategy;
 
 /**
+ *
  * @author Gram <gram7gram@gmail.com>
  */
 public class TowerStrategyManager {
-
-    private final EnemyDistanceComparator distanceComparator;
-    private final EnemyHealthComparator healthComparator;
 
     private final TowerStrategy strongestTowerStrategy;
     private final TowerStrategy weakestTowerStrategy;
@@ -26,15 +24,14 @@ public class TowerStrategyManager {
     private final TowerStrategy aoeStrategy;
 
     public TowerStrategyManager() {
-        distanceComparator = new EnemyDistanceComparator();
-        healthComparator = new EnemyHealthComparator();
-
-        allTowerStrategy = new AllStrategy(this);
+        EnemyDistanceComparator distanceComparator = new EnemyDistanceComparator();
+        EnemyHealthComparator healthComparator = new EnemyHealthComparator();
+        allTowerStrategy = new AllStrategy();
         randomTowerStrategy = new RandomStrategy();
-        nearestTowerStrategy = new NearestStrategy(this);
-        weakestTowerStrategy = new WeakestStrategy(this);
-        strongestTowerStrategy = new StrongestStrategy(this);
-        aoeStrategy = new AOEStrategy(this);
+        nearestTowerStrategy = new NearestStrategy(distanceComparator);
+        weakestTowerStrategy = new WeakestStrategy(healthComparator);
+        strongestTowerStrategy = new StrongestStrategy(healthComparator);
+        aoeStrategy = new AOEStrategy();
     }
 
     public TowerStrategy getAllStrategy() {
@@ -57,20 +54,11 @@ public class TowerStrategyManager {
         return randomTowerStrategy;
     }
 
-    public EnemyDistanceComparator getDistanceComparator() {
-        return distanceComparator;
-    }
-
-    public EnemyHealthComparator getHealthComparator() {
-        return healthComparator;
-    }
-
     public TowerStrategy getDefault() {
-        return strongestTowerStrategy;
+        return getWeakestStrategy();
     }
 
     public TowerStrategy getAoeStrategy() {
         return aoeStrategy;
     }
-
 }

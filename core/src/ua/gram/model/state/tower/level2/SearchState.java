@@ -28,17 +28,18 @@ public class SearchState extends IdleState {
     public void manage(Tower tower, float delta) {
         if (tower.attackCount >= tower.getProperty().getRate()) {
             tower.attackCount = 0;
+            int limit = 5;
 
-            List<EnemyGroup> victims = new ArrayList<EnemyGroup>(5);
+            List<EnemyGroup> victims = new ArrayList<EnemyGroup>(limit);
             for (EnemyGroup group : tower.getStage().getEnemyGroupsOnMap()) {
-                if (tower.isInRange(group.getRootActor())
-                        && group.getRootActor().health > 0) {
+                if (victims.size() == limit) break;
+                if (group.getRootActor().isAlive()
+                        && tower.isInRange(group.getRootActor())) {
                     victims.add(group);
                 }
             }
 
-            if (victims.isEmpty()) tower.resetVictims();
-            else {
+            if (!victims.isEmpty()) {
                 List<EnemyGroup> filteredVictims = tower.getCurrentTowerStrategy().chooseVictims(tower, victims);
                 if (!filteredVictims.isEmpty()) {
                     tower.setVictims(filteredVictims);
@@ -47,7 +48,8 @@ public class SearchState extends IdleState {
                             tower.getStateHolder().getCurrentLevel2State(),
                             manager.getAttackState(), 2);
                 } else tower.resetVictims();
-            }
+            } else tower.resetVictims();
+
         } else {
             tower.attackCount += delta;
         }

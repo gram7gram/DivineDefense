@@ -71,10 +71,14 @@ public class WalkingState extends Level2State {
         }
     }
 
+    private int round(float value) {
+        return value - (int) value > 0.4f ? (int) value + 1 : (int) value;
+    }
+
     @Override
     public void manage(final Enemy enemy, float delta) {
-        int x = Math.round(enemy.getX());
-        int y = Math.round(enemy.getY());
+        int x = round(enemy.getX());
+        int y = round(enemy.getY());
 
         if (enemy.isRemoved) return;
 
@@ -90,36 +94,37 @@ public class WalkingState extends Level2State {
             return;
         }
 
-        if (x % DDGame.TILE_HEIGHT == 0 && y % DDGame.TILE_HEIGHT == 0
-                && isIterationAllowed(enemy.getUpdateIterationCount())) {
+        if (Float.compare(x % DDGame.TILE_HEIGHT, 0) == 0 && Float.compare(x % DDGame.TILE_HEIGHT, 0) == 0) {
+            if (isIterationAllowed(enemy.getUpdateIterationCount())) {
 
-            Map map = enemy.getSpawner().getLevel().getMap();
-            if (!map.checkPosition(enemy.getCurrentPositionIndex(), map.getPrototype().walkableProperty)) {
-                Log.crit(enemy + " stepped out of walking bounds");
-                remove(enemy, enemy.getSpawner().getStateManager().getDeadState());
-                return;
-            }
-
-            int prevX = Math.round(enemy.getPreviousPosition().x);
-            int prevY = Math.round(enemy.getPreviousPosition().y);
-
-            if (prevX != x || prevY != y) {
-                enemy.setUpdateIterationCount(0);
-
-                try {
-                    move(enemy, delta, x, y);
-                } catch (EmptyStackException e) {
-                    Log.warn("Direction stack is empty. Removing " + enemy);
-                    remove(enemy);
-                } catch (NullPointerException e) {
-                    Log.exc("Required variable is NULL. Removing " + enemy, e);
-                    remove(enemy);
+                Map map = enemy.getSpawner().getLevel().getMap();
+                if (!map.checkPosition(enemy.getCurrentPositionIndex(), map.getPrototype().walkableProperty)) {
+                    Log.crit(enemy + " stepped out of walking bounds");
+                    remove(enemy, enemy.getSpawner().getStateManager().getDeadState());
+                    return;
                 }
 
-                enemy.setPreviousPosition(x, y);
+                int prevX = Math.round(enemy.getPreviousPosition().x);
+                int prevY = Math.round(enemy.getPreviousPosition().y);
+
+                if (prevX != x || prevY != y) {
+                    enemy.setUpdateIterationCount(0);
+
+                    try {
+                        move(enemy, delta, x, y);
+                    } catch (EmptyStackException e) {
+                        Log.warn("Direction stack is empty. Removing " + enemy);
+                        remove(enemy);
+                    } catch (NullPointerException e) {
+                        Log.exc("Required variable is NULL. Removing " + enemy, e);
+                        remove(enemy);
+                    }
+
+                    enemy.setPreviousPosition(x, y);
+                }
+            } else {
+                enemy.addUpdateIterationCount(1);
             }
-        } else {
-            enemy.addUpdateIterationCount(1);
         }
     }
 

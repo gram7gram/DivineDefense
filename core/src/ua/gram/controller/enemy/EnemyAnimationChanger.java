@@ -52,9 +52,9 @@ public class EnemyAnimationChanger implements Runnable {
                     type, enemy.getCurrentDirectionType());
             pool.free(enemy.getPoolableAnimation());
 
-            Log.info(enemy + " frees animation:"
-                    + " " + enemy.getAnimator().getPrimaryType()
-                    + " " + enemy.getAnimator().getSecondaryType());
+//            Log.info(enemy + " frees animation:"
+//                    + " " + enemy.getAnimator().getPrimaryType()
+//                    + " " + enemy.getAnimator().getSecondaryType());
 
         } catch (Exception e) {
             Log.exc("Cannot free " + enemy + " previous animation", e);
@@ -67,9 +67,9 @@ public class EnemyAnimationChanger implements Runnable {
                     type, enemy.getCurrentDirectionType());
             enemy.setAnimation(pool.obtain());
 
-            Log.info(enemy + " obtains animation to:"
-                    + " " + enemy.getAnimator().getPrimaryType()
-                    + " " + enemy.getAnimator().getSecondaryType());
+//            Log.info(enemy + " obtains animation to:"
+//                    + " " + enemy.getAnimator().getPrimaryType()
+//                    + " " + enemy.getAnimator().getSecondaryType());
 
         } catch (Exception e) {
             Log.exc("Cannot set new animation for " + enemy, e);

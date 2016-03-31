@@ -1,8 +1,7 @@
 package ua.gram.model.state.enemy.level1;
 
-import com.badlogic.gdx.Gdx;
-
 import ua.gram.DDGame;
+import ua.gram.controller.Log;
 import ua.gram.controller.enemy.EnemySpawner;
 import ua.gram.model.Player;
 import ua.gram.model.actor.enemy.Enemy;
@@ -29,7 +28,7 @@ public class FinishState extends InactiveState {
 
         enemy.isRemoved = true;
 
-        Gdx.app.log("INFO", enemy + " reaches the Base");
+        Log.info(enemy + " reaches the Base");
 //        enemy.getAnimationProvider().get(enemy).free(enemy);
 //        Gdx.app.log("INFO", enemy + " frees animation");
 

@@ -7,7 +7,7 @@ import ua.gram.controller.Log;
 import ua.gram.model.actor.GameActor;
 
 /**
- * Generic state manager. GameActor
+ *
  * @author Gram <gram7gram@gmail.com>
  */
 public abstract class StateManager<A extends GameActor> {
