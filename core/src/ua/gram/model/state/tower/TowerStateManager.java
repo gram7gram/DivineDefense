@@ -13,6 +13,7 @@ import ua.gram.model.state.tower.level1.InactiveState;
 import ua.gram.model.state.tower.level1.Level1State;
 import ua.gram.model.state.tower.level1.PreorderState;
 import ua.gram.model.state.tower.level1.SellingState;
+import ua.gram.model.state.tower.level1.UpgradeState;
 import ua.gram.model.state.tower.level2.AttackState;
 import ua.gram.model.state.tower.level2.IdleState;
 import ua.gram.model.state.tower.level2.Level2State;
@@ -31,6 +32,7 @@ public class TowerStateManager extends StateManager<Tower> {
     private TowerState searchState;
     private TowerState idleState;
     private TowerState preorderState;
+    private TowerState upgradeState;
 
     public TowerStateManager(DDGame game) {
         super(game);
@@ -46,6 +48,7 @@ public class TowerStateManager extends StateManager<Tower> {
         if (searchState == null) searchState = new SearchState(game);
         if (idleState == null) idleState = new IdleState(game);
         if (preorderState == null) preorderState = new PreorderState(game);
+        if (upgradeState == null) upgradeState = new UpgradeState(game);
     }
 
     @Override
@@ -126,5 +129,9 @@ public class TowerStateManager extends StateManager<Tower> {
 
     public TowerState getPreorderState() {
         return preorderState;
+    }
+
+    public TowerState getUpgradeState() {
+        return upgradeState;
     }
 }

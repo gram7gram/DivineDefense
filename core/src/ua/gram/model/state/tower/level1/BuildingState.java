@@ -13,7 +13,7 @@ import ua.gram.model.state.tower.TowerStateManager;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public final class BuildingState extends ActiveState {
+public final class BuildingState extends InactiveState {
 
     public BuildingState(DDGame game) {
         super(game);
@@ -36,6 +36,8 @@ public final class BuildingState extends ActiveState {
         towerGroup.setVisible(true);
         battleStage.updateZIndexes(towerGroup);
         battleStage.addTowerPosition(tower);
+        towerGroup.getBar().setVisible(true);
+        towerGroup.getBar().setDuration(tower.getPrototype().buildDelay);
         Log.info(tower + " is built");
     }
 
@@ -53,13 +55,14 @@ public final class BuildingState extends ActiveState {
         } else {
             tower.setTouchable(Touchable.disabled);
             tower.buildCount += delta;
+            tower.getParent().getBar().setProgress(tower.buildCount);
         }
-
     }
 
     @Override
     public void postManage(Tower tower) {
         super.postManage(tower);
         tower.buildCount = 0;
+        tower.getParent().getBar().setVisible(false);
     }
 }

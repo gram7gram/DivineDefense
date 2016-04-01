@@ -22,7 +22,6 @@ import ua.gram.model.actor.weapon.Weapon;
 import ua.gram.model.enums.Types;
 import ua.gram.model.group.EnemyGroup;
 import ua.gram.model.group.TowerGroup;
-import ua.gram.model.prototype.tower.TowerPropertyPrototype;
 import ua.gram.model.prototype.tower.TowerPrototype;
 import ua.gram.model.prototype.weapon.WeaponPrototype;
 import ua.gram.model.state.tower.TowerStateHolder;
@@ -100,27 +99,10 @@ public abstract class Tower extends GameActor<Types.TowerState, Types.TowerLevel
         return distance <= property.getRange() * DDGame.TILE_HEIGHT * 1.5;
     }
 
-    public void upgrade() {
-        int price = property.getCost();
-        int nextLevel = property.getTowerLevel() + 1;
-
-        if (nextLevel > MAX_TOWER_LEVEL)
-            throw new IllegalArgumentException("Cannot update to higher value, then expected");
-
-        try {
-            TowerPropertyPrototype nextProperty = prototype.getProperty(nextLevel);
-            property.setPrototype(nextProperty);
-            game.getPlayer().chargeCoins(price);
-            Log.info(this + " is upgraded to " + nextLevel + " level");
-        } catch (Exception e) {
-            Log.exc("Could not upgrade " + this + " to level " + nextLevel, e);
-        }
-    }
-
     @Override
     public void reset() {
         currentTowerStrategy = getDefaultStrategy();
-        property.setPrototype(prototype.getFirstLevelProperty());
+        property.setPropertyPrototype(prototype.getFirstLevelProperty());
         this.setPosition(0, 0);
         Log.info(this + " was reset");
     }

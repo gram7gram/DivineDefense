@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import ua.gram.DDGame;
 import ua.gram.controller.Log;
@@ -24,6 +23,7 @@ public class TowerGroup extends ActorGroup<Tower> implements Initializer {
     private final ShapeRenderer shapeRenderer;
     private final Tower tower;
     private final Weapon weapon;
+    private final ProgressBar bar;
 
     public TowerGroup(DDGame game, Tower tower) {
         super(tower);
@@ -31,7 +31,8 @@ public class TowerGroup extends ActorGroup<Tower> implements Initializer {
         this.tower = tower;
         shapeRenderer = new ShapeRenderer();
         weapon = tower.getWeapon();
-        Actor bar = new ProgressBar(game.getResources().getSkin(), tower);
+        bar = new ProgressBar(game.getResources().getSkin(), tower);
+        bar.setDuration(tower.getPrototype().buildDelay);
         addActor(bar);
         addActor(tower);
         addActor(weapon);
@@ -82,5 +83,9 @@ public class TowerGroup extends ActorGroup<Tower> implements Initializer {
             }
 
         }
+    }
+
+    public ProgressBar getBar() {
+        return bar;
     }
 }

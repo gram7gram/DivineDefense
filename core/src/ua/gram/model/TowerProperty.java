@@ -17,7 +17,7 @@ public class TowerProperty {
         return prototype;
     }
 
-    public void setPrototype(TowerPropertyPrototype prototype) {
+    public void setPropertyPrototype(TowerPropertyPrototype prototype) {
         this.prototype = prototype;
     }
 
