@@ -115,7 +115,7 @@ public abstract class Weapon extends Actor implements Resetable, Pool.Poolable {
 
     protected boolean canBeDrawn() {
         return currentFrame != null && !isOutOfBounds()
-                && targetGroup != null && isTargetInRange();
+                && (!isFinished() || (targetGroup != null && isTargetInRange()));
     }
 
     protected boolean isTargetInRange() {

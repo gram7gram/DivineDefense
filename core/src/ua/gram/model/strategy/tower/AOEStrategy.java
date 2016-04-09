@@ -34,9 +34,10 @@ public class AOEStrategy implements TowerStrategy {
         Enemy mainTarget = targets.get(0);
 
         ArrayList<Enemy> victimInRange = new ArrayList<Enemy>(5);
+        victimInRange.add(mainTarget);
 
         for (Enemy target : targets) {
-            if (target == mainTarget) continue;
+            if (victimInRange.contains(target)) continue;
             Vector2 victimPosition = target.getCurrentPosition();
             Vector2 mainVictimPosition = mainTarget.getCurrentPosition();
             float distance = victimPosition.dst(mainVictimPosition);

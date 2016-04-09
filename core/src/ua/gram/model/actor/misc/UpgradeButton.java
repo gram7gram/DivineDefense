@@ -17,7 +17,8 @@ public class UpgradeButton extends Button {
         label.setVisible(true);
         label.setAlignment(Align.center);
 
-        add(label).size(20).padTop(45 - 20).padLeft(45 - 20);
+        int size = 25;
+        add(label).size(size).padTop(45 - size).padLeft(45 - size);
     }
 
     public void updatePrice(String price) {

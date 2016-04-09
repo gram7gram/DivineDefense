@@ -34,6 +34,8 @@ Dmitriy Bondarchuk (Gram) <gram7gram@gmail.com>
 
 Development page: https://github.com/gram7gram/DivineDefense
 
+Twitter: https://twitter.com/DivineDefense
+
 **Art** 
 
 Евгений Ф. <yeugenyf@gmail.com>

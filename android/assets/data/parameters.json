@@ -105,13 +105,17 @@
           {
             "index": 1,
             "enemies": [
-              "EnemyRunner",
-              "EnemyRunner",
-              "EnemyRunner",
               "EnemySoldier",
               "EnemySoldier",
-              "EnemyRunner",
+              "EnemySoldier",
+              "EnemySoldier",
               "EnemySoldier"
+              //              "EnemyRunner",
+              //              "EnemyRunner",
+              //              "EnemyRunner",
+              //              "EnemySoldier",
+              //              "EnemyRunner",
+              //              "EnemySoldier"
             ]
           },
           {
