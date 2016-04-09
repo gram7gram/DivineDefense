@@ -1,9 +1,9 @@
 package ua.gram.view.screen;
 
 import ua.gram.DDGame;
-import ua.gram.controller.Log;
-import ua.gram.controller.Resources;
-import ua.gram.model.Player;
+import ua.gram.model.player.Player;
+import ua.gram.utils.Log;
+import ua.gram.utils.Resources;
 import ua.gram.view.AbstractLoadingScreen;
 
 /**

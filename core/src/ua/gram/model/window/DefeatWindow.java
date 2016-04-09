@@ -14,20 +14,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ua.gram.DDGame;
-import ua.gram.controller.Log;
 import ua.gram.controller.factory.DefeatOptionFactory;
 import ua.gram.controller.stage.StageHolder;
 import ua.gram.model.Initializer;
-import ua.gram.model.ResetableInterface;
+import ua.gram.model.Resetable;
 import ua.gram.model.actor.misc.DefeatOption;
 import ua.gram.model.prototype.ui.DefeatOptionPrototype;
 import ua.gram.model.prototype.ui.window.DefeatWindowPrototype;
 import ua.gram.model.prototype.ui.window.WindowPrototype;
+import ua.gram.utils.Log;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class DefeatWindow extends Window implements Initializer, ResetableInterface {
+public class DefeatWindow extends Window implements Initializer, Resetable {
 
     private final DDGame game;
     private final DefeatWindowPrototype prototype;
@@ -117,8 +117,8 @@ public class DefeatWindow extends Window implements Initializer, ResetableInterf
         for (Actor actor : actors) {
             if (actor instanceof Group) {
                 resetActors(((Group) actor).getChildren());
-            } else if (actor instanceof ResetableInterface) {
-                ((ResetableInterface) actor).resetObject();
+            } else if (actor instanceof Resetable) {
+                ((Resetable) actor).resetObject();
             }
         }
     }

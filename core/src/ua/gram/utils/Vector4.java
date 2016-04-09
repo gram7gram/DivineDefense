@@ -1,4 +1,4 @@
-package ua.gram.controller;
+package ua.gram.utils;
 
 /**
  * @author Gram <gram7gram@gmail.com>

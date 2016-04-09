@@ -3,10 +3,10 @@ package ua.gram.controller.pool.animation;
 import java.util.EnumMap;
 import java.util.EnumSet;
 
-import ua.gram.controller.Log;
 import ua.gram.model.enums.Types;
 import ua.gram.model.map.Path;
 import ua.gram.model.prototype.enemy.EnemyPrototype;
+import ua.gram.utils.Log;
 
 /**
  * Holds pools for Enemy and each direction, available in the game.

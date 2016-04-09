@@ -7,7 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import java.util.EmptyStackException;
 
 import ua.gram.DDGame;
-import ua.gram.controller.Log;
 import ua.gram.controller.enemy.EnemyAnimationChanger;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.enums.Types;
@@ -15,13 +14,14 @@ import ua.gram.model.map.Map;
 import ua.gram.model.map.Path;
 import ua.gram.model.state.enemy.EnemyStateManager;
 import ua.gram.model.state.enemy.level1.Level1State;
+import ua.gram.utils.Log;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
 public class WalkingState extends Level2State {
 
-    protected EnemyAnimationChanger animationChanger;
+    protected final EnemyAnimationChanger animationChanger;
     protected Vector2 basePosition;
 
     public WalkingState(DDGame game) {
@@ -133,12 +133,12 @@ public class WalkingState extends Level2State {
 
     protected final void remove(Enemy enemy) {
         EnemyStateManager manager = enemy.getSpawner().getStateManager();
-        manager.swap(enemy, enemy.getStateHolder().getCurrentLevel1State(), manager.getFinishState(), 1);
+        manager.swap(enemy, manager.getFinishState());
     }
 
     protected final void remove(Enemy enemy, Level1State state) {
         EnemyStateManager manager = enemy.getSpawner().getStateManager();
-        manager.swap(enemy, enemy.getStateHolder().getCurrentLevel1State(), state, 1);
+        manager.swap(enemy, state);
     }
 
     protected final boolean isIterationAllowed(int iteration) {

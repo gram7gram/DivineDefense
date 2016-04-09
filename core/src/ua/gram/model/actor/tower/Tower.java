@@ -11,27 +11,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ua.gram.DDGame;
-import ua.gram.controller.Log;
+import ua.gram.controller.pool.WeaponPool;
 import ua.gram.controller.stage.BattleStage;
 import ua.gram.controller.tower.TowerShop;
+import ua.gram.model.ActiveTarget;
 import ua.gram.model.PoolableAnimation;
-import ua.gram.model.TowerProperty;
 import ua.gram.model.actor.GameActor;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.actor.weapon.Weapon;
 import ua.gram.model.enums.Types;
-import ua.gram.model.group.EnemyGroup;
 import ua.gram.model.group.TowerGroup;
 import ua.gram.model.prototype.tower.TowerPrototype;
-import ua.gram.model.prototype.weapon.WeaponPrototype;
 import ua.gram.model.state.tower.TowerStateHolder;
 import ua.gram.model.state.tower.TowerStateManager;
 import ua.gram.model.state.tower.level1.ActiveState;
 import ua.gram.model.strategy.tower.TowerStrategy;
+import ua.gram.utils.Log;
 
 /**
  * TODO Different animations: IDLE, BUILDING, SELLING, SHOOTING
- * NOTE The amount of TowerState tagets depends on it's tower_level.
  *
  * @author Gram <gram7gram@gmail.com>
  */
@@ -43,23 +41,27 @@ public abstract class Tower extends GameActor<Types.TowerState, Types.TowerLevel
     protected final TowerPrototype prototype;
     protected final TowerProperty property;
     protected final TowerStateHolder stateHolder;
+    protected final DDGame game;
+    protected final TowerShop towerShop;
+    protected final WeaponPool weaponPool;
+    private final Vector2 center;
     public float buildCount = 0;
     public float attackCount = 0;
-    protected DDGame game;
     protected TextureRegion currentFrame;
-    protected TowerShop towerShop;
-    protected Weapon weapon;
-    private List<EnemyGroup> victims;
+    private List<ActiveTarget> targets;
     private TowerStrategy currentTowerStrategy;
     private float stateTime;
 
-    public Tower(DDGame game, TowerPrototype prototype) {
+    public Tower(DDGame game, TowerShop towerShop, TowerPrototype prototype) {
         super(prototype);
         this.game = game;
         this.prototype = prototype;
-        this.property = new TowerProperty(prototype.getFirstLevelProperty());
+        this.towerShop = towerShop;
+        property = new TowerProperty(prototype.getFirstLevelProperty());
         stateHolder = new TowerStateHolder();
-        victims = new ArrayList<EnemyGroup>(5);
+        targets = new ArrayList<ActiveTarget>(5);
+        weaponPool = towerShop.getWeaponBuilder().getPool(prototype.weapon);
+        center = Vector2.Zero;
     }
 
     @Override
@@ -88,15 +90,17 @@ public abstract class Tower extends GameActor<Types.TowerState, Types.TowerLevel
 
     public abstract void update(float delta);
 
-    public abstract WeaponPrototype getWeaponPrototype();
-
-    public abstract Weapon getWeapon();
+    public Weapon getWeapon() {
+        if (targets.isEmpty())
+            throw new NullPointerException("Mising active targets, so no weapon can be obtained");
+        return targets.get(0).getWeapon();
+    }
 
     public boolean isInRange(Enemy enemy) {
         Vector2 enemyPos = new Vector2(enemy.getOriginX(), enemy.getOriginY());
         Vector2 towerPos = new Vector2(this.getOriginX(), this.getOriginY());
         float distance = enemyPos.dst(towerPos);
-        return distance <= property.getRange() * DDGame.TILE_HEIGHT * 1.5;
+        return distance <= (property.getRange() * DDGame.TILE_HEIGHT * 1.5);
     }
 
     @Override
@@ -121,10 +125,8 @@ public abstract class Tower extends GameActor<Types.TowerState, Types.TowerLevel
     }
 
     public Vector2 getCenterPoint() {
-        return new Vector2(
-                this.getX() + (this.getWidth() / 2f),
-                this.getY() + (this.getHeight() / 2f)
-        );
+        center.set(getX() + (getWidth() / 2f), getY() + (getHeight() / 2f));
+        return center;
     }
 
     public TowerPrototype getPrototype() {
@@ -145,10 +147,6 @@ public abstract class Tower extends GameActor<Types.TowerState, Types.TowerLevel
         return towerShop;
     }
 
-    public void setTowerShop(TowerShop towerShop) {
-        this.towerShop = towerShop;
-    }
-
     @Override
     public TowerStateManager getStateManager() {
         if (towerShop == null)
@@ -160,12 +158,8 @@ public abstract class Tower extends GameActor<Types.TowerState, Types.TowerLevel
         return stateHolder;
     }
 
-    public List<EnemyGroup> getVictims() {
-        return victims;
-    }
-
-    public void setVictims(List<EnemyGroup> victims) {
-        this.victims = victims;
+    public List<ActiveTarget> getTargets() {
+        return targets;
     }
 
     public TowerStrategy getCurrentTowerStrategy() {
@@ -173,11 +167,13 @@ public abstract class Tower extends GameActor<Types.TowerState, Types.TowerLevel
     }
 
     public void resetVictims() {
-        if (!victims.isEmpty()) {
-            Log.info(this + " resets victims");
-            victims.clear();
+        if (targets.isEmpty()) return;
+
+        for (ActiveTarget target : targets) {
+            weaponPool.free(target.getWeapon());
         }
-        if (weapon.isVisible()) weapon.reset();
+        targets.clear();
+        Log.info(this + " resets targets");
     }
 
     public boolean isControlsVisible() {
@@ -190,5 +186,13 @@ public abstract class Tower extends GameActor<Types.TowerState, Types.TowerLevel
 
     public boolean isActiveState() {
         return getStateHolder().getCurrentLevel1State() instanceof ActiveState;
+    }
+
+    public void addTarget(ActiveTarget target) {
+        targets.add(target);
+    }
+
+    public WeaponPool getWeaponPool() {
+        return weaponPool;
     }
 }

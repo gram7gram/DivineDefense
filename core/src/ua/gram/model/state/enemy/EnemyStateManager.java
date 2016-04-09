@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import ua.gram.DDGame;
-import ua.gram.controller.Log;
 import ua.gram.model.actor.enemy.AbilityUser;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.state.StateInterface;
@@ -23,6 +22,7 @@ import ua.gram.model.state.enemy.level3.AbilityState;
 import ua.gram.model.state.enemy.level3.Level3State;
 import ua.gram.model.state.enemy.level4.Level4State;
 import ua.gram.model.state.enemy.level4.StunState;
+import ua.gram.utils.Log;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -182,5 +182,38 @@ public final class EnemyStateManager extends StateManager<Enemy> {
 
     public AbilityState getAbilityState() {
         return abilityState;
+    }
+
+
+    public synchronized void swap(Enemy actor, Level1State before, Level1State after) {
+        this.swap(actor, before, after, 1);
+    }
+
+    public synchronized void swap(Enemy actor, Level1State after) {
+        this.swap(actor, actor.getStateHolder().getCurrentLevel1State(), after, 1);
+    }
+
+    public synchronized void swap(Enemy actor, Level2State before, Level2State after) {
+        this.swap(actor, before, after, 2);
+    }
+
+    public synchronized void swap(Enemy actor, Level2State after) {
+        this.swap(actor, actor.getStateHolder().getCurrentLevel2State(), after, 2);
+    }
+
+    public synchronized void swap(Enemy actor, Level3State before, Level3State after) {
+        this.swap(actor, before, after, 3);
+    }
+
+    public synchronized void swap(Enemy actor, Level3State after) {
+        this.swap(actor, actor.getStateHolder().getCurrentLevel3State(), after, 3);
+    }
+
+    public synchronized void swap(Enemy actor, Level4State before, Level4State after) {
+        this.swap(actor, before, after, 4);
+    }
+
+    public synchronized void swap(Enemy actor, Level4State after) {
+        this.swap(actor, actor.getStateHolder().getCurrentLevel4State(), after, 4);
     }
 }

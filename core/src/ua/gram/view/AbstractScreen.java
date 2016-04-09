@@ -4,8 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 
 import ua.gram.DDGame;
-import ua.gram.controller.Log;
 import ua.gram.model.prototype.GamePrototype;
+import ua.gram.utils.Log;
 
 /**
  * @author Gram <gram7gram@gmail.com>

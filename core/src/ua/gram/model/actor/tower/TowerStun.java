@@ -1,9 +1,8 @@
 package ua.gram.model.actor.tower;
 
 import ua.gram.DDGame;
-import ua.gram.model.actor.weapon.FreezeWeapon;
+import ua.gram.controller.tower.TowerShop;
 import ua.gram.model.prototype.tower.TowerPrototype;
-import ua.gram.model.prototype.weapon.FreezeWeaponPrototype;
 import ua.gram.model.strategy.tower.TowerStrategy;
 
 /**
@@ -11,8 +10,8 @@ import ua.gram.model.strategy.tower.TowerStrategy;
  */
 public final class TowerStun extends Tower implements Cloneable {
 
-    public TowerStun(DDGame game, TowerPrototype prototype) {
-        super(game, prototype);
+    public TowerStun(DDGame game, TowerShop towerShop, TowerPrototype prototype) {
+        super(game, towerShop, prototype);
     }
 
     @Override
@@ -22,25 +21,12 @@ public final class TowerStun extends Tower implements Cloneable {
 
     @Override
     public void update(float delta) {
-        this.setOrigin(getX() + animationWidth / 2f, getY() + 28);
+        setOrigin(getX() + animationWidth / 2f, getY() + 28);
     }
 
     @Override
     public TowerStun clone() throws CloneNotSupportedException {
         return (TowerStun) super.clone();
-    }
-
-    @Override
-    public FreezeWeaponPrototype getWeaponPrototype() {
-        return (FreezeWeaponPrototype) prototype.weapon;
-    }
-
-    @Override
-    public FreezeWeapon getWeapon() {
-        if (weapon == null) {
-            weapon = new FreezeWeapon(game.getResources(), this.getWeaponPrototype());
-        }
-        return (FreezeWeapon) weapon;
     }
 
 }

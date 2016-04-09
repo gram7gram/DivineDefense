@@ -5,8 +5,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import ua.gram.DDGame;
-import ua.gram.controller.Log;
 import ua.gram.controller.stage.ErrorStage;
+import ua.gram.utils.Log;
 import ua.gram.view.AbstractScreen;
 
 /**

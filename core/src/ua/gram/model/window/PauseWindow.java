@@ -7,10 +7,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import ua.gram.DDGame;
-import ua.gram.controller.Log;
 import ua.gram.controller.stage.StageHolder;
 import ua.gram.controller.stage.UIStage;
 import ua.gram.model.Initializer;
+import ua.gram.utils.Log;
 import ua.gram.view.screen.MainMenuScreen;
 
 /**
@@ -73,6 +73,13 @@ public class PauseWindow extends WindowGroup implements Initializer {
                 stage.toggleWindow(stage.getPauseWindow());
             }
         });
+    }
 
+    @Override
+    public void setVisible(boolean visible) {
+        super.setVisible(visible);
+        if (visible && stageHolder != null) {
+            stageHolder.getUiStage().getTowerControls().hideControls();
+        }
     }
 }

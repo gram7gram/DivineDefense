@@ -3,12 +3,12 @@ package ua.gram.model.state.tower.level1;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 
 import ua.gram.DDGame;
-import ua.gram.controller.Log;
 import ua.gram.controller.stage.BattleStage;
 import ua.gram.model.actor.tower.Tower;
 import ua.gram.model.enums.Types;
 import ua.gram.model.group.TowerGroup;
 import ua.gram.model.state.tower.TowerStateManager;
+import ua.gram.utils.Log;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -47,11 +47,10 @@ public final class BuildingState extends InactiveState {
         if (tower.buildCount >= tower.getPrototype().buildDelay) {
             tower.buildCount = 0;
             tower.setTouchable(Touchable.enabled);
-            tower.getWeapon().setSource(tower.getParent());
             Log.info(tower + " is built");
             TowerStateManager manager = tower.getTowerShop().getStateManager();
-            manager.swap(tower, tower.getStateHolder().getCurrentLevel1State(), manager.getActiveState(), 1);
-            manager.swap(tower, tower.getStateHolder().getCurrentLevel2State(), manager.getSearchState(), 2);
+            manager.swap(tower, manager.getActiveState());
+            manager.swap(tower, manager.getSearchState());
         } else {
             tower.setTouchable(Touchable.disabled);
             tower.buildCount += delta;

@@ -10,6 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import ua.gram.DDGame;
 import ua.gram.controller.listener.TowerShopInputListener;
 import ua.gram.controller.tower.TowerShop;
+import ua.gram.model.actor.misc.CustomLabel;
+import ua.gram.model.prototype.tower.TowerPropertyPrototype;
 import ua.gram.model.prototype.tower.TowerPrototype;
 
 /**
@@ -18,20 +20,21 @@ import ua.gram.model.prototype.tower.TowerPrototype;
 public class TowerShopItem extends Group {
 
     private final DDGame game;
+    private final TowerPropertyPrototype prototype;
     private final Button item;
     private final Label price;
     private int indexInShop;
 
-    public TowerShopItem(DDGame game, TowerShop shop, TowerPrototype prototype, String style) {
+    public TowerShopItem(DDGame game, TowerShop shop, TowerPrototype proto, String style) {
         this.game = game;
+        this.prototype = proto.getFirstLevelProperty();
         Skin skin = game.getResources().getSkin();
         item = new Button(skin, style);
-        item.setSize(DDGame.DEFAULT_BUTTON_HEIGHT, DDGame.DEFAULT_BUTTON_HEIGHT);
-        price = new Label("" + prototype.getFirstLevelProperty().cost, skin, "16_tinted");
-        price.setVisible(true);
         item.setVisible(true);
+        price = new CustomLabel("" + prototype.cost, skin, "16_tinted");
+        price.setVisible(true);
 
-        item.addListener(new TowerShopInputListener(game, shop, prototype.name));
+        item.addListener(new TowerShopInputListener(game, shop, proto.name));
 
         addActor(item);
         addActor(price);
@@ -52,10 +55,10 @@ public class TowerShopItem extends Group {
     @Override
     public void act(float delta) {
         super.act(delta);
-        this.setDebug(DDGame.DEBUG);
+        setDebug(DDGame.DEBUG, true);
         if (!DDGame.PAUSE && item.isVisible()) {
             int money = game.getPlayer().getCoins();
-            int cost = Integer.parseInt(price.getText().toString());
+            int cost = prototype.cost;
             Touchable touchBefore = item.getTouchable();
             item.setTouchable(money < cost ? Touchable.disabled : Touchable.enabled);
             item.setDisabled(money < cost);

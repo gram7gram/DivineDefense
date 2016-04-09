@@ -8,8 +8,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import ua.gram.controller.Log;
 import ua.gram.model.prototype.GameActorPrototype;
+import ua.gram.utils.Log;
 
 /**
  * @author Gram <gram7gram@gmail.com>

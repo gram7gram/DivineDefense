@@ -8,20 +8,20 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.Align;
 
 import ua.gram.DDGame;
-import ua.gram.controller.Log;
 import ua.gram.controller.listener.NextLevelClickListener;
-import ua.gram.model.Level;
-import ua.gram.model.ResetableInterface;
+import ua.gram.model.Resetable;
 import ua.gram.model.actor.misc.CustomLabel;
+import ua.gram.model.level.Level;
 import ua.gram.model.prototype.ui.window.VictoryWindowPrototype;
 import ua.gram.model.prototype.ui.window.WindowPrototype;
+import ua.gram.utils.Log;
 
 /**
  * NOTE Add social integration?
  *
  * @author Gram <gram7gram@gmail.com>
  */
-public class VictoryWindow extends Window implements ResetableInterface {
+public class VictoryWindow extends Window implements Resetable {
 
     private final CustomLabel reward;
     private final DDGame game;

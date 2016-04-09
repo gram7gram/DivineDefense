@@ -16,10 +16,10 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.util.ByteArrayDataSource;
 
-import ua.gram.controller.Json;
-import ua.gram.controller.Log;
 import ua.gram.model.prototype.GamePrototype;
 import ua.gram.model.prototype.ReportPrototype;
+import ua.gram.utils.Json;
+import ua.gram.utils.Log;
 
 /**
  * @author Gram <gram7gram@gmail.com>

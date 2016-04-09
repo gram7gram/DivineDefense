@@ -1,12 +1,12 @@
 package ua.gram.model.state.tower.level1;
 
 import ua.gram.DDGame;
-import ua.gram.controller.Log;
-import ua.gram.model.TowerProperty;
 import ua.gram.model.actor.misc.ProgressBar;
 import ua.gram.model.actor.tower.Tower;
+import ua.gram.model.actor.tower.TowerProperty;
 import ua.gram.model.prototype.tower.TowerPropertyPrototype;
 import ua.gram.model.state.tower.TowerStateManager;
+import ua.gram.utils.Log;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -45,12 +45,8 @@ public class UpgradeState extends InactiveState {
         bar.addProgress(delta);
         if (bar.isFinished()) {
             TowerStateManager manager = actor.getStateManager();
-            manager.swap(actor,
-                    actor.getStateHolder().getCurrentLevel2State(),
-                    manager.getSearchState(), 2);
-            manager.swap(actor,
-                    actor.getStateHolder().getCurrentLevel1State(),
-                    manager.getActiveState(), 1);
+            manager.swap(actor, manager.getSearchState());
+            manager.swap(actor, manager.getActiveState());
         }
     }
 

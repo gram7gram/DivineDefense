@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.Align;
 
 import ua.gram.DDGame;
-import ua.gram.controller.Vector4;
+import ua.gram.utils.Vector4;
 
 /**
  * @author Gram <gram7gram@gmail.com>

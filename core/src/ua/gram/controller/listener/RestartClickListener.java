@@ -4,8 +4,8 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import ua.gram.DDGame;
-import ua.gram.controller.Log;
 import ua.gram.model.prototype.LevelPrototype;
+import ua.gram.utils.Log;
 import ua.gram.view.screen.ErrorScreen;
 import ua.gram.view.screen.LevelLoadingScreen;
 

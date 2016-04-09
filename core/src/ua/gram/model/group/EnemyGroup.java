@@ -7,10 +7,10 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import java.util.List;
 
 import ua.gram.DDGame;
-import ua.gram.controller.Log;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.actor.misc.HealthBar;
 import ua.gram.model.state.enemy.EnemyStateHolder;
+import ua.gram.utils.Log;
 
 
 /**

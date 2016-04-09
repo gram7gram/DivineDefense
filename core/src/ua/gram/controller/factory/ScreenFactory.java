@@ -6,7 +6,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 import ua.gram.DDGame;
-import ua.gram.controller.Log;
+import ua.gram.utils.Log;
 
 /**
  * @author Gram <gram7gram@gmail.com>

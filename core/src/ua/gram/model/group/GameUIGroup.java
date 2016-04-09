@@ -11,12 +11,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 
 import ua.gram.DDGame;
-import ua.gram.controller.Log;
 import ua.gram.controller.stage.StageHolder;
 import ua.gram.controller.stage.UIStage;
 import ua.gram.model.Initializer;
-import ua.gram.model.Level;
 import ua.gram.model.actor.misc.CustomLabel;
+import ua.gram.model.level.Level;
+import ua.gram.utils.Log;
 
 /**
  * @author Gram <gram7gram@gmail.com>

@@ -1,35 +1,21 @@
 package ua.gram.model.actor.tower;
 
 import ua.gram.DDGame;
-import ua.gram.model.actor.weapon.LaserWeapon;
+import ua.gram.controller.tower.TowerShop;
 import ua.gram.model.prototype.tower.TowerPrototype;
-import ua.gram.model.prototype.weapon.LaserWeaponPrototype;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
 public final class TowerPrimary extends Tower implements Cloneable {
 
-    public TowerPrimary(DDGame game, TowerPrototype prototype) {
-        super(game, prototype);
+    public TowerPrimary(DDGame game, TowerShop towerShop, TowerPrototype prototype) {
+        super(game, towerShop, prototype);
     }
 
     @Override
     public void update(float delta) {
         this.setOrigin(getX() + animationWidth / 2f, getY() + 70);
-    }
-
-    @Override
-    public LaserWeaponPrototype getWeaponPrototype() {
-        return (LaserWeaponPrototype) prototype.weapon;
-    }
-
-    @Override
-    public LaserWeapon getWeapon() {
-        if (weapon == null) {
-            weapon = new LaserWeapon(game.getResources(), this.getWeaponPrototype());
-        }
-        return (LaserWeapon) weapon;
     }
 
     @Override

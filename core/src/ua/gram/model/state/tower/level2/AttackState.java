@@ -5,13 +5,13 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import java.util.List;
 
 import ua.gram.DDGame;
-import ua.gram.controller.Log;
+import ua.gram.model.ActiveTarget;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.actor.tower.Tower;
 import ua.gram.model.actor.weapon.Weapon;
 import ua.gram.model.enums.Types;
-import ua.gram.model.group.EnemyGroup;
 import ua.gram.model.state.tower.TowerStateManager;
+import ua.gram.utils.Log;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -25,6 +25,7 @@ public class AttackState extends Level2State {
     @Override
     public void preManage(Tower actor) {
         super.preManage(actor);
+        actor.getParent().init();
         Log.info(actor + " is attacking...");
     }
 
@@ -36,12 +37,14 @@ public class AttackState extends Level2State {
     @Override
     public void manage(final Tower tower, float delta) {
         super.manage(tower, delta);
-        final Weapon weapon = tower.getWeapon();
-        if (tower.attackCount >= tower.getProperty().getRate() && weapon.isFinished()) {
-            List<EnemyGroup> victims = tower.getVictims();
-            if (victims != null && !victims.isEmpty()) {
-                for (EnemyGroup victimGroup : victims) {
-                    final Enemy victim = victimGroup.getRootActor();
+        if (tower.attackCount >= tower.getProperty().getRate()) {
+            List<ActiveTarget> targets = tower.getTargets();
+            if (!targets.isEmpty()) {
+                for (ActiveTarget target : targets) {
+
+                    final Weapon weapon = target.getWeapon();
+                    final Enemy victim = target.getTarget();
+
                     if (tower.isInRange(victim)) {
                         weapon.addAction(
                                 Actions.sequence(
@@ -56,25 +59,31 @@ public class AttackState extends Level2State {
                                             public void run() {
                                                 weapon.attack(tower, victim);
                                             }
+                                        }),
+                                        Actions.run(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                weapon.postAttack(tower, victim);
+                                            }
                                         })
                                 )
                         );
+                    } else {
+                        if (weapon.hasTarget()) {
+                            weapon.addAction(
+                                    Actions.run(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            weapon.postAttack(tower, victim);
+                                        }
+                                    })
+                            );
+                        }
                     }
-
-                    weapon.addAction(
-                            Actions.run(new Runnable() {
-                                @Override
-                                public void run() {
-                                    weapon.postAttack(tower, victim);
-                                }
-                            })
-                    );
                 }
 
                 TowerStateManager manager = tower.getTowerShop().getStateManager();
-                manager.swap(tower,
-                        tower.getStateHolder().getCurrentLevel2State(),
-                        manager.getSearchState(), 2);
+                manager.swap(tower, manager.getSearchState());
             } else {
                 tower.resetVictims();
             }

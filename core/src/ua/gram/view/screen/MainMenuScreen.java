@@ -6,9 +6,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import ua.gram.DDGame;
-import ua.gram.controller.Log;
 import ua.gram.controller.stage.MainMenuStage;
 import ua.gram.model.prototype.ui.window.WindowPrototype;
+import ua.gram.utils.Log;
 import ua.gram.view.AbstractScreen;
 
 /**

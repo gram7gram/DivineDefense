@@ -1,16 +1,17 @@
-package ua.gram.model;
+package ua.gram.model.player;
 
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import ua.gram.DDGame;
-import ua.gram.controller.Log;
+import ua.gram.model.Resetable;
 import ua.gram.model.prototype.PlayerPrototype;
 import ua.gram.model.prototype.progress.ProgressPrototype;
+import ua.gram.utils.Log;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class Player implements ResetableInterface {
+public class Player implements Resetable {
 
     public static String PLAYER_FACTION;
     public static String SYSTEM_FACTION;
@@ -165,5 +166,9 @@ public class Player implements ResetableInterface {
             throw new GdxRuntimeException("Missing player progress");
 
         ++prototype.progress.level.lastUnlocked;
+    }
+
+    public boolean hasCoins(int price) {
+        return coins >= price;
     }
 }

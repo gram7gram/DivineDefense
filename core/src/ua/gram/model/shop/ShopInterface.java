@@ -1,4 +1,4 @@
-package ua.gram.model;
+package ua.gram.model.shop;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 

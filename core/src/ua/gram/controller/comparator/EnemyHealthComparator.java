@@ -1,13 +1,13 @@
 package ua.gram.controller.comparator;
 
-import ua.gram.model.group.EnemyGroup;
-
 import java.util.Comparator;
+
+import ua.gram.model.actor.enemy.Enemy;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class EnemyHealthComparator implements Comparator<EnemyGroup> {
+public class EnemyHealthComparator implements Comparator<Enemy> {
 
     public static final int MAX = 1;
     public static final int MIN = -1;
@@ -18,8 +18,8 @@ public class EnemyHealthComparator implements Comparator<EnemyGroup> {
     }
 
     @Override
-    public int compare(EnemyGroup enemy1, EnemyGroup enemy2) {
-        return (int) ((enemy1.getRootActor().health - enemy2.getRootActor().health) * type);
+    public int compare(Enemy enemy1, Enemy enemy2) {
+        return (int) ((enemy1.health - enemy2.health) * type);
     }
 
     public void setType(int type) {

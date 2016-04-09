@@ -7,13 +7,15 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import ua.gram.DDGame;
-import ua.gram.controller.Resources;
+import ua.gram.controller.builder.WeaponBuilder;
 import ua.gram.model.prototype.weapon.LaserWeaponPrototype;
+import ua.gram.model.prototype.weapon.WeaponPrototype;
+import ua.gram.utils.Resources;
 
 /**
- * Weapon for TowerSecondary
  *
  * @author Gram <gram7gram@gmail.com>
  */
@@ -28,8 +30,13 @@ public final class LaserWeapon extends Weapon {
     private final Sprite end_over;
     private Color color_back;
 
-    public LaserWeapon(Resources resources, LaserWeaponPrototype prototype) {
-        super(resources, prototype);
+    public LaserWeapon(WeaponBuilder builder, Resources resources, WeaponPrototype proto) {
+        super(builder, resources, proto);
+
+        if (!(proto instanceof LaserWeaponPrototype))
+            throw new GdxRuntimeException("Prototype is not instance of LaserWeaponPrototype");
+        LaserWeaponPrototype prototype = (LaserWeaponPrototype) proto;
+
         this.color_back = prototype.colorBack;
         this.color_over = prototype.colorOver;
         this.start_back = new Sprite(resources.getRegisteredTexture(prototype.startBack));
@@ -42,7 +49,7 @@ public final class LaserWeapon extends Weapon {
 
     @Override
     public void update(float delta) {
-        if (targetGroup == null || towerGroup == null) return;
+        if (targetGroup == null) return;
 
         Vector2 towerPos = new Vector2(towerGroup.getOriginX(), towerGroup.getOriginY());
         Vector2 targetPos = new Vector2(targetGroup.getOriginX(), targetGroup.getOriginY());
@@ -84,14 +91,14 @@ public final class LaserWeapon extends Weapon {
         end_back.setColor(color_back);
         end_over.setColor(color_over);
 
-        this.setSize(
+        setSize(
                 start_back.getWidth(),
                 start_back.getHeight() + middle_back.getHeight() + end_back.getWidth()
         );
-        this.setOrigin(start_back.getWidth() / 2f, start_back.getHeight() / 2f);
-        this.setPosition(start_back.getX(), start_back.getY());
-        this.setRotation(degrees);
-        this.setVisible(true);
+        setOrigin(start_back.getWidth() / 2f, start_back.getHeight() / 2f);
+        setPosition(start_back.getX(), start_back.getY());
+        setRotation(degrees);
+        setVisible(true);
     }
 
     @Override
@@ -101,7 +108,7 @@ public final class LaserWeapon extends Weapon {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        if (DDGame.PAUSE || targetGroup == null || towerGroup == null) return;
+        if (DDGame.PAUSE || targetGroup == null) return;
 
         //NOTE Actual drawing is done on end(); if we do not end, we contaminate previous rendering.
         batch.end();
@@ -119,11 +126,11 @@ public final class LaserWeapon extends Weapon {
     }
 
     @Override
-    public void reset() {
-        super.reset();
-        this.setSize(0, 0);
-        this.setPosition(towerGroup.getOriginX(), towerGroup.getOriginY());
-        this.setRotation(0);
+    public void resetObject() {
+        super.resetObject();
+        setSize(0, 0);
+        setPosition(0, 0);
+        setRotation(0);
     }
 
     @Override
@@ -134,10 +141,6 @@ public final class LaserWeapon extends Weapon {
     @Override
     public LaserWeaponPrototype getPrototype() {
         return (LaserWeaponPrototype) prototype;
-    }
-
-    public void setBackColor(Color color) {
-        color_back = DDGame.DEBUG ? Color.BLUE : color;
     }
 
 }

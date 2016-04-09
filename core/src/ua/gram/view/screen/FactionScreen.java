@@ -6,9 +6,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import ua.gram.DDGame;
-import ua.gram.controller.Log;
-import ua.gram.controller.Resources;
 import ua.gram.controller.stage.FactionStage;
+import ua.gram.utils.Log;
+import ua.gram.utils.Resources;
 import ua.gram.view.AbstractScreen;
 
 /**

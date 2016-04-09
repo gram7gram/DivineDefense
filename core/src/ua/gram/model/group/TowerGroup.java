@@ -7,12 +7,12 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import ua.gram.DDGame;
-import ua.gram.controller.Log;
 import ua.gram.model.Initializer;
 import ua.gram.model.actor.misc.ProgressBar;
 import ua.gram.model.actor.tower.Tower;
 import ua.gram.model.actor.weapon.Weapon;
 import ua.gram.model.state.tower.TowerStateHolder;
+import ua.gram.utils.Log;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -22,7 +22,6 @@ public class TowerGroup extends ActorGroup<Tower> implements Initializer {
     private final DDGame game;
     private final ShapeRenderer shapeRenderer;
     private final Tower tower;
-    private final Weapon weapon;
     private final ProgressBar bar;
 
     public TowerGroup(DDGame game, Tower tower) {
@@ -30,19 +29,21 @@ public class TowerGroup extends ActorGroup<Tower> implements Initializer {
         this.game = game;
         this.tower = tower;
         shapeRenderer = new ShapeRenderer();
-        weapon = tower.getWeapon();
         bar = new ProgressBar(game.getResources().getSkin(), tower);
         bar.setDuration(tower.getPrototype().buildDelay);
         addActor(bar);
         addActor(tower);
-        addActor(weapon);
-        weapon.setVisible(false);
         Log.info("Group for " + tower + " is OK");
     }
 
     @Override
     public void init() {
+        if (tower.getTargets().isEmpty()) return;
+        Weapon weapon = tower.getWeapon();
         weapon.setSource(this);
+        weapon.setVisible(false);
+        if (!weapon.hasParent())
+            addActor(weapon);
     }
 
     @Override

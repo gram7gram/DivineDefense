@@ -1079,56 +1079,56 @@ size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-ui/button/tower-shop/tower-primary
+ui/button/tower-shop/primary
   rotate: false
   xy: 1, 1
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
-ui/button/tower-shop/tower-primary-disabled
+ui/button/tower-shop/primary-disabled
   rotate: false
   xy: 82, 1
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
-ui/button/tower-shop/tower-secondary
+ui/button/tower-shop/secondary
   rotate: false
   xy: 163, 1
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
-ui/button/tower-shop/tower-secondary-disabled
+ui/button/tower-shop/secondary-disabled
   rotate: false
   xy: 244, 1
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
-ui/button/tower-shop/tower-special
+ui/button/tower-shop/special
   rotate: false
   xy: 325, 1
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
-ui/button/tower-shop/tower-special-disabled
+ui/button/tower-shop/special-disabled
   rotate: false
   xy: 406, 1
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
-ui/button/tower-shop/tower-stun
+ui/button/tower-shop/stun
   rotate: false
   xy: 487, 1
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
-ui/button/tower-shop/tower-stun-disabled
+ui/button/tower-shop/stun-disabled
   rotate: false
   xy: 568, 1
   size: 80, 80
@@ -2236,28 +2236,28 @@ size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-towers/TowerSpecial/Angel/Lvl2/ATTACK
+towers/PRIMARY/Angel/Lvl2/ATTACK
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerSpecial/Angel/Lvl2/BUILD
+towers/PRIMARY/Angel/Lvl2/BUILD
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerSpecial/Angel/Lvl2/IDLE
+towers/PRIMARY/Angel/Lvl2/IDLE
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerSpecial/Angel/Lvl2/SELL
+towers/PRIMARY/Angel/Lvl2/SELL
   rotate: false
   xy: 1, 1
   size: 540, 90
@@ -2270,28 +2270,28 @@ size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-towers/TowerSpecial/Angel/Lvl4/ATTACK
+towers/PRIMARY/Angel/Lvl4/ATTACK
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerSpecial/Angel/Lvl4/BUILD
+towers/PRIMARY/Angel/Lvl4/BUILD
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerSpecial/Angel/Lvl4/IDLE
+towers/PRIMARY/Angel/Lvl4/IDLE
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerSpecial/Angel/Lvl4/SELL
+towers/PRIMARY/Angel/Lvl4/SELL
   rotate: false
   xy: 1, 1
   size: 540, 90
@@ -2304,28 +2304,28 @@ size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-towers/TowerSpecial/Angel/Lvl1/ATTACK
+towers/PRIMARY/Angel/Lvl1/ATTACK
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerSpecial/Angel/Lvl1/BUILD
+towers/PRIMARY/Angel/Lvl1/BUILD
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerSpecial/Angel/Lvl1/IDLE
+towers/PRIMARY/Angel/Lvl1/IDLE
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerSpecial/Angel/Lvl1/SELL
+towers/PRIMARY/Angel/Lvl1/SELL
   rotate: false
   xy: 1, 1
   size: 540, 90
@@ -2338,28 +2338,28 @@ size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-towers/TowerSpecial/Angel/Lvl3/ATTACK
+towers/PRIMARY/Angel/Lvl3/ATTACK
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerSpecial/Angel/Lvl3/BUILD
+towers/PRIMARY/Angel/Lvl3/BUILD
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerSpecial/Angel/Lvl3/IDLE
+towers/PRIMARY/Angel/Lvl3/IDLE
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerSpecial/Angel/Lvl3/SELL
+towers/PRIMARY/Angel/Lvl3/SELL
   rotate: false
   xy: 1, 1
   size: 540, 90
@@ -2372,28 +2372,28 @@ size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-towers/TowerPrimary/Angel/Lvl2/ATTACK
+towers/SPECIAL/Angel/Lvl2/ATTACK
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerPrimary/Angel/Lvl2/BUILD
+towers/SPECIAL/Angel/Lvl2/BUILD
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerPrimary/Angel/Lvl2/IDLE
+towers/SPECIAL/Angel/Lvl2/IDLE
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerPrimary/Angel/Lvl2/SELL
+towers/SPECIAL/Angel/Lvl2/SELL
   rotate: false
   xy: 1, 1
   size: 540, 90
@@ -2406,28 +2406,28 @@ size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-towers/TowerPrimary/Angel/Lvl4/ATTACK
+towers/SPECIAL/Angel/Lvl4/ATTACK
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerPrimary/Angel/Lvl4/BUILD
+towers/SPECIAL/Angel/Lvl4/BUILD
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerPrimary/Angel/Lvl4/IDLE
+towers/SPECIAL/Angel/Lvl4/IDLE
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerPrimary/Angel/Lvl4/SELL
+towers/SPECIAL/Angel/Lvl4/SELL
   rotate: false
   xy: 1, 1
   size: 540, 90
@@ -2440,28 +2440,28 @@ size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-towers/TowerPrimary/Angel/Lvl1/ATTACK
+towers/SPECIAL/Angel/Lvl1/ATTACK
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerPrimary/Angel/Lvl1/BUILD
+towers/SPECIAL/Angel/Lvl1/BUILD
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerPrimary/Angel/Lvl1/IDLE
+towers/SPECIAL/Angel/Lvl1/IDLE
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerPrimary/Angel/Lvl1/SELL
+towers/SPECIAL/Angel/Lvl1/SELL
   rotate: false
   xy: 1, 1
   size: 540, 90
@@ -2474,28 +2474,28 @@ size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-towers/TowerPrimary/Angel/Lvl3/ATTACK
+towers/SPECIAL/Angel/Lvl3/ATTACK
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerPrimary/Angel/Lvl3/BUILD
+towers/SPECIAL/Angel/Lvl3/BUILD
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerPrimary/Angel/Lvl3/IDLE
+towers/SPECIAL/Angel/Lvl3/IDLE
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerPrimary/Angel/Lvl3/SELL
+towers/SPECIAL/Angel/Lvl3/SELL
   rotate: false
   xy: 1, 1
   size: 540, 90
@@ -2508,28 +2508,28 @@ size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-towers/TowerSecondary/Angel/Lvl2/ATTACK
+towers/SECONDARY/Angel/Lvl2/ATTACK
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerSecondary/Angel/Lvl2/BUILD
+towers/SECONDARY/Angel/Lvl2/BUILD
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerSecondary/Angel/Lvl2/IDLE
+towers/SECONDARY/Angel/Lvl2/IDLE
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerSecondary/Angel/Lvl2/SELL
+towers/SECONDARY/Angel/Lvl2/SELL
   rotate: false
   xy: 1, 1
   size: 540, 90
@@ -2542,28 +2542,28 @@ size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-towers/TowerSecondary/Angel/Lvl4/ATTACK
+towers/SECONDARY/Angel/Lvl4/ATTACK
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerSecondary/Angel/Lvl4/BUILD
+towers/SECONDARY/Angel/Lvl4/BUILD
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerSecondary/Angel/Lvl4/IDLE
+towers/SECONDARY/Angel/Lvl4/IDLE
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerSecondary/Angel/Lvl4/SELL
+towers/SECONDARY/Angel/Lvl4/SELL
   rotate: false
   xy: 1, 1
   size: 540, 90
@@ -2576,28 +2576,28 @@ size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-towers/TowerSecondary/Angel/Lvl1/ATTACK
+towers/SECONDARY/Angel/Lvl1/ATTACK
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerSecondary/Angel/Lvl1/BUILD
+towers/SECONDARY/Angel/Lvl1/BUILD
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerSecondary/Angel/Lvl1/IDLE
+towers/SECONDARY/Angel/Lvl1/IDLE
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerSecondary/Angel/Lvl1/SELL
+towers/SECONDARY/Angel/Lvl1/SELL
   rotate: false
   xy: 1, 1
   size: 540, 90
@@ -2610,28 +2610,28 @@ size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-towers/TowerSecondary/Angel/Lvl3/ATTACK
+towers/SECONDARY/Angel/Lvl3/ATTACK
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerSecondary/Angel/Lvl3/BUILD
+towers/SECONDARY/Angel/Lvl3/BUILD
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerSecondary/Angel/Lvl3/IDLE
+towers/SECONDARY/Angel/Lvl3/IDLE
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerSecondary/Angel/Lvl3/SELL
+towers/SECONDARY/Angel/Lvl3/SELL
   rotate: false
   xy: 1, 1
   size: 540, 90
@@ -2644,28 +2644,28 @@ size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-towers/TowerStun/Angel/Lvl2/ATTACK
+towers/STUN/Angel/Lvl2/ATTACK
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerStun/Angel/Lvl2/BUILD
+towers/STUN/Angel/Lvl2/BUILD
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerStun/Angel/Lvl2/IDLE
+towers/STUN/Angel/Lvl2/IDLE
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerStun/Angel/Lvl2/SELL
+towers/STUN/Angel/Lvl2/SELL
   rotate: false
   xy: 1, 1
   size: 540, 90
@@ -2678,28 +2678,28 @@ size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-towers/TowerStun/Angel/Lvl4/ATTACK
+towers/STUN/Angel/Lvl4/ATTACK
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerStun/Angel/Lvl4/BUILD
+towers/STUN/Angel/Lvl4/BUILD
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerStun/Angel/Lvl4/IDLE
+towers/STUN/Angel/Lvl4/IDLE
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerStun/Angel/Lvl4/SELL
+towers/STUN/Angel/Lvl4/SELL
   rotate: false
   xy: 1, 1
   size: 540, 90
@@ -2712,28 +2712,28 @@ size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-towers/TowerStun/Angel/Lvl1/ATTACK
+towers/STUN/Angel/Lvl1/ATTACK
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerStun/Angel/Lvl1/BUILD
+towers/STUN/Angel/Lvl1/BUILD
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerStun/Angel/Lvl1/IDLE
+towers/STUN/Angel/Lvl1/IDLE
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerStun/Angel/Lvl1/SELL
+towers/STUN/Angel/Lvl1/SELL
   rotate: false
   xy: 1, 1
   size: 540, 90
@@ -2746,28 +2746,28 @@ size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-towers/TowerStun/Angel/Lvl3/ATTACK
+towers/STUN/Angel/Lvl3/ATTACK
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerStun/Angel/Lvl3/BUILD
+towers/STUN/Angel/Lvl3/BUILD
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerStun/Angel/Lvl3/IDLE
+towers/STUN/Angel/Lvl3/IDLE
   rotate: false
   xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
-towers/TowerStun/Angel/Lvl3/SELL
+towers/STUN/Angel/Lvl3/SELL
   rotate: false
   xy: 1, 1
   size: 540, 90

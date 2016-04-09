@@ -5,10 +5,10 @@ import com.badlogic.gdx.utils.Pool;
 import java.util.HashMap;
 
 import ua.gram.DDGame;
-import ua.gram.controller.Log;
 import ua.gram.controller.factory.EnemyFactory;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.prototype.enemy.EnemyPrototype;
+import ua.gram.utils.Log;
 
 /**
  * @author Gram <gram7gram@gmail.com>

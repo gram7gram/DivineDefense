@@ -1,11 +1,11 @@
 package ua.gram.view.screen;
 
 import ua.gram.DDGame;
-import ua.gram.controller.Log;
-import ua.gram.controller.Resources;
-import ua.gram.model.Level;
+import ua.gram.model.level.Level;
 import ua.gram.model.prototype.LevelConfigPrototype;
 import ua.gram.model.prototype.LevelPrototype;
+import ua.gram.utils.Log;
+import ua.gram.utils.Resources;
 import ua.gram.view.AbstractLoadingScreen;
 
 /**

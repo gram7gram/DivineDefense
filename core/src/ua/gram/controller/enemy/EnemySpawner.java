@@ -9,15 +9,15 @@ import java.util.Objects;
 import java.util.Stack;
 
 import ua.gram.DDGame;
-import ua.gram.controller.Log;
 import ua.gram.controller.pool.EnemyPool;
 import ua.gram.controller.stage.BattleStage;
-import ua.gram.model.EnemyPath;
-import ua.gram.model.Level;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.group.EnemyGroup;
+import ua.gram.model.level.Level;
+import ua.gram.model.map.EnemyPath;
 import ua.gram.model.prototype.enemy.EnemyPrototype;
 import ua.gram.model.state.enemy.EnemyStateManager;
+import ua.gram.utils.Log;
 
 /**
  * @author Gram <gram7gram@gmail.com>

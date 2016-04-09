@@ -6,13 +6,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 
 import ua.gram.DDGame;
 import ua.gram.controller.factory.DefeatListenerFactory;
-import ua.gram.model.ResetableInterface;
+import ua.gram.model.Resetable;
 import ua.gram.model.prototype.ui.DefeatOptionPrototype;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class DefeatOption extends Group implements ResetableInterface {
+public class DefeatOption extends Group implements Resetable {
 
     protected final DDGame game;
     protected final Button option;

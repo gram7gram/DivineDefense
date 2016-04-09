@@ -8,25 +8,26 @@ import java.util.Objects;
 import java.util.Set;
 
 import ua.gram.DDGame;
-import ua.gram.controller.Log;
+import ua.gram.controller.builder.WeaponBuilder;
 import ua.gram.controller.pool.TowerPool;
 import ua.gram.controller.stage.BattleStage;
 import ua.gram.controller.stage.StageHolder;
 import ua.gram.controller.stage.UIStage;
 import ua.gram.model.Initializer;
-import ua.gram.model.ShopInterface;
 import ua.gram.model.actor.PositionMarker;
 import ua.gram.model.actor.tower.Tower;
-import ua.gram.model.group.TowerControlsGroup;
+import ua.gram.model.group.TowerControls;
 import ua.gram.model.group.TowerGroup;
 import ua.gram.model.group.TowerShopGroup;
 import ua.gram.model.prototype.shop.TowerShopConfigPrototype;
 import ua.gram.model.prototype.tower.TowerPrototype;
+import ua.gram.model.shop.ShopInterface;
 import ua.gram.model.state.tower.TowerStateManager;
 import ua.gram.model.strategy.TowerStrategyManager;
+import ua.gram.utils.Log;
 
 /**
- * Container for singleton objects, which are shared among the Towers built.
+ * Container for singleton objects, which are shared among the Towers.
  * Handles managing TowerStates, purchasing and refunding.
  * @author Gram <gram7gram@gmail.com>
  */
@@ -40,20 +41,20 @@ public class TowerShop implements ShopInterface<TowerGroup>, Initializer {
     private final TowerAnimationProvider animationProvider;
     private final HashMap<TowerPrototype, Pool<Tower>> identityMap;
     private final PositionMarker marker;
-    private final Skin skin;
     private final TowerShopConfigPrototype prototype;
+    private final TowerControls controls;
+    private final WeaponBuilder weaponBuilder;
+    private final TowerPrototype[] towerPrototypes;
 
     public TowerShop(DDGame game, StageHolder stageHolder, TowerShopConfigPrototype prototype) {
         this.game = game;
         this.prototype = prototype;
         this.stageHolder = stageHolder;
-        skin = game.getResources().getSkin();
-        TowerPrototype[] prototypes = game.getPrototype().towers;
-        identityMap = new HashMap<TowerPrototype, Pool<Tower>>(prototypes.length);
+        towerPrototypes = game.getPrototype().towers;
+        identityMap = new HashMap<TowerPrototype, Pool<Tower>>(towerPrototypes.length);
 
-        registerAll(prototypes);
-
-        animationProvider = new TowerAnimationProvider(skin, prototypes);
+        Skin skin = game.getResources().getSkin();
+        animationProvider = new TowerAnimationProvider(skin, towerPrototypes);
         strategyManager = new TowerStrategyManager();
         stateManager = new TowerStateManager(game);
         towerShopGroup = new TowerShopGroup(game, prototype);
@@ -61,20 +62,29 @@ public class TowerShop implements ShopInterface<TowerGroup>, Initializer {
         marker = new PositionMarker(skin, "position-marker");
         marker.setVisible(false);
 
+        controls = new TowerControls(game, skin);
+
+        weaponBuilder = new WeaponBuilder(game, game.getPrototype().weapons);
+
         Log.info("TowerShop is OK");
     }
 
     @Override
     public void init() {
+
+        registerAll(towerPrototypes);
+
+        weaponBuilder.init();
         towerShopGroup.setTowerShop(this);
         towerShopGroup.init();
-        stageHolder.getUiStage().setTowerControls(new TowerControlsGroup(skin, this));
+        controls.setShop(this);
+        stageHolder.getUiStage().setTowerControls(controls);
         stageHolder.getBattleStage().addActor(marker);
     }
 
     private void registerAll(TowerPrototype[] prototypes) {
         for (TowerPrototype prototype : prototypes)
-            identityMap.put(prototype, new TowerPool(game, prototype));
+            identityMap.put(prototype, new TowerPool(game, this, prototype));
     }
 
     /**
@@ -91,15 +101,11 @@ public class TowerShop implements ShopInterface<TowerGroup>, Initializer {
         Tower tower = identityMap.get(prototype).obtain();
         Log.info(type + " is going to be preordered from TowerShop...");
         tower.setPosition(x, y);
-        tower.setTowerShop(this);
         stateManager.init(tower);
-        stateManager.swap(tower,
-                tower.getStateHolder().getCurrentLevel1State(),
-                stateManager.getPreorderState(), 1);
+        stateManager.swap(tower, stateManager.getPreorderState());
         TowerGroup group = new TowerGroup(game, tower);
-        group.init();
         stageHolder.getBattleStage().addActor(group);
-        Log.info(tower + " is preordered from TowerShop");
+        Log.info(tower + " has been preordered from TowerShop");
         return group;
     }
 
@@ -127,19 +133,15 @@ public class TowerShop implements ShopInterface<TowerGroup>, Initializer {
         Tower tower = group.getRootActor();
         Log.info(tower + " is going to be bought from TowerShop...");
         tower.setPosition(x, y);
-        stateManager.swap(tower,
-                tower.getStateHolder().getCurrentLevel1State(),
-                stateManager.getBuildingState(), 1);
-        Log.info(tower + " is bought from TowerShop");
+        stateManager.swap(tower, stateManager.getBuildingState());
+        Log.info(tower + " has been bought from TowerShop");
     }
 
     public void sell(TowerGroup group) {
         Tower tower = group.getRootActor();
         Log.info(tower + " is going to be sold to TowerShop...");
-        stateManager.swap(tower,
-                tower.getStateHolder().getCurrentLevel1State(),
-                stateManager.getSellingState(), 1);
-        Log.info(tower + " is sold to TowerShop");
+        stateManager.swap(tower, stateManager.getSellingState());
+        Log.info(tower + " has been sold to TowerShop");
     }
 
     public Pool<Tower> getPool(TowerPrototype prototype) {
@@ -149,15 +151,15 @@ public class TowerShop implements ShopInterface<TowerGroup>, Initializer {
     @Override
     public void refund(TowerGroup group) {
         Tower tower = group.getRootActor();
-        Pool<Tower> pool = this.getPool(tower.getPrototype());
+        Pool<Tower> pool = getPool(tower.getPrototype());
         if (pool == null) {
             Log.crit("Missing prototype in identity map");
         } else {
             pool.free(tower);
             Log.info(tower + " is set free");
         }
+        group.remove();
     }
-
 
     public TowerShopGroup getTowerShopGroup() {
         return towerShopGroup;
@@ -193,5 +195,9 @@ public class TowerShop implements ShopInterface<TowerGroup>, Initializer {
 
     public TowerShopConfigPrototype getPrototype() {
         return prototype;
+    }
+
+    public WeaponBuilder getWeaponBuilder() {
+        return weaponBuilder;
     }
 }

@@ -11,22 +11,22 @@ import com.badlogic.gdx.utils.Pool;
 import java.util.Random;
 
 import ua.gram.DDGame;
-import ua.gram.controller.Log;
 import ua.gram.controller.enemy.EnemyAnimationProvider;
 import ua.gram.controller.enemy.EnemySpawner;
 import ua.gram.controller.pool.animation.AnimationPool;
 import ua.gram.controller.stage.BattleStage;
 import ua.gram.model.Animator;
-import ua.gram.model.EnemyPath;
 import ua.gram.model.PoolableAnimation;
 import ua.gram.model.actor.GameActor;
 import ua.gram.model.actor.misc.PopupLabel;
 import ua.gram.model.enums.Types;
 import ua.gram.model.group.EnemyGroup;
+import ua.gram.model.map.EnemyPath;
 import ua.gram.model.map.Path;
 import ua.gram.model.prototype.enemy.EnemyPrototype;
 import ua.gram.model.state.enemy.EnemyStateHolder;
 import ua.gram.model.state.enemy.EnemyStateManager;
+import ua.gram.utils.Log;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -179,13 +179,13 @@ public abstract class Enemy extends GameActor<Types.EnemyState, Path.Types, Enem
         return animator.getPoolable().getAnimation();
     }
 
-    public void setAnimation(PoolableAnimation animation) {
-        this.animator.setPollable(animation);
-    }
-
     public void setAnimation(Types.EnemyState type) {
         AnimationPool pool = getAnimationProvider().get(prototype, type, getCurrentDirectionType());
         this.setAnimation(pool.obtain());
+    }
+
+    public void setAnimation(PoolableAnimation animation) {
+        this.animator.setPollable(animation);
     }
 
     public void damage(float damage) {

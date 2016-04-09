@@ -129,7 +129,7 @@
       "background": "ui/label/background-0.25"
     },
     "16_tinted": {
-      "font": "archery16white",
+      "font": "komika24white",
       "background": "ui/label/background-0.25"
     }
   },
@@ -233,21 +233,21 @@
       "up": "ui/static/faction-unknown-2",
       "down": "ui/static/faction-unknown-2"
     },
-    "shopitem-towerprimary": {
-      "up": "ui/button/tower-shop/tower-primary",
-      "disabled": "ui/button/tower-shop/tower-primary-disabled"
+    "shopitem-primary": {
+      "up": "ui/button/tower-shop/primary",
+      "disabled": "ui/button/tower-shop/primary-disabled"
     },
-    "shopitem-towersecondary": {
-      "up": "ui/button/tower-shop/tower-secondary",
-      "disabled": "ui/button/tower-shop/tower-secondary-disabled"
+    "shopitem-secondary": {
+      "up": "ui/button/tower-shop/secondary",
+      "disabled": "ui/button/tower-shop/secondary-disabled"
     },
-    "shopitem-towerstun": {
-      "up": "ui/button/tower-shop/tower-stun",
-      "disabled": "ui/button/tower-shop/tower-stun-disabled"
+    "shopitem-stun": {
+      "up": "ui/button/tower-shop/stun",
+      "disabled": "ui/button/tower-shop/stun-disabled"
     },
-    "shopitem-towerspecial": {
-      "up": "ui/button/tower-shop/tower-special",
-      "disabled": "ui/button/tower-shop/tower-special-disabled"
+    "shopitem-special": {
+      "up": "ui/button/tower-shop/special",
+      "disabled": "ui/button/tower-shop/special-disabled"
     },
     "sell-button": {
       "up": "ui/button/button-sell-up",

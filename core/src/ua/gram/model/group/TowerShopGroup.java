@@ -4,13 +4,13 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 import ua.gram.DDGame;
-import ua.gram.controller.Log;
 import ua.gram.controller.tower.TowerShop;
 import ua.gram.model.Initializer;
 import ua.gram.model.actor.market.TowerShopItem;
 import ua.gram.model.prototype.shop.TowerShopConfigPrototype;
 import ua.gram.model.prototype.shop.TowerShopItemPrototype;
 import ua.gram.model.prototype.tower.TowerPrototype;
+import ua.gram.utils.Log;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -38,15 +38,9 @@ public class TowerShopGroup extends Table implements Initializer {
             item.setVisible(true);
             item.addAction(
                     Actions.sequence(
-                            Actions.parallel(
-                                    Actions.alpha(0)
-//                                    Actions.moveBy(0, -DDGame.DEFAULT_BUTTON_HEIGHT)
-                            ),
+                            Actions.alpha(0),
                             Actions.delay(.2f * item.getIndexInShop()),
-                            Actions.parallel(
-                                    Actions.alpha(1, .15f)
-//                                    Actions.moveBy(0, DDGame.DEFAULT_BUTTON_HEIGHT, .2f)
-                            )
+                            Actions.alpha(1, .15f)
                     )
             );
             add(item).size(DDGame.DEFAULT_BUTTON_HEIGHT).pad(5);

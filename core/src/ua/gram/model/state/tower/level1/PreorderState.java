@@ -3,9 +3,9 @@ package ua.gram.model.state.tower.level1;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 
 import ua.gram.DDGame;
-import ua.gram.controller.Log;
 import ua.gram.model.actor.tower.Tower;
 import ua.gram.model.enums.Types;
+import ua.gram.utils.Log;
 
 /**
  * @author Gram <gram7gram@gmail.com>

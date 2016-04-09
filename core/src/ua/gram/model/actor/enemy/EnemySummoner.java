@@ -3,10 +3,10 @@ package ua.gram.model.actor.enemy;
 import com.badlogic.gdx.math.Vector2;
 
 import ua.gram.DDGame;
-import ua.gram.controller.Log;
 import ua.gram.model.map.Map;
 import ua.gram.model.map.Path;
 import ua.gram.model.prototype.enemy.AbilityUserPrototype;
+import ua.gram.utils.Log;
 
 /**
  * @author Gram <gram7gram@gmail.com>

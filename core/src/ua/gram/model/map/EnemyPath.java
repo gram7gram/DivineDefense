@@ -1,4 +1,4 @@
-package ua.gram.model;
+package ua.gram.model.map;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.GdxRuntimeException;
@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Stack;
 
 import ua.gram.DDGame;
-import ua.gram.model.map.Path;
 
 /**
  * @author Gram <gram7gram@gmail.com>

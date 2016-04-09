@@ -2,9 +2,10 @@ package ua.gram.model.group;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+
 import ua.gram.DDGame;
-import ua.gram.model.Player;
 import ua.gram.model.actor.misc.CustomLabel;
+import ua.gram.model.player.Player;
 
 /**
  * @author Gram <gram7gram@gmail.com>

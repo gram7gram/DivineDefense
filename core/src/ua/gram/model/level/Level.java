@@ -1,15 +1,16 @@
-package ua.gram.model;
+package ua.gram.model.level;
 
 import java.util.ArrayList;
 
 import ua.gram.DDGame;
-import ua.gram.controller.Log;
 import ua.gram.controller.enemy.EnemySpawner;
 import ua.gram.controller.stage.BattleStage;
 import ua.gram.controller.stage.UIStage;
+import ua.gram.model.Initializer;
 import ua.gram.model.map.Map;
 import ua.gram.model.prototype.LevelPrototype;
 import ua.gram.model.prototype.WavePrototype;
+import ua.gram.utils.Log;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -130,11 +131,11 @@ public class Level implements Initializer {
         return currentWave;
     }
 
-    public BattleStage getStage() {
+    public BattleStage getBattleStage() {
         return battleStage;
     }
 
-    public void setStage(BattleStage stage) {
+    public void setBattleStage(BattleStage stage) {
         this.battleStage = stage;
     }
 

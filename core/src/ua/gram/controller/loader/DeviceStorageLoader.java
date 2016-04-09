@@ -2,8 +2,8 @@ package ua.gram.controller.loader;
 
 import com.badlogic.gdx.files.FileHandle;
 
-import ua.gram.controller.Json;
 import ua.gram.model.prototype.RemoteConfigurationPrototype;
+import ua.gram.utils.Json;
 
 /**
  * @author Gram <gram7gram@gmail.com>

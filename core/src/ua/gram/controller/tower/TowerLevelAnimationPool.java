@@ -4,11 +4,11 @@ import java.util.EnumMap;
 import java.util.EnumSet;
 import java.util.Map;
 
-import ua.gram.controller.Log;
 import ua.gram.controller.pool.animation.AnimationPool;
 import ua.gram.controller.pool.animation.TowerAnimationController;
 import ua.gram.model.enums.Types;
 import ua.gram.model.prototype.tower.TowerPrototype;
+import ua.gram.utils.Log;
 
 /**
  * Holds Pools of Animations for each levelConfig and state of the TowerState.

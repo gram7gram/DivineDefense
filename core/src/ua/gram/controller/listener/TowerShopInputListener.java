@@ -4,14 +4,14 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import ua.gram.DDGame;
-import ua.gram.controller.Log;
 import ua.gram.controller.stage.BattleStage;
 import ua.gram.controller.stage.UIStage;
 import ua.gram.controller.tower.TowerShop;
 import ua.gram.controller.voter.TiledMapVoter;
-import ua.gram.model.Level;
 import ua.gram.model.actor.tower.Tower;
 import ua.gram.model.group.TowerGroup;
+import ua.gram.model.level.Level;
+import ua.gram.utils.Log;
 import ua.gram.view.screen.ErrorScreen;
 
 /**

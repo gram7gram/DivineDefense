@@ -2,10 +2,10 @@ package ua.gram.controller.enemy;
 
 import com.badlogic.gdx.math.Vector2;
 
-import ua.gram.controller.Log;
 import ua.gram.controller.pool.animation.AnimationPool;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.enums.Types;
+import ua.gram.utils.Log;
 
 /**
  * It is executed if Enemy changes direction.

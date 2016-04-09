@@ -4,12 +4,12 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import ua.gram.DDGame;
-import ua.gram.controller.Log;
 import ua.gram.controller.listener.WaveCounterClickListener;
 import ua.gram.model.Initializer;
-import ua.gram.model.Level;
 import ua.gram.model.actor.AnimatedActor;
+import ua.gram.model.level.Level;
 import ua.gram.model.prototype.CounterButtonPrototype;
+import ua.gram.utils.Log;
 
 /**
  * @author Gram <gram7gram@gmail.com>

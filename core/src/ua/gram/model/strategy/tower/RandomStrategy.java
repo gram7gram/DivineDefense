@@ -1,9 +1,9 @@
 package ua.gram.model.strategy.tower;
 
-import ua.gram.model.actor.tower.Tower;
-import ua.gram.model.group.EnemyGroup;
-
 import java.util.List;
+
+import ua.gram.model.actor.enemy.Enemy;
+import ua.gram.model.actor.tower.Tower;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -11,7 +11,7 @@ import java.util.List;
 public class RandomStrategy implements TowerStrategy {
 
     @Override
-    public List<EnemyGroup> chooseVictims(Tower tower, List<EnemyGroup> victims) {
+    public List<Enemy> chooseVictims(Tower tower, List<Enemy> targets) {
         throw new IllegalArgumentException("Not implemented yet");
     }
 

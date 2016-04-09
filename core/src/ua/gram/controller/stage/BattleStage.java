@@ -6,16 +6,16 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import java.util.ArrayList;
 
 import ua.gram.DDGame;
-import ua.gram.controller.Log;
 import ua.gram.controller.listener.ToggleTowerControlsListener;
 import ua.gram.model.Initializer;
-import ua.gram.model.Level;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.actor.tower.Tower;
 import ua.gram.model.group.ActorGroup;
 import ua.gram.model.group.EnemyGroup;
 import ua.gram.model.group.Layer;
 import ua.gram.model.group.TowerGroup;
+import ua.gram.model.level.Level;
+import ua.gram.utils.Log;
 
 /**
  * Contains major game objects, like towers and enemies.
@@ -25,8 +25,8 @@ import ua.gram.model.group.TowerGroup;
 public class BattleStage extends AbstractStage implements Initializer {
 
     private final Level level;
+    private final ToggleTowerControlsListener controlsListener;
     private volatile ArrayList<Layer> indexes;
-    private ToggleTowerControlsListener controlsListener;
     private ArrayList<int[]> towerPositions;
 
     public BattleStage(DDGame game, Level level) {
@@ -39,6 +39,7 @@ public class BattleStage extends AbstractStage implements Initializer {
             indexes.add(layer);
             addActor(layer);
         }
+        controlsListener = new ToggleTowerControlsListener();
         Log.info(indexes.size() + " indexes are OK");
         Log.info("BattleStage is OK");
     }
@@ -53,10 +54,12 @@ public class BattleStage extends AbstractStage implements Initializer {
         super.act(delta);
         setDebugAll(DDGame.DEBUG);
         if (!DDGame.PAUSE) {
-            if (level.getStage() == null) {
-                level.setStage(this);
+            if (level.getBattleStage() == null) {
+                level.setBattleStage(this);
                 level.createSpawner();
-                controlsListener = new ToggleTowerControlsListener(this, stageHolder.getUiStage());
+                if (stageHolder == null)
+                    throw new NullPointerException("Missing StageHolder for listener");
+                controlsListener.setStageHolder(stageHolder);
                 addListener(controlsListener);
             }
             level.update(delta);

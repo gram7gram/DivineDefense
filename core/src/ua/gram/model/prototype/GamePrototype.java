@@ -2,6 +2,7 @@ package ua.gram.model.prototype;
 
 import ua.gram.model.prototype.enemy.EnemyPrototype;
 import ua.gram.model.prototype.tower.TowerPrototype;
+import ua.gram.model.prototype.weapon.WeaponPrototype;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -11,8 +12,8 @@ public abstract class GamePrototype<P extends ParametersPrototype> extends Proto
     public PlayerPrototype player;
     public EnemyPrototype[] enemies;
     public TowerPrototype[] towers;
+    public WeaponPrototype[] weapons;
     public LevelConfigPrototype levelConfig;
-    public RemoteConfigurationPrototype remoteConfig;
     public UIPrototype ui;
 
     public abstract String getConfigPath();

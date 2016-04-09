@@ -3,7 +3,6 @@ package ua.gram.model.state.tower;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import ua.gram.DDGame;
-import ua.gram.controller.Log;
 import ua.gram.model.actor.tower.Tower;
 import ua.gram.model.state.StateInterface;
 import ua.gram.model.state.StateManager;
@@ -18,21 +17,22 @@ import ua.gram.model.state.tower.level2.AttackState;
 import ua.gram.model.state.tower.level2.IdleState;
 import ua.gram.model.state.tower.level2.Level2State;
 import ua.gram.model.state.tower.level2.SearchState;
+import ua.gram.utils.Log;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
 public class TowerStateManager extends StateManager<Tower> {
 
-    private TowerState activeState;
-    private TowerState inactiveState;
-    private TowerState buildingState;
-    private TowerState sellingState;
-    private TowerState attackState;
-    private TowerState searchState;
-    private TowerState idleState;
-    private TowerState preorderState;
-    private TowerState upgradeState;
+    private ActiveState activeState;
+    private InactiveState inactiveState;
+    private BuildingState buildingState;
+    private SellingState sellingState;
+    private AttackState attackState;
+    private SearchState searchState;
+    private IdleState idleState;
+    private PreorderState preorderState;
+    private UpgradeState upgradeState;
 
     public TowerStateManager(DDGame game) {
         super(game);
@@ -99,39 +99,55 @@ public class TowerStateManager extends StateManager<Tower> {
         Log.info(tower + " states have been reset");
     }
 
-    public TowerState getActiveState() {
+    public ActiveState getActiveState() {
         return activeState;
     }
 
-    public TowerState getInactiveState() {
+    public InactiveState getInactiveState() {
         return inactiveState;
     }
 
-    public TowerState getBuildingState() {
+    public BuildingState getBuildingState() {
         return buildingState;
     }
 
-    public TowerState getSellingState() {
+    public SellingState getSellingState() {
         return sellingState;
     }
 
-    public TowerState getAttackState() {
+    public AttackState getAttackState() {
         return attackState;
     }
 
-    public TowerState getSearchState() {
+    public SearchState getSearchState() {
         return searchState;
     }
 
-    public TowerState getIdleState() {
+    public IdleState getIdleState() {
         return idleState;
     }
 
-    public TowerState getPreorderState() {
+    public PreorderState getPreorderState() {
         return preorderState;
     }
 
-    public TowerState getUpgradeState() {
+    public UpgradeState getUpgradeState() {
         return upgradeState;
+    }
+
+    public synchronized void swap(Tower actor, Level1State before, Level1State after) {
+        this.swap(actor, before, after, 1);
+    }
+
+    public synchronized void swap(Tower actor, Level1State after) {
+        this.swap(actor, actor.getStateHolder().getCurrentLevel1State(), after, 1);
+    }
+
+    public synchronized void swap(Tower actor, Level2State before, Level2State after) {
+        this.swap(actor, before, after, 2);
+    }
+
+    public synchronized void swap(Tower actor, Level2State after) {
+        this.swap(actor, actor.getStateHolder().getCurrentLevel2State(), after, 2);
     }
 }

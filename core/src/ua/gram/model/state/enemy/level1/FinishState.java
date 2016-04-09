@@ -1,12 +1,12 @@
 package ua.gram.model.state.enemy.level1;
 
 import ua.gram.DDGame;
-import ua.gram.controller.Log;
 import ua.gram.controller.enemy.EnemySpawner;
-import ua.gram.model.Player;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.enums.Types;
 import ua.gram.model.group.EnemyGroup;
+import ua.gram.model.player.Player;
+import ua.gram.utils.Log;
 
 /**
  * @author Gram <gram7gram@gmail.com>

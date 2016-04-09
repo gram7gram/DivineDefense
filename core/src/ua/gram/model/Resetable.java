@@ -3,6 +3,6 @@ package ua.gram.model;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public interface ResetableInterface {
+public interface Resetable {
     void resetObject();
 }

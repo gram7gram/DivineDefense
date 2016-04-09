@@ -5,7 +5,7 @@ import com.badlogic.gdx.ApplicationListener;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public interface ModuleInterface {
+public interface Module {
 
     ApplicationListener getApp();
     void initModule();

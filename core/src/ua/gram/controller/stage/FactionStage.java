@@ -11,9 +11,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import ua.gram.DDGame;
-import ua.gram.controller.Log;
-import ua.gram.model.Player;
+import ua.gram.model.player.Player;
 import ua.gram.model.window.ConfirmWindow;
+import ua.gram.utils.Log;
 import ua.gram.view.screen.MainMenuScreen;
 
 /**

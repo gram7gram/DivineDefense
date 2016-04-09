@@ -1,7 +1,6 @@
 package ua.gram.model.prototype.tower;
 
 import ua.gram.model.prototype.GameActorPrototype;
-import ua.gram.model.prototype.weapon.WeaponPrototype;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -9,7 +8,7 @@ import ua.gram.model.prototype.weapon.WeaponPrototype;
 public class TowerPrototype extends GameActorPrototype {
 
     public float buildDelay;
-    public WeaponPrototype weapon;
+    public String weapon;
     public TowerPropertyPrototype[] properties;
 
     public TowerPropertyPrototype getFirstLevelProperty() {
@@ -28,9 +27,5 @@ public class TowerPrototype extends GameActorPrototype {
             throw new NullPointerException("Missing first tower property");
 
         return prototype;
-    }
-
-    public WeaponPrototype getWeapon() {
-        return weapon;
     }
 }

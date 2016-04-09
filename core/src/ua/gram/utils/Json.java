@@ -1,6 +1,6 @@
-package ua.gram.controller;
+package ua.gram.utils;
 
-import ua.gram.model.ResetableInterface;
+import ua.gram.model.Resetable;
 
 /**
  * NOTE Do not serialize classes from external libraries
@@ -17,8 +17,8 @@ public class Json extends com.badlogic.gdx.utils.Json {
             writeValue("class", className);
         }
 
-        if (object instanceof ResetableInterface) {
-            ((ResetableInterface) object).resetObject();
+        if (object instanceof Resetable) {
+            ((Resetable) object).resetObject();
         }
 
         super.writeFields(object);

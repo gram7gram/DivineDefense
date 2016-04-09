@@ -5,10 +5,10 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.JsonWriter;
 
-import ua.gram.controller.Json;
-import ua.gram.controller.Log;
 import ua.gram.controller.factory.LoaderFactory;
 import ua.gram.model.prototype.GamePrototype;
+import ua.gram.utils.Json;
+import ua.gram.utils.Log;
 
 /**
  * @author Gram <gram7gram@gmail.com>

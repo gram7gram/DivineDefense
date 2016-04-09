@@ -8,14 +8,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 
 import ua.gram.DDGame;
-import ua.gram.controller.Log;
-import ua.gram.model.ResetableInterface;
+import ua.gram.model.Resetable;
 import ua.gram.model.actor.tower.Tower;
+import ua.gram.utils.Log;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class ProgressBar extends Actor implements ResetableInterface {
+public class ProgressBar extends Actor implements Resetable {
 
     private final Tower tower;
     private final NinePatchDrawable progressBar;

@@ -2,7 +2,7 @@ package ua.gram.model.map;
 
 import com.badlogic.gdx.math.Vector2;
 
-import ua.gram.controller.Log;
+import ua.gram.utils.Log;
 
 /**
  * @author Gram <gram7gram@gmail.com>

@@ -9,12 +9,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import ua.gram.DDGame;
-import ua.gram.controller.Vector4;
 import ua.gram.controller.factory.ScreenFactory;
 import ua.gram.model.prototype.ui.ButtonPrototype;
 import ua.gram.model.prototype.ui.ScreenButtonPrototype;
 import ua.gram.model.prototype.ui.window.MainMenuWindowPrototype;
 import ua.gram.model.prototype.ui.window.WindowPrototype;
+import ua.gram.utils.Vector4;
 
 /**
  * @author Gram <gram7gram@gmail.com>

@@ -4,9 +4,11 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
-import ua.gram.controller.Resources;
+import ua.gram.controller.builder.WeaponBuilder;
 import ua.gram.model.group.Layer;
 import ua.gram.model.prototype.weapon.BombWeaponPrototype;
+import ua.gram.model.prototype.weapon.WeaponPrototype;
+import ua.gram.utils.Resources;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -15,8 +17,8 @@ public class BombWeapon extends Weapon implements AOEWeapon {
 
     private Layer currentLayer;
 
-    public BombWeapon(Resources resources, BombWeaponPrototype prototype) {
-        super(resources, prototype);
+    public BombWeapon(WeaponBuilder builder, Resources resources, WeaponPrototype prototype) {
+        super(builder, resources, prototype);
     }
 
     @Override
@@ -45,19 +47,16 @@ public class BombWeapon extends Weapon implements AOEWeapon {
     @Override
     public void update(float delta) {
         if (isOutOfBounds()) {
-            this.setPosition(
-                    targetGroup.getOriginX() - this.getWidth() / 2f,
-                    targetGroup.getOriginY() - this.getHeight() / 2f + 10);
+            setPosition(
+                    targetGroup.getOriginX() - getWidth() / 2f,
+                    targetGroup.getOriginY() - getHeight() / 2f + 10);
         }
     }
 
     @Override
-    public void reset() {
-        super.reset();
-        this.setPosition(0, 0);
-        //Return Weapon to TowerGroup
-        this.remove();
-        towerGroup.addActor(this);
+    public void resetObject() {
+        super.resetObject();
+        setPosition(0, 0);
         currentLayer = null;
     }
 
@@ -70,6 +69,4 @@ public class BombWeapon extends Weapon implements AOEWeapon {
     public float getAOERange() {
         return getPrototype().aoeRange;
     }
-
-
 }

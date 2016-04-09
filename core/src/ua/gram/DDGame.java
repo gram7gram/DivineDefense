@@ -14,15 +14,15 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.nio.IntBuffer;
 
-import ua.gram.controller.Log;
-import ua.gram.controller.Resources;
-import ua.gram.controller.StringProcessor;
 import ua.gram.controller.security.SecurityManager;
-import ua.gram.model.Player;
 import ua.gram.model.Speed;
+import ua.gram.model.player.Player;
 import ua.gram.model.prototype.GamePrototype;
 import ua.gram.model.prototype.LevelPrototype;
 import ua.gram.model.prototype.ParametersPrototype;
+import ua.gram.utils.Log;
+import ua.gram.utils.Resources;
+import ua.gram.utils.StringProcessor;
 import ua.gram.view.screen.LaunchLoadingScreen;
 
 /**

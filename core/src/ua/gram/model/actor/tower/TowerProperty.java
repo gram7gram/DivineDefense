@@ -1,4 +1,4 @@
-package ua.gram.model;
+package ua.gram.model.actor.tower;
 
 import ua.gram.model.prototype.tower.TowerPropertyPrototype;
 

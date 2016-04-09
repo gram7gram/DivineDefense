@@ -12,8 +12,8 @@ public class PoolableAnimation implements Pool.Poolable {
     private final Animation a;
 
     public PoolableAnimation(float delay, TextureRegion[] tiles) {
-        this.a = new Animation(delay, tiles);
-        this.a.setPlayMode(Animation.PlayMode.LOOP);
+        a = new Animation(delay, tiles);
+        a.setPlayMode(Animation.PlayMode.LOOP);
     }
 
     @Override

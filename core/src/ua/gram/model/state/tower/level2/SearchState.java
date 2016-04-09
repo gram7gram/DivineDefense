@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ua.gram.DDGame;
-import ua.gram.controller.Log;
+import ua.gram.model.ActiveTarget;
+import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.actor.tower.Tower;
+import ua.gram.model.actor.weapon.Weapon;
 import ua.gram.model.group.EnemyGroup;
 import ua.gram.model.state.tower.TowerStateManager;
+import ua.gram.utils.Log;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -21,7 +24,7 @@ public class SearchState extends IdleState {
     @Override
     public void preManage(Tower tower) {
         super.preManage(tower);
-        Log.info(tower + " scannes for victims...");
+        Log.info(tower + " searches for targets...");
     }
 
     @Override
@@ -30,23 +33,29 @@ public class SearchState extends IdleState {
             tower.attackCount = 0;
             int limit = 5;
 
-            List<EnemyGroup> victims = new ArrayList<EnemyGroup>(limit);
+            List<Enemy> targets = new ArrayList<Enemy>(limit);
             for (EnemyGroup group : tower.getStage().getEnemyGroupsOnMap()) {
-                if (victims.size() == limit) break;
+                if (targets.size() == limit) break;
                 if (group.getRootActor().isAlive()
                         && tower.isInRange(group.getRootActor())) {
-                    victims.add(group);
+                    targets.add(group.getRootActor());
                 }
             }
 
-            if (!victims.isEmpty()) {
-                List<EnemyGroup> filteredVictims = tower.getCurrentTowerStrategy().chooseVictims(tower, victims);
-                if (!filteredVictims.isEmpty()) {
-                    tower.setVictims(filteredVictims);
+            Log.info(tower + " has found " + targets.size() + " targets in range");
+
+            if (!targets.isEmpty()) {
+                List<Enemy> filteredTargets = tower.getCurrentTowerStrategy().chooseVictims(tower, targets);
+                Log.info(tower + " aims at " + filteredTargets.size()
+                        + (filteredTargets.size() == 1 ? " target" : " targets"));
+                if (!filteredTargets.isEmpty()) {
+                    for (Enemy enemy : filteredTargets) {
+                        Weapon weapon = tower.getWeaponPool().obtain();
+                        ActiveTarget target = new ActiveTarget(tower, weapon, enemy);
+                        tower.addTarget(target);
+                    }
                     TowerStateManager manager = tower.getTowerShop().getStateManager();
-                    manager.swap(tower,
-                            tower.getStateHolder().getCurrentLevel2State(),
-                            manager.getAttackState(), 2);
+                    manager.swap(tower, manager.getAttackState());
                 } else tower.resetVictims();
             } else tower.resetVictims();
 

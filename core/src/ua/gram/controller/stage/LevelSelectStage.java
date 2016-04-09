@@ -3,9 +3,9 @@ package ua.gram.controller.stage;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import ua.gram.DDGame;
-import ua.gram.controller.Log;
 import ua.gram.model.group.LevelSelectWindow;
 import ua.gram.model.prototype.LevelPrototype;
+import ua.gram.utils.Log;
 
 /**
  * @author Gram <gram7gram@gmail.com>

@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import java.util.Arrays;
 
 import ua.gram.DDGame;
-import ua.gram.controller.Log;
+import ua.gram.utils.Log;
 
 /**
  * @author Gram <gram7gram@gmail.com>

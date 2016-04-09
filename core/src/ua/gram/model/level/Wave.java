@@ -1,7 +1,7 @@
-package ua.gram.model;
+package ua.gram.model.level;
 
-import ua.gram.controller.Log;
 import ua.gram.model.prototype.WavePrototype;
+import ua.gram.utils.Log;
 
 /**
  * @author Gram <gram7gram@gmail.com>

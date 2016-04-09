@@ -5,10 +5,10 @@ import com.badlogic.gdx.math.Vector2;
 import java.util.ArrayList;
 import java.util.List;
 
+import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.actor.tower.Tower;
-import ua.gram.model.actor.weapon.AOEWeapon;
-import ua.gram.model.actor.weapon.Weapon;
-import ua.gram.model.group.EnemyGroup;
+import ua.gram.model.prototype.weapon.AOEWeaponPrototype;
+import ua.gram.model.prototype.weapon.WeaponPrototype;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -16,30 +16,32 @@ import ua.gram.model.group.EnemyGroup;
 public class AOEStrategy implements TowerStrategy {
 
     @Override
-    public List<EnemyGroup> chooseVictims(Tower tower, List<EnemyGroup> victims) {
+    public List<Enemy> chooseVictims(Tower tower, List<Enemy> targets) {
 
-        if (victims.size() == 1) return victims;
+        if (targets.size() == 0) throw new NullPointerException("Nothing to compare");
 
-        Weapon weapon = tower.getWeapon();
+        if (targets.size() == 1) return targets;
 
-        if (!(weapon instanceof AOEWeapon))
+        WeaponPrototype weapon = tower.getWeaponPool().getPrototype();
+
+        if (!(weapon instanceof AOEWeaponPrototype))
             throw new IllegalArgumentException("Non-AOE weapon should not have access to this method");
 
-        return getVictimsInRange(victims, (AOEWeapon) weapon);
+        return getVictimsInRange(targets, (AOEWeaponPrototype) weapon);
     }
 
-    protected List<EnemyGroup> getVictimsInRange(List<EnemyGroup> victims, AOEWeapon weapon) {
-        EnemyGroup mainVictim = victims.get(0);
+    protected List<Enemy> getVictimsInRange(List<Enemy> targets, AOEWeaponPrototype weapon) {
+        Enemy mainTarget = targets.get(0);
 
-        ArrayList<EnemyGroup> victimInRange = new ArrayList<EnemyGroup>(5);
+        ArrayList<Enemy> victimInRange = new ArrayList<Enemy>(5);
 
-        for (EnemyGroup victim : victims) {
-            if (victim == mainVictim) continue;
-            Vector2 victimPosition = victim.getRootActor().getCurrentPosition();
-            Vector2 mainVictimPosition = mainVictim.getRootActor().getCurrentPosition();
+        for (Enemy target : targets) {
+            if (target == mainTarget) continue;
+            Vector2 victimPosition = target.getCurrentPosition();
+            Vector2 mainVictimPosition = mainTarget.getCurrentPosition();
             float distance = victimPosition.dst(mainVictimPosition);
-            if (distance <= weapon.getAOERange()) {
-                victimInRange.add(victim);
+            if (distance <= weapon.aoeRange) {
+                victimInRange.add(target);
             }
         }
 

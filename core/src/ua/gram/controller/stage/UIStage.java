@@ -6,19 +6,19 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import ua.gram.DDGame;
-import ua.gram.controller.Log;
 import ua.gram.controller.tower.TowerShop;
 import ua.gram.model.Initializer;
-import ua.gram.model.Level;
 import ua.gram.model.actor.misc.CounterButton;
 import ua.gram.model.group.GameUIGroup;
-import ua.gram.model.group.TowerControlsGroup;
+import ua.gram.model.group.TowerControls;
+import ua.gram.model.level.Level;
 import ua.gram.model.prototype.CounterButtonPrototype;
 import ua.gram.model.prototype.UIPrototype;
 import ua.gram.model.prototype.shop.TowerShopConfigPrototype;
 import ua.gram.model.window.DefeatWindow;
 import ua.gram.model.window.PauseWindow;
 import ua.gram.model.window.VictoryWindow;
+import ua.gram.utils.Log;
 
 /**
  * TODO Display Current levelConfig at the beginning.
@@ -36,7 +36,7 @@ public class UIStage extends AbstractStage implements Initializer {
     private final GameUIGroup gameUIGroup;
     private final CounterButton counter;
     private TowerShop towerShop;
-    private TowerControlsGroup towerControls;
+    private TowerControls towerControls;
 
     public UIStage(DDGame game, Level level, UIPrototype prototype) {
         super(game);
@@ -134,11 +134,11 @@ public class UIStage extends AbstractStage implements Initializer {
         }
     }
 
-    public TowerControlsGroup getTowerControls() {
+    public TowerControls getTowerControls() {
         return towerControls;
     }
 
-    public void setTowerControls(TowerControlsGroup controls) {
+    public void setTowerControls(TowerControls controls) {
         if (towerControls != null) throw new IllegalArgumentException("Already initialized");
         towerControls = controls;
         controls.setVisible(false);
@@ -155,16 +155,6 @@ public class UIStage extends AbstractStage implements Initializer {
 
     public GameUIGroup getGameUIGroup() {
         return gameUIGroup;
-    }
-
-    public TowerShop getTowerShop() {
-        return towerShop;
-    }
-
-    public void hideAllWindows() {
-        pauseWindow.setVisible(false);
-        victoryWindow.setVisible(false);
-        defeatWindow.setVisible(false);
     }
 
     public void toggleDefeatWindow() {

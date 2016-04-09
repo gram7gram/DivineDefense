@@ -9,7 +9,7 @@ import com.badlogic.gdx.backends.android.AndroidFiles;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import ua.gram.DDGame;
-import ua.gram.ModuleInterface;
+import ua.gram.Module;
 import ua.gram.android.prototype.AndroidGamePrototype;
 import ua.gram.controller.security.SecurityManager;
 import ua.gram.model.prototype.ParametersPrototype;
@@ -17,7 +17,7 @@ import ua.gram.model.prototype.ParametersPrototype;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class AndroidModule implements ModuleInterface {
+public class AndroidModule implements Module {
 
     private final AndroidGamePrototype prototype;
     private final SecurityManager<AndroidGamePrototype> securityManager;

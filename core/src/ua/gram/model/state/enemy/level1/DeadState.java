@@ -5,11 +5,11 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 import java.util.Random;
 
 import ua.gram.DDGame;
-import ua.gram.controller.Log;
 import ua.gram.controller.enemy.EnemySpawner;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.enums.Types;
 import ua.gram.model.group.EnemyGroup;
+import ua.gram.utils.Log;
 
 /**
  * @author Gram <gram7gram@gmail.com>

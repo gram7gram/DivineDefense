@@ -288,22 +288,22 @@
       "class": "ua.gram.model.prototype.shop.TowerShopConfigPrototype",
       "items": [
         {
-          "name": "TowerPrimary",
+          "name": "PRIMARY",
           "unlocked": true,
           "order": 1
         },
         {
-          "name": "TowerSecondary",
+          "name": "SECONDARY",
           "unlocked": true,
           "order": 2
         },
         {
-          "name": "TowerStun",
+          "name": "STUN",
           "unlocked": true,
           "order": 3
         },
         {
-          "name": "TowerSpecial",
+          "name": "SPECIAL",
           "unlocked": true,
           "order": 4
         }
@@ -384,33 +384,12 @@
   ],
   "towers": [
     {
-      "name": "TowerPrimary",
+      "name": "PRIMARY",
       "powerLevel": 1,
       "buildDelay": 2,
       "width": 60,
       "height": 90,
-      "weapon": {
-        "class": "ua.gram.model.prototype.weapon.LaserWeaponPrototype",
-        "type": "Laser",
-        "colorOver": {
-          "r": 1,
-          "g": 1,
-          "b": 1,
-          "a": 1
-        },
-        "colorBack": {
-          "r": 1,
-          "g": 0,
-          "b": 0,
-          "a": 1
-        },
-        "startBack": "data/images/misc/start_back.png",
-        "startOver": "data/images/misc/start_over.png",
-        "middleBack": "data/images/misc/middle_back.png",
-        "middleOver": "data/images/misc/middle_over.png",
-        "endBack": "data/images/misc/end_back.png",
-        "endOver": "data/images/misc/end_over.png"
-      },
+      "weapon": "Laser",
       "properties": [
         {
           "towerLevel": 1,
@@ -443,19 +422,12 @@
       ]
     },
     {
-      "name": "TowerSecondary",
+      "name": "SECONDARY",
       "powerLevel": 1,
       "buildDelay": 2,
       "width": 60,
       "height": 90,
-      "weapon": {
-        "class": "ua.gram.model.prototype.weapon.BombWeaponPrototype",
-        "type": "Bomb",
-        "region": "weapons/SECONDARY_WEAPON",
-        "delay": 0.07,
-        "frames": 12,
-        "aoeRange": 60
-      },
+      "weapon": "Bomb",
       "properties": [
         {
           "towerLevel": 1,
@@ -488,18 +460,12 @@
       ]
     },
     {
-      "name": "TowerSpecial",
+      "name": "SPECIAL",
       "powerLevel": 1,
       "buildDelay": 2,
       "width": 60,
       "height": 90,
-      "weapon": {
-        "class": "ua.gram.model.prototype.weapon.LightningWeaponPrototype",
-        "type": "Lightning",
-        "region": "weapons/SPECIAL_WEAPON",
-        "delay": 0.05,
-        "frames": 10
-      },
+      "weapon": "Lightning",
       "properties": [
         {
           "towerLevel": 1,
@@ -532,19 +498,12 @@
       ]
     },
     {
-      "name": "TowerStun",
+      "name": "STUN",
       "powerLevel": 1,
       "buildDelay": 2,
       "width": 60,
       "height": 90,
-      "weapon": {
-        "class": "ua.gram.model.prototype.weapon.FreezeWeaponPrototype",
-        "type": "Freeze",
-        "region": "weapons/STUN_WEAPON",
-        "delay": 0.15,
-        "frames": 4,
-        "aoeRange": 180
-      },
+      "weapon": "Freeze",
       "properties": [
         {
           "towerLevel": 1,
@@ -575,6 +534,53 @@
           "cost": 100
         }
       ]
+    }
+  ],
+  "weapons": [
+    {
+      "class": "ua.gram.model.prototype.weapon.LaserWeaponPrototype",
+      "type": "Laser",
+      "colorOver": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      },
+      "colorBack": {
+        "r": 1,
+        "g": 0,
+        "b": 0,
+        "a": 1
+      },
+      "startBack": "data/images/misc/start_back.png",
+      "startOver": "data/images/misc/start_over.png",
+      "middleBack": "data/images/misc/middle_back.png",
+      "middleOver": "data/images/misc/middle_over.png",
+      "endBack": "data/images/misc/end_back.png",
+      "endOver": "data/images/misc/end_over.png"
+    },
+    {
+      "class": "ua.gram.model.prototype.weapon.BombWeaponPrototype",
+      "type": "Bomb",
+      "region": "weapons/SECONDARY_WEAPON",
+      "delay": 0.07,
+      "frames": 12,
+      "aoeRange": 60
+    },
+    {
+      "class": "ua.gram.model.prototype.weapon.LightningWeaponPrototype",
+      "type": "Lightning",
+      "region": "weapons/SPECIAL_WEAPON",
+      "delay": 0.05,
+      "frames": 10
+    },
+    {
+      "class": "ua.gram.model.prototype.weapon.FreezeWeaponPrototype",
+      "type": "Freeze",
+      "region": "weapons/STUN_WEAPON",
+      "delay": 0.15,
+      "frames": 4,
+      "aoeRange": 180
     }
   ],
   "ui": {

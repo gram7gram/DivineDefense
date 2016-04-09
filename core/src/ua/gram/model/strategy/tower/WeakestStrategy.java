@@ -4,8 +4,8 @@ import java.util.Collections;
 import java.util.List;
 
 import ua.gram.controller.comparator.EnemyHealthComparator;
+import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.actor.tower.Tower;
-import ua.gram.model.group.EnemyGroup;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -13,25 +13,31 @@ import ua.gram.model.group.EnemyGroup;
 public class WeakestStrategy implements TowerStrategy {
 
     private final EnemyHealthComparator healthComparator;
+    private final Object lock = new Object();
 
     public WeakestStrategy(EnemyHealthComparator comparator) {
         this.healthComparator = comparator;
     }
 
     @Override
-    public List<EnemyGroup> chooseVictims(Tower tower, List<EnemyGroup> victims) {
+    public List<Enemy> chooseVictims(Tower tower, List<Enemy> targets) {
 
-        if (victims.size() == 0) throw new NullPointerException("Nothing to compare");
+        if (targets.size() == 0) throw new NullPointerException("Nothing to compare");
 
-        if (victims.size() == 1) return victims;
+        if (targets.size() == 1) return targets;
 
         healthComparator.setType(EnemyHealthComparator.MIN);
 
-        Collections.sort(victims, healthComparator);
+        synchronized (lock) {
 
-        int lvl = tower.getProperty().getTowerLevel();
+            Collections.sort(targets, healthComparator);
 
-        return victims.subList(0, lvl);
+//            NOTE Use this to attack multiple targets
+//            int lvl = tower.getProperty().getTowerLevel();
+//            return targets.subList(0, lvl);
+
+            return targets.subList(0, 1);
+        }
     }
 
 }

@@ -7,16 +7,16 @@ import com.badlogic.gdx.backends.lwjgl.LwjglFiles;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import ua.gram.DDGame;
-import ua.gram.ModuleInterface;
-import ua.gram.controller.Log;
+import ua.gram.Module;
 import ua.gram.controller.security.SecurityManager;
 import ua.gram.desktop.prototype.DesktopGamePrototype;
 import ua.gram.model.prototype.ParametersPrototype;
+import ua.gram.utils.Log;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class DesktopModule implements ModuleInterface {
+public class DesktopModule implements Module {
 
     private final SecurityManager<DesktopGamePrototype> securityManager;
     private DesktopGamePrototype prototype;

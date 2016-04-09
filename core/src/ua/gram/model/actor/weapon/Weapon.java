@@ -6,24 +6,28 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.Pool;
 
 import ua.gram.DDGame;
-import ua.gram.controller.Log;
-import ua.gram.controller.Resources;
+import ua.gram.controller.builder.WeaponBuilder;
+import ua.gram.model.Resetable;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.actor.tower.Tower;
 import ua.gram.model.group.EnemyGroup;
 import ua.gram.model.group.TowerGroup;
 import ua.gram.model.prototype.weapon.WeaponPrototype;
+import ua.gram.utils.Log;
+import ua.gram.utils.Resources;
 
 /**
  * NOTE Set duration in WeaponPrototype less then zero to display weapon until enemy is within the reach
  *
  * @author Gram <gram7gram@gmail.com>
  */
-public abstract class Weapon extends Actor {
+public abstract class Weapon extends Actor implements Resetable, Pool.Poolable {
 
     protected final WeaponPrototype prototype;
+    protected final WeaponBuilder builder;
     protected TowerGroup towerGroup;
     protected EnemyGroup targetGroup;
     protected TextureRegion currentFrame;
@@ -33,7 +37,8 @@ public abstract class Weapon extends Actor {
     protected float scaleX;
     protected float scaleY;
 
-    public Weapon(Resources resources, WeaponPrototype prototype) {
+    public Weapon(WeaponBuilder builder, Resources resources, WeaponPrototype prototype) {
+        this.builder = builder;
         this.prototype = prototype;
         this.animation = createAnimation(resources.getSkin());
         duration = 0;
@@ -42,13 +47,10 @@ public abstract class Weapon extends Actor {
         Log.info(this.getClass().getSimpleName() + " is OK");
     }
 
-    /**
-     * Weapon will be updated if game is not paused and there is a targetGroup.
-     */
     @Override
     public void act(float delta) {
         super.act(delta);
-        this.setDebug(DDGame.DEBUG);
+        setDebug(DDGame.DEBUG);
         if (!DDGame.PAUSE && targetGroup != null) {
             if (!(isWeaponDurationExceeded(duration) && isFinished())) {
                 duration += delta;
@@ -65,7 +67,7 @@ public abstract class Weapon extends Actor {
                 update(delta);
                 setVisible(true);
             } else if (targetGroup != null) {
-                reset();
+                resetObject();
             }
         }
     }
@@ -73,16 +75,16 @@ public abstract class Weapon extends Actor {
     /**
      * Each weapon may require different z-indexes to be displayed properly.
      * Move Weapon from front to back to achieve pseudo-3d effect.
-     * Current implementaion toggles TowerState and Weapon z-indexes, so that they won't overlap.
+     * Current implementation toggles TowerState and Weapon z-indexes, so that they won't overlap.
      */
     protected void handleIndexes(int targetIndex, int parentIndex) {
         //NOTE toFront/toBack methods cause overlap in towerGroup and weapon animations, so used this...
         if (targetIndex < parentIndex) {
-            this.setZIndex(0);
+            setZIndex(0);
             towerGroup.getRootActor().setZIndex(1);
         } else {
             towerGroup.getRootActor().setZIndex(0);
-            this.setZIndex(1);
+            setZIndex(1);
         }
     }
 
@@ -91,18 +93,14 @@ public abstract class Weapon extends Actor {
         return !(duration > time || duration < 0);
     }
 
-    /**
-     * Weapon should be drawn in it's render(Batch) method.
-     * Weapon will be drawn if game is not paused and there is a targetGroup.
-     */
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        if (!DDGame.PAUSE || (currentFrame == null && animation != null)) {
+        if (needAnimationUpdate()) {
             currentFrame = animation.getKeyFrame(stateTime, true);
             stateTime += Gdx.graphics.getDeltaTime();
         }
-        if (currentFrame != null && !isOutOfBounds())
+        if (canBeDrawn())
             batch.draw(
                     currentFrame,
                     getX(),
@@ -111,8 +109,22 @@ public abstract class Weapon extends Actor {
                     getHeight() * scaleY);
     }
 
+    protected boolean needAnimationUpdate() {
+        return !DDGame.PAUSE || (currentFrame == null && animation != null);
+    }
+
+    protected boolean canBeDrawn() {
+        return currentFrame != null && !isOutOfBounds()
+                && targetGroup != null && isTargetInRange();
+    }
+
+    protected boolean isTargetInRange() {
+        return towerGroup != null
+                && towerGroup.getRootActor().isInRange(targetGroup.getRootActor());
+    }
+
     /**
-     * Update your weapon here.
+     * Update your weapon here
      */
     public abstract void update(float delta);
 
@@ -122,10 +134,9 @@ public abstract class Weapon extends Actor {
         return stateTime == 0 || animation.isAnimationFinished(stateTime);
     }
 
-    /**
-     * Reset your weapon here. Resets if targetGroup is lost, or weapon duration is exceeded
-     */
-    public void reset() {
+    @Override
+    public void resetObject() {
+        remove();
         duration = 0;
         stateTime = 0;
         scaleX = 1;
@@ -134,6 +145,11 @@ public abstract class Weapon extends Actor {
         currentFrame = null;
         setVisible(false);
         Log.info(getClass().getSimpleName() + " was reset");
+    }
+
+    @Override
+    public void reset() {
+        resetObject();
     }
 
     public abstract WeaponPrototype getPrototype();
@@ -156,18 +172,17 @@ public abstract class Weapon extends Actor {
     }
 
     /**
-     * Perform TowerState specific preparations before attack.
+     * Perform Tower specific preparations before attack.
      *
      * @param victim the enemy to attack
      */
     public void preAttack(Tower tower, Enemy victim) {
-        Weapon weapon = tower.getWeapon();
-        weapon.setTarget(victim.getParent());
-        weapon.setVisible(true);
+        setTarget(victim.getParent());
+        setVisible(true);
     }
 
     /**
-     * Perform towerGroup-specific attack.
+     * Perform Tower specific attack.
      *
      * @param victim the enemy to attack
      */
@@ -177,11 +192,15 @@ public abstract class Weapon extends Actor {
     }
 
     /**
-     * Perform TowerState specific actions after attack.
+     * Perform Tower specific actions after attack.
      *
      * @param victim the enemy attacked
      */
     public void postAttack(Tower tower, Enemy victim) {
         victim.isAttacked = false;
+    }
+
+    public boolean hasTarget() {
+        return targetGroup != null;
     }
 }

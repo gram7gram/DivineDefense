@@ -1,4 +1,4 @@
-package ua.gram.controller;
+package ua.gram.utils;
 
 import com.badlogic.gdx.Gdx;
 

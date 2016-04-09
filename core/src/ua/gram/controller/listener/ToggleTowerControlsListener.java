@@ -4,11 +4,10 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-import ua.gram.controller.Log;
-import ua.gram.controller.stage.BattleStage;
-import ua.gram.controller.stage.UIStage;
-import ua.gram.model.group.TowerControlsGroup;
+import ua.gram.controller.stage.StageHolder;
+import ua.gram.model.group.TowerControls;
 import ua.gram.model.group.TowerGroup;
+import ua.gram.utils.Log;
 
 /**
  * Handles towerGroup controls: if they are visible and player
@@ -19,37 +18,30 @@ import ua.gram.model.group.TowerGroup;
  */
 public class ToggleTowerControlsListener extends ClickListener {
 
-    private final BattleStage stage_battle;
-    private final UIStage stage_ui;
-
-    public ToggleTowerControlsListener(BattleStage stage, UIStage stage_ui) {
-        this.stage_battle = stage;
-        this.stage_ui = stage_ui;
-    }
+    private StageHolder holder;
 
     @Override
     public void clicked(InputEvent event, float x, float y) {
         super.clicked(event, x, y);
 
-        if (!stage_battle.hasTowersOnMap()) return;
+        if (!holder.getBattleStage().hasTowersOnMap()) return;
 
-        TowerControlsGroup controls = stage_ui.getTowerControls();
+        TowerControls controls = holder.getUiStage().getTowerControls();
 
         TowerGroup tower = isClickedOnTower(x, y);
 
         if (tower != null && tower.getRootActor().isActiveState()) {
-            controls.setGroup(tower);
-            controls.setVisible(true);
-            controls.toFront();
+            controls.setTower(tower);
+            controls.showControls();
             Log.info(tower.getRootActor() + " controls are "
                     + (controls.isVisible() ? "" : "in") + "visible");
             return;
         }
 
         if (controls.isVisible()) {
-            if (!contains(controls.getUpgradeBut(), x, y)
-                    && !contains(controls.getSellBut(), x, y)) {
-                controls.resetObject();
+            if (event.getRelatedActor() != controls.getUpgradeBut()
+                    && event.getRelatedActor() != controls.getSellBut()) {
+                controls.hideControls();
                 Log.info("Controls are hidden by stage");
             }
         }
@@ -57,7 +49,7 @@ public class ToggleTowerControlsListener extends ClickListener {
     }
 
     private TowerGroup isClickedOnTower(float x, float y) {
-        for (TowerGroup towerGroup : stage_battle.getTowersOnMap()) {
+        for (TowerGroup towerGroup : holder.getBattleStage().getTowersOnMap()) {
             if (contains(towerGroup, x, y)) {
                 return towerGroup;
             }
@@ -80,5 +72,9 @@ public class ToggleTowerControlsListener extends ClickListener {
                 && yCord > actor.getY()
                 && yCord < actor.getY() + actor.getHeight()
         );
+    }
+
+    public void setStageHolder(StageHolder stageHolder) {
+        this.holder = stageHolder;
     }
 }

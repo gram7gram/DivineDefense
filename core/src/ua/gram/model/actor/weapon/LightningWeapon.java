@@ -3,13 +3,15 @@ package ua.gram.model.actor.weapon;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import ua.gram.DDGame;
-import ua.gram.controller.Resources;
+import ua.gram.controller.builder.WeaponBuilder;
 import ua.gram.controller.stage.BattleStage;
 import ua.gram.model.group.Layer;
 import ua.gram.model.prototype.weapon.LightningWeaponPrototype;
 import ua.gram.model.prototype.weapon.WeaponPrototype;
+import ua.gram.utils.Resources;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -19,8 +21,8 @@ public class LightningWeapon extends Weapon {
     private Layer currentLayer;
     private float originalHeight;
 
-    public LightningWeapon(Resources resources, WeaponPrototype prototype) {
-        super(resources, prototype);
+    public LightningWeapon(WeaponBuilder builder, Resources resources, WeaponPrototype prototype) {
+        super(builder, resources, prototype);
     }
 
     @Override
@@ -28,8 +30,8 @@ public class LightningWeapon extends Weapon {
         LightningWeaponPrototype proto = getPrototype();
         TextureRegion region = skin.getRegion(proto.region);
         originalHeight = region.getRegionHeight();
-        this.setSize(region.getRegionWidth() / proto.frames, originalHeight);
-        TextureRegion[] tiles = region.split((int) this.getWidth(), (int) this.getHeight())[0];
+        setSize(region.getRegionWidth() / proto.frames, originalHeight);
+        TextureRegion[] tiles = region.split((int) getWidth(), (int) getHeight())[0];
         Animation animation = new Animation(proto.delay, tiles);
         animation.setPlayMode(Animation.PlayMode.REVERSED);
         return animation;
@@ -39,9 +41,9 @@ public class LightningWeapon extends Weapon {
     public void update(float delta) {
         if (isOutOfBounds()) {
             float scaler = getScaler(originalHeight);
-            this.setSize(this.getWidth(), originalHeight * scaler);
-            this.scale(1, scaler);
-            this.setPosition(targetGroup.getOriginX() - this.getWidth() / 2f, targetGroup.getOriginY());
+            setSize(getWidth(), originalHeight * scaler);
+            scale(1, scaler);
+            setPosition(targetGroup.getOriginX() - getWidth() / 2f, targetGroup.getOriginY());
         }
     }
 
@@ -55,25 +57,27 @@ public class LightningWeapon extends Weapon {
         if (currentLayer == null) {
             BattleStage stage = towerGroup.getRootActor().getStage();
             currentLayer = stage.putOnLayer(this, parentIndex + 1);
-            this.toFront();
+            toFront();
         }
     }
 
     @Override
-    public void reset() {
-        super.reset();
+    public void resetObject() {
+        super.resetObject();
         //Return Weapon to TowerGroup
-        if (this.getParent() != towerGroup) {
-            this.remove();
+        if (getParent() != towerGroup) {
+            remove();
             towerGroup.addActor(this);
-            this.toBack();
+            toBack();
         }
-        this.setPosition(0, 0);
+        setPosition(0, 0);
         currentLayer = null;
     }
 
     @Override
     public LightningWeaponPrototype getPrototype() {
+        if (!(prototype instanceof LightningWeaponPrototype))
+            throw new GdxRuntimeException("Prototype is not instance of LightningWeaponPrototype");
         return (LightningWeaponPrototype) prototype;
     }
 }
