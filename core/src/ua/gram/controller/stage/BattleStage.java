@@ -26,8 +26,8 @@ public class BattleStage extends AbstractStage implements Initializer {
 
     private final Level level;
     private final ToggleTowerControlsListener controlsListener;
-    private volatile ArrayList<Layer> indexes;
-    private ArrayList<int[]> towerPositions;
+    private final ArrayList<Layer> indexes;
+    private final ArrayList<int[]> towerPositions;
 
     public BattleStage(DDGame game, Level level) {
         super(game);

@@ -41,7 +41,7 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public void show() {
-        Log.info("Screen set to GameScreen");
+        super.show();
         battleStage.init();
         uiStage.init();
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
@@ -71,16 +71,9 @@ public class GameScreen extends AbstractScreen {
     }
 
     @Override
-    public void hide() {
-        Log.warn("Hiding GameScreen");
-        Gdx.input.setInputProcessor(null);
-        dispose();
-    }
-
-    @Override
     public void dispose() {
+        super.dispose();
         renderer.dispose();
-        Log.warn("GameScreen disposed");
     }
 
 }

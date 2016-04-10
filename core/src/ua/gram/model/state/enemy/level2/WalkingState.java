@@ -57,18 +57,12 @@ public class WalkingState extends Level2State {
      */
     protected synchronized void move(final Enemy enemy, float delta, int x, int y) {
 
-        Vector2 current = enemy.getCurrentDirection();
         Vector2 dir = enemy.getPath().nextDirection();
 
-        if (!Path.compare(dir, current)) {
-            enemy.addAction(Actions.parallel(
-                    Actions.run(animationChanger.update(enemy, dir, getType())),
-                    moveBy(enemy, dir)
-            ));
-        } else {
-            enemy.setCurrentDirection(dir);
-            enemy.addAction(moveBy(enemy, dir));
-        }
+        enemy.addAction(Actions.sequence(
+                Actions.run(animationChanger.update(enemy, dir, getType())),
+                moveBy(enemy, dir)
+        ));
     }
 
     @Override
@@ -76,7 +70,10 @@ public class WalkingState extends Level2State {
         int x = Math.round(enemy.getX());
         int y = Math.round(enemy.getY());
 
-        if (enemy.isRemoved) return;
+        if (enemy.isRemoved) {
+            remove(enemy);
+            return;
+        }
 
         if (Path.compare(enemy.getCurrentPositionIndex(), basePosition)) {
             Log.info(enemy + " position equals to Base. Removing enemy");
