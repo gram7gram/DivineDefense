@@ -1,5 +1,6 @@
-package ua.gram.model.prototype;
+package ua.gram.model.prototype.level;
 
+import ua.gram.model.prototype.Prototype;
 import ua.gram.model.prototype.shop.TowerShopConfigPrototype;
 
 /**
@@ -9,5 +10,5 @@ public class LevelConfigPrototype extends Prototype {
     public String[] resources;
     public LevelPrototype[] levels;
     public TowerShopConfigPrototype towerShopConfig;
-    public CounterButtonPrototype counterButtonConfig;
+    public ua.gram.model.prototype.ui.CounterButtonPrototype counterButtonConfig;
 }

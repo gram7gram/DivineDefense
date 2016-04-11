@@ -73,7 +73,6 @@
     }
   },
   "levelConfig": {
-    "class": "ua.gram.model.prototype.LevelConfigPrototype",
     "resources": [
       "data/images/misc/background.jpg",
       "data/images/misc/start_back.png",
@@ -96,6 +95,24 @@
           "blockedProperty": "blocked",
           "name": "data/levels/maps/level1@60.tmx"
         },
+        "backgroundColor": {
+          "r": 184,
+          "g": 249,
+          "b": 255,
+          "a": 1
+        },
+        "assets": {
+          "back": [],
+          "front": [
+            {
+              "file": "data/levels/res/level1-gates@900.png",
+              "width": 900,
+              "height": 230,
+              "x": 0,
+              "y": 380
+            }
+          ]
+        },
         "preview": "preview/level-1-preview@256",
         "initialDirection": {
           "x": 0,
@@ -109,13 +126,17 @@
               "EnemySoldier",
               "EnemySoldier",
               "EnemySoldier",
+              "EnemySoldier",
+              "EnemySoldier",
+              "EnemySoldier",
+              "EnemySoldier",
+              "EnemySoldier",
+              "EnemySoldier",
+              "EnemySoldier",
+              "EnemySoldier",
+              "EnemySoldier",
+              "EnemySoldier",
               "EnemySoldier"
-              //              "EnemyRunner",
-              //              "EnemyRunner",
-              //              "EnemyRunner",
-              //              "EnemySoldier",
-              //              "EnemyRunner",
-              //              "EnemySoldier"
             ]
           },
           {
@@ -141,6 +162,12 @@
           "baseProperty": "base",
           "blockedProperty": "blocked",
           "name": "data/levels/maps/level2@60.tmx"
+        },
+        "backgroundColor": {
+          "r": 184,
+          "g": 249,
+          "b": 255,
+          "a": 1
         },
         "preview": "preview/level-2-preview@256",
         "initialDirection": {
@@ -173,6 +200,12 @@
           "blockedProperty": "blocked",
           "name": "data/levels/maps/level3@60.tmx"
         },
+        "backgroundColor": {
+          "r": 184,
+          "g": 249,
+          "b": 255,
+          "a": 1
+        },
         "preview": "preview/level-3-preview@256",
         "initialDirection": {
           "x": 0,
@@ -203,6 +236,12 @@
           "baseProperty": "base",
           "blockedProperty": "blocked",
           "name": "data/levels/maps/level3@60.tmx"
+        },
+        "backgroundColor": {
+          "r": 184,
+          "g": 249,
+          "b": 255,
+          "a": 1
         },
         "preview": "preview/level-3-preview@256",
         "initialDirection": {
@@ -235,6 +274,12 @@
           "blockedProperty": "blocked",
           "name": "data/levels/maps/level3@60.tmx"
         },
+        "backgroundColor": {
+          "r": 184,
+          "g": 249,
+          "b": 255,
+          "a": 1
+        },
         "preview": "preview/level-3-preview@256",
         "initialDirection": {
           "x": 0,
@@ -265,6 +310,12 @@
           "baseProperty": "base",
           "blockedProperty": "blocked",
           "name": "data/levels/maps/level3@60.tmx"
+        },
+        "backgroundColor": {
+          "r": 184,
+          "g": 249,
+          "b": 255,
+          "a": 1
         },
         "preview": "preview/level-3-preview@256",
         "initialDirection": {
@@ -314,7 +365,6 @@
       ]
     },
     "counterButtonConfig": {
-      "class": "ua.gram.model.prototype.CounterButtonPrototype",
       "width": 40,
       "height": 40,
       "region": "ui/static/button-countdown",
@@ -338,7 +388,7 @@
       "name": "EnemySoldier",
       "ability": false,
       "health": 110,
-      "speed": 1.6,
+      "speed": 0.6,
       "armor": 10,
       "reward": 10,
       "width": 60,

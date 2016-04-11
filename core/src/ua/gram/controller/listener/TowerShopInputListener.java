@@ -12,14 +12,12 @@ import ua.gram.model.actor.tower.Tower;
 import ua.gram.model.group.TowerGroup;
 import ua.gram.model.level.Level;
 import ua.gram.utils.Log;
-import ua.gram.view.screen.ErrorScreen;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
 public class TowerShopInputListener extends ClickListener {
 
-    private final DDGame game;
     private final UIStage uiStage;
     private final BattleStage battleStage;
     private final String type;
@@ -27,8 +25,7 @@ public class TowerShopInputListener extends ClickListener {
     private final TiledMapVoter voter;
     private TowerGroup towerGroup;
 
-    public TowerShopInputListener(DDGame game, TowerShop shop, String type) {
-        this.game = game;
+    public TowerShopInputListener(TowerShop shop, String type) {
         this.shop = shop;
         this.type = type;
         this.uiStage = shop.getUiStage();
@@ -52,22 +49,29 @@ public class TowerShopInputListener extends ClickListener {
         }
     }
 
-    /** Move the Tower across the map */
+    /**
+     * Move the Tower across the map
+     */
     @Override
     public void touchDragged(InputEvent event, float x, float y, int pointer) {
         float X = event.getStageX() - event.getStageX() % DDGame.TILE_HEIGHT;
         float Y = event.getStageY() - event.getStageY() % DDGame.TILE_HEIGHT;
-        boolean canBeBuild = voter.canBeBuildOnAllLayers(X, Y);
-        boolean isFree = battleStage.isPositionEmpty(X, Y);
-        if (canBeBuild && isFree
-                && !(Float.compare(X, towerGroup.getX()) == 0
-                && Float.compare(Y, towerGroup.getY()) == 0)) {
-            Tower tower = towerGroup.getRootActor();
-            tower.setPosition(X, Y + 40);
-            tower.toFront();
-            shop.getMarker().setPosition(X, Y);
-            shop.getMarker().setVisible(true);
+        if (!isEqual(X, Y, towerGroup)) {
+            boolean canBeBuild = voter.canBeBuildOnAllLayers(X, Y);
+            boolean isFree = battleStage.isPositionEmpty(X, Y);
+            if (canBeBuild && isFree) {
+                Tower tower = towerGroup.getRootActor();
+                tower.setPosition(X, Y + 40);
+                tower.toFront();
+                shop.getMarker().setPosition(X, Y);
+                shop.getMarker().setVisible(true);
+            }
         }
+    }
+
+    private boolean isEqual(float x, float y, TowerGroup group) {
+        return Float.compare(x, group.getX()) == 0
+                && Float.compare(y, group.getY()) == 0;
     }
 
     /**
@@ -83,20 +87,17 @@ public class TowerShopInputListener extends ClickListener {
         boolean isFree = battleStage.isPositionEmpty(X, Y);
         if (canBeBuild && isFree) {
             shop.buy(towerGroup, X, Y);
-            Level level = uiStage.getLevel();
-            try {
-                if (level.getWave() == null || (!level.getWave().isStarted && !level.isCleared)) {
-                    uiStage.getLevel().nextWave();
-                    uiStage.getCounter().setVisible(false);
-                }
-            } catch (Exception e) {
-                game.setScreen(new ErrorScreen(game,
-                        "Unappropriate wave [" + uiStage.getLevel().getCurrentWaveIndex()
-                                + "] in level " + uiStage.getLevel().getCurrentLevel(), e));
+            if (canStartNextWave(uiStage.getLevel())) {
+                uiStage.getLevel().nextWave();
+                uiStage.getCounter().setVisible(false);
             }
         } else {
             shop.refund(towerGroup);
         }
         shop.getMarker().reset();
+    }
+
+    private boolean canStartNextWave(Level level) {
+        return level.getWave() == null || (!level.getWave().isStarted && !level.isCleared);
     }
 }

@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import ua.gram.DDGame;
 import ua.gram.controller.factory.LevelTileFactory;
-import ua.gram.model.prototype.LevelPrototype;
+import ua.gram.model.prototype.level.LevelPrototype;
 import ua.gram.model.window.WindowGroup;
 import ua.gram.view.screen.MainMenuScreen;
 

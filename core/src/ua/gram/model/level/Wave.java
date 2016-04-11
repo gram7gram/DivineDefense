@@ -1,6 +1,6 @@
 package ua.gram.model.level;
 
-import ua.gram.model.prototype.WavePrototype;
+import ua.gram.model.prototype.level.WavePrototype;
 import ua.gram.utils.Log;
 
 /**

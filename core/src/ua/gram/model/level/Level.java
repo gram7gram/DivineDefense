@@ -8,8 +8,8 @@ import ua.gram.controller.stage.BattleStage;
 import ua.gram.controller.stage.UIStage;
 import ua.gram.model.Initializer;
 import ua.gram.model.map.Map;
-import ua.gram.model.prototype.LevelPrototype;
-import ua.gram.model.prototype.WavePrototype;
+import ua.gram.model.prototype.level.LevelPrototype;
+import ua.gram.model.prototype.level.WavePrototype;
 import ua.gram.utils.Log;
 
 /**
@@ -50,9 +50,8 @@ public class Level implements Initializer {
         }
     }
 
-    public EnemySpawner createSpawner() {
+    public void createSpawner() {
         spawner = new EnemySpawner(game, this, battleStage);
-        return spawner;
     }
 
     public void update(float delta) {

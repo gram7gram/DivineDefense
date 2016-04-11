@@ -8,7 +8,7 @@ import ua.gram.controller.listener.WaveCounterClickListener;
 import ua.gram.model.Initializer;
 import ua.gram.model.actor.AnimatedActor;
 import ua.gram.model.level.Level;
-import ua.gram.model.prototype.CounterButtonPrototype;
+import ua.gram.model.prototype.ui.CounterButtonPrototype;
 import ua.gram.utils.Log;
 
 /**

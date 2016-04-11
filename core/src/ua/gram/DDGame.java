@@ -18,8 +18,8 @@ import ua.gram.controller.security.SecurityManager;
 import ua.gram.model.Speed;
 import ua.gram.model.player.Player;
 import ua.gram.model.prototype.GamePrototype;
-import ua.gram.model.prototype.LevelPrototype;
 import ua.gram.model.prototype.ParametersPrototype;
+import ua.gram.model.prototype.level.LevelPrototype;
 import ua.gram.utils.Log;
 import ua.gram.utils.Resources;
 import ua.gram.utils.StringProcessor;
@@ -88,6 +88,7 @@ public class DDGame<P extends GamePrototype> extends Game {
     @Override
     public void create() {
         Gdx.app.setLogLevel(parameters.logLevel);
+        Gdx.input.setCatchMenuKey(true);
         sayHello();
         initGameValues();
         try {

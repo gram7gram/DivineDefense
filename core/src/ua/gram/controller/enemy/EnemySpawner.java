@@ -92,10 +92,8 @@ public final class EnemySpawner {
      *
      * @param type  the EnemyState ancestor to spawn.
      * @param spawn map tile positionIndex to spawn at (not in pixels)
-     * @throws CloneNotSupportedException - error occcured at cloning.
-     * @throws NullPointerException       - type does not belong to known EnemyState ancestor.
      */
-    public void spawn(String type, Vector2 spawn) throws CloneNotSupportedException, NullPointerException {
+    public void spawn(String type, Vector2 spawn) {
         Enemy enemy;
         try {
             enemy = this.obtain(type);
@@ -126,10 +124,8 @@ public final class EnemySpawner {
      *
      * @param type  the EnemyState ancestor to spawn.
      * @param spawn map tile positionIndex to spawn at (not in pixels)
-     * @throws CloneNotSupportedException - error occcured at cloning.
-     * @throws NullPointerException       - type does not belong to known EnemyState ancestor.
      */
-    public void spawnChild(Enemy parent, String type, Vector2 spawn) throws CloneNotSupportedException, NullPointerException {
+    public void spawnChild(Enemy parent, String type, Vector2 spawn) {
         Enemy enemy;
         try {
             enemy = this.obtain(type);
@@ -194,7 +190,7 @@ public final class EnemySpawner {
         Log.info(enemy + " is set free");
     }
 
-    public Enemy obtain(String type) throws CloneNotSupportedException {
+    public Enemy obtain(String type) {
         return getPool(type).obtain();
     }
 

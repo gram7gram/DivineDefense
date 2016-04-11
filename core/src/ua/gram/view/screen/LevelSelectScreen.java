@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import ua.gram.DDGame;
 import ua.gram.controller.stage.LevelSelectStage;
-import ua.gram.model.prototype.LevelPrototype;
+import ua.gram.model.prototype.level.LevelPrototype;
 import ua.gram.utils.Log;
 import ua.gram.utils.Resources;
 import ua.gram.view.AbstractScreen;
