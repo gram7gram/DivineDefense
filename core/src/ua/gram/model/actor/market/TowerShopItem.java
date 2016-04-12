@@ -34,7 +34,7 @@ public class TowerShopItem extends Group {
         price = new CustomLabel("" + prototype.cost, skin, "16_tinted");
         price.setVisible(true);
 
-        item.addListener(new TowerShopInputListener(game, shop, proto.name));
+        item.addListener(new TowerShopInputListener(shop, proto.name));
 
         addActor(item);
         addActor(price);

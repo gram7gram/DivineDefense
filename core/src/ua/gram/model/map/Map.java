@@ -10,7 +10,7 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 import java.util.HashMap;
 
 import ua.gram.DDGame;
-import ua.gram.model.prototype.MapPrototype;
+import ua.gram.model.prototype.level.MapPrototype;
 import ua.gram.utils.Log;
 
 /**

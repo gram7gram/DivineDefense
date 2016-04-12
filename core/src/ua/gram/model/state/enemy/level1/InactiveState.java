@@ -1,7 +1,6 @@
 package ua.gram.model.state.enemy.level1;
 
 import ua.gram.DDGame;
-import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.enums.Types;
 
 /**
@@ -18,18 +17,4 @@ public class InactiveState extends Level1State {
         return null;
     }
 
-    @Override
-    public void preManage(Enemy enemy) {
-
-    }
-
-    @Override
-    public void manage(Enemy enemy, float delta) {
-
-    }
-
-    @Override
-    public void postManage(Enemy enemy) {
-
-    }
 }

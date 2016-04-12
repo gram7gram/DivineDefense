@@ -3,7 +3,7 @@ package ua.gram.controller.factory;
 import ua.gram.DDGame;
 import ua.gram.model.group.LevelTile;
 import ua.gram.model.group.LockedLevelTile;
-import ua.gram.model.prototype.LevelPrototype;
+import ua.gram.model.prototype.level.LevelPrototype;
 
 /**
  * @author Gram <gram7gram@gmail.com>

@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import ua.gram.DDGame;
 import ua.gram.model.level.Level;
-import ua.gram.model.prototype.LevelPrototype;
+import ua.gram.model.prototype.level.LevelPrototype;
 import ua.gram.utils.Log;
 import ua.gram.view.screen.ErrorScreen;
 import ua.gram.view.screen.LevelLoadingScreen;

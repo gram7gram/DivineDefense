@@ -4,7 +4,7 @@ buildscript {
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.0.0'
+        classpath 'com.android.tools.build:gradle:1.5.0'
         classpath 'org.robovm:robovm-gradle-plugin:1.0.0'
     }
 }
@@ -15,7 +15,7 @@ allprojects {
     version = '0.01'
     ext {
         appName = 'Divine Defense'
-        gdxVersion = '1.6.4'
+        gdxVersion = '1.9.2'
     }
 
     repositories {
@@ -47,7 +47,9 @@ project(":android") {
         compile "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"
+        natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-arm64-v8a"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86"
+        natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86_64"
         compile fileTree(dir: 'libs', include: '*.jar')
     }
 }

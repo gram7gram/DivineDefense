@@ -13,8 +13,8 @@ public abstract class GamePrototype<P extends ParametersPrototype> extends Proto
     public EnemyPrototype[] enemies;
     public TowerPrototype[] towers;
     public WeaponPrototype[] weapons;
-    public LevelConfigPrototype levelConfig;
-    public UIPrototype ui;
+    public ua.gram.model.prototype.level.LevelConfigPrototype levelConfig;
+    public ua.gram.model.prototype.ui.UIPrototype ui;
 
     public abstract String getConfigPath();
 

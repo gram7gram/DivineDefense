@@ -3,7 +3,7 @@ package ua.gram.controller.factory;
 import ua.gram.controller.voter.AffirmativeVoterPolicy;
 import ua.gram.controller.voter.ConsensusVoterPolicy;
 import ua.gram.controller.voter.UnanimousVoterPolicy;
-import ua.gram.controller.voter.VoterPolicyInterface;
+import ua.gram.controller.voter.VoterPolicy;
 import ua.gram.model.enums.Voter;
 
 /**
@@ -11,7 +11,7 @@ import ua.gram.model.enums.Voter;
  */
 public class VoterPolicyFactory {
 
-    public static VoterPolicyInterface create(Voter.Policy policy) {
+    public static VoterPolicy create(Voter.Policy policy) {
         switch (policy) {
             case AFFIRMATIVE:
                 return new AffirmativeVoterPolicy();

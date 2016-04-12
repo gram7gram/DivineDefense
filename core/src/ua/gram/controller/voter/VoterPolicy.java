@@ -7,6 +7,6 @@ import ua.gram.model.enums.Voter;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public interface VoterPolicyInterface {
+public interface VoterPolicy {
     boolean isGranted(List<Voter.Value> values);
 }

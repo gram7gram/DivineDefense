@@ -38,8 +38,8 @@ public class GameUIGroup extends Table implements Initializer {
         this.game = game;
         this.level = level;
 
-        byte gap = 5;
-        int butHeight = DDGame.DEFAULT_BUTTON_HEIGHT;
+//        byte gap = 5;
+//        int butHeight = DDGame.DEFAULT_BUTTON_HEIGHT;
         Skin skin = game.getResources().getSkin();
 
         pauseBut = new Button(skin, "pause-big");

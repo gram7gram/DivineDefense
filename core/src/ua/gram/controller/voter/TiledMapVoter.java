@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ua.gram.DDGame;
+import ua.gram.controller.factory.VoterPolicyFactory;
 import ua.gram.model.enums.Voter;
 import ua.gram.model.map.Map;
 
@@ -17,21 +18,22 @@ import ua.gram.model.map.Map;
  */
 public class TiledMapVoter {
 
-    private final Map map;
-    private final MapLayers layers;
-    private final VoterPolicyInterface voter;
+    protected final Map map;
+    protected final MapLayers layers;
+    private final VoterPolicy voter;
 
     public TiledMapVoter(Map map) {
         this.map = map;
         layers = map.getTiledMap().getLayers();
-        voter = ua.gram.controller.factory.VoterPolicyFactory.create(Voter.Policy.UNANIMOUS);
+        voter = VoterPolicyFactory.create(Voter.Policy.UNANIMOUS);
     }
 
     public boolean canBeBuildOnAllLayers(float X, float Y) {
         List<Voter.Value> values = new ArrayList<Voter.Value>(layers.getCount());
 
         for (MapLayer layer : layers) {
-            values.add(canBeBuild((TiledMapTileLayer) layer, X, Y));
+            Voter.Value value = canBeBuild((TiledMapTileLayer) layer, X, Y);
+            values.add(value);
         }
 
         return voter.isGranted(values);
@@ -46,11 +48,10 @@ public class TiledMapVoter {
 
         MapProperties prop = cell.getTile().getProperties();
 
-        return isPossibleToBuild(prop);
+        return isPossibleToBuild(prop) ? Voter.Value.FOR : Voter.Value.AGAINST;
     }
 
-    private Voter.Value isPossibleToBuild(MapProperties properties) {
-        return !map.isWalkable(properties) && !map.isBlocked(properties)
-                ? Voter.Value.FOR : Voter.Value.AGAINST;
+    protected boolean isPossibleToBuild(MapProperties properties) {
+        return !map.isWalkable(properties) && !map.isBlocked(properties);
     }
 }

@@ -2,6 +2,7 @@ package ua.gram.controller.stage;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
@@ -12,9 +13,9 @@ import ua.gram.model.actor.misc.CounterButton;
 import ua.gram.model.group.GameUIGroup;
 import ua.gram.model.group.TowerControls;
 import ua.gram.model.level.Level;
-import ua.gram.model.prototype.CounterButtonPrototype;
-import ua.gram.model.prototype.UIPrototype;
 import ua.gram.model.prototype.shop.TowerShopConfigPrototype;
+import ua.gram.model.prototype.ui.CounterButtonPrototype;
+import ua.gram.model.prototype.ui.UIPrototype;
 import ua.gram.model.window.DefeatWindow;
 import ua.gram.model.window.PauseWindow;
 import ua.gram.model.window.VictoryWindow;
@@ -124,12 +125,16 @@ public class UIStage extends AbstractStage implements Initializer {
             if (level.isDefeated() && !victoryWindow.isVisible()) {
                 Log.info("Player is dead");
                 DDGame.PAUSE = true;
-                toggleWindow(defeatWindow);
+                toggleDefeatWindow();
             } else if (level.isVictorious() && !defeatWindow.isVisible()) {
                 Log.info("Player is victorious");
-                stageHolder.getBattleStage().clear();
+                for (Actor actor : stageHolder.getBattleStage().getActors()) {
+                    if (!(actor instanceof Image)) {
+                        actor.remove();
+                    }
+                }
                 DDGame.PAUSE = true;
-                toggleWindow(victoryWindow);
+                toggleVictoryWindow();
             }
         }
     }

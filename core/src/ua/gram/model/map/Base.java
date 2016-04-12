@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
 /**
- * Created by Gram on 3/1.
+ * @author Gram <gram7gram@gmail.com>
  */
 public class Base {
 

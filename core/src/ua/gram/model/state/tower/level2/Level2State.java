@@ -18,14 +18,4 @@ public abstract class Level2State extends TowerState {
         initAnimation(actor);
     }
 
-    @Override
-    public void manage(Tower actor, float delta) {
-
-    }
-
-    @Override
-    public void postManage(Tower actor) {
-
-    }
-
 }
