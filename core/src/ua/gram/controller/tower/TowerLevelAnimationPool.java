@@ -1,11 +1,13 @@
 package ua.gram.controller.tower;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
 import java.util.EnumMap;
 import java.util.EnumSet;
 import java.util.Map;
 
 import ua.gram.controller.pool.animation.AnimationPool;
-import ua.gram.controller.pool.animation.TowerAnimationController;
+import ua.gram.controller.pool.animation.TowerAnimationManager;
 import ua.gram.model.enums.Types;
 import ua.gram.model.prototype.tower.TowerPrototype;
 import ua.gram.utils.Log;
@@ -20,11 +22,13 @@ public class TowerLevelAnimationPool {
     private final Map<Types.TowerLevels, AnimationPool> identityMap;
 
     public TowerLevelAnimationPool(TowerPrototype prototype,
-                                   TowerAnimationController controller,
+                                   TowerAnimationManager controller,
                                    Types.TowerState type) {
         identityMap = new EnumMap<>(Types.TowerLevels.class);
         for (Types.TowerLevels level : EnumSet.allOf(Types.TowerLevels.class)) {
-            identityMap.put(level, new AnimationPool(controller.getAnimationRegion(prototype, type, level)));
+            TextureRegion[] regions = controller.getAnimationRegion(prototype, type, level);
+            String name = controller.getAnimationName(prototype, type, level);
+            identityMap.put(level, new AnimationPool(regions, name));
         }
         Log.info("LevelAnimationPool for " + prototype.name + " " + type + " is OK");
     }

@@ -45,6 +45,7 @@ public class Level implements Initializer {
 
     @Override
     public void init() {
+        map.init();
         for (WavePrototype proto : prototype.waves) {
             waves.add(new Wave(this, proto));
         }

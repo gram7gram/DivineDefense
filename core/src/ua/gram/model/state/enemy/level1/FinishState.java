@@ -6,6 +6,7 @@ import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.enums.Types;
 import ua.gram.model.group.EnemyGroup;
 import ua.gram.model.player.Player;
+import ua.gram.model.state.enemy.EnemyStateManager;
 import ua.gram.utils.Log;
 
 /**
@@ -13,8 +14,8 @@ import ua.gram.utils.Log;
  */
 public class FinishState extends InactiveState {
 
-    public FinishState(DDGame game) {
-        super(game);
+    public FinishState(DDGame game, EnemyStateManager manager) {
+        super(game, manager);
     }
 
     @Override
@@ -24,13 +25,14 @@ public class FinishState extends InactiveState {
 
     @Override
     public void preManage(Enemy enemy) {
+        getManager().getAnimationChanger()
+                .update(enemy, enemy.getCurrentDirection(), getType());
+
         super.preManage(enemy);
 
         enemy.isRemoved = true;
 
         Log.info(enemy + " reaches the Base");
-//        enemy.getAnimationProvider().get(enemy).free(enemy);
-//        Gdx.app.log("INFO", enemy + " frees animation");
 
         EnemySpawner spawner = enemy.getSpawner();
         EnemyGroup group = enemy.getEnemyGroup();
@@ -40,7 +42,7 @@ public class FinishState extends InactiveState {
         group.clear();
         group.remove();
 
-        Player player = this.getGame().getPlayer();
+        Player player = getGame().getPlayer();
         player.decreaseHealth();
     }
 

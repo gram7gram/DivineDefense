@@ -9,7 +9,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 19
     }
-    buildToolsVersion '19.1.0'
+    buildToolsVersion '23.0.2'
     compileSdkVersion 19
     //buildToolsVersion "23.0.2"
     //compileSdkVersion 20

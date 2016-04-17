@@ -27,6 +27,7 @@ public class WeaponFactory {
                     throw new GdxRuntimeException("Weapon prototype is not instance of LaserWeaponPrototype");
                 LaserWeaponPrototype prototype = (LaserWeaponPrototype) proto;
                 return new LaserWeapon(builder, game.getResources(), prototype);
+
             case "BOMB":
                 if (!(proto instanceof BombWeaponPrototype))
                     throw new GdxRuntimeException("Weapon prototype is not instance of BombWeaponPrototype");

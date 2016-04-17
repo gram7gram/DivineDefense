@@ -1,18 +1,17 @@
 package ua.gram.model.state.enemy.level2;
 
-import com.badlogic.gdx.Gdx;
-
 import ua.gram.DDGame;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.enums.Types;
+import ua.gram.model.state.enemy.EnemyStateManager;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
 public class IdleState extends Level2State {
 
-    public IdleState(DDGame game) {
-        super(game);
+    public IdleState(DDGame game, EnemyStateManager manager) {
+        super(game, manager);
     }
 
     @Override
@@ -22,8 +21,9 @@ public class IdleState extends Level2State {
 
     @Override
     public void preManage(Enemy enemy) {
-        initAnimation(enemy);
-        Gdx.app.log("INFO", enemy + " state: " + enemy.getAnimator().getPrimaryType());
+        getManager().getAnimationChanger()
+                .update(enemy, enemy.getCurrentDirection(), getType());
+        super.preManage(enemy);
     }
 
     @Override

@@ -54,7 +54,9 @@ public class TowerShop implements ShopInterface<TowerGroup>, Initializer {
         identityMap = new HashMap<TowerPrototype, Pool<Tower>>(towerPrototypes.length);
 
         Skin skin = game.getResources().getSkin();
+
         animationProvider = new TowerAnimationProvider(skin, towerPrototypes);
+
         strategyManager = new TowerStrategyManager();
         stateManager = new TowerStateManager(game);
         towerShopGroup = new TowerShopGroup(game, prototype);
@@ -71,6 +73,8 @@ public class TowerShop implements ShopInterface<TowerGroup>, Initializer {
 
     @Override
     public void init() {
+
+        animationProvider.init();
 
         registerAll(towerPrototypes);
 

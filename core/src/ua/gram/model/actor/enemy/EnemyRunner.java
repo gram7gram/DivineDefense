@@ -14,7 +14,7 @@ public final class EnemyRunner extends Enemy implements Cloneable {
 
     @Override
     public void update(float delta) {
-        this.setOrigin(this.getX() + this.getWidth() / 2f, this.getY() + this.getHeight() / 2f);
+        setOrigin(getX() + getWidth() / 2f, getY() + getHeight() / 2f);
     }
 
     @Override

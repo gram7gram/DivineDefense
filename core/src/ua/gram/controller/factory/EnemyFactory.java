@@ -16,19 +16,27 @@ import ua.gram.model.prototype.enemy.EnemyPrototype;
 public class EnemyFactory {
 
     public static Enemy create(DDGame game, EnemyPrototype prototype) {
+        Enemy enemy;
         switch (prototype.name) {
             case "EnemyWarrior":
-                return new EnemyWarrior(game, prototype);
+                enemy = new EnemyWarrior(game, prototype);
+                break;
             case "EnemySoldier":
-                return new EnemySoldier(game, prototype);
+                enemy = new EnemySoldier(game, prototype);
+                break;
             case "EnemySoldierArmored":
-                return new EnemySoldierArmored(game, prototype);
+                enemy = new EnemySoldierArmored(game, prototype);
+                break;
             case "EnemySummoner":
-                return new EnemySummoner(game, (AbilityUserPrototype) prototype);
+                enemy = new EnemySummoner(game, (AbilityUserPrototype) prototype);
+                break;
             case "EnemyRunner":
-                return new EnemyRunner(game, prototype);
+                enemy = new EnemyRunner(game, prototype);
+                break;
             default:
                 throw new NullPointerException("EnemyFactory couldn't create: " + prototype.name);
         }
+        enemy.init();
+        return enemy;
     }
 }

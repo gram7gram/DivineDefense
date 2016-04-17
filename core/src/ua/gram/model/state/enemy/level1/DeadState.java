@@ -9,6 +9,7 @@ import ua.gram.controller.enemy.EnemySpawner;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.enums.Types;
 import ua.gram.model.group.EnemyGroup;
+import ua.gram.model.state.enemy.EnemyStateManager;
 import ua.gram.utils.Log;
 
 /**
@@ -16,8 +17,8 @@ import ua.gram.utils.Log;
  */
 public class DeadState extends InactiveState {
 
-    public DeadState(DDGame game) {
-        super(game);
+    public DeadState(DDGame game, EnemyStateManager manager) {
+        super(game, manager);
     }
 
     @Override
@@ -27,10 +28,14 @@ public class DeadState extends InactiveState {
 
     @Override
     public void preManage(Enemy enemy) throws GdxRuntimeException {
+        getManager().getAnimationChanger()
+                .update(enemy, enemy.getCurrentDirection(), getType());
+
         super.preManage(enemy);
 
-//        enemy.getAnimationProvider().get(enemy.getPrototype()).free(enemy);
-//        Log.info(enemy + " frees animation");
+        manager.swapLevel2State(enemy, null);
+        manager.swapLevel3State(enemy, null);
+        manager.swapLevel4State(enemy, null);
 
         EnemySpawner spawner = enemy.getSpawner();
         EnemyGroup group = enemy.getEnemyGroup();
@@ -39,7 +44,6 @@ public class DeadState extends InactiveState {
         spawner.free(enemy);
         group.clear();
         group.remove();
-        Log.info(enemy + " is dead");
     }
 
     @Override
@@ -47,7 +51,7 @@ public class DeadState extends InactiveState {
         getGame().getPlayer().addCoins(enemy.reward);
         float value = new Random().nextFloat();
 
-        //10% chance to getPool a gem
+        //10% chance to get a gem
         if (value >= .45 && value < .55) {
             getGame().getPlayer().addGems(1);
             Log.info("Player got 1 gem");

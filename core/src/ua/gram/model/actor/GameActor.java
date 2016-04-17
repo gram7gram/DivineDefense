@@ -87,16 +87,16 @@ public abstract class GameActor<T1, T2, M extends StateManager> extends Actor {
 
     public void setCurrentDirection(Vector2 currentDirection) {
         this.currentDirection = currentDirection;
-        this.previousDirection = Path.opposite(currentDirection);
-        this.currentDirectionType = Path.getType(currentDirection);
-        this.previousDirectionType = Path.getType(this.previousDirection);
+        previousDirection = Path.opposite(currentDirection);
+        currentDirectionType = Path.getType(currentDirection);
+        previousDirectionType = Path.getType(previousDirection);
     }
 
     public void setPreviousDirection(Vector2 previousDirection) {
         this.previousDirection = previousDirection;
-        this.currentDirection = Path.opposite(previousDirection);
-        this.previousDirectionType = Path.getType(previousDirection);
-        this.currentDirectionType = Path.getType(this.currentDirection);
+        currentDirection = Path.opposite(previousDirection);
+        previousDirectionType = Path.getType(previousDirection);
+        currentDirectionType = Path.getType(currentDirection);
     }
 
     public Animator<T1, T2> getAnimator() {

@@ -19,48 +19,44 @@ public class Log {
      */
     public synchronized static void info(String msg) {
         if (Gdx.app != null) {
-            Gdx.app.log("INFO", msg);
+            Gdx.app.log(INFO, msg);
         } else {
-            System.out.println("INFO " + msg);
+            System.out.println(INFO + ": " + msg);
         }
     }
 
     public synchronized static void warn(String msg) {
         if (Gdx.app != null) {
-            Gdx.app.log("WARN", msg);
+            Gdx.app.log(WARN, msg);
         } else {
-            System.out.println("WARN " + msg);
+            System.out.println(WARN + ": " + msg);
         }
     }
 
-    /**
-     * Log critical errors. Should not happen
-     */
+    /** Log critical errors. Should not happen */
     public synchronized static void crit(String msg) {
         if (Gdx.app != null) {
-            Gdx.app.error("CRIT", msg);
+            Gdx.app.error(CRIT, msg);
         } else {
-            System.err.println("CRIT " + msg);
+            System.err.println(CRIT + ": " + msg);
         }
     }
 
-    /**
-     * Log exceptions
-     */
+    /** Log exceptions */
     public synchronized static void exc(String msg, Exception e) {
         String message = buildExceptionMessage(msg, e);
         if (Gdx.app != null) {
-            Gdx.app.error("\nEXC", message);
+            Gdx.app.error("\n" + EXC, message);
         } else {
-            System.err.println("\nEXC " + message);
+            System.err.println("\n" + EXC + ": " + message);
         }
     }
 
     public static String buildExceptionMessage(String msg, Exception e) {
-        msg += "\r\nCLASS:\t" + e.getClass().getSimpleName();
-        msg += "\nMSG:\t" + e.getMessage();
-        msg += "\nTRACE:\t" + Arrays.toString(e.getStackTrace());
-        msg += "\nCAUSE:\t" + e.getCause();
+        msg += "\r\nCLASS: " + e.getClass().getSimpleName();
+        msg += "\nMSG: " + e.getMessage();
+        msg += "\nTRACE: " + Arrays.toString(e.getStackTrace());
+        msg += "\nCAUSE: " + e.getCause();
         msg += "\r\n";
         return msg;
     }

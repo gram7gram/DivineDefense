@@ -15,32 +15,36 @@ import ua.gram.utils.Log;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class TowerAnimationController implements AnimationControllerInterface<TowerPrototype, Types.TowerState, Types.TowerLevels> {
+public class TowerAnimationManager implements AnimationManager<TowerPrototype, Types.TowerState, Types.TowerLevels> {
 
     private final EnumMap<Types.TowerState, TowerLevelAnimationPool> identityMap;
     private final Skin skin;
+    private final TowerPrototype prototype;
 
-    public TowerAnimationController(Skin skin, TowerPrototype prototype) {
+    public TowerAnimationManager(Skin skin, TowerPrototype prototype) {
         this.skin = skin;
+        this.prototype = prototype;
         identityMap = new EnumMap<Types.TowerState, TowerLevelAnimationPool>(Types.TowerState.class);
-        init(prototype);
     }
 
     @Override
-    public boolean init(TowerPrototype prototype) {
-        boolean initialized = true;
+    public void init() {
+
         for (Types.TowerState type : EnumSet.allOf(Types.TowerState.class)) {
-            try {
-                identityMap.put(type, new TowerLevelAnimationPool(prototype, this, type));
-            } catch (Exception e) {
-                initialized = false;
-                Log.exc("Error at loading " + type.name() + " animation type for " + prototype.name, e);
-            }
+            identityMap.put(type, new TowerLevelAnimationPool(prototype, this, type));
         }
 
-        if (initialized) Log.info("AnimationController for " + prototype.name + " is OK");
+        Log.info("AnimationController for " + prototype.name + " is OK");
 
-        return initialized;
+    }
+
+    @Override
+    public String getAnimationName(TowerPrototype prototype, Types.TowerState type, Types.TowerLevels level) {
+        return "towers"
+                + "/" + prototype.name
+                + "/" + Player.PLAYER_FACTION
+                + "/" + level.name()
+                + "/" + type.name();
     }
 
     @Override
@@ -50,11 +54,7 @@ public class TowerAnimationController implements AnimationControllerInterface<To
         if (prototype == null || skin == null)
             throw new NullPointerException("Missing required parameters");
 
-        String region = "towers"
-                + "/" + prototype.name
-                + "/" + Player.PLAYER_FACTION
-                + "/" + level.name()
-                + "/" + type.name();
+        String region = getAnimationName(prototype, type, level);
 
         TextureRegion texture = skin.getRegion(region);
 

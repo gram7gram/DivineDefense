@@ -1,44 +1,27 @@
 package ua.gram.model.state.enemy;
 
 import ua.gram.DDGame;
-import ua.gram.controller.enemy.EnemyAnimationProvider;
-import ua.gram.controller.enemy.EnemySpawner;
-import ua.gram.controller.enemy.StateSwapper;
-import ua.gram.controller.pool.animation.AnimationPool;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.enums.Types;
-import ua.gram.model.state.AbstractState;
+import ua.gram.model.state.State;
 
 /**
  * Representation of Actor at the moment of time.
  *
  * @author Gram <gram7gram@gmail.com>
  */
-public abstract class EnemyState extends AbstractState<Enemy> {
+public abstract class EnemyState extends State<Enemy> {
 
-    protected StateSwapper<Enemy> stateSwapper;
+    protected final EnemyStateManager manager;
 
-    public EnemyState(DDGame game) {
+    public EnemyState(DDGame game, EnemyStateManager manager) {
         super(game);
-        stateSwapper = new StateSwapper<Enemy>();
-    }
-
-    public void initAnimation(Enemy enemy) {
-        EnemySpawner spawner = enemy.getSpawner();
-        EnemyAnimationProvider provider = spawner.getAnimationProvider();
-
-        setUncheckedType(enemy);
-
-        AnimationPool pool = provider.get(enemy.getPrototype(), getType(),
-                enemy.getCurrentDirectionType());
-        enemy.setAnimation(pool.obtain());
-    }
-
-    @SuppressWarnings("unchecked")
-    private void setUncheckedType(Enemy enemy) {
-        enemy.getAnimator().setPrimaryType(getType());
-        enemy.getAnimator().setSecondaryType(enemy.getCurrentDirectionType());
+        this.manager = manager;
     }
 
     protected abstract Types.EnemyState getType();
+
+    public EnemyStateManager getManager() {
+        return manager;
+    }
 }

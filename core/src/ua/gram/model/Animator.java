@@ -38,4 +38,8 @@ public class Animator<T1, T2> {
     public void setSecondaryType(T2 secondaryType) {
         this.secondaryType = secondaryType;
     }
+
+    public boolean hasAnimation() {
+        return poolableAnimation != null;
+    }
 }

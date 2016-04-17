@@ -13,46 +13,43 @@ import ua.gram.utils.Log;
  */
 public final class EnemySummoner extends AbilityUser implements Cloneable {
 
-    private Vector2 previousBadPosition;
+    private final Vector2 minionSpawnPosition;
 
     public EnemySummoner(DDGame game, AbilityUserPrototype prototype) {
         super(game, prototype);
-        previousBadPosition = Vector2.Zero;
+        minionSpawnPosition = Vector2.Zero;
+    }
+
+    private Vector2 getMinionSpawnPosition(Vector2 pos, Vector2 next) {
+        minionSpawnPosition.set(
+                (Math.round(pos.x) - (Math.round(pos.x) % DDGame.TILE_HEIGHT)) / DDGame.TILE_HEIGHT + next.x,
+                (Math.round(pos.y) - (Math.round(pos.y) % DDGame.TILE_HEIGHT)) / DDGame.TILE_HEIGHT + next.y);
+        return minionSpawnPosition;
     }
 
     @Override
     public synchronized boolean ability() {
-        Vector2 pos = this.getCurrentPosition();
-        Vector2 next = this.getCurrentDirection();
-        Vector2 position = new Vector2(
-                (Math.round(pos.x) - (Math.round(pos.x) % DDGame.TILE_HEIGHT)) / DDGame.TILE_HEIGHT + next.x,
-                (Math.round(pos.y) - (Math.round(pos.y) % DDGame.TILE_HEIGHT)) / DDGame.TILE_HEIGHT + next.y);
+        Vector2 pos = getCurrentPosition();
+        Vector2 next = getCurrentDirection();
+        Vector2 position = getMinionSpawnPosition(pos, next);
 
         Map map = getSpawner().getLevel().getMap();
 
-        if (Path.compare(previousBadPosition, position) || !map.checkSpawnPosition(position)) {
-            previousBadPosition = Path.clone(position);
-            Log.crit("Cannot spawn child. Requested cell "
-                    + Path.toString(position) + " does not contain nessesary property");
-            return false;
-        } else {
-            previousBadPosition = Vector2.Zero;
+        if (!map.getVoter().isWalkable((int) position.x, (int) position.y)) {
+            throw new IllegalArgumentException("Cannot spawn minion at "
+                    + Path.toString(position) + ": cell is not walkable");
         }
 
-        try {
-            spawner.spawnChild(this, "EnemySoldier", position);
-            Log.info(this + " performs ability");
-        } catch (Exception e) {
-            Log.exc("Could not execute ability for " + this, e);
-            return false;
-        }
+        spawner.spawn(getPrototype().minion, position, this);
+
+        Log.info(this + " performs ability");
 
         return true;
     }
 
     @Override
     public void update(float delta) {
-        this.setOrigin(this.getX() + this.getWidth() / 2f, this.getY() + this.getHeight() / 2f);
+        setOrigin(getX() + getWidth() / 2f, getY() + getHeight() / 2f);
     }
 
     @Override
@@ -63,6 +60,11 @@ public final class EnemySummoner extends AbilityUser implements Cloneable {
     @Override
     public void reset() {
         super.reset();
-        previousBadPosition = Vector2.Zero;
+        minionSpawnPosition.set(0, 0);
+    }
+
+    @Override
+    public AbilityUserPrototype getPrototype() {
+        return (AbilityUserPrototype) prototype;
     }
 }

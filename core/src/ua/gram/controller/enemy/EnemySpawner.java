@@ -12,9 +12,10 @@ import ua.gram.DDGame;
 import ua.gram.controller.pool.EnemyPool;
 import ua.gram.controller.stage.BattleStage;
 import ua.gram.model.actor.enemy.Enemy;
+import ua.gram.model.actor.enemy.EnemySummoner;
 import ua.gram.model.group.EnemyGroup;
 import ua.gram.model.level.Level;
-import ua.gram.model.map.EnemyPath;
+import ua.gram.model.map.WalkablePath;
 import ua.gram.model.prototype.enemy.EnemyPrototype;
 import ua.gram.model.state.enemy.EnemyStateManager;
 import ua.gram.utils.Log;
@@ -50,6 +51,7 @@ public final class EnemySpawner {
         animationProvider = new EnemyAnimationProvider(
                 game.getResources().getSkin(),
                 prototypes);
+        animationProvider.init();
 
         Log.info("EnemySpawner is OK");
     }
@@ -73,12 +75,14 @@ public final class EnemySpawner {
             try {
                 if (!enemiesToSpawn.isEmpty()) {
                     Vector2 spawnPosition = level.getMap().getSpawn().getPosition();
-                    this.spawn(enemiesToSpawn.pop(), spawnPosition);
+
+                    spawn(enemiesToSpawn.pop(), spawnPosition, null);
+
                 } else if (!stage_battle.hasEnemiesOnMap() || level.isCleared) {
                     level.getWave().finish();
                 }
             } catch (Exception e) {
-                Log.exc("Spawn conflict", e);
+                Log.exc("EnemySpawner conflict", e);
             }
         } else {
             count += delta;
@@ -93,10 +97,10 @@ public final class EnemySpawner {
      * @param type  the EnemyState ancestor to spawn.
      * @param spawn map tile positionIndex to spawn at (not in pixels)
      */
-    public void spawn(String type, Vector2 spawn) {
+    public void spawn(String type, Vector2 spawn, EnemySummoner parent) {
         Enemy enemy;
         try {
-            enemy = this.obtain(type);
+            enemy = obtain(type);
         } catch (Exception e) {
             Log.exc("Unable to obtain [" + type + "] from pool", e);
             return;
@@ -111,43 +115,13 @@ public final class EnemySpawner {
             enemyGroup.setVisible(true);
             enemy.setGroup(enemyGroup);
             stage_battle.updateZIndexes(enemyGroup);
+            if (parent != null) {
+                enemy.setParentEnemy(parent);
+            }
+            stateManager.getSpawnState().setSpawnPosition(spawn);
             stateManager.swapLevel1State(enemy, stateManager.getSpawnState());
         } catch (Exception e) {
             Log.exc("EnemySpawner failed to spawn " + enemy, e);
-        }
-    }
-
-    /**
-     * Spawns obtained from pool and cloned EnemyState,
-     * places it at the Spawn positionIndex and gives it the path to go.
-     * Spawn takes place in Group with the coresponding HealthBar.
-     *
-     * @param type  the EnemyState ancestor to spawn.
-     * @param spawn map tile positionIndex to spawn at (not in pixels)
-     */
-    public void spawnChild(Enemy parent, String type, Vector2 spawn) {
-        Enemy enemy;
-        try {
-            enemy = this.obtain(type);
-        } catch (Exception e) {
-            Log.exc("Unable to obtain [" + type + "] from pool", e);
-            return;
-        }
-        stateManager.init(enemy);
-        enemy.setSpawner(this);
-        stateManager.swapLevel1State(enemy, stateManager.getInactiveState());
-        stateManager.swapLevel2State(enemy, stateManager.getIdleState());
-        try {
-            enemy.setPosition(spawn.x * DDGame.TILE_HEIGHT, spawn.y * DDGame.TILE_HEIGHT);
-            EnemyGroup enemyGroup = new EnemyGroup(game, enemy);
-            enemyGroup.setVisible(true);
-            enemy.setGroup(enemyGroup);
-            stage_battle.updateZIndexes(enemyGroup);
-            stateManager.getSpawnState().setSpawnPosition(spawn);
-            stateManager.getSpawnState().setParent(parent);
-            stateManager.swapLevel1State(enemy, stateManager.getSpawnState());
-        } catch (Exception e) {
-            Log.exc("EnemySpawner failed to spawn " + parent + "'s child " + enemy, e);
         }
     }
 
@@ -156,7 +130,7 @@ public final class EnemySpawner {
      * FIX Bigger speed - slower walk of EnemyState
      */
     public void setActionPath(final Enemy enemy, Vector2 spawn, Vector2 previous) {
-        EnemyPath path = level.getMap().normalizePath(previous, spawn);
+        WalkablePath path = level.getMap().normalizePath(previous, spawn);
         enemy.setPath(path);
         if (enemy.getCurrentDirection() == null) {
             Vector2 current = path.peekNextDirection();
@@ -186,7 +160,7 @@ public final class EnemySpawner {
     }
 
     public void free(Enemy enemy) {
-        this.getPool(enemy.getName()).free(enemy);
+        getPool(enemy.getName()).free(enemy);
         Log.info(enemy + " is set free");
     }
 
@@ -204,9 +178,5 @@ public final class EnemySpawner {
 
     public Level getLevel() {
         return level;
-    }
-
-    public Vector2 getSpawnPosition() {
-        return level.getMap().getSpawn().getPosition();
     }
 }

@@ -2,9 +2,9 @@ package ua.gram.controller.enemy;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
-import ua.gram.controller.pool.animation.AnimationControllerInterface;
+import ua.gram.controller.pool.animation.AnimationManager;
 import ua.gram.controller.pool.animation.AnimationProvider;
-import ua.gram.controller.pool.animation.EnemyAnimationController;
+import ua.gram.controller.pool.animation.EnemyAnimationManager;
 import ua.gram.model.enums.Types;
 import ua.gram.model.map.Path;
 import ua.gram.model.prototype.enemy.EnemyPrototype;
@@ -19,7 +19,7 @@ public class EnemyAnimationProvider extends AnimationProvider<EnemyPrototype, Ty
     }
 
     @Override
-    protected AnimationControllerInterface<EnemyPrototype, Types.EnemyState, Path.Types> getInstance(EnemyPrototype prototype) {
-        return new EnemyAnimationController(getSkin(), prototype);
+    protected AnimationManager<EnemyPrototype, Types.EnemyState, Path.Types> getInstance(EnemyPrototype prototype) {
+        return new EnemyAnimationManager(getSkin(), prototype);
     }
 }

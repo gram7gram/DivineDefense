@@ -1,20 +1,19 @@
 package ua.gram.model.state.enemy.level3;
 
-import com.badlogic.gdx.Gdx;
-
 import ua.gram.DDGame;
 import ua.gram.model.actor.enemy.AbilityUser;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.enums.Types;
 import ua.gram.model.state.enemy.EnemyStateManager;
+import ua.gram.utils.Log;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
 public class AbilityState extends Level3State {
 
-    public AbilityState(DDGame game) {
-        super(game);
+    public AbilityState(DDGame game, EnemyStateManager manager) {
+        super(game, manager);
     }
 
     @Override
@@ -26,10 +25,12 @@ public class AbilityState extends Level3State {
     public void preManage(Enemy enemy) {
         check(enemy);
         AbilityUser user = (AbilityUser) enemy;
-        initAnimation(enemy);
+        manager.swapLevel2State(user, manager.getIdleState());
+        getManager().getAnimationChanger()
+                .update(user, user.getCurrentDirection(), getType());
+        super.preManage(user);
         user.setAbilityExecuted(false);
         user.setAbilityDurationCount(0);
-        Gdx.app.log("INFO", enemy + " state: " + enemy.getAnimator().getPrimaryType());
     }
 
     @Override
@@ -37,7 +38,6 @@ public class AbilityState extends Level3State {
         check(enemy);
         AbilityUser user = (AbilityUser) enemy;
         float duration = user.getAbilityDuration();
-        EnemyStateManager manager = user.getSpawner().getStateManager();
         if (user.getAbilityDurationCount() >= duration) {
             user.setAbilityDurationCount(0);
             manager.swapLevel2State(user, manager.getWalkingState(user));
@@ -45,7 +45,13 @@ public class AbilityState extends Level3State {
         } else {
             user.addAbilityDurationCount(delta);
             if (!user.isAbilityExecuted() && !user.isInterrupted()) {
-                user.setAbilityExecuted(user.ability());
+                try {
+                    user.setAbilityExecuted(user.ability());
+                } catch (Exception e) {
+                    Log.exc("Could not execute ability for " + user, e);
+                    manager.swapLevel2State(user, manager.getWalkingState(user));
+                    manager.swapLevel3State(user, null);
+                }
             }
         }
     }
@@ -56,6 +62,7 @@ public class AbilityState extends Level3State {
         AbilityUser user = (AbilityUser) enemy;
         user.setAbilityExecuted(false);
         user.setAbilityDurationCount(0);
+        manager.swapLevel2State(user, manager.getWalkingState(user));
     }
 
     private void check(Enemy enemy) {

@@ -6,9 +6,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import ua.gram.controller.builder.WeaponBuilder;
 import ua.gram.controller.stage.BattleStage;
+import ua.gram.model.actor.enemy.Enemy;
+import ua.gram.model.actor.tower.Tower;
 import ua.gram.model.group.Layer;
 import ua.gram.model.prototype.weapon.FreezeWeaponPrototype;
 import ua.gram.model.prototype.weapon.WeaponPrototype;
+import ua.gram.model.state.enemy.EnemyStateManager;
 import ua.gram.utils.Resources;
 
 /**
@@ -20,6 +23,20 @@ public class FreezeWeapon extends Weapon implements AOEWeapon {
 
     public FreezeWeapon(WeaponBuilder builder, Resources resources, WeaponPrototype prototype) {
         super(builder, resources, prototype);
+    }
+
+    @Override
+    public void preAttack(Tower tower, Enemy victim) {
+        super.preAttack(tower, victim);
+        EnemyStateManager manager = victim.getStateManager();
+        manager.swapLevel4State(victim, manager.getStunState());
+    }
+
+    @Override
+    public void postAttack(Tower tower, Enemy victim) {
+        super.postAttack(tower, victim);
+        EnemyStateManager manager = victim.getStateManager();
+        manager.swapLevel4State(victim, null);
     }
 
     @Override

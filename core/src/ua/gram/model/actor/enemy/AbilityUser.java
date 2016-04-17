@@ -28,10 +28,6 @@ public abstract class AbilityUser extends Enemy implements AbilityUserInterface 
         return abilityDelay;
     }
 
-    public void setAbilityDelay(float delayAbility) {
-        this.delayAbility = delayAbility;
-    }
-
     @Override
     public float getAbilityDuration() {
         return abilityDuration;
@@ -50,13 +46,7 @@ public abstract class AbilityUser extends Enemy implements AbilityUserInterface 
 
     @Override
     public boolean isAbilityPossible() {
-        if (delayAbility >= abilityDelay) {
-            delayAbility = 0;
-            return true;
-        } else {
-            delayAbility += 1;
-            return false;
-        }
+        return isAbilityPossible(1);
     }
 
     @Override

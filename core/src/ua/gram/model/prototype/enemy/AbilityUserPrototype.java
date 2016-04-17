@@ -6,4 +6,5 @@ package ua.gram.model.prototype.enemy;
 public final class AbilityUserPrototype extends EnemyPrototype {
     public float abilityDelay;
     public float abilityDuration;
+    public String minion;
 }

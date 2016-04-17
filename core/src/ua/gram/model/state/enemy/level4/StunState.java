@@ -1,18 +1,17 @@
 package ua.gram.model.state.enemy.level4;
 
-import com.badlogic.gdx.Gdx;
-
 import ua.gram.DDGame;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.enums.Types;
+import ua.gram.model.state.enemy.EnemyStateManager;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
 public class StunState extends Level4State {
 
-    public StunState(DDGame game) {
-        super(game);
+    public StunState(DDGame game, EnemyStateManager manager) {
+        super(game, manager);
     }
 
     @Override
@@ -22,17 +21,21 @@ public class StunState extends Level4State {
 
     @Override
     public void preManage(Enemy enemy) {
+        getManager().getAnimationChanger()
+                .update(enemy, enemy.getCurrentDirection(), getType());
+        super.preManage(enemy);
         enemy.isAffected = true;
-        Gdx.app.log("INFO", enemy + " is stunned");
     }
 
     @Override
     public void manage(Enemy enemy, float delta) {
-//        enemy.decreaseSpeed();
+        super.manage(enemy, delta);
+        enemy.decreaseSpeed();
     }
 
     @Override
     public void postManage(Enemy enemy) {
+        super.postManage(enemy);
         enemy.isAffected = false;
         enemy.resetSpeed();
     }

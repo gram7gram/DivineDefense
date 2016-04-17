@@ -3,97 +3,96 @@ package ua.gram.controller.enemy;
 import com.badlogic.gdx.math.Vector2;
 
 import ua.gram.controller.pool.animation.AnimationPool;
+import ua.gram.model.Animator;
+import ua.gram.model.PoolableAnimation;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.enums.Types;
+import ua.gram.model.map.Path;
 import ua.gram.utils.Log;
 
 /**
- * It is executed if Enemy changes direction.
- *
  * @author Gram <gram7gram@gmail.com>
  */
 public class EnemyAnimationChanger implements Runnable {
 
+    private final Object lock = new Object();
     private Types.EnemyState type;
     private Enemy enemy;
     private Vector2 dir;
 
-    public EnemyAnimationChanger(Types.EnemyState type) {
-        this.type = type;
-    }
-
     @Override
     public void run() {
+        update();
+    }
+
+    private void update() {
         if (enemy == null || type == null)
             throw new NullPointerException("Missing required parameters");
-        if (enemy.getCurrentDirection() == dir && enemy.getAnimator().getPrimaryType() == type)
-            return;
+
+        if (enemy.getAnimator().hasAnimation()) {
+
+            if (enemy.getCurrentDirection() == dir && enemy.getAnimator().getPrimaryType() == type) {
+                return;
+            }
+
+            freeAnimation();
+        }
+
+        updateDirection();
+
+        obtainAnimation();
+    }
+
+    private void updateDirection() {
+        if (dir != null && enemy.getCurrentDirection() != dir) {
+            synchronized (lock) {
+                enemy.setCurrentDirection(dir);
+            }
+        }
+    }
+
+    private void freeAnimation() {
+        if (enemy.getPoolableAnimation() == null) return;
 
         EnemyAnimationProvider animationProvider = enemy.getAnimationProvider();
-
-        returnOldAnimation(animationProvider);
-
-        //NOTE Next animation may have other direction, so update is nessesary
-        if (dir != null) enemy.setCurrentDirection(dir);
-
-        setUncheckedType();
-
-        getNewAnimation(animationProvider);
-    }
-
-    @SuppressWarnings("unchecked")
-    private void setUncheckedType() {
-        enemy.getAnimator().setPrimaryType(type);
-    }
-
-    private void returnOldAnimation(EnemyAnimationProvider animationProvider) {
+        Animator<Types.EnemyState, Path.Types> animator = enemy.getAnimator();
         try {
-            AnimationPool pool = animationProvider.get(enemy.getPrototype(),
-                    type, enemy.getCurrentDirectionType());
-            pool.free(enemy.getPoolableAnimation());
-
-//            Log.info(enemy + " frees animation:"
-//                    + " " + enemy.getAnimator().getPrimaryType()
-//                    + " " + enemy.getAnimator().getSecondaryType());
+            synchronized (lock) {
+                AnimationPool pool = animationProvider.get(enemy.getPrototype(), animator);
+                pool.free(animator.getPoolable());
+            }
 
         } catch (Exception e) {
             Log.exc("Cannot free " + enemy + " previous animation", e);
         }
     }
 
-    private void getNewAnimation(EnemyAnimationProvider animationProvider) {
+    private void obtainAnimation() {
+        EnemyAnimationProvider animationProvider = enemy.getAnimationProvider();
+        Animator<Types.EnemyState, Path.Types> animator = enemy.getAnimator();
         try {
-            AnimationPool pool = animationProvider.get(enemy.getPrototype(),
-                    type, enemy.getCurrentDirectionType());
-            enemy.setAnimation(pool.obtain());
+            synchronized (lock) {
+                animator.setPrimaryType(type);
+                animator.setSecondaryType(enemy.getCurrentDirectionType());
 
-//            Log.info(enemy + " obtains animation to:"
-//                    + " " + enemy.getAnimator().getPrimaryType()
-//                    + " " + enemy.getAnimator().getSecondaryType());
-
+                AnimationPool pool = animationProvider.get(enemy.getPrototype(), animator);
+                PoolableAnimation animation = pool.obtain();
+                animator.setPollable(animation);
+            }
         } catch (Exception e) {
             Log.exc("Cannot set new animation for " + enemy, e);
         }
     }
 
-    public EnemyAnimationChanger update(Enemy enemy, Vector2 dir, Types.EnemyState type) {
+    public void update(Enemy enemy, Vector2 dir, Types.EnemyState type) {
+        updateValues(enemy, dir, type);
+        update();
+    }
+
+    public EnemyAnimationChanger updateValues(Enemy enemy, Vector2 dir, Types.EnemyState type) {
         this.enemy = enemy;
         this.dir = dir;
         this.type = type;
-
-        return this;
-    }
-
-    public EnemyAnimationChanger update(Enemy enemy, Vector2 dir) {
-        this.enemy = enemy;
-        this.dir = dir;
-
-        return this;
-    }
-
-    public EnemyAnimationChanger update(Enemy enemy) {
-        this.enemy = enemy;
-        this.dir = null;
 
         return this;
     }

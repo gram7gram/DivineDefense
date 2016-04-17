@@ -13,7 +13,7 @@ import ua.gram.DDGame;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class EnemyPath {
+public class WalkablePath {
 
     public ArrayList<Vector2> path;
     public ArrayList<Vector2> directions;
@@ -21,7 +21,7 @@ public class EnemyPath {
     public Stack<Vector2> pathStack;
     private boolean isReversed = false;
 
-    public EnemyPath() {
+    public WalkablePath() {
         path = new ArrayList<Vector2>();
         directions = new ArrayList<Vector2>();
         directionStack = new Stack<Vector2>();

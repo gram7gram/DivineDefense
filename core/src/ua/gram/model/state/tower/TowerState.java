@@ -7,7 +7,7 @@ import ua.gram.controller.tower.TowerAnimationProvider;
 import ua.gram.controller.tower.TowerShop;
 import ua.gram.model.actor.tower.Tower;
 import ua.gram.model.enums.Types;
-import ua.gram.model.state.AbstractState;
+import ua.gram.model.state.State;
 import ua.gram.utils.Log;
 
 /**
@@ -15,7 +15,7 @@ import ua.gram.utils.Log;
  *
  * @author Gram <gram7gram@gmail.com>
  */
-public abstract class TowerState extends AbstractState<Tower> {
+public abstract class TowerState extends State<Tower> {
 
     protected final StateSwapper<Tower> stateSwapper;
 
@@ -25,6 +25,9 @@ public abstract class TowerState extends AbstractState<Tower> {
         Log.info("Tower " + getClass().getSimpleName() + " state is OK");
     }
 
+    /**
+     * TODO Move to TowerAnimationChanger
+     */
     public void initAnimation(Tower tower) {
         TowerShop shop = tower.getTowerShop();
         TowerAnimationProvider provider = shop.getAnimationProvider();

@@ -30,7 +30,7 @@ public class TowerShopInputListener extends ClickListener {
         this.type = type;
         this.uiStage = shop.getUiStage();
         this.battleStage = shop.getBattleStage();
-        voter = new TiledMapVoter(battleStage.getLevel().getMap());
+        voter = battleStage.getLevel().getMap().getVoter();
     }
 
     /**
@@ -49,15 +49,17 @@ public class TowerShopInputListener extends ClickListener {
         }
     }
 
-    /**
-     * Move the Tower across the map
-     */
+    /** Move the Tower across the map */
     @Override
-    public void touchDragged(InputEvent event, float x, float y, int pointer) {
+    public void touchDragged(InputEvent event, float eventX, float eventY, int pointer) {
         float X = event.getStageX() - event.getStageX() % DDGame.TILE_HEIGHT;
         float Y = event.getStageY() - event.getStageY() % DDGame.TILE_HEIGHT;
         if (!isEqual(X, Y, towerGroup)) {
-            boolean canBeBuild = voter.canBeBuildOnAllLayers(X, Y);
+
+            int xIndex = (int) (X / DDGame.TILE_HEIGHT);
+            int yIndex = (int) (Y / DDGame.TILE_HEIGHT);
+
+            boolean canBeBuild = voter.isBuildable(xIndex, yIndex);
             boolean isFree = battleStage.isPositionEmpty(X, Y);
             if (canBeBuild && isFree) {
                 Tower tower = towerGroup.getRootActor();
@@ -77,19 +79,26 @@ public class TowerShopInputListener extends ClickListener {
     /**
      * Puts the Tower on the map if building is allowed.
      * As soon as towerGroup is put on map, display building animation for 1.5 sec.
-     * Then switch to idle animation and activate towerGroup.
+     * Then switch to idle animation and activate tower.
      */
     @Override
     public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
         float X = event.getStageX() - event.getStageX() % DDGame.TILE_HEIGHT;
         float Y = event.getStageY() - event.getStageY() % DDGame.TILE_HEIGHT;
-        boolean canBeBuild = voter.canBeBuildOnAllLayers(X, Y);
         boolean isFree = battleStage.isPositionEmpty(X, Y);
-        if (canBeBuild && isFree) {
-            shop.buy(towerGroup, X, Y);
-            if (canStartNextWave(uiStage.getLevel())) {
-                uiStage.getLevel().nextWave();
-                uiStage.getCounter().setVisible(false);
+        if (isFree) {
+            int xIndex = (int) (X / DDGame.TILE_HEIGHT);
+            int yIndex = (int) (Y / DDGame.TILE_HEIGHT);
+
+            boolean canBeBuild = voter.isBuildable(xIndex, yIndex);
+            if (canBeBuild) {
+                shop.buy(towerGroup, X, Y);
+                if (canStartNextWave(uiStage.getLevel())) {
+                    uiStage.getLevel().nextWave();
+                    uiStage.getCounter().setVisible(false);
+                }
+            } else {
+                shop.refund(towerGroup);
             }
         } else {
             shop.refund(towerGroup);

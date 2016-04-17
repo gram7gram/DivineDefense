@@ -23,7 +23,7 @@
  </tileset>
  <layer name="Back" height="10" width="15">
   <data compression="zlib" encoding="base64">
-   eJxjYBh6gBGIOYGYCYnNSYQeJhLs4ERj4zMfmxwnEk2Kvch6Yf4jB5DjX06oPhjGZh5MjhMJM6HJg2gAiwwApw==
+   eJxjYBh6gBGIOYGYCYnNSYQeJjLtI2Q+ITly7YX5jxxAqn9hfmREwtjMg8lxImEmNHkQDQBv6ACM
   </data>
  </layer>
  <layer name="Terrain" height="10" width="15">

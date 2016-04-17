@@ -11,17 +11,19 @@ import ua.gram.model.PoolableAnimation;
 public class AnimationPool extends Pool<PoolableAnimation> {
 
     private final TextureRegion[] tiles;
+    private final String name;
     private float delay = .1f;
 
-    public AnimationPool(TextureRegion[] tiles) {
+    public AnimationPool(TextureRegion[] tiles, String name) {
         super(4);
         if (tiles == null || tiles[0] == null) throw new NullPointerException("Passed empty tiles to constructor");
         this.tiles = tiles;
+        this.name = name;
     }
 
     @Override
     public PoolableAnimation newObject() {
-        return new PoolableAnimation(delay, tiles);
+        return new PoolableAnimation(delay, tiles, name);
     }
 
     public void setDelay(float delay) {

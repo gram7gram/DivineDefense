@@ -1,28 +1,26 @@
 package ua.gram.model.actor.enemy;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Pool;
-
-import java.util.Random;
 
 import ua.gram.DDGame;
 import ua.gram.controller.enemy.EnemyAnimationProvider;
 import ua.gram.controller.enemy.EnemySpawner;
-import ua.gram.controller.pool.animation.AnimationPool;
+import ua.gram.controller.event.DamageEvent;
+import ua.gram.controller.listener.DamageListener;
 import ua.gram.controller.stage.BattleStage;
 import ua.gram.model.Animator;
+import ua.gram.model.Initializer;
 import ua.gram.model.PoolableAnimation;
 import ua.gram.model.actor.GameActor;
-import ua.gram.model.actor.misc.PopupLabel;
 import ua.gram.model.enums.Types;
 import ua.gram.model.group.EnemyGroup;
-import ua.gram.model.map.EnemyPath;
 import ua.gram.model.map.Path;
+import ua.gram.model.map.WalkablePath;
 import ua.gram.model.prototype.enemy.EnemyPrototype;
 import ua.gram.model.state.enemy.EnemyStateHolder;
 import ua.gram.model.state.enemy.EnemyStateManager;
@@ -32,7 +30,7 @@ import ua.gram.utils.Log;
  * @author Gram <gram7gram@gmail.com>
  */
 public abstract class Enemy extends GameActor<Types.EnemyState, Path.Types, EnemyStateManager>
-        implements Pool.Poolable {
+        implements Pool.Poolable, Initializer {
 
     public final float defaultHealth;
     public final float defaultSpeed;
@@ -45,20 +43,21 @@ public abstract class Enemy extends GameActor<Types.EnemyState, Path.Types, Enem
     public float speed;
     public float armor;
     public float spawnDuration;
-    public boolean isStunned;
+    public float spawnDurationCount;
     public boolean isAttacked;
     public boolean isAffected;
     public boolean isDead;
     public boolean isRemoved;
     public boolean hasReachedCheckpoint;
-    protected EnemyPath path;
+    protected WalkablePath path;
     protected EnemySpawner spawner;
     private float stateTime = 0;
     private EnemyGroup group;
     private TextureRegion currentFrame;
     private Vector2 originPosition;
     private Vector2 previousPosition;
-    //    private Path.Types previousPositionType;
+    private Vector2 currentPositionIndex;
+    private Enemy parent;
 
     public Enemy(DDGame game, EnemyPrototype prototype) {
         super(prototype);
@@ -72,14 +71,18 @@ public abstract class Enemy extends GameActor<Types.EnemyState, Path.Types, Enem
         defaultHealth = health;
         defaultSpeed = speed;
         defaultArmor = armor;
-        isStunned = false;
-        isAffected = false;
         isDead = false;
         isRemoved = false;
         hasReachedCheckpoint = true;
         previousPosition = Vector2.Zero;
         originPosition = Vector2.Zero;
+        currentPositionIndex = Vector2.Zero;
         stateHolder = new EnemyStateHolder();
+    }
+
+    @Override
+    public void init() {
+        addListener(new DamageListener(this));
     }
 
     @Override
@@ -106,38 +109,30 @@ public abstract class Enemy extends GameActor<Types.EnemyState, Path.Types, Enem
     public void act(float delta) {
         super.act(delta);
         if (!DDGame.PAUSE && !isRemoved) {
+
             if (game.getSpeed().isIncreased()) {
-                float delay = game.getSpeed().getValue() * prototype.frameDuration;
-                getAnimationProvider().get(prototype,
-                        animator.getPrimaryType(),
-                        animator.getSecondaryType())
-                        .setDelay(delay);
+                updateAnimationSpeed();
             }
+
             update(delta);
-            EnemyStateManager stateManager = spawner.getStateManager();
-            if (this.health <= 0 && stateHolder.getCurrentLevel1State() != stateManager.getDeadState()) {
-                stateManager.swapLevel1State(this, stateManager.getDeadState());
-            } else {
-                getStage().updateActorIndex(getParent());
-                if (isStunned && !isAffected) {
-                    stateManager.swapLevel4State(this, stateManager.getStunState());
-                } else if (!isStunned && isAffected) {
-                    stateManager.swapLevel4State(this, null);
-                }
-            }
-            stateManager.update(this, delta);
+
+            getStage().updateActorIndex(getParent());
+
+            getStateManager().update(this, delta);
         }
     }
 
+    private void updateAnimationSpeed() {
+        float delay = game.getSpeed().getValue() * prototype.frameDuration;
+        getAnimationProvider().get(prototype, animator).setDelay(delay);
+    }
+
     /**
-     * Perform EnemyState-specific action.
+     * Perform Enemy-specific action.
      * Executes every iteration, if not paused.
      */
     public abstract void update(float delta);
 
-    /**
-     * Return Enemy to it's initial setup
-     */
     @Override
     public void reset() {
         EnemyStateManager stateManager = spawner.getStateManager();
@@ -148,8 +143,6 @@ public abstract class Enemy extends GameActor<Types.EnemyState, Path.Types, Enem
         stateTime = 0;
         path = null;
         currentFrame = null;
-        isStunned = false;
-        isAffected = false;
         isDead = false;
         isAttacked = false;
         isRemoved = false;
@@ -158,47 +151,29 @@ public abstract class Enemy extends GameActor<Types.EnemyState, Path.Types, Enem
         previousDirection = Vector2.Zero;
         originPosition = Vector2.Zero;
         previousPosition = Vector2.Zero;
+        currentPositionIndex = Vector2.Zero;
         Log.info(this + " was reset");
     }
 
     /**
-     * Meddle with param to make slight difference between enemies
-     *
-     * @param param
-     * @return slightly changed param
+     * TODO Meddle with param to make slight difference between enemy stats
      */
     private float meddle(float param) {
-        return param * (new Random().nextInt((11 - 9) + 10) / 10 + 0.9f);
+        return param;
     }
 
     public EnemyAnimationProvider getAnimationProvider() {
         return spawner.getAnimationProvider();
     }
 
-    public Animation getAnimation() {
-        return animator.getPoolable().getAnimation();
-    }
-
-    public void setAnimation(Types.EnemyState type) {
-        AnimationPool pool = getAnimationProvider().get(prototype, type, getCurrentDirectionType());
-        this.setAnimation(pool.obtain());
-    }
-
     public void setAnimation(PoolableAnimation animation) {
-        this.animator.setPollable(animation);
+        animator.setPollable(animation);
     }
 
     public void damage(float damage) {
         health -= damage;
 
-        addAction(
-                Actions.run(new PopupLabel("-" + (int) damage,
-                        game.getResources().getSkin(),
-                        "smallest-popup-red",
-                        this)));
-
-        Log.info(this + " receives " + (int) damage
-                + " dmg, hp: " + health);
+        fire(new DamageEvent(damage));
     }
 
     public EnemySpawner getSpawner() {
@@ -210,7 +185,9 @@ public abstract class Enemy extends GameActor<Types.EnemyState, Path.Types, Enem
     }
 
     public Vector2 getOrigin() {
-        originPosition.set(this.getX() + this.getOriginX(), this.getY() + this.getOriginY());
+        originPosition.set(
+                getX() + getOriginX(),
+                getY() + getOriginY());
         return originPosition;
     }
 
@@ -218,15 +195,27 @@ public abstract class Enemy extends GameActor<Types.EnemyState, Path.Types, Enem
         return spawnDuration;
     }
 
+    public float getSpawnDurationCount() {
+        return spawnDurationCount;
+    }
+
+    public void setSpawnDurationCount(float spawnDurationCount) {
+        this.spawnDurationCount = spawnDurationCount;
+    }
+
+    public void addSpawnDurationCount(float spawnDurationCount) {
+        this.spawnDurationCount += spawnDurationCount;
+    }
+
     public EnemyGroup getEnemyGroup() {
         return group;
     }
 
-    public EnemyPath getPath() {
+    public WalkablePath getPath() {
         return path;
     }
 
-    public void setPath(EnemyPath path) {
+    public void setPath(WalkablePath path) {
         this.path = path;
     }
 
@@ -251,10 +240,13 @@ public abstract class Enemy extends GameActor<Types.EnemyState, Path.Types, Enem
     }
 
     public Vector2 getCurrentPositionIndex() {
-        return new Vector2(Math.round(this.getX()) / DDGame.TILE_HEIGHT, Math.round(this.getY()) / DDGame.TILE_HEIGHT);
+        currentPositionIndex.set(
+                Math.round(getX()) / DDGame.TILE_HEIGHT,
+                Math.round(getY()) / DDGame.TILE_HEIGHT);
+        return currentPositionIndex;
     }
 
-    public Animator getAnimator() {
+    public Animator<Types.EnemyState, Path.Types> getAnimator() {
         return animator;
     }
 
@@ -286,5 +278,21 @@ public abstract class Enemy extends GameActor<Types.EnemyState, Path.Types, Enem
 
     public boolean isAlive() {
         return health > 0;
+    }
+
+    public Enemy getParentEnemy() {
+        return parent;
+    }
+
+    public void setParentEnemy(Enemy parent) {
+        this.parent = parent;
+    }
+
+    public boolean hasParentEnemy() {
+        return parent != null;
+    }
+
+    public Skin getSkin() {
+        return game.getResources().getSkin();
     }
 }

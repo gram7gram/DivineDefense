@@ -2,6 +2,7 @@ package ua.gram.controller.enemy;
 
 import ua.gram.model.actor.GameActor;
 import ua.gram.model.state.StateInterface;
+import ua.gram.utils.Log;
 
 /**
  * Swap state with new state for provided actor
@@ -18,6 +19,9 @@ public class StateSwapper<E extends GameActor> implements Runnable {
                                StateInterface<E> state1,
                                StateInterface<E> state2,
                                int level) {
+        if (actor == null) {
+            throw new NullPointerException("StateSwapper requires actor");
+        }
         this.actor = actor;
         this.state1 = state1;
         this.state2 = state2;
@@ -29,14 +33,21 @@ public class StateSwapper<E extends GameActor> implements Runnable {
     @Override
     @SuppressWarnings("unchecked")
     public void run() {
+        if (actor == null) {
+            Log.crit("Missing actor in swapper");
+            reset();
+            return;
+        }
+
         actor.getStateManager().swap(actor, state1, state2, level);
+
         reset();
     }
 
     private void reset() {
-        this.actor = null;
-        this.state1 = null;
-        this.state2 = null;
-        this.level = 0;
+        actor = null;
+        state1 = null;
+        state2 = null;
+        level = 0;
     }
 }

@@ -1,8 +1,6 @@
 package ua.gram.model.state.enemy.level1;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import ua.gram.DDGame;
 import ua.gram.controller.enemy.EnemySpawner;
@@ -10,18 +8,17 @@ import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.enums.Types;
 import ua.gram.model.map.Path;
 import ua.gram.model.state.enemy.EnemyStateManager;
+import ua.gram.utils.Log;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
 public class SpawnState extends InactiveState {
 
-    private float spawnDurationCount;
     private Vector2 spawnPosition;
-    private Enemy parent;
 
-    public SpawnState(DDGame game) {
-        super(game);
+    public SpawnState(DDGame game, EnemyStateManager manager) {
+        super(game, manager);
     }
 
     @Override
@@ -30,60 +27,72 @@ public class SpawnState extends InactiveState {
     }
 
     @Override
-    public void preManage(Enemy enemy) throws GdxRuntimeException {
+    public void preManage(Enemy enemy) {
+        if (enemy.hasParentEnemy()) {
+            minionSpawn(enemy);
+        } else {
+            normalSpawn(enemy);
+        }
+
+        getManager().getAnimationChanger()
+                .update(enemy, enemy.getCurrentDirection(), getType());
+
         super.preManage(enemy);
-        EnemySpawner spawner = enemy.getSpawner();
-        Vector2 initial = spawner.getLevel().getPrototype().initialDirection;
 
-        enemy.setCurrentDirection(parent == null || parent.getCurrentDirection() == null
-                ? initial : parent.getCurrentDirection());
-
-        initAnimation(enemy);
-
-        Vector2 pos = spawnPosition == null
-                ? spawner.getSpawnPosition()
-                : spawnPosition;
-
-        Vector2 prev = parent == null
-                ? Path.opposite(initial)
-                : parent.getPreviousDirection();
-
-        spawner.setActionPath(enemy, pos, prev);
-
-        Gdx.app.log("INFO", enemy + " is spawned at " + Path.toString(pos));
-
-        spawnDurationCount = 0;
-
+        enemy.setSpawnDurationCount(0);
         enemy.setVisible(true);
 
-        Gdx.app.log("INFO", enemy + " state: " + enemy.getAnimator().getPrimaryType());
+        Log.info(enemy + " is spawned at " + Path.toString(enemy.getCurrentPositionIndex()));
+    }
+
+    private void normalSpawn(Enemy enemy) {
+
+        EnemySpawner spawner = enemy.getSpawner();
+
+        Vector2 initial = spawner.getLevel().getPrototype().initialDirection;
+
+        enemy.setCurrentDirection(initial);
+
+        Vector2 prev = Path.opposite(initial);
+
+        spawner.setActionPath(enemy, spawnPosition, prev);
+    }
+
+    private void minionSpawn(Enemy enemy) {
+
+        EnemySpawner spawner = enemy.getSpawner();
+
+        Enemy parent = enemy.getParentEnemy();
+
+        Vector2 initial = parent.getCurrentDirection();
+
+        enemy.setCurrentDirection(initial);
+
+        Vector2 prev = enemy.getPreviousDirection();
+
+        spawner.setActionPath(enemy, spawnPosition, prev);
     }
 
     @Override
     public void manage(Enemy enemy, float delta) {
         EnemyStateManager manager = enemy.getSpawner().getStateManager();
-        if (spawnDurationCount >= enemy.getSpawnDuration()) {
+        if (enemy.getSpawnDurationCount() >= enemy.getSpawnDuration()) {
             manager.swapLevel1State(enemy, manager.getActiveState());
             manager.swapLevel2State(enemy, manager.getWalkingState(enemy));
-            spawnDurationCount = 0;
+            enemy.setSpawnDurationCount(0);
         } else {
-            spawnDurationCount += delta;
+            enemy.addSpawnDurationCount(delta);
         }
     }
 
     @Override
     public void postManage(Enemy enemy) {
-        spawnDurationCount = 0;
-        spawnPosition = null;
-        parent = null;
+        super.postManage(enemy);
+        enemy.setSpawnDurationCount(0);
     }
 
     public void setSpawnPosition(Vector2 spawnPosition) {
         this.spawnPosition = spawnPosition;
-    }
-
-    public void setParent(Enemy parent) {
-        this.parent = parent;
     }
 
 }

@@ -7,7 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import java.util.EmptyStackException;
 
 import ua.gram.DDGame;
-import ua.gram.controller.enemy.EnemyAnimationChanger;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.enums.Types;
 import ua.gram.model.map.Map;
@@ -21,12 +20,10 @@ import ua.gram.utils.Log;
  */
 public class WalkingState extends Level2State {
 
-    protected final EnemyAnimationChanger animationChanger;
     protected Vector2 basePosition;
 
-    public WalkingState(DDGame game) {
-        super(game);
-        animationChanger = new EnemyAnimationChanger(getType());
+    public WalkingState(DDGame game, EnemyStateManager manager) {
+        super(game, manager);
     }
 
     @Override
@@ -36,15 +33,17 @@ public class WalkingState extends Level2State {
 
     @Override
     public void preManage(final Enemy enemy) {
-        initAnimation(enemy);
+        getManager().getAnimationChanger()
+                .update(enemy, enemy.getCurrentDirection(), getType());
+
+        super.preManage(enemy);
+
         if (basePosition == null) {
             basePosition = enemy.getSpawner().getLevel().getMap()
                     .getBase().getPosition();
         }
 
-        reset(enemy);
-
-        Log.info(enemy + " state: " + enemy.getAnimator().getPrimaryType());
+        resetState(enemy);
     }
 
     /**
@@ -55,20 +54,33 @@ public class WalkingState extends Level2State {
      * @param x     current x
      * @param y     current y
      */
-    protected synchronized void move(final Enemy enemy, float delta, int x, int y) {
+    protected void move(final Enemy enemy, float delta, int x, int y) {
 
         Vector2 dir = enemy.getPath().nextDirection();
 
-        enemy.addAction(Actions.sequence(
-                Actions.run(animationChanger.update(enemy, dir, getType())),
-                moveBy(enemy, dir)
-        ));
+        getManager().getAnimationChanger().update(enemy, dir, getType());
+
+        enemy.addAction(moveBy(enemy, dir));
+    }
+
+    private boolean checkFloatPosition(Enemy enemy) {
+        int x = Math.round(enemy.getX());
+        int y = Math.round(enemy.getY());
+        return Float.compare(x % DDGame.TILE_HEIGHT, 0) == 0
+                && Float.compare(y % DDGame.TILE_HEIGHT, 0) == 0;
+    }
+
+    private boolean checkIntegerPosition(Enemy enemy) {
+        int x = (int) enemy.getX();
+        int y = (int) enemy.getY();
+        return x % DDGame.TILE_HEIGHT == 0
+                && y % DDGame.TILE_HEIGHT == 0;
     }
 
     @Override
     public void manage(final Enemy enemy, float delta) {
-        int x = Math.round(enemy.getX());
-        int y = Math.round(enemy.getY());
+
+        if (!enemy.hasParent()) return;
 
         if (enemy.isRemoved) {
             remove(enemy);
@@ -87,62 +99,71 @@ public class WalkingState extends Level2State {
             return;
         }
 
-        if (Float.compare(x % DDGame.TILE_HEIGHT, 0) == 0 && Float.compare(y % DDGame.TILE_HEIGHT, 0) == 0) {
-//            if (isIterationAllowed(enemy.getUpdateIterationCount())) {
-
-                Map map = enemy.getSpawner().getLevel().getMap();
-                if (!map.checkPosition(enemy.getCurrentPositionIndex(), map.getPrototype().walkableProperty)) {
-                    Log.crit(enemy + " stepped out of walking bounds");
-                    remove(enemy, enemy.getSpawner().getStateManager().getDeadState());
-                    return;
-                }
-
-                int prevX = Math.round(enemy.getPreviousPosition().x);
-                int prevY = Math.round(enemy.getPreviousPosition().y);
-
-                if (prevX != x || prevY != y) {
-                    enemy.setUpdateIterationCount(0);
-
-                    try {
-                        move(enemy, delta, x, y);
-                    } catch (EmptyStackException e) {
-                        Log.warn("Direction stack is empty. Removing " + enemy);
-                        remove(enemy);
-                    } catch (NullPointerException e) {
-                        Log.exc("Required variable is NULL. Removing " + enemy, e);
-                        remove(enemy);
-                    }
-
-                    enemy.setPreviousPosition(x, y);
-                }
-//            } else {
-//                enemy.addUpdateIterationCount(1);
-//            }
+        if (checkFloatPosition(enemy)) {
+            if (isIterationAllowed(enemy)) {
+                handleEnemy(enemy, delta);
+            } else {
+                enemy.addUpdateIterationCount(1);
+            }
         }
     }
 
-    protected final Action moveBy(Enemy enemy, Vector2 dir) {
+    private void handleEnemy(Enemy enemy, float delta) {
+        int x = Math.round(enemy.getX());
+        int y = Math.round(enemy.getY());
+
+        Map map = enemy.getSpawner().getLevel().getMap();
+        Vector2 pos = enemy.getCurrentPositionIndex();
+
+        if (!map.getVoter().isWalkable((int) pos.x, (int) pos.y)) {
+            Log.crit(enemy + " stepped out of walking bounds");
+            remove(enemy, enemy.getSpawner().getStateManager().getDeadState());
+            return;
+        }
+
+        int prevX = Math.round(enemy.getPreviousPosition().x);
+        int prevY = Math.round(enemy.getPreviousPosition().y);
+
+        if (prevX != x || prevY != y) {
+            enemy.setUpdateIterationCount(0);
+
+            try {
+                move(enemy, delta, x, y);
+            } catch (EmptyStackException e) {
+                Log.warn("Direction stack is empty. Removing " + enemy);
+                remove(enemy);
+            } catch (NullPointerException e) {
+                Log.exc("Required variable is NULL. Removing " + enemy, e);
+                remove(enemy);
+            }
+
+            enemy.setPreviousPosition(x, y);
+        }
+    }
+
+    protected Action moveBy(Enemy enemy, Vector2 dir) {
         return Actions.moveBy(
                 enemy.speed > 0 ? (int) (dir.x * DDGame.TILE_HEIGHT) : 0,
                 enemy.speed > 0 ? (int) (dir.y * DDGame.TILE_HEIGHT) : 0,
                 enemy.speed * getGame().getSpeed().getValue());
     }
 
-    protected final void remove(Enemy enemy) {
+    protected void remove(Enemy enemy) {
         EnemyStateManager manager = enemy.getSpawner().getStateManager();
         manager.swap(enemy, manager.getFinishState());
     }
 
-    protected final void remove(Enemy enemy, Level1State state) {
+    protected void remove(Enemy enemy, Level1State state) {
         EnemyStateManager manager = enemy.getSpawner().getStateManager();
         manager.swap(enemy, state);
     }
 
-    protected final boolean isIterationAllowed(int iteration) {
-        return getGame().getSpeed().isIncreased() ? iteration > 2 : iteration > 3;
+    protected boolean isIterationAllowed(Enemy enemy) {
+        int iteration = enemy.getUpdateIterationCount();
+        return enemy.getPrototype().speed <= 1.5f || iteration > 2;
     }
 
-    protected final void reset(Enemy enemy) {
+    protected void resetState(Enemy enemy) {
         enemy.setPreviousPosition(-1, -1);
         enemy.speed = enemy.defaultSpeed;
         enemy.setUpdateIterationCount(0);
@@ -150,6 +171,6 @@ public class WalkingState extends Level2State {
 
     @Override
     public void postManage(Enemy enemy) {
-        reset(enemy);
+        resetState(enemy);
     }
 }

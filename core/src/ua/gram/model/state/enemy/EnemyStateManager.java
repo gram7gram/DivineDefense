@@ -1,9 +1,10 @@
 package ua.gram.model.state.enemy;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import ua.gram.DDGame;
+import ua.gram.controller.enemy.EnemyAnimationChanger;
+import ua.gram.controller.enemy.StateSwapper;
 import ua.gram.model.actor.enemy.AbilityUser;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.state.StateInterface;
@@ -29,6 +30,8 @@ import ua.gram.utils.Log;
  */
 public final class EnemyStateManager extends StateManager<Enemy> {
 
+    protected final StateSwapper<Enemy> stateSwapper;
+    protected final EnemyAnimationChanger animationChanger;
     //Level 1
     private DeadState deadState;
     private FinishState finishState;
@@ -46,20 +49,22 @@ public final class EnemyStateManager extends StateManager<Enemy> {
 
     public EnemyStateManager(DDGame game) {
         super(game);
+        stateSwapper = new StateSwapper<Enemy>();
+        animationChanger = new EnemyAnimationChanger();
     }
 
     @Override
     public void init(Enemy enemy) {
-        if (stunState == null) stunState = new StunState(game);
-        if (deadState == null) deadState = new DeadState(game);
-        if (idleState == null) idleState = new IdleState(game);
-        if (spawnState == null) spawnState = new SpawnState(game);
-        if (activeState == null) activeState = new ActiveState(game);
-        if (finishState == null) finishState = new FinishState(game);
-        if (walkingState == null) walkingState = new WalkingState(game);
-        if (abilityState == null) abilityState = new AbilityState(game);
-        if (inactiveState == null) inactiveState = new InactiveState(game);
-        if (abilityWalkingState == null) abilityWalkingState = new AbilityWalkingState(game);
+        if (stunState == null) stunState = new StunState(game, this);
+        if (deadState == null) deadState = new DeadState(game, this);
+        if (idleState == null) idleState = new IdleState(game, this);
+        if (spawnState == null) spawnState = new SpawnState(game, this);
+        if (activeState == null) activeState = new ActiveState(game, this);
+        if (finishState == null) finishState = new FinishState(game, this);
+        if (walkingState == null) walkingState = new WalkingState(game, this);
+        if (abilityState == null) abilityState = new AbilityState(game, this);
+        if (inactiveState == null) inactiveState = new InactiveState(game, this);
+        if (abilityWalkingState == null) abilityWalkingState = new AbilityWalkingState(game, this);
     }
 
     @Override
@@ -145,7 +150,7 @@ public final class EnemyStateManager extends StateManager<Enemy> {
         holder.setCurrentLevel2State(null);
         holder.setCurrentLevel3State(null);
         holder.setCurrentLevel4State(null);
-        Gdx.app.log("INFO", enemy + " states have been reset");
+        Log.info(enemy + " states have been reset");
     }
 
     public DeadState getDeadState() {
@@ -184,7 +189,6 @@ public final class EnemyStateManager extends StateManager<Enemy> {
         return abilityState;
     }
 
-
     public synchronized void swap(Enemy actor, Level1State before, Level1State after) {
         this.swap(actor, before, after, 1);
     }
@@ -215,5 +219,13 @@ public final class EnemyStateManager extends StateManager<Enemy> {
 
     public synchronized void swap(Enemy actor, Level4State after) {
         this.swap(actor, actor.getStateHolder().getCurrentLevel4State(), after, 4);
+    }
+
+    public StateSwapper<Enemy> getStateSwapper() {
+        return stateSwapper;
+    }
+
+    public EnemyAnimationChanger getAnimationChanger() {
+        return animationChanger;
     }
 }

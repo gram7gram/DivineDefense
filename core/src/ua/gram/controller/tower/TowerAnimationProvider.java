@@ -2,9 +2,9 @@ package ua.gram.controller.tower;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
-import ua.gram.controller.pool.animation.AnimationControllerInterface;
+import ua.gram.controller.pool.animation.AnimationManager;
 import ua.gram.controller.pool.animation.AnimationProvider;
-import ua.gram.controller.pool.animation.TowerAnimationController;
+import ua.gram.controller.pool.animation.TowerAnimationManager;
 import ua.gram.model.enums.Types;
 import ua.gram.model.prototype.tower.TowerPrototype;
 
@@ -18,8 +18,8 @@ public class TowerAnimationProvider extends AnimationProvider<TowerPrototype, Ty
     }
 
     @Override
-    protected AnimationControllerInterface<TowerPrototype, Types.TowerState, Types.TowerLevels> getInstance(TowerPrototype prototype) {
-        return new TowerAnimationController(getSkin(), prototype);
+    protected AnimationManager<TowerPrototype, Types.TowerState, Types.TowerLevels> getInstance(TowerPrototype prototype) {
+        return new TowerAnimationManager(getSkin(), prototype);
     }
 
 }

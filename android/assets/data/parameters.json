@@ -122,21 +122,7 @@
           {
             "index": 1,
             "enemies": [
-              "EnemySoldier",
-              "EnemySoldier",
-              "EnemySoldier",
-              "EnemySoldier",
-              "EnemySoldier",
-              "EnemySoldier",
-              "EnemySoldier",
-              "EnemySoldier",
-              "EnemySoldier",
-              "EnemySoldier",
-              "EnemySoldier",
-              "EnemySoldier",
-              "EnemySoldier",
-              "EnemySoldier",
-              "EnemySoldier"
+              "EnemySummoner"
             ]
           },
           {
@@ -421,7 +407,8 @@
       "spawnDuration": 1.5,
       "frameDuration": 0.1,
       "abilityDuration": 3,
-      "abilityDelay": 4
+      "abilityDelay": 4,
+      "minion": "EnemySoldier"
     },
     {
       "name": "EnemyWarrior",
