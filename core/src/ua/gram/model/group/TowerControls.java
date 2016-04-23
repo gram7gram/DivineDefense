@@ -9,11 +9,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import ua.gram.DDGame;
+import ua.gram.controller.state.tower.TowerStateManager;
 import ua.gram.controller.tower.TowerShop;
 import ua.gram.model.Resetable;
 import ua.gram.model.actor.misc.UpgradeButton;
 import ua.gram.model.actor.tower.Tower;
-import ua.gram.model.state.tower.TowerStateManager;
 import ua.gram.utils.Log;
 
 /**

@@ -40,6 +40,7 @@ public class TowerShopInputListener extends ClickListener {
     public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
         float X = event.getStageX() - event.getStageX() % DDGame.TILE_HEIGHT;
         float Y = event.getStageY() - event.getStageY() % DDGame.TILE_HEIGHT;
+        event.stop();
         try {
             towerGroup = shop.preorder(type, X, Y);
             return true;
@@ -54,6 +55,7 @@ public class TowerShopInputListener extends ClickListener {
     public void touchDragged(InputEvent event, float eventX, float eventY, int pointer) {
         float X = event.getStageX() - event.getStageX() % DDGame.TILE_HEIGHT;
         float Y = event.getStageY() - event.getStageY() % DDGame.TILE_HEIGHT;
+        event.stop();
         if (!isEqual(X, Y, towerGroup)) {
 
             int xIndex = (int) (X / DDGame.TILE_HEIGHT);
@@ -85,6 +87,7 @@ public class TowerShopInputListener extends ClickListener {
     public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
         float X = event.getStageX() - event.getStageX() % DDGame.TILE_HEIGHT;
         float Y = event.getStageY() - event.getStageY() % DDGame.TILE_HEIGHT;
+        event.stop();
         boolean isFree = battleStage.isPositionEmpty(X, Y);
         if (isFree) {
             int xIndex = (int) (X / DDGame.TILE_HEIGHT);

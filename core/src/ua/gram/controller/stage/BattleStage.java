@@ -28,13 +28,15 @@ public class BattleStage extends AbstractStage implements Initializer {
     private final ToggleTowerControlsListener controlsListener;
     private final ArrayList<Layer> indexes;
     private final ArrayList<int[]> towerPositions;
+    private final int mapHeight;
 
     public BattleStage(DDGame game, Level level) {
         super(game);
         this.level = level;
         towerPositions = new ArrayList<int[]>();
         indexes = new ArrayList<Layer>();
-        for (int i = 0; i < DDGame.MAP_HEIGHT; i++) {
+        mapHeight = level.getMap().getFirstLayer().getHeight();
+        for (int i = 0; i < mapHeight; i++) {
             Layer layer = new Layer();
             indexes.add(layer);
             addActor(layer);
@@ -46,7 +48,12 @@ public class BattleStage extends AbstractStage implements Initializer {
 
     @Override
     public void init() {
-
+        level.setBattleStage(this);
+        level.createSpawner();
+        if (stageHolder == null)
+            throw new NullPointerException("Missing StageHolder for listener");
+        controlsListener.setStageHolder(stageHolder);
+        addListener(controlsListener);
     }
 
     @Override
@@ -54,14 +61,6 @@ public class BattleStage extends AbstractStage implements Initializer {
         super.act(delta);
         setDebugAll(DDGame.DEBUG);
         if (!DDGame.PAUSE) {
-            if (level.getBattleStage() == null) {
-                level.setBattleStage(this);
-                level.createSpawner();
-                if (stageHolder == null)
-                    throw new NullPointerException("Missing StageHolder for listener");
-                controlsListener.setStageHolder(stageHolder);
-                addListener(controlsListener);
-            }
             level.update(delta);
         }
     }
@@ -80,7 +79,7 @@ public class BattleStage extends AbstractStage implements Initializer {
             group.addActor(newGroup);
             Log.info(newGroup.getClass().getSimpleName() + " added to " + index + " index");
         } else {
-            Log.warn(this.getClass().getSimpleName() + " failed to getPool Group at " + index + " index");
+            Log.warn("Stage failed to get Group at " + index + " index");
         }
 
         int count = countLayers();
@@ -105,14 +104,14 @@ public class BattleStage extends AbstractStage implements Initializer {
                         Log.crit("Could not swap " + enemy.getRootActor() + " between indexes");
                     }
                 } catch (IndexOutOfBoundsException e) {
-                    Log.exc(this.getClass().getSimpleName() + " failed to update indexes", e);
+                    Log.exc("Stage failed to update indexes", e);
                 }
             }
         }
     }
 
     private int getActorIndex(Actor actor) {
-        int index = (DDGame.MAP_HEIGHT - Math.round(actor.getY() / DDGame.TILE_HEIGHT) - 1);
+        int index = (mapHeight - Math.round(actor.getY() / DDGame.TILE_HEIGHT) - 1);
         return index > 0 ? index : 0;
     }
 
@@ -228,20 +227,22 @@ public class BattleStage extends AbstractStage implements Initializer {
         return true;
     }
 
-    public ArrayList<Layer> getIndexes() {
-        return indexes;
-    }
-
     public ToggleTowerControlsListener getControlsListener() {
         return controlsListener;
     }
 
     public void addTowerPosition(Tower tower) {
-        towerPositions.add(new int[]{(int) tower.getX() / DDGame.TILE_HEIGHT, (int) tower.getY() / DDGame.TILE_HEIGHT});
+        towerPositions.add(new int[]{
+                (int) (tower.getX() / DDGame.TILE_HEIGHT),
+                (int) (tower.getY() / DDGame.TILE_HEIGHT)
+        });
     }
 
     public void removeTowerPosition(Tower tower) {
-        towerPositions.remove(new int[]{(int) tower.getX() / DDGame.TILE_HEIGHT, (int) tower.getY() / DDGame.TILE_HEIGHT});
+        towerPositions.remove(new int[]{
+                (int) (tower.getX() / DDGame.TILE_HEIGHT),
+                (int) (tower.getY() / DDGame.TILE_HEIGHT)
+        });
     }
 
     public Layer putOnLayer(Actor actor, int index) {

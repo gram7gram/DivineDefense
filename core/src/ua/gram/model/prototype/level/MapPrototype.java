@@ -7,7 +7,6 @@ import ua.gram.model.prototype.Prototype;
  */
 public class MapPrototype extends Prototype {
     public String name;
-    public String layer;
     public String walkableProperty;
     public String spawnProperty;
     public String baseProperty;

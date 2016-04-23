@@ -1,6 +1,7 @@
 package ua.gram.model.map;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -120,12 +121,20 @@ public class Path {
         return pos == null ? null : Path.toString(pos.x, pos.y);
     }
 
+    public static String toString(Vector3 pos) {
+        return pos == null ? null : Path.toString(pos.x, pos.y, pos.z);
+    }
+
     public static String toStringRound(Vector2 pos) {
         return Path.toString(Math.round(pos.x), Math.round(pos.y));
     }
 
     public static String toString(float x, float y) {
         return "[" + x + ":" + y + "]";
+    }
+
+    public static String toString(float x, float y, float z) {
+        return "[" + x + ":" + y + ":" + z + "]";
     }
 
     public static Vector2 clone(Vector2 vector) {

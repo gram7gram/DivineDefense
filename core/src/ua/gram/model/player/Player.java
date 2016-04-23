@@ -111,7 +111,11 @@ public class Player implements Resetable {
         return level;
     }
 
-    public String getPrototypeFraction() {
+    public boolean isNewPlayer() {
+        return getFactionPrototype() == null;
+    }
+
+    public String getFactionPrototype() {
         return prototype.faction;
     }
 
@@ -142,8 +146,8 @@ public class Player implements Resetable {
     }
 
     public String getOppositeFaction(String name) {
-        if (name.equals(DDGame.FACTION1)) return DDGame.FACTION2;
-        else if (name.equals(DDGame.FACTION2)) return DDGame.FACTION1;
+        if (name.equals(DDGame.FACTION_2)) return DDGame.FACTION_1;
+        else if (name.equals(DDGame.FACTION_1)) return DDGame.FACTION_2;
         else throw new GdxRuntimeException("No faction registered as " + name);
 
     }

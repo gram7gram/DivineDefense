@@ -49,7 +49,7 @@ public class SecurityManager<P extends GamePrototype> {
 
             try {
                 actualPrototype = get(external, loader, type);
-                Log.info("Recieved game configuration from " + loader.name() + " source");
+                Log.info("Loaded game configuration from " + loader.name() + " source");
             } catch (Exception e2) {
                 Log.warn("Could not get " + loader.name() + " game configuration");
                 actualPrototype = prototype;
@@ -78,7 +78,7 @@ public class SecurityManager<P extends GamePrototype> {
             json.toJson(prototype, new FileHandle(path));
             Log.info("Player saved successfully to: " + path);
         } catch (Exception e) {
-            Log.exc("Could not save player", e);
+            Log.exc("Could not save player to " + path, e);
         }
     }
 

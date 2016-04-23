@@ -5,10 +5,10 @@ import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
 import ua.gram.controller.event.DamageEvent;
+import ua.gram.controller.state.enemy.EnemyStateHolder;
+import ua.gram.controller.state.enemy.EnemyStateManager;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.actor.misc.PopupLabel;
-import ua.gram.model.state.enemy.EnemyStateHolder;
-import ua.gram.model.state.enemy.EnemyStateManager;
 import ua.gram.utils.Log;
 
 /**

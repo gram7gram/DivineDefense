@@ -13,6 +13,7 @@ import ua.gram.controller.pool.TowerPool;
 import ua.gram.controller.stage.BattleStage;
 import ua.gram.controller.stage.StageHolder;
 import ua.gram.controller.stage.UIStage;
+import ua.gram.controller.state.tower.TowerStateManager;
 import ua.gram.model.Initializer;
 import ua.gram.model.actor.PositionMarker;
 import ua.gram.model.actor.tower.Tower;
@@ -22,7 +23,6 @@ import ua.gram.model.group.TowerShopGroup;
 import ua.gram.model.prototype.shop.TowerShopConfigPrototype;
 import ua.gram.model.prototype.tower.TowerPrototype;
 import ua.gram.model.shop.ShopInterface;
-import ua.gram.model.state.tower.TowerStateManager;
 import ua.gram.model.strategy.TowerStrategyManager;
 import ua.gram.utils.Log;
 
@@ -38,7 +38,7 @@ public class TowerShop implements ShopInterface<TowerGroup>, Initializer {
     private final TowerShopGroup towerShopGroup;
     private final TowerStrategyManager strategyManager;
     private final TowerStateManager stateManager;
-    private final TowerAnimationProvider animationProvider;
+    private final ua.gram.controller.animation.tower.TowerAnimationProvider animationProvider;
     private final HashMap<TowerPrototype, Pool<Tower>> identityMap;
     private final PositionMarker marker;
     private final TowerShopConfigPrototype prototype;
@@ -55,7 +55,7 @@ public class TowerShop implements ShopInterface<TowerGroup>, Initializer {
 
         Skin skin = game.getResources().getSkin();
 
-        animationProvider = new TowerAnimationProvider(skin, towerPrototypes);
+        animationProvider = new ua.gram.controller.animation.tower.TowerAnimationProvider(skin, towerPrototypes);
 
         strategyManager = new TowerStrategyManager();
         stateManager = new TowerStateManager(game);
@@ -189,7 +189,7 @@ public class TowerShop implements ShopInterface<TowerGroup>, Initializer {
         return stateManager;
     }
 
-    public TowerAnimationProvider getAnimationProvider() {
+    public ua.gram.controller.animation.tower.TowerAnimationProvider getAnimationProvider() {
         return animationProvider;
     }
 

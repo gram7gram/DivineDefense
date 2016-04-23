@@ -11,13 +11,13 @@ import java.util.Stack;
 import ua.gram.DDGame;
 import ua.gram.controller.pool.EnemyPool;
 import ua.gram.controller.stage.BattleStage;
+import ua.gram.controller.state.enemy.EnemyStateManager;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.actor.enemy.EnemySummoner;
 import ua.gram.model.group.EnemyGroup;
 import ua.gram.model.level.Level;
 import ua.gram.model.map.WalkablePath;
 import ua.gram.model.prototype.enemy.EnemyPrototype;
-import ua.gram.model.state.enemy.EnemyStateManager;
 import ua.gram.utils.Log;
 
 /**
@@ -29,7 +29,7 @@ public final class EnemySpawner {
     private final Level level;
     private final BattleStage stage_battle;
     private final EnemyStateManager stateManager;
-    private final EnemyAnimationProvider animationProvider;
+    private final ua.gram.controller.animation.enemy.EnemyAnimationProvider animationProvider;
     private final Map<String, Pool<Enemy>> identityMap;
     private final Stack<String> enemiesToSpawn;
     private float count;
@@ -48,7 +48,7 @@ public final class EnemySpawner {
 
         enemiesToSpawn = new Stack<String>();
         stateManager = new EnemyStateManager(game);
-        animationProvider = new EnemyAnimationProvider(
+        animationProvider = new ua.gram.controller.animation.enemy.EnemyAnimationProvider(
                 game.getResources().getSkin(),
                 prototypes);
         animationProvider.init();
@@ -168,7 +168,7 @@ public final class EnemySpawner {
         return getPool(type).obtain();
     }
 
-    public EnemyAnimationProvider getAnimationProvider() {
+    public ua.gram.controller.animation.enemy.EnemyAnimationProvider getAnimationProvider() {
         return animationProvider;
     }
 

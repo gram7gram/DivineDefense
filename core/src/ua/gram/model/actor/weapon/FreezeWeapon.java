@@ -6,12 +6,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import ua.gram.controller.builder.WeaponBuilder;
 import ua.gram.controller.stage.BattleStage;
+import ua.gram.controller.state.enemy.EnemyStateManager;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.actor.tower.Tower;
 import ua.gram.model.group.Layer;
 import ua.gram.model.prototype.weapon.FreezeWeaponPrototype;
 import ua.gram.model.prototype.weapon.WeaponPrototype;
-import ua.gram.model.state.enemy.EnemyStateManager;
 import ua.gram.utils.Resources;
 
 /**

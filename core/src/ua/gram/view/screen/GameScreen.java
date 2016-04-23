@@ -9,6 +9,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 import ua.gram.DDGame;
+import ua.gram.controller.listener.CameraListener;
 import ua.gram.controller.stage.BattleStage;
 import ua.gram.controller.stage.StageHolder;
 import ua.gram.controller.stage.UIStage;
@@ -37,7 +38,6 @@ public class GameScreen extends AbstractScreen {
         game.getSpeed().reset();
         game.getPlayer().resetObject();
         renderer = new OrthogonalTiledMapRenderer(level.getMap().getTiledMap());
-        renderer.setView(game.getCamera());
         battleStage = new BattleStage(game, level);
         uiStage = new UIStage(game, level, game.getPrototype().ui);
         StageHolder stageHolder = new StageHolder(uiStage, battleStage);
@@ -55,6 +55,7 @@ public class GameScreen extends AbstractScreen {
         loadBackgroundElements();
         loadForegroundElements();
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
+        inputMultiplexer.addProcessor(new CameraListener(game.getCamera(), level.getMap().getFirstLayer()));
         inputMultiplexer.addProcessor(uiStage);
         inputMultiplexer.addProcessor(battleStage);
         Gdx.input.setInputProcessor(inputMultiplexer);
@@ -65,7 +66,8 @@ public class GameScreen extends AbstractScreen {
     public void renderUiElements(float delta) {
         Gdx.gl.glClearColor(color.r / 255f, color.g / 255f, color.b / 255f, color.a);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-        renderer.render(); //show tile map
+        renderer.setView(game.getCamera());
+        renderer.render();
         battleStage.draw();
         uiStage.act(delta);
         uiStage.draw();

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ua.gram.controller.factory.VoterPolicyFactory;
+import ua.gram.controller.voter.policy.VoterPolicy;
 import ua.gram.model.enums.Voter;
 import ua.gram.model.map.Map;
 

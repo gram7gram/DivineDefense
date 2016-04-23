@@ -1,9 +1,7 @@
 package ua.gram.view.screen;
 
 import ua.gram.DDGame;
-import ua.gram.model.player.Player;
 import ua.gram.utils.Log;
-import ua.gram.utils.Resources;
 import ua.gram.view.AbstractLoadingScreen;
 
 /**
@@ -19,20 +17,16 @@ public class LaunchLoadingScreen extends AbstractLoadingScreen {
 
     @Override
     public void show() {
-        game.setPlayer(new Player(prototype.player));
-        game.getResources().loadTexture(Resources.BACKGROUND_TEXTURE);
-        game.createCamera();
-        game.createBatch();
-        game.createViewport();
+        game.createPlayer();
         super.show();
     }
 
     @Override
-    public void doAction() {
-        if (game.getPlayer().getPrototypeFraction() != null) {
-            game.setScreen(new MainMenuScreen(game));
-        } else {
+    public void onLoad() {
+        if (game.getPlayer().isNewPlayer()) {
             game.setScreen(new FactionScreen(game));
+        } else {
+            game.setScreen(new MainMenuScreen(game));
         }
     }
 

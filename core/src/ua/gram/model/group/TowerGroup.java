@@ -7,11 +7,11 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import ua.gram.DDGame;
+import ua.gram.controller.state.tower.TowerStateHolder;
 import ua.gram.model.Initializer;
 import ua.gram.model.actor.misc.ProgressBar;
 import ua.gram.model.actor.tower.Tower;
 import ua.gram.model.actor.weapon.Weapon;
-import ua.gram.model.state.tower.TowerStateHolder;
 import ua.gram.utils.Log;
 
 /**

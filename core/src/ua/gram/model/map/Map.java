@@ -68,17 +68,18 @@ public class Map implements Initializer {
      */
     private HashMap<String, Vector2> findMapPoints() {
         HashMap<String, Vector2> map = new HashMap<String, Vector2>(2);
+        map.put(prototype.spawnProperty, new Vector2(0, 12));
+        map.put(prototype.baseProperty, new Vector2(19, 12));
         for (int x = 0; x < getFirstLayer().getWidth(); x++) {
             for (int y = 0; y < getFirstLayer().getHeight(); y++) {
+
+                if (hasFoundAllPoints(map)) break;
 
                 if (!map.containsKey(prototype.spawnProperty) && voter.isSpawn(x, y)) {
                     map.put(prototype.spawnProperty, new Vector2(x, y));
                 } else if (!map.containsKey(prototype.baseProperty) && voter.isBase(x, y)) {
                     map.put(prototype.baseProperty, new Vector2(x, y));
                 }
-
-                if (hasFoundAllPoints(map))
-                    break;
             }
         }
 
@@ -151,9 +152,9 @@ public class Map implements Initializer {
             String cause;
 
             if (count >= parseLimit)
-                cause = "parse limit reached";
+                cause = "parse limit of " + parseLimit + " was reached";
             else
-                cause = "no Base found";
+                cause = "no Base was found";
 
             throw new GdxRuntimeException("Path normalization error: " + cause);
         }
@@ -198,7 +199,7 @@ public class Map implements Initializer {
         return layers;
     }
 
-    private TiledMapTileLayer getFirstLayer() {
+    public TiledMapTileLayer getFirstLayer() {
         return layers.get(0);
     }
 }

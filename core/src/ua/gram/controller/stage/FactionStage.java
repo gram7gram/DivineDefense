@@ -27,15 +27,16 @@ public class FactionStage extends AbstractStage {
         super(game);
         skin = game.getResources().getSkin();
 
-        Label header = new Label("Choose your fraction", skin, "header1white");
+        Label header = new Label("Choose your faction", skin, "header1white");
         header.setVisible(true);
-        header.setPosition((DDGame.WORLD_WIDTH - header.getWidth()) / 2f,
+        header.setPosition(
+                (DDGame.WORLD_WIDTH - header.getWidth()) / 2f,
                 DDGame.WORLD_HEIGHT - header.getHeight() - 10);
 
         Button option1 = new Button(skin, "faction-1");
         option1.setBounds(0, 0, DDGame.WORLD_WIDTH / 2, DDGame.WORLD_HEIGHT);
         option1.setTouchable(Touchable.disabled);
-        option1.setName(DDGame.FACTION2);
+        option1.setName(DDGame.FACTION_1);
 
         Button lock = new Button(skin, "button-lock");
         lock.setTouchable(Touchable.disabled);
@@ -48,7 +49,7 @@ public class FactionStage extends AbstractStage {
         option2.setBounds(DDGame.WORLD_WIDTH / 2, 0,
                 DDGame.WORLD_WIDTH / 2, DDGame.WORLD_HEIGHT);
         option2.setTouchable(Touchable.enabled);
-        option2.setName(DDGame.FACTION1);
+        option2.setName(DDGame.FACTION_2);
         option2.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -73,7 +74,7 @@ public class FactionStage extends AbstractStage {
             }
         });
 
-        Group fractions = new Group();
+        Group factions = new Group();
 
         option1.addAction(
                 Actions.sequence(
@@ -98,11 +99,11 @@ public class FactionStage extends AbstractStage {
                 )
         );
 
-        fractions.addActor(option1);
-        fractions.addActor(option2);
-        fractions.addActor(header);
+        factions.addActor(option1);
+        factions.addActor(option2);
+        factions.addActor(header);
 
-        addActor(fractions);
+        addActor(factions);
     }
 
     @Override

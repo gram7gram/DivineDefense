@@ -19,7 +19,7 @@ public class EnemyDirectionAnimationPool implements DirectionPool {
     private final EnumMap<Path.Types, AnimationPool> identityMap;
 
     public EnemyDirectionAnimationPool(EnemyPrototype prototype,
-                                       EnemyAnimationManager provider,
+                                       ua.gram.controller.animation.enemy.EnemyAnimationManager provider,
                                        Types.EnemyState type) {
         identityMap = new EnumMap<Path.Types, AnimationPool>(Path.Types.class);
 

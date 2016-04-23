@@ -9,11 +9,11 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.BufferUtils;
 import com.badlogic.gdx.utils.GdxRuntimeException;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.nio.IntBuffer;
 
+import ua.gram.controller.factory.ViewportFactory;
 import ua.gram.controller.security.SecurityManager;
 import ua.gram.model.Speed;
 import ua.gram.model.player.Player;
@@ -53,19 +53,18 @@ import ua.gram.view.screen.LaunchLoadingScreen;
  */
 public class DDGame<P extends GamePrototype> extends Game {
 
-    public static String FACTION1;
-    public static String FACTION2;
+    public static final int MAX_ENTITIES = 250;
+    public static String FACTION_2;
+    public static String FACTION_1;
     public static boolean DEBUG;
     public static boolean PAUSE = false;
     public static int TILE_HEIGHT;
     public static int DEFAULT_BUTTON_HEIGHT;
     public static int WORLD_WIDTH;
     public static int WORLD_HEIGHT;
-    public static int MAP_WIDTH;
-    public static int MAP_HEIGHT;
-    public static int MAX_ENTITIES;
     public static int MAX_LEVELS;
     public static int MAX_TEXTURE_SIZE;
+
     private final P prototype;
     private final ParametersPrototype parameters;
     private final Speed gameSpeed;
@@ -89,34 +88,47 @@ public class DDGame<P extends GamePrototype> extends Game {
     public void create() {
         Gdx.app.setLogLevel(parameters.logLevel);
         Gdx.input.setCatchMenuKey(true);
+
         sayHello();
+
         initGameValues();
+
         try {
             resources = new Resources(this);
-            setScreen(new LaunchLoadingScreen(this));
+            resources.getManager().finishLoading();
         } catch (GdxRuntimeException e) {
-            Log.exc("Missing skin file", e);
+            Log.exc("Cannot create resources", e);
             Gdx.app.exit();
         }
+
+        createCamera();
+        createBatch();
+        createViewport();
+
+        setScreen(new LaunchLoadingScreen(this));
     }
 
     private void initGameValues() {
         WORLD_WIDTH = Gdx.graphics.getWidth();
         WORLD_HEIGHT = Gdx.graphics.getHeight();
         TILE_HEIGHT = parameters.constants.tileHeight;
-        MAP_WIDTH = WORLD_WIDTH / TILE_HEIGHT;
-        MAP_HEIGHT = WORLD_HEIGHT / TILE_HEIGHT;
-        MAX_ENTITIES = MAP_WIDTH * MAP_HEIGHT;//Maximum entities on the map
         MAX_LEVELS = prototype.levelConfig.levels.length;
         DEFAULT_BUTTON_HEIGHT = parameters.constants.buttonHeight;
-        FACTION1 = parameters.constants.faction1;
-        FACTION2 = parameters.constants.faction2;
+        FACTION_1 = parameters.constants.faction1;
+        FACTION_2 = parameters.constants.faction2;
         info = new BitmapFont();
         info.setColor(1, 1, 1, 1);
         IntBuffer intBuffer = BufferUtils.newIntBuffer(16);
         Gdx.gl20.glGetIntegerv(GL20.GL_MAX_TEXTURE_SIZE, intBuffer);
         MAX_TEXTURE_SIZE = intBuffer.get();
         Log.info("Max texture size for device: " + MAX_TEXTURE_SIZE);
+    }
+
+    @Override
+    public void render() {
+        super.render();
+        if (batch != null && camera != null)
+            batch.setProjectionMatrix(camera.view);
     }
 
     @Override
@@ -138,13 +150,14 @@ public class DDGame<P extends GamePrototype> extends Game {
     public void createBatch() {
         if (batch != null) return;
         batch = new SpriteBatch();
-        batch.setProjectionMatrix(camera.combined);
     }
 
     public void createViewport() {
         if (view != null) return;
         float RATIO = (float) (WORLD_WIDTH / WORLD_HEIGHT);
-        view = new ExtendViewport(WORLD_WIDTH * RATIO, WORLD_HEIGHT, camera);
+        view = ViewportFactory.create("ExtendViewport",
+                WORLD_WIDTH * RATIO, WORLD_HEIGHT,
+                camera);
         view.apply();
     }
 
@@ -162,6 +175,10 @@ public class DDGame<P extends GamePrototype> extends Game {
 
     public Viewport getViewport() {
         return view;
+    }
+
+    public void setViewport(Viewport viewport) {
+        this.view = viewport;
     }
 
     public OrthographicCamera getCamera() {
@@ -215,5 +232,9 @@ public class DDGame<P extends GamePrototype> extends Game {
         for (String text : parameters.consoleHello) {
             Log.info(StringProcessor.processString(parameters, text));
         }
+    }
+
+    public void createPlayer() {
+        setPlayer(new Player(prototype.player));
     }
 }

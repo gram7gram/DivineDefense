@@ -29,6 +29,7 @@ public class Resources implements Disposable {
         this.game = game;
         manager = new AssetManager();
         skin = loadSkin(game.getParameters().skin);
+        loadTexture(BACKGROUND_TEXTURE);
     }
 
     /**

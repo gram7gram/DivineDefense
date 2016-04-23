@@ -8,11 +8,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Pool;
 
 import ua.gram.DDGame;
-import ua.gram.controller.enemy.EnemyAnimationProvider;
+import ua.gram.controller.animation.enemy.EnemyAnimationProvider;
 import ua.gram.controller.enemy.EnemySpawner;
 import ua.gram.controller.event.DamageEvent;
 import ua.gram.controller.listener.DamageListener;
 import ua.gram.controller.stage.BattleStage;
+import ua.gram.controller.state.enemy.EnemyStateHolder;
+import ua.gram.controller.state.enemy.EnemyStateManager;
 import ua.gram.model.Animator;
 import ua.gram.model.Initializer;
 import ua.gram.model.PoolableAnimation;
@@ -22,8 +24,6 @@ import ua.gram.model.group.EnemyGroup;
 import ua.gram.model.map.Path;
 import ua.gram.model.map.WalkablePath;
 import ua.gram.model.prototype.enemy.EnemyPrototype;
-import ua.gram.model.state.enemy.EnemyStateHolder;
-import ua.gram.model.state.enemy.EnemyStateManager;
 import ua.gram.utils.Log;
 
 /**

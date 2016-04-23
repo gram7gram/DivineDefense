@@ -1,8 +1,5 @@
 package ua.gram.view;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-
 import ua.gram.DDGame;
 import ua.gram.controller.stage.LoadingStage;
 import ua.gram.utils.Log;
@@ -11,13 +8,13 @@ import ua.gram.view.screen.MainMenuScreen;
 
 /**
  * LevelScreen handles resource loading invocation.
- * In 'show' you specify resources to be loaded In 'doAction'
- * you specify program logic that will be executed
+ * In 'show' you specify resources to be loaded.
+ * In 'onLoad' you specify program logic that will be executed
  */
 public abstract class AbstractLoadingScreen extends AbstractScreen {
 
-    public LoadingStage uiStage;
-    public int progress;
+    protected LoadingStage loadingStage;
+    protected int progress;
 
     public AbstractLoadingScreen(DDGame game) {
         super(game);
@@ -26,20 +23,18 @@ public abstract class AbstractLoadingScreen extends AbstractScreen {
     @Override
     public void show() {
         super.show();
-        uiStage = new LoadingStage(game);
+        loadingStage = new LoadingStage(game);
     }
 
     @Override
     public void renderUiElements(float delta) {
-        Gdx.gl.glClearColor(.44f, .62f, .8f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         progress = (int) game.getAssetManager().getProgress() * 100;
-        uiStage.update(progress);
-        uiStage.act(delta);
-        uiStage.draw();
+        loadingStage.update(progress);
+        loadingStage.act(delta);
+        loadingStage.draw();
         if (game.getAssetManager().update()) {
             try {
-                doAction();
+                onLoad();
             } catch (Exception e) {
                 game.setScreen(new ErrorScreen(game, "Error at loading", e));
             }
@@ -51,12 +46,8 @@ public abstract class AbstractLoadingScreen extends AbstractScreen {
 
     }
 
-    /**
-     * Executes only if AssetManager finishes loading the resources,
-     * required for the following Screen ancestor.
-     */
-    public void doAction() {
-        uiStage.update(progress);
+    public void onLoad() {
+        loadingStage.update(progress);
         Log.info("Loading " + progress + "%");
         game.setScreen(new MainMenuScreen(game));
     }

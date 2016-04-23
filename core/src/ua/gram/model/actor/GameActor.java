@@ -4,10 +4,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import ua.gram.DDGame;
+import ua.gram.controller.state.StateManager;
 import ua.gram.model.Animator;
 import ua.gram.model.map.Path;
 import ua.gram.model.prototype.GameActorPrototype;
-import ua.gram.model.state.StateManager;
 
 public abstract class GameActor<T1, T2, M extends StateManager> extends Actor {
 

@@ -19,9 +19,9 @@
       "useCompass": false,
       "hideStatusBar": true
     },
-    "logo128": "logo_min128.png",
-    "logo32": "logo_min32.png",
-    "logo16": "logo_min16.png"
+    "logo128": "logo/xhdpi/logo_min128.png",
+    "logo32": "logo/hdpi/logo_min32.png",
+    "logo16": "logo/mdpi/logo_min16.png"
   },
   "parameters": {
     "debugging": true,
@@ -56,8 +56,8 @@
     "constants": {
       "buttonHeight": 80,
       "tileHeight": 60,
-      "faction1": "Angel",
-      "faction2": "Demon"
+      "faction1": "Demon",
+      "faction2": "Angel"
     }
   },
   "player": {
@@ -88,7 +88,6 @@
       {
         "level": 1,
         "map": {
-          "layer": "Terrain",
           "walkableProperty": "walkable",
           "spawnProperty": "spawn",
           "baseProperty": "base",
