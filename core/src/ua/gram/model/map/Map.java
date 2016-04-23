@@ -68,8 +68,6 @@ public class Map implements Initializer {
      */
     private HashMap<String, Vector2> findMapPoints() {
         HashMap<String, Vector2> map = new HashMap<String, Vector2>(2);
-        map.put(prototype.spawnProperty, new Vector2(0, 12));
-        map.put(prototype.baseProperty, new Vector2(19, 12));
         for (int x = 0; x < getFirstLayer().getWidth(); x++) {
             for (int y = 0; y < getFirstLayer().getHeight(); y++) {
 
