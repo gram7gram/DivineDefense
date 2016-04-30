@@ -6,8 +6,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import ua.gram.DDGame;
-import ua.gram.controller.builder.WeaponBuilder;
 import ua.gram.controller.stage.BattleStage;
+import ua.gram.controller.weapon.WeaponProvider;
 import ua.gram.model.group.Layer;
 import ua.gram.model.prototype.weapon.LightningWeaponPrototype;
 import ua.gram.model.prototype.weapon.WeaponPrototype;
@@ -21,7 +21,7 @@ public class LightningWeapon extends Weapon {
     private Layer currentLayer;
     private float originalHeight;
 
-    public LightningWeapon(WeaponBuilder builder, Resources resources, WeaponPrototype prototype) {
+    public LightningWeapon(WeaponProvider builder, Resources resources, WeaponPrototype prototype) {
         super(builder, resources, prototype);
     }
 

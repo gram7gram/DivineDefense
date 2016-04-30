@@ -20,7 +20,6 @@ public class Level implements Initializer {
     public static int MAX_WAVES;
     private final ArrayList<Wave> waves;
     private final LevelPrototype prototype;
-    private final Object lock;
     public boolean isCleared;
     private Wave currentWave;
     private Map map;
@@ -32,7 +31,6 @@ public class Level implements Initializer {
     public Level(DDGame game, LevelPrototype prototype) {
         if (prototype.waves == null || prototype.waves.length == 0)
             throw new NullPointerException("Missing waves");
-        lock = new Object();
         this.game = game;
         this.prototype = prototype;
         currentLevel = prototype.level;
@@ -49,20 +47,14 @@ public class Level implements Initializer {
         for (WavePrototype proto : prototype.waves) {
             waves.add(new Wave(this, proto));
         }
-    }
-
-    public void createSpawner() {
         spawner = new EnemySpawner(game, this, battleStage);
+        spawner.init();
     }
 
     public void update(float delta) {
         if (currentWave != null) {
             if (currentWave.getIndex() <= MAX_WAVES) {
                 if (currentWave.isStarted) {
-                    synchronized (lock) {
-                        if (spawner == null)
-                            createSpawner();
-                    }
                     spawner.update(delta);
                 }
             }

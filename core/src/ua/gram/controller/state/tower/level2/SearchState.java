@@ -17,8 +17,8 @@ import ua.gram.utils.Log;
  */
 public class SearchState extends IdleState {
 
-    public SearchState(DDGame game) {
-        super(game);
+    public SearchState(DDGame game, TowerStateManager manager) {
+        super(game, manager);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package ua.gram.controller.enemy;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Pool;
 
 import java.util.HashMap;
@@ -9,9 +10,11 @@ import java.util.Objects;
 import java.util.Stack;
 
 import ua.gram.DDGame;
+import ua.gram.controller.animation.enemy.EnemyAnimationProvider;
 import ua.gram.controller.pool.EnemyPool;
 import ua.gram.controller.stage.BattleStage;
 import ua.gram.controller.state.enemy.EnemyStateManager;
+import ua.gram.model.Initializer;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.actor.enemy.EnemySummoner;
 import ua.gram.model.group.EnemyGroup;
@@ -23,13 +26,13 @@ import ua.gram.utils.Log;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public final class EnemySpawner {
+public final class EnemySpawner implements Initializer {
 
     private final DDGame game;
     private final Level level;
     private final BattleStage stage_battle;
     private final EnemyStateManager stateManager;
-    private final ua.gram.controller.animation.enemy.EnemyAnimationProvider animationProvider;
+    private final EnemyAnimationProvider animationProvider;
     private final Map<String, Pool<Enemy>> identityMap;
     private final Stack<String> enemiesToSpawn;
     private float count;
@@ -44,16 +47,21 @@ public final class EnemySpawner {
             throw new NullPointerException("Nothing to register");
 
         identityMap = new HashMap<String, Pool<Enemy>>(prototypes.length);
+
         registerAll(prototypes);
 
+        Skin skin = game.getResources().getSkin();
         enemiesToSpawn = new Stack<String>();
         stateManager = new EnemyStateManager(game);
-        animationProvider = new ua.gram.controller.animation.enemy.EnemyAnimationProvider(
-                game.getResources().getSkin(),
-                prototypes);
-        animationProvider.init();
+        animationProvider = new EnemyAnimationProvider(skin, prototypes);
 
         Log.info("EnemySpawner is OK");
+    }
+
+    @Override
+    public void init() {
+        stateManager.init();
+        animationProvider.init();
     }
 
     private void registerAll(EnemyPrototype[] prototypes) {
@@ -62,12 +70,6 @@ public final class EnemySpawner {
         }
     }
 
-    /**
-     * Basic loop that spawns enemies with specified delay.
-     * NOTE Level is Finished, if there are no enemies to spawn
-     *
-     * @param delta Same as Gdx.graphics.getDeltaTime()
-     */
     public void update(float delta) {
         float delay = 1;
         if (count >= delay) {
@@ -78,7 +80,7 @@ public final class EnemySpawner {
 
                     spawn(enemiesToSpawn.pop(), spawnPosition, null);
 
-                } else if (!stage_battle.hasEnemiesOnMap() || level.isCleared) {
+                } else if (canFinishWave()) {
                     level.getWave().finish();
                 }
             } catch (Exception e) {
@@ -89,13 +91,17 @@ public final class EnemySpawner {
         }
     }
 
+    private boolean canFinishWave() {
+        return !stage_battle.hasEnemiesOnMap() || level.isCleared;
+    }
+
     /**
      * Spawns obtained from pool and cloned EnemyState,
      * places it at the Spawn positionIndex and gives it the path to go.
      * Spawn takes place in Group with the coresponding HealthBar.
      *
      * @param type  the EnemyState ancestor to spawn.
-     * @param spawn map tile positionIndex to spawn at (not in pixels)
+     * @param spawn map tile position index to spawn at (not in pixels)
      */
     public void spawn(String type, Vector2 spawn, EnemySummoner parent) {
         Enemy enemy;
@@ -105,7 +111,6 @@ public final class EnemySpawner {
             Log.exc("Unable to obtain [" + type + "] from pool", e);
             return;
         }
-        stateManager.init(enemy);
         enemy.setSpawner(this);
         stateManager.swapLevel1State(enemy, stateManager.getInactiveState());
         stateManager.swapLevel2State(enemy, stateManager.getIdleState());
@@ -126,15 +131,16 @@ public final class EnemySpawner {
     }
 
     /**
-     * Sets the Actions for EnemyState to do to walk the path
      * FIX Bigger speed - slower walk of EnemyState
+     *
+     * Sets the Actions for EnemyState to do to walk the path
      */
     public void setActionPath(final Enemy enemy, Vector2 spawn, Vector2 previous) {
         WalkablePath path = level.getMap().normalizePath(previous, spawn);
         enemy.setPath(path);
-        if (enemy.getCurrentDirection() == null) {
+        if (enemy.getDirectionHolder().getCurrentDirection() == null) {
             Vector2 current = path.peekNextDirection();
-            enemy.setCurrentDirection(current);
+            enemy.getDirectionHolder().setCurrentDirection(current);
         }
     }
 
@@ -168,7 +174,7 @@ public final class EnemySpawner {
         return getPool(type).obtain();
     }
 
-    public ua.gram.controller.animation.enemy.EnemyAnimationProvider getAnimationProvider() {
+    public EnemyAnimationProvider getAnimationProvider() {
         return animationProvider;
     }
 

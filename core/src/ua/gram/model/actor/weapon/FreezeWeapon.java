@@ -4,9 +4,9 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
-import ua.gram.controller.builder.WeaponBuilder;
 import ua.gram.controller.stage.BattleStage;
 import ua.gram.controller.state.enemy.EnemyStateManager;
+import ua.gram.controller.weapon.WeaponProvider;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.actor.tower.Tower;
 import ua.gram.model.group.Layer;
@@ -21,7 +21,7 @@ public class FreezeWeapon extends Weapon implements AOEWeapon {
 
     private Layer currentLayer;
 
-    public FreezeWeapon(WeaponBuilder builder, Resources resources, WeaponPrototype prototype) {
+    public FreezeWeapon(WeaponProvider builder, Resources resources, WeaponPrototype prototype) {
         super(builder, resources, prototype);
     }
 

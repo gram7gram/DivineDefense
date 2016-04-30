@@ -29,7 +29,7 @@ public class DeadState extends InactiveState {
     @Override
     public void preManage(Enemy enemy) throws GdxRuntimeException {
         getManager().getAnimationChanger()
-                .update(enemy, enemy.getCurrentDirection(), getType());
+                .update(enemy, enemy.getDirectionHolder().getCurrentDirection(), getType());
 
         super.preManage(enemy);
 
@@ -48,12 +48,12 @@ public class DeadState extends InactiveState {
 
     @Override
     public void postManage(Enemy enemy) {
-        getGame().getPlayer().addCoins(enemy.reward);
+        game.getPlayer().addCoins(enemy.reward);
         float value = new Random().nextFloat();
 
         //10% chance to get a gem
         if (value >= .45 && value < .55) {
-            getGame().getPlayer().addGems(1);
+            game.getPlayer().addGems(1);
             Log.info("Player got 1 gem");
         }
     }

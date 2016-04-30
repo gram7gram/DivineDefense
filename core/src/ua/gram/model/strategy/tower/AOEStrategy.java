@@ -38,8 +38,8 @@ public class AOEStrategy implements TowerStrategy {
 
         for (Enemy target : targets) {
             if (victimInRange.contains(target)) continue;
-            Vector2 victimPosition = target.getCurrentPosition();
-            Vector2 mainVictimPosition = mainTarget.getCurrentPosition();
+            Vector2 victimPosition = target.getDirectionHolder().getCurrentPosition();
+            Vector2 mainVictimPosition = mainTarget.getDirectionHolder().getCurrentPosition();
             float distance = victimPosition.dst(mainVictimPosition);
             if (distance <= weapon.aoeRange) {
                 victimInRange.add(target);

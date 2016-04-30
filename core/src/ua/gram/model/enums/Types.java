@@ -7,6 +7,21 @@ package ua.gram.model.enums;
  */
 public class Types {
 
+    public static Types.TowerLevels getTowerLevelType(int level) {
+        switch (level) {
+            case 1:
+                return Types.TowerLevels.Lvl1;
+            case 2:
+                return Types.TowerLevels.Lvl2;
+            case 3:
+                return Types.TowerLevels.Lvl3;
+            case 4:
+                return Types.TowerLevels.Lvl4;
+            default:
+                throw new NullPointerException("Unknown tower level: " + level);
+        }
+    }
+
     public enum Tower {
         STUN, SECONDARY, PRIMARY, SPECIAL
     }

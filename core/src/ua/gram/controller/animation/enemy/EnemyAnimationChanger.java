@@ -31,7 +31,8 @@ public class EnemyAnimationChanger implements Runnable {
 
         if (enemy.getAnimator().hasAnimation()) {
 
-            if (enemy.getCurrentDirection() == dir && enemy.getAnimator().getPrimaryType() == type) {
+            if (Path.equal(enemy.getDirectionHolder().getCurrentDirection(), dir)
+                    && enemy.getAnimator().getPrimaryType() == type) {
                 return;
             }
 
@@ -44,9 +45,9 @@ public class EnemyAnimationChanger implements Runnable {
     }
 
     private void updateDirection() {
-        if (dir != null && enemy.getCurrentDirection() != dir) {
+        if (dir != null && enemy.getDirectionHolder().getCurrentDirection() != dir) {
             synchronized (lock) {
-                enemy.setCurrentDirection(dir);
+                enemy.getDirectionHolder().setCurrentDirection(dir);
             }
         }
     }
@@ -54,7 +55,7 @@ public class EnemyAnimationChanger implements Runnable {
     private void freeAnimation() {
         if (enemy.getPoolableAnimation() == null) return;
 
-        ua.gram.controller.animation.enemy.EnemyAnimationProvider animationProvider = enemy.getAnimationProvider();
+        EnemyAnimationProvider animationProvider = enemy.getAnimationProvider();
         Animator<Types.EnemyState, Path.Types> animator = enemy.getAnimator();
         try {
             synchronized (lock) {
@@ -68,12 +69,12 @@ public class EnemyAnimationChanger implements Runnable {
     }
 
     private void obtainAnimation() {
-        ua.gram.controller.animation.enemy.EnemyAnimationProvider animationProvider = enemy.getAnimationProvider();
+        EnemyAnimationProvider animationProvider = enemy.getAnimationProvider();
         Animator<Types.EnemyState, Path.Types> animator = enemy.getAnimator();
         try {
             synchronized (lock) {
                 animator.setPrimaryType(type);
-                animator.setSecondaryType(enemy.getCurrentDirectionType());
+                animator.setSecondaryType(enemy.getDirectionHolder().getCurrentDirectionType());
 
                 AnimationPool pool = animationProvider.get(enemy.getPrototype(), animator);
                 PoolableAnimation animation = pool.obtain();
@@ -82,6 +83,10 @@ public class EnemyAnimationChanger implements Runnable {
         } catch (Exception e) {
             Log.exc("Cannot set new animation for " + enemy, e);
         }
+    }
+
+    public void update(Enemy enemy, Types.EnemyState type) {
+        update(enemy, enemy.getDirectionHolder().getCurrentDirection(), type);
     }
 
     public void update(Enemy enemy, Vector2 dir, Types.EnemyState type) {

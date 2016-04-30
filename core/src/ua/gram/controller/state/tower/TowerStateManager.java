@@ -3,8 +3,10 @@ package ua.gram.controller.state.tower;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import ua.gram.DDGame;
+import ua.gram.controller.animation.tower.TowerAnimationChanger;
 import ua.gram.controller.state.StateInterface;
 import ua.gram.controller.state.StateManager;
+import ua.gram.controller.state.StateSwapper;
 import ua.gram.controller.state.tower.level1.ActiveState;
 import ua.gram.controller.state.tower.level1.BuildingState;
 import ua.gram.controller.state.tower.level1.InactiveState;
@@ -24,6 +26,9 @@ import ua.gram.utils.Log;
  */
 public class TowerStateManager extends StateManager<Tower> {
 
+    protected final StateSwapper<Tower> stateSwapper;
+    protected final TowerAnimationChanger animationChanger;
+
     private ActiveState activeState;
     private InactiveState inactiveState;
     private BuildingState buildingState;
@@ -36,19 +41,21 @@ public class TowerStateManager extends StateManager<Tower> {
 
     public TowerStateManager(DDGame game) {
         super(game);
+        stateSwapper = new StateSwapper<>();
+        animationChanger = new TowerAnimationChanger();
     }
 
     @Override
-    public void init(Tower actor) {
-        if (activeState == null) activeState = new ActiveState(game);
-        if (inactiveState == null) inactiveState = new InactiveState(game);
-        if (buildingState == null) buildingState = new BuildingState(game);
-        if (sellingState == null) sellingState = new SellingState(game);
-        if (attackState == null) attackState = new AttackState(game);
-        if (searchState == null) searchState = new SearchState(game);
-        if (idleState == null) idleState = new IdleState(game);
-        if (preorderState == null) preorderState = new PreorderState(game);
-        if (upgradeState == null) upgradeState = new UpgradeState(game);
+    public void init() {
+        activeState = new ActiveState(game, this);
+        inactiveState = new InactiveState(game, this);
+        buildingState = new BuildingState(game, this);
+        sellingState = new SellingState(game, this);
+        attackState = new AttackState(game, this);
+        searchState = new SearchState(game, this);
+        idleState = new IdleState(game, this);
+        preorderState = new PreorderState(game, this);
+        upgradeState = new UpgradeState(game, this);
     }
 
     @Override
@@ -133,6 +140,14 @@ public class TowerStateManager extends StateManager<Tower> {
 
     public UpgradeState getUpgradeState() {
         return upgradeState;
+    }
+
+    public StateSwapper<Tower> getStateSwapper() {
+        return stateSwapper;
+    }
+
+    public TowerAnimationChanger getAnimationChanger() {
+        return animationChanger;
     }
 
     public synchronized void swap(Tower actor, Level1State before, Level1State after) {

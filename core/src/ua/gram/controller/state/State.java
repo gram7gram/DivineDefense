@@ -16,17 +16,13 @@ public class State<A extends GameActor> implements StateInterface<A>, Resetable 
         this.game = game;
     }
 
-    public DDGame getGame() {
-        return game;
-    }
-
     @Override
     public String toString() {
         return name();
     }
 
     public String name() {
-        return this.getClass().getSimpleName();
+        return getClass().getSimpleName();
     }
 
     @Override

@@ -1,11 +1,7 @@
 package ua.gram.controller.state.tower;
 
 import ua.gram.DDGame;
-import ua.gram.controller.animation.tower.TowerAnimationProvider;
-import ua.gram.controller.pool.animation.AnimationPool;
 import ua.gram.controller.state.State;
-import ua.gram.controller.state.StateSwapper;
-import ua.gram.controller.tower.TowerShop;
 import ua.gram.model.actor.tower.Tower;
 import ua.gram.model.enums.Types;
 import ua.gram.utils.Log;
@@ -17,46 +13,19 @@ import ua.gram.utils.Log;
  */
 public abstract class TowerState extends State<Tower> {
 
-    protected final StateSwapper<Tower> stateSwapper;
+    protected final TowerStateManager manager;
 
-    public TowerState(DDGame game) {
+    public TowerState(DDGame game, TowerStateManager manager) {
         super(game);
-        stateSwapper = new StateSwapper<Tower>();
-        Log.info("Tower " + getClass().getSimpleName() + " state is OK");
+        this.manager = manager;
+        Log.info("Tower " + name() + " state is OK");
     }
 
-    /**
-     * TODO Move to TowerAnimationChanger
-     */
-    public void initAnimation(Tower tower) {
-        TowerShop shop = tower.getTowerShop();
-        TowerAnimationProvider provider = shop.getAnimationProvider();
-
-        setUncheckedType(tower);
-
-        AnimationPool pool = provider.get(tower.getPrototype(), getType(),
-                getType(tower.getProperty().getTowerLevel()));
-        tower.setAnimation(pool.obtain());
-    }
-
-    private void setUncheckedType(Tower tower) {
-        tower.getAnimator().setPrimaryType(getType());
-        tower.getAnimator().setSecondaryType(getType(tower.getProperty().getTowerLevel()));
-    }
-
-    private Types.TowerLevels getType(int level) {
-        switch (level) {
-            case 1:
-                return Types.TowerLevels.Lvl1;
-            case 2:
-                return Types.TowerLevels.Lvl2;
-            case 3:
-                return Types.TowerLevels.Lvl3;
-            case 4:
-                return Types.TowerLevels.Lvl4;
-            default:
-                throw new NullPointerException("Unknown tower level: " + level);
-        }
+    @Override
+    public void preManage(Tower actor) {
+        super.preManage(actor);
+        manager.getAnimationChanger().update(actor, getType(),
+                Types.getTowerLevelType(actor.getProperty().getTowerLevel()));
     }
 
     protected abstract Types.TowerState getType();

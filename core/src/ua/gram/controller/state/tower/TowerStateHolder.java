@@ -2,14 +2,16 @@ package ua.gram.controller.state.tower;
 
 import ua.gram.controller.state.tower.level1.Level1State;
 import ua.gram.controller.state.tower.level2.Level2State;
+import ua.gram.model.enums.Types;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
 public class TowerStateHolder {
 
-    private volatile Level1State currentLevel1State;
-    private volatile Level2State currentLevel2State;
+    private Level1State currentLevel1State;
+    private Level2State currentLevel2State;
+    private Types.TowerLevels currentLevelType;
 
     public Level1State getCurrentLevel1State() {
         return currentLevel1State;
@@ -25,5 +27,13 @@ public class TowerStateHolder {
 
     public void setCurrentLevel2State(Level2State currentLevel2State) {
         this.currentLevel2State = currentLevel2State;
+    }
+
+    public Types.TowerLevels getCurrentLevelType() {
+        return currentLevelType;
+    }
+
+    public void setCurrentLevelType(Types.TowerLevels currentLevelType) {
+        this.currentLevelType = currentLevelType;
     }
 }

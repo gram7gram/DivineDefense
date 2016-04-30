@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ua.gram.DDGame;
+import ua.gram.controller.animation.tower.TowerAnimationProvider;
 import ua.gram.controller.pool.WeaponPool;
 import ua.gram.controller.stage.BattleStage;
 import ua.gram.controller.state.tower.TowerStateHolder;
@@ -60,7 +61,7 @@ public abstract class Tower extends GameActor<Types.TowerState, Types.TowerLevel
         property = new TowerProperty(prototype.getFirstLevelProperty());
         stateHolder = new TowerStateHolder();
         targets = new ArrayList<ActiveTarget>(5);
-        weaponPool = towerShop.getWeaponBuilder().getPool(prototype.weapon);
+        weaponPool = towerShop.getWeaponProvider().getPool(prototype.weapon);
         center = Vector2.Zero;
     }
 
@@ -194,5 +195,9 @@ public abstract class Tower extends GameActor<Types.TowerState, Types.TowerLevel
 
     public WeaponPool getWeaponPool() {
         return weaponPool;
+    }
+
+    public TowerAnimationProvider getAnimationProvider() {
+        return towerShop.getAnimationProvider();
     }
 }

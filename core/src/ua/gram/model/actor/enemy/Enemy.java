@@ -3,12 +3,12 @@ package ua.gram.model.actor.enemy;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Pool;
 
 import ua.gram.DDGame;
 import ua.gram.controller.animation.enemy.EnemyAnimationProvider;
+import ua.gram.controller.enemy.DirectionHolder;
 import ua.gram.controller.enemy.EnemySpawner;
 import ua.gram.controller.event.DamageEvent;
 import ua.gram.controller.listener.DamageListener;
@@ -52,11 +52,9 @@ public abstract class Enemy extends GameActor<Types.EnemyState, Path.Types, Enem
     protected WalkablePath path;
     protected EnemySpawner spawner;
     private float stateTime = 0;
+    private DirectionHolder directionHolder;
     private EnemyGroup group;
     private TextureRegion currentFrame;
-    private Vector2 originPosition;
-    private Vector2 previousPosition;
-    private Vector2 currentPositionIndex;
     private Enemy parent;
 
     public Enemy(DDGame game, EnemyPrototype prototype) {
@@ -74,14 +72,12 @@ public abstract class Enemy extends GameActor<Types.EnemyState, Path.Types, Enem
         isDead = false;
         isRemoved = false;
         hasReachedCheckpoint = true;
-        previousPosition = Vector2.Zero;
-        originPosition = Vector2.Zero;
-        currentPositionIndex = Vector2.Zero;
         stateHolder = new EnemyStateHolder();
     }
 
     @Override
     public void init() {
+        directionHolder = new DirectionHolder(this);
         addListener(new DamageListener(this));
     }
 
@@ -147,12 +143,14 @@ public abstract class Enemy extends GameActor<Types.EnemyState, Path.Types, Enem
         isAttacked = false;
         isRemoved = false;
         hasReachedCheckpoint = true;
-        currentDirection = Vector2.Zero;
-        previousDirection = Vector2.Zero;
-        originPosition = Vector2.Zero;
-        previousPosition = Vector2.Zero;
-        currentPositionIndex = Vector2.Zero;
+        directionHolder.resetObject();
         Log.info(this + " was reset");
+    }
+
+    @Override
+    public EnemyStateManager getStateManager() {
+        if (spawner == null) throw new NullPointerException("Missing EnemySpawner");
+        return spawner.getStateManager();
     }
 
     /**
@@ -172,7 +170,6 @@ public abstract class Enemy extends GameActor<Types.EnemyState, Path.Types, Enem
 
     public void damage(float damage) {
         health -= damage;
-
         fire(new DamageEvent(damage));
     }
 
@@ -182,13 +179,6 @@ public abstract class Enemy extends GameActor<Types.EnemyState, Path.Types, Enem
 
     public void setSpawner(EnemySpawner spawner) {
         this.spawner = spawner;
-    }
-
-    public Vector2 getOrigin() {
-        originPosition.set(
-                getX() + getOriginX(),
-                getY() + getOriginY());
-        return originPosition;
     }
 
     public float getSpawnDuration() {
@@ -205,6 +195,10 @@ public abstract class Enemy extends GameActor<Types.EnemyState, Path.Types, Enem
 
     public void addSpawnDurationCount(float spawnDurationCount) {
         this.spawnDurationCount += spawnDurationCount;
+    }
+
+    public DirectionHolder getDirectionHolder() {
+        return directionHolder;
     }
 
     public EnemyGroup getEnemyGroup() {
@@ -235,37 +229,8 @@ public abstract class Enemy extends GameActor<Types.EnemyState, Path.Types, Enem
         this.speed = defaultSpeed;
     }
 
-    public Vector2 getPreviousDirection() {
-        return previousDirection;
-    }
-
-    public Vector2 getCurrentPositionIndex() {
-        currentPositionIndex.set(
-                Math.round(getX()) / DDGame.TILE_HEIGHT,
-                Math.round(getY()) / DDGame.TILE_HEIGHT);
-        return currentPositionIndex;
-    }
-
     public Animator<Types.EnemyState, Path.Types> getAnimator() {
         return animator;
-    }
-
-    public PoolableAnimation getPoolableAnimation() {
-        return animator.getPoolable();
-    }
-
-    public void setPreviousPosition(float x, float y) {
-        previousPosition.set(x, y);
-    }
-
-    public Vector2 getPreviousPosition() {
-        return previousPosition;
-    }
-
-    @Override
-    public EnemyStateManager getStateManager() {
-        if (spawner == null) throw new NullPointerException("Missing EnemySpawner");
-        return spawner.getStateManager();
     }
 
     public EnemyPrototype getPrototype() {

@@ -1,6 +1,7 @@
 package ua.gram.controller.state.tower.level1;
 
 import ua.gram.DDGame;
+import ua.gram.controller.state.tower.TowerStateManager;
 import ua.gram.model.enums.Types;
 
 /**
@@ -8,8 +9,8 @@ import ua.gram.model.enums.Types;
  */
 public class ActiveState extends Level1State {
 
-    public ActiveState(DDGame game) {
-        super(game);
+    public ActiveState(DDGame game, TowerStateManager manager) {
+        super(game, manager);
     }
 
     @Override

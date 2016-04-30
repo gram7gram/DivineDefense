@@ -35,14 +35,14 @@ public class SpawnState extends InactiveState {
         }
 
         getManager().getAnimationChanger()
-                .update(enemy, enemy.getCurrentDirection(), getType());
+                .update(enemy, enemy.getDirectionHolder().getCurrentDirection(), getType());
 
         super.preManage(enemy);
 
         enemy.setSpawnDurationCount(0);
         enemy.setVisible(true);
 
-        Log.info(enemy + " is spawned at " + Path.toString(enemy.getCurrentPositionIndex()));
+        Log.info(enemy + " is spawned at " + Path.toString(enemy.getDirectionHolder().getCurrentPositionIndex()));
     }
 
     private void normalSpawn(Enemy enemy) {
@@ -51,7 +51,7 @@ public class SpawnState extends InactiveState {
 
         Vector2 initial = spawner.getLevel().getPrototype().initialDirection;
 
-        enemy.setCurrentDirection(initial);
+        enemy.getDirectionHolder().setCurrentDirection(initial);
 
         Vector2 prev = Path.opposite(initial);
 
@@ -64,11 +64,11 @@ public class SpawnState extends InactiveState {
 
         Enemy parent = enemy.getParentEnemy();
 
-        Vector2 initial = parent.getCurrentDirection();
+        Vector2 initial = parent.getDirectionHolder().getCurrentDirection();
 
-        enemy.setCurrentDirection(initial);
+        enemy.getDirectionHolder().setCurrentDirection(initial);
 
-        Vector2 prev = enemy.getPreviousDirection();
+        Vector2 prev = enemy.getDirectionHolder().getPreviousDirection();
 
         spawner.setActionPath(enemy, spawnPosition, prev);
     }

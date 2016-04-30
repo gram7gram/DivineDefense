@@ -34,7 +34,7 @@ public class WalkingState extends Level2State {
     @Override
     public void preManage(final Enemy enemy) {
         getManager().getAnimationChanger()
-                .update(enemy, enemy.getCurrentDirection(), getType());
+                .update(enemy, enemy.getDirectionHolder().getCurrentDirection(), getType());
 
         super.preManage(enemy);
 
@@ -87,7 +87,7 @@ public class WalkingState extends Level2State {
             return;
         }
 
-        if (Path.compare(enemy.getCurrentPositionIndex(), basePosition)) {
+        if (Path.compare(enemy.getDirectionHolder().getCurrentPositionIndex(), basePosition)) {
             Log.info(enemy + " position equals to Base. Removing enemy");
             remove(enemy);
             return;
@@ -113,7 +113,7 @@ public class WalkingState extends Level2State {
         int y = Math.round(enemy.getY());
 
         Map map = enemy.getSpawner().getLevel().getMap();
-        Vector2 pos = enemy.getCurrentPositionIndex();
+        Vector2 pos = enemy.getDirectionHolder().getCurrentPositionIndex();
 
         if (!map.getVoter().isWalkable((int) pos.x, (int) pos.y)) {
             Log.crit(enemy + " stepped out of walking bounds");
@@ -121,8 +121,8 @@ public class WalkingState extends Level2State {
             return;
         }
 
-        int prevX = Math.round(enemy.getPreviousPosition().x);
-        int prevY = Math.round(enemy.getPreviousPosition().y);
+        int prevX = Math.round(enemy.getDirectionHolder().getPreviousPosition().x);
+        int prevY = Math.round(enemy.getDirectionHolder().getPreviousPosition().y);
 
         if (prevX != x || prevY != y) {
             enemy.setUpdateIterationCount(0);
@@ -137,7 +137,7 @@ public class WalkingState extends Level2State {
                 remove(enemy);
             }
 
-            enemy.setPreviousPosition(x, y);
+            enemy.getDirectionHolder().setPreviousPosition(x, y);
         }
     }
 
@@ -145,7 +145,7 @@ public class WalkingState extends Level2State {
         return Actions.moveBy(
                 enemy.speed > 0 ? (int) (dir.x * DDGame.TILE_HEIGHT) : 0,
                 enemy.speed > 0 ? (int) (dir.y * DDGame.TILE_HEIGHT) : 0,
-                enemy.speed * getGame().getSpeed().getValue());
+                enemy.speed * game.getSpeed().getValue());
     }
 
     protected void remove(Enemy enemy) {
@@ -164,7 +164,7 @@ public class WalkingState extends Level2State {
     }
 
     protected void resetState(Enemy enemy) {
-        enemy.setPreviousPosition(-1, -1);
+        enemy.getDirectionHolder().setPreviousPosition(-1, -1);
         enemy.speed = enemy.defaultSpeed;
         enemy.setUpdateIterationCount(0);
     }

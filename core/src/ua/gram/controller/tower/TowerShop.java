@@ -8,12 +8,14 @@ import java.util.Objects;
 import java.util.Set;
 
 import ua.gram.DDGame;
-import ua.gram.controller.builder.WeaponBuilder;
+import ua.gram.controller.animation.tower.TowerAnimationChanger;
+import ua.gram.controller.animation.tower.TowerAnimationProvider;
 import ua.gram.controller.pool.TowerPool;
 import ua.gram.controller.stage.BattleStage;
 import ua.gram.controller.stage.StageHolder;
 import ua.gram.controller.stage.UIStage;
 import ua.gram.controller.state.tower.TowerStateManager;
+import ua.gram.controller.weapon.WeaponProvider;
 import ua.gram.model.Initializer;
 import ua.gram.model.actor.PositionMarker;
 import ua.gram.model.actor.tower.Tower;
@@ -38,13 +40,14 @@ public class TowerShop implements ShopInterface<TowerGroup>, Initializer {
     private final TowerShopGroup towerShopGroup;
     private final TowerStrategyManager strategyManager;
     private final TowerStateManager stateManager;
-    private final ua.gram.controller.animation.tower.TowerAnimationProvider animationProvider;
+    private final TowerAnimationProvider animationProvider;
     private final HashMap<TowerPrototype, Pool<Tower>> identityMap;
     private final PositionMarker marker;
     private final TowerShopConfigPrototype prototype;
     private final TowerControls controls;
-    private final WeaponBuilder weaponBuilder;
+    private final WeaponProvider weaponProvider;
     private final TowerPrototype[] towerPrototypes;
+    private final TowerAnimationChanger animationChanger;
 
     public TowerShop(DDGame game, StageHolder stageHolder, TowerShopConfigPrototype prototype) {
         this.game = game;
@@ -55,18 +58,19 @@ public class TowerShop implements ShopInterface<TowerGroup>, Initializer {
 
         Skin skin = game.getResources().getSkin();
 
-        animationProvider = new ua.gram.controller.animation.tower.TowerAnimationProvider(skin, towerPrototypes);
+        animationProvider = new TowerAnimationProvider(skin, towerPrototypes);
 
         strategyManager = new TowerStrategyManager();
         stateManager = new TowerStateManager(game);
         towerShopGroup = new TowerShopGroup(game, prototype);
+        animationChanger = new TowerAnimationChanger();
 
         marker = new PositionMarker(skin, "position-marker");
         marker.setVisible(false);
 
         controls = new TowerControls(game, skin);
 
-        weaponBuilder = new WeaponBuilder(game, game.getPrototype().weapons);
+        weaponProvider = new WeaponProvider(game, game.getPrototype().weapons);
 
         Log.info("TowerShop is OK");
     }
@@ -76,9 +80,11 @@ public class TowerShop implements ShopInterface<TowerGroup>, Initializer {
 
         animationProvider.init();
 
+        stateManager.init();
+
         registerAll(towerPrototypes);
 
-        weaponBuilder.init();
+        weaponProvider.init();
         towerShopGroup.setTowerShop(this);
         towerShopGroup.init();
         controls.setShop(this);
@@ -105,7 +111,6 @@ public class TowerShop implements ShopInterface<TowerGroup>, Initializer {
         Tower tower = identityMap.get(prototype).obtain();
         Log.info(type + " is going to be preordered from TowerShop...");
         tower.setPosition(x, y);
-        stateManager.init(tower);
         stateManager.swap(tower, stateManager.getPreorderState());
         TowerGroup group = new TowerGroup(game, tower);
         stageHolder.getBattleStage().addActor(group);
@@ -189,7 +194,7 @@ public class TowerShop implements ShopInterface<TowerGroup>, Initializer {
         return stateManager;
     }
 
-    public ua.gram.controller.animation.tower.TowerAnimationProvider getAnimationProvider() {
+    public TowerAnimationProvider getAnimationProvider() {
         return animationProvider;
     }
 
@@ -201,7 +206,11 @@ public class TowerShop implements ShopInterface<TowerGroup>, Initializer {
         return prototype;
     }
 
-    public WeaponBuilder getWeaponBuilder() {
-        return weaponBuilder;
+    public WeaponProvider getWeaponProvider() {
+        return weaponProvider;
+    }
+
+    public TowerAnimationChanger getAnimationChanger() {
+        return animationChanger;
     }
 }

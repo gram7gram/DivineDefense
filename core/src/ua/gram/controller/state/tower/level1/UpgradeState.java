@@ -13,8 +13,8 @@ import ua.gram.utils.Log;
  */
 public class UpgradeState extends InactiveState {
 
-    public UpgradeState(DDGame game) {
-        super(game);
+    public UpgradeState(DDGame game, TowerStateManager manager) {
+        super(game, manager);
     }
 
     @Override

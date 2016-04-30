@@ -13,10 +13,10 @@ import ua.gram.utils.Log;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public final class BuildingState extends InactiveState {
+public class BuildingState extends InactiveState {
 
-    public BuildingState(DDGame game) {
-        super(game);
+    public BuildingState(DDGame game, TowerStateManager manager) {
+        super(game, manager);
     }
 
     @Override
@@ -38,7 +38,6 @@ public final class BuildingState extends InactiveState {
         battleStage.addTowerPosition(tower);
         towerGroup.getBar().setVisible(true);
         towerGroup.getBar().setDuration(tower.getPrototype().buildDelay);
-        Log.info(tower + " is built");
     }
 
     @Override

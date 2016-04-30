@@ -20,8 +20,8 @@ public class EnemyDistanceComparator implements Comparator<Enemy> {
 
     @Override
     public int compare(Enemy enemy1, Enemy enemy2) {
-        Vector2 pos1 = enemy1.getOrigin();
-        Vector2 pos2 = enemy2.getOrigin();
+        Vector2 pos1 = enemy1.getDirectionHolder().getOriginPosition();
+        Vector2 pos2 = enemy2.getDirectionHolder().getOriginPosition();
         Vector2 posTower = tower.getCenterPoint();
         float dist1 = pos1.dst(posTower);
         float dist2 = pos2.dst(posTower);

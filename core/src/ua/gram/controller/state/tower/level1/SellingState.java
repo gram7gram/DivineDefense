@@ -13,8 +13,8 @@ import ua.gram.utils.Log;
  */
 public class SellingState extends InactiveState {
 
-    public SellingState(DDGame game) {
-        super(game);
+    public SellingState(DDGame game, TowerStateManager towerStateManager) {
+        super(game, towerStateManager);
     }
 
     @Override

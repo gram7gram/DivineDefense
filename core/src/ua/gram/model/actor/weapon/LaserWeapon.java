@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import ua.gram.DDGame;
-import ua.gram.controller.builder.WeaponBuilder;
+import ua.gram.controller.weapon.WeaponProvider;
 import ua.gram.model.prototype.weapon.LaserWeaponPrototype;
 import ua.gram.model.prototype.weapon.WeaponPrototype;
 import ua.gram.utils.Resources;
@@ -30,7 +30,7 @@ public final class LaserWeapon extends Weapon {
     private final Sprite end_over;
     private Color color_back;
 
-    public LaserWeapon(WeaponBuilder builder, Resources resources, WeaponPrototype proto) {
+    public LaserWeapon(WeaponProvider builder, Resources resources, WeaponPrototype proto) {
         super(builder, resources, proto);
 
         if (!(proto instanceof LaserWeaponPrototype))

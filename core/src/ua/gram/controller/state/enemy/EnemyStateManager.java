@@ -54,17 +54,17 @@ public final class EnemyStateManager extends StateManager<Enemy> {
     }
 
     @Override
-    public void init(Enemy enemy) {
-        if (stunState == null) stunState = new StunState(game, this);
-        if (deadState == null) deadState = new DeadState(game, this);
-        if (idleState == null) idleState = new IdleState(game, this);
-        if (spawnState == null) spawnState = new SpawnState(game, this);
-        if (activeState == null) activeState = new ActiveState(game, this);
-        if (finishState == null) finishState = new FinishState(game, this);
-        if (walkingState == null) walkingState = new WalkingState(game, this);
-        if (abilityState == null) abilityState = new AbilityState(game, this);
-        if (inactiveState == null) inactiveState = new InactiveState(game, this);
-        if (abilityWalkingState == null) abilityWalkingState = new AbilityWalkingState(game, this);
+    public void init() {
+        stunState = new StunState(game, this);
+        deadState = new DeadState(game, this);
+        idleState = new IdleState(game, this);
+        spawnState = new SpawnState(game, this);
+        activeState = new ActiveState(game, this);
+        finishState = new FinishState(game, this);
+        walkingState = new WalkingState(game, this);
+        abilityState = new AbilityState(game, this);
+        inactiveState = new InactiveState(game, this);
+        abilityWalkingState = new AbilityWalkingState(game, this);
     }
 
     @Override

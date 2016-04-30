@@ -1,4 +1,4 @@
-package ua.gram.controller.builder;
+package ua.gram.controller.weapon;
 
 import java.util.HashMap;
 
@@ -10,13 +10,13 @@ import ua.gram.model.prototype.weapon.WeaponPrototype;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class WeaponBuilder implements Initializer {
+public class WeaponProvider implements Initializer {
 
     private final HashMap<WeaponPrototype, WeaponPool> identityMap;
     private final DDGame game;
     private final WeaponPrototype[] prototypes;
 
-    public WeaponBuilder(DDGame game, WeaponPrototype[] prototypes) {
+    public WeaponProvider(DDGame game, WeaponPrototype[] prototypes) {
         identityMap = new HashMap<>(prototypes.length);
         this.game = game;
         this.prototypes = prototypes;

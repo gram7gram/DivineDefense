@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Pool;
 
 import ua.gram.DDGame;
-import ua.gram.controller.builder.WeaponBuilder;
+import ua.gram.controller.weapon.WeaponProvider;
 import ua.gram.model.Resetable;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.actor.tower.Tower;
@@ -27,7 +27,7 @@ import ua.gram.utils.Resources;
 public abstract class Weapon extends Actor implements Resetable, Pool.Poolable {
 
     protected final WeaponPrototype prototype;
-    protected final WeaponBuilder builder;
+    protected final WeaponProvider builder;
     protected TowerGroup towerGroup;
     protected EnemyGroup targetGroup;
     protected TextureRegion currentFrame;
@@ -37,7 +37,7 @@ public abstract class Weapon extends Actor implements Resetable, Pool.Poolable {
     protected float scaleX;
     protected float scaleY;
 
-    public Weapon(WeaponBuilder builder, Resources resources, WeaponPrototype prototype) {
+    public Weapon(WeaponProvider builder, Resources resources, WeaponPrototype prototype) {
         this.builder = builder;
         this.prototype = prototype;
         this.animation = createAnimation(resources.getSkin());

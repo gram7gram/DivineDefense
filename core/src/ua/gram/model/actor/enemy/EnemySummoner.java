@@ -29,8 +29,8 @@ public final class EnemySummoner extends AbilityUser implements Cloneable {
 
     @Override
     public synchronized boolean ability() {
-        Vector2 pos = getCurrentPosition();
-        Vector2 next = getCurrentDirection();
+        Vector2 pos = getDirectionHolder().getCurrentPosition();
+        Vector2 next = getDirectionHolder().getCurrentDirection();
         Vector2 position = getMinionSpawnPosition(pos, next);
 
         Map map = getSpawner().getLevel().getMap();

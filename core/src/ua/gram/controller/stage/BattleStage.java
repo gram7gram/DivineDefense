@@ -49,7 +49,6 @@ public class BattleStage extends AbstractStage implements Initializer {
     @Override
     public void init() {
         level.setBattleStage(this);
-        level.createSpawner();
         if (stageHolder == null)
             throw new NullPointerException("Missing StageHolder for listener");
         controlsListener.setStageHolder(stageHolder);

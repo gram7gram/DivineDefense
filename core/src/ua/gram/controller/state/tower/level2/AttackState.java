@@ -18,8 +18,8 @@ import ua.gram.utils.Log;
  */
 public class AttackState extends Level2State {
 
-    public AttackState(DDGame game) {
-        super(game);
+    public AttackState(DDGame game, TowerStateManager manager) {
+        super(game, manager);
     }
 
     @Override

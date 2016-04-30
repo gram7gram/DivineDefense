@@ -26,7 +26,7 @@ public class FinishState extends InactiveState {
     @Override
     public void preManage(Enemy enemy) {
         getManager().getAnimationChanger()
-                .update(enemy, enemy.getCurrentDirection(), getType());
+                .update(enemy, getType());
 
         super.preManage(enemy);
 
@@ -42,7 +42,7 @@ public class FinishState extends InactiveState {
         group.clear();
         group.remove();
 
-        Player player = getGame().getPlayer();
+        Player player = game.getPlayer();
         player.decreaseHealth();
     }
 

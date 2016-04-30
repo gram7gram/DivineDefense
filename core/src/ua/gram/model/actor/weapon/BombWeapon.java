@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
-import ua.gram.controller.builder.WeaponBuilder;
+import ua.gram.controller.weapon.WeaponProvider;
 import ua.gram.model.group.Layer;
 import ua.gram.model.prototype.weapon.BombWeaponPrototype;
 import ua.gram.model.prototype.weapon.WeaponPrototype;
@@ -17,7 +17,7 @@ public class BombWeapon extends Weapon implements AOEWeapon {
 
     private Layer currentLayer;
 
-    public BombWeapon(WeaponBuilder builder, Resources resources, WeaponPrototype prototype) {
+    public BombWeapon(WeaponProvider builder, Resources resources, WeaponPrototype prototype) {
         super(builder, resources, prototype);
     }
 

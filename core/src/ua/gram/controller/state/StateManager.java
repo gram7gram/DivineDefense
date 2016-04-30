@@ -3,21 +3,20 @@ package ua.gram.controller.state;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import ua.gram.DDGame;
+import ua.gram.model.Initializer;
 import ua.gram.model.actor.GameActor;
 import ua.gram.utils.Log;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public abstract class StateManager<A extends GameActor> {
+public abstract class StateManager<A extends GameActor> implements Initializer {
 
     protected final DDGame game;
 
     public StateManager(DDGame game) {
         this.game = game;
     }
-
-    public abstract void init(A actor);
 
     public abstract void update(A actor, float delta);
 

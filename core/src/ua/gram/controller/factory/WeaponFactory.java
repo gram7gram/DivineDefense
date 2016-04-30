@@ -3,7 +3,7 @@ package ua.gram.controller.factory;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import ua.gram.DDGame;
-import ua.gram.controller.builder.WeaponBuilder;
+import ua.gram.controller.weapon.WeaponProvider;
 import ua.gram.model.actor.weapon.BombWeapon;
 import ua.gram.model.actor.weapon.FreezeWeapon;
 import ua.gram.model.actor.weapon.LaserWeapon;
@@ -20,7 +20,7 @@ import ua.gram.model.prototype.weapon.WeaponPrototype;
  */
 public class WeaponFactory {
 
-    public static Weapon create(DDGame game, WeaponBuilder builder, WeaponPrototype proto) {
+    public static Weapon create(DDGame game, WeaponProvider builder, WeaponPrototype proto) {
         switch (proto.type.toUpperCase()) {
             case "LASER":
                 if (!(proto instanceof LaserWeaponPrototype))

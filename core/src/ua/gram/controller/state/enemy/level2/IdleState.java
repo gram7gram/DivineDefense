@@ -22,7 +22,7 @@ public class IdleState extends Level2State {
     @Override
     public void preManage(Enemy enemy) {
         getManager().getAnimationChanger()
-                .update(enemy, enemy.getCurrentDirection(), getType());
+                .update(enemy, enemy.getDirectionHolder().getCurrentDirection(), getType());
         super.preManage(enemy);
     }
 
