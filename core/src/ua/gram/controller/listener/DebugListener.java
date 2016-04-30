@@ -20,18 +20,24 @@ public class DebugListener extends InputListener {
         this.stageHolder = stageHolder;
     }
 
+    private void debug(boolean enable) {
+        if (DDGame.DEBUG == enable) return;
+        DDGame.DEBUG = enable;
+        Log.info("Debuging is " + (DDGame.DEBUG ? "on" : "off"));
+    }
+
     @Override
     public boolean keyDown(InputEvent event, int keycode) {
         switch (keycode) {
+            case Input.Keys.MENU:
+                Log.info("Android menu button pressed in debug mode");
+                debug(!DDGame.DEBUG);
+                break;
             case Input.Keys.PLUS:
-                if (DDGame.DEBUG) break;
-                DDGame.DEBUG = true;
-                Log.info("Debuging is on");
+                debug(true);
                 break;
             case Input.Keys.MINUS:
-                if (!DDGame.DEBUG) break;
-                DDGame.DEBUG = false;
-                Log.info("Debuging is off");
+                debug(false);
                 break;
             case Input.Keys.ESCAPE:
                 Log.warn("Pressed ESC in debug mode. Will exit");

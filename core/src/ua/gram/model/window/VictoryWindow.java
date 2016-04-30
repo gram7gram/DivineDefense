@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.Align;
 
 import ua.gram.DDGame;
@@ -21,14 +20,14 @@ import ua.gram.utils.Log;
  *
  * @author Gram <gram7gram@gmail.com>
  */
-public class VictoryWindow extends Window implements Resetable {
+public class VictoryWindow extends AbstractWindow implements Resetable {
 
     private final CustomLabel reward;
     private final DDGame game;
     private final VictoryWindowPrototype prototype;
 
     public VictoryWindow(final DDGame game, final Level level, WindowPrototype proto) {
-        super("", game.getResources().getSkin(), proto.style);
+        super(game, proto);
 
         if (!(proto instanceof VictoryWindowPrototype))
             throw new IllegalArgumentException("Prototype is not instance of VictoryWindowPrototype");
@@ -37,15 +36,6 @@ public class VictoryWindow extends Window implements Resetable {
         prototype = (VictoryWindowPrototype) proto;
 
         Skin skin = game.getResources().getSkin();
-
-        setSize(prototype.width, prototype.height);
-
-        float originX = (DDGame.WORLD_WIDTH - getWidth()) / 2f;
-        float originY = (DDGame.WORLD_HEIGHT - getHeight()) / 2f;
-
-        setPosition(originX, originY);
-        setVisible(true);
-        setMovable(false);
 
         TextureRegion region = skin.getRegion(prototype.titleRegion);
         if (region == null)

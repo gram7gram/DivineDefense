@@ -97,8 +97,7 @@ public class DDGame<P extends GamePrototype> extends Game {
             resources = new Resources(this);
             resources.getManager().finishLoading();
         } catch (GdxRuntimeException e) {
-            Log.exc("Cannot create resources", e);
-            Gdx.app.exit();
+            Log.exc("Cannot create resources", e, true);
         }
 
         createCamera();
@@ -127,8 +126,10 @@ public class DDGame<P extends GamePrototype> extends Game {
     @Override
     public void render() {
         super.render();
-        if (batch != null && camera != null)
+
+        if (batch != null && camera != null) {
             batch.setProjectionMatrix(camera.view);
+        }
     }
 
     @Override
@@ -175,10 +176,6 @@ public class DDGame<P extends GamePrototype> extends Game {
 
     public Viewport getViewport() {
         return view;
-    }
-
-    public void setViewport(Viewport viewport) {
-        this.view = viewport;
     }
 
     public OrthographicCamera getCamera() {

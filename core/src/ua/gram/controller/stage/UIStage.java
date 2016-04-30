@@ -2,6 +2,7 @@ package ua.gram.controller.stage;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.GdxRuntimeException;
@@ -115,6 +116,28 @@ public class UIStage extends AbstractStage implements Initializer {
             battleStage.addListener(battleStage.getControlsListener());
         }
         Log.info(window.getClass().getSimpleName() + " is " + (window.isVisible() ? "" : "in") + "visible");
+    }
+
+    public void moveBy(float x, float y) {
+        gameUIGroup.addAction(Actions.moveBy(x, y));
+        victoryWindow.addAction(Actions.moveBy(x, y));
+        defeatWindow.addAction(Actions.moveBy(x, y));
+        pauseWindow.addAction(Actions.moveBy(x, y));
+    }
+
+    public void moveTo(float x, float y) {
+        gameUIGroup.addAction(Actions.moveTo(
+                x - (game.getCamera().viewportWidth / 2f),
+                y - (game.getCamera().viewportHeight / 2f)));
+        victoryWindow.addAction(Actions.moveTo(
+                x - (victoryWindow.getWidth() / 2f),
+                y - (victoryWindow.getHeight() / 2f)));
+        defeatWindow.addAction(Actions.moveTo(
+                x - (defeatWindow.getWidth() / 2f),
+                y - (defeatWindow.getHeight() / 2f)));
+        pauseWindow.addAction(Actions.moveTo(
+                x - (pauseWindow.getWidth() / 2f),
+                y - (pauseWindow.getHeight() / 2f)));
     }
 
     @Override

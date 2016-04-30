@@ -27,13 +27,13 @@ public class MainMenuScreen extends AbstractScreen {
     }
 
     @Override
-    public void renderUiElements(float delta) {
+    public void renderAlways(float delta) {
         uiStage.act(delta);
         uiStage.draw();
     }
 
     @Override
-    public void renderOtherElements(float delta) {
+    public void renderNoPause(float delta) {
     }
 
 }

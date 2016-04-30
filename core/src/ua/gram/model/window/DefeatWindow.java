@@ -6,7 +6,6 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.SnapshotArray;
 
@@ -27,14 +26,14 @@ import ua.gram.utils.Log;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class DefeatWindow extends Window implements Initializer, Resetable {
+public class DefeatWindow extends AbstractWindow implements Initializer, Resetable {
 
     private final DDGame game;
     private final DefeatWindowPrototype prototype;
     private StageHolder stageHolder;
 
     public DefeatWindow(final DDGame game, WindowPrototype proto) {
-        super("", game.getResources().getSkin(), proto.style);
+        super(game, proto);
 
         if (!(proto instanceof DefeatWindowPrototype))
             throw new IllegalArgumentException("Prototype is not instance of DefeatWindowPrototype");
@@ -43,13 +42,6 @@ public class DefeatWindow extends Window implements Initializer, Resetable {
         this.prototype = (DefeatWindowPrototype) proto;
 
         Skin skin = game.getResources().getSkin();
-
-        setSize(prototype.width, prototype.height);
-        setPosition(
-                DDGame.WORLD_WIDTH / 2f - this.getWidth() / 2f,
-                DDGame.WORLD_HEIGHT / 2f - this.getHeight() / 2f);
-        setVisible(true);
-        setMovable(false);
 
         Label title1 = new Label(prototype.headerText, skin, prototype.headerTextStyle);
         Label title2 = new Label(prototype.subHeaderText, skin, prototype.subHeaderTextStyle);

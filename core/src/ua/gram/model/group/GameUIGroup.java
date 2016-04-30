@@ -38,46 +38,23 @@ public class GameUIGroup extends Table implements Initializer {
         this.game = game;
         this.level = level;
 
-//        byte gap = 5;
-//        int butHeight = DDGame.DEFAULT_BUTTON_HEIGHT;
         Skin skin = game.getResources().getSkin();
+        String labelStyle = "small_tinted";
 
         pauseBut = new Button(skin, "pause-big");
-//        pauseBut.setPosition(DDGame.WORLD_WIDTH - butHeight - gap, DDGame.WORLD_HEIGHT - butHeight - gap);
-//        pauseBut.setSize(butHeight, butHeight);
         pauseBut.setVisible(true);
 
-        healthLabel = new CustomLabel("HEALTH: " + game.getPlayer().getHealth(), skin, "small_tinted");
-        gemsLabel = new CustomLabel("GEMS: " + game.getPlayer().getGems(), skin, "small_tinted");
-        moneyLabel = new CustomLabel("MONEY: " + game.getPlayer().getCoins(), skin, "small_tinted");
+        healthLabel = new CustomLabel("HEALTH: " + game.getPlayer().getHealth(), skin, labelStyle);
+        gemsLabel = new CustomLabel("GEMS: " + game.getPlayer().getGems(), skin, labelStyle);
+        moneyLabel = new CustomLabel("MONEY: " + game.getPlayer().getCoins(), skin, labelStyle);
+        waveLabel = new CustomLabel("", skin, labelStyle);
 
         moneyLabel.setVisible(true);
-//        moneyLabel.setPosition(
-//                DDGame.WORLD_WIDTH / 2f - gap - gemsLabel.getWidth() - gap - moneyLabel.getWidth() - gap,
-//                DDGame.WORLD_HEIGHT - moneyLabel.getHeight() - gap
-//        );
-
         gemsLabel.setVisible(true);
-//        gemsLabel.setPosition(
-//                DDGame.WORLD_WIDTH / 2f - gap - gemsLabel.getWidth(),
-//                DDGame.WORLD_HEIGHT - gemsLabel.getHeight() - gap
-//        );
-
         healthLabel.setVisible(true);
-//        healthLabel.setPosition(
-//                DDGame.WORLD_WIDTH / 2f + gap,
-//                DDGame.WORLD_HEIGHT - healthLabel.getHeight() - gap
-//        );
-
-        waveLabel = new CustomLabel("", skin, "small_tinted");
         waveLabel.setVisible(false);
-//        waveLabel.setPosition(
-//                DDGame.WORLD_WIDTH / 2f + gap + healthLabel.getWidth() + gap,
-//                DDGame.WORLD_HEIGHT - waveLabel.getHeight() - gap
-//        );
 
         //NOTE Workaround about 0 width of the notification label at first launch
-        //notificationLabel = new CustomLabel("", skin, "header1white");
         notificationLabel = new CustomLabel("LEVEL " + level.getIndex(), skin, "header1white");
         notificationLabel.setVisible(false);
 
@@ -149,9 +126,7 @@ public class GameUIGroup extends Table implements Initializer {
         super.draw(batch, parentAlpha);
         setDebug(DDGame.DEBUG, true);
         if (DDGame.DEBUG) {
-            game.getInfo().draw(batch,
-                    "FPS: " + Gdx.graphics.getFramesPerSecond(),
-                    10, DDGame.WORLD_HEIGHT - 12);
+            game.getInfo().draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 5, 15);
         }
     }
 

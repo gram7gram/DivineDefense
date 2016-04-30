@@ -11,10 +11,8 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import ua.gram.DDGame;
-import ua.gram.view.screen.ErrorScreen;
 
 /**
- * NOTE Sprites should not be present in TextureAtlas: lock, weapon etc.
  *
  * @author Gram <gram7gram@gmail.com>
  */
@@ -63,8 +61,7 @@ public class Resources implements Disposable {
             manager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
             manager.load(file, TiledMap.class);
         } catch (GdxRuntimeException e) {
-            if (game.getCamera() == null) createDisplayComponents();
-            game.setScreen(new ErrorScreen(game, "Could not load map for level: " + file, e));
+            Log.exc("Could not load map for level: " + file, e);
         }
     }
 
@@ -79,8 +76,7 @@ public class Resources implements Disposable {
         try {
             manager.load(file, Texture.class);
         } catch (GdxRuntimeException e) {
-            if (game.getCamera() == null) createDisplayComponents();
-            game.setScreen(new ErrorScreen(game, "Not loaded: " + file, e));
+            Log.exc("Not loaded: " + file, e);
         }
     }
 
@@ -98,16 +94,6 @@ public class Resources implements Disposable {
 
     public Texture getRegisteredTexture(String file) {
         return manager.get(file, Texture.class);
-    }
-
-    public Texture getAtlasRegion(String region) {
-        return skin.getRegion(region).getTexture();
-    }
-
-    private void createDisplayComponents() {
-        game.createCamera();
-        game.createViewport();
-        game.createBatch();
     }
 
     @Override

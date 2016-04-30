@@ -35,11 +35,10 @@ public class WindowGroup extends Group {
         layout = new Table(skin);
         layout.setBackground(style.background);
         layout.setVisible(true);
-        setBounds(
-                DDGame.DEFAULT_BUTTON_HEIGHT / 3f,
-                DDGame.DEFAULT_BUTTON_HEIGHT / 2f,
-                DDGame.WORLD_WIDTH - DDGame.DEFAULT_BUTTON_HEIGHT * 2 / 3f,
-                DDGame.WORLD_HEIGHT - DDGame.DEFAULT_BUTTON_HEIGHT);
+        int gap = 20;
+        setBounds(gap, gap,
+                DDGame.WORLD_WIDTH - gap * 2,
+                DDGame.WORLD_HEIGHT - gap * 2);
         content = new Table(skin);
         content.setVisible(true);
         contentAlign = Align.center;

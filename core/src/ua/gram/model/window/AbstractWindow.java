@@ -1,27 +1,23 @@
 package ua.gram.model.window;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 
 import ua.gram.DDGame;
+import ua.gram.model.prototype.ui.window.WindowPrototype;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
 public abstract class AbstractWindow extends Window {
 
-    public AbstractWindow(String title, Skin skin) {
-        this(title, skin, "window-dark-gold");
-    }
-
-    public AbstractWindow(String title, Skin skin, String styleName) {
-        super(title.toUpperCase(), skin, styleName);
-        setBounds(
-                DDGame.DEFAULT_BUTTON_HEIGHT / 3f,
-                DDGame.DEFAULT_BUTTON_HEIGHT / 2f,
-                DDGame.WORLD_WIDTH - DDGame.DEFAULT_BUTTON_HEIGHT * 2 / 3f,
-                DDGame.WORLD_HEIGHT - DDGame.DEFAULT_BUTTON_HEIGHT);
-        pad(30);
+    public AbstractWindow(DDGame game, WindowPrototype prototype) {
+        super("", game.getResources().getSkin(), prototype.style);
+        setSize(prototype.width, prototype.height);
+        setPosition(
+                game.getCamera().position.x - (getWidth() / 2f),
+                game.getCamera().position.y - (getHeight() / 2f));
+        setVisible(true);
+        setMovable(false);
     }
 
     @Override

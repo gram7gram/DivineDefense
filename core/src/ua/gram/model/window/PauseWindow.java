@@ -50,7 +50,7 @@ public class PauseWindow extends WindowGroup implements Initializer {
                 .expand();
 
         setPosition(DDGame.WORLD_WIDTH / 4f, DDGame.WORLD_HEIGHT / 3f);
-        setSize(DDGame.WORLD_WIDTH / 2f, DDGame.WORLD_HEIGHT / 3f);
+        setSize(DDGame.WORLD_WIDTH / 2f, 200);
         setVisible(true);
 
         setTitle(new Label("PAUSE", skin, "header2altwhite"));

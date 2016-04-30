@@ -7,7 +7,7 @@
       "resizable": true,
       "vSyncEnabled": false,
       "width": 900,
-      "height": 600,
+      "height": 480,
       "fullscreen": false,
       "foregroundFPS": 0,
       "backgroundFPS": 0,
@@ -633,30 +633,30 @@
         "headerTextStyle": "header1altblack",
         "subHeaderText": "Get the revenge and be victorious :",
         "subHeaderTextStyle": "header2black",
-        "width": 760,
-        "height": 520,
+        "width": 570,
+        "height": 390,
         "options": [
           {
             "style": "button-defeat-restart",
             "delay": 10,
-            "width": 200,
-            "height": 335,
+            "width": 150,
+            "height": 250,
             "order": 0
           },
           {
             "style": "button-defeat-continue-part",
             "health": 3,
             "cost": 3,
-            "width": 200,
-            "height": 335,
+            "width": 150,
+            "height": 250,
             "order": 1
           },
           {
             "style": "button-defeat-continue-full",
             "health": -1,
             "cost": 5,
-            "width": 200,
-            "height": 335,
+            "width": 150,
+            "height": 250,
             "order": 2
           }
         ]

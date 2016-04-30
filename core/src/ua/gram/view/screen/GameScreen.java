@@ -2,8 +2,6 @@ package ua.gram.view.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -29,7 +27,6 @@ public class GameScreen extends AbstractScreen {
     private final BattleStage battleStage;
     private final UIStage uiStage;
     private final Level level;
-    private final Color color;
 
     public GameScreen(DDGame game, Level level) {
         super(game);
@@ -43,19 +40,19 @@ public class GameScreen extends AbstractScreen {
         StageHolder stageHolder = new StageHolder(uiStage, battleStage);
         battleStage.setStageHolder(stageHolder);
         uiStage.setStageHolder(stageHolder);
-        color = level.getPrototype().backgroundColor;
         Log.info("GameScreen is OK");
     }
 
     @Override
     public void show() {
         super.show();
+        renderer.setView(game.getCamera());
         battleStage.init();
         uiStage.init();
         loadBackgroundElements();
         loadForegroundElements();
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
-        inputMultiplexer.addProcessor(new CameraListener(game.getCamera(), level.getMap().getFirstLayer()));
+        inputMultiplexer.addProcessor(new CameraListener(uiStage));
         inputMultiplexer.addProcessor(uiStage);
         inputMultiplexer.addProcessor(battleStage);
         Gdx.input.setInputProcessor(inputMultiplexer);
@@ -63,14 +60,17 @@ public class GameScreen extends AbstractScreen {
     }
 
     @Override
-    public void renderUiElements(float delta) {
-        Gdx.gl.glClearColor(color.r / 255f, color.g / 255f, color.b / 255f, color.a);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+    public void renderAlways(float delta) {
+        uiStage.act(delta);
         renderer.setView(game.getCamera());
         renderer.render();
         battleStage.draw();
-        uiStage.act(delta);
         uiStage.draw();
+    }
+
+    @Override
+    public void renderNoPause(float delta) {
+        battleStage.act(delta);
     }
 
     protected void loadBackgroundElements() {
@@ -109,15 +109,6 @@ public class GameScreen extends AbstractScreen {
             battleStage.addActor(image);
             Log.info("Added foreground texture: " + resource.file);
         }
-    }
-
-    /**
-     * act() is placed in separated method due to battleStage
-     * should not be updated if game is paused.
-     */
-    @Override
-    public void renderOtherElements(float delta) {
-        battleStage.act(delta);
     }
 
     @Override

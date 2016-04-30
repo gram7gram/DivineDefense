@@ -6,6 +6,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector3;
 
 import ua.gram.DDGame;
+import ua.gram.controller.stage.UIStage;
 import ua.gram.utils.Log;
 
 /**
@@ -13,6 +14,7 @@ import ua.gram.utils.Log;
  */
 public class CameraListener extends InputAdapter {
 
+    private final UIStage stage;
     private final Camera camera;
     private final Vector3 curr;
     private final Vector3 last;
@@ -20,12 +22,15 @@ public class CameraListener extends InputAdapter {
     private final int mapWidth;
     private final int mapHeight;
 
-    public CameraListener(Camera camera, TiledMapTileLayer layer) {
-        this.camera = camera;
+    public CameraListener(UIStage stage) {
+        this.stage = stage;
+        this.camera = stage.getViewport().getCamera();
 
         curr = new Vector3();
         last = new Vector3(-1, -1, -1);
         delta = new Vector3();
+
+        TiledMapTileLayer layer = stage.getLevel().getMap().getFirstLayer();
         mapWidth = layer.getWidth() * DDGame.TILE_HEIGHT;
         mapHeight = layer.getHeight() * DDGame.TILE_HEIGHT;
     }
@@ -38,7 +43,10 @@ public class CameraListener extends InputAdapter {
         if (!(last.x == -1 && last.y == -1 && last.z == -1)) {
             camera.unproject(delta.set(last.x, last.y, 0));
             delta.sub(curr);
-            camera.translate(delta.x, delta.y, 0);
+            camera.translate(Math.min(delta.x, 5), Math.min(delta.y, 5), 0);
+            if (isInMapBounds()) {
+                stage.moveBy(Math.min(delta.x, 5), Math.min(delta.y, 5));
+            }
         }
 
         last.set(x, y, 0);
@@ -46,6 +54,16 @@ public class CameraListener extends InputAdapter {
         putInMapBounds();
 
         return false;
+    }
+
+
+    private boolean isInMapBounds() {
+
+        return camera.position.x >= camera.viewportWidth / 2f
+                && camera.position.x <= mapWidth - camera.viewportWidth / 2f
+                && camera.position.y >= camera.viewportHeight / 2f
+                && camera.position.y <= mapHeight - camera.viewportHeight / 2f;
+
     }
 
     private void putInMapBounds() {
@@ -59,6 +77,10 @@ public class CameraListener extends InputAdapter {
             camera.position.y = camera.viewportHeight / 2f;
         else if (camera.position.y > mapHeight - camera.viewportHeight / 2f)
             camera.position.y = mapHeight - camera.viewportHeight / 2f;
+
+        stage.moveTo(
+                camera.position.x,
+                camera.position.y);
 
     }
 

@@ -38,23 +38,25 @@ public abstract class AbstractScreen implements Screen {
         batch.end();
 
         if (!DDGame.PAUSE) {
-            renderOtherElements(delta);
+            renderOnPause(delta);
+        } else {
+            renderNoPause(delta);
         }
-        renderUiElements(delta);
+        renderAlways(delta);
     }
 
-    /**
-     * Always renders
-     */
-    public abstract void renderUiElements(float delta);
+    protected abstract void renderAlways(float delta);
 
     /** Renders only if the game is not on PAUSE */
-    public abstract void renderOtherElements(float delta);
+    protected abstract void renderNoPause(float delta);
+
+    protected void renderOnPause(float delta) {
+
+    }
 
     @Override
     public void resize(int width, int height) {
-//        NOTE update() do nothing with width && height...
-//        game.getViewport().update(width, height);
+        game.getViewport().update(width, height);
     }
 
     @Override

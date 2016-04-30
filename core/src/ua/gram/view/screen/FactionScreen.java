@@ -27,12 +27,12 @@ public class FactionScreen extends AbstractScreen {
     }
 
     @Override
-    public void renderUiElements(float delta) {
+    public void renderAlways(float delta) {
         stage.act(delta);
         stage.draw();
     }
 
     @Override
-    public void renderOtherElements(float delta) {
+    public void renderNoPause(float delta) {
     }
 }

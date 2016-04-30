@@ -44,11 +44,17 @@ public class Log {
 
     /** Log exceptions */
     public synchronized static void exc(String msg, Exception e) {
+        exc(msg, e, false);
+    }
+
+    public synchronized static void exc(String msg, Exception e, boolean shutdown) {
         String message = buildExceptionMessage(msg, e);
         if (Gdx.app != null) {
             Gdx.app.error("\n" + EXC, message);
+            if (shutdown) Gdx.app.exit();
         } else {
             System.err.println("\n" + EXC + ": " + message);
+            if (shutdown) System.exit(1);
         }
     }
 

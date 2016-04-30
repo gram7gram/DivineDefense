@@ -27,7 +27,7 @@ public abstract class AbstractLoadingScreen extends AbstractScreen {
     }
 
     @Override
-    public void renderUiElements(float delta) {
+    public void renderAlways(float delta) {
         progress = (int) game.getAssetManager().getProgress() * 100;
         loadingStage.update(progress);
         loadingStage.act(delta);
@@ -42,7 +42,7 @@ public abstract class AbstractLoadingScreen extends AbstractScreen {
     }
 
     @Override
-    public void renderOtherElements(float delta) {
+    public void renderNoPause(float delta) {
 
     }
 
