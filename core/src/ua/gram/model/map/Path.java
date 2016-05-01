@@ -25,21 +25,21 @@ public class Path {
         DIRECTIONS.add(WEST);
     }
 
-    public static Types getType(Vector2 dir) {
+    public static Direction getType(Vector2 dir) {
         if (dir == null || dir == Vector2.Zero) return null;
         if (dir.equals(EAST)) {
-            return Types.RIGHT;
+            return Direction.RIGHT;
         } else if (dir.equals(WEST)) {
-            return Types.LEFT;
+            return Direction.LEFT;
         } else if (dir.equals(NORTH)) {
-            return Types.UP;
+            return Direction.UP;
         } else if (dir.equals(SOUTH)) {
-            return Types.DOWN;
+            return Direction.DOWN;
         }
         return null;
     }
 
-    public static Vector2 getVector(Types type) {
+    public static Vector2 getVector(Direction type) {
         switch (type) {
             case UP:
                 return NORTH;
@@ -141,7 +141,7 @@ public class Path {
         return new Vector2((int) vector.x, (int) vector.y);
     }
 
-    public enum Types {
+    public enum Direction {
         LEFT, UP, DOWN, RIGHT
     }
 }

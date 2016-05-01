@@ -19,7 +19,7 @@ import ua.gram.utils.Log;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class EnemyAnimationManager implements AnimationManager<EnemyPrototype, Types.EnemyState, Path.Types> {
+public class EnemyAnimationManager implements AnimationManager<EnemyPrototype, Types.EnemyState, Path.Direction> {
 
     private final EnumMap<Types.EnemyState, EnemyDirectionAnimationPool> identityMap;
     private final Skin skin;
@@ -51,7 +51,7 @@ public class EnemyAnimationManager implements AnimationManager<EnemyPrototype, T
     }
 
     @Override
-    public String getAnimationName(EnemyPrototype prototype, Types.EnemyState type, Path.Types direction) {
+    public String getAnimationName(EnemyPrototype prototype, Types.EnemyState type, Path.Direction direction) {
         return "enemies"
                 + "/" + prototype.name
                 + "/" + Player.SYSTEM_FACTION
@@ -62,7 +62,7 @@ public class EnemyAnimationManager implements AnimationManager<EnemyPrototype, T
     @Override
     public TextureRegion[] getAnimationRegion(EnemyPrototype prototype,
                                               Types.EnemyState type,
-                                              Path.Types direction) {
+                                              Path.Direction direction) {
         if (prototype == null || skin == null)
             throw new NullPointerException("Missing required parameters");
 
@@ -96,7 +96,7 @@ public class EnemyAnimationManager implements AnimationManager<EnemyPrototype, T
     }
 
     @Override
-    public AnimationPool get(Types.EnemyState type, Path.Types path) {
+    public AnimationPool get(Types.EnemyState type, Path.Direction path) {
         return this.getPool(type).get(path);
     }
 }

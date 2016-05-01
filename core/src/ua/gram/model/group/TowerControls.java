@@ -90,7 +90,7 @@ public class TowerControls extends Table implements Resetable {
         add().width(tower.getWidth())
                 .height(45);
 
-        if (tower.getProperty().getTowerLevel() == Tower.MAX_TOWER_LEVEL) {
+        if (tower.getProperties().getTowerLevel() == Tower.MAX_TOWER_LEVEL) {
             add().size(45)
                     .padLeft(5);
         } else {
@@ -98,7 +98,7 @@ public class TowerControls extends Table implements Resetable {
                     .padLeft(5);
         }
 
-        int price = tower.getProperty().getCost();
+        int price = tower.getProperties().getCost();
         upgradeBut.setVisible(game.getPlayer().hasCoins(price));
         upgradeBut.updatePrice(price + "");
 

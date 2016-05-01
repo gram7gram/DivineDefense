@@ -60,19 +60,32 @@ public class TowerStateManager extends StateManager<Tower> {
 
     @Override
     public void update(Tower tower, float delta) {
-        if (tower == null) return;
+        if (tower == null)
+            throw new NullPointerException("TowerStateManager cannot update NULL");
 
         TowerStateHolder holder = tower.getStateHolder();
 
-        if (holder.getCurrentLevel1State() != null) try {
-            holder.getCurrentLevel1State().manage(tower, delta);
-        } catch (Exception e) {
-            Log.exc("Could not manage Level1State on " + tower, e);
+        boolean hasManagedState = false;
+
+        if (holder.getCurrentLevel1State() != null) {
+            try {
+                holder.getCurrentLevel1State().manage(tower, delta);
+                hasManagedState = true;
+            } catch (Exception e) {
+                Log.exc("Could not manage Level1State on " + tower, e);
+            }
         }
-        if (holder.getCurrentLevel2State() != null) try {
-            holder.getCurrentLevel2State().manage(tower, delta);
-        } catch (Exception e) {
-            Log.exc("Could not manage Level2State on " + tower, e);
+        if (holder.getCurrentLevel2State() != null) {
+            try {
+                holder.getCurrentLevel2State().manage(tower, delta);
+                hasManagedState = true;
+            } catch (Exception e) {
+                Log.exc("Could not manage Level2State on " + tower, e);
+            }
+        }
+
+        if (!hasManagedState) {
+            throw new GdxRuntimeException("Any state was managed by TowerStateManager");
         }
     }
 

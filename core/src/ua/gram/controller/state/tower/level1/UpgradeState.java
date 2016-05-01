@@ -4,7 +4,7 @@ import ua.gram.DDGame;
 import ua.gram.controller.state.tower.TowerStateManager;
 import ua.gram.model.actor.misc.ProgressBar;
 import ua.gram.model.actor.tower.Tower;
-import ua.gram.model.actor.tower.TowerProperty;
+import ua.gram.model.actor.tower.TowerProperties;
 import ua.gram.model.prototype.tower.TowerPropertyPrototype;
 import ua.gram.utils.Log;
 
@@ -25,7 +25,7 @@ public class UpgradeState extends InactiveState {
         bar.setDuration(actor.getPrototype().buildDelay);
         bar.setVisible(true);
 
-        TowerProperty property = actor.getProperty();
+        TowerProperties property = actor.getProperties();
         int price = property.getCost();
 
         int nextLevel = property.getTowerLevel() + 1;
@@ -55,7 +55,7 @@ public class UpgradeState extends InactiveState {
         super.postManage(actor);
         actor.getParent().getBar().setVisible(false);
 
-        TowerProperty property = actor.getProperty();
+        TowerProperties property = actor.getProperties();
         int nextLevel = property.getTowerLevel() + 1;
         try {
             TowerPropertyPrototype nextProperty = actor.getPrototype().getProperty(nextLevel);

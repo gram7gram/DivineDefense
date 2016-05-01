@@ -16,14 +16,14 @@ import ua.gram.utils.Log;
  */
 public class EnemyDirectionAnimationPool implements DirectionPool {
 
-    private final EnumMap<Path.Types, AnimationPool> identityMap;
+    private final EnumMap<Path.Direction, AnimationPool> identityMap;
 
     public EnemyDirectionAnimationPool(EnemyPrototype prototype,
                                        ua.gram.controller.animation.enemy.EnemyAnimationManager provider,
                                        Types.EnemyState type) {
-        identityMap = new EnumMap<Path.Types, AnimationPool>(Path.Types.class);
+        identityMap = new EnumMap<Path.Direction, AnimationPool>(Path.Direction.class);
 
-        for (Path.Types direction : EnumSet.allOf(Path.Types.class)) {
+        for (Path.Direction direction : EnumSet.allOf(Path.Direction.class)) {
             TextureRegion[] regions = provider.getAnimationRegion(prototype, type, direction);
             String name = provider.getAnimationName(prototype, type, direction);
             identityMap.put(direction, new AnimationPool(regions, name));
@@ -32,9 +32,9 @@ public class EnemyDirectionAnimationPool implements DirectionPool {
         Log.info("DirectionPool for " + prototype.name + " " + type.name() + " is OK");
     }
 
-    public AnimationPool get(Path.Types direction) {
+    public AnimationPool get(Path.Direction direction) {
         if (direction == null) {
-            direction = Path.Types.DOWN;
+            direction = Path.Direction.DOWN;
             Log.warn("Direction is not set. Using default: " + direction.name());
         }
         return identityMap.get(direction);

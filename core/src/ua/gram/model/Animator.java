@@ -1,6 +1,7 @@
 package ua.gram.model;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -10,6 +11,7 @@ public class Animator<T1, T2> {
     private PoolableAnimation poolableAnimation;
     private T1 primaryType;
     private T2 secondaryType;
+    private TextureRegion currentFrame;
 
     public PoolableAnimation getPoolable() {
         return poolableAnimation;
@@ -41,5 +43,17 @@ public class Animator<T1, T2> {
 
     public boolean hasAnimation() {
         return poolableAnimation != null;
+    }
+
+    public TextureRegion getCurrentFrame() {
+        return currentFrame;
+    }
+
+    public void setCurrentFrame(TextureRegion currentFrame) {
+        this.currentFrame = currentFrame;
+    }
+
+    public boolean hasCurrentFrame() {
+        return currentFrame != null;
     }
 }

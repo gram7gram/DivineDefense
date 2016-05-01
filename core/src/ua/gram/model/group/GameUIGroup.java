@@ -1,6 +1,5 @@
 package ua.gram.model.group;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -125,9 +124,6 @@ public class GameUIGroup extends Table implements Initializer {
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         setDebug(DDGame.DEBUG, true);
-        if (DDGame.DEBUG) {
-            game.getInfo().draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 5, 15);
-        }
     }
 
     public void showNotification(String message) {

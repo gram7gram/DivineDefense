@@ -76,7 +76,7 @@ public class TowerGroup extends ActorGroup<Tower> implements Initializer {
                 shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
                 shapeRenderer.setColor(Color.RED);
                 shapeRenderer.circle(getOriginX(), getOriginY(),
-                        getRootActor().getProperty().getRange() * DDGame.TILE_HEIGHT * 1.5f);
+                        root.getProperties().getRange() * DDGame.TILE_HEIGHT * 1.5f);
                 shapeRenderer.end();
                 Gdx.gl.glDisable(GL20.GL_BLEND);
 

@@ -30,7 +30,7 @@ public final class EnemySpawner implements Initializer {
 
     private final DDGame game;
     private final Level level;
-    private final BattleStage stage_battle;
+    private final BattleStage battleStage;
     private final EnemyStateManager stateManager;
     private final EnemyAnimationProvider animationProvider;
     private final Map<String, Pool<Enemy>> identityMap;
@@ -39,7 +39,7 @@ public final class EnemySpawner implements Initializer {
 
     public EnemySpawner(DDGame game, Level level, BattleStage stage) {
         this.game = game;
-        this.stage_battle = stage;
+        this.battleStage = stage;
         this.level = level;
 
         EnemyPrototype[] prototypes = game.getPrototype().enemies;
@@ -92,7 +92,7 @@ public final class EnemySpawner implements Initializer {
     }
 
     private boolean canFinishWave() {
-        return !stage_battle.hasEnemiesOnMap() || level.isCleared;
+        return !battleStage.hasEnemiesOnMap() || level.isCleared;
     }
 
     /**
@@ -119,7 +119,7 @@ public final class EnemySpawner implements Initializer {
             EnemyGroup enemyGroup = new EnemyGroup(game, enemy);
             enemyGroup.setVisible(true);
             enemy.setGroup(enemyGroup);
-            stage_battle.updateZIndexes(enemyGroup);
+            battleStage.updateZIndexes(enemyGroup);
             if (parent != null) {
                 enemy.setParentEnemy(parent);
             }

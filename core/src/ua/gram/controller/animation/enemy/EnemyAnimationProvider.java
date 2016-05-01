@@ -11,14 +11,14 @@ import ua.gram.model.prototype.enemy.EnemyPrototype;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class EnemyAnimationProvider extends AnimationProvider<EnemyPrototype, Types.EnemyState, Path.Types> {
+public class EnemyAnimationProvider extends AnimationProvider<EnemyPrototype, Types.EnemyState, Path.Direction> {
 
     public EnemyAnimationProvider(Skin skin, EnemyPrototype[] registeredTypes) {
         super(skin, registeredTypes);
     }
 
     @Override
-    protected AnimationManager<EnemyPrototype, Types.EnemyState, Path.Types> getInstance(EnemyPrototype prototype) {
+    protected AnimationManager<EnemyPrototype, Types.EnemyState, Path.Direction> getInstance(EnemyPrototype prototype) {
         return new EnemyAnimationManager(getSkin(), prototype);
     }
 }

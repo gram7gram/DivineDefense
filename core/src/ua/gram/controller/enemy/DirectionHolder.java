@@ -19,8 +19,8 @@ public class DirectionHolder implements Resetable {
     private final Vector2 currentDirection;
     private final Vector2 previousDirection;
     private final Vector2 currentPositionIndex;
-    private Path.Types currentDirectionType;
-    private Path.Types previousDirectionType;
+    private Path.Direction currentDirectionType;
+    private Path.Direction previousDirectionType;
 
     public DirectionHolder(GameActor actor) {
         this.actor = actor;
@@ -55,11 +55,11 @@ public class DirectionHolder implements Resetable {
         return originPosition;
     }
 
-    public Path.Types getCurrentDirectionType() {
+    public Path.Direction getCurrentDirectionType() {
         return currentDirectionType;
     }
 
-    public Path.Types getPreviousDirectionType() {
+    public Path.Direction getPreviousDirectionType() {
         return previousDirectionType;
     }
 

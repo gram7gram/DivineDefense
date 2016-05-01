@@ -31,15 +31,23 @@ public class GameScreen extends AbstractScreen {
     public GameScreen(DDGame game, Level level) {
         super(game);
         this.level = level;
+
         DDGame.PAUSE = false;
         game.getSpeed().reset();
         game.getPlayer().resetObject();
+
         renderer = new OrthogonalTiledMapRenderer(level.getMap().getTiledMap());
+
         battleStage = new BattleStage(game, level);
+        level.setBattleStage(battleStage);
+        level.init();
+
         uiStage = new UIStage(game, level, game.getPrototype().ui);
+
         StageHolder stageHolder = new StageHolder(uiStage, battleStage);
         battleStage.setStageHolder(stageHolder);
         uiStage.setStageHolder(stageHolder);
+
         Log.info("GameScreen is OK");
     }
 

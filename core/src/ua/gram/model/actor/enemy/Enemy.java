@@ -1,13 +1,9 @@
 package ua.gram.model.actor.enemy;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.Pool;
 
 import ua.gram.DDGame;
-import ua.gram.controller.animation.enemy.EnemyAnimationProvider;
 import ua.gram.controller.enemy.DirectionHolder;
 import ua.gram.controller.enemy.EnemySpawner;
 import ua.gram.controller.event.DamageEvent;
@@ -29,7 +25,8 @@ import ua.gram.utils.Log;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public abstract class Enemy extends GameActor<Types.EnemyState, Path.Types, EnemyStateManager>
+public abstract class Enemy
+        extends GameActor<Types.EnemyState, Path.Direction, EnemyStateManager>
         implements Pool.Poolable, Initializer {
 
     public final float defaultHealth;
@@ -51,10 +48,8 @@ public abstract class Enemy extends GameActor<Types.EnemyState, Path.Types, Enem
     public boolean hasReachedCheckpoint;
     protected WalkablePath path;
     protected EnemySpawner spawner;
-    private float stateTime = 0;
     private DirectionHolder directionHolder;
     private EnemyGroup group;
-    private TextureRegion currentFrame;
     private Enemy parent;
 
     public Enemy(DDGame game, EnemyPrototype prototype) {
@@ -78,27 +73,21 @@ public abstract class Enemy extends GameActor<Types.EnemyState, Path.Types, Enem
     @Override
     public void init() {
         directionHolder = new DirectionHolder(this);
-        addListener(new DamageListener(this));
+        addListener(new DamageListener(this, game.getResources().getSkin()));
     }
 
     @Override
     public EnemyGroup getParent() {
+        if (!(super.getParent() instanceof EnemyGroup))
+            throw new GdxRuntimeException("Enemy parent is not EnemyGroup");
         return (EnemyGroup) super.getParent();
     }
 
     @Override
     public BattleStage getStage() {
+        if (!(super.getStage() instanceof BattleStage))
+            throw new GdxRuntimeException("Enemy stage is not BattleStage");
         return (BattleStage) super.getStage();
-    }
-
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        super.draw(batch, parentAlpha);
-        if ((!DDGame.PAUSE || currentFrame == null) && animator.getAnimation() != null) {
-            currentFrame = animator.getAnimation().getKeyFrame(stateTime, true);
-            stateTime += Gdx.graphics.getDeltaTime();
-        }
-        if (currentFrame != null) batch.draw(currentFrame, getX(), getY());
     }
 
     @Override
@@ -120,7 +109,7 @@ public abstract class Enemy extends GameActor<Types.EnemyState, Path.Types, Enem
 
     private void updateAnimationSpeed() {
         float delay = game.getSpeed().getValue() * prototype.frameDuration;
-        getAnimationProvider().get(prototype, animator).setDelay(delay);
+        spawner.getAnimationProvider().get(prototype, animator).setDelay(delay);
     }
 
     /**
@@ -131,25 +120,24 @@ public abstract class Enemy extends GameActor<Types.EnemyState, Path.Types, Enem
 
     @Override
     public void reset() {
-        EnemyStateManager stateManager = spawner.getStateManager();
-        stateManager.reset(this);
+        spawner.getStateManager().reset(this);
         health = prototype.health;
         speed = meddle(prototype.speed);
         armor = prototype.armor;
-        stateTime = 0;
         path = null;
-        currentFrame = null;
         isDead = false;
         isAttacked = false;
         isRemoved = false;
         hasReachedCheckpoint = true;
         directionHolder.resetObject();
+        resetObject();
         Log.info(this + " was reset");
     }
 
     @Override
     public EnemyStateManager getStateManager() {
-        if (spawner == null) throw new NullPointerException("Missing EnemySpawner");
+        if (spawner == null)
+            throw new NullPointerException("Missing EnemySpawner");
         return spawner.getStateManager();
     }
 
@@ -158,10 +146,6 @@ public abstract class Enemy extends GameActor<Types.EnemyState, Path.Types, Enem
      */
     private float meddle(float param) {
         return param;
-    }
-
-    public EnemyAnimationProvider getAnimationProvider() {
-        return spawner.getAnimationProvider();
     }
 
     public void setAnimation(PoolableAnimation animation) {
@@ -229,7 +213,7 @@ public abstract class Enemy extends GameActor<Types.EnemyState, Path.Types, Enem
         this.speed = defaultSpeed;
     }
 
-    public Animator<Types.EnemyState, Path.Types> getAnimator() {
+    public Animator<Types.EnemyState, Path.Direction> getAnimator() {
         return animator;
     }
 
@@ -255,9 +239,5 @@ public abstract class Enemy extends GameActor<Types.EnemyState, Path.Types, Enem
 
     public boolean hasParentEnemy() {
         return parent != null;
-    }
-
-    public Skin getSkin() {
-        return game.getResources().getSkin();
     }
 }

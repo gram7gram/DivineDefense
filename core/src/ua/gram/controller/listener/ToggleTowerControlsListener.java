@@ -75,6 +75,9 @@ public class ToggleTowerControlsListener extends ClickListener {
     }
 
     public void setStageHolder(StageHolder stageHolder) {
+        if (stageHolder == null)
+            throw new NullPointerException("Missing StageHolder for listener");
+
         this.holder = stageHolder;
     }
 }

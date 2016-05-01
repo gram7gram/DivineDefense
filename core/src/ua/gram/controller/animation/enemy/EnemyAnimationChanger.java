@@ -55,8 +55,8 @@ public class EnemyAnimationChanger implements Runnable {
     private void freeAnimation() {
         if (enemy.getPoolableAnimation() == null) return;
 
-        EnemyAnimationProvider animationProvider = enemy.getAnimationProvider();
-        Animator<Types.EnemyState, Path.Types> animator = enemy.getAnimator();
+        EnemyAnimationProvider animationProvider = enemy.getSpawner().getAnimationProvider();
+        Animator<Types.EnemyState, Path.Direction> animator = enemy.getAnimator();
         try {
             synchronized (lock) {
                 AnimationPool pool = animationProvider.get(enemy.getPrototype(), animator);
@@ -69,8 +69,8 @@ public class EnemyAnimationChanger implements Runnable {
     }
 
     private void obtainAnimation() {
-        EnemyAnimationProvider animationProvider = enemy.getAnimationProvider();
-        Animator<Types.EnemyState, Path.Types> animator = enemy.getAnimator();
+        EnemyAnimationProvider animationProvider = enemy.getSpawner().getAnimationProvider();
+        Animator<Types.EnemyState, Path.Direction> animator = enemy.getAnimator();
         try {
             synchronized (lock) {
                 animator.setPrimaryType(type);

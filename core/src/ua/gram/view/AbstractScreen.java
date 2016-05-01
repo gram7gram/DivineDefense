@@ -3,6 +3,7 @@ package ua.gram.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -38,11 +39,19 @@ public abstract class AbstractScreen implements Screen {
         batch.end();
 
         if (!DDGame.PAUSE) {
-            renderOnPause(delta);
-        } else {
             renderNoPause(delta);
+        } else {
+            renderOnPause(delta);
         }
         renderAlways(delta);
+
+        if (DDGame.DEBUG) {
+            Batch batch = game.getBatch();
+            batch.begin();
+            game.getInfo().draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 5, 15);
+            game.getInfo().draw(batch, "Pause: " + DDGame.PAUSE, 5, 30);
+            batch.end();
+        }
     }
 
     protected abstract void renderAlways(float delta);
@@ -61,11 +70,13 @@ public abstract class AbstractScreen implements Screen {
 
     @Override
     public void pause() {
+        Log.warn("App enters pause state");
         DDGame.PAUSE = true;
     }
 
     @Override
     public void resume() {
+        Log.warn("App resumes");
         DDGame.PAUSE = false;
     }
 

@@ -25,7 +25,7 @@ public abstract class TowerState extends State<Tower> {
     public void preManage(Tower actor) {
         super.preManage(actor);
         manager.getAnimationChanger().update(actor, getType(),
-                Types.getTowerLevelType(actor.getProperty().getTowerLevel()));
+                Types.getTowerLevelType(actor.getProperties().getTowerLevel()));
     }
 
     protected abstract Types.TowerState getType();

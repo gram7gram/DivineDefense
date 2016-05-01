@@ -188,7 +188,7 @@ public abstract class Weapon extends Actor implements Resetable, Pool.Poolable {
      */
     public void attack(Tower tower, Enemy victim) {
         victim.isAttacked = true;
-        victim.damage(tower.getProperty().getDamage());
+        victim.damage(tower.getProperties().getDamage());
     }
 
     /**

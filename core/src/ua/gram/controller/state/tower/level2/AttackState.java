@@ -37,7 +37,7 @@ public class AttackState extends Level2State {
     @Override
     public void manage(final Tower tower, float delta) {
         super.manage(tower, delta);
-        if (tower.attackCount >= tower.getProperty().getRate()) {
+        if (tower.attackCount >= tower.getProperties().getRate()) {
             List<ActiveTarget> targets = tower.getTargets();
             if (!targets.isEmpty()) {
                 for (ActiveTarget target : targets) {

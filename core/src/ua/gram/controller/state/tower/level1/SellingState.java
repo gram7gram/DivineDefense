@@ -36,7 +36,7 @@ public class SellingState extends InactiveState {
         if (tower.buildCount >= tower.getPrototype().buildDelay / 2) {
             BattleStage stage = tower.getTowerShop().getBattleStage();
             stage.removeTowerPosition(tower);
-            int revenue = (int) (tower.getProperty().getCost() * Tower.SELL_RATIO);
+            int revenue = (int) (tower.getProperties().getCost() * Tower.SELL_RATIO);
             game.getPlayer().addCoins(revenue);
             tower.getTowerShop().refund(tower.getParent());
             tower.getParent().remove();

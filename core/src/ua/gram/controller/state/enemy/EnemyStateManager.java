@@ -69,29 +69,48 @@ public final class EnemyStateManager extends StateManager<Enemy> {
 
     @Override
     public void update(Enemy enemy, float delta) {
-        if (enemy == null) return;
+        if (enemy == null)
+            throw new NullPointerException("EnemyStateManager cannot update NULL");
 
         EnemyStateHolder holder = enemy.getStateHolder();
 
-        if (holder.getCurrentLevel1State() != null) try {
-            holder.getCurrentLevel1State().manage(enemy, delta);
-        } catch (Exception e) {
-            Log.exc("Could not manage Level1State on " + enemy, e);
+        boolean hasManagedState = false;
+
+        if (holder.getCurrentLevel1State() != null) {
+            try {
+                holder.getCurrentLevel1State().manage(enemy, delta);
+                hasManagedState = true;
+            } catch (Exception e) {
+                Log.exc("Could not manage Level1State on " + enemy, e);
+            }
         }
-        if (holder.getCurrentLevel2State() != null) try {
-            holder.getCurrentLevel2State().manage(enemy, delta);
-        } catch (Exception e) {
-            Log.exc("Could not manage Level2State on " + enemy, e);
+        if (holder.getCurrentLevel2State() != null) {
+            try {
+                holder.getCurrentLevel2State().manage(enemy, delta);
+                hasManagedState = true;
+            } catch (Exception e) {
+                Log.exc("Could not manage Level2State on " + enemy, e);
+            }
         }
-        if (holder.getCurrentLevel3State() != null) try {
-            holder.getCurrentLevel3State().manage(enemy, delta);
-        } catch (Exception e) {
-            Log.exc("Could not manage Level3State on " + enemy, e);
+        if (holder.getCurrentLevel3State() != null) {
+            try {
+                holder.getCurrentLevel3State().manage(enemy, delta);
+                hasManagedState = true;
+            } catch (Exception e) {
+                Log.exc("Could not manage Level3State on " + enemy, e);
+            }
         }
-        if (holder.getCurrentLevel4State() != null) try {
-            holder.getCurrentLevel4State().manage(enemy, delta);
-        } catch (Exception e) {
-            Log.exc("Could not manage Level4State on " + enemy, e);
+        if (holder.getCurrentLevel4State() != null) {
+            try {
+                holder.getCurrentLevel4State().manage(enemy, delta);
+                hasManagedState = true;
+            } catch (Exception e) {
+                Log.exc("Could not manage Level4State on " + enemy, e);
+            }
+        }
+
+        if (!hasManagedState) {
+            throw new GdxRuntimeException("Any state was managed by TowerStateManager");
         }
     }
 

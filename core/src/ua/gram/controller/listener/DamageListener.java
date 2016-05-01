@@ -3,6 +3,7 @@ package ua.gram.controller.listener;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import ua.gram.controller.event.DamageEvent;
 import ua.gram.controller.state.enemy.EnemyStateHolder;
@@ -17,9 +18,11 @@ import ua.gram.utils.Log;
 public class DamageListener implements EventListener {
 
     private final Enemy enemy;
+    private final Skin skin;
 
-    public DamageListener(Enemy enemy) {
+    public DamageListener(Enemy enemy, Skin skin) {
         this.enemy = enemy;
+        this.skin = skin;
     }
 
     @Override
@@ -35,7 +38,7 @@ public class DamageListener implements EventListener {
         String text = "-" + (int) damageEvent.getDamage();
 
         enemy.addAction(
-                Actions.run(new PopupLabel(text, enemy.getSkin(),
+                Actions.run(new PopupLabel(text, skin,
                         "smallest-popup-red", enemy)));
 
         EnemyStateManager manager = enemy.getStateManager();

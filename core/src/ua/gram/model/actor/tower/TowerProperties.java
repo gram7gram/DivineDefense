@@ -5,11 +5,11 @@ import ua.gram.model.prototype.tower.TowerPropertyPrototype;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class TowerProperty {
+public class TowerProperties {
 
     private TowerPropertyPrototype prototype;
 
-    public TowerProperty(TowerPropertyPrototype prototype) {
+    public TowerProperties(TowerPropertyPrototype prototype) {
         this.prototype = prototype;
     }
 

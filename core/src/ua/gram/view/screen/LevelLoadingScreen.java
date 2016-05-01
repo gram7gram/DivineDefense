@@ -45,7 +45,6 @@ public class LevelLoadingScreen extends AbstractLoadingScreen {
     public void onLoad() throws NullPointerException {
         loadingStage.update(progress);
         Level level = new Level(game, prototype);
-        level.init();
         game.setScreen(new GameScreen(game, level));
     }
 

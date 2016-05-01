@@ -30,17 +30,13 @@ import ua.gram.view.screen.LaunchLoadingScreen;
  * <br/>
  * TODO Make different assets for 4x3 and 16x9(16x10) screens
  * <br/>
- * TODO For 16x9(16x10) make StretchViewport
- * <br/>
- * TODO Add to JSON pressed and disabled drawable for buttons
- * <br/>
  * TODO Add copyrights
  * <br/>
  * TODO Handle Android Menu, Back click events
  * <br/>
- * FIXME Logotype
+ * FIX Logotype
  * <br/>
- * FIXME Switch 16pt font with 20pt
+ * FIX Switch 16pt font with 20pt
  * <br/>
  * NOTE Enemies should be tough because the amount of towers is unlimited
  * <br/>

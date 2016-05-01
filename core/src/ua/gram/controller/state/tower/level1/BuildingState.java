@@ -28,7 +28,7 @@ public class BuildingState extends InactiveState {
     public void preManage(Tower tower) {
         super.preManage(tower);
         Log.info(tower + " is being built...");
-        game.getPlayer().chargeCoins(tower.getProperty().getCost());
+        game.getPlayer().chargeCoins(tower.getProperties().getCost());
         tower.setOrigin(tower.getX() + 20, tower.getY() + 42);
         tower.setDefaultStrategy();
         BattleStage battleStage = tower.getTowerShop().getBattleStage();

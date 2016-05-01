@@ -1,9 +1,6 @@
 package ua.gram.model.actor.tower;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool;
 
@@ -30,49 +27,37 @@ import ua.gram.model.strategy.tower.TowerStrategy;
 import ua.gram.utils.Log;
 
 /**
- * TODO Different animations: IDLE, BUILDING, SELLING, SHOOTING
  *
  * @author Gram <gram7gram@gmail.com>
  */
-public abstract class Tower extends GameActor<Types.TowerState, Types.TowerLevels, TowerStateManager>
+public abstract class Tower
+        extends GameActor<Types.TowerState, Types.TowerLevels, TowerStateManager>
         implements Pool.Poolable {
 
     public static final float SELL_RATIO = .6f;
     public static final byte MAX_TOWER_LEVEL = 4;
-    protected final TowerPrototype prototype;
-    protected final TowerProperty property;
-    protected final TowerStateHolder stateHolder;
     protected final DDGame game;
     protected final TowerShop towerShop;
+    protected final TowerPrototype prototype;
+    protected final TowerProperties properties;
+    protected final TowerStateHolder stateHolder;
     protected final WeaponPool weaponPool;
     private final Vector2 center;
     public float buildCount = 0;
     public float attackCount = 0;
-    protected TextureRegion currentFrame;
     private List<ActiveTarget> targets;
     private TowerStrategy currentTowerStrategy;
-    private float stateTime;
 
     public Tower(DDGame game, TowerShop towerShop, TowerPrototype prototype) {
         super(prototype);
         this.game = game;
         this.prototype = prototype;
         this.towerShop = towerShop;
-        property = new TowerProperty(prototype.getFirstLevelProperty());
+        properties = new TowerProperties(prototype.getFirstLevelProperty());
         stateHolder = new TowerStateHolder();
         targets = new ArrayList<ActiveTarget>(5);
         weaponPool = towerShop.getWeaponProvider().getPool(prototype.weapon);
         center = Vector2.Zero;
-    }
-
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        super.draw(batch, parentAlpha);
-        if ((!DDGame.PAUSE || currentFrame == null) && animator.getAnimation() != null) {
-            currentFrame = animator.getAnimation().getKeyFrame(stateTime, true);
-            stateTime += Gdx.graphics.getDeltaTime();
-        }
-        if (currentFrame != null) batch.draw(currentFrame, this.getX(), this.getY());
     }
 
     @Override
@@ -101,14 +86,15 @@ public abstract class Tower extends GameActor<Types.TowerState, Types.TowerLevel
         Vector2 enemyPos = new Vector2(enemy.getOriginX(), enemy.getOriginY());
         Vector2 towerPos = new Vector2(this.getOriginX(), this.getOriginY());
         float distance = enemyPos.dst(towerPos);
-        return distance <= (property.getRange() * DDGame.TILE_HEIGHT * 1.5);
+        return distance <= (properties.getRange() * DDGame.TILE_HEIGHT * 1.5);
     }
 
     @Override
     public void reset() {
         currentTowerStrategy = getDefaultStrategy();
-        property.setPropertyPrototype(prototype.getFirstLevelProperty());
-        this.setPosition(0, 0);
+        properties.setPropertyPrototype(prototype.getFirstLevelProperty());
+        setPosition(0, 0);
+        resetObject();
         Log.info(this + " was reset");
     }
 
@@ -181,8 +167,8 @@ public abstract class Tower extends GameActor<Types.TowerState, Types.TowerLevel
         return towerShop.getUiStage().getTowerControls().getTower() == this;
     }
 
-    public TowerProperty getProperty() {
-        return property;
+    public TowerProperties getProperties() {
+        return properties;
     }
 
     public boolean isActiveState() {

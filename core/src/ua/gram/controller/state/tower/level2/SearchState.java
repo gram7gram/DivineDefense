@@ -29,7 +29,7 @@ public class SearchState extends IdleState {
 
     @Override
     public void manage(Tower tower, float delta) {
-        if (tower.attackCount >= tower.getProperty().getRate()) {
+        if (tower.attackCount >= tower.getProperties().getRate()) {
             tower.attackCount = 0;
             int limit = 5;
 
