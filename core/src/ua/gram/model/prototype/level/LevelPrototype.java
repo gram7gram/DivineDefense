@@ -16,4 +16,6 @@ public final class LevelPrototype extends Prototype {
     public Vector2 initialDirection;
     public LevelAssetPrototype assets;
     public Color backgroundColor;
+    public String boss;
+    public String type;
 }

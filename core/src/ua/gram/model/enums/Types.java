@@ -34,6 +34,10 @@ public class Types {
         WALKING, STUN, ABILITY, DEAD, FINISH, SPAWN, IDLE
     }
 
+    public enum BossState {
+        IDLE, DEFEATED, EXCLAMATE, COMMAND
+    }
+
     public enum TowerLevels {
         Lvl1, Lvl2, Lvl3, Lvl4
     }

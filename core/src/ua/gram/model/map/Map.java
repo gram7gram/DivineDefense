@@ -1,7 +1,6 @@
 package ua.gram.model.map;
 
 import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
@@ -23,7 +22,7 @@ import ua.gram.utils.Log;
  */
 public class Map implements Initializer {
 
-    protected final List<TiledMapTileLayer> layers;
+    private final List<TiledMapTileLayer> layers;
     private final MapPrototype prototype;
     private final Path path;
     private final TiledMap tiledMap;
@@ -38,16 +37,8 @@ public class Map implements Initializer {
         tiledMap = game.getResources().getMap(prototype.name);
         parseLimit = 3 * DDGame.MAX_ENTITIES;
         path = new Path();
-
-        MapLayers mapLayers = tiledMap.getLayers();
-        layers = new ArrayList<>(mapLayers.getCount());
-        for (MapLayer mapLayer : mapLayers) {
-            if (!(mapLayer instanceof TiledMapTileLayer))
-                throw new IllegalArgumentException("Provided map is not a TiledMap");
-            TiledMapTileLayer layer = (TiledMapTileLayer) mapLayer;
-            layers.add(layer);
-        }
-
+        layers = new ArrayList<>(tiledMap.getLayers().getCount());
+        initLayers();
         Log.info("Map is OK");
     }
 
@@ -59,25 +50,29 @@ public class Map implements Initializer {
 
         spawn = new Spawn(points.get(prototype.spawnProperty));
         base = new Base(points.get(prototype.baseProperty));
-
     }
 
-    /**
-     * Parses whole map grid, looking for 'spawn' property of the tile.
-     * If found one, new Spawn object is created and search is aborted.
-     */
+    private void initLayers() {
+        for (MapLayer mapLayer : tiledMap.getLayers()) {
+            if (!(mapLayer instanceof TiledMapTileLayer))
+                throw new IllegalArgumentException("Provided map is not a TiledMap");
+            TiledMapTileLayer layer = (TiledMapTileLayer) mapLayer;
+            layers.add(layer);
+        }
+    }
+
     private HashMap<String, Vector2> findMapPoints() {
         HashMap<String, Vector2> map = new HashMap<String, Vector2>(2);
         for (int x = 0; x < getFirstLayer().getWidth(); x++) {
             for (int y = 0; y < getFirstLayer().getHeight(); y++) {
-
-                if (hasFoundAllPoints(map)) break;
 
                 if (!map.containsKey(prototype.spawnProperty) && voter.isSpawn(x, y)) {
                     map.put(prototype.spawnProperty, new Vector2(x, y));
                 } else if (!map.containsKey(prototype.baseProperty) && voter.isBase(x, y)) {
                     map.put(prototype.baseProperty, new Vector2(x, y));
                 }
+
+                if (hasFoundAllPoints(map)) break;
             }
         }
 
@@ -124,6 +119,7 @@ public class Map implements Initializer {
 
                         path.addDirection(direction);
                         path.addPath(new Vector2(currentX, currentY));
+
                         position.add(direction);
                         lastDir = Path.opposite(direction);
 

@@ -72,10 +72,18 @@ public class TiledMapVoter {
 
             MapProperties properties = tile.getProperties();
 
-            values.add(getVoterValue(properties.containsKey(property)));
+            values.add(getVoterValue(containsAllowedProperties(properties, property)));
         }
 
         return voter.isGranted(values);
+    }
+
+    private boolean containsAllowedProperties(MapProperties properties, String property) {
+        if (property.equals(map.getPrototype().baseProperty) || property.equals(map.getPrototype().spawnProperty)) {
+            return properties.containsKey(property) || properties.containsKey(map.getPrototype().walkableProperty);
+        } else {
+            return properties.containsKey(property);
+        }
     }
 
     private Voter.Value getVoterValue(boolean condition) {

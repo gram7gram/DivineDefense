@@ -31,13 +31,11 @@ public class TowerAnimationManager implements AnimationManager<TowerPrototype, T
 
     @Override
     public void init() {
-
         for (Types.TowerState type : EnumSet.allOf(Types.TowerState.class)) {
             identityMap.put(type, new TowerLevelAnimationPool(prototype, this, type));
         }
 
-        Log.info("AnimationController for " + prototype.name + " is OK");
-
+        Log.info("AnimationManager for " + prototype.name + " is OK");
     }
 
     @Override

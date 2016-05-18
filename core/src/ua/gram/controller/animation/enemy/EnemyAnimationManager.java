@@ -42,7 +42,7 @@ public class EnemyAnimationManager implements AnimationManager<EnemyPrototype, T
             identityMap.put(type, new EnemyDirectionAnimationPool(prototype, this, type));
         }
 
-        Log.info("AnimationController for " + prototype.name + " is OK");
+        Log.info("AnimationManager for " + prototype.name + " is OK");
 
     }
 

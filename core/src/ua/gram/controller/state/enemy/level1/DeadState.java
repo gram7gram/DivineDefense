@@ -28,8 +28,8 @@ public class DeadState extends InactiveState {
 
     @Override
     public void preManage(Enemy enemy) throws GdxRuntimeException {
-        getManager().getAnimationChanger()
-                .update(enemy, enemy.getDirectionHolder().getCurrentDirection(), getType());
+        manager.getAnimationChanger()
+                .update(enemy, getType());
 
         super.preManage(enemy);
 

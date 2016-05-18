@@ -1,7 +1,10 @@
 package ua.gram.model.prototype;
 
+import ua.gram.model.prototype.boss.BossPrototype;
 import ua.gram.model.prototype.enemy.EnemyPrototype;
+import ua.gram.model.prototype.level.LevelConfigPrototype;
 import ua.gram.model.prototype.tower.TowerPrototype;
+import ua.gram.model.prototype.ui.UIPrototype;
 import ua.gram.model.prototype.weapon.WeaponPrototype;
 
 /**
@@ -13,8 +16,9 @@ public abstract class GamePrototype<P extends ParametersPrototype> extends Proto
     public EnemyPrototype[] enemies;
     public TowerPrototype[] towers;
     public WeaponPrototype[] weapons;
-    public ua.gram.model.prototype.level.LevelConfigPrototype levelConfig;
-    public ua.gram.model.prototype.ui.UIPrototype ui;
+    public LevelConfigPrototype levelConfig;
+    public UIPrototype ui;
+    public BossPrototype[] bosses;
 
     public abstract String getConfigPath();
 

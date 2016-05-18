@@ -11,7 +11,8 @@ import ua.gram.model.prototype.enemy.EnemyPrototype;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class EnemyAnimationProvider extends AnimationProvider<EnemyPrototype, Types.EnemyState, Path.Direction> {
+public class EnemyAnimationProvider
+        extends AnimationProvider<EnemyPrototype, Types.EnemyState, Path.Direction> {
 
     public EnemyAnimationProvider(Skin skin, EnemyPrototype[] registeredTypes) {
         super(skin, registeredTypes);

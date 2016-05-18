@@ -16,12 +16,14 @@ public abstract class GameActor<T1, T2, M extends StateManager>
         implements Resetable {
 
     protected final Animator<T1, T2> animator;
+    protected final GameActorPrototype prototype;
     protected final float animationWidth;
     protected final float animationHeight;
     protected int updateIterationCount;
     private float stateTime;
 
     public GameActor(GameActorPrototype prototype) {
+        this.prototype = prototype;
         this.setName(prototype.name);
         this.animationWidth = prototype.width;
         this.animationHeight = prototype.height;
@@ -76,5 +78,9 @@ public abstract class GameActor<T1, T2, M extends StateManager>
 
     public PoolableAnimation getPoolableAnimation() {
         return animator.getPoolable();
+    }
+
+    public GameActorPrototype getPrototype() {
+        return prototype;
     }
 }

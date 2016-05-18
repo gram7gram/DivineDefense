@@ -17,5 +17,4 @@ public class InactiveState extends Level1State {
     protected Types.EnemyState getType() {
         return null;
     }
-
 }

@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import java.util.EnumMap;
 import java.util.EnumSet;
 
+import ua.gram.controller.animation.enemy.EnemyAnimationManager;
 import ua.gram.model.enums.Types;
 import ua.gram.model.map.Path;
 import ua.gram.model.prototype.enemy.EnemyPrototype;
@@ -19,7 +20,7 @@ public class EnemyDirectionAnimationPool implements DirectionPool {
     private final EnumMap<Path.Direction, AnimationPool> identityMap;
 
     public EnemyDirectionAnimationPool(EnemyPrototype prototype,
-                                       ua.gram.controller.animation.enemy.EnemyAnimationManager provider,
+                                       EnemyAnimationManager provider,
                                        Types.EnemyState type) {
         identityMap = new EnumMap<Path.Direction, AnimationPool>(Path.Direction.class);
 

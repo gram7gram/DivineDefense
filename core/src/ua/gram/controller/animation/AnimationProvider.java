@@ -19,13 +19,13 @@ import ua.gram.utils.Log;
  */
 public abstract class AnimationProvider<P extends GameActorPrototype, T, D> implements Initializer {
 
-    private final Map<String, ua.gram.controller.animation.AnimationManager<P, T, D>> identityMap;
+    private final Map<String, AnimationManager<P, T, D>> identityMap;
     private final Set<P> registeredTypes;
     private final Skin skin;
 
     public AnimationProvider(Skin skin, P[] prototypes) {
         this.skin = skin;
-        identityMap = new HashMap<String, ua.gram.controller.animation.AnimationManager<P, T, D>>(prototypes.length);
+        identityMap = new HashMap<String, AnimationManager<P, T, D>>(prototypes.length);
         registeredTypes = new HashSet<P>(Arrays.asList(prototypes));
         Log.info(getClass().getSimpleName() + " is OK");
     }
@@ -36,7 +36,7 @@ public abstract class AnimationProvider<P extends GameActorPrototype, T, D> impl
             throw new NullPointerException("Missing registered prototypes");
 
         for (P prototype : registeredTypes) {
-            ua.gram.controller.animation.AnimationManager<P, T, D> controller = getInstance(prototype);
+            AnimationManager<P, T, D> controller = getInstance(prototype);
             controller.init();
             identityMap.put(prototype.name, controller);
         }
@@ -46,7 +46,7 @@ public abstract class AnimationProvider<P extends GameActorPrototype, T, D> impl
         Log.info("Identity map for " + this.getClass().getSimpleName() + " is OK");
     }
 
-    protected abstract ua.gram.controller.animation.AnimationManager<P, T, D> getInstance(P prototype);
+    protected abstract AnimationManager<P, T, D> getInstance(P prototype);
 
     public Skin getSkin() {
         return skin;
@@ -60,15 +60,15 @@ public abstract class AnimationProvider<P extends GameActorPrototype, T, D> impl
         return this.get(prototype.name).get(type1, type2);
     }
 
-    public ua.gram.controller.animation.AnimationManager<P, T, D> get(P prototype) {
+    public AnimationManager<P, T, D> get(P prototype) {
         return get(prototype.name);
     }
 
-    public ua.gram.controller.animation.AnimationManager<P, T, D> get(String type) {
+    public AnimationManager<P, T, D> get(String type) {
         if (identityMap.isEmpty())
             throw new NullPointerException("Put some pools to indentity map first to use AnimationProvider.get()");
 
-        ua.gram.controller.animation.AnimationManager<P, T, D> pool = identityMap.get(type);
+        AnimationManager<P, T, D> pool = identityMap.get(type);
 
         if (pool == null)
             throw new NullPointerException("Identity map does not contain pool for type: " + type);

@@ -14,6 +14,7 @@ import ua.gram.controller.stage.UIStage;
 import ua.gram.model.actor.BackgroundImage;
 import ua.gram.model.actor.ForegroundImage;
 import ua.gram.model.level.Level;
+import ua.gram.model.prototype.level.LevelAssetPrototype;
 import ua.gram.model.prototype.level.ResoursePrototype;
 import ua.gram.utils.Log;
 import ua.gram.view.AbstractScreen;
@@ -73,6 +74,7 @@ public class GameScreen extends AbstractScreen {
         renderer.setView(game.getCamera());
         renderer.render();
         battleStage.draw();
+        level.draw(game.getBatch());
         uiStage.draw();
     }
 
@@ -81,8 +83,18 @@ public class GameScreen extends AbstractScreen {
         battleStage.act(delta);
     }
 
+    private int getBackgroundAssestSize(LevelAssetPrototype prototype) {
+        return prototype == null || prototype.front == null ?
+                0 : prototype.front.length;
+    }
+
+    private int getForegroundAssestSize(LevelAssetPrototype prototype) {
+        return prototype == null || prototype.back == null ?
+                0 : prototype.back.length;
+    }
+
     protected void loadBackgroundElements() {
-        int size = level.getPrototype().assets.back.length;
+        int size = getBackgroundAssestSize(level.getPrototype().assets);
         Log.info("Level " + level.getIndex() + " require " + size + " background textures");
         if (size == 0) return;
 
@@ -101,7 +113,7 @@ public class GameScreen extends AbstractScreen {
     }
 
     protected void loadForegroundElements() {
-        int size = level.getPrototype().assets.front.length;
+        int size = getForegroundAssestSize(level.getPrototype().assets);
         Log.info("Level " + level.getIndex() + " require " + size + " foreground textures");
         if (size == 0) return;
 

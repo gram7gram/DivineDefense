@@ -1,9 +1,12 @@
 package ua.gram.model.level;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
+
 import java.util.ArrayList;
 
 import ua.gram.DDGame;
 import ua.gram.controller.enemy.EnemySpawner;
+import ua.gram.controller.factory.LevelFactory;
 import ua.gram.controller.stage.BattleStage;
 import ua.gram.controller.stage.UIStage;
 import ua.gram.model.Initializer;
@@ -18,27 +21,29 @@ import ua.gram.utils.Log;
 public class Level implements Initializer {
 
     public static int MAX_WAVES;
+    protected final DDGame game;
+    protected final LevelFactory.Type type;
     private final ArrayList<Wave> waves;
     private final LevelPrototype prototype;
     public boolean isCleared;
+    protected BattleStage battleStage;
     private Wave currentWave;
     private Map map;
-    private DDGame game;
     private EnemySpawner spawner;
-    private BattleStage battleStage;
     private int currentLevel;
 
-    public Level(DDGame game, LevelPrototype prototype) {
+    public Level(DDGame game, LevelPrototype prototype, LevelFactory.Type type) {
         if (prototype.waves == null || prototype.waves.length == 0)
             throw new NullPointerException("Missing waves");
         this.game = game;
         this.prototype = prototype;
+        this.type = type;
         currentLevel = prototype.level;
         MAX_WAVES = prototype.waves.length;
         isCleared = false;
         waves = new ArrayList<Wave>(prototype.waves.length);
         map = new Map(game, prototype.map);
-        Log.info("Level " + currentLevel + " is OK");
+        Log.info("Level " + currentLevel + " " + type.name() + "is OK");
     }
 
     @Override
@@ -49,6 +54,10 @@ public class Level implements Initializer {
         }
         spawner = new EnemySpawner(game, this, battleStage);
         spawner.init();
+    }
+
+    public void draw(Batch batch) {
+
     }
 
     public void update(float delta) {
@@ -121,10 +130,6 @@ public class Level implements Initializer {
 
     public Wave getWave() {
         return currentWave;
-    }
-
-    public BattleStage getBattleStage() {
-        return battleStage;
     }
 
     public void setBattleStage(BattleStage stage) {
