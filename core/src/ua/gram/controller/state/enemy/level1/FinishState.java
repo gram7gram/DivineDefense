@@ -2,6 +2,7 @@ package ua.gram.controller.state.enemy.level1;
 
 import ua.gram.DDGame;
 import ua.gram.controller.enemy.EnemySpawner;
+import ua.gram.controller.event.PlayerDamagedEvent;
 import ua.gram.controller.state.enemy.EnemyStateManager;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.enums.Types;
@@ -31,6 +32,7 @@ public class FinishState extends InactiveState {
         super.preManage(enemy);
 
         enemy.isRemoved = true;
+        enemy.getStage().getRoot().fire(new PlayerDamagedEvent(1));
 
         Log.info(enemy + " reaches the Base");
 

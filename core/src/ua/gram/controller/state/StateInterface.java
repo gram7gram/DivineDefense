@@ -1,6 +1,6 @@
 package ua.gram.controller.state;
 
-import ua.gram.model.actor.GameActor;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 
 /**
  * Handles state-logic on Actor update.
@@ -9,7 +9,7 @@ import ua.gram.model.actor.GameActor;
  *
  * @author Gram <gram7gram@gmail.com>
  */
-public interface StateInterface<T extends GameActor> {
+public interface StateInterface<T extends Actor> {
 
     /**
      * Execute before actual management:

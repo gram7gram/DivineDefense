@@ -3,6 +3,7 @@ package ua.gram.controller.listener;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 
+import ua.gram.controller.event.PlayerDamagedEvent;
 import ua.gram.controller.event.PlayerDefeatedEvent;
 import ua.gram.controller.state.boss.BossStateManager;
 import ua.gram.model.actor.boss.Boss;
@@ -18,9 +19,14 @@ public class PlayerDefeatedListener implements EventListener {
         this.boss = boss;
     }
 
+    private boolean canHandle(Event event) {
+        return event instanceof PlayerDefeatedEvent
+                || event instanceof PlayerDamagedEvent;
+    }
+
     @Override
     public boolean handle(Event event) {
-        if (!(event instanceof PlayerDefeatedEvent)) return false;
+        if (!canHandle(event)) return false;
 
         BossStateManager manager = boss.getStateManager();
 

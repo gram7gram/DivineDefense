@@ -17,15 +17,20 @@ public class ExclamationState extends Level2State {
 
     @Override
     protected Types.BossState getType() {
-        return Types.BossState.EXCLAMATE;
+        return Types.BossState.EXCLAMATION;
     }
 
     @Override
     public void preManage(Boss actor) {
-        manager.getAnimationChanger()
-                .update(actor, getType());
+        actor.getLevel().getBossAnimationManager()
+                .getSkeletonState()
+                .setAnimation(0, getType().name(), false);
 
         super.preManage(actor);
+
+        actor.getCounters()
+                .set("exclamation_count", 0)
+                .set("exclamation_duration", 3);
     }
 
     @Override
@@ -35,9 +40,8 @@ public class ExclamationState extends Level2State {
         Counters counters = actor.getCounters();
         float count = counters.get("exclamation_count");
         if (count >= counters.get("exclamation_duration")) {
-            manager.swapLevel1State(actor, manager.getActiveState());
-            manager.swapLevel2State(actor, manager.getIdleState());
             counters.set("exclamation_count", 0);
+            manager.swapLevel2State(actor, manager.getIdleState());
         } else {
             counters.set("exclamation_count", count + delta);
         }

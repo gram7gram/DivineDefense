@@ -27,7 +27,7 @@ public class AbilityState extends Level3State {
         AbilityUser user = (AbilityUser) enemy;
         manager.swapLevel2State(user, manager.getIdleState());
         getManager().getAnimationChanger()
-                .update(user, user.getDirectionHolder().getCurrentDirection(), getType());
+                .update(user, getType());
         super.preManage(user);
         user.setAbilityExecuted(false);
         user.setAbilityDurationCount(0);

@@ -110,7 +110,7 @@ public final class EnemyStateManager extends StateManager<Enemy> {
         }
 
         if (!hasManagedState) {
-            throw new GdxRuntimeException("Any state was managed by TowerStateManager");
+            throw new GdxRuntimeException("No state was managed by TowerStateManager");
         }
     }
 

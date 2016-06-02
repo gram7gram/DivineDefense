@@ -3,6 +3,7 @@ package ua.gram.view.screen;
 import ua.gram.DDGame;
 import ua.gram.controller.factory.LevelFactory;
 import ua.gram.model.level.Level;
+import ua.gram.model.player.Player;
 import ua.gram.model.prototype.level.LevelConfigPrototype;
 import ua.gram.model.prototype.level.LevelPrototype;
 import ua.gram.utils.Log;
@@ -31,16 +32,30 @@ public class LevelLoadingScreen extends AbstractLoadingScreen {
     @Override
     public void show() {
         super.show();
-        loadResources();
+        loadGlobalResources();
+        loadLevelResources();
     }
 
-    private void loadResources() {
+    private void loadLevelResources() {
+        Resources resources = game.getResources();
+        if (prototype.bosses == null) return;
+
+        for (String boss : prototype.bosses) {
+            resources.loadAtlas("data/spine/bosses/"
+                    + Player.SYSTEM_FACTION + "/" + boss + "/skeleton");
+        }
+        Log.info("Loaded level resources");
+    }
+
+    private void loadGlobalResources() {
         Resources resources = game.getResources();
         resources.loadMap(prototype.map.name);
-        for (String resource : config.resources) {
+        if (config.commonResources == null) return;
+
+        for (String resource : config.commonResources) {
             resources.loadTexture(resource);
         }
-        Log.info("Loaded nessesary " + config.resources.length + " resources for the level");
+        Log.info("Loaded nessesary " + config.commonResources.length + " resources for the level");
     }
 
     @Override

@@ -83,4 +83,9 @@ public class TowerAnimationManager implements AnimationManager<TowerPrototype, T
             throw new NullPointerException("Identity map does not contain pool for type: " + type);
         return pool;
     }
+
+    @Override
+    public void dispose() {
+
+    }
 }

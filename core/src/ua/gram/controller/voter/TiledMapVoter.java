@@ -18,11 +18,15 @@ import ua.gram.model.map.Map;
 public class TiledMapVoter {
 
     private final Map map;
-    private final VoterPolicy voter;
+    private VoterPolicy voter;
 
     public TiledMapVoter(Map map) {
+        this(map, Voter.Policy.UNANIMOUS);
+    }
+
+    public TiledMapVoter(Map map, Voter.Policy policy) {
         this.map = map;
-        voter = VoterPolicyFactory.create(Voter.Policy.UNANIMOUS);
+        voter = VoterPolicyFactory.create(policy);
     }
 
     public boolean isBuildable(int x, int y) {
@@ -34,13 +38,15 @@ public class TiledMapVoter {
         return is(x, y, property);
     }
 
-    public boolean isSpawn(int x, int y) {
+    public boolean isSpawn(int x, int y, Voter.Policy policy) {
         String property = map.getPrototype().spawnProperty;
+        this.voter = VoterPolicyFactory.create(policy);
         return is(x, y, property);
     }
 
-    public boolean isBase(int x, int y) {
+    public boolean isBase(int x, int y, Voter.Policy policy) {
         String property = map.getPrototype().baseProperty;
+        this.voter = VoterPolicyFactory.create(policy);
         return is(x, y, property);
     }
 
@@ -72,18 +78,10 @@ public class TiledMapVoter {
 
             MapProperties properties = tile.getProperties();
 
-            values.add(getVoterValue(containsAllowedProperties(properties, property)));
+            values.add(getVoterValue(properties.containsKey(property)));
         }
 
         return voter.isGranted(values);
-    }
-
-    private boolean containsAllowedProperties(MapProperties properties, String property) {
-        if (property.equals(map.getPrototype().baseProperty) || property.equals(map.getPrototype().spawnProperty)) {
-            return properties.containsKey(property) || properties.containsKey(map.getPrototype().walkableProperty);
-        } else {
-            return properties.containsKey(property);
-        }
     }
 
     private Voter.Value getVoterValue(boolean condition) {

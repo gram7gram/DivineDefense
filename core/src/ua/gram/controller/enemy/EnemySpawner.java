@@ -138,14 +138,15 @@ public final class EnemySpawner implements Initializer {
     public void setActionPath(final Enemy enemy, Vector2 spawn, Vector2 previous) {
         WalkablePath path = level.getMap().normalizePath(previous, spawn);
         enemy.setPath(path);
-        if (enemy.getDirectionHolder().getCurrentDirection() == null) {
+        if (enemy.getDirectionHolder().hasCurrentDirection()) {
             Vector2 current = path.peekNextDirection();
-            enemy.getDirectionHolder().setCurrentDirection(current);
+            enemy.getDirectionHolder().setCurrentDirection(current.x, current.y);
         }
     }
 
     public void setEnemiesToSpawn(String[] types) {
-        for (String type : types) enemiesToSpawn.push(type);
+        for (String type : types)
+            enemiesToSpawn.push(type);
         Log.info("Enemies for wave " + level.getCurrentWaveIndex()
                 + " are prepared. Size: " + enemiesToSpawn.size());
     }

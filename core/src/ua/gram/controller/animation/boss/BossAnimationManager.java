@@ -1,86 +1,96 @@
 package ua.gram.controller.animation.boss;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.esotericsoftware.spine.AnimationState;
+import com.esotericsoftware.spine.AnimationStateData;
+import com.esotericsoftware.spine.Skeleton;
+import com.esotericsoftware.spine.SkeletonData;
+import com.esotericsoftware.spine.SkeletonJson;
+import com.esotericsoftware.spine.SkeletonRenderer;
 
-import java.util.EnumMap;
-import java.util.EnumSet;
-
-import ua.gram.controller.animation.AnimationManager;
-import ua.gram.controller.pool.animation.AnimationPool;
-import ua.gram.controller.pool.animation.BossDirectionAnimationPool;
-import ua.gram.model.enums.Types;
-import ua.gram.model.map.Path;
 import ua.gram.model.player.Player;
 import ua.gram.model.prototype.boss.BossPrototype;
 import ua.gram.utils.Log;
+import ua.gram.utils.Resources;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class BossAnimationManager
-        implements AnimationManager<BossPrototype, Types.BossState, Path.Direction> {
+public class BossAnimationManager {
 
-    private final EnumMap<Types.BossState, BossDirectionAnimationPool> identityMap;
-    private final Skin skin;
+    protected final Skeleton skeleton;
+    private final Resources resources;
     private final BossPrototype prototype;
+    private final SkeletonRenderer<Batch> skeletRenderer;
+    private final AnimationStateData stateData;
+    private final AnimationState skeletonState;
+    private final SkeletonData skeletonData;
+    private final float animationScale;
 
-    public BossAnimationManager(Skin skin, BossPrototype prototype) {
-        this.skin = skin;
+    public BossAnimationManager(Resources resources, BossPrototype prototype) {
+        this.resources = resources;
         this.prototype = prototype;
-        identityMap = new EnumMap<Types.BossState, BossDirectionAnimationPool>(Types.BossState.class);
+        this.animationScale = prototype.scale;
+
+        skeletonData = getSkeleton(prototype.name);
+
+        stateData = new AnimationStateData(skeletonData);
+        skeletRenderer = new SkeletonRenderer<>();
+        skeletonState = new AnimationState(stateData);
+        skeleton = new Skeleton(skeletonData);
+        skeleton.setFlip(true, false);
     }
 
-    @Override
     public void init() {
-        for (Types.BossState type : EnumSet.allOf(Types.BossState.class)) {
-            identityMap.put(type, new BossDirectionAnimationPool(prototype, this, type));
-        }
+        stateData.setMix("IDLE", "COMMAND", 0.2f);
+        stateData.setMix("COMMAND", "IDLE", 0.2f);
+        stateData.setMix("IDLE", "EXCLAMATION", 0.2f);
+        stateData.setMix("EXCLAMATION", "IDLE", 0.2f);
+        stateData.setMix("COMMAND", "EXCLAMATION", 0);
+        stateData.setMix("EXCLAMATION", "COMMAND", 0);
+//        stateData.setMix("EXCLAMATION", "DEFEAT", 0);
+//        stateData.setMix("COMMAND", "DEFEAT", 0);
+//        stateData.setMix("IDLE", "DEFEAT", 0);
+
+
+        // Queue animations on track 0.
+//        skeletonState.setAnimation(0, "IDLE", true);
+//        skeletonState.addAnimation(0, "COMMAND", false, 2); // Jump after 2 seconds.
+//        skeletonState.addAnimation(0, "IDLE", true, 0);
+//        skeletonState.addAnimation(0, "EXCLAMATION", true, 2);
+//        skeletonState.addAnimation(0, "IDLE", true, 0);
 
         Log.info("AnimationManager for " + prototype.name + " is OK");
     }
 
-    @Override
-    public TextureRegion[] getAnimationRegion(BossPrototype prototype, Types.BossState type, Path.Direction direction) {
-        if (prototype == null || skin == null)
-            throw new NullPointerException("Missing required parameters");
-
-        String region = getAnimationName(prototype, type, direction);
-
-        TextureRegion texture = skin.getRegion(region);
-
-        if (texture == null)
-            throw new NullPointerException("Texture not found: " + region);
-
-        TextureRegion[][] regions = texture.split(
-                (int) prototype.width,
-                (int) prototype.height);
-
-        if (regions == null || regions[0] == null)
-            throw new NullPointerException("Texture not loaded: " + region);
-
-        return regions[0];
+    private SkeletonData getSkeleton(String name) {
+        String path = "data/spine/bosses/"
+                + Player.SYSTEM_FACTION + "/" + name + "/skeleton";
+        TextureAtlas atlas = resources.getAtlas(path);
+        SkeletonJson json = new SkeletonJson(atlas);
+        json.setScale(animationScale);
+        return json.readSkeletonData(Gdx.files.internal(path + ".json"));
     }
 
-    @Override
-    public String getAnimationName(BossPrototype prototype, Types.BossState state, Path.Direction direction) {
-        return "bosses"
-                + "/" + prototype.name
-                + "/" + Player.SYSTEM_FACTION
-                + "/" + state
-                + "/" + direction;
+    public AnimationState getSkeletonState() {
+        return skeletonState;
     }
 
-    @Override
-    public AnimationPool get(Types.BossState type, Path.Direction direction) {
-        if (identityMap.isEmpty())
-            throw new NullPointerException("Put some pools to indentity map first to use get()");
+    public SkeletonRenderer<Batch> getSkeletonRenderer() {
+        return skeletRenderer;
+    }
 
-        BossDirectionAnimationPool pool = identityMap.get(type);
+    public SkeletonData getSkeletonData() {
+        return skeletonData;
+    }
 
-        if (pool == null)
-            throw new NullPointerException("Identity map does not contain pool for type: " + type);
+    public float getScale() {
+        return animationScale;
+    }
 
-        return pool.get(direction);
+    public Skeleton getSkeleton() {
+        return skeleton;
     }
 }

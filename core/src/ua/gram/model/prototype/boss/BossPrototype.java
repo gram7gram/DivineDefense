@@ -10,4 +10,5 @@ import ua.gram.model.prototype.GameActorPrototype;
 public class BossPrototype extends GameActorPrototype {
     public int level;
     public Vector2 position;
+    public float scale;
 }

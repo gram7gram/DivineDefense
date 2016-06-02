@@ -28,7 +28,7 @@ public class AbilityWalkingState extends WalkingState {
     }
 
     @Override
-    protected synchronized void move(final Enemy enemy, float delta, int x, int y) {
+    protected void move(final Enemy enemy, float delta, int x, int y) {
 
         final AbilityUser user = convert(enemy);
 

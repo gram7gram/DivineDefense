@@ -8,6 +8,8 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import ua.gram.DDGame;
+import ua.gram.controller.event.LevelFinishedEvent;
+import ua.gram.controller.event.PlayerDefeatedEvent;
 import ua.gram.controller.tower.TowerShop;
 import ua.gram.model.Initializer;
 import ua.gram.model.actor.misc.CounterButton;
@@ -147,10 +149,12 @@ public class UIStage extends AbstractStage implements Initializer {
         if (!DDGame.PAUSE) {
             if (level.isDefeated() && !victoryWindow.isVisible()) {
                 Log.info("Player is dead");
+                stageHolder.fire(new PlayerDefeatedEvent());
                 DDGame.PAUSE = true;
                 toggleDefeatWindow();
             } else if (level.isVictorious() && !defeatWindow.isVisible()) {
                 Log.info("Player is victorious");
+                stageHolder.fire(new LevelFinishedEvent());
                 for (Actor actor : stageHolder.getBattleStage().getActors()) {
                     if (!(actor instanceof Image)) {
                         actor.remove();

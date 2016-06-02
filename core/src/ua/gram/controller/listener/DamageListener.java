@@ -31,6 +31,7 @@ public class DamageListener implements EventListener {
 
         DamageEvent damageEvent = (DamageEvent) event;
 
+        enemy.health -= damageEvent.getDamage();
 
         Log.info(enemy + " receives " + damageEvent.getDamage()
                 + " dmg, hp: " + enemy.health);

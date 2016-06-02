@@ -1,11 +1,12 @@
 package ua.gram.model.level;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.utils.Disposable;
 
 import java.util.ArrayList;
 
 import ua.gram.DDGame;
 import ua.gram.controller.enemy.EnemySpawner;
+import ua.gram.controller.event.WaveStartedEvent;
 import ua.gram.controller.factory.LevelFactory;
 import ua.gram.controller.stage.BattleStage;
 import ua.gram.controller.stage.UIStage;
@@ -18,7 +19,7 @@ import ua.gram.utils.Log;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class Level implements Initializer {
+public class Level implements Initializer, Disposable {
 
     public static int MAX_WAVES;
     protected final DDGame game;
@@ -43,7 +44,7 @@ public class Level implements Initializer {
         isCleared = false;
         waves = new ArrayList<Wave>(prototype.waves.length);
         map = new Map(game, prototype.map);
-        Log.info("Level " + currentLevel + " " + type.name() + "is OK");
+        Log.info("Level " + currentLevel + " " + type.name() + " is OK");
     }
 
     @Override
@@ -56,18 +57,17 @@ public class Level implements Initializer {
         spawner.init();
     }
 
-    public void draw(Batch batch) {
-
-    }
-
     public void update(float delta) {
-        if (currentWave != null) {
-            if (currentWave.getIndex() <= MAX_WAVES) {
-                if (currentWave.isStarted) {
-                    spawner.update(delta);
-                }
+        if (!DDGame.PAUSE) {
+            if (canUpdateSpawner()) {
+                spawner.update(delta);
             }
         }
+    }
+
+    private boolean canUpdateSpawner() {
+        return currentWave != null && currentWave.isStarted
+                && currentWave.getIndex() <= MAX_WAVES;
     }
 
     public void nextWave() throws IndexOutOfBoundsException {
@@ -75,6 +75,9 @@ public class Level implements Initializer {
         spawner.setEnemiesToSpawn(currentWave.getEnemies());
         currentWave.isStarted = true;
         showNextWaveNotification();
+
+        battleStage.getRoot().fire(new WaveStartedEvent());
+
         Log.info("Wave " + currentWave.getIndex()
                 + "(" + currentWave.getEnemies().length
                 + ") / " + MAX_WAVES
@@ -150,5 +153,10 @@ public class Level implements Initializer {
 
     public int getIndex() {
         return prototype.level;
+    }
+
+    @Override
+    public void dispose() {
+
     }
 }

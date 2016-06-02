@@ -5,20 +5,30 @@ package ua.gram.model;
  */
 public class Speed {
 
-    private float value = 1;
+    private final float defaultSpeed;
+    private float value;
+
+    public Speed(float speed) {
+        value = speed;
+        defaultSpeed = speed;
+    }
+
+    public Speed() {
+        this(1);
+    }
 
     public float increase() {
-        value = .5f;
+        value = defaultSpeed / 2;
         return value;
     }
 
     public float decrease() {
-        value = 1;
+        value = defaultSpeed;
         return value;
     }
 
     public void reset() {
-        this.value = 1;
+        value = defaultSpeed;
     }
 
     public float getValue() {
@@ -26,6 +36,6 @@ public class Speed {
     }
 
     public boolean isIncreased() {
-        return value < 1;
+        return value < defaultSpeed;
     }
 }

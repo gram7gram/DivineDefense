@@ -3,7 +3,6 @@ package ua.gram.controller.state.boss;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import ua.gram.DDGame;
-import ua.gram.controller.animation.boss.BossAnimationChanger;
 import ua.gram.controller.state.StateInterface;
 import ua.gram.controller.state.StateManager;
 import ua.gram.controller.state.boss.level1.ActiveState;
@@ -22,7 +21,6 @@ import ua.gram.utils.Log;
  */
 public class BossStateManager extends StateManager<Boss> {
 
-    private final BossAnimationChanger animationChanger;
 
     //Level 1 states
     private DefeatedState defeatedState;
@@ -35,7 +33,6 @@ public class BossStateManager extends StateManager<Boss> {
 
     public BossStateManager(DDGame game) {
         super(game);
-        animationChanger = new BossAnimationChanger();
     }
 
     @Override
@@ -108,10 +105,6 @@ public class BossStateManager extends StateManager<Boss> {
         holder.setCurrentLevel2State(null);
 
         Log.info(actor + " states have been reset");
-    }
-
-    public BossAnimationChanger getAnimationChanger() {
-        return animationChanger;
     }
 
     public void swapLevel1State(Boss actor, Level1State state) {

@@ -91,7 +91,6 @@ public class DDGame<P extends GamePrototype> extends Game {
 
         try {
             resources = new Resources(this);
-            resources.getManager().finishLoading();
         } catch (GdxRuntimeException e) {
             Log.exc("Cannot create resources", e, true);
         }

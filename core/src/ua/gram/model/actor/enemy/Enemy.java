@@ -14,6 +14,7 @@ import ua.gram.controller.state.enemy.EnemyStateManager;
 import ua.gram.model.Animator;
 import ua.gram.model.Initializer;
 import ua.gram.model.PoolableAnimation;
+import ua.gram.model.Speed;
 import ua.gram.model.actor.GameActor;
 import ua.gram.model.enums.Types;
 import ua.gram.model.group.EnemyGroup;
@@ -36,6 +37,7 @@ public abstract class Enemy
     protected final DDGame game;
     protected final EnemyPrototype prototype;
     protected final EnemyStateHolder stateHolder;
+    protected final Speed speedManager;
     public float health;
     public float speed;
     public float armor;
@@ -68,6 +70,7 @@ public abstract class Enemy
         isRemoved = false;
         hasReachedCheckpoint = true;
         stateHolder = new EnemyStateHolder();
+        speedManager = new Speed(speed);
     }
 
     @Override
@@ -99,10 +102,12 @@ public abstract class Enemy
                 updateAnimationSpeed();
             }
 
+            if (path != null) {
+                path.draw(getStage());
+            }
+
             update(delta);
-
             getStage().updateActorIndex(getParent());
-
             getStateManager().update(this, delta);
         }
     }
@@ -124,12 +129,14 @@ public abstract class Enemy
         health = prototype.health;
         speed = meddle(prototype.speed);
         armor = prototype.armor;
-        path = null;
         isDead = false;
         isAttacked = false;
         isRemoved = false;
         hasReachedCheckpoint = true;
         directionHolder.resetObject();
+        path.dispose();
+        path = null;
+        speedManager.reset();
         resetObject();
         Log.info(this + " was reset");
     }
@@ -153,8 +160,11 @@ public abstract class Enemy
     }
 
     public void damage(float damage) {
-        health -= damage;
         fire(new DamageEvent(damage));
+    }
+
+    public Speed getSpeed() {
+        return speedManager;
     }
 
     public EnemySpawner getSpawner() {
@@ -199,18 +209,6 @@ public abstract class Enemy
 
     public void setGroup(EnemyGroup group) {
         this.group = group;
-    }
-
-    public void increaseSpeed() {
-        this.speed = defaultSpeed / 2;
-    }
-
-    public void decreaseSpeed() {
-        this.speed = defaultSpeed * 2;
-    }
-
-    public void resetSpeed() {
-        this.speed = defaultSpeed;
     }
 
     public Animator<Types.EnemyState, Path.Direction> getAnimator() {

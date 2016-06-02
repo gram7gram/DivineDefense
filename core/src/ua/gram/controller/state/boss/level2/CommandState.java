@@ -10,6 +10,7 @@ import ua.gram.model.enums.Types;
  * @author Gram <gram7gram@gmail.com>
  */
 public class CommandState extends Level2State {
+
     public CommandState(DDGame game, BossStateManager manager) {
         super(game, manager);
     }
@@ -21,10 +22,15 @@ public class CommandState extends Level2State {
 
     @Override
     public void preManage(Boss actor) {
-        manager.getAnimationChanger()
-                .update(actor, getType());
+        actor.getLevel().getBossAnimationManager()
+                .getSkeletonState()
+                .setAnimation(0, getType().name(), false);
 
         super.preManage(actor);
+
+        actor.getCounters()
+                .set("command_count", 0)
+                .set("command_duration", 3);
     }
 
     @Override
@@ -34,9 +40,8 @@ public class CommandState extends Level2State {
         Counters counters = actor.getCounters();
         float count = counters.get("command_count");
         if (count >= counters.get("command_duration")) {
-            manager.swapLevel1State(actor, manager.getActiveState());
-            manager.swapLevel2State(actor, manager.getIdleState());
             counters.set("command_count", 0);
+            manager.swapLevel2State(actor, manager.getIdleState());
         } else {
             counters.set("command_count", count + delta);
         }

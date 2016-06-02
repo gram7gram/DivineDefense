@@ -3,7 +3,8 @@ package ua.gram.model.actor.enemy;
 import com.badlogic.gdx.math.Vector2;
 
 import ua.gram.DDGame;
-import ua.gram.model.map.Map;
+import ua.gram.controller.voter.TiledMapVoter;
+import ua.gram.model.enums.Voter;
 import ua.gram.model.map.Path;
 import ua.gram.model.prototype.enemy.AbilityUserPrototype;
 import ua.gram.utils.Log;
@@ -20,29 +21,48 @@ public final class EnemySummoner extends AbilityUser implements Cloneable {
         minionSpawnPosition = Vector2.Zero;
     }
 
-    private Vector2 getMinionSpawnPosition(Vector2 pos, Vector2 next) {
+    private Vector2 getMinionSpawnPosition(Vector2 pos, Path.Direction nextType) {
+        Vector2 next = Path.getVector(nextType);
+
+        if (next == null || next.x > 1 || next.x < -1 || next.y > 1 || next.y < -1)
+            throw new IllegalArgumentException("Next vector (" + nextType + ") is not a valid direction");
+
         minionSpawnPosition.set(
-                (Math.round(pos.x) - (Math.round(pos.x) % DDGame.TILE_HEIGHT)) / DDGame.TILE_HEIGHT + next.x,
-                (Math.round(pos.y) - (Math.round(pos.y) % DDGame.TILE_HEIGHT)) / DDGame.TILE_HEIGHT + next.y);
+                pos.x + next.x,
+                pos.y + next.y);
+
         return minionSpawnPosition;
     }
 
     @Override
     public synchronized boolean ability() {
-        Vector2 pos = getDirectionHolder().getCurrentPosition();
-        Vector2 next = getDirectionHolder().getCurrentDirection();
-        Vector2 position = getMinionSpawnPosition(pos, next);
-
-        Map map = getSpawner().getLevel().getMap();
-
-        if (!map.getVoter().isWalkable((int) position.x, (int) position.y)) {
-            throw new IllegalArgumentException("Cannot spawn minion at "
-                    + Path.toString(position) + ": cell is not walkable");
+        if (path.stepsBeforeFinishLength() <= getPrototype().abilityDelay) {
+            setAbilityExecuted(true);
+            Log.warn(this + " is too close to Base to perform ability");
+            return false;
         }
 
-        spawner.spawn(getPrototype().minion, position, this);
+        Vector2 pos = getDirectionHolder().getCurrentPositionIndex();
+        Path.Direction next = getDirectionHolder().getCurrentDirectionType();
+        Vector2 index = getMinionSpawnPosition(pos, next);
 
-        Log.info(this + " performs ability");
+        int x = (int) index.x;
+        int y = (int) index.y;
+
+        TiledMapVoter voter = getSpawner().getLevel().getMap().getVoter();
+
+        if (!voter.isWalkable(x, y)) {
+            throw new IllegalArgumentException("Cannot spawn minion at ["
+                    + x + ":" + y + "]: cell is not walkable");
+        }
+
+        if (!voter.isBase(x, y, Voter.Policy.AFFIRMATIVE)) {
+            spawner.spawn(getPrototype().minion, index, this);
+
+            Log.info(this + " performs ability");
+        } else {
+            Log.warn(this + " tried to perform ability at the Base");
+        }
 
         return true;
     }

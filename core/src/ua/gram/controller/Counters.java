@@ -16,10 +16,12 @@ public class Counters implements Resetable {
         map = new HashMap<>(3);
     }
 
-    public void set(String name, float value) {
+    public Counters set(String name, float value) {
         synchronized (lock) {
             map.put(name, value);
         }
+
+        return this;
     }
 
     public float get(String name) {

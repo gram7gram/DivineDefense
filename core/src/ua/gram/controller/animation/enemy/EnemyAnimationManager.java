@@ -99,4 +99,9 @@ public class EnemyAnimationManager implements AnimationManager<EnemyPrototype, T
     public AnimationPool get(Types.EnemyState type, Path.Direction path) {
         return this.getPool(type).get(path);
     }
+
+    @Override
+    public void dispose() {
+
+    }
 }

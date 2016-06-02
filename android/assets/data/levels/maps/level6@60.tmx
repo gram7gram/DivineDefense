@@ -267,7 +267,7 @@
  </tileset>
  <layer name="Terrain" width="15" height="10">
   <data encoding="base64" compression="zlib">
-   eJyFksENACAIAxmFGWD/3fxoQi6nPojGtlAaMyJyV4+T9/mWgpVUCt/0Jb3oh75OkUsP1DS4tznEXp5/WvIqPBPLghlSa5k3+IbPWdzP9rXcX39jAaJjGQY=
+   eJyFkcENACAMAjsKM9T9d/OjCblQfZBWKQ2oqkoHyyp7v1PgGlDApG/0yQ99XbRx9NBB42fXsk55kue0Q4+5lPH6+b0jtZNHanyGGfTQTn9PjvwGiucY3A==
   </data>
  </layer>
  <layer name="Cliffs" width="15" height="10">

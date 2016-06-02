@@ -3,12 +3,10 @@ package ua.gram.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import ua.gram.DDGame;
-import ua.gram.model.prototype.GamePrototype;
 import ua.gram.utils.Log;
 import ua.gram.utils.Resources;
 
@@ -18,35 +16,40 @@ import ua.gram.utils.Resources;
 public abstract class AbstractScreen implements Screen {
 
     protected final DDGame game;
-    protected final GamePrototype prototype;
-    private final Sprite background;
-    private final SpriteBatch batch;
+    protected final SpriteBatch batch;
+    private Texture texture;
 
     public AbstractScreen(DDGame game) {
         this.game = game;
-        this.prototype = game.getPrototype();
         batch = game.getBatch();
-        background = new Sprite(game.getResources().getRegisteredTexture(Resources.BACKGROUND_TEXTURE));
+    }
+
+    @Override
+    public void show() {
+        Log.info("Screen set to " + this.getClass().getSimpleName());
+        texture = game.getResources().getRegisteredTexture(Resources.BACKGROUND_TEXTURE);
     }
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(.44f, .62f, .8f, 1);
+        Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
-        batch.begin();
-        background.draw(batch);
-        batch.end();
+        if (texture != null) {
+            batch.begin();
+            batch.draw(texture, 0, 0, 900, 480);
+            batch.end();
+        }
 
         if (!DDGame.PAUSE) {
             renderNoPause(delta);
         } else {
             renderOnPause(delta);
         }
+
         renderAlways(delta);
 
         if (DDGame.DEBUG) {
-            Batch batch = game.getBatch();
             batch.begin();
             game.getInfo().draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 5, 15);
             game.getInfo().draw(batch, "Pause: " + DDGame.PAUSE, 5, 30);
@@ -56,7 +59,9 @@ public abstract class AbstractScreen implements Screen {
 
     protected abstract void renderAlways(float delta);
 
-    /** Renders only if the game is not on PAUSE */
+    /**
+     * Renders only if the game is not on PAUSE
+     */
     protected abstract void renderNoPause(float delta);
 
     protected void renderOnPause(float delta) {
@@ -81,12 +86,6 @@ public abstract class AbstractScreen implements Screen {
     }
 
     @Override
-    public void show() {
-        Log.info("Screen set to " + this.getClass().getSimpleName());
-        background.setBounds(0, 0, DDGame.WORLD_WIDTH, DDGame.WORLD_HEIGHT);
-    }
-
-    @Override
     public void hide() {
         Log.warn("Hiding " + this.getClass().getSimpleName());
         Gdx.input.setInputProcessor(null);
@@ -95,11 +94,7 @@ public abstract class AbstractScreen implements Screen {
     @Override
     public void dispose() {
         Log.warn("Disposing " + this.getClass().getSimpleName());
-        background.getTexture().dispose();
-    }
-
-    public GamePrototype getPrototype() {
-        return prototype;
+        texture.dispose();
     }
 
     public DDGame getGame() {

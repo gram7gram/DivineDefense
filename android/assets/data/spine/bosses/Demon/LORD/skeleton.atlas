@@ -1,0 +1,167 @@
+
+skeleton.png
+size: 943,2374
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Arm back down
+  rotate: true
+  xy: 560, 25
+  size: 43, 99
+  orig: 43, 99
+  offset: 0, 0
+  index: -1
+Arm back down 2
+  rotate: false
+  xy: 862, 329
+  size: 51, 52
+  orig: 51, 52
+  offset: 0, 0
+  index: -1
+Arm back up
+  rotate: true
+  xy: 808, 43
+  size: 48, 127
+  orig: 48, 127
+  offset: 0, 0
+  index: -1
+Arm front down
+  rotate: false
+  xy: 816, 254
+  size: 44, 127
+  orig: 44, 127
+  offset: 0, 0
+  index: -1
+Arm front down 2
+  rotate: true
+  xy: 890, 178
+  size: 56, 49
+  orig: 56, 49
+  offset: 0, 0
+  index: -1
+Arm front down 3
+  rotate: true
+  xy: 862, 236
+  size: 91, 45
+  orig: 91, 45
+  offset: 0, 0
+  index: -1
+Arm front up
+  rotate: false
+  xy: 808, 93
+  size: 80, 139
+  orig: 80, 139
+  offset: 0, 0
+  index: -1
+Body down
+  rotate: false
+  xy: 509, 70
+  size: 297, 162
+  orig: 297, 162
+  offset: 0, 0
+  index: -1
+Body up
+  rotate: false
+  xy: 791, 383
+  size: 123, 254
+  orig: 123, 254
+  offset: 0, 0
+  index: -1
+Feet back
+  rotate: false
+  xy: 844, 1684
+  size: 97, 198
+  orig: 97, 198
+  offset: 0, 0
+  index: -1
+Feet front
+  rotate: false
+  xy: 740, 1664
+  size: 102, 218
+  orig: 102, 218
+  offset: 0, 0
+  index: -1
+Flame 01
+  rotate: false
+  xy: 740, 1884
+  size: 186, 291
+  orig: 186, 291
+  offset: 0, 0
+  index: -1
+Flame 02
+  rotate: false
+  xy: 740, 2177
+  size: 191, 195
+  orig: 191, 195
+  offset: 0, 0
+  index: -1
+Flame 03
+  rotate: true
+  xy: 509, 234
+  size: 118, 305
+  orig: 118, 305
+  offset: 0, 0
+  index: -1
+Skull down
+  rotate: true
+  xy: 890, 108
+  size: 68, 48
+  orig: 68, 48
+  offset: 0, 0
+  index: -1
+Skull up
+  rotate: false
+  xy: 791, 639
+  size: 143, 173
+  orig: 143, 173
+  offset: 0, 0
+  index: -1
+Throne back
+  rotate: false
+  xy: 509, 965
+  size: 376, 669
+  orig: 376, 669
+  offset: 0, 0
+  index: -1
+Throne front
+  rotate: false
+  xy: 509, 354
+  size: 280, 609
+  orig: 280, 609
+  offset: 0, 0
+  index: -1
+ball
+  rotate: true
+  xy: 844, 1636
+  size: 46, 47
+  orig: 46, 47
+  offset: 0, 0
+  index: -1
+ball glow
+  rotate: true
+  xy: 791, 814
+  size: 149, 148
+  orig: 149, 148
+  offset: 0, 0
+  index: -1
+glow eyes
+  rotate: false
+  xy: 509, 21
+  size: 49, 47
+  orig: 49, 47
+  offset: 0, 0
+  index: -1
+light force
+  rotate: false
+  xy: 2, 2
+  size: 505, 1632
+  orig: 505, 1632
+  offset: 0, 0
+  index: -1
+pentagram 02
+  rotate: false
+  xy: 2, 1636
+  size: 736, 736
+  orig: 736, 736
+  offset: 0, 0
+  index: -1

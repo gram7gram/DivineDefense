@@ -73,7 +73,7 @@
     }
   },
   "levelConfig": {
-    "resources": [
+    "commonResources": [
       "data/images/misc/background.jpg",
       "data/images/misc/start_back.png",
       "data/images/misc/start_over.png",
@@ -93,12 +93,6 @@
           "baseProperty": "base",
           "blockedProperty": "blocked",
           "name": "data/levels/maps/level1@60.tmx"
-        },
-        "backgroundColor": {
-          "r": 184,
-          "g": 249,
-          "b": 255,
-          "a": 1
         },
         "assets": {
           "back": [],
@@ -141,18 +135,11 @@
       {
         "level": 2,
         "map": {
-          "layer": "Terrain",
           "walkableProperty": "walkable",
           "spawnProperty": "spawn",
           "baseProperty": "base",
           "blockedProperty": "blocked",
           "name": "data/levels/maps/level2@60.tmx"
-        },
-        "backgroundColor": {
-          "r": 184,
-          "g": 249,
-          "b": 255,
-          "a": 1
         },
         "preview": "preview/level-2-preview@256",
         "initialDirection": {
@@ -178,20 +165,15 @@
       {
         "level": 3,
         "type": "FINAL",
-        "boss": "FINAL_BOSS",
+        "bosses": [
+          "LORD"
+        ],
         "map": {
-          "layer": "Terrain",
           "walkableProperty": "walkable",
           "spawnProperty": "spawn",
           "baseProperty": "base",
           "blockedProperty": "blocked",
-          "name": "data/levels/maps/level6@60.tmx"
-        },
-        "backgroundColor": {
-          "r": 184,
-          "g": 249,
-          "b": 255,
-          "a": 1
+          "name": "data/levels/maps/level10@60.tmx"
         },
         "preview": "preview/level-3-preview@256",
         "initialDirection": {
@@ -203,13 +185,38 @@
             "index": 1,
             "enemies": [
               "EnemyRunner",
+              "EnemySummoner",
+              "EnemyWarrior",
+              "EnemyWarrior",
+              "EnemyWarrior",
+              "EnemyWarrior",
               "EnemyWarrior"
             ]
           },
           {
             "index": 2,
             "enemies": [
-              "EnemyRunner"
+              "EnemyWarrior",
+              "EnemySummoner",
+              "EnemyWarrior",
+              "EnemySummoner",
+              "EnemyWarrior",
+              "EnemySummoner"
+            ]
+          },
+          {
+            "index": 3,
+            "enemies": [
+              "EnemyWarrior",
+              "EnemySummoner",
+              "EnemyWarrior",
+              "EnemySummoner",
+              "EnemyWarrior",
+              "EnemySummoner",
+              "EnemySummoner",
+              "EnemySummoner",
+              "EnemySummoner",
+              "EnemySummoner"
             ]
           }
         ]
@@ -597,13 +604,22 @@
                 "Developer",
                 "UI design"
               ],
-              "name": "Dmitriy Bondarchuk"
+              "name": "Dmitriy Bondarchuk",
+              "email": "gram7gram@gmail.com"
             },
             {
               "roles": [
                 "Character design"
               ],
               "name": "Eugeniy Fedorenko"
+            },
+            {
+              "roles": [
+                "Boss design",
+                "Level design"
+              ],
+              "name": "Budi Harjakesuma",
+              "email": "bootdh@gmail.com"
             }
           ]
         }
@@ -641,12 +657,31 @@
   "bosses": [
     {
       "type": "FINAL_BOSS",
-      "name": "BOSS",
+      "name": "LORD",
       "width": 390,
       "height": 260,
+      "scale": 0.45,
+      "states": [
+        {
+          "name": "EXCLAMATION",
+          "duration": 2.6
+        },
+        {
+          "name": "IDLE",
+          "duration": 1.5
+        },
+        {
+          "name": "COMMAND",
+          "duration": 3
+        },
+        {
+          "name": "DEFEATED",
+          "duration": 5
+        }
+      ],
       "position": {
-        "x": 100,
-        "y": 100
+        "x": 725,
+        "y": 110
       }
     }
   ]

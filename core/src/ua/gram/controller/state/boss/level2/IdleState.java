@@ -21,8 +21,9 @@ public class IdleState extends Level2State {
 
     @Override
     public void preManage(Boss actor) {
-        manager.getAnimationChanger()
-                .update(actor, getType());
+        actor.getLevel().getBossAnimationManager()
+                .getSkeletonState()
+                .setAnimation(0, getType().name(), true);
         super.preManage(actor);
     }
 }

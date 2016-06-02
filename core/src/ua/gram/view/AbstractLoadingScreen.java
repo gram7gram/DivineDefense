@@ -2,7 +2,6 @@ package ua.gram.view;
 
 import ua.gram.DDGame;
 import ua.gram.controller.stage.LoadingStage;
-import ua.gram.utils.Log;
 import ua.gram.view.screen.ErrorScreen;
 import ua.gram.view.screen.MainMenuScreen;
 
@@ -48,7 +47,6 @@ public abstract class AbstractLoadingScreen extends AbstractScreen {
 
     public void onLoad() {
         loadingStage.update(progress);
-        Log.info("Loading " + progress + "%");
         game.setScreen(new MainMenuScreen(game));
     }
 

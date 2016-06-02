@@ -6,7 +6,7 @@ filter: Nearest,Nearest
 repeat: none
 health-bar-100
   rotate: false
-  xy: 212, 177
+  xy: 393, 236
   size: 1, 1
   split: 0, 0, 0, 0
   orig: 1, 1
@@ -14,7 +14,7 @@ health-bar-100
   index: -1
 health-bar-30
   rotate: false
-  xy: 393, 238
+  xy: 212, 114
   size: 1, 1
   split: 0, 0, 0, 0
   orig: 1, 1
@@ -22,7 +22,7 @@ health-bar-30
   index: -1
 health-bar-50
   rotate: false
-  xy: 1, 1
+  xy: 273, 175
   size: 1, 1
   split: 0, 0, 0, 0
   orig: 1, 1
@@ -30,23 +30,30 @@ health-bar-50
   index: -1
 level_lock
   rotate: false
-  xy: 1, 29
+  xy: 1, 27
   size: 210, 210
   orig: 210, 210
   offset: 0, 0
   index: -1
 misc-gem-small
   rotate: false
-  xy: 1, 3
+  xy: 1, 1
   size: 40, 25
   orig: 40, 25
   offset: 0, 0
   index: -1
 position-marker
   rotate: false
-  xy: 212, 179
+  xy: 212, 177
   size: 180, 60
   orig: 180, 60
+  offset: 0, 0
+  index: -1
+summon-circle
+  rotate: false
+  xy: 212, 116
+  size: 60, 60
+  orig: 60, 60
   offset: 0, 0
   index: -1
 
@@ -1147,5 +1154,1630 @@ preview/level-3-preview@256
   xy: 515, 1
   size: 256, 256
   orig: 256, 256
+  offset: 0, 0
+  index: -1
+
+style12.png
+size: 2048,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+weapons/SECONDARY_WEAPON
+  rotate: false
+  xy: 1, 538
+  size: 1700, 100
+  orig: 1700, 100
+  offset: 0, 0
+  index: -1
+weapons/SPECIAL_WEAPON
+  rotate: false
+  xy: 1, 182
+  size: 1400, 355
+  orig: 1400, 355
+  offset: 0, 0
+  index: -1
+weapons/STUN_WEAPON
+  rotate: false
+  xy: 1, 1
+  size: 740, 180
+  orig: 740, 180
+  offset: 0, 0
+  index: -1
+
+style13.png
+size: 2048,256
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+enemies/EnemySoldier/Demon/FINISH/DOWN
+  rotate: false
+  xy: 1, 92
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySoldier/Demon/FINISH/LEFT
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySoldier/Demon/FINISH/RIGHT
+  rotate: false
+  xy: 542, 92
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySoldier/Demon/FINISH/UP
+  rotate: false
+  xy: 542, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+
+style14.png
+size: 2048,128
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+enemies/EnemySoldier/Demon/IDLE/DOWN
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySoldier/Demon/IDLE/LEFT
+  rotate: false
+  xy: 542, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySoldier/Demon/IDLE/RIGHT
+  rotate: false
+  xy: 1083, 1
+  size: 60, 90
+  orig: 60, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySoldier/Demon/IDLE/UP
+  rotate: false
+  xy: 1144, 1
+  size: 60, 90
+  orig: 60, 90
+  offset: 0, 0
+  index: -1
+
+style15.png
+size: 2048,256
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+enemies/EnemySoldier/Demon/WALKING/DOWN
+  rotate: false
+  xy: 1, 92
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySoldier/Demon/WALKING/LEFT
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySoldier/Demon/WALKING/RIGHT
+  rotate: false
+  xy: 542, 92
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySoldier/Demon/WALKING/UP
+  rotate: false
+  xy: 542, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+
+style16.png
+size: 2048,128
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+enemies/EnemySoldier/Demon/STUN/DOWN
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySoldier/Demon/STUN/LEFT
+  rotate: false
+  xy: 542, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySoldier/Demon/STUN/RIGHT
+  rotate: false
+  xy: 1083, 1
+  size: 60, 90
+  orig: 60, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySoldier/Demon/STUN/UP
+  rotate: false
+  xy: 1144, 1
+  size: 60, 90
+  orig: 60, 90
+  offset: 0, 0
+  index: -1
+
+style17.png
+size: 2048,256
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+enemies/EnemySoldier/Demon/DEAD/DOWN
+  rotate: false
+  xy: 1, 92
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySoldier/Demon/DEAD/LEFT
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySoldier/Demon/DEAD/RIGHT
+  rotate: false
+  xy: 542, 92
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySoldier/Demon/DEAD/UP
+  rotate: false
+  xy: 542, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+
+style18.png
+size: 2048,256
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+enemies/EnemySoldier/Demon/SPAWN/DOWN
+  rotate: false
+  xy: 1, 92
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySoldier/Demon/SPAWN/LEFT
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySoldier/Demon/SPAWN/RIGHT
+  rotate: false
+  xy: 542, 92
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySoldier/Demon/SPAWN/UP
+  rotate: false
+  xy: 542, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+
+style19.png
+size: 2048,256
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+enemies/EnemySummoner/Demon/ABILITY/DOWN
+  rotate: false
+  xy: 1, 92
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySummoner/Demon/ABILITY/LEFT
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySummoner/Demon/ABILITY/RIGHT
+  rotate: false
+  xy: 542, 92
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySummoner/Demon/ABILITY/UP
+  rotate: false
+  xy: 542, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+
+style20.png
+size: 2048,256
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+enemies/EnemySummoner/Demon/FINISH/DOWN
+  rotate: false
+  xy: 1, 92
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySummoner/Demon/FINISH/LEFT
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySummoner/Demon/FINISH/RIGHT
+  rotate: false
+  xy: 542, 92
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySummoner/Demon/FINISH/UP
+  rotate: false
+  xy: 542, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+
+style21.png
+size: 64,512
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+enemies/EnemySummoner/Demon/IDLE/DOWN
+  rotate: false
+  xy: 1, 274
+  size: 60, 90
+  orig: 60, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySummoner/Demon/IDLE/LEFT
+  rotate: false
+  xy: 1, 183
+  size: 60, 90
+  orig: 60, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySummoner/Demon/IDLE/RIGHT
+  rotate: false
+  xy: 1, 92
+  size: 60, 90
+  orig: 60, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySummoner/Demon/IDLE/UP
+  rotate: false
+  xy: 1, 1
+  size: 60, 90
+  orig: 60, 90
+  offset: 0, 0
+  index: -1
+
+style22.png
+size: 2048,256
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+enemies/EnemySummoner/Demon/WALKING/DOWN
+  rotate: false
+  xy: 1, 92
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySummoner/Demon/WALKING/LEFT
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySummoner/Demon/WALKING/RIGHT
+  rotate: false
+  xy: 542, 92
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySummoner/Demon/WALKING/UP
+  rotate: false
+  xy: 542, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+
+style23.png
+size: 64,512
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+enemies/EnemySummoner/Demon/STUN/DOWN
+  rotate: false
+  xy: 1, 274
+  size: 60, 90
+  orig: 60, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySummoner/Demon/STUN/LEFT
+  rotate: false
+  xy: 1, 183
+  size: 60, 90
+  orig: 60, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySummoner/Demon/STUN/RIGHT
+  rotate: false
+  xy: 1, 92
+  size: 60, 90
+  orig: 60, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySummoner/Demon/STUN/UP
+  rotate: false
+  xy: 1, 1
+  size: 60, 90
+  orig: 60, 90
+  offset: 0, 0
+  index: -1
+
+style24.png
+size: 2048,256
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+enemies/EnemySummoner/Demon/DEAD/DOWN
+  rotate: false
+  xy: 1, 92
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySummoner/Demon/DEAD/LEFT
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySummoner/Demon/DEAD/RIGHT
+  rotate: false
+  xy: 542, 92
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySummoner/Demon/DEAD/UP
+  rotate: false
+  xy: 542, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+
+style25.png
+size: 2048,256
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+enemies/EnemySummoner/Demon/SPAWN/DOWN
+  rotate: false
+  xy: 1, 92
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySummoner/Demon/SPAWN/LEFT
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySummoner/Demon/SPAWN/RIGHT
+  rotate: false
+  xy: 542, 92
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySummoner/Demon/SPAWN/UP
+  rotate: false
+  xy: 542, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+
+style26.png
+size: 2048,256
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+enemies/EnemyWarrior/Demon/FINISH/DOWN
+  rotate: false
+  xy: 1, 92
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemyWarrior/Demon/FINISH/LEFT
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemyWarrior/Demon/FINISH/RIGHT
+  rotate: false
+  xy: 542, 92
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemyWarrior/Demon/FINISH/UP
+  rotate: false
+  xy: 542, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+
+style27.png
+size: 64,512
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+enemies/EnemyWarrior/Demon/IDLE/DOWN
+  rotate: false
+  xy: 1, 274
+  size: 60, 90
+  orig: 60, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemyWarrior/Demon/IDLE/LEFT
+  rotate: false
+  xy: 1, 183
+  size: 60, 90
+  orig: 60, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemyWarrior/Demon/IDLE/RIGHT
+  rotate: false
+  xy: 1, 92
+  size: 60, 90
+  orig: 60, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemyWarrior/Demon/IDLE/UP
+  rotate: false
+  xy: 1, 1
+  size: 60, 90
+  orig: 60, 90
+  offset: 0, 0
+  index: -1
+
+style28.png
+size: 2048,256
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+enemies/EnemyWarrior/Demon/WALKING/DOWN
+  rotate: false
+  xy: 1, 92
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemyWarrior/Demon/WALKING/LEFT
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemyWarrior/Demon/WALKING/RIGHT
+  rotate: false
+  xy: 542, 92
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemyWarrior/Demon/WALKING/UP
+  rotate: false
+  xy: 542, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+
+style29.png
+size: 64,512
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+enemies/EnemyWarrior/Demon/STUN/DOWN
+  rotate: false
+  xy: 1, 274
+  size: 60, 90
+  orig: 60, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemyWarrior/Demon/STUN/LEFT
+  rotate: false
+  xy: 1, 183
+  size: 60, 90
+  orig: 60, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemyWarrior/Demon/STUN/RIGHT
+  rotate: false
+  xy: 1, 92
+  size: 60, 90
+  orig: 60, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemyWarrior/Demon/STUN/UP
+  rotate: false
+  xy: 1, 1
+  size: 60, 90
+  orig: 60, 90
+  offset: 0, 0
+  index: -1
+
+style30.png
+size: 2048,256
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+enemies/EnemyWarrior/Demon/DEAD/DOWN
+  rotate: false
+  xy: 1, 92
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemyWarrior/Demon/DEAD/LEFT
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemyWarrior/Demon/DEAD/RIGHT
+  rotate: false
+  xy: 542, 92
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemyWarrior/Demon/DEAD/UP
+  rotate: false
+  xy: 542, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+
+style31.png
+size: 2048,256
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+enemies/EnemyWarrior/Demon/SPAWN/DOWN
+  rotate: false
+  xy: 1, 92
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemyWarrior/Demon/SPAWN/LEFT
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemyWarrior/Demon/SPAWN/RIGHT
+  rotate: false
+  xy: 542, 92
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemyWarrior/Demon/SPAWN/UP
+  rotate: false
+  xy: 542, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+
+style32.png
+size: 2048,256
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+enemies/EnemyRunner/Demon/FINISH/DOWN
+  rotate: false
+  xy: 1, 92
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemyRunner/Demon/FINISH/LEFT
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemyRunner/Demon/FINISH/RIGHT
+  rotate: false
+  xy: 542, 92
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemyRunner/Demon/FINISH/UP
+  rotate: false
+  xy: 542, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+
+style33.png
+size: 64,512
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+enemies/EnemyRunner/Demon/IDLE/DOWN
+  rotate: false
+  xy: 1, 274
+  size: 60, 90
+  orig: 60, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemyRunner/Demon/IDLE/LEFT
+  rotate: false
+  xy: 1, 183
+  size: 60, 90
+  orig: 60, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemyRunner/Demon/IDLE/RIGHT
+  rotate: false
+  xy: 1, 92
+  size: 60, 90
+  orig: 60, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemyRunner/Demon/IDLE/UP
+  rotate: false
+  xy: 1, 1
+  size: 60, 90
+  orig: 60, 90
+  offset: 0, 0
+  index: -1
+
+style34.png
+size: 2048,256
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+enemies/EnemyRunner/Demon/WALKING/DOWN
+  rotate: false
+  xy: 1, 92
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemyRunner/Demon/WALKING/LEFT
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemyRunner/Demon/WALKING/RIGHT
+  rotate: false
+  xy: 542, 92
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemyRunner/Demon/WALKING/UP
+  rotate: false
+  xy: 542, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+
+style35.png
+size: 64,512
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+enemies/EnemyRunner/Demon/STUN/DOWN
+  rotate: false
+  xy: 1, 274
+  size: 60, 90
+  orig: 60, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemyRunner/Demon/STUN/LEFT
+  rotate: false
+  xy: 1, 183
+  size: 60, 90
+  orig: 60, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemyRunner/Demon/STUN/RIGHT
+  rotate: false
+  xy: 1, 92
+  size: 60, 90
+  orig: 60, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemyRunner/Demon/STUN/UP
+  rotate: false
+  xy: 1, 1
+  size: 60, 90
+  orig: 60, 90
+  offset: 0, 0
+  index: -1
+
+style36.png
+size: 2048,256
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+enemies/EnemyRunner/Demon/DEAD/DOWN
+  rotate: false
+  xy: 1, 92
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemyRunner/Demon/DEAD/LEFT
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemyRunner/Demon/DEAD/RIGHT
+  rotate: false
+  xy: 542, 92
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemyRunner/Demon/DEAD/UP
+  rotate: false
+  xy: 542, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+
+style37.png
+size: 2048,256
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+enemies/EnemyRunner/Demon/SPAWN/DOWN
+  rotate: false
+  xy: 1, 92
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemyRunner/Demon/SPAWN/LEFT
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemyRunner/Demon/SPAWN/RIGHT
+  rotate: false
+  xy: 542, 92
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemyRunner/Demon/SPAWN/UP
+  rotate: false
+  xy: 542, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+
+style38.png
+size: 2048,256
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+enemies/EnemySoldierArmored/Demon/FINISH/DOWN
+  rotate: false
+  xy: 1, 92
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySoldierArmored/Demon/FINISH/LEFT
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySoldierArmored/Demon/FINISH/RIGHT
+  rotate: false
+  xy: 542, 92
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySoldierArmored/Demon/FINISH/UP
+  rotate: false
+  xy: 542, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+
+style39.png
+size: 64,512
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+enemies/EnemySoldierArmored/Demon/IDLE/DOWN
+  rotate: false
+  xy: 1, 274
+  size: 60, 90
+  orig: 60, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySoldierArmored/Demon/IDLE/LEFT
+  rotate: false
+  xy: 1, 183
+  size: 60, 90
+  orig: 60, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySoldierArmored/Demon/IDLE/RIGHT
+  rotate: false
+  xy: 1, 92
+  size: 60, 90
+  orig: 60, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySoldierArmored/Demon/IDLE/UP
+  rotate: false
+  xy: 1, 1
+  size: 60, 90
+  orig: 60, 90
+  offset: 0, 0
+  index: -1
+
+style40.png
+size: 2048,256
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+enemies/EnemySoldierArmored/Demon/WALKING/DOWN
+  rotate: false
+  xy: 1, 92
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySoldierArmored/Demon/WALKING/LEFT
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySoldierArmored/Demon/WALKING/RIGHT
+  rotate: false
+  xy: 542, 92
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySoldierArmored/Demon/WALKING/UP
+  rotate: false
+  xy: 542, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+
+style41.png
+size: 64,512
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+enemies/EnemySoldierArmored/Demon/STUN/DOWN
+  rotate: false
+  xy: 1, 274
+  size: 60, 90
+  orig: 60, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySoldierArmored/Demon/STUN/LEFT
+  rotate: false
+  xy: 1, 183
+  size: 60, 90
+  orig: 60, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySoldierArmored/Demon/STUN/RIGHT
+  rotate: false
+  xy: 1, 92
+  size: 60, 90
+  orig: 60, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySoldierArmored/Demon/STUN/UP
+  rotate: false
+  xy: 1, 1
+  size: 60, 90
+  orig: 60, 90
+  offset: 0, 0
+  index: -1
+
+style42.png
+size: 2048,256
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+enemies/EnemySoldierArmored/Demon/DEAD/DOWN
+  rotate: false
+  xy: 1, 92
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySoldierArmored/Demon/DEAD/LEFT
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySoldierArmored/Demon/DEAD/RIGHT
+  rotate: false
+  xy: 542, 92
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySoldierArmored/Demon/DEAD/UP
+  rotate: false
+  xy: 542, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+
+style43.png
+size: 2048,256
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+enemies/EnemySoldierArmored/Demon/SPAWN/DOWN
+  rotate: false
+  xy: 1, 92
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySoldierArmored/Demon/SPAWN/LEFT
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySoldierArmored/Demon/SPAWN/RIGHT
+  rotate: false
+  xy: 542, 92
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+enemies/EnemySoldierArmored/Demon/SPAWN/UP
+  rotate: false
+  xy: 542, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+
+style44.png
+size: 1024,128
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+towers/PRIMARY/Angel/Lvl4/ATTACK
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/PRIMARY/Angel/Lvl4/BUILD
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/PRIMARY/Angel/Lvl4/IDLE
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/PRIMARY/Angel/Lvl4/SELL
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+
+style45.png
+size: 1024,128
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+towers/PRIMARY/Angel/Lvl3/ATTACK
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/PRIMARY/Angel/Lvl3/BUILD
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/PRIMARY/Angel/Lvl3/IDLE
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/PRIMARY/Angel/Lvl3/SELL
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+
+style46.png
+size: 1024,128
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+towers/PRIMARY/Angel/Lvl1/ATTACK
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/PRIMARY/Angel/Lvl1/BUILD
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/PRIMARY/Angel/Lvl1/IDLE
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/PRIMARY/Angel/Lvl1/SELL
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+
+style47.png
+size: 1024,128
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+towers/PRIMARY/Angel/Lvl2/ATTACK
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/PRIMARY/Angel/Lvl2/BUILD
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/PRIMARY/Angel/Lvl2/IDLE
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/PRIMARY/Angel/Lvl2/SELL
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+
+style48.png
+size: 1024,128
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+towers/STUN/Angel/Lvl4/ATTACK
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/STUN/Angel/Lvl4/BUILD
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/STUN/Angel/Lvl4/IDLE
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/STUN/Angel/Lvl4/SELL
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+
+style49.png
+size: 1024,128
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+towers/STUN/Angel/Lvl3/ATTACK
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/STUN/Angel/Lvl3/BUILD
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/STUN/Angel/Lvl3/IDLE
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/STUN/Angel/Lvl3/SELL
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+
+style50.png
+size: 1024,128
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+towers/STUN/Angel/Lvl1/ATTACK
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/STUN/Angel/Lvl1/BUILD
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/STUN/Angel/Lvl1/IDLE
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/STUN/Angel/Lvl1/SELL
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+
+style51.png
+size: 1024,128
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+towers/STUN/Angel/Lvl2/ATTACK
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/STUN/Angel/Lvl2/BUILD
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/STUN/Angel/Lvl2/IDLE
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/STUN/Angel/Lvl2/SELL
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+
+style52.png
+size: 1024,128
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+towers/SECONDARY/Angel/Lvl4/ATTACK
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/SECONDARY/Angel/Lvl4/BUILD
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/SECONDARY/Angel/Lvl4/IDLE
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/SECONDARY/Angel/Lvl4/SELL
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+
+style53.png
+size: 1024,128
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+towers/SECONDARY/Angel/Lvl3/ATTACK
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/SECONDARY/Angel/Lvl3/BUILD
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/SECONDARY/Angel/Lvl3/IDLE
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/SECONDARY/Angel/Lvl3/SELL
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+
+style54.png
+size: 1024,128
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+towers/SECONDARY/Angel/Lvl1/ATTACK
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/SECONDARY/Angel/Lvl1/BUILD
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/SECONDARY/Angel/Lvl1/IDLE
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/SECONDARY/Angel/Lvl1/SELL
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+
+style55.png
+size: 1024,128
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+towers/SECONDARY/Angel/Lvl2/ATTACK
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/SECONDARY/Angel/Lvl2/BUILD
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/SECONDARY/Angel/Lvl2/IDLE
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/SECONDARY/Angel/Lvl2/SELL
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+
+style56.png
+size: 1024,128
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+towers/SPECIAL/Angel/Lvl4/ATTACK
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/SPECIAL/Angel/Lvl4/BUILD
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/SPECIAL/Angel/Lvl4/IDLE
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/SPECIAL/Angel/Lvl4/SELL
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+
+style57.png
+size: 1024,128
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+towers/SPECIAL/Angel/Lvl3/ATTACK
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/SPECIAL/Angel/Lvl3/BUILD
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/SPECIAL/Angel/Lvl3/IDLE
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/SPECIAL/Angel/Lvl3/SELL
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+
+style58.png
+size: 1024,128
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+towers/SPECIAL/Angel/Lvl1/ATTACK
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/SPECIAL/Angel/Lvl1/BUILD
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/SPECIAL/Angel/Lvl1/IDLE
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/SPECIAL/Angel/Lvl1/SELL
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+
+style59.png
+size: 1024,128
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+towers/SPECIAL/Angel/Lvl2/ATTACK
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/SPECIAL/Angel/Lvl2/BUILD
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/SPECIAL/Angel/Lvl2/IDLE
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/SPECIAL/Angel/Lvl2/SELL
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
   offset: 0, 0
   index: -1

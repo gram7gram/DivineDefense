@@ -17,6 +17,7 @@ import ua.gram.model.level.Level;
 import ua.gram.model.prototype.level.LevelAssetPrototype;
 import ua.gram.model.prototype.level.ResoursePrototype;
 import ua.gram.utils.Log;
+import ua.gram.utils.Resources;
 import ua.gram.view.AbstractScreen;
 
 /**
@@ -66,6 +67,7 @@ public class GameScreen extends AbstractScreen {
         inputMultiplexer.addProcessor(battleStage);
         Gdx.input.setInputProcessor(inputMultiplexer);
         uiStage.getGameUIGroup().showNotification("LEVEL " + (level.getIndex()));
+
     }
 
     @Override
@@ -74,7 +76,6 @@ public class GameScreen extends AbstractScreen {
         renderer.setView(game.getCamera());
         renderer.render();
         battleStage.draw();
-        level.draw(game.getBatch());
         uiStage.draw();
     }
 
@@ -83,28 +84,39 @@ public class GameScreen extends AbstractScreen {
         battleStage.act(delta);
     }
 
-    private int getBackgroundAssestSize(LevelAssetPrototype prototype) {
+    private ResoursePrototype[] getBackgroundAssets(LevelAssetPrototype prototype) {
         return prototype == null || prototype.front == null ?
-                0 : prototype.front.length;
+                null : prototype.front;
     }
 
-    private int getForegroundAssestSize(LevelAssetPrototype prototype) {
+    private ResoursePrototype[] getForegroundAssets(LevelAssetPrototype prototype) {
         return prototype == null || prototype.back == null ?
-                0 : prototype.back.length;
+                null : prototype.back;
+    }
+
+    private int getBackgroundAssetsSize(LevelAssetPrototype prototype) {
+        ResoursePrototype[] prototypes = getBackgroundAssets(prototype);
+        return prototypes == null ? 0 : prototypes.length;
+    }
+
+    private int getForegroundAssetsSize(LevelAssetPrototype prototype) {
+        ResoursePrototype[] prototypes = getForegroundAssets(prototype);
+        return prototypes == null ? 0 : prototypes.length;
     }
 
     protected void loadBackgroundElements() {
-        int size = getBackgroundAssestSize(level.getPrototype().assets);
+        LevelAssetPrototype prototype = level.getPrototype().assets;
+        int size = getBackgroundAssetsSize(prototype);
         Log.info("Level " + level.getIndex() + " require " + size + " background textures");
         if (size == 0) return;
 
-        for (ResoursePrototype resource : level.getPrototype().assets.back) {
+        for (ResoursePrototype resource : getBackgroundAssets(prototype)) {
             game.getResources().loadTexture(resource.file);
         }
 
         game.getResources().getManager().finishLoading();
 
-        for (ResoursePrototype resource : level.getPrototype().assets.back) {
+        for (ResoursePrototype resource : getBackgroundAssets(prototype)) {
             Texture texture = game.getResources().getRegisteredTexture(resource.file);
             Image image = new BackgroundImage(texture, resource);
             battleStage.addActor(image);
@@ -113,18 +125,23 @@ public class GameScreen extends AbstractScreen {
     }
 
     protected void loadForegroundElements() {
-        int size = getForegroundAssestSize(level.getPrototype().assets);
+        LevelAssetPrototype prototype = level.getPrototype().assets;
+        int size = getForegroundAssetsSize(prototype);
+
         Log.info("Level " + level.getIndex() + " require " + size + " foreground textures");
+
         if (size == 0) return;
 
-        for (ResoursePrototype resource : level.getPrototype().assets.front) {
-            game.getResources().loadTexture(resource.file);
+        Resources resources = game.getResources();
+
+        for (ResoursePrototype resource : getForegroundAssets(prototype)) {
+            resources.loadTexture(resource.file);
         }
 
         game.getResources().getManager().finishLoading();
 
-        for (ResoursePrototype resource : level.getPrototype().assets.front) {
-            Texture texture = game.getResources().getRegisteredTexture(resource.file);
+        for (ResoursePrototype resource : getForegroundAssets(prototype)) {
+            Texture texture = resources.getRegisteredTexture(resource.file);
             Image image = new ForegroundImage(texture, resource);
             battleStage.addActor(image);
             Log.info("Added foreground texture: " + resource.file);
@@ -135,6 +152,6 @@ public class GameScreen extends AbstractScreen {
     public void dispose() {
         super.dispose();
         renderer.dispose();
+        level.dispose();
     }
-
 }

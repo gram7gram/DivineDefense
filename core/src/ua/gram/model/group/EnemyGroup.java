@@ -33,7 +33,9 @@ public class EnemyGroup extends ActorGroup<Enemy> {
             String[] fullAnimationName = root.getPoolableAnimation().getName().split("/");
             String name = fullAnimationName[fullAnimationName.length - 2]
                     + "/" + fullAnimationName[fullAnimationName.length - 1];
+
             EnemyStateHolder holder = root.getStateHolder();
+
             game.getInfo().draw(batch, holder.getCurrentLevel1State() + "", x, y + 12);
             game.getInfo().draw(batch, holder.getCurrentLevel2State() + "", x, y + 24);
             game.getInfo().draw(batch, holder.getCurrentLevel3State() + "", x, y + 36);

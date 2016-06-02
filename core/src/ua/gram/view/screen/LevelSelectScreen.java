@@ -23,7 +23,7 @@ public class LevelSelectScreen extends AbstractScreen {
     @Override
     public void show() {
         super.show();
-        LevelPrototype[] prototypes = getPrototype().levelConfig.levels;
+        LevelPrototype[] prototypes = game.getPrototype().levelConfig.levels;
         stage = new LevelSelectStage(game, prototypes);
         Gdx.input.setInputProcessor(stage);
     }

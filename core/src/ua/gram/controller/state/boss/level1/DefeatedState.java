@@ -22,13 +22,13 @@ public class DefeatedState extends Level1State {
 
     @Override
     public void preManage(Boss actor) {
-        manager.getAnimationChanger()
-                .update(actor, getType());
+        actor.getLevel().getBossAnimationManager()
+                .getSkeletonState()
+                .setAnimation(0, getType().name(), false);
         super.preManage(actor);
         manager.swapLevel2State(actor, null);
         actor.clearActions();
     }
-
 
     @Override
     public void manage(Boss actor, float delta) {
@@ -48,7 +48,6 @@ public class DefeatedState extends Level1State {
     @Override
     public void postManage(Boss actor) {
         super.postManage(actor);
-
         actor.remove();
     }
 }

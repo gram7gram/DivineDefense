@@ -56,7 +56,6 @@ public class CameraListener extends InputAdapter {
         return false;
     }
 
-
     private boolean isInMapBounds() {
 
         return camera.position.x >= camera.viewportWidth / 2f

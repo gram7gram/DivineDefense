@@ -72,28 +72,24 @@ public class DirectionHolder implements Resetable {
         currentPositionIndex.set(0, 0);
     }
 
+    public boolean hasCurrentDirection() {
+        return !Path.compare(currentDirection, Vector2.Zero);
+    }
+
     public Vector2 getCurrentDirection() {
         return currentDirection;
     }
 
-    public void setCurrentDirection(Vector2 direction) {
-        this.currentDirection.set(direction.x, direction.y);
-        Vector2 opposite = Path.opposite(direction);
+    public void setCurrentDirection(float x, float y) {
+        currentDirection.set(x, y);
+        Vector2 opposite = Path.opposite(x, y);
         previousDirection.set(opposite.x, opposite.y);
-        currentDirectionType = Path.getType(direction);
-        previousDirectionType = Path.getType(previousDirection);
+        currentDirectionType = Path.getType(x, y);
+        previousDirectionType = Path.getType(opposite.x, opposite.y);
     }
 
     public Vector2 getPreviousDirection() {
         return previousDirection;
-    }
-
-    public void setPreviousDirection(Vector2 direction) {
-        this.previousDirection.set(direction.x, direction.y);
-        Vector2 opposite = Path.opposite(direction);
-        currentDirection.set(opposite.x, opposite.y);
-        previousDirectionType = Path.getType(direction);
-        currentDirectionType = Path.getType(currentDirection);
     }
 
     public Vector2 getPreviousPosition() {

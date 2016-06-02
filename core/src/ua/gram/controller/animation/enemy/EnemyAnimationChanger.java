@@ -2,6 +2,7 @@ package ua.gram.controller.animation.enemy;
 
 import com.badlogic.gdx.math.Vector2;
 
+import ua.gram.controller.enemy.DirectionHolder;
 import ua.gram.controller.pool.animation.AnimationPool;
 import ua.gram.model.Animator;
 import ua.gram.model.PoolableAnimation;
@@ -45,9 +46,10 @@ public class EnemyAnimationChanger implements Runnable {
     }
 
     private void updateDirection() {
-        if (dir != null && enemy.getDirectionHolder().getCurrentDirection() != dir) {
+        DirectionHolder holder = enemy.getDirectionHolder();
+        if (dir != null && !Path.compare(holder.getCurrentDirection(), dir)) {
             synchronized (lock) {
-                enemy.getDirectionHolder().setCurrentDirection(dir);
+                holder.setCurrentDirection(dir.x, dir.y);
             }
         }
     }

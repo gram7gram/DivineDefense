@@ -4,6 +4,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -28,6 +29,7 @@ public class Resources implements Disposable {
         manager = new AssetManager();
         skin = loadSkin(game.getParameters().skin);
         loadTexture(BACKGROUND_TEXTURE);
+        manager.finishLoading();
     }
 
     /**
@@ -101,4 +103,15 @@ public class Resources implements Disposable {
         manager.dispose();
     }
 
+    public void loadAtlas(String resource) {
+        try {
+            manager.load(resource + ".atlas", TextureAtlas.class);
+        } catch (GdxRuntimeException e) {
+            Log.exc("Not loaded: " + resource, e);
+        }
+    }
+
+    public TextureAtlas getAtlas(String name) {
+        return manager.get(name + ".atlas", TextureAtlas.class);
+    }
 }

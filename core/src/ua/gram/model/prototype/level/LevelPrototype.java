@@ -1,6 +1,5 @@
 package ua.gram.model.prototype.level;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 
 import ua.gram.model.prototype.Prototype;
@@ -15,7 +14,6 @@ public final class LevelPrototype extends Prototype {
     public MapPrototype map;
     public Vector2 initialDirection;
     public LevelAssetPrototype assets;
-    public Color backgroundColor;
-    public String boss;
+    public String[] bosses;
     public String type;
 }

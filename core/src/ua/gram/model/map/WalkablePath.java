@@ -1,11 +1,12 @@
 package ua.gram.model.map;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.GdxRuntimeException;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Disposable;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Stack;
 
 import ua.gram.DDGame;
@@ -13,29 +14,34 @@ import ua.gram.DDGame;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class WalkablePath {
+public class WalkablePath implements Disposable {
 
-    public ArrayList<Vector2> path;
-    public ArrayList<Vector2> directions;
-    public Stack<Vector2> directionStack;
-    public Stack<Vector2> pathStack;
+    private final ArrayList<Actor> debuggableDots;
+    private ArrayList<Vector2> path;
+    private Stack<Vector2> directionStack;
     private boolean isReversed = false;
+    private boolean isDrawn = false;
 
     public WalkablePath() {
         path = new ArrayList<Vector2>();
-        directions = new ArrayList<Vector2>();
         directionStack = new Stack<Vector2>();
-        pathStack = new Stack<Vector2>();
+        debuggableDots = new ArrayList<>(20);
     }
 
     public void addDirection(Vector2 dir) {
-        directions.add(dir);
         directionStack.push(dir);
     }
 
     public void addPath(Vector2 position) {
         path.add(position);
-        pathStack.push(position);
+    }
+
+    public int size() {
+        return path.size();
+    }
+
+    public int stepsBeforeFinishLength() {
+        return directionStack.size();
     }
 
     public ArrayList<Vector2> getPath() {
@@ -46,75 +52,39 @@ public class WalkablePath {
         this.path = path;
     }
 
-    public ArrayList<Vector2> getDirections() {
-        return directions;
-    }
-
-    public void setDirections(ArrayList<Vector2> directions) {
-        this.directions = directions;
-    }
-
-    public Stack<Vector2> getDirectionStack() {
-        return directionStack;
-    }
-
-    public void setDirectionStack(Stack<Vector2> directionStack) {
-        this.directionStack = directionStack;
-    }
-
-    public Stack<Vector2> getPathStack() {
-        return pathStack;
-    }
-
-    public void setPathStack(Stack<Vector2> pathStack) {
-        this.pathStack = pathStack;
-    }
-
     public Vector2 nextDirection() {
         if (!isReversed) {
             Collections.reverse(directionStack);
-            Collections.reverse(pathStack);
             isReversed = true;
         }
         return directionStack.pop();
-    }
-
-    public Vector2 nextPath() {
-        if (!isReversed) {
-            Collections.reverse(directionStack);
-            Collections.reverse(pathStack);
-            isReversed = true;
-        }
-        return pathStack.pop();
     }
 
     public Vector2 peekNextDirection() {
         return directionStack.peek();
     }
 
-    public Vector2 peekNextPath() {
-        return pathStack.peek();
-    }
-
-    /**
-     * @param posToSpawn actual positionIndex of an Actor in pixels
-     * @return next positionIndex in the path
-     */
-    public Vector2 getNextPosition(Vector2 posToSpawn) {
-        int count = 0;
-        posToSpawn.x = (int) (posToSpawn.x / DDGame.TILE_HEIGHT);
-        posToSpawn.y = (int) (posToSpawn.y / DDGame.TILE_HEIGHT);
-        for (Vector2 pos : path) {
-            if (Path.equal(pos, posToSpawn)) {
-                return path.get(count);
+    public void draw(Stage stage) {
+        if (DDGame.DEBUG && !isDrawn) {
+            for (Vector2 p : path) {
+                Actor dot = new Actor();
+                dot.setSize(3, 3);
+                dot.setPosition(
+                        p.x * DDGame.TILE_HEIGHT + (DDGame.TILE_HEIGHT - dot.getWidth()) / 2,
+                        p.y * DDGame.TILE_HEIGHT + (DDGame.TILE_HEIGHT - dot.getHeight()) / 2);
+                dot.setDebug(true);
+                stage.addActor(dot);
+                debuggableDots.add(dot);
             }
-            ++count;
+            isDrawn = true;
         }
-        throw new GdxRuntimeException("Position not found");
     }
 
-    public List<Vector2> findFrom(Vector2 current) {
-        int index = path.indexOf(current);
-        return directionStack.subList(index, path.size() - 1);
+    @Override
+    public void dispose() {
+        for (Actor dot : debuggableDots) {
+            dot.remove();
+        }
+        debuggableDots.clear();
     }
 }

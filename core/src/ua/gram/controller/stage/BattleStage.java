@@ -28,22 +28,26 @@ public class BattleStage extends AbstractStage implements Initializer {
     private final ToggleTowerControlsListener controlsListener;
     private final ArrayList<Layer> indexes;
     private final ArrayList<int[]> towerPositions;
-    private final int mapHeight;
 
     public BattleStage(DDGame game, Level level) {
         super(game);
         this.level = level;
         towerPositions = new ArrayList<int[]>();
         indexes = new ArrayList<Layer>();
-        mapHeight = level.getMap().getFirstLayer().getHeight();
+        addLayers();
+
+        Log.info(indexes.size() + " indexes are OK");
+        controlsListener = new ToggleTowerControlsListener();
+        Log.info("BattleStage is OK");
+    }
+
+    private void addLayers() {
+        int mapHeight = level.getMap().getFirstLayer().getHeight();
         for (int i = 0; i < mapHeight; i++) {
             Layer layer = new Layer();
             indexes.add(layer);
             addActor(layer);
         }
-        controlsListener = new ToggleTowerControlsListener();
-        Log.info(indexes.size() + " indexes are OK");
-        Log.info("BattleStage is OK");
     }
 
     @Override
@@ -57,9 +61,7 @@ public class BattleStage extends AbstractStage implements Initializer {
     public void act(float delta) {
         super.act(delta);
         setDebugAll(DDGame.DEBUG);
-        if (!DDGame.PAUSE) {
-            level.update(delta);
-        }
+        level.update(delta);
     }
 
     /**
@@ -108,6 +110,7 @@ public class BattleStage extends AbstractStage implements Initializer {
     }
 
     private int getActorIndex(Actor actor) {
+        int mapHeight = level.getMap().getFirstLayer().getHeight();
         int index = (mapHeight - Math.round(actor.getY() / DDGame.TILE_HEIGHT) - 1);
         return index > 0 ? index : 0;
     }

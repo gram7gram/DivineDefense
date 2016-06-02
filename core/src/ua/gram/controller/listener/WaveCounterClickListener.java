@@ -46,18 +46,26 @@ public class WaveCounterClickListener extends ClickListener {
     }
 
     private void rewardPlayer() {
-        Animation animation = button.getAnimation();
-        float value = 10 * (1 - (animation.getAnimationDuration() / button.getCounter()));
-        int reward = Math.abs((int) value);
+        int reward = getReward();
+        if (reward == 0) return;
 
-        if (reward > 0) {
-            Log.info("Player receives " + reward + " coins as reward for interruption");
-            game.getPlayer().addCoins(reward);
-            button.addAction(
-                    Actions.run(
-                            new PopupLabel("+" + reward,
-                                    game.getResources().getSkin(),
-                                    "smallpopupwhite", button)));
-        }
+        Log.info("Player receives " + reward + " coins as reward for interruption");
+        game.getPlayer().addCoins(reward);
+        button.addAction(
+                Actions.run(
+                        new PopupLabel("+" + reward,
+                                game.getResources().getSkin(),
+                                "smallpopupwhite", button)));
+    }
+
+    private int getReward() {
+        Animation animation = button.getAnimation();
+
+        float divider = button.getCounter();
+        if (divider == 0) return 0;
+
+        float value = 10 * (1 - (animation.getAnimationDuration() / divider));
+
+        return Math.abs((int) value);
     }
 }

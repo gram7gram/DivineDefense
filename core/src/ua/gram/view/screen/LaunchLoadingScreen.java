@@ -5,7 +5,6 @@ import ua.gram.utils.Log;
 import ua.gram.view.AbstractLoadingScreen;
 
 /**
- *
  * @author Gram <gram7gram@gmail.com>
  */
 public class LaunchLoadingScreen extends AbstractLoadingScreen {
@@ -29,5 +28,4 @@ public class LaunchLoadingScreen extends AbstractLoadingScreen {
             game.setScreen(new MainMenuScreen(game));
         }
     }
-
 }

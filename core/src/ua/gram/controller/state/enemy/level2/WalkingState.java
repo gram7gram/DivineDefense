@@ -51,8 +51,8 @@ public class WalkingState extends Level2State {
      *
      * @param enemy actor to move
      * @param delta graphics delta time
-     * @param x     current x
-     * @param y     current y
+     * @param x current x
+     * @param y current y
      */
     protected void move(final Enemy enemy, float delta, int x, int y) {
 
@@ -68,13 +68,6 @@ public class WalkingState extends Level2State {
         int y = Math.round(enemy.getY());
         return Float.compare(x % DDGame.TILE_HEIGHT, 0) == 0
                 && Float.compare(y % DDGame.TILE_HEIGHT, 0) == 0;
-    }
-
-    private boolean checkIntegerPosition(Enemy enemy) {
-        int x = (int) enemy.getX();
-        int y = (int) enemy.getY();
-        return x % DDGame.TILE_HEIGHT == 0
-                && y % DDGame.TILE_HEIGHT == 0;
     }
 
     @Override

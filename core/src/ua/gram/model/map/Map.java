@@ -13,6 +13,7 @@ import java.util.List;
 import ua.gram.DDGame;
 import ua.gram.controller.voter.TiledMapVoter;
 import ua.gram.model.Initializer;
+import ua.gram.model.enums.Voter;
 import ua.gram.model.prototype.level.MapPrototype;
 import ua.gram.utils.Log;
 
@@ -63,16 +64,25 @@ public class Map implements Initializer {
 
     private HashMap<String, Vector2> findMapPoints() {
         HashMap<String, Vector2> map = new HashMap<String, Vector2>(2);
-        for (int x = 0; x < getFirstLayer().getWidth(); x++) {
-            for (int y = 0; y < getFirstLayer().getHeight(); y++) {
 
-                if (!map.containsKey(prototype.spawnProperty) && voter.isSpawn(x, y)) {
-                    map.put(prototype.spawnProperty, new Vector2(x, y));
-                } else if (!map.containsKey(prototype.baseProperty) && voter.isBase(x, y)) {
-                    map.put(prototype.baseProperty, new Vector2(x, y));
+        outer:
+        {
+            for (TiledMapTileLayer layer : layers) {
+                for (int x = 0; x < layer.getWidth(); x++) {
+                    for (int y = 0; y < layer.getHeight(); y++) {
+
+                        if (!map.containsKey(prototype.spawnProperty)
+                                && voter.isSpawn(x, y, Voter.Policy.AFFIRMATIVE)) {
+                            map.put(prototype.spawnProperty, new Vector2(x, y));
+                        } else if (!map.containsKey(prototype.baseProperty)
+                                && voter.isBase(x, y, Voter.Policy.AFFIRMATIVE)) {
+                            map.put(prototype.baseProperty, new Vector2(x, y));
+                        }
+
+                        if (hasFoundAllPoints(map))
+                            break outer;
+                    }
                 }
-
-                if (hasFoundAllPoints(map)) break;
             }
         }
 
@@ -94,10 +104,6 @@ public class Map implements Initializer {
      * If the added one contains 'base' property, search is aborted.
      * <p/>
      * NOTE: Kind of A* path finding.
-     * <p/>
-     * NOTE: It is necessary to look through the map twice, because you have to make
-     * sure that you start scanning from 'spawn' and finish in 'base' to avoid random
-     * 'walkable' tile adding to the path.
      */
     public WalkablePath normalizePath(Vector2 lastDir, Vector2 start) {
         if (lastDir == null || start == null)
@@ -123,9 +129,9 @@ public class Map implements Initializer {
                         position.add(direction);
                         lastDir = Path.opposite(direction);
 
-                        if (voter.isBase(currentX, currentY)) {
+                        if (voter.isBase(currentX, currentY, Voter.Policy.AFFIRMATIVE)) {
                             isFound = true;
-                        } else if (voter.isSpawn(currentX, currentY)) {
+                        } else if (voter.isSpawn(currentX, currentY, Voter.Policy.AFFIRMATIVE)) {
                             if (!recursion) {
                                 recursion = true;
                                 Log.warn("Path normalization was reversed");
@@ -133,7 +139,6 @@ public class Map implements Initializer {
                             } else
                                 throw new GdxRuntimeException("Path normalization error: parsing in wrong direction");
                         }
-                        break;
                     }
                     ++count;
                 }
@@ -151,6 +156,10 @@ public class Map implements Initializer {
                 cause = "no Base was found";
 
             throw new GdxRuntimeException("Path normalization error: " + cause);
+        }
+
+        if (path.size() < 5) {
+            throw new GdxRuntimeException("Path is incorrect");
         }
 
         Log.info("Path is OK");

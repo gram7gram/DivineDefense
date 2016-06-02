@@ -1,16 +1,16 @@
 package ua.gram.controller.state;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import ua.gram.DDGame;
 import ua.gram.model.Initializer;
-import ua.gram.model.actor.GameActor;
 import ua.gram.utils.Log;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public abstract class StateManager<A extends GameActor> implements Initializer {
+public abstract class StateManager<A extends Actor> implements Initializer {
 
     protected final DDGame game;
 
