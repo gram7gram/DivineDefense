@@ -60,6 +60,10 @@ public class WalkablePath implements Disposable {
         return directionStack.pop();
     }
 
+    public Stack<Vector2> getDirections() {
+        return directionStack;
+    }
+
     public Vector2 peekNextDirection() {
         return directionStack.peek();
     }

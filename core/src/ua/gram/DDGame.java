@@ -61,6 +61,7 @@ public class DDGame<P extends GamePrototype> extends Game {
     public static int MAX_LEVELS;
     public static int MAX_TEXTURE_SIZE;
 
+    private final String rootDirectory;
     private final P prototype;
     private final ParametersPrototype parameters;
     private final Speed gameSpeed;
@@ -73,11 +74,16 @@ public class DDGame<P extends GamePrototype> extends Game {
     private BitmapFont info;
 
     public DDGame(SecurityManager security, P prototype) {
+        this(security, prototype, "");
+    }
+
+    public DDGame(SecurityManager security, P prototype, String root) {
         this.security = security;
         this.prototype = prototype;
         this.parameters = prototype.getParameters();
         gameSpeed = new Speed();
         DEBUG = parameters.debugging;
+        rootDirectory = root;
     }
 
     @Override
@@ -90,7 +96,7 @@ public class DDGame<P extends GamePrototype> extends Game {
         initGameValues();
 
         try {
-            resources = new Resources(this);
+            resources = new Resources(this, rootDirectory);
         } catch (GdxRuntimeException e) {
             Log.exc("Cannot create resources", e, true);
         }
@@ -103,19 +109,27 @@ public class DDGame<P extends GamePrototype> extends Game {
     }
 
     private void initGameValues() {
-        WORLD_WIDTH = Gdx.graphics.getWidth();
-        WORLD_HEIGHT = Gdx.graphics.getHeight();
+        WORLD_WIDTH = Gdx.graphics.getWidth() > 0 ? Gdx.graphics.getWidth() : 100;
+        WORLD_HEIGHT = Gdx.graphics.getHeight() > 0 ? Gdx.graphics.getHeight() : 100;
         TILE_HEIGHT = parameters.constants.tileHeight;
         MAX_LEVELS = prototype.levelConfig.levels.length;
         DEFAULT_BUTTON_HEIGHT = parameters.constants.buttonHeight;
         FACTION_1 = parameters.constants.faction1;
         FACTION_2 = parameters.constants.faction2;
-        info = new BitmapFont();
-        info.setColor(1, 1, 1, 1);
-        IntBuffer intBuffer = BufferUtils.newIntBuffer(16);
-        Gdx.gl20.glGetIntegerv(GL20.GL_MAX_TEXTURE_SIZE, intBuffer);
-        MAX_TEXTURE_SIZE = intBuffer.get();
-        Log.info("Max texture size for device: " + MAX_TEXTURE_SIZE);
+
+        try {
+            info = new BitmapFont();
+            info.setColor(1, 1, 1, 1);
+        } catch (NullPointerException e) {
+            Log.exc("Could not init BitmapFont", e);
+        }
+
+        if (Gdx.gl20 != null) {
+            IntBuffer intBuffer = BufferUtils.newIntBuffer(16);
+            Gdx.gl20.glGetIntegerv(GL20.GL_MAX_TEXTURE_SIZE, intBuffer);
+            MAX_TEXTURE_SIZE = intBuffer.get();
+            Log.info("Max texture size for device: " + MAX_TEXTURE_SIZE);
+        }
     }
 
     @Override
@@ -145,16 +159,26 @@ public class DDGame<P extends GamePrototype> extends Game {
 
     public void createBatch() {
         if (batch != null) return;
-        batch = new SpriteBatch();
+        try {
+            batch = new SpriteBatch();
+        } catch (NullPointerException e) {
+            Log.exc("Could not init SpriteBatch", e);
+        }
     }
 
     public void createViewport() {
         if (view != null) return;
-        float RATIO = (float) (WORLD_WIDTH / WORLD_HEIGHT);
-        view = ViewportFactory.create("ExtendViewport",
-                WORLD_WIDTH * RATIO, WORLD_HEIGHT,
-                camera);
-        view.apply();
+
+        float RATIO = WORLD_HEIGHT > 0 ? WORLD_WIDTH / WORLD_HEIGHT : 1;
+
+        try {
+            view = ViewportFactory.create("ExtendViewport",
+                    WORLD_WIDTH * RATIO, WORLD_HEIGHT,
+                    camera);
+            view.apply();
+        } catch (Exception e) {
+            Log.exc("Could not init Viewport", e);
+        }
     }
 
     public BitmapFont getInfo() {

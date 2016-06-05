@@ -30,7 +30,10 @@ public class PlayerDefeatedListener implements EventListener {
 
         BossStateManager manager = boss.getStateManager();
 
-        manager.swapLevel2State(boss, manager.getExclamationState());
+        if (boss.getStateHolder().getCurrentLevel2State() != manager.getExclamationState()) {
+
+            manager.swapLevel2State(boss, manager.getExclamationState());
+        }
 
         return false;
     }

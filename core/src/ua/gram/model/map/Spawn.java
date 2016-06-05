@@ -13,6 +13,7 @@ public class Spawn {
 
     public Spawn(Vector2 spawnPosition) {
         this.spawnPosition = spawnPosition;
+        Log.info("Spawn at " + spawnPosition);
         Log.info("Spawn is OK");
     }
 

@@ -35,7 +35,7 @@ public abstract class AbilityUser extends Enemy implements AbilityUserInterface 
 
     @Override
     public boolean isAbilityPossible(float delta) {
-        if (delayAbility >= this.getAbilityDelay()) {
+        if (delayAbility >= getAbilityDelay()) {
             delayAbility = 0;
             return true;
         } else {
@@ -56,7 +56,7 @@ public abstract class AbilityUser extends Enemy implements AbilityUserInterface 
 
     @Override
     public void setAbilityExecuted(boolean executed) {
-        this.isAbilityExecuted = executed;
+        isAbilityExecuted = executed;
     }
 
     public boolean isAbilityActive() {
@@ -83,11 +83,11 @@ public abstract class AbilityUser extends Enemy implements AbilityUserInterface 
 
     @Override
     public void setAbilityDurationCount(float duration) {
-        this.abilityDurationCount = duration;
+        abilityDurationCount = duration;
     }
 
     @Override
     public void addAbilityDurationCount(float duration) {
-        this.abilityDurationCount += duration;
+        abilityDurationCount += duration;
     }
 }

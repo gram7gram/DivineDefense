@@ -36,8 +36,9 @@ public final class EnemySummoner extends AbilityUser implements Cloneable {
 
     @Override
     public synchronized boolean ability() {
-        if (path.stepsBeforeFinishLength() <= getPrototype().abilityDelay) {
-            setAbilityExecuted(true);
+        if (path.stepsBeforeFinishLength() <= getPrototype().abilityDelay + 1) {
+            isInterrupted = true;
+            abilityDurationCount = -1;
             Log.warn(this + " is too close to Base to perform ability");
             return false;
         }

@@ -1,7 +1,8 @@
 package ua.gram.model.map;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+
+import ua.gram.utils.Log;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -12,7 +13,8 @@ public class Base {
 
     public Base(Vector2 basePosition) {
         this.basePosition = basePosition;
-        Gdx.app.log("INFO", "Base is OK");
+        Log.info("Base at " + basePosition);
+        Log.info("Base is OK");
     }
 
     public Vector2 getPosition() {

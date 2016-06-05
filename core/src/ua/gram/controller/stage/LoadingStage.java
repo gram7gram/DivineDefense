@@ -14,7 +14,7 @@ public class LoadingStage extends AbstractStage {
 
     public LoadingStage(DDGame game) {
         super(game);
-        label = new Label("Loading: 0%", game.getResources().getSkin(), "header1black");
+        label = new Label("Loading...", game.getResources().getSkin(), "header1black");
         label.setPosition(
                 DDGame.WORLD_WIDTH / 2 - label.getWidth() / 2,
                 DDGame.WORLD_HEIGHT / 2 - label.getHeight() / 2
@@ -23,6 +23,7 @@ public class LoadingStage extends AbstractStage {
     }
 
     public void update(int progress) {
-        label.setText("Loading: " + progress + "%");
+//        label.setText("Loading: " + progress + "%");
+        label.setText("Loading...");
     }
 }

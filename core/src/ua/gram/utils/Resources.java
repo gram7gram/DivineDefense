@@ -2,7 +2,6 @@ package ua.gram.utils;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
-import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -14,7 +13,6 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 import ua.gram.DDGame;
 
 /**
- *
  * @author Gram <gram7gram@gmail.com>
  */
 public class Resources implements Disposable {
@@ -25,11 +23,19 @@ public class Resources implements Disposable {
     private final Skin skin;
 
     public Resources(DDGame game) {
+        this(game, "");
+    }
+
+    public Resources(DDGame game, String root) {
         this.game = game;
         manager = new AssetManager();
-        skin = loadSkin(game.getParameters().skin);
-        loadTexture(BACKGROUND_TEXTURE);
+        skin = loadSkin(root, game.getParameters().skin, true);
+        loadTexture(root + BACKGROUND_TEXTURE);
         manager.finishLoading();
+    }
+
+    public Skin loadSkin(String file) {
+        return loadSkin("", file, true);
     }
 
     /**
@@ -41,17 +47,20 @@ public class Resources implements Disposable {
      * @param file - name of the Json
      * @return - new Skin, buy with Json and Atlas, that matches Json file without extension
      */
-    public Skin loadSkin(String file) {
+    public Skin loadSkin(String root, String file, boolean waitUntilFinished) {
         String atlas = game.getParameters().atlas;
         if (atlas == null) {
             String name = file.substring(0, file.lastIndexOf("."));
             atlas = name + ".atlas";
             Log.warn("Atlas file not specified. Trying: " + atlas);
         }
-        manager.load(file, Skin.class, new SkinLoader.SkinParameter(atlas));
-        manager.finishLoading();
+        manager.load(root + file, Skin.class, new SkinLoader.SkinParameter(root + atlas));
 
-        return manager.get(file, Skin.class);
+        if (waitUntilFinished) {
+            manager.finishLoading();
+        }
+
+        return manager.get(root + file, Skin.class);
     }
 
     /**
@@ -60,7 +69,7 @@ public class Resources implements Disposable {
      */
     public void loadMap(String file) {
         try {
-            manager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
+            manager.setLoader(TiledMap.class, new TmxMapLoader());
             manager.load(file, TiledMap.class);
         } catch (GdxRuntimeException e) {
             Log.exc("Could not load map for level: " + file, e);

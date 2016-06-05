@@ -29,10 +29,29 @@ allprojects {
 project(":desktop") {
     apply plugin: "java"
 
+    sourceSets.test.java.srcDirs = ["test/"]
+
     dependencies {
         compile project(":core")
         compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+        compile fileTree(dir: 'libs', include: '*.jar')
+
+        testCompile "junit:junit:4.12"
+        testCompile "org.mockito:mockito-core:1.+"
+        testCompile "com.tngtech.java:junit-dataprovider:1.10.0"
+        testCompile "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
+        testCompile "com.badlogicgames.gdx:gdx:$gdxVersion"
+        testCompile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+
+    }
+}
+
+project(":core") {
+    apply plugin: "java"
+
+    dependencies {
+        compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile fileTree(dir: 'libs', include: '*.jar')
     }
 }
@@ -53,21 +72,5 @@ if (System.env.ANDROID_HOME != null) {
             natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86_64"
             compile fileTree(dir: 'libs', include: '*.jar')
         }
-    }
-}
-
-project(":core") {
-    apply plugin: "java"
-
-    sourceSets.test.java.srcDirs = ["test/"]
-
-    dependencies {
-        compile "com.badlogicgames.gdx:gdx:$gdxVersion"
-        compile fileTree(dir: 'libs', include: '*.jar')
-
-        testCompile "junit:junit:4.11"
-        testCompile "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
-        testCompile "com.badlogicgames.gdx:gdx:$gdxVersion"
-        testCompile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
     }
 }

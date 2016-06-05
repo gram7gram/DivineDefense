@@ -33,6 +33,16 @@ public class Map implements Initializer {
     private TiledMapVoter voter;
     private boolean recursion = false;
 
+    public Map(TiledMap map, MapPrototype prototype) {
+        this.prototype = prototype;
+        tiledMap = map;
+        parseLimit = 3 * DDGame.MAX_ENTITIES;
+        path = new Path();
+        layers = new ArrayList<>(tiledMap.getLayers().getCount());
+        initLayers();
+        Log.info("Map is OK");
+    }
+
     public Map(DDGame game, MapPrototype prototype) {
         this.prototype = prototype;
         tiledMap = game.getResources().getMap(prototype.name);

@@ -18,18 +18,22 @@ import ua.gram.utils.Log;
  */
 public class DesktopModule implements Module {
 
+    public static final String PARAMETERS = "data/parameters.json";
     private final SecurityManager<DesktopGamePrototype> securityManager;
+    private final String rootDirectory;
     private DesktopGamePrototype prototype;
     private ApplicationListener app;
 
     public DesktopModule() {
+        this("", PARAMETERS);
+    }
+
+    public DesktopModule(String rootDirectory, String parametersPath) {
         securityManager = new SecurityManager<DesktopGamePrototype>();
         securityManager.setFileHandle(new LwjglFiles());
-
+        this.rootDirectory = rootDirectory;
         try {
-            prototype = securityManager.load(
-                    DesktopGamePrototype.class,
-                    "data/parameters.json");
+            prototype = securityManager.load(DesktopGamePrototype.class, rootDirectory + parametersPath);
 
             securityManager.setPrototype(prototype);
 
@@ -51,7 +55,7 @@ public class DesktopModule implements Module {
 
     @Override
     public void initModule() {
-        app = new DDGame<DesktopGamePrototype>(securityManager, prototype);
+        app = new DDGame<DesktopGamePrototype>(securityManager, prototype, rootDirectory);
     }
 
     @Override

@@ -27,11 +27,17 @@ public abstract class AbstractScreen implements Screen {
     @Override
     public void show() {
         Log.info("Screen set to " + this.getClass().getSimpleName());
-        texture = game.getResources().getRegisteredTexture(Resources.BACKGROUND_TEXTURE);
+        try {
+            texture = game.getResources().getRegisteredTexture(Resources.BACKGROUND_TEXTURE);
+        } catch (NullPointerException e) {
+            Log.exc("Could not init default background texture", e);
+        }
     }
 
     @Override
     public void render(float delta) {
+        if (Gdx.gl == null || batch == null) return;
+
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
@@ -94,7 +100,7 @@ public abstract class AbstractScreen implements Screen {
     @Override
     public void dispose() {
         Log.warn("Disposing " + this.getClass().getSimpleName());
-        texture.dispose();
+        if (texture != null) texture.dispose();
     }
 
     public DDGame getGame() {
