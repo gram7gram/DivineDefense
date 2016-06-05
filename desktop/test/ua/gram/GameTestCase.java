@@ -15,7 +15,7 @@ import org.mockito.Mockito;
  */
 public class GameTestCase {
 
-    protected final String root = "/home/master/Projects/DivineDefense/DD/android/assets/";
+    protected final String root = System.getProperty("user.dir") + "/../android/assets/";
 
     public GameTestCase() {
 

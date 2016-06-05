@@ -10,9 +10,8 @@ cache:
 git:
   depth: 3
 branches:
-  exclude:
-    - master
   only:
+    - master
     - /^DD-.*$/
 script:
     - ./gradlew check
