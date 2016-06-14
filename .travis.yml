@@ -16,5 +16,5 @@ branches:
 script:
     #- ./gradlew check
     #- ./gradlew assemble
-    - export PROJECT_DIR=${pwd}
+    - export PROJECT_DIR=${PWD}
     - ./gradlew :desktop:test
