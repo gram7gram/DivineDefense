@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="15" height="10" tilewidth="60" tileheight="60" nextobjectid="1">
+ <tileset firstgid="1" name="CASTLE tile-set rev 2" tilewidth="60" tileheight="60" tilecount="24">
+  <image source="terrain/castle@60.png" width="240" height="360"/>
+  <tile id="2">
+   <properties>
+    <property name="walkable" value=""/>
+   </properties>
+  </tile>
+  <tile id="5">
+   <properties>
+    <property name="walkable" value=""/>
+   </properties>
+  </tile>
+  <tile id="10">
+   <properties>
+    <property name="base" value=""/>
+    <property name="walkable" value=""/>
+   </properties>
+  </tile>
+  <tile id="23">
+   <properties>
+    <property name="spawn" value=""/>
+    <property name="walkable" value=""/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Tile Layer 1" width="15" height="10">
+  <data encoding="base64" compression="zlib">
+   eJwTZmBgECYTi1OAWUbxsMYA9z4EVw==
+  </data>
+ </layer>
+ <layer name="Tile Layer 2" width="15" height="10">
+  <data encoding="base64" compression="zlib">
+   eJyljYsKgDAIRW9F0TuCiv7/S1NSsFCqdeDgnLsOAGqcTFK9ns+LVJ0zPa5E/R7M31AkZCpjSpYZyNHY3fZ6u/VuJjMyF6N3UbZ8+MNTsw3Zil9Yyc34hwOfkgIh
+  </data>
+ </layer>
+</map>
