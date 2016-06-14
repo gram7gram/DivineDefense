@@ -4,7 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 import ua.gram.DDGame;
 import ua.gram.utils.Log;
@@ -16,19 +18,22 @@ import ua.gram.utils.Resources;
 public abstract class AbstractScreen implements Screen {
 
     protected final DDGame game;
-    protected final SpriteBatch batch;
-    private Texture texture;
+    private Stage backgroundStage;
 
     public AbstractScreen(DDGame game) {
         this.game = game;
-        batch = game.getBatch();
     }
 
     @Override
     public void show() {
         Log.info("Screen set to " + this.getClass().getSimpleName());
+        backgroundStage = new Stage(game.getViewport(), game.getBatch());
         try {
-            texture = game.getResources().getRegisteredTexture(Resources.BACKGROUND_TEXTURE);
+            Texture texture = game.getResources().getRegisteredTexture(Resources.BACKGROUND_TEXTURE);
+
+            Image backgroundImage = new Image(texture);
+            backgroundImage.setBounds(0, 0, DDGame.WORLD_WIDTH, DDGame.WORLD_HEIGHT);
+            backgroundStage.addActor(backgroundImage);
         } catch (NullPointerException e) {
             Log.exc("Could not init default background texture", e);
         }
@@ -36,16 +41,14 @@ public abstract class AbstractScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        Batch batch = game.getBatch();
         if (Gdx.gl == null || batch == null) return;
 
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
-        if (texture != null) {
-            batch.begin();
-            batch.draw(texture, 0, 0, 900, 480);
-            batch.end();
-        }
+        backgroundStage.act(delta);
+        backgroundStage.draw();
 
         if (!DDGame.PAUSE) {
             renderNoPause(delta);
@@ -100,7 +103,7 @@ public abstract class AbstractScreen implements Screen {
     @Override
     public void dispose() {
         Log.warn("Disposing " + this.getClass().getSimpleName());
-        if (texture != null) texture.dispose();
+        if (backgroundStage != null) backgroundStage.dispose();
     }
 
     public DDGame getGame() {

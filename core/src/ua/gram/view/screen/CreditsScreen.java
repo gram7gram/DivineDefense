@@ -1,8 +1,11 @@
 package ua.gram.view.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.InputMultiplexer;
 
 import ua.gram.DDGame;
+import ua.gram.controller.listener.CameraControlsListener;
 import ua.gram.controller.stage.CreditsStage;
 import ua.gram.utils.Log;
 import ua.gram.view.AbstractScreen;
@@ -23,7 +26,11 @@ public class CreditsScreen extends AbstractScreen {
     @Override
     public void show() {
         super.show();
-        Gdx.input.setInputProcessor(stage);
+        InputMultiplexer multiplexer = new InputMultiplexer();
+        InputAdapter inputAdapter = new CameraControlsListener(game);
+        multiplexer.addProcessor(stage);
+        multiplexer.addProcessor(inputAdapter);
+        Gdx.input.setInputProcessor(multiplexer);
     }
 
     @Override
