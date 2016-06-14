@@ -1,7 +1,6 @@
 ## DIVINE DEFENSE
 
 [![Build Status](https://travis-ci.org/gram7gram/DivineDefense.svg?branch=master)](https://travis-ci.org/gram7gram/DivineDefense)
-
 [![Coverage Status](https://coveralls.io/repos/github/gram7gram/DivineDefense/badge.svg?branch=master)](https://coveralls.io/github/gram7gram/DivineDefense?branch=master)
 
 ![GAME ICON](https://github.com/gram7gram/DivineDefense/blob/master/logo_small.png?raw=true)
