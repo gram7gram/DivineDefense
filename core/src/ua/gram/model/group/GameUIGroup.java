@@ -10,8 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 
 import ua.gram.DDGame;
+import ua.gram.controller.event.PauseEvent;
 import ua.gram.controller.stage.StageHolder;
-import ua.gram.controller.stage.UIStage;
 import ua.gram.model.Initializer;
 import ua.gram.model.actor.misc.CustomLabel;
 import ua.gram.model.level.Level;
@@ -98,9 +98,7 @@ public class GameUIGroup extends Table implements Initializer {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 notificationLabel.remove();
-                DDGame.PAUSE = true;
-                UIStage uiStage = stageHolder.getUiStage();
-                uiStage.toggleWindow(uiStage.getPauseWindow());
+                stageHolder.fire(new PauseEvent(true));
             }
         });
     }
@@ -117,7 +115,7 @@ public class GameUIGroup extends Table implements Initializer {
     }
 
     private boolean canBeUpdated() {
-        return !DDGame.PAUSE && !(level.isCleared | game.getPlayer().isDead());
+        return !DDGame.PAUSE && !(level.isCleared() | game.getPlayer().isDead());
     }
 
     @Override

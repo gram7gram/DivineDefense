@@ -10,7 +10,6 @@ import ua.gram.model.actor.misc.CounterButton;
 import ua.gram.model.actor.misc.PopupLabel;
 import ua.gram.model.level.Level;
 import ua.gram.utils.Log;
-import ua.gram.view.screen.ErrorScreen;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -30,18 +29,21 @@ public class WaveCounterClickListener extends ClickListener {
         Log.info("Countdown interrupted");
         Level level = button.getLevel();
         Animation animation = button.getAnimation();
-        try {
-            if (!animation.isAnimationFinished(button.getStateTime())) {
-                rewardPlayer();
-            } else {
-                Log.info("No reward for player");
-            }
-            button.reset();
+
+        if (!animation.isAnimationFinished(button.getStateTime())) {
+            rewardPlayer();
+        } else {
+            Log.info("No reward for player");
+        }
+
+        button.reset();
+
+        if (level.hasNextWave()) {
             level.nextWave();
-        } catch (Exception e) {
-            game.setScreen(new ErrorScreen(game, "Inappropriate wave "
+        } else {
+            Log.crit("Inappropriate wave "
                     + level.getCurrentWaveIndex()
-                    + " in level " + level.getCurrentLevel(), e));
+                    + " in level " + level.getCurrentLevel());
         }
     }
 

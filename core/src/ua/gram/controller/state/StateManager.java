@@ -42,6 +42,12 @@ public abstract class StateManager<A extends Actor> implements Initializer {
                 Log.exc("Could not execute postManage() on "
                         + actor + "'s state " + before, e);
             }
+        } else {
+            try {
+                onBeforeStateReset(actor);
+            } catch (Exception e) {
+                Log.exc("Could not execute onBeforeStateReset() on " + actor, e);
+            }
         }
 
         if (before == after) {
@@ -63,6 +69,12 @@ public abstract class StateManager<A extends Actor> implements Initializer {
                 Log.exc("Could not execute preManage() on "
                         + actor + "'s state " + before, e);
             }
+        } else {
+            try {
+                onAfterStateReset(actor);
+            } catch (Exception e) {
+                Log.exc("Could not execute onAfterStateReset() on " + actor, e);
+            }
         }
     }
 
@@ -81,5 +93,13 @@ public abstract class StateManager<A extends Actor> implements Initializer {
      * @param actor the actor which will be managed
      */
     public abstract void reset(A actor);
+
+    public void onBeforeStateReset(A actor) {
+
+    }
+
+    public void onAfterStateReset(A actor) {
+
+    }
 
 }

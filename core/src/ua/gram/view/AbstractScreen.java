@@ -82,13 +82,13 @@ public abstract class AbstractScreen implements Screen {
     @Override
     public void pause() {
         Log.warn("App enters pause state");
-        DDGame.PAUSE = true;
+        DDGame.pauseGame();
     }
 
     @Override
     public void resume() {
         Log.warn("App resumes");
-        DDGame.PAUSE = false;
+        DDGame.resumeGame();
     }
 
     @Override

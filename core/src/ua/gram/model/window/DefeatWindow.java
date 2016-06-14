@@ -93,8 +93,9 @@ public class DefeatWindow extends AbstractWindow implements Initializer, Resetab
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     super.clicked(event, x, y);
-                    if (!option.getButton().isDisabled())
-                        stageHolder.getUiStage().toggleDefeatWindow();
+                    if (!option.getButton().isDisabled()) {
+                        stageHolder.getUiStage().hideDefeatWindow();
+                    }
                 }
             });
         }

@@ -15,12 +15,12 @@ import ua.gram.utils.Log;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class DamageListener implements EventListener {
+public class EnemyDamageListener implements EventListener {
 
     private final Enemy enemy;
     private final Skin skin;
 
-    public DamageListener(Enemy enemy, Skin skin) {
+    public EnemyDamageListener(Enemy enemy, Skin skin) {
         this.enemy = enemy;
         this.skin = skin;
     }

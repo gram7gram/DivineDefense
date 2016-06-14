@@ -52,6 +52,7 @@ project(":core") {
 
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
+        compile project(":spine-libgdx")
         compile fileTree(dir: 'libs', include: '*.jar')
     }
 }
@@ -72,5 +73,13 @@ if (System.env.ANDROID_HOME != null) {
             natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86_64"
             compile fileTree(dir: 'libs', include: '*.jar')
         }
+    }
+}
+
+project(":spine-libgdx") {
+    apply plugin: "java"
+
+    dependencies {
+        compile "com.badlogicgames.gdx:gdx:$gdxVersion"
     }
 }

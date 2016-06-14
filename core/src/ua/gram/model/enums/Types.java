@@ -35,7 +35,7 @@ public class Types {
     }
 
     public enum BossState {
-        IDLE, DEFEATED, EXCLAMATION, COMMAND
+        IDLE, DEFEAT, EXCLAMATION, COMMAND
     }
 
     public enum TowerLevels {

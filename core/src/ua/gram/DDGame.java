@@ -86,6 +86,24 @@ public class DDGame<P extends GamePrototype> extends Game {
         rootDirectory = root;
     }
 
+    public static void pauseGame() {
+        if (PAUSE) {
+            Log.warn("Game is already paused");
+            return;
+        }
+        PAUSE = true;
+        Log.info("Pause is ON");
+    }
+
+    public static void resumeGame() {
+        if (!PAUSE) {
+            Log.warn("Game is already resumed");
+            return;
+        }
+        PAUSE = false;
+        Log.info("Pause is OFF");
+    }
+
     @Override
     public void create() {
         Gdx.app.setLogLevel(parameters.logLevel);

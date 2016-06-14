@@ -26,7 +26,6 @@ public class BossAnimationManager {
     private final SkeletonRenderer<Batch> skeletRenderer;
     private final AnimationStateData stateData;
     private final AnimationState skeletonState;
-    private final SkeletonData skeletonData;
     private final float animationScale;
 
     public BossAnimationManager(Resources resources, BossPrototype prototype) {
@@ -34,7 +33,7 @@ public class BossAnimationManager {
         this.prototype = prototype;
         this.animationScale = prototype.scale;
 
-        skeletonData = getSkeleton(prototype.name);
+        SkeletonData skeletonData = getSkeleton(prototype.name);
 
         stateData = new AnimationStateData(skeletonData);
         skeletRenderer = new SkeletonRenderer<>();
@@ -50,17 +49,9 @@ public class BossAnimationManager {
         stateData.setMix("EXCLAMATION", "IDLE", 0.2f);
         stateData.setMix("COMMAND", "EXCLAMATION", 0);
         stateData.setMix("EXCLAMATION", "COMMAND", 0);
-//        stateData.setMix("EXCLAMATION", "DEFEAT", 0);
-//        stateData.setMix("COMMAND", "DEFEAT", 0);
-//        stateData.setMix("IDLE", "DEFEAT", 0);
-
-
-        // Queue animations on track 0.
-//        skeletonState.setAnimation(0, "IDLE", true);
-//        skeletonState.addAnimation(0, "COMMAND", false, 2); // Jump after 2 seconds.
-//        skeletonState.addAnimation(0, "IDLE", true, 0);
-//        skeletonState.addAnimation(0, "EXCLAMATION", true, 2);
-//        skeletonState.addAnimation(0, "IDLE", true, 0);
+        stateData.setMix("EXCLAMATION", "DEFEAT", 0);
+        stateData.setMix("COMMAND", "DEFEAT", 0);
+        stateData.setMix("IDLE", "DEFEAT", 0);
 
         Log.info("AnimationManager for " + prototype.name + " is OK");
     }
@@ -80,10 +71,6 @@ public class BossAnimationManager {
 
     public SkeletonRenderer<Batch> getSkeletonRenderer() {
         return skeletRenderer;
-    }
-
-    public SkeletonData getSkeletonData() {
-        return skeletonData;
     }
 
     public float getScale() {

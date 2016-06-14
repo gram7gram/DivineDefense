@@ -1,4 +1,4 @@
-DIVINE DEFENSE
+## DIVINE DEFENSE
 
 [![Build Status](https://travis-ci.org/gram7gram/DivineDefense.svg?branch=master)](https://travis-ci.org/gram7gram/DivineDefense)
 
@@ -6,7 +6,7 @@ DIVINE DEFENSE
 
 ![GAME ICON](https://github.com/gram7gram/DivineDefense/blob/master/logo_small.png?raw=true)
 
-#Concept
+# Concept
 
 **Short name**: DD
 
@@ -44,7 +44,9 @@ Twitter: https://twitter.com/DivineDefense
 
 Dmitriy Bondarchuk (Gram) <gram7gram@gmail.com>
 
-#Setting
+Budi Harjakesuma <bootdh@gmail.com>
+
+# Setting
 
 **Style**: cartoon
 
@@ -136,7 +138,3 @@ By clearing all waves in level, the Player can proceed to the next level. Later,
 If the Player is not successful - Player’s health drops to zero - he will be provided with 2 opportunities: restart the level or continue the wave with “blessing”. Blessings are in several options: continue with full health restored or continue with several restored health.
 
 The game is considered finished when the Player clears last level.
-
-
-
-__end of concept__

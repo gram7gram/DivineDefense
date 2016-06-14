@@ -1,8 +1,11 @@
 package ua.gram.controller.state.boss;
 
+import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import ua.gram.DDGame;
+import ua.gram.controller.event.LevelFinishedEvent;
+import ua.gram.controller.stage.StageHolder;
 import ua.gram.controller.state.StateInterface;
 import ua.gram.controller.state.StateManager;
 import ua.gram.controller.state.boss.level1.ActiveState;
@@ -20,7 +23,6 @@ import ua.gram.utils.Log;
  * @author Gram <gram7gram@gmail.com>
  */
 public class BossStateManager extends StateManager<Boss> {
-
 
     //Level 1 states
     private DefeatedState defeatedState;
@@ -48,7 +50,7 @@ public class BossStateManager extends StateManager<Boss> {
     @Override
     public void update(Boss actor, float delta) {
         if (actor == null)
-            throw new NullPointerException("EnemyStateManager cannot update NULL");
+            throw new NullPointerException(getClass().getSimpleName() + " cannot update NULL actor");
 
         BossStateHolder holder = actor.getStateHolder();
 
@@ -62,6 +64,7 @@ public class BossStateManager extends StateManager<Boss> {
                 Log.exc("Could not manage Level1State on " + actor, e);
             }
         }
+
         if (holder.getCurrentLevel2State() != null) {
             try {
                 holder.getCurrentLevel2State().manage(actor, delta);
@@ -70,8 +73,9 @@ public class BossStateManager extends StateManager<Boss> {
                 Log.exc("Could not manage Level2State on " + actor, e);
             }
         }
+
         if (!hasManagedState) {
-            throw new GdxRuntimeException("Any state was managed by TowerStateManager");
+            throw new GdxRuntimeException("No state was managed by " + getClass().getSimpleName());
         }
 
     }
@@ -99,20 +103,20 @@ public class BossStateManager extends StateManager<Boss> {
     }
 
     @Override
-    public void reset(Boss actor) {
-        BossStateHolder holder = actor.getStateHolder();
+    public void reset(Boss boss) {
+        BossStateHolder holder = boss.getStateHolder();
         holder.setCurrentLevel1State(null);
         holder.setCurrentLevel2State(null);
 
-        Log.info(actor + " states have been reset");
+        Log.info(boss + " states have been reset");
     }
 
-    public void swapLevel1State(Boss actor, Level1State state) {
-        swap(actor, actor.getStateHolder().getCurrentLevel1State(), state, 1);
+    public void swapLevel1State(Boss boss, Level1State state) {
+        swap(boss, boss.getStateHolder().getCurrentLevel1State(), state, 1);
     }
 
-    public void swapLevel2State(Boss actor, Level2State state) {
-        swap(actor, actor.getStateHolder().getCurrentLevel1State(), state, 2);
+    public void swapLevel2State(Boss boss, Level2State state) {
+        swap(boss, boss.getStateHolder().getCurrentLevel1State(), state, 2);
     }
 
     public DefeatedState getDefeatedState() {
@@ -137,5 +141,19 @@ public class BossStateManager extends StateManager<Boss> {
 
     public IdleState getIdleState() {
         return idleState;
+    }
+
+    @Override
+    public void onAfterStateReset(Boss boss) {
+        if (boss.getStateHolder().getCurrentLevel1State() == null && boss.isDefeated()) {
+            Log.info("Executing onAfterStateReset for " + boss);
+            StageHolder stageHolder = boss.getLevel().getStageHolder();
+
+            Event event = new LevelFinishedEvent();
+            stageHolder.fireUI(event);
+            stageHolder.fireBattle(event);
+
+            boss.remove();
+        }
     }
 }

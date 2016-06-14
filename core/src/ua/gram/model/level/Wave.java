@@ -1,5 +1,6 @@
 package ua.gram.model.level;
 
+import ua.gram.controller.event.LevelFinishedEvent;
 import ua.gram.model.prototype.level.WavePrototype;
 import ua.gram.utils.Log;
 
@@ -11,7 +12,7 @@ public class Wave {
     private final Level level;
     private final String[] enemies;
     private final byte index;
-    public boolean isStarted;
+    private boolean isStarted;
 
     public Wave(Level level, WavePrototype prototype) {
         this.level = level;
@@ -21,16 +22,16 @@ public class Wave {
         Log.info("Wave " + index + " is OK");
     }
 
-    /**
-     * Set flags for the finish wave. If wave was the last - the levelConfig is cleared.
-     */
     public void finish() {
         Log.info("Wave " + index + "/" + level.getMaxWaves() + " is finished");
         isStarted = false;
-        if (index == level.getMaxWaves()) {
-            level.isCleared = true;
-            Log.info("Level " + level.getCurrentLevel() + " is cleared");
+        if (isLastWave()) {
+            level.getStageHolder().fire(new LevelFinishedEvent());
         }
+    }
+
+    private boolean isLastWave() {
+        return index == level.getMaxWaves();
     }
 
     public byte getIndex() {
@@ -39,5 +40,13 @@ public class Wave {
 
     public String[] getEnemies() {
         return enemies;
+    }
+
+    public boolean isStarted() {
+        return isStarted;
+    }
+
+    public void setStarted(boolean started) {
+        this.isStarted = started;
     }
 }

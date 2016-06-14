@@ -3,7 +3,7 @@ package ua.gram.controller.factory;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import ua.gram.DDGame;
-import ua.gram.controller.listener.ContinueListener;
+import ua.gram.controller.listener.ContinueLevelListener;
 import ua.gram.controller.listener.RestartClickListener;
 import ua.gram.model.prototype.ui.DefeatOptionPrototype;
 
@@ -16,7 +16,7 @@ public class DefeatListenerFactory {
         if (prototype.cost == 0) {
             return new RestartClickListener(game, game.getPlayer().getLevel());
         } else {
-            return new ContinueListener(game, prototype.health, prototype.cost);
+            return new ContinueLevelListener(game, prototype.health, prototype.cost);
         }
     }
 }

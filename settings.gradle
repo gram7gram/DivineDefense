@@ -1,4 +1,4 @@
-include 'desktop', 'core'
+include 'desktop', 'core', 'spine-libgdx'
 
 if (System.env.ANDROID_HOME != null) {
     include 'android'

@@ -6,7 +6,6 @@ import com.badlogic.gdx.utils.Pool;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Stack;
 
 import ua.gram.DDGame;
@@ -74,17 +73,13 @@ public final class EnemySpawner implements Initializer {
         float delay = 1;
         if (count >= delay) {
             count = 0;
-            try {
-                if (!enemiesToSpawn.isEmpty()) {
-                    Vector2 spawnPosition = level.getMap().getSpawn().getPosition();
+            if (!enemiesToSpawn.isEmpty()) {
+                Vector2 spawnPosition = level.getMap().getSpawn().getPosition();
 
-                    spawn(enemiesToSpawn.pop(), spawnPosition, null);
+                spawn(enemiesToSpawn.pop(), spawnPosition, null);
 
-                } else if (canFinishWave()) {
-                    level.getWave().finish();
-                }
-            } catch (Exception e) {
-                Log.exc("EnemySpawner conflict", e);
+            } else if (canFinishWave()) {
+                level.getWave().finish();
             }
         } else {
             count += delta;
@@ -92,7 +87,7 @@ public final class EnemySpawner implements Initializer {
     }
 
     private boolean canFinishWave() {
-        return !battleStage.hasEnemiesOnMap() || level.isCleared;
+        return !battleStage.hasEnemiesOnMap() || level.isCleared();
     }
 
     /**
@@ -132,7 +127,7 @@ public final class EnemySpawner implements Initializer {
 
     /**
      * FIX Bigger speed - slower walk of EnemyState
-     *
+     * <p/>
      * Sets the Actions for EnemyState to do to walk the path
      */
     public void setActionPath(final Enemy enemy, Vector2 spawn, Vector2 previous) {
@@ -154,7 +149,7 @@ public final class EnemySpawner implements Initializer {
     public Pool<Enemy> getPool(String type) {
         Pool<Enemy> pool = null;
         for (String name : identityMap.keySet()) {
-            if (Objects.equals(name, type)) {
+            if (name.equals(type)) {
                 pool = identityMap.get(name);
                 break;
             }

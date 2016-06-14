@@ -2,6 +2,7 @@ package ua.gram.view.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -26,29 +27,22 @@ import ua.gram.view.AbstractScreen;
 public class GameScreen extends AbstractScreen {
 
     private final OrthogonalTiledMapRenderer renderer;
-    private final BattleStage battleStage;
-    private final UIStage uiStage;
     private final Level level;
+    private final InputMultiplexer inputMultiplexer;
+    private CameraListener cameraListener;
+    private StageHolder stageHolder;
 
     public GameScreen(DDGame game, Level level) {
         super(game);
         this.level = level;
 
-        DDGame.PAUSE = false;
+        DDGame.resumeGame();
         game.getSpeed().reset();
         game.getPlayer().resetObject();
 
         renderer = new OrthogonalTiledMapRenderer(level.getMap().getTiledMap());
 
-        battleStage = new BattleStage(game, level);
-        level.setBattleStage(battleStage);
-        level.init();
-
-        uiStage = new UIStage(game, level, game.getPrototype().ui);
-
-        StageHolder stageHolder = new StageHolder(uiStage, battleStage);
-        battleStage.setStageHolder(stageHolder);
-        uiStage.setStageHolder(stageHolder);
+        inputMultiplexer = new InputMultiplexer();
 
         Log.info("GameScreen is OK");
     }
@@ -56,22 +50,39 @@ public class GameScreen extends AbstractScreen {
     @Override
     public void show() {
         super.show();
+
+        BattleStage battleStage = new BattleStage(game, level);
+        UIStage uiStage = new UIStage(game, level, game.getPrototype().ui);
+
+        cameraListener = new CameraListener(uiStage);
+
+        stageHolder = new StageHolder(this, uiStage, battleStage);
+
+        battleStage.setStageHolder(stageHolder);
+        uiStage.setStageHolder(stageHolder);
+        level.setStageHolder(stageHolder);
+
+        level.init();
+
         renderer.setView(game.getCamera());
-        battleStage.init();
-        uiStage.init();
+        stageHolder.init();
+
         loadBackgroundElements();
         loadForegroundElements();
-        InputMultiplexer inputMultiplexer = new InputMultiplexer();
-        inputMultiplexer.addProcessor(new CameraListener(uiStage));
+
+        inputMultiplexer.addProcessor(cameraListener);
         inputMultiplexer.addProcessor(uiStage);
         inputMultiplexer.addProcessor(battleStage);
-        Gdx.input.setInputProcessor(inputMultiplexer);
-        uiStage.getGameUIGroup().showNotification("LEVEL " + (level.getIndex()));
 
+        Gdx.input.setInputProcessor(inputMultiplexer);
+
+        uiStage.getGameUIGroup().showNotification("LEVEL " + (level.getIndex()));
     }
 
     @Override
     public void renderAlways(float delta) {
+        UIStage uiStage = stageHolder.getUiStage();
+        BattleStage battleStage = stageHolder.getBattleStage();
         uiStage.act(delta);
         renderer.setView(game.getCamera());
         renderer.render();
@@ -81,7 +92,7 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public void renderNoPause(float delta) {
-        battleStage.act(delta);
+        stageHolder.getBattleStage().act(delta);
     }
 
     private ResoursePrototype[] getBackgroundAssets(LevelAssetPrototype prototype) {
@@ -119,7 +130,7 @@ public class GameScreen extends AbstractScreen {
         for (ResoursePrototype resource : getBackgroundAssets(prototype)) {
             Texture texture = game.getResources().getRegisteredTexture(resource.file);
             Image image = new BackgroundImage(texture, resource);
-            battleStage.addActor(image);
+            stageHolder.getBattleStage().addActor(image);
             Log.info("Added background texture: " + resource.file);
         }
     }
@@ -143,7 +154,7 @@ public class GameScreen extends AbstractScreen {
         for (ResoursePrototype resource : getForegroundAssets(prototype)) {
             Texture texture = resources.getRegisteredTexture(resource.file);
             Image image = new ForegroundImage(texture, resource);
-            battleStage.addActor(image);
+            stageHolder.getBattleStage().addActor(image);
             Log.info("Added foreground texture: " + resource.file);
         }
     }
@@ -151,7 +162,40 @@ public class GameScreen extends AbstractScreen {
     @Override
     public void dispose() {
         super.dispose();
+        Gdx.input.setInputProcessor(null);
         renderer.dispose();
-        level.dispose();
+        level.resetObject();
+    }
+
+    public void disableCameraProcessor() {
+        inputMultiplexer.removeProcessor(cameraListener);
+        Gdx.input.setInputProcessor(inputMultiplexer);
+    }
+
+    public void enableCameraListener() {
+        for (InputProcessor processor : inputMultiplexer.getProcessors()) {
+            if (processor == cameraListener) {
+                Log.warn("CameraListener input processor is already enabled");
+                return;
+            }
+        }
+        inputMultiplexer.addProcessor(cameraListener);
+        Gdx.input.setInputProcessor(inputMultiplexer);
+    }
+
+    public void disableBattleStageProcessor() {
+        inputMultiplexer.removeProcessor(stageHolder.getBattleStage());
+        Gdx.input.setInputProcessor(inputMultiplexer);
+    }
+
+    public void enableBattleStageProcessor() {
+        for (InputProcessor processor : inputMultiplexer.getProcessors()) {
+            if (processor == stageHolder.getBattleStage()) {
+                Log.warn("BattleStage input processor is already enabled");
+                return;
+            }
+        }
+        inputMultiplexer.addProcessor(stageHolder.getBattleStage());
+        Gdx.input.setInputProcessor(inputMultiplexer);
     }
 }

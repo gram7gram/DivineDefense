@@ -11,13 +11,13 @@ import ua.gram.model.player.Player;
  *
  * @author gram
  */
-public class ContinueListener extends ClickListener {
+public class ContinueLevelListener extends ClickListener {
 
     private final DDGame game;
     private final int amountHealth;
     private final int amountGems;
 
-    public ContinueListener(DDGame game, int health, int gems) {
+    public ContinueLevelListener(DDGame game, int health, int gems) {
         this.game = game;
         this.amountHealth = health == -1 ? Player.DEFAULT_HEALTH : health;
         this.amountGems = gems;
@@ -28,7 +28,7 @@ public class ContinueListener extends ClickListener {
         game.getPlayer().chargeGems(amountGems);
         game.getPlayer().setHealth(amountHealth);
         game.getSecurity().save();
-        DDGame.PAUSE = false;
+        DDGame.resumeGame();
     }
 
 }

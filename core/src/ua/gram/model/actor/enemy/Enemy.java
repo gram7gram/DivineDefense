@@ -7,7 +7,7 @@ import ua.gram.DDGame;
 import ua.gram.controller.enemy.DirectionHolder;
 import ua.gram.controller.enemy.EnemySpawner;
 import ua.gram.controller.event.DamageEvent;
-import ua.gram.controller.listener.DamageListener;
+import ua.gram.controller.listener.EnemyDamageListener;
 import ua.gram.controller.stage.BattleStage;
 import ua.gram.controller.state.enemy.EnemyStateHolder;
 import ua.gram.controller.state.enemy.EnemyStateManager;
@@ -76,7 +76,7 @@ public abstract class Enemy
     @Override
     public void init() {
         directionHolder = new DirectionHolder(this);
-        addListener(new DamageListener(this, game.getResources().getSkin()));
+        addListener(new EnemyDamageListener(this, game.getResources().getSkin()));
     }
 
     @Override

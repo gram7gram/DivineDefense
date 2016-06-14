@@ -52,7 +52,7 @@ public class BattleStage extends AbstractStage implements Initializer {
 
     @Override
     public void init() {
-        level.setBattleStage(this);
+        level.setStageHolder(stageHolder);
         controlsListener.setStageHolder(stageHolder);
         addListener(controlsListener);
     }

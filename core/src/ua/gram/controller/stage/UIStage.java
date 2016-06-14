@@ -1,9 +1,7 @@
 package ua.gram.controller.stage;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
@@ -23,11 +21,9 @@ import ua.gram.model.window.DefeatWindow;
 import ua.gram.model.window.PauseWindow;
 import ua.gram.model.window.VictoryWindow;
 import ua.gram.utils.Log;
+import ua.gram.view.screen.GameScreen;
 
 /**
- * TODO Display Current levelConfig at the beginning.
- * FIXME Change stats representation.
- *
  * @author Gram <gram7gram@gmail.com>
  */
 public class UIStage extends AbstractStage implements Initializer {
@@ -39,7 +35,6 @@ public class UIStage extends AbstractStage implements Initializer {
     private final DefeatWindow defeatWindow;
     private final GameUIGroup gameUIGroup;
     private final CounterButton counter;
-    private TowerShop towerShop;
     private TowerControls towerControls;
 
     public UIStage(DDGame game, Level level, UIPrototype prototype) {
@@ -52,16 +47,7 @@ public class UIStage extends AbstractStage implements Initializer {
         pauseWindow = new PauseWindow(game);
         defeatWindow = new DefeatWindow(game, prototype.getWindow("defeat"));
 
-        gameUIGroup.setVisible(true);
-        victoryWindow.setVisible(false);
-        pauseWindow.setVisible(false);
-        defeatWindow.setVisible(false);
-
-        Vector2 pos = level.getMap().getSpawn().getPosition();
-        if (pos == null) throw new GdxRuntimeException("Missing map spawn point");
-
         CounterButtonPrototype counterPrototype = game.getPrototype().levelConfig.counterButtonConfig;
-        counterPrototype.tilePosition = new Vector2(pos.x, pos.y);
 
         counter = new CounterButton(game, level, counterPrototype);
 
@@ -70,6 +56,19 @@ public class UIStage extends AbstractStage implements Initializer {
 
     @Override
     public void init() {
+        Vector2 pos = level.getMap().getSpawn().getPosition();
+        if (pos == null) throw new GdxRuntimeException("Missing map spawn point");
+
+        counter.setPosition(
+                pos.x * DDGame.TILE_HEIGHT + 10,
+                pos.y * DDGame.TILE_HEIGHT + 10
+        );
+
+        gameUIGroup.setVisible(true);
+        victoryWindow.setVisible(false);
+        pauseWindow.setVisible(false);
+        defeatWindow.setVisible(false);
+
         debugListener.setStageHolder(stageHolder);
 
         gameUIGroup.setStageHolder(stageHolder);
@@ -84,7 +83,7 @@ public class UIStage extends AbstractStage implements Initializer {
         counter.init();
 
         TowerShopConfigPrototype config = game.getPrototype().levelConfig.towerShopConfig;
-        towerShop = new TowerShop(game, stageHolder, config);
+        TowerShop towerShop = new TowerShop(game, stageHolder, config);
         towerShop.init();
         towerShop.getTowerShopGroup().setVisible(true);
 
@@ -99,25 +98,6 @@ public class UIStage extends AbstractStage implements Initializer {
                 .expand()
                 .align(Align.bottomRight);
         Log.info("UIStage is initialized");
-    }
-
-    /**
-     * Hides/Shows the window, shows/hides other ui elements.
-     *
-     * @param window show/hide this
-     */
-    public void toggleWindow(Actor window) {
-        Log.info("Pause: " + DDGame.PAUSE);
-        window.setVisible(!window.isVisible());
-        gameUIGroup.setVisible(!window.isVisible());
-        towerShop.getTowerShopGroup().setVisible(!window.isVisible());
-        BattleStage battleStage = stageHolder.getBattleStage();
-        if (window.isVisible()) {
-            battleStage.removeListener(battleStage.getControlsListener());
-        } else {
-            battleStage.addListener(battleStage.getControlsListener());
-        }
-        Log.info(window.getClass().getSimpleName() + " is " + (window.isVisible() ? "" : "in") + "visible");
     }
 
     public void moveBy(float x, float y) {
@@ -146,22 +126,15 @@ public class UIStage extends AbstractStage implements Initializer {
     public void act(float delta) {
         super.act(delta);
         setDebugAll(DDGame.DEBUG);
-        if (!DDGame.PAUSE) {
-            if (level.isDefeated() && !victoryWindow.isVisible()) {
+        if (!DDGame.PAUSE && !level.isInterrupted()) {
+            if (level.isDefeated()) {
                 Log.info("Player is dead");
+                level.setInterrupted(true);
                 stageHolder.fire(new PlayerDefeatedEvent());
-                DDGame.PAUSE = true;
-                toggleDefeatWindow();
-            } else if (level.isVictorious() && !defeatWindow.isVisible()) {
+            } else if (level.isVictorious()) {
                 Log.info("Player is victorious");
+                level.setInterrupted(true);
                 stageHolder.fire(new LevelFinishedEvent());
-                for (Actor actor : stageHolder.getBattleStage().getActors()) {
-                    if (!(actor instanceof Image)) {
-                        actor.remove();
-                    }
-                }
-                DDGame.PAUSE = true;
-                toggleVictoryWindow();
             }
         }
     }
@@ -171,7 +144,8 @@ public class UIStage extends AbstractStage implements Initializer {
     }
 
     public void setTowerControls(TowerControls controls) {
-        if (towerControls != null) throw new IllegalArgumentException("Already initialized");
+        if (towerControls != null)
+            throw new IllegalArgumentException("Tower controls are already initialized");
         towerControls = controls;
         controls.setVisible(false);
         addActor(controls);
@@ -181,34 +155,81 @@ public class UIStage extends AbstractStage implements Initializer {
         return level;
     }
 
-    public PauseWindow getPauseWindow() {
-        return pauseWindow;
-    }
-
     public GameUIGroup getGameUIGroup() {
         return gameUIGroup;
     }
 
-    public void toggleDefeatWindow() {
-        victoryWindow.setVisible(false);
-        pauseWindow.setVisible(false);
+    public void showDefeatWindow() {
+        disableNonUiProcessors();
+        hideAllWindows();
+        hideUI();
         defeatWindow.resetObject();
-        defeatWindow.setVisible(!defeatWindow.isVisible());
+        defeatWindow.setVisible(true);
     }
 
-    public void toggleVictoryWindow() {
+    public void hideDefeatWindow() {
+        enableNonUiProcessors();
+        showUI();
         defeatWindow.setVisible(false);
-        pauseWindow.setVisible(false);
-        victoryWindow.setVisible(!victoryWindow.isVisible());
     }
 
-    public void togglePauseWindow() {
+    public void hideVictoryWindow() {
+        enableNonUiProcessors();
+        showUI();
+        victoryWindow.setVisible(false);
+    }
+
+    public void hidePauseWindow() {
+        enableNonUiProcessors();
+        showUI();
+        pauseWindow.setVisible(false);
+    }
+
+    public void showVictoryWindow() {
+        disableNonUiProcessors();
+        hideAllWindows();
+        hideUI();
+        victoryWindow.setVisible(true);
+    }
+
+    public void showPauseWindow() {
+        disableNonUiProcessors();
+        hideAllWindows();
+        hideUI();
+        pauseWindow.setVisible(true);
+    }
+
+    public void hideAllWindows() {
         defeatWindow.setVisible(false);
         victoryWindow.setVisible(false);
-        pauseWindow.setVisible(!pauseWindow.isVisible());
+        pauseWindow.setVisible(false);
     }
 
     public CounterButton getCounter() {
         return counter;
+    }
+
+    private void disableNonUiProcessors() {
+        GameScreen screen = stageHolder.getGameScreen();
+        screen.disableCameraProcessor();
+        screen.disableBattleStageProcessor();
+    }
+
+    private void enableNonUiProcessors() {
+        GameScreen screen = stageHolder.getGameScreen();
+        screen.enableCameraListener();
+        screen.enableBattleStageProcessor();
+    }
+
+    public void hideUI() {
+        gameUIGroup.setVisible(false);
+        counter.setVisible(false);
+    }
+
+    public void showUI() {
+        gameUIGroup.setVisible(true);
+        if (!counter.hasFinished()) {
+            counter.setVisible(true);
+        }
     }
 }

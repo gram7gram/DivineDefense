@@ -2,6 +2,7 @@ package ua.gram.model.actor.boss;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.esotericsoftware.spine.AnimationState;
 import com.esotericsoftware.spine.Skeleton;
 
@@ -11,6 +12,7 @@ import ua.gram.controller.state.boss.BossStateHolder;
 import ua.gram.controller.state.boss.BossStateManager;
 import ua.gram.model.Initializer;
 import ua.gram.model.Resetable;
+import ua.gram.model.enums.Types;
 import ua.gram.model.level.FinalLevel;
 import ua.gram.model.prototype.boss.BossPrototype;
 import ua.gram.utils.Log;
@@ -21,15 +23,16 @@ import ua.gram.utils.Log;
 public class Boss extends Actor implements Initializer, Resetable {
 
     protected final DDGame game;
-    protected final BossStateManager manager;
+    protected final BossStateManager stateManager;
     protected final BossStateHolder stateHolder;
     protected final BossPrototype prototype;
-    private final Counters counters;
+    protected final Counters counters;
     protected Skeleton skeleton;
-    private FinalLevel level;
+    protected FinalLevel level;
+    private boolean isDefeated;
 
     public Boss(DDGame game, BossPrototype prototype, BossStateManager manager) {
-        this.manager = manager;
+        this.stateManager = manager;
         this.game = game;
         this.prototype = prototype;
 
@@ -37,19 +40,26 @@ public class Boss extends Actor implements Initializer, Resetable {
 
         counters = new Counters();
 
+        resetObject();
+
         Log.info(getClass().getSimpleName() + " is OK");
     }
 
     @Override
     public void init() {
-        manager.swapLevel1State(this, manager.getActiveState());
+        stateManager.swapLevel1State(this, stateManager.getActiveState());
     }
 
     @Override
     public void act(float delta) {
         super.act(delta);
+        setDebug(DDGame.DEBUG);
         if (skeleton != null) {
-            getStateManager().update(this, delta);
+            try {
+                stateManager.update(this, delta);
+            } catch (GdxRuntimeException e) {
+                Log.exc("Could not update boss state", e);
+            }
             AnimationState state = level.getBossAnimationManager().getSkeletonState();
             state.update(delta);
             state.apply(skeleton);
@@ -79,7 +89,7 @@ public class Boss extends Actor implements Initializer, Resetable {
     }
 
     public BossStateManager getStateManager() {
-        return manager;
+        return stateManager;
     }
 
     public BossStateHolder getStateHolder() {
@@ -121,9 +131,29 @@ public class Boss extends Actor implements Initializer, Resetable {
     @Override
     public void resetObject() {
         counters.resetObject();
+        isDefeated = false;
     }
 
     public Skeleton getSkeleton() {
         return skeleton;
+    }
+
+    public boolean isDefeated() {
+        return isDefeated;
+    }
+
+    public void setDefeated(boolean defeated) {
+        this.isDefeated = defeated;
+    }
+
+    public void updateAnimation(Types.BossState state, boolean loop) {
+        if (state == null) {
+            Log.warn("Could not update " + this + " animation of NULL type");
+            return;
+        }
+
+        level.getBossAnimationManager()
+                .getSkeletonState()
+                .setAnimation(0, state.name(), loop);
     }
 }

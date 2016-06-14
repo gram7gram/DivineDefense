@@ -6,6 +6,8 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 
 import ua.gram.DDGame;
+import ua.gram.controller.event.LevelFinishedEvent;
+import ua.gram.controller.event.PlayerDefeatedEvent;
 import ua.gram.controller.stage.StageHolder;
 import ua.gram.utils.Log;
 
@@ -45,19 +47,17 @@ public class DebugListener extends InputListener {
                 break;
             case Input.Keys.D:
                 if (stageHolder != null) {
-                    stageHolder.getUiStage().toggleDefeatWindow();
-                    DDGame.PAUSE = !DDGame.PAUSE;
+                    stageHolder.fire(new PlayerDefeatedEvent());
                 }
                 break;
             case Input.Keys.V:
                 if (stageHolder != null) {
-                    stageHolder.getUiStage().toggleVictoryWindow();
-                    DDGame.PAUSE = !DDGame.PAUSE;
+                    stageHolder.fire(new LevelFinishedEvent());
                 }
                 break;
             case Input.Keys.P:
                 if (stageHolder != null) {
-                    stageHolder.getUiStage().togglePauseWindow();
+                    stageHolder.getUiStage().showPauseWindow();
                     DDGame.PAUSE = !DDGame.PAUSE;
                 }
                 break;

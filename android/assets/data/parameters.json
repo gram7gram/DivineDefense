@@ -173,7 +173,7 @@
           "spawnProperty": "spawn",
           "baseProperty": "base",
           "blockedProperty": "blocked",
-          "name": "data/levels/maps/level10@60.tmx"
+          "name": "data/levels/maps/level11@60.tmx"
         },
         "preview": "preview/level-3-preview@256",
         "initialDirection": {
@@ -184,39 +184,7 @@
           {
             "index": 1,
             "enemies": [
-              "EnemyRunner",
-              "EnemySummoner",
-              "EnemyWarrior",
-              "EnemyWarrior",
-              "EnemyWarrior",
-              "EnemyWarrior",
               "EnemyWarrior"
-            ]
-          },
-          {
-            "index": 2,
-            "enemies": [
-              "EnemyWarrior",
-              "EnemySummoner",
-              "EnemyWarrior",
-              "EnemySummoner",
-              "EnemyWarrior",
-              "EnemySummoner"
-            ]
-          },
-          {
-            "index": 3,
-            "enemies": [
-              "EnemyWarrior",
-              "EnemySummoner",
-              "EnemyWarrior",
-              "EnemySummoner",
-              "EnemyWarrior",
-              "EnemySummoner",
-              "EnemySummoner",
-              "EnemySummoner",
-              "EnemySummoner",
-              "EnemySummoner"
             ]
           }
         ]
@@ -311,7 +279,7 @@
       "name": "EnemyWarrior",
       "ability": false,
       "health": 110,
-      "speed": 0.9,
+      "speed": 0.1,
       "armor": 10,
       "reward": 10,
       "width": 60,
@@ -664,7 +632,7 @@
       "states": [
         {
           "name": "EXCLAMATION",
-          "duration": 2.6
+          "duration": 2.2
         },
         {
           "name": "IDLE",
@@ -675,13 +643,13 @@
           "duration": 3
         },
         {
-          "name": "DEFEATED",
-          "duration": 5
+          "name": "DEFEAT",
+          "duration": 10
         }
       ],
       "position": {
-        "x": 725,
-        "y": 110
+        "x": 755,
+        "y": 170
       }
     }
   ]

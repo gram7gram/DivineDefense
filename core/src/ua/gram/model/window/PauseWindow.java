@@ -8,7 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import ua.gram.DDGame;
 import ua.gram.controller.stage.StageHolder;
-import ua.gram.controller.stage.UIStage;
 import ua.gram.model.Initializer;
 import ua.gram.utils.Log;
 import ua.gram.view.screen.MainMenuScreen;
@@ -68,9 +67,8 @@ public class PauseWindow extends WindowGroup implements Initializer {
         continueBut.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                DDGame.PAUSE = false;
-                UIStage stage = stageHolder.getUiStage();
-                stage.toggleWindow(stage.getPauseWindow());
+                stageHolder.getUiStage().hidePauseWindow();
+                DDGame.resumeGame();
             }
         });
     }

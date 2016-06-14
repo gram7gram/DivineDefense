@@ -110,6 +110,6 @@ public class TowerShopInputListener extends ClickListener {
     }
 
     private boolean canStartNextWave(Level level) {
-        return level.getWave() == null || (!level.getWave().isStarted && !level.isCleared);
+        return level.getWave() == null || (!level.getWave().isStarted() && !level.isCleared());
     }
 }

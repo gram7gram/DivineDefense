@@ -3,37 +3,28 @@ package ua.gram.controller.listener;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 
-import ua.gram.controller.event.PlayerDamagedEvent;
+import ua.gram.DDGame;
 import ua.gram.controller.event.PlayerDefeatedEvent;
-import ua.gram.controller.state.boss.BossStateManager;
-import ua.gram.model.actor.boss.Boss;
+import ua.gram.controller.stage.StageHolder;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
 public class PlayerDefeatedListener implements EventListener {
 
-    private final Boss boss;
+    private final StageHolder holder;
 
-    public PlayerDefeatedListener(Boss boss) {
-        this.boss = boss;
-    }
-
-    private boolean canHandle(Event event) {
-        return event instanceof PlayerDefeatedEvent
-                || event instanceof PlayerDamagedEvent;
+    public PlayerDefeatedListener(StageHolder holder) {
+        this.holder = holder;
     }
 
     @Override
     public boolean handle(Event event) {
-        if (!canHandle(event)) return false;
+        if (!(event instanceof PlayerDefeatedEvent)) return false;
 
-        BossStateManager manager = boss.getStateManager();
+        holder.getUiStage().showDefeatWindow();
 
-        if (boss.getStateHolder().getCurrentLevel2State() != manager.getExclamationState()) {
-
-            manager.swapLevel2State(boss, manager.getExclamationState());
-        }
+        DDGame.pauseGame();
 
         return false;
     }

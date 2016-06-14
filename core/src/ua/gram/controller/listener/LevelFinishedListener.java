@@ -1,31 +1,44 @@
 package ua.gram.controller.listener;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
+import ua.gram.DDGame;
 import ua.gram.controller.event.LevelFinishedEvent;
-import ua.gram.controller.state.boss.BossStateManager;
-import ua.gram.model.actor.boss.Boss;
+import ua.gram.controller.stage.StageHolder;
+import ua.gram.model.level.Level;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
 public class LevelFinishedListener implements EventListener {
 
-    private final Boss boss;
+    private final StageHolder holder;
 
-    public LevelFinishedListener(Boss boss) {
-        this.boss = boss;
+    public LevelFinishedListener(StageHolder holder) {
+        this.holder = holder;
     }
 
     @Override
     public boolean handle(Event event) {
         if (!(event instanceof LevelFinishedEvent)) return false;
 
-        BossStateManager manager = boss.getStateManager();
+        Level level = holder.getBattleStage().getLevel();
 
-        manager.swapLevel2State(boss, manager.getExclamationState());
+        level.finish();
 
-        return false;
+        for (Actor actor : holder.getBattleStage().getActors()) {
+            if (!(actor instanceof Image)) {
+                actor.remove();
+            }
+        }
+
+        DDGame.pauseGame();
+
+        holder.getUiStage().showVictoryWindow();
+
+        return true;
     }
 }

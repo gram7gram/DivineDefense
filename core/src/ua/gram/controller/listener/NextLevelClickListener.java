@@ -26,7 +26,7 @@ public class NextLevelClickListener extends ClickListener {
 
     @Override
     public void clicked(InputEvent event, float x, float y) {
-        DDGame.PAUSE = false;
+        DDGame.resumeGame();
         if (!level.isLast()) {
             game.getPlayer().incrementLastUnlockedLevel();
             int lvl = game.getPlayer().nextLevel();

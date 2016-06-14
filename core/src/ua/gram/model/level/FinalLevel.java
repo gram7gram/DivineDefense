@@ -1,12 +1,14 @@
 package ua.gram.model.level;
 
+import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import ua.gram.DDGame;
 import ua.gram.controller.animation.boss.BossAnimationManager;
+import ua.gram.controller.event.LevelFinishedEvent;
 import ua.gram.controller.factory.LevelFactory;
-import ua.gram.controller.listener.LevelFinishedListener;
-import ua.gram.controller.listener.PlayerDefeatedListener;
+import ua.gram.controller.listener.BossDefeatedListener;
+import ua.gram.controller.listener.BossVictoriousListener;
 import ua.gram.controller.listener.WaveStartedListener;
 import ua.gram.controller.state.boss.BossStateManager;
 import ua.gram.model.actor.boss.Boss;
@@ -61,14 +63,27 @@ public class FinalLevel extends Level {
         manager.init();
         boss.setLevel(this);
         boss.init();
-        battleStage.addActor(boss);
 
-        battleStage.getRoot().addListener(new PlayerDefeatedListener(boss));
-        battleStage.getRoot().addListener(new WaveStartedListener(boss));
-        battleStage.getRoot().addListener(new LevelFinishedListener(boss));
+        boss.addListener(new BossVictoriousListener(boss));
+        boss.addListener(new WaveStartedListener(boss));
+        boss.addListener(new BossDefeatedListener(boss));
+
+        stageHolder.getBattleStage().addActor(boss);
     }
 
     public BossAnimationManager getBossAnimationManager() {
         return bossAnimationManager;
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        boss.fire(new LevelFinishedEvent());
+    }
+
+    @Override
+    public void propagateEvent(Event event) {
+        super.propagateEvent(event);
+        boss.fire(event);
     }
 }
