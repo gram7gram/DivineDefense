@@ -24,8 +24,7 @@ public class MapTest extends GameTestCase {
     public static Object[][] validMapProvider() {
         return new Object[][]{
                 {"data/levels/maps/level1@60.tmx", new Vector2(1, 0)},
-                {"data/levels/maps/level10@60.tmx", new Vector2(12, 9)},
-                {"data/levels/maps/level11@60.tmx", new Vector2(11, 8)}
+                {"data/levels/maps/level10@60.tmx", new Vector2(12, 8)}
         };
     }
 

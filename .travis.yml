@@ -14,7 +14,4 @@ branches:
     - master
     - /^DD-.*$/
 script:
-    #- ./gradlew check
-    #- ./gradlew assemble
-    - export PROJECT_DIR=${PWD}
-    - ./gradlew :desktop:test
+    - PROJECT_DIR=${PWD} ./gradlew :core:test

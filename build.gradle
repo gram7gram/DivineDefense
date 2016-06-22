@@ -29,12 +29,23 @@ allprojects {
 project(":desktop") {
     apply plugin: "java"
 
-    sourceSets.test.java.srcDirs = ["test/"]
-
     dependencies {
         compile project(":core")
         compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+        compile fileTree(dir: 'libs', include: '*.jar')
+
+    }
+}
+
+project(":core") {
+    apply plugin: "java"
+
+    sourceSets.test.java.srcDirs = ["test/"]
+
+    dependencies {
+        compile "com.badlogicgames.gdx:gdx:$gdxVersion"
+        compile project(":spine-libgdx")
         compile fileTree(dir: 'libs', include: '*.jar')
 
         testCompile "junit:junit:4.12"
@@ -43,17 +54,6 @@ project(":desktop") {
         testCompile "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
         testCompile "com.badlogicgames.gdx:gdx:$gdxVersion"
         testCompile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-
-    }
-}
-
-project(":core") {
-    apply plugin: "java"
-
-    dependencies {
-        compile "com.badlogicgames.gdx:gdx:$gdxVersion"
-        compile project(":spine-libgdx")
-        compile fileTree(dir: 'libs', include: '*.jar')
     }
 }
 

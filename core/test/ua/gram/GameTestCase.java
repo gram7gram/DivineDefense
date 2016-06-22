@@ -1,11 +1,11 @@
 package ua.gram;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.backends.headless.HeadlessFiles;
 import com.badlogic.gdx.backends.headless.HeadlessNativesLoader;
 import com.badlogic.gdx.backends.headless.HeadlessNet;
 import com.badlogic.gdx.backends.headless.mock.graphics.MockGraphics;
 import com.badlogic.gdx.backends.headless.mock.input.MockInput;
-import com.badlogic.gdx.backends.lwjgl.LwjglFiles;
 import com.badlogic.gdx.graphics.GL20;
 
 import org.mockito.Mockito;
@@ -20,7 +20,7 @@ public class GameTestCase {
     public GameTestCase() {
 
         HeadlessNativesLoader.load();
-        Gdx.files = new LwjglFiles();
+        Gdx.files = new HeadlessFiles();
         Gdx.graphics = new MockGraphics();
         Gdx.net = new HeadlessNet();
         Gdx.input = new MockInput();
