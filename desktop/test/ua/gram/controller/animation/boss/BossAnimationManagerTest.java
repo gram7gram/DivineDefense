@@ -16,7 +16,6 @@ import ua.gram.model.prototype.boss.BossPrototype;
 
 import static org.junit.Assert.assertNotNull;
 
-
 @RunWith(DataProviderRunner.class)
 public class BossAnimationManagerTest extends HeadlessDesktop {
 

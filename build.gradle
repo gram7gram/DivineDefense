@@ -1,3 +1,4 @@
+
 buildscript {
     repositories {
         mavenCentral()
@@ -10,12 +11,13 @@ buildscript {
 }
 
 allprojects {
-    apply plugin: "idea"
+    apply plugin: 'idea'
 
-    version = '0.01'
     ext {
+        version = '0.01'
         appName = 'Divine Defense'
         gdxVersion = '1.9.2'
+        jacocoVersion = '0.7.7.201606060606'
     }
 
     repositories {
@@ -28,6 +30,19 @@ allprojects {
 
 project(":desktop") {
     apply plugin: "java"
+    apply plugin: 'jacoco'
+
+    jacoco {
+        toolVersion = jacocoVersion
+    }
+
+    jacocoTestReport {
+        reports {
+            html.enabled true
+        }
+    }
+
+    test.finalizedBy jacocoTestReport
 
     sourceSets.test.java.srcDirs = ["test/"]
 
@@ -49,7 +64,17 @@ project(":desktop") {
 
 project(":core") {
     apply plugin: "java"
+    apply plugin: 'jacoco'
 
+    jacoco {
+        toolVersion = jacocoVersion
+    }
+
+    jacocoTestReport {
+        reports {
+            html.enabled true
+        }
+    }
     sourceSets.test.java.srcDirs = ["test/"]
 
     dependencies {

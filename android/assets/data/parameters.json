@@ -107,7 +107,11 @@
             }
           ]
         },
-        "preview": "preview/level-1-preview@256",
+        "preview": {
+          "name": "data/levels/res/level-1-preview",
+          "format": "jpg",
+          "size": 256
+        },
         "initialDirection": {
           "x": 0,
           "y": 1
@@ -134,15 +138,19 @@
         ]
       },
       {
-        "level": 2,
+        "level": 4,
         "map": {
           "walkableProperty": "walkable",
           "spawnProperty": "spawn",
           "baseProperty": "base",
           "blockedProperty": "blocked",
-          "name": "data/levels/maps/level2@60.tmx"
+          "name": "data/levels/maps/level4@60.tmx"
         },
-        "preview": "preview/level-2-preview@256",
+        "preview": {
+          "name": "data/levels/res/level-4-preview",
+          "format": "jpg",
+          "size": 256
+        },
         "initialDirection": {
           "x": 1,
           "y": 0
@@ -164,7 +172,95 @@
         ]
       },
       {
-        "level": 3,
+        "level": 5,
+        "map": {
+          "walkableProperty": "walkable",
+          "spawnProperty": "spawn",
+          "baseProperty": "base",
+          "blockedProperty": "blocked",
+          "name": "data/levels/maps/level5@60.tmx"
+        },
+        "preview": {
+          "name": "data/levels/res/level-5-preview",
+          "format": "jpg",
+          "size": 256
+        },
+        "initialDirection": {
+          "x": 1,
+          "y": 0
+        },
+        "waves": [
+          {
+            "index": 1,
+            "enemies": [
+              "EnemyRunner",
+              "EnemyWarrior"
+            ]
+          },
+          {
+            "index": 2,
+            "enemies": [
+              "EnemyRunner"
+            ]
+          }
+        ]
+      },
+      {
+        "level": 7,
+        "map": {
+          "walkableProperty": "walkable",
+          "spawnProperty": "spawn",
+          "baseProperty": "base",
+          "blockedProperty": "blocked",
+          "name": "data/levels/maps/level7@60.tmx"
+        },
+        "preview": {
+          "name": "data/levels/res/level-7-preview",
+          "format": "jpg",
+          "size": 256
+        },
+        "initialDirection": {
+          "x": 0,
+          "y": -1
+        },
+        "waves": [
+          {
+            "index": 1,
+            "enemies": [
+              "EnemyWarrior"
+            ]
+          }
+        ]
+      },
+      {
+        "level": 8,
+        "map": {
+          "walkableProperty": "walkable",
+          "spawnProperty": "spawn",
+          "baseProperty": "base",
+          "blockedProperty": "blocked",
+          "name": "data/levels/maps/level8@60.tmx"
+        },
+        "preview": {
+          "name": "data/levels/res/level-8-preview",
+          "format": "jpg",
+          "size": 256
+        },
+        "initialDirection": {
+          "x": 1,
+          "y": 0
+        },
+        "waves": [
+          {
+            "index": 1,
+            "enemies": [
+              "EnemyWarrior"
+            ]
+          }
+        ]
+      },
+      {
+        "level": 10,
         "type": "FINAL",
         "bosses": [
           "LORD"
@@ -174,9 +270,13 @@
           "spawnProperty": "spawn",
           "baseProperty": "base",
           "blockedProperty": "blocked",
-          "name": "data/levels/maps/level11@60.tmx"
+          "name": "data/levels/maps/level10@60.tmx"
         },
-        "preview": "preview/level-3-preview@256",
+        "preview": {
+          "name": "data/levels/res/level-10-preview",
+          "format": "jpg",
+          "size": 256
+        },
         "initialDirection": {
           "x": 0,
           "y": -1

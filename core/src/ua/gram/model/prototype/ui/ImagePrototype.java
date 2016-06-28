@@ -7,5 +7,6 @@ import ua.gram.model.prototype.Prototype;
  */
 public class ImagePrototype extends Prototype {
     public String name;
-    public float size;
+    public String format;
+    public int size;
 }

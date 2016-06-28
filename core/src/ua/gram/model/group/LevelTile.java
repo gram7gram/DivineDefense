@@ -1,10 +1,12 @@
 package ua.gram.model.group;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
 import ua.gram.DDGame;
 import ua.gram.model.prototype.level.LevelPrototype;
@@ -18,7 +20,6 @@ public class LevelTile extends Table {
 
     public LevelTile(final DDGame game, final LevelPrototype prototype) {
         super(game.getResources().getSkin());
-        Skin skin = game.getResources().getSkin();
 
         final byte lvl = prototype.level;
         addListener(new ClickListener() {
@@ -33,7 +34,15 @@ public class LevelTile extends Table {
 
         setTouchable(Touchable.enabled);
 
-        setBackground(skin.getDrawable(prototype.preview));
+        String previewName = prototype.preview.name 
+        + "@" + prototype.preview.size 
+        + "." + prototype.preview.format;
+
+        Texture background = game.getResources()
+                .getRegisteredTexture(previewName);
+        SpriteDrawable drawable = new SpriteDrawable(new Sprite(background));
+
+        setBackground(drawable);
 
         Log.info("Level tile " + lvl + " is OK");
     }

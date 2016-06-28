@@ -24,6 +24,15 @@ public class LevelSelectScreen extends AbstractScreen {
     public void show() {
         super.show();
         LevelPrototype[] prototypes = game.getPrototype().levelConfig.levels;
+        for(LevelPrototype proto : prototypes) {
+            String previewName = proto.preview.name 
+                + "@" + proto.preview.size 
+                + "." + proto.preview.format;
+            game.getResources().loadTexture(previewName);
+        }
+
+        game.getResources().getManager().finishLoading();
+
         stage = new LevelSelectStage(game, prototypes);
         Gdx.input.setInputProcessor(stage);
     }
@@ -37,5 +46,18 @@ public class LevelSelectScreen extends AbstractScreen {
     @Override
     public void renderNoPause(float delta) {
 
+    }
+
+    @Override
+    public void hide() {
+        super.hide();
+        LevelPrototype[] prototypes = game.getPrototype().levelConfig.levels;
+        for(LevelPrototype proto : prototypes) {
+            
+            String previewName = proto.preview.name 
+                + "@" + proto.preview.size 
+                + "." + proto.preview.format;
+            game.getResources().getManager().unload(previewName);
+        }
     }
 }

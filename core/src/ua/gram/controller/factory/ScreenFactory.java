@@ -3,7 +3,6 @@ package ua.gram.controller.factory;
 import com.badlogic.gdx.Screen;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 
 import ua.gram.DDGame;
 import ua.gram.utils.Log;
@@ -23,10 +22,9 @@ public class ScreenFactory {
                 constructor = clazz.getConstructor(DDGame.class);
                 try {
                     return (Screen) constructor.newInstance(game);
-                } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-                    Log.exc("Cannot instansiate class: " + name, e);
+                } catch (Exception e) {
+                    Log.exc("Cannot instanciate class: " + name, e);
                 }
-
             } catch (NoSuchMethodException e) {
                 Log.exc("No such method for class: " + name, e);
             }
