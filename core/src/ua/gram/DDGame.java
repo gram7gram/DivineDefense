@@ -15,6 +15,7 @@ import java.nio.IntBuffer;
 
 import ua.gram.controller.factory.ViewportFactory;
 import ua.gram.controller.security.SecurityManager;
+import ua.gram.model.Initializer;
 import ua.gram.model.Speed;
 import ua.gram.model.player.Player;
 import ua.gram.model.prototype.GamePrototype;
@@ -47,11 +48,12 @@ import ua.gram.view.screen.LaunchLoadingScreen;
  *
  * @author Gram <gram7gram@gmail.com>
  */
-public class DDGame<P extends GamePrototype> extends Game {
+public class DDGame<P extends GamePrototype> extends Game implements Initializer {
 
     public static final int MAX_ENTITIES = 250;
     public static String FACTION_2;
     public static String FACTION_1;
+    public static String ENV;
     public static boolean DEBUG;
     public static boolean PAUSE = false;
     public static int TILE_HEIGHT;
@@ -106,6 +108,21 @@ public class DDGame<P extends GamePrototype> extends Game {
 
     @Override
     public void create() {
+
+        try {
+            init();
+        } catch (GdxRuntimeException e) {
+            Log.exc("Cannot init game. Exiting...", e, true);
+        }
+
+        if (!ENV.equals("test")) {
+            resources.init();
+            setScreen(new LaunchLoadingScreen(this));
+        }
+    }
+
+    @Override
+    public void init() {
         Gdx.app.setLogLevel(parameters.logLevel);
         Gdx.input.setCatchMenuKey(true);
 
@@ -113,20 +130,15 @@ public class DDGame<P extends GamePrototype> extends Game {
 
         initGameValues();
 
-        try {
-            resources = new Resources(this, rootDirectory);
-        } catch (GdxRuntimeException e) {
-            Log.exc("Cannot create resources", e, true);
-        }
+        resources = new Resources(this, rootDirectory);
 
         createCamera();
         createBatch();
         createViewport();
-
-        setScreen(new LaunchLoadingScreen(this));
     }
 
     private void initGameValues() {
+        ENV = parameters.env;
         WORLD_WIDTH = Gdx.graphics.getWidth() > 0 ? Gdx.graphics.getWidth() : 100;
         WORLD_HEIGHT = Gdx.graphics.getHeight() > 0 ? Gdx.graphics.getHeight() : 100;
         TILE_HEIGHT = parameters.constants.tileHeight;
@@ -135,14 +147,14 @@ public class DDGame<P extends GamePrototype> extends Game {
         FACTION_1 = parameters.constants.faction1;
         FACTION_2 = parameters.constants.faction2;
 
-        try {
-            info = new BitmapFont();
-            info.setColor(1, 1, 1, 1);
-        } catch (NullPointerException e) {
-            Log.exc("Could not init BitmapFont", e);
-        }
-
         if (Gdx.gl20 != null) {
+            try {
+                info = new BitmapFont();
+                info.setColor(1, 1, 1, 1);
+            } catch (NullPointerException e) {
+                Log.exc("Could not init BitmapFont", e);
+            }
+
             IntBuffer intBuffer = BufferUtils.newIntBuffer(16);
             Gdx.gl20.glGetIntegerv(GL20.GL_MAX_TEXTURE_SIZE, intBuffer);
             MAX_TEXTURE_SIZE = intBuffer.get();
@@ -271,4 +283,5 @@ public class DDGame<P extends GamePrototype> extends Game {
     public void createPlayer() {
         setPlayer(new Player(prototype.player));
     }
+
 }

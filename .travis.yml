@@ -14,4 +14,4 @@ branches:
     - master
     - /^DD-.*$/
 script:
-    - PROJECT_DIR=${PWD} ./gradlew :core:test
+    - PROJECT_DIR=${PWD} ./gradlew :desktop:test

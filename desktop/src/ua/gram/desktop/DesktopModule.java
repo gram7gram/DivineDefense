@@ -54,7 +54,10 @@ public class DesktopModule implements Module {
     }
 
     @Override
-    public void initModule() {
+    public void initModule(String env) {
+        if (env != null) {
+            prototype.parameters.env = env;
+        }
         app = new DDGame<DesktopGamePrototype>(securityManager, prototype, rootDirectory);
     }
 

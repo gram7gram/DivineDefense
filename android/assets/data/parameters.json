@@ -24,6 +24,7 @@
     "logo16": "logo/mdpi/logo_min16.png"
   },
   "parameters": {
+    "env": "dev",
     "debugging": true,
     "logLevel": 3,
     "title": "Divine Defense",

@@ -8,7 +8,8 @@ import com.badlogic.gdx.ApplicationListener;
 public interface Module {
 
     ApplicationListener getApp();
-    void initModule();
+
+    void initModule(String env);
 
     void initParameters();
 

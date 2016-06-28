@@ -10,7 +10,7 @@ public class AndroidLauncher extends AndroidApplication {
         super.onCreate(savedInstanceState);
 
         AndroidModule module = new AndroidModule(getAssets());
-        module.initModule();
+        module.initModule(null);
         initialize(module.getApp(), module.getConfig());
     }
 }

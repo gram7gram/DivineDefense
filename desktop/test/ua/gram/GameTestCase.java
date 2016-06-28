@@ -15,9 +15,16 @@ import org.mockito.Mockito;
  */
 public class GameTestCase {
 
-    protected final String root = System.getenv("PROJECT_DIR") + "/android/assets/";
+    protected final String root;
 
     public GameTestCase() {
+
+        String currentProjectDirectory = System.getenv("PROJECT_DIR");
+        if (currentProjectDirectory == null) {
+            throw new NullPointerException("Missing env variable: PROJECT_DIR");
+        }
+
+        root = currentProjectDirectory + "/android/assets/";
 
         HeadlessNativesLoader.load();
         Gdx.files = new HeadlessFiles();
@@ -26,20 +33,7 @@ public class GameTestCase {
         Gdx.input = new MockInput();
         Gdx.gl = Mockito.mock(GL20.class);
 
-//        DesktopModule module = new DesktopModule(root, "data/parameters.json");
-//        module.initModule();
-//        HeadlessApplicationConfiguration config = new HeadlessApplicationConfiguration();
-//
-//        Application app = new HeadlessApplication(module.getApp(), config);
-
-//        Gdx.app = app;
-//
-//        ApplicationListener game = app.getApplicationListener();
-//
-//        if (!(game instanceof DDGame))
-//            throw new GdxRuntimeException("App instance is not a DDGame");
-//
-//        this.game = (DDGame) game;
 
     }
+
 }

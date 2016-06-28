@@ -1,6 +1,7 @@
 package ua.gram.controller.animation.boss;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.esotericsoftware.spine.AnimationState;
@@ -33,7 +34,7 @@ public class BossAnimationManager {
         this.prototype = prototype;
         this.animationScale = prototype.scale;
 
-        SkeletonData skeletonData = getSkeleton(prototype.name);
+        SkeletonData skeletonData = getSkeletonData(prototype.name);
 
         stateData = new AnimationStateData(skeletonData);
         skeletRenderer = new SkeletonRenderer<>();
@@ -56,13 +57,18 @@ public class BossAnimationManager {
         Log.info("AnimationManager for " + prototype.name + " is OK");
     }
 
-    private SkeletonData getSkeleton(String name) {
-        String path = "data/spine/bosses/"
+    public String getSkeletonAtlasPath(String name) {
+        return "data/spine/bosses/"
                 + Player.SYSTEM_FACTION + "/" + name + "/skeleton";
+    }
+
+    public SkeletonData getSkeletonData(String name) {
+        String path = getSkeletonAtlasPath(name);
         TextureAtlas atlas = resources.getAtlas(path);
         SkeletonJson json = new SkeletonJson(atlas);
         json.setScale(animationScale);
-        return json.readSkeletonData(Gdx.files.internal(path + ".json"));
+        FileHandle file = Gdx.files.internal(resources.getRootDirectory() + path + ".json");
+        return json.readSkeletonData(file);
     }
 
     public AnimationState getSkeletonState() {

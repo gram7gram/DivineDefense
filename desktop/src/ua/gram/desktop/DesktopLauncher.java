@@ -9,7 +9,7 @@ public class DesktopLauncher {
 
     public static void main(String[] arg) {
         DesktopModule module = new DesktopModule();
-        module.initModule();
+        module.initModule(null);
         new LwjglApplication(module.getApp(), module.getConfig());
     }
 

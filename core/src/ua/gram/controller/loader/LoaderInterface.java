@@ -7,9 +7,9 @@ import ua.gram.model.prototype.RemoteConfigurationPrototype;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public interface LoaderInterface {
+public interface LoaderInterface<A> {
 
-    Object load(Class type, FileHandle file);
+    Object load(Class<A> type, FileHandle file);
 
-    Object load(Class type, RemoteConfigurationPrototype remote);
+    Object load(Class<A> type, RemoteConfigurationPrototype remote);
 }
