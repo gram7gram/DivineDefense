@@ -43,6 +43,7 @@ public class TowerShopInputListener extends ClickListener {
         event.stop();
         try {
             towerGroup = shop.preorder(type, X, Y);
+            uiStage.disableNonUiProcessors();
             return true;
         } catch (Exception e) {
             Log.exc("Could not get Tower from Shop: " + type, e);
@@ -61,9 +62,9 @@ public class TowerShopInputListener extends ClickListener {
             int xIndex = (int) (X / DDGame.TILE_HEIGHT);
             int yIndex = (int) (Y / DDGame.TILE_HEIGHT);
 
-            boolean canBeBuild = voter.isBuildable(xIndex, yIndex);
+            boolean canBeHovered = voter.isHoverable(xIndex, yIndex);
             boolean isFree = battleStage.isPositionEmpty(X, Y);
-            if (canBeBuild && isFree) {
+            if (isFree && canBeHovered) {
                 Tower tower = towerGroup.getRootActor();
                 tower.setPosition(X, Y + 40);
                 tower.toFront();
@@ -73,11 +74,6 @@ public class TowerShopInputListener extends ClickListener {
         }
     }
 
-    private boolean isEqual(float x, float y, TowerGroup group) {
-        return Float.compare(x, group.getX()) == 0
-                && Float.compare(y, group.getY()) == 0;
-    }
-
     /**
      * Puts the Tower on the map if building is allowed.
      * As soon as towerGroup is put on map, display building animation for 1.5 sec.
@@ -85,28 +81,34 @@ public class TowerShopInputListener extends ClickListener {
      */
     @Override
     public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+        event.stop();
         float X = event.getStageX() - event.getStageX() % DDGame.TILE_HEIGHT;
         float Y = event.getStageY() - event.getStageY() % DDGame.TILE_HEIGHT;
-        event.stop();
-        boolean isFree = battleStage.isPositionEmpty(X, Y);
-        if (isFree) {
-            int xIndex = (int) (X / DDGame.TILE_HEIGHT);
-            int yIndex = (int) (Y / DDGame.TILE_HEIGHT);
+        int xIndex = (int) (X / DDGame.TILE_HEIGHT);
+        int yIndex = (int) (Y / DDGame.TILE_HEIGHT);
 
-            boolean canBeBuild = voter.isBuildable(xIndex, yIndex);
-            if (canBeBuild) {
-                shop.buy(towerGroup, X, Y);
-                if (canStartNextWave(uiStage.getLevel())) {
-                    uiStage.getLevel().nextWave();
-                    uiStage.getCounter().setVisible(false);
-                }
-            } else {
-                shop.refund(towerGroup);
+        boolean canBeBuild = voter.isBuildable(xIndex, yIndex);
+        boolean isFree = battleStage.isPositionEmpty(X, Y);
+
+        if (isFree && canBeBuild) {
+
+            shop.buy(towerGroup, X, Y);
+
+            if (canStartNextWave(uiStage.getLevel())) {
+                uiStage.getLevel().nextWave();
+                uiStage.getCounter().setVisible(false);
             }
         } else {
             shop.refund(towerGroup);
         }
+
         shop.getMarker().reset();
+        uiStage.enableNonUiProcessors();
+    }
+
+    private boolean isEqual(float x, float y, TowerGroup group) {
+        return Float.compare(x, group.getX()) == 0
+                && Float.compare(y, group.getY()) == 0;
     }
 
     private boolean canStartNextWave(Level level) {

@@ -209,13 +209,13 @@ public class UIStage extends AbstractStage implements Initializer {
         return counter;
     }
 
-    private void disableNonUiProcessors() {
+    public void disableNonUiProcessors() {
         GameScreen screen = stageHolder.getGameScreen();
         screen.disableCameraProcessor();
         screen.disableBattleStageProcessor();
     }
 
-    private void enableNonUiProcessors() {
+    public void enableNonUiProcessors() {
         GameScreen screen = stageHolder.getGameScreen();
         screen.enableCameraListener();
         screen.enableBattleStageProcessor();

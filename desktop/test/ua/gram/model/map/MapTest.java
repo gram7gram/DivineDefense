@@ -24,6 +24,7 @@ public class MapTest extends GameTestCase {
     public static Object[][] validMapProvider() {
         return new Object[][]{
                 {"data/levels/maps/level1@60.tmx", new Vector2(1, 0)},
+                {"data/levels/maps/level2@60.tmx", new Vector2(1, 0)},
                 {"data/levels/maps/level4@60.tmx", new Vector2(1, 0)},
                 {"data/levels/maps/level5@60.tmx", new Vector2(0, 6)},
                 {"data/levels/maps/level6@60.tmx", new Vector2(1, 9)},
@@ -54,7 +55,7 @@ public class MapTest extends GameTestCase {
 
         WalkablePath path = map.normalizePath(Vector2.Zero, spawn);
 
-        assertTrue(path.size() > 5);
+        assertTrue(path.size() > 10);
 
         for (Vector2 direction : path.getDirections()) {
             assertTrue("X coordinate is not a direction",

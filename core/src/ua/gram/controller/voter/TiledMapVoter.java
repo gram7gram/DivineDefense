@@ -29,8 +29,14 @@ public class TiledMapVoter {
         voter = VoterPolicyFactory.create(policy);
     }
 
+    public boolean isHoverable(int x, int y) {
+        return !isWalkable(x, y)
+                && !isSpawn(x, y, Voter.Policy.AFFIRMATIVE)
+                && !isBase(x, y, Voter.Policy.AFFIRMATIVE);
+    }
+
     public boolean isBuildable(int x, int y) {
-        return !isWalkable(x, y) && !isBlocked(x, y);
+        return !isBlocked(x, y) && isHoverable(x, y);
     }
 
     public boolean isWalkable(int x, int y) {

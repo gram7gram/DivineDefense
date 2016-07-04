@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="15" height="10" tilewidth="60" tileheight="60" backgroundcolor="#55aaff" nextobjectid="1">
+ <tileset firstgid="1" name="platform@60" tilewidth="60" tileheight="60" tilecount="6">
+  <image source="terrain/platform@60.png" width="180" height="120"/>
+  <tile id="0">
+   <properties>
+    <property name="walkable" value=""/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="base" value=""/>
+    <property name="walkable" value=""/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="5">
+   <properties>
+    <property name="spawn" value=""/>
+    <property name="walkable" value=""/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="7" name="clouds@60" tilewidth="60" tileheight="60" tilecount="1">
+  <image source="terrain/clouds@60.png" width="60" height="60"/>
+  <tile id="0">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Tile Layer 1" width="15" height="10">
+  <data encoding="base64" compression="zlib">
+   eJxjZ2BgYB/Fo5jKGADZQAQb
+  </data>
+ </layer>
+ <layer name="Tile Layer 2" width="15" height="10">
+  <data encoding="base64" compression="zlib">
+   eJxjYKANYKZALwvVXEE8YCVTblQvdjkAN7gARA==
+  </data>
+ </layer>
+ <layer name="Tile Layer 3" width="15" height="10">
+  <data encoding="base64" compression="zlib">
+   eJxjYBh8gJECvSyjegeFXgAbTAAe
+  </data>
+ </layer>
+ <layer name="Tile Layer 4" width="15" height="10">
+  <data encoding="base64" compression="zlib">
+   eJxjYBh6gAkPZsSBmaB6WXFgEGDBgYkBo3pR9QIArkAAxQ==
+  </data>
+ </layer>
+ <layer name="Tile Layer 5" width="15" height="10">
+  <data encoding="base64" compression="zlib">
+   eJxjYBhZgAmIGbFgJhwYJgcCrEDMggWz4rALWW6k6QUAmBwA2g==
+  </data>
+ </layer>
+ <layer name="Tile Layer 6" width="15" height="10">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFxAImIGaE0kxofHR1uORGCgAAFswAFA==
+  </data>
+ </layer>
+ <layer name="Tile Layer 7" width="15" height="10">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgF9ABMQMwIpbHx0dVhkxtKAAAPzAAR
+  </data>
+ </layer>
+ <layer name="Tile Layer 8" width="15" height="10">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFgx0wATEjlEbm48JMSGoHCgAADSQAEw==
+  </data>
+ </layer>
+ <layer name="Tile Layer 9" width="15" height="10">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFwxkwATEjlKYnAAAEnAAG
+  </data>
+ </layer>
+ <layer name="Tile Layer 10" width="15" height="10">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFowA3YCNTHwADqAAH
+  </data>
+ </layer>
+</map>
