@@ -58,7 +58,9 @@ public class Boss extends Actor implements Initializer, Resetable {
             try {
                 stateManager.update(this, delta);
             } catch (GdxRuntimeException e) {
-                Log.exc("Could not update boss state", e);
+                Log.exc("Could not update " + this + "'s state", e);
+                this.remove();
+                return;
             }
             AnimationState state = level.getBossAnimationManager().getSkeletonState();
             state.update(delta);

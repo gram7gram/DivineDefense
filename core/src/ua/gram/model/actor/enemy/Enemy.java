@@ -1,5 +1,7 @@
 package ua.gram.model.actor.enemy;
 
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.Pool;
 
@@ -81,16 +83,23 @@ public abstract class Enemy
 
     @Override
     public EnemyGroup getParent() {
-        if (!(super.getParent() instanceof EnemyGroup))
+        Group group = super.getParent();
+        if (group == null) return null;
+
+        if (!(group instanceof EnemyGroup))
             throw new GdxRuntimeException("Enemy parent is not EnemyGroup");
-        return (EnemyGroup) super.getParent();
+        return (EnemyGroup) group;
     }
 
     @Override
     public BattleStage getStage() {
-        if (!(super.getStage() instanceof BattleStage))
+        Stage stage = super.getStage();
+        if (stage == null) return null;
+
+        if (!(stage instanceof BattleStage))
             throw new GdxRuntimeException("Enemy stage is not BattleStage");
-        return (BattleStage) super.getStage();
+
+        return (BattleStage) stage;
     }
 
     @Override
@@ -108,7 +117,12 @@ public abstract class Enemy
 
             update(delta);
             getStage().updateActorIndex(getParent());
-            getStateManager().update(this, delta);
+            try {
+                getStateManager().update(this, delta);
+            } catch (GdxRuntimeException e) {
+                Log.exc("Could not update " + this + "'s state", e);
+                this.remove();
+            }
         }
     }
 

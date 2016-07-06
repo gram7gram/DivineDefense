@@ -17,8 +17,8 @@ import ua.gram.model.map.Map;
  */
 public class TiledMapVoter {
 
-    private final Map map;
-    private VoterPolicy voter;
+    protected final Map map;
+    protected VoterPolicy voter;
 
     public TiledMapVoter(Map map) {
         this(map, Voter.Policy.UNANIMOUS);
@@ -90,7 +90,7 @@ public class TiledMapVoter {
         return voter.isGranted(values);
     }
 
-    private Voter.Value getVoterValue(boolean condition) {
+    protected Voter.Value getVoterValue(boolean condition) {
         return condition ? Voter.Value.FOR : Voter.Value.AGAINST;
     }
 }

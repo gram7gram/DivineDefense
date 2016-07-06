@@ -1,36 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="15" height="10" tilewidth="60" tileheight="60" nextobjectid="1">
- <tileset firstgid="1" name="grass@60" tilewidth="60" tileheight="60" tilecount="32">
-  <image source="terrain/grass@60.png" width="512" height="256"/>
-  <tile id="10">
+ <tileset firstgid="1" name="castle@60" tilewidth="60" tileheight="60" tilecount="36">
+  <image source="terrain/castle@60.png" width="240" height="540"/>
+  <tile id="7">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="11">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="12">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="13">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="14">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="16">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="17">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="18">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="20">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="21">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="22">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="37" name="lava_ground@60" tilewidth="60" tileheight="60" tilecount="18">
+  <image source="terrain/lava_ground@60.png" width="180" height="360"/>
+  <tile id="0">
    <properties>
     <property name="base" value=""/>
     <property name="walkable" value=""/>
    </properties>
   </tile>
-  <tile id="11">
+  <tile id="15">
    <properties>
     <property name="spawn" value=""/>
     <property name="walkable" value=""/>
    </properties>
   </tile>
-  <tile id="12">
-   <properties>
-    <property name="base" value=""/>
-    <property name="walkable" value=""/>
-   </properties>
-  </tile>
-  <tile id="20">
+  <tile id="16">
    <properties>
     <property name="walkable" value=""/>
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="33" name="sand@60" tilewidth="60" tileheight="60" tilecount="21">
-  <image source="terrain/sand@60.png" width="180" height="420"/>
- </tileset>
- <tileset firstgid="54" name="dark_ground@60" tilewidth="60" tileheight="60" tilecount="24">
-  <image source="terrain/dark_ground@60.png" width="180" height="480"/>
+ <tileset firstgid="55" name="lava@60" tilewidth="60" tileheight="60" tilecount="18">
+  <image source="terrain/lava@60.png" width="180" height="360"/>
   <tile id="0">
    <properties>
     <property name="blocked" value=""/>
@@ -121,53 +170,20 @@
     <property name="blocked" value=""/>
    </properties>
   </tile>
-  <tile id="18">
-   <properties>
-    <property name="blocked" value=""/>
-   </properties>
-  </tile>
-  <tile id="19">
-   <properties>
-    <property name="blocked" value=""/>
-   </properties>
-  </tile>
-  <tile id="20">
-   <properties>
-    <property name="blocked" value=""/>
-   </properties>
-  </tile>
-  <tile id="21">
-   <properties>
-    <property name="blocked" value=""/>
-   </properties>
-  </tile>
-  <tile id="22">
-   <properties>
-    <property name="blocked" value=""/>
-   </properties>
-  </tile>
-  <tile id="23">
-   <properties>
-    <property name="blocked" value=""/>
-   </properties>
-  </tile>
  </tileset>
- <tileset firstgid="78" name="farmlands@60" tilewidth="60" tileheight="60" tilecount="136">
-  <image source="terrain/farmlands@60.png" width="1024" height="512"/>
- </tileset>
- <layer name="Tile Layer 2" width="15" height="10">
+ <layer name="Tile Layer 1" width="15" height="10">
   <data encoding="base64" compression="zlib">
-   eJzjZGBg4KQAywCxGBYsTYReWSAWxYLl8JgtjaaXDYjFgZgdTS82s9HlCPHZ8JhLDB/GZiWglhXqNxYsenmxyBEKOylomIAwDxb/I8sjY0m0+MEnRwgDACOwCpk=
+   eJwTZmBgECYTi1OA9QcJNsWD0dWaEKFGH484sW4gVS8t/K5KYbgCAIVWGQo=
   </data>
  </layer>
  <layer name="Tile Layer 2" width="15" height="10">
   <data encoding="base64" compression="zlib">
-   eJxbzcDAsBKIV0ExKYCQnpUE+LQE9LSLWgCfm4eCf5DdCACL5wfz
+   eJzjZ2Bg4ABifjJoEOAhkx4FwxsAADO2AQU=
   </data>
  </layer>
  <layer name="Tile Layer 3" width="15" height="10">
   <data encoding="base64" compression="zlib">
-   eJxjYKAdsARiEyqYY4KDTQ1gg8S2ItINxIgTkiMEKPUnKfpN0Ghi9BOSBwBDWQMg
+   eJxjYBgYYEcEtoeqtUUTdyECuwKxFRA7ALEFkjgpwBlqDi8Q85HsQwgQBGIWBkw/kaLXEYqdSNQriaTXmgF72OLSq8iAP2wJuRkASgkNmA==
   </data>
  </layer>
 </map>

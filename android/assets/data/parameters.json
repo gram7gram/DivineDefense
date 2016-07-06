@@ -93,7 +93,13 @@
           "spawnProperty": "spawn",
           "baseProperty": "base",
           "blockedProperty": "blocked",
-          "name": "data/levels/maps/level2@60.tmx"
+          "name": "data/levels/maps/level1@60.tmx",
+          "voter": "PSEUDO_3D"
+        },
+        "backgroundColor": {
+          "r": 77,
+          "g": 178,
+          "b": 254
         },
         "assets": {
           "back": [],
@@ -115,6 +121,92 @@
         "initialDirection": {
           "x": 0,
           "y": 1
+        },
+        "waves": [
+          {
+            "index": 1,
+            "enemies": [
+              "EnemySummoner"
+            ]
+          },
+          {
+            "index": 2,
+            "enemies": [
+              "EnemyRunner",
+              "EnemyRunner",
+              "EnemyRunner",
+              "EnemySoldier",
+              "EnemySoldier",
+              "EnemyRunner",
+              "EnemySoldier"
+            ]
+          }
+        ]
+      },
+      {
+        "level": 2,
+        "map": {
+          "walkableProperty": "walkable",
+          "spawnProperty": "spawn",
+          "baseProperty": "base",
+          "blockedProperty": "blocked",
+          "name": "data/levels/maps/level2@60.tmx"
+        },
+        "assets": {
+          "back": [],
+          "front": []
+        },
+        "preview": {
+          "name": "data/levels/res/level-2-preview",
+          "format": "jpg",
+          "size": 256
+        },
+        "initialDirection": {
+          "x": 0,
+          "y": 1
+        },
+        "waves": [
+          {
+            "index": 1,
+            "enemies": [
+              "EnemySummoner"
+            ]
+          },
+          {
+            "index": 2,
+            "enemies": [
+              "EnemyRunner",
+              "EnemyRunner",
+              "EnemyRunner",
+              "EnemySoldier",
+              "EnemySoldier",
+              "EnemyRunner",
+              "EnemySoldier"
+            ]
+          }
+        ]
+      },
+      {
+        "level": 3,
+        "map": {
+          "walkableProperty": "walkable",
+          "spawnProperty": "spawn",
+          "baseProperty": "base",
+          "blockedProperty": "blocked",
+          "name": "data/levels/maps/level3@60.tmx"
+        },
+        "assets": {
+          "back": [],
+          "front": []
+        },
+        "preview": {
+          "name": "data/levels/res/level-3-preview",
+          "format": "jpg",
+          "size": 256
+        },
+        "initialDirection": {
+          "x": 1,
+          "y": 0
         },
         "waves": [
           {
@@ -206,6 +298,40 @@
         ]
       },
       {
+        "level": 6,
+        "map": {
+          "walkableProperty": "walkable",
+          "spawnProperty": "spawn",
+          "baseProperty": "base",
+          "blockedProperty": "blocked",
+          "name": "data/levels/maps/level6@60.tmx"
+        },
+        "preview": {
+          "name": "data/levels/res/level-6-preview",
+          "format": "jpg",
+          "size": 256
+        },
+        "initialDirection": {
+          "x": 0,
+          "y": -1
+        },
+        "waves": [
+          {
+            "index": 1,
+            "enemies": [
+              "EnemyRunner",
+              "EnemyWarrior"
+            ]
+          },
+          {
+            "index": 2,
+            "enemies": [
+              "EnemyRunner"
+            ]
+          }
+        ]
+      },
+      {
         "level": 7,
         "map": {
           "walkableProperty": "walkable",
@@ -243,6 +369,33 @@
         },
         "preview": {
           "name": "data/levels/res/level-8-preview",
+          "format": "jpg",
+          "size": 256
+        },
+        "initialDirection": {
+          "x": 1,
+          "y": 0
+        },
+        "waves": [
+          {
+            "index": 1,
+            "enemies": [
+              "EnemyWarrior"
+            ]
+          }
+        ]
+      },
+      {
+        "level": 9,
+        "map": {
+          "walkableProperty": "walkable",
+          "spawnProperty": "spawn",
+          "baseProperty": "base",
+          "blockedProperty": "blocked",
+          "name": "data/levels/maps/level8@60.tmx"
+        },
+        "preview": {
+          "name": "data/levels/res/level-9-preview",
           "format": "jpg",
           "size": 256
         },

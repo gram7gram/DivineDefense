@@ -70,7 +70,7 @@ public final class EnemyStateManager extends StateManager<Enemy> {
     @Override
     public void update(Enemy enemy, float delta) {
         if (enemy == null)
-            throw new NullPointerException("EnemyStateManager cannot update NULL");
+            throw new NullPointerException("StateManager cannot update NULL");
 
         EnemyStateHolder holder = enemy.getStateHolder();
 
@@ -110,7 +110,7 @@ public final class EnemyStateManager extends StateManager<Enemy> {
         }
 
         if (!hasManagedState) {
-            throw new GdxRuntimeException("No state was managed by TowerStateManager");
+            throw new GdxRuntimeException("No state was managed by StateManager");
         }
     }
 

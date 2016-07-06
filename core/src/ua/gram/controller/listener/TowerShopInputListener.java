@@ -8,6 +8,7 @@ import ua.gram.controller.stage.BattleStage;
 import ua.gram.controller.stage.UIStage;
 import ua.gram.controller.tower.TowerShop;
 import ua.gram.controller.voter.TiledMapVoter;
+import ua.gram.model.actor.PositionMarker;
 import ua.gram.model.actor.tower.Tower;
 import ua.gram.model.group.TowerGroup;
 import ua.gram.model.level.Level;
@@ -57,6 +58,7 @@ public class TowerShopInputListener extends ClickListener {
         float X = event.getStageX() - event.getStageX() % DDGame.TILE_HEIGHT;
         float Y = event.getStageY() - event.getStageY() % DDGame.TILE_HEIGHT;
         event.stop();
+        PositionMarker marker = shop.getMarker();
         if (!isEqual(X, Y, towerGroup)) {
 
             int xIndex = (int) (X / DDGame.TILE_HEIGHT);
@@ -68,9 +70,14 @@ public class TowerShopInputListener extends ClickListener {
                 Tower tower = towerGroup.getRootActor();
                 tower.setPosition(X, Y + 40);
                 tower.toFront();
-                shop.getMarker().setPosition(X, Y);
-                shop.getMarker().setVisible(true);
+                marker.setPosition(X, Y);
+                marker.setVisible(true);
+                marker.setMarkerStyle(PositionMarker.SUCCESS);
+            } else {
+                marker.setMarkerStyle(PositionMarker.DANGER);
             }
+        } else {
+            marker.setMarkerStyle(PositionMarker.DANGER);
         }
     }
 

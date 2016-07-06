@@ -33,9 +33,11 @@ public class DeadState extends InactiveState {
 
         super.preManage(enemy);
 
-        manager.swapLevel2State(enemy, null);
-        manager.swapLevel3State(enemy, null);
-        manager.swapLevel4State(enemy, null);
+        try {
+            manager.reset(enemy);
+        } catch (NullPointerException e) {
+            //ignore
+        }
 
         EnemySpawner spawner = enemy.getSpawner();
         EnemyGroup group = enemy.getEnemyGroup();

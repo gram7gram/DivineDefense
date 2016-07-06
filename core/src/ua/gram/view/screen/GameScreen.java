@@ -50,6 +50,7 @@ public class GameScreen extends AbstractScreen {
     @Override
     public void show() {
         super.show();
+        backgroundStage.clear();
 
         BattleStage battleStage = new BattleStage(game, level);
         UIStage uiStage = new UIStage(game, level, game.getPrototype().ui);
@@ -63,6 +64,8 @@ public class GameScreen extends AbstractScreen {
         level.setStageHolder(stageHolder);
 
         level.init();
+
+        setBackgroundColor(level.getPrototype().backgroundColor);
 
         renderer.setView(game.getCamera());
         stageHolder.init();

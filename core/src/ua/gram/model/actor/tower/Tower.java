@@ -2,6 +2,7 @@ package ua.gram.model.actor.tower;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.Pool;
 
 import java.util.ArrayList;
@@ -70,7 +71,13 @@ public abstract class Tower
         super.act(delta);
         if (!DDGame.PAUSE) {
             update(delta);
-            getStateManager().update(this, delta);
+
+            try {
+                getStateManager().update(this, delta);
+            } catch (GdxRuntimeException e) {
+                Log.exc("Could not update " + this + "'s state", e);
+                this.remove();
+            }
         }
     }
 

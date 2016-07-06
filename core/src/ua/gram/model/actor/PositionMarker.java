@@ -1,6 +1,7 @@
 package ua.gram.model.actor;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -14,9 +15,13 @@ import ua.gram.DDGame;
  */
 public class PositionMarker extends Actor {
 
+    public static final String SUCCESS = "success";
+    public static final String DANGER = "danger";
+
     private final Animation animation;
     private float stateTime;
     private TextureRegion currentFrame;
+    private String markerStyle;
 
     public PositionMarker(Skin skin, String region) {
 
@@ -34,6 +39,8 @@ public class PositionMarker extends Actor {
 
         animation = new Animation(1 / 5f, regions[0]);
         animation.setPlayMode(Animation.PlayMode.LOOP);
+
+        markerStyle = SUCCESS;
     }
 
     @Override
@@ -50,11 +57,32 @@ public class PositionMarker extends Actor {
             currentFrame = animation.getKeyFrame(stateTime, true);
             stateTime += Gdx.graphics.getDeltaTime();
         }
-        if (currentFrame != null) batch.draw(currentFrame, getX(), getY(), getWidth(), getHeight());
+        if (currentFrame != null) {
+            Color initialColor = batch.getColor();
+            batch.setColor(getColorByStyle());
+            batch.draw(currentFrame, getX(), getY(), getWidth(), getHeight());
+            batch.setColor(initialColor);
+        }
     }
 
     public void reset() {
         setPosition(0, 0);
         setVisible(false);
+        markerStyle = SUCCESS;
+    }
+
+    private Color getColorByStyle() {
+        switch (markerStyle) {
+            case SUCCESS:
+                return Color.GREEN;
+            case DANGER:
+                return Color.RED;
+            default:
+                throw new IllegalArgumentException("Unknown marker style: " + markerStyle);
+        }
+    }
+
+    public void setMarkerStyle(String markerStyle) {
+        this.markerStyle = markerStyle;
     }
 }

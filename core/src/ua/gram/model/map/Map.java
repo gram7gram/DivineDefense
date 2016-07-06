@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import ua.gram.DDGame;
+import ua.gram.controller.factory.VoterFactory;
 import ua.gram.controller.voter.TiledMapVoter;
 import ua.gram.model.Initializer;
 import ua.gram.model.enums.Voter;
@@ -55,7 +56,11 @@ public class Map implements Initializer {
 
     @Override
     public void init() {
-        voter = new TiledMapVoter(this);
+        if (prototype.voter == null) {
+            prototype.voter = VoterFactory.TILED_MAP;
+        }
+
+        voter = VoterFactory.create(this, prototype.voter);
 
         HashMap<String, Vector2> points = findMapPoints();
 
