@@ -1,6 +1,5 @@
 package ua.gram.model.group;
 
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -117,7 +116,6 @@ public class TowerControls extends Table implements Resetable {
     }
 
     public void hideControls() {
-        setVisible(true);
         addAction(
                 Actions.sequence(
                         Actions.alpha(1),
@@ -131,14 +129,6 @@ public class TowerControls extends Table implements Resetable {
                 )
         );
 
-    }
-
-    public Actor getUpgradeBut() {
-        return upgradeBut;
-    }
-
-    public Button getSellBut() {
-        return sellBut;
     }
 
     public Tower getTower() {

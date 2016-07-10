@@ -4,8 +4,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Pool;
 
 import java.util.HashMap;
-import java.util.Objects;
-import java.util.Set;
 
 import ua.gram.DDGame;
 import ua.gram.controller.animation.tower.TowerAnimationChanger;
@@ -53,11 +51,11 @@ public class TowerShop implements ShopInterface<TowerGroup>, Initializer {
         this.game = game;
         this.prototype = prototype;
         this.stageHolder = stageHolder;
-        towerPrototypes = game.getPrototype().towers;
-        identityMap = new HashMap<TowerPrototype, Pool<Tower>>(towerPrototypes.length);
 
         Skin skin = game.getResources().getSkin();
 
+        towerPrototypes = game.getPrototype().towers;
+        identityMap = new HashMap<TowerPrototype, Pool<Tower>>(towerPrototypes.length);
         animationProvider = new TowerAnimationProvider(skin, towerPrototypes);
 
         strategyManager = new TowerStrategyManager();
@@ -65,7 +63,7 @@ public class TowerShop implements ShopInterface<TowerGroup>, Initializer {
         towerShopGroup = new TowerShopGroup(game, prototype);
         animationChanger = new TowerAnimationChanger();
 
-        marker = new PositionMarker(skin, "position-marker");
+        marker = new PositionMarker(skin);
         marker.setVisible(false);
 
         controls = new TowerControls(game, skin);
@@ -107,21 +105,26 @@ public class TowerShop implements ShopInterface<TowerGroup>, Initializer {
      * @return towerGroup, obtained from pool
      */
     public TowerGroup preorder(String type, float x, float y) {
+        Log.info(type + " is going to be preordered from TowerShop...");
+
         TowerPrototype prototype = findByName(type);
         Tower tower = identityMap.get(prototype).obtain();
-        Log.info(type + " is going to be preordered from TowerShop...");
         tower.setPosition(x, y);
+
         stateManager.swap(tower, stateManager.getPreorderState());
+
         TowerGroup group = new TowerGroup(game, tower);
         stageHolder.getBattleStage().addActor(group);
+
         Log.info(tower + " has been preordered from TowerShop");
+
         return group;
     }
 
     public TowerPrototype findByName(String name) {
         TowerPrototype prototype = null;
         for (TowerPrototype p : identityMap.keySet()) {
-            if (Objects.equals(p.name, name)) {
+            if (p.name.equals(name)) {
                 prototype = p;
                 break;
             }
@@ -142,14 +145,18 @@ public class TowerShop implements ShopInterface<TowerGroup>, Initializer {
         Tower tower = group.getRootActor();
         Log.info(tower + " is going to be bought from TowerShop...");
         tower.setPosition(x, y);
+
         stateManager.swap(tower, stateManager.getBuildingState());
+
         Log.info(tower + " has been bought from TowerShop");
     }
 
     public void sell(TowerGroup group) {
         Tower tower = group.getRootActor();
         Log.info(tower + " is going to be sold to TowerShop...");
+
         stateManager.swap(tower, stateManager.getSellingState());
+
         Log.info(tower + " has been sold to TowerShop");
     }
 
@@ -184,10 +191,6 @@ public class TowerShop implements ShopInterface<TowerGroup>, Initializer {
 
     public TowerStrategyManager getStrategyManager() {
         return strategyManager;
-    }
-
-    public Set<TowerPrototype> getRegisteredTowers() {
-        return identityMap.keySet();
     }
 
     public TowerStateManager getStateManager() {

@@ -23,7 +23,8 @@ public class PositionMarker extends Actor {
     private TextureRegion currentFrame;
     private String markerStyle;
 
-    public PositionMarker(Skin skin, String region) {
+    public PositionMarker(Skin skin) {
+        String region = "position-marker";
 
         TextureRegion texture = skin.getRegion(region);
 

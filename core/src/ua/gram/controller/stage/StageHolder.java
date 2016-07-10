@@ -3,10 +3,13 @@ package ua.gram.controller.stage;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 
+import ua.gram.controller.listener.BattleStageClickListener;
 import ua.gram.controller.listener.LevelFinishedListener;
 import ua.gram.controller.listener.PauseListener;
 import ua.gram.controller.listener.PlayerDefeatedListener;
+import ua.gram.controller.listener.TowerControlsToggleListener;
 import ua.gram.model.Initializer;
+import ua.gram.model.group.TowerControls;
 import ua.gram.utils.Log;
 import ua.gram.view.screen.GameScreen;
 
@@ -32,9 +35,15 @@ public class StageHolder implements Initializer {
         EventListener levelFinished = new PlayerDefeatedListener(this);
         EventListener playerDefeated = new LevelFinishedListener(this);
         EventListener pauseListener = new PauseListener(this);
-        uiStage.getRoot().addListener(levelFinished);
-        uiStage.getRoot().addListener(playerDefeated);
-        uiStage.getRoot().addListener(pauseListener);
+        uiStage.addListener(levelFinished);
+        uiStage.addListener(playerDefeated);
+        uiStage.addListener(pauseListener);
+
+        TowerControls controls = uiStage.getTowerControls();
+        EventListener controlsListener = new TowerControlsToggleListener(controls);
+        EventListener battleStageClickListener = new BattleStageClickListener(this);
+        battleStage.addListener(controlsListener);
+        battleStage.addListener(battleStageClickListener);
     }
 
     /**
@@ -43,14 +52,15 @@ public class StageHolder implements Initializer {
     public void fire(Event event) {
         String eventName = event.getClass().getSimpleName();
         Log.warn(eventName + " was fired on all stages");
-        fireLevel(event);
 
+        fireLevel(event);
 
         if (!event.isHandled()) {
             fireUI(event);
         } else {
             Log.warn(eventName + " was not executed on UI stage. It was handled before");
         }
+
         if (!event.isHandled()) {
             fireBattle(event);
         } else {

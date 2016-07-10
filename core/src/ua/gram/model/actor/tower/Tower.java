@@ -14,7 +14,6 @@ import ua.gram.controller.pool.WeaponPool;
 import ua.gram.controller.stage.BattleStage;
 import ua.gram.controller.state.tower.TowerStateHolder;
 import ua.gram.controller.state.tower.TowerStateManager;
-import ua.gram.controller.state.tower.level1.ActiveState;
 import ua.gram.controller.tower.TowerShop;
 import ua.gram.model.ActiveTarget;
 import ua.gram.model.PoolableAnimation;
@@ -176,10 +175,6 @@ public abstract class Tower
 
     public TowerProperties getProperties() {
         return properties;
-    }
-
-    public boolean isActiveState() {
-        return getStateHolder().getCurrentLevel1State() instanceof ActiveState;
     }
 
     public void addTarget(ActiveTarget target) {

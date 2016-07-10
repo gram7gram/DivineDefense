@@ -41,4 +41,8 @@ public class Types {
     public enum TowerLevels {
         Lvl1, Lvl2, Lvl3, Lvl4
     }
+
+    public enum TowerControls {
+        VISIBLE, INVISIBLE
+    }
 }

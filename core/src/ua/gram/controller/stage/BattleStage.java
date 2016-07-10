@@ -6,7 +6,6 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import java.util.ArrayList;
 
 import ua.gram.DDGame;
-import ua.gram.controller.listener.ToggleTowerControlsListener;
 import ua.gram.model.Initializer;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.actor.tower.Tower;
@@ -25,19 +24,17 @@ import ua.gram.utils.Log;
 public class BattleStage extends AbstractStage implements Initializer {
 
     private final Level level;
-    private final ToggleTowerControlsListener controlsListener;
     private final ArrayList<Layer> indexes;
-    private final ArrayList<int[]> towerPositions;
+    private final ArrayList<int[]> towerPositionCache;
 
     public BattleStage(DDGame game, Level level) {
         super(game);
         this.level = level;
-        towerPositions = new ArrayList<int[]>();
+        towerPositionCache = new ArrayList<int[]>();
         indexes = new ArrayList<Layer>();
         addLayers();
 
         Log.info(indexes.size() + " indexes are OK");
-        controlsListener = new ToggleTowerControlsListener();
         Log.info("BattleStage is OK");
     }
 
@@ -52,9 +49,10 @@ public class BattleStage extends AbstractStage implements Initializer {
 
     @Override
     public void init() {
+        if (stageHolder == null) {
+            throw new NullPointerException("Missing StageHolder");
+        }
         level.setStageHolder(stageHolder);
-        controlsListener.setStageHolder(stageHolder);
-        addListener(controlsListener);
     }
 
     @Override
@@ -218,7 +216,7 @@ public class BattleStage extends AbstractStage implements Initializer {
     }
 
     public boolean isPositionEmpty(float x, float y) {
-        for (int[] position : towerPositions) {
+        for (int[] position : towerPositionCache) {
             if (position[0] == (int) (x / DDGame.TILE_HEIGHT)
                     && position[1] == (int) (y / DDGame.TILE_HEIGHT)) {
                 return false;
@@ -227,19 +225,15 @@ public class BattleStage extends AbstractStage implements Initializer {
         return true;
     }
 
-    public ToggleTowerControlsListener getControlsListener() {
-        return controlsListener;
-    }
-
     public void addTowerPosition(Tower tower) {
-        towerPositions.add(new int[]{
+        towerPositionCache.add(new int[]{
                 (int) (tower.getX() / DDGame.TILE_HEIGHT),
                 (int) (tower.getY() / DDGame.TILE_HEIGHT)
         });
     }
 
     public void removeTowerPosition(Tower tower) {
-        towerPositions.remove(new int[]{
+        towerPositionCache.remove(new int[]{
                 (int) (tower.getX() / DDGame.TILE_HEIGHT),
                 (int) (tower.getY() / DDGame.TILE_HEIGHT)
         });

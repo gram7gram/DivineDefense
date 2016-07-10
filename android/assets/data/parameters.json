@@ -58,7 +58,9 @@
       "buttonHeight": 80,
       "tileHeight": 60,
       "faction1": "Demon",
-      "faction2": "Angel"
+      "faction2": "Angel",
+      "towerSellRatio": 0.6,
+      "maxTowerLevel": 4
     }
   },
   "player": {
@@ -69,7 +71,7 @@
     "faction": null,
     "progress": {
       "level": {
-        "lastUnlocked": 3
+        "lastUnlocked": 1
       }
     }
   },

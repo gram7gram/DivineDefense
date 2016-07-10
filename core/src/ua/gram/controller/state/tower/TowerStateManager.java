@@ -155,10 +155,6 @@ public class TowerStateManager extends StateManager<Tower> {
         return upgradeState;
     }
 
-    public StateSwapper<Tower> getStateSwapper() {
-        return stateSwapper;
-    }
-
     public TowerAnimationChanger getAnimationChanger() {
         return animationChanger;
     }

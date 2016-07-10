@@ -28,14 +28,20 @@ public class BuildingState extends InactiveState {
     public void preManage(Tower tower) {
         super.preManage(tower);
         Log.info(tower + " is being built...");
+
         game.getPlayer().chargeCoins(tower.getProperties().getCost());
+
         tower.setOrigin(tower.getX() + 20, tower.getY() + 42);
         tower.setDefaultStrategy();
+
         BattleStage battleStage = tower.getTowerShop().getBattleStage();
+
         TowerGroup towerGroup = tower.getParent();
         towerGroup.setVisible(true);
+
         battleStage.updateZIndexes(towerGroup);
         battleStage.addTowerPosition(tower);
+
         towerGroup.getBar().setVisible(true);
         towerGroup.getBar().setDuration(tower.getPrototype().buildDelay);
     }
@@ -46,7 +52,9 @@ public class BuildingState extends InactiveState {
         if (tower.buildCount >= tower.getPrototype().buildDelay) {
             tower.buildCount = 0;
             tower.setTouchable(Touchable.enabled);
+
             Log.info(tower + " is built");
+
             TowerStateManager manager = tower.getTowerShop().getStateManager();
             manager.swap(tower, manager.getActiveState());
             manager.swap(tower, manager.getSearchState());

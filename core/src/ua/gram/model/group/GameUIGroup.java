@@ -94,6 +94,7 @@ public class GameUIGroup extends Table implements Initializer {
     @Override
     public void init() {
         if (stageHolder == null) throw new NullPointerException("Missing UIStage");
+
         pauseBut.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
