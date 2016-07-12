@@ -25,7 +25,7 @@ public class MapTest extends GameTestCase {
         return new Object[][]{
                 {"data/levels/maps/level1@60.tmx", new Vector2(1, 0)},
                 {"data/levels/maps/level2@60.tmx", new Vector2(0, 1)},
-                {"data/levels/maps/level3@60.tmx", new Vector2(1, 0)},
+                {"data/levels/maps/level3@60.tmx", new Vector2(0, 5)},
                 {"data/levels/maps/level4@60.tmx", new Vector2(1, 0)},
                 {"data/levels/maps/level5@60.tmx", new Vector2(0, 6)},
                 {"data/levels/maps/level6@60.tmx", new Vector2(1, 9)},
