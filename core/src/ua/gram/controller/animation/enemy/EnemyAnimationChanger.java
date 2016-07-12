@@ -47,7 +47,8 @@ public class EnemyAnimationChanger implements Runnable {
 
     private void updateDirection() {
         DirectionHolder holder = enemy.getDirectionHolder();
-        if (dir != null && !Path.compare(holder.getCurrentDirection(), dir)) {
+        if (dir != null
+                && !Path.compare(holder.getCurrentDirection(), dir)) {
             synchronized (lock) {
                 holder.setCurrentDirection(dir.x, dir.y);
             }

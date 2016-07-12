@@ -81,6 +81,10 @@ public class DirectionHolder implements Resetable {
     }
 
     public void setCurrentDirection(float x, float y) {
+        if (Path.getType(x, y) == null) {
+            throw new IllegalArgumentException("Not a direction: [" + x + ":" + y + "]");
+        }
+
         currentDirection.set(x, y);
         Vector2 opposite = Path.opposite(x, y);
         previousDirection.set(opposite.x, opposite.y);

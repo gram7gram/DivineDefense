@@ -528,7 +528,7 @@
       "spawnDuration": 1.5,
       "frameDuration": 0.1,
       "abilityDuration": 3,
-      "abilityDelay": 4,
+      "abilityDelay": 1,
       "minion": "EnemySoldier"
     },
     {

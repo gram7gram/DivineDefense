@@ -56,9 +56,6 @@ public class SpawnState extends InactiveState {
 
     private void minionSpawn(Enemy enemy) {
         EnemySpawner spawner = enemy.getSpawner();
-        Enemy parent = enemy.getParentEnemy();
-        Vector2 initial = parent.getDirectionHolder().getCurrentDirection();
-        enemy.getDirectionHolder().setCurrentDirection(initial.x, initial.y);
         Vector2 prev = enemy.getDirectionHolder().getPreviousDirection();
         spawner.setActionPath(enemy, spawnPosition, prev);
     }
