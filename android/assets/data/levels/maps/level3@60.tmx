@@ -253,7 +253,7 @@
   <tile id="3">
    <properties>
     <property name="base" value=""/>
-    <property name="wakable" value=""/>
+    <property name="walkable" value=""/>
    </properties>
   </tile>
   <tile id="4">
@@ -308,7 +308,7 @@
   </tile>
   <tile id="16">
    <properties>
-    <property name="wakable" value=""/>
+    <property name="walkable" value=""/>
    </properties>
   </tile>
   <tile id="18">
