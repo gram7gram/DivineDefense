@@ -75,7 +75,7 @@ public class TowerGroup extends ActorGroup<Tower> implements Initializer {
                 Gdx.gl.glEnable(GL20.GL_BLEND);
                 shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
                 shapeRenderer.setColor(Color.RED);
-                shapeRenderer.circle(getOriginX(), getOriginY(),
+                shapeRenderer.circle(targetPoints.getBase().getX(), targetPoints.getBase().getY(),
                         root.getProperties().getRange() * DDGame.TILE_HEIGHT * 1.5f);
                 shapeRenderer.end();
                 Gdx.gl.glDisable(GL20.GL_BLEND);

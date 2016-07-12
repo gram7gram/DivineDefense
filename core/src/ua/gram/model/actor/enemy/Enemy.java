@@ -249,6 +249,11 @@ public abstract class Enemy
         this.parent = parent;
     }
 
+    @Override
+    public boolean remove() {
+        return getParent().remove();
+    }
+
     public boolean hasParentEnemy() {
         return parent != null;
     }

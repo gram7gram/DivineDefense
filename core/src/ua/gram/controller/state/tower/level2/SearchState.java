@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ua.gram.DDGame;
+import ua.gram.controller.Counters;
 import ua.gram.controller.state.tower.TowerStateManager;
 import ua.gram.model.ActiveTarget;
 import ua.gram.model.actor.enemy.Enemy;
@@ -29,16 +30,19 @@ public class SearchState extends IdleState {
 
     @Override
     public void manage(Tower tower, float delta) {
-        if (tower.attackCount >= tower.getProperties().getRate()) {
-            tower.attackCount = 0;
+        Counters counters = tower.getCounters();
+        float count = counters.get("searchCount");
+        if (count >= .1) {
+            counters.set("searchCount", 0);
             int limit = 5;
 
             List<Enemy> targets = new ArrayList<Enemy>(limit);
             for (EnemyGroup group : tower.getStage().getEnemyGroupsOnMap()) {
-                if (targets.size() == limit) break;
-                if (group.getRootActor().isAlive()
-                        && tower.isInRange(group.getRootActor())) {
-                    targets.add(group.getRootActor());
+                Enemy enemy = group.getRootActor();
+
+                if (enemy.isAlive() && tower.isInRange(enemy)) {
+                    targets.add(enemy);
+                    if (targets.size() == limit) break;
                 }
             }
 
@@ -60,7 +64,7 @@ public class SearchState extends IdleState {
             } else tower.resetVictims();
 
         } else {
-            tower.attackCount += delta;
+            counters.set("searchCount", count + delta);
         }
     }
 }

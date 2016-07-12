@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ua.gram.DDGame;
+import ua.gram.controller.Counters;
 import ua.gram.controller.animation.tower.TowerAnimationProvider;
 import ua.gram.controller.pool.WeaponPool;
 import ua.gram.controller.stage.BattleStage;
@@ -21,6 +22,7 @@ import ua.gram.model.actor.GameActor;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.actor.weapon.Weapon;
 import ua.gram.model.enums.Types;
+import ua.gram.model.group.TargetPoints;
 import ua.gram.model.group.TowerGroup;
 import ua.gram.model.prototype.tower.TowerPrototype;
 import ua.gram.model.strategy.tower.TowerStrategy;
@@ -43,8 +45,7 @@ public abstract class Tower
     protected final TowerStateHolder stateHolder;
     protected final WeaponPool weaponPool;
     private final Vector2 center;
-    public float buildCount = 0;
-    public float attackCount = 0;
+    private final Counters counters;
     private List<ActiveTarget> targets;
     private TowerStrategy currentTowerStrategy;
 
@@ -58,6 +59,7 @@ public abstract class Tower
         targets = new ArrayList<ActiveTarget>(5);
         weaponPool = towerShop.getWeaponProvider().getPool(prototype.weapon);
         center = Vector2.Zero;
+        counters = new Counters();
     }
 
     @Override
@@ -89,9 +91,14 @@ public abstract class Tower
     }
 
     public boolean isInRange(Enemy enemy) {
-        Vector2 enemyPos = new Vector2(enemy.getOriginX(), enemy.getOriginY());
-        Vector2 towerPos = new Vector2(this.getOriginX(), this.getOriginY());
+        if (!enemy.hasParent()) return false;
+
+        TargetPoints targetPoints = enemy.getParent().getTargetPoints();
+        TargetPoints towerPoints = getParent().getTargetPoints();
+        Vector2 enemyPos = new Vector2(targetPoints.getBase().getX(), targetPoints.getBase().getY());
+        Vector2 towerPos = new Vector2(towerPoints.getBase().getX(), towerPoints.getBase().getY());
         float distance = enemyPos.dst(towerPos);
+
         return distance <= (properties.getRange() * DDGame.TILE_HEIGHT * 1.5);
     }
 
@@ -187,5 +194,9 @@ public abstract class Tower
 
     public TowerAnimationProvider getAnimationProvider() {
         return towerShop.getAnimationProvider();
+    }
+
+    public Counters getCounters() {
+        return counters;
     }
 }

@@ -10,14 +10,13 @@ import ua.gram.model.Resetable;
 public class Counters implements Resetable {
 
     private final HashMap<String, Float> map;
-    private final Object lock = new Object();
 
     public Counters() {
         map = new HashMap<>(3);
     }
 
     public Counters set(String name, float value) {
-        synchronized (lock) {
+        synchronized (map) {
             map.put(name, value);
         }
 
@@ -25,8 +24,10 @@ public class Counters implements Resetable {
     }
 
     public float get(String name) {
-        if (!map.containsKey(name)) {
-            set(name, 0);
+        synchronized (map) {
+            if (!map.containsKey(name)) {
+                set(name, 0);
+            }
         }
         return map.get(name);
     }

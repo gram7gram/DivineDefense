@@ -125,15 +125,10 @@ public final class EnemySpawner implements Initializer {
         }
     }
 
-    /**
-     * FIX Bigger speed - slower walk of EnemyState
-     * <p/>
-     * Sets the Actions for EnemyState to do to walk the path
-     */
     public void setActionPath(final Enemy enemy, Vector2 spawn, Vector2 previous) {
         WalkablePath path = level.getMap().normalizePath(previous, spawn);
         enemy.setPath(path);
-        if (enemy.getDirectionHolder().hasCurrentDirection()) {
+        if (!enemy.getDirectionHolder().hasCurrentDirection()) {
             Vector2 current = path.peekNextDirection();
             enemy.getDirectionHolder().setCurrentDirection(current.x, current.y);
         }

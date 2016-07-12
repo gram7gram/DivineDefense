@@ -44,7 +44,7 @@ public abstract class Weapon extends Actor implements Resetable, Pool.Poolable {
         duration = 0;
         scaleX = 1;
         scaleY = 1;
-        Log.info(this.getClass().getSimpleName() + " is OK");
+        Log.info(getClass().getSimpleName() + " is OK");
     }
 
     @Override
@@ -100,13 +100,14 @@ public abstract class Weapon extends Actor implements Resetable, Pool.Poolable {
             currentFrame = animation.getKeyFrame(stateTime, true);
             stateTime += Gdx.graphics.getDeltaTime();
         }
-        if (canBeDrawn())
+        if (canBeDrawn()) {
             batch.draw(
                     currentFrame,
                     getX(),
                     getY(),
                     getWidth() * scaleX,
                     getHeight() * scaleY);
+        }
     }
 
     protected boolean needAnimationUpdate() {
@@ -115,7 +116,7 @@ public abstract class Weapon extends Actor implements Resetable, Pool.Poolable {
 
     protected boolean canBeDrawn() {
         return currentFrame != null && !isOutOfBounds()
-                && (!isFinished() || (targetGroup != null && isTargetInRange()));
+                && (!isFinished() || isTargetInRange());
     }
 
     protected boolean isTargetInRange() {

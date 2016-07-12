@@ -43,12 +43,13 @@ public class TowerControls extends Table implements Resetable {
 
     private synchronized void build() {
         final TowerGroup group = getTowerGroup();
-        final Tower tower = getTower();
+        if (group == null) throw new NullPointerException("Missing tower for tower controls");
+        final Tower tower = group.getRootActor();
+
         sellBut.clearListeners();
         sellBut.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if (tower == null) throw new NullPointerException("Sell failed: no tower");
                 shop.sell(group);
                 resetObject();
             }
@@ -57,8 +58,6 @@ public class TowerControls extends Table implements Resetable {
         upgradeBut.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if (tower == null) throw new NullPointerException("Upgrade failed: no tower");
-
                 try {
                     TowerStateManager manager = tower.getStateManager();
                     manager.swap(tower,
@@ -90,17 +89,14 @@ public class TowerControls extends Table implements Resetable {
                 .height(45);
 
         if (tower.getProperties().getTowerLevel() == Tower.MAX_TOWER_LEVEL) {
-            add().size(45)
-                    .padLeft(5);
+            add().size(45).padLeft(5);
         } else {
-            add(upgradeBut).size(45)
-                    .padLeft(5);
+            add(upgradeBut).size(45).padLeft(5);
         }
 
         int price = tower.getProperties().getCost();
         upgradeBut.setVisible(game.getPlayer().hasCoins(price));
         upgradeBut.updatePrice(price + "");
-
     }
 
     public void showControls() {

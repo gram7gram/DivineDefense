@@ -3,6 +3,7 @@ package ua.gram.controller.state.tower.level1;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 
 import ua.gram.DDGame;
+import ua.gram.controller.Counters;
 import ua.gram.controller.stage.BattleStage;
 import ua.gram.controller.state.tower.TowerStateManager;
 import ua.gram.model.actor.tower.Tower;
@@ -49,8 +50,10 @@ public class BuildingState extends InactiveState {
     @Override
     public void manage(Tower tower, float delta) {
         super.manage(tower, delta);
-        if (tower.buildCount >= tower.getPrototype().buildDelay) {
-            tower.buildCount = 0;
+        Counters counters = tower.getCounters();
+        float count = counters.get("buildCount");
+        if (count >= tower.getPrototype().buildDelay) {
+            counters.set("buildCount", 0);
             tower.setTouchable(Touchable.enabled);
 
             Log.info(tower + " is built");
@@ -60,15 +63,14 @@ public class BuildingState extends InactiveState {
             manager.swap(tower, manager.getSearchState());
         } else {
             tower.setTouchable(Touchable.disabled);
-            tower.buildCount += delta;
-            tower.getParent().getBar().setProgress(tower.buildCount);
+            counters.set("buildCount", count + delta);
+            tower.getParent().getBar().setProgress(count + delta);
         }
     }
 
     @Override
     public void postManage(Tower tower) {
         super.postManage(tower);
-        tower.buildCount = 0;
         tower.getParent().getBar().setVisible(false);
     }
 }
