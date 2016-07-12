@@ -24,12 +24,14 @@ public class MapTest extends GameTestCase {
     public static Object[][] validMapProvider() {
         return new Object[][]{
                 {"data/levels/maps/level1@60.tmx", new Vector2(1, 0)},
-                {"data/levels/maps/level2@60.tmx", new Vector2(1, 0)},
+                {"data/levels/maps/level2@60.tmx", new Vector2(0, 1)},
+                {"data/levels/maps/level3@60.tmx", new Vector2(1, 0)},
                 {"data/levels/maps/level4@60.tmx", new Vector2(1, 0)},
                 {"data/levels/maps/level5@60.tmx", new Vector2(0, 6)},
                 {"data/levels/maps/level6@60.tmx", new Vector2(1, 9)},
                 {"data/levels/maps/level7@60.tmx", new Vector2(1, 9)},
                 {"data/levels/maps/level8@60.tmx", new Vector2(0, 1)},
+                {"data/levels/maps/level9@60.tmx", new Vector2(0, 4)},
                 {"data/levels/maps/level10@60.tmx", new Vector2(12, 8)}
         };
     }
