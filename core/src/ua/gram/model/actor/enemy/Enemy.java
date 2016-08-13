@@ -107,6 +107,14 @@ public abstract class Enemy
         super.act(delta);
         if (!DDGame.PAUSE && !isRemoved) {
 
+            try {
+                directionHolder.validate();
+            } catch (IllegalArgumentException e) {
+                Log.exc("Direction holder contains illegal values", e);
+                remove();
+                return;
+            }
+
             if (game.getSpeed().isIncreased()) {
                 updateAnimationSpeed();
             }
@@ -148,7 +156,9 @@ public abstract class Enemy
         isRemoved = false;
         hasReachedCheckpoint = true;
         directionHolder.resetObject();
-        path.dispose();
+        if (path != null) {
+            path.dispose();
+        }
         path = null;
         speedManager.reset();
         resetObject();
@@ -241,17 +251,16 @@ public abstract class Enemy
         return health > 0;
     }
 
-    public Enemy getParentEnemy() {
-        return parent;
-    }
-
     public void setParentEnemy(Enemy parent) {
         this.parent = parent;
     }
 
     @Override
     public boolean remove() {
-        return getParent().remove();
+        clear();
+        reset();
+        spawner.free(this);
+        return getEnemyGroup().remove();
     }
 
     public boolean hasParentEnemy() {

@@ -21,6 +21,7 @@ public class EnemyGroup extends ActorGroup<Enemy> {
         addActor(enemy);
         addActor(new HealthBar(game.getResources().getSkin(), enemy));
         enemy.toFront();
+        setVisible(true);
         Log.info("Group for " + enemy + " is OK");
     }
 

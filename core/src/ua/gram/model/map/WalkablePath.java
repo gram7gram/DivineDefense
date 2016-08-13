@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Disposable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Stack;
 
 import ua.gram.DDGame;
@@ -17,7 +18,7 @@ import ua.gram.DDGame;
 public class WalkablePath implements Disposable {
 
     private final ArrayList<Actor> debuggableDots;
-    private ArrayList<Vector2> path;
+    private List<Vector2> path;
     private Stack<Vector2> directionStack;
     private boolean isReversed = false;
     private boolean isDrawn = false;
@@ -44,12 +45,12 @@ public class WalkablePath implements Disposable {
         return directionStack.size();
     }
 
-    public ArrayList<Vector2> getPath() {
-        return path;
+    public List<Vector2> getPath() {
+        return Collections.unmodifiableList(path);
     }
 
     public void setPath(ArrayList<Vector2> path) {
-        this.path = path;
+        this.path = Collections.unmodifiableList(path);
     }
 
     public Vector2 nextDirection() {
@@ -57,15 +58,18 @@ public class WalkablePath implements Disposable {
             Collections.reverse(directionStack);
             isReversed = true;
         }
-        return directionStack.pop();
+
+        Vector2 nextDirection = directionStack.pop();
+        return nextDirection != null ? nextDirection.cpy() : null;
     }
 
-    public Stack<Vector2> getDirections() {
-        return directionStack;
+    public List<Vector2> getDirections() {
+        return Collections.unmodifiableList(directionStack);
     }
 
     public Vector2 peekNextDirection() {
-        return directionStack.peek();
+        Vector2 nextDirection = directionStack.peek();
+        return nextDirection != null ? nextDirection.cpy() : null;
     }
 
     public void draw(Stage stage) {

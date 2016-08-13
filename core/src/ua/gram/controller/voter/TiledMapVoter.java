@@ -15,7 +15,7 @@ import ua.gram.model.map.Map;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class TiledMapVoter {
+public class TiledMapVoter implements ua.gram.controller.voter.Voter {
 
     protected final Map map;
     protected VoterPolicy voter;
@@ -41,30 +41,30 @@ public class TiledMapVoter {
 
     public boolean isWalkable(int x, int y) {
         String property = map.getPrototype().walkableProperty;
-        return is(x, y, property);
+        return isGranted(x, y, property);
     }
 
     public boolean isSpawn(int x, int y, Voter.Policy policy) {
         String property = map.getPrototype().spawnProperty;
         this.voter = VoterPolicyFactory.create(policy);
-        return is(x, y, property);
+        return isGranted(x, y, property);
     }
 
     public boolean isBase(int x, int y, Voter.Policy policy) {
         String property = map.getPrototype().baseProperty;
         this.voter = VoterPolicyFactory.create(policy);
-        return is(x, y, property);
+        return isGranted(x, y, property);
     }
 
     public boolean isBlocked(int x, int y) {
         String property = map.getPrototype().blockedProperty;
-        return is(x, y, property);
+        return isGranted(x, y, property);
     }
 
     /**
      * Check all layers whether tile contains provided property
      */
-    public boolean is(int x, int y, String property) {
+    public boolean isGranted(int x, int y, String property) {
         List<Voter.Value> values = new ArrayList<Voter.Value>(map.getLayers().size());
 
         for (TiledMapTileLayer layer : map.getLayers()) {

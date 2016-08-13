@@ -7,8 +7,10 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import java.util.EmptyStackException;
 
 import ua.gram.DDGame;
+import ua.gram.controller.enemy.DirectionHolder;
 import ua.gram.controller.state.enemy.EnemyStateManager;
 import ua.gram.controller.state.enemy.level1.Level1State;
+import ua.gram.controller.voter.TiledMapVoter;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.enums.Types;
 import ua.gram.model.map.Map;
@@ -102,20 +104,33 @@ public class WalkingState extends Level2State {
     }
 
     private void handleEnemy(Enemy enemy, float delta) {
-        int x = Math.round(enemy.getX());
-        int y = Math.round(enemy.getY());
-
         Map map = enemy.getSpawner().getLevel().getMap();
-        Vector2 pos = enemy.getDirectionHolder().getCurrentPositionIndex();
+        TiledMapVoter voter = map.getVoter();
+        DirectionHolder directionHolder = enemy.getDirectionHolder();
 
-        if (!map.getVoter().isWalkable((int) pos.x, (int) pos.y)) {
-            Log.crit(enemy + " stepped out of walking bounds");
+        Vector2 pos = directionHolder.getCurrentPosition();
+        Vector2 positionIndex = directionHolder.getCurrentPositionIndex();
+        Vector2 previousPos = directionHolder.getPreviousPosition();
+
+        int indexX = (int) positionIndex.x;
+        int indexY = (int) positionIndex.y;
+
+        if (!voter.isWalkable(indexX, indexY)) {
+            Log.crit(enemy + " stepped out of walking bounds at "
+                    + Path.toString(positionIndex)
+                    + Path.toString(indexX, indexY)
+                    + Path.toString(pos)
+                    + Path.toString(enemy.getX(), enemy.getY())
+            );
             remove(enemy, enemy.getSpawner().getStateManager().getDeadState());
             return;
         }
 
-        int prevX = Math.round(enemy.getDirectionHolder().getPreviousPosition().x);
-        int prevY = Math.round(enemy.getDirectionHolder().getPreviousPosition().y);
+        int prevX = Math.round(previousPos.x);
+        int prevY = Math.round(previousPos.y);
+
+        int x = Math.round(pos.x);
+        int y = Math.round(pos.y);
 
         if (prevX != x || prevY != y) {
             enemy.setUpdateIterationCount(0);
@@ -130,7 +145,7 @@ public class WalkingState extends Level2State {
                 remove(enemy);
             }
 
-            enemy.getDirectionHolder().setPreviousPosition(x, y);
+            directionHolder.setPreviousPosition(x, y);
         }
     }
 

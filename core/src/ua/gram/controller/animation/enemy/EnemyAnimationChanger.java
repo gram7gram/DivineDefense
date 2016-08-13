@@ -37,20 +37,35 @@ public class EnemyAnimationChanger implements Runnable {
                 return;
             }
 
-            freeAnimation();
+            try {
+                freeAnimation();
+            } catch (Exception e) {
+                Log.exc("Could not free animation", e);
+                return;
+            }
         }
 
-        updateDirection();
+        try {
+            updateDirection();
+        } catch (Exception e) {
+            Log.exc("Could not update direction", e);
+            return;
+        }
 
-        obtainAnimation();
+        try {
+            obtainAnimation();
+        } catch (Exception e) {
+            Log.exc("Could not obtain animation", e);
+        }
     }
 
     private void updateDirection() {
         DirectionHolder holder = enemy.getDirectionHolder();
         if (dir != null
                 && !Path.compare(holder.getCurrentDirection(), dir)) {
+            Vector2 newDirection = dir.cpy();
             synchronized (lock) {
-                holder.setCurrentDirection(dir.x, dir.y);
+                holder.setCurrentDirection(newDirection.x, newDirection.y);
             }
         }
     }
@@ -99,7 +114,7 @@ public class EnemyAnimationChanger implements Runnable {
 
     public EnemyAnimationChanger updateValues(Enemy enemy, Vector2 dir, Types.EnemyState type) {
         this.enemy = enemy;
-        this.dir = dir;
+        this.dir = dir.cpy();
         this.type = type;
 
         return this;

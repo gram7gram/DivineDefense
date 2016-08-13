@@ -20,7 +20,7 @@ public class Pseudo3DMapVoter extends TiledMapVoter {
     }
 
     @Override
-    public boolean is(int x, int y, String property) {
+    public boolean isGranted(int x, int y, String property) {
         List<Voter.Value> values = new ArrayList<Voter.Value>(map.getLayers().size());
 
         for (TiledMapTileLayer layer : map.getLayers()) {

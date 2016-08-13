@@ -5,11 +5,9 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 import java.util.Random;
 
 import ua.gram.DDGame;
-import ua.gram.controller.enemy.EnemySpawner;
 import ua.gram.controller.state.enemy.EnemyStateManager;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.enums.Types;
-import ua.gram.model.group.EnemyGroup;
 import ua.gram.utils.Log;
 
 /**
@@ -33,19 +31,7 @@ public class DeadState extends InactiveState {
 
         super.preManage(enemy);
 
-        try {
-            manager.reset(enemy);
-        } catch (NullPointerException e) {
-            //ignore
-        }
-
-        EnemySpawner spawner = enemy.getSpawner();
-        EnemyGroup group = enemy.getEnemyGroup();
-
-        enemy.clearActions();
-        spawner.free(enemy);
-        group.clear();
-        group.remove();
+        enemy.remove();
     }
 
     @Override

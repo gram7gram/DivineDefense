@@ -63,6 +63,30 @@ public final class EnemySpawner implements Initializer {
         animationProvider.init();
     }
 
+    public void spawn(String type, Vector2 spawn, EnemySummoner parent) {
+        Enemy enemy = obtain(type);
+        enemy.setSpawner(this);
+
+        stateManager.swapLevel1State(enemy, stateManager.getInactiveState());
+        stateManager.swapLevel2State(enemy, stateManager.getIdleState());
+
+        EnemyGroup enemyGroup = new EnemyGroup(game, enemy);
+        enemy.setGroup(enemyGroup);
+
+        try {
+            battleStage.updateZIndexes(enemyGroup);
+            if (parent != null) {
+                enemy.setParentEnemy(parent);
+                enemy.getDirectionHolder().copy(parent.getDirectionHolder());
+            }
+            stateManager.getSpawnState().setSpawnIndex(spawn);
+            stateManager.swapLevel1State(enemy, stateManager.getSpawnState());
+        } catch (Exception e) {
+            Log.exc("EnemySpawner failed to spawn " + enemy, e);
+            enemy.remove();
+        }
+    }
+
     private void registerAll(EnemyPrototype[] prototypes) {
         for (EnemyPrototype prototype : prototypes) {
             identityMap.put(prototype.name, new EnemyPool(game, prototype.name));
@@ -90,53 +114,17 @@ public final class EnemySpawner implements Initializer {
         return !battleStage.hasEnemiesOnMap() || level.isCleared();
     }
 
-    /**
-     * Spawns obtained from pool and cloned EnemyState,
-     * places it at the Spawn positionIndex and gives it the path to go.
-     * Spawn takes place in Group with the coresponding HealthBar.
-     *
-     * @param type  the EnemyState ancestor to spawn.
-     * @param spawn map tile position index to spawn at (not in pixels)
-     */
-    public void spawn(String type, Vector2 spawn, EnemySummoner parent) {
-        Enemy enemy;
-        try {
-            enemy = obtain(type);
-        } catch (Exception e) {
-            Log.exc("Unable to obtain [" + type + "] from pool", e);
-            return;
-        }
-        enemy.setSpawner(this);
-        stateManager.swapLevel1State(enemy, stateManager.getInactiveState());
-        stateManager.swapLevel2State(enemy, stateManager.getIdleState());
-        try {
-            enemy.setPosition(spawn.x * DDGame.TILE_HEIGHT, spawn.y * DDGame.TILE_HEIGHT);
-            EnemyGroup enemyGroup = new EnemyGroup(game, enemy);
-            enemyGroup.setVisible(true);
-            enemy.setGroup(enemyGroup);
-            battleStage.updateZIndexes(enemyGroup);
-            if (parent != null) {
-                enemy.setParentEnemy(parent);
-            }
-            stateManager.getSpawnState().setSpawnPosition(spawn);
-            stateManager.swapLevel1State(enemy, stateManager.getSpawnState());
-        } catch (Exception e) {
-            Log.exc("EnemySpawner failed to spawn " + enemy, e);
-        }
-    }
-
     public void setActionPath(final Enemy enemy, Vector2 spawn, Vector2 previous) {
         WalkablePath path = level.getMap().normalizePath(previous, spawn);
         enemy.setPath(path);
-        if (!enemy.getDirectionHolder().hasCurrentDirection()) {
-            Vector2 current = path.peekNextDirection();
-            enemy.getDirectionHolder().setCurrentDirection(current.x, current.y);
-        }
+        Vector2 current = path.peekNextDirection();
+        enemy.getDirectionHolder().setCurrentDirection(current.x, current.y);
     }
 
     public void setEnemiesToSpawn(String[] types) {
-        for (String type : types)
+        for (String type : types) {
             enemiesToSpawn.push(type);
+        }
         Log.info("Enemies for wave " + level.getCurrentWaveIndex()
                 + " are prepared. Size: " + enemiesToSpawn.size());
     }

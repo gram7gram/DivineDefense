@@ -3,6 +3,7 @@ package ua.gram.controller.state.enemy.level1;
 import com.badlogic.gdx.math.Vector2;
 
 import ua.gram.DDGame;
+import ua.gram.controller.enemy.DirectionHolder;
 import ua.gram.controller.enemy.EnemySpawner;
 import ua.gram.controller.state.enemy.EnemyStateManager;
 import ua.gram.model.actor.enemy.Enemy;
@@ -15,7 +16,7 @@ import ua.gram.utils.Log;
  */
 public class SpawnState extends InactiveState {
 
-    private Vector2 spawnPosition;
+    private Vector2 spawnIndex;
 
     public SpawnState(DDGame game, EnemyStateManager manager) {
         super(game, manager);
@@ -42,8 +43,19 @@ public class SpawnState extends InactiveState {
         enemy.setSpawnDurationCount(0);
         enemy.setVisible(true);
 
-        Log.info(enemy + " is spawned at " + Path.toString(
-                enemy.getDirectionHolder().getCurrentPositionIndex()));
+        DirectionHolder directionHolder = enemy.getDirectionHolder();
+
+        directionHolder.setCurrentPosition(
+                spawnIndex.x * DDGame.TILE_HEIGHT,
+                spawnIndex.y * DDGame.TILE_HEIGHT);
+
+        Vector2 currentPosition = directionHolder.getCurrentPosition();
+
+        enemy.setPosition(currentPosition.x, currentPosition.y);
+
+        Log.info(enemy + " is spawned at "
+                + Path.toString(directionHolder.getCurrentPositionIndex())
+                + ", " + Path.toString(currentPosition));
     }
 
     private void normalSpawn(Enemy enemy) {
@@ -51,13 +63,13 @@ public class SpawnState extends InactiveState {
         Vector2 initial = spawner.getLevel().getPrototype().initialDirection;
         enemy.getDirectionHolder().setCurrentDirection(initial.x, initial.y);
         Vector2 prev = Path.opposite(initial);
-        spawner.setActionPath(enemy, spawnPosition, prev);
+        spawner.setActionPath(enemy, spawnIndex, prev);
     }
 
     private void minionSpawn(Enemy enemy) {
         EnemySpawner spawner = enemy.getSpawner();
         Vector2 prev = enemy.getDirectionHolder().getPreviousDirection();
-        spawner.setActionPath(enemy, spawnPosition, prev);
+        spawner.setActionPath(enemy, spawnIndex, prev);
     }
 
     @Override
@@ -78,8 +90,8 @@ public class SpawnState extends InactiveState {
         enemy.setSpawnDurationCount(0);
     }
 
-    public void setSpawnPosition(Vector2 spawnPosition) {
-        this.spawnPosition = spawnPosition;
+    public void setSpawnIndex(Vector2 spawnIndex) {
+        this.spawnIndex = spawnIndex.cpy();
     }
 
 }

@@ -1,7 +1,6 @@
 package ua.gram.model.map;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +17,7 @@ public class Path {
     public static List<Vector2> DIRECTIONS;
 
     public Path() {
-        DIRECTIONS = new ArrayList<Vector2>();
+        DIRECTIONS = new ArrayList<Vector2>(4);
         DIRECTIONS.add(NORTH);
         DIRECTIONS.add(SOUTH);
         DIRECTIONS.add(EAST);
@@ -55,13 +54,16 @@ public class Path {
 
     public static Vector2 opposite(Vector2 dir) {
         if (dir == null || dir == Vector2.Zero) return Vector2.Zero;
-        if (dir.equals(EAST)) {
+
+        Vector2 dirCopy = dir.cpy();
+
+        if (dirCopy.equals(EAST)) {
             return WEST;
-        } else if (dir.equals(WEST)) {
+        } else if (dirCopy.equals(WEST)) {
             return EAST;
-        } else if (dir.equals(NORTH)) {
+        } else if (dirCopy.equals(NORTH)) {
             return SOUTH;
-        } else if (dir.equals(SOUTH)) {
+        } else if (dirCopy.equals(SOUTH)) {
             return NORTH;
         }
         return Vector2.Zero;
@@ -80,59 +82,30 @@ public class Path {
             return Vector2.Zero;
     }
 
-    /**
-     * Compare two Vector2s by casting their coordinates to integers
-     *
-     * @return are they "equal"
-     */
     public static boolean compare(Vector2 vec1, Vector2 vec2) {
-        int vecX1 = (int) vec1.x;
-        int vecY1 = (int) vec1.y;
-        int vecX2 = (int) vec2.x;
-        int vecY2 = (int) vec2.y;
+        Vector2 vec1Copy = vec1.cpy();
+        Vector2 vec2Copy = vec2.cpy();
+        int vecX1 = (int) vec1Copy.x;
+        int vecY1 = (int) vec1Copy.y;
+        int vecX2 = (int) vec2Copy.x;
+        int vecY2 = (int) vec2Copy.y;
         return vecX1 == vecX2 && vecY1 == vecY2;
     }
 
     public static boolean equal(Vector2 vec1, Vector2 vec2) {
-        return Float.compare(vec1.x, vec2.x) == 0
-                && Float.compare(vec1.y, vec2.y) == 0;
-    }
-
-    public static Vector2 direction(Vector2 vec1, Vector2 vec2) {
-        int vecX1 = (int) vec1.x;
-        int vecY1 = (int) vec1.y;
-        int vecX2 = (int) vec2.x;
-        int vecY2 = (int) vec2.y;
-        if (vecX1 == vecX2 && vecY1 > vecY2) {
-            return Path.NORTH;
-        } else if (vecX1 == vecX2 && vecY1 < vecY2) {
-            return Path.SOUTH;
-        } else if (vecX1 > vecX2 && vecY1 == vecY2) {
-            return Path.EAST;
-        } else if (vecX1 < vecX2 && vecY1 == vecY2) {
-            return Path.WEST;
-        } else
-            return Vector2.Zero;
+        Vector2 vec1Copy = vec1.cpy();
+        Vector2 vec2Copy = vec2.cpy();
+        return Float.compare(vec1Copy.x, vec2Copy.x) == 0
+                && Float.compare(vec1Copy.y, vec2Copy.y) == 0;
     }
 
     public static String toString(Vector2 pos) {
-        return pos == null ? null : Path.toString(pos.x, pos.y);
-    }
-
-    public static String toString(Vector3 pos) {
-        return pos == null ? null : Path.toString(pos.x, pos.y, pos.z);
+        Vector2 copyPos = pos != null ? pos.cpy() : null;
+        return copyPos == null ? null : Path.toString(copyPos.x, copyPos.y);
     }
 
     public static String toString(float x, float y) {
         return "[" + x + ":" + y + "]";
-    }
-
-    public static String toString(float x, float y, float z) {
-        return "[" + x + ":" + y + ":" + z + "]";
-    }
-
-    public static Vector2 clone(Vector2 vector) {
-        return new Vector2((int) vector.x, (int) vector.y);
     }
 
     public enum Direction {

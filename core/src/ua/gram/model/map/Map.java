@@ -124,25 +124,29 @@ public class Map implements Initializer {
         if (lastDir == null || start == null)
             throw new NullPointerException("Path normalization is impossible");
 
+        Vector2 lastDirectionCopy = lastDir.cpy();
+        Vector2 startPositionCopy = start.cpy();
+
         WalkablePath path = new WalkablePath();
 
-        Vector2 position = Path.clone(start);
         boolean isFound = false;
         int count = 0;
 
         while (!isFound && count < parseLimit) {
             for (Vector2 direction : Path.DIRECTIONS) {
-                if (!direction.equals(lastDir) && isInMapBounds(direction, position)) {
-                    int currentX = (int) (position.x + direction.x);
-                    int currentY = (int) (position.y + direction.y);
+                if (!direction.equals(lastDir) && isInMapBounds(direction, startPositionCopy)) {
+                    int currentX = (int) (startPositionCopy.x + direction.x);
+                    int currentY = (int) (startPositionCopy.y + direction.y);
 
                     if (voter.isWalkable(currentX, currentY)) {
 
-                        path.addDirection(direction);
+                        Vector2 copyDirection = direction.cpy();
+
+                        startPositionCopy.add(copyDirection);
+                        path.addDirection(copyDirection);
                         path.addPath(new Vector2(currentX, currentY));
 
-                        position.add(direction);
-                        lastDir = Path.opposite(direction);
+                        lastDir = Path.opposite(copyDirection);
 
                         if (voter.isBase(currentX, currentY, Voter.Policy.AFFIRMATIVE)) {
                             isFound = true;
@@ -150,7 +154,7 @@ public class Map implements Initializer {
                             if (!recursion) {
                                 recursion = true;
                                 Log.warn("Path normalization was reversed");
-                                return normalizePath(Path.opposite(lastDir), start);
+                                return normalizePath(Path.opposite(lastDirectionCopy), start);
                             } else
                                 throw new GdxRuntimeException("Path normalization error: parsing in wrong direction");
                         }
