@@ -34,6 +34,8 @@ public class Counters implements Resetable {
 
     @Override
     public void resetObject() {
-        map.clear();
+        synchronized (map) {
+            map.clear();
+        }
     }
 }

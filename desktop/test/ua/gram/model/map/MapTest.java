@@ -11,8 +11,8 @@ import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import ua.gram.GameTestCase;
 import ua.gram.model.prototype.level.MapPrototype;
+import ua.gram.test.GameTestCase;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;

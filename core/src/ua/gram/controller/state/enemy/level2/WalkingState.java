@@ -4,9 +4,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
-import java.util.EmptyStackException;
-
 import ua.gram.DDGame;
+import ua.gram.controller.Counters;
 import ua.gram.controller.enemy.DirectionHolder;
 import ua.gram.controller.state.enemy.EnemyStateManager;
 import ua.gram.controller.state.enemy.level1.Level1State;
@@ -22,6 +21,7 @@ import ua.gram.utils.Log;
  */
 public class WalkingState extends Level2State {
 
+    private final String WALKING_STATE_ITERATION = "walking_state_iteration";
     protected Vector2 basePosition;
 
     public WalkingState(DDGame game, EnemyStateManager manager) {
@@ -53,8 +53,8 @@ public class WalkingState extends Level2State {
      *
      * @param enemy actor to move
      * @param delta graphics delta time
-     * @param x current x
-     * @param y current y
+     * @param x     current x
+     * @param y     current y
      */
     protected void move(final Enemy enemy, float delta, int x, int y) {
 
@@ -66,8 +66,11 @@ public class WalkingState extends Level2State {
     }
 
     private boolean checkFloatPosition(Enemy enemy) {
-        int x = Math.round(enemy.getX());
-        int y = Math.round(enemy.getY());
+        Vector2 currentPositionCopy = enemy.getDirectionHolder().getCurrentPosition();
+
+        int x = Math.round(currentPositionCopy.x);
+        int y = Math.round(currentPositionCopy.y);
+
         return Float.compare(x % DDGame.TILE_HEIGHT, 0) == 0
                 && Float.compare(y % DDGame.TILE_HEIGHT, 0) == 0;
     }
@@ -82,23 +85,27 @@ public class WalkingState extends Level2State {
             return;
         }
 
+        if (!enemy.hasPath()) {
+            Log.crit("Missing path for " + enemy);
+            remove(enemy);
+            return;
+        }
+
         if (Path.compare(enemy.getDirectionHolder().getCurrentPositionIndex(), basePosition)) {
             Log.info(enemy + " position equals to Base. Removing enemy");
             remove(enemy);
             return;
         }
 
-        if (enemy.getPath() == null) {
-            Log.crit("Missing path for " + enemy);
-            remove(enemy);
-            return;
-        }
-
         if (checkFloatPosition(enemy)) {
-            if (isIterationAllowed(enemy)) {
+            Counters counters = enemy.getCounters();
+            float currentIterationCount = counters.get(WALKING_STATE_ITERATION);
+
+            if (isIterationAllowed(enemy, currentIterationCount)) {
+                counters.set(WALKING_STATE_ITERATION, 0);
                 handleEnemy(enemy, delta);
             } else {
-                enemy.addUpdateIterationCount(1);
+                counters.set(WALKING_STATE_ITERATION, currentIterationCount + 1);
             }
         }
     }
@@ -116,11 +123,9 @@ public class WalkingState extends Level2State {
         int indexY = (int) positionIndex.y;
 
         if (!voter.isWalkable(indexX, indexY)) {
-            Log.crit(enemy + " stepped out of walking bounds at "
-                    + Path.toString(positionIndex)
+            Log.crit(enemy + " stepped out of walking bounds at index "
                     + Path.toString(indexX, indexY)
-                    + Path.toString(pos)
-                    + Path.toString(enemy.getX(), enemy.getY())
+                    + Path.toString(positionIndex)
             );
             remove(enemy, enemy.getSpawner().getStateManager().getDeadState());
             return;
@@ -133,27 +138,28 @@ public class WalkingState extends Level2State {
         int y = Math.round(pos.y);
 
         if (prevX != x || prevY != y) {
-            enemy.setUpdateIterationCount(0);
 
             try {
                 move(enemy, delta, x, y);
-            } catch (EmptyStackException e) {
-                Log.warn("Direction stack is empty. Removing " + enemy);
-                remove(enemy);
-            } catch (NullPointerException e) {
-                Log.exc("Required variable is NULL. Removing " + enemy, e);
+                directionHolder.setPreviousPosition(x, y);
+            } catch (Exception e) {
+                Log.exc("Cannot move  " + enemy + " to " + Path.toString(x, y), e);
                 remove(enemy);
             }
-
-            directionHolder.setPreviousPosition(x, y);
         }
     }
 
     protected Action moveBy(Enemy enemy, Vector2 dir) {
+        Vector2 dirCopy = dir.cpy();
+        float acceleration = game.getSpeed().getValue();
+
+        int horizontal = (int) (dirCopy.x * DDGame.TILE_HEIGHT);
+        int vertical = (int) (dirCopy.y * DDGame.TILE_HEIGHT);
+
         return Actions.moveBy(
-                enemy.speed > 0 ? (int) (dir.x * DDGame.TILE_HEIGHT) : 0,
-                enemy.speed > 0 ? (int) (dir.y * DDGame.TILE_HEIGHT) : 0,
-                enemy.speed * game.getSpeed().getValue());
+                enemy.speed > 0 ? horizontal : 0,
+                enemy.speed > 0 ? vertical : 0,
+                enemy.speed * acceleration);
     }
 
     protected void remove(Enemy enemy) {
@@ -166,15 +172,14 @@ public class WalkingState extends Level2State {
         manager.swap(enemy, state);
     }
 
-    protected boolean isIterationAllowed(Enemy enemy) {
-        int iteration = enemy.getUpdateIterationCount();
+    protected boolean isIterationAllowed(Enemy enemy, float iteration) {
         return enemy.getPrototype().speed <= 1.5f || iteration > 2;
     }
 
     protected void resetState(Enemy enemy) {
-        enemy.getDirectionHolder().setPreviousPosition(-1, -1);
         enemy.speed = enemy.defaultSpeed;
-        enemy.setUpdateIterationCount(0);
+        Counters counters = enemy.getCounters();
+        counters.set(WALKING_STATE_ITERATION, 0);
     }
 
     @Override

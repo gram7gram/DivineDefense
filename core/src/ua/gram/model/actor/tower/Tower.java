@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ua.gram.DDGame;
-import ua.gram.controller.Counters;
 import ua.gram.controller.animation.tower.TowerAnimationProvider;
 import ua.gram.controller.pool.WeaponPool;
 import ua.gram.controller.stage.BattleStage;
@@ -45,7 +44,6 @@ public abstract class Tower
     protected final TowerStateHolder stateHolder;
     protected final WeaponPool weaponPool;
     private final Vector2 center;
-    private final Counters counters;
     private List<ActiveTarget> targets;
     private TowerStrategy currentTowerStrategy;
 
@@ -59,7 +57,6 @@ public abstract class Tower
         targets = new ArrayList<ActiveTarget>(5);
         weaponPool = towerShop.getWeaponProvider().getPool(prototype.weapon);
         center = Vector2.Zero;
-        counters = new Counters();
     }
 
     @Override
@@ -194,9 +191,5 @@ public abstract class Tower
 
     public TowerAnimationProvider getAnimationProvider() {
         return towerShop.getAnimationProvider();
-    }
-
-    public Counters getCounters() {
-        return counters;
     }
 }

@@ -114,7 +114,7 @@ public final class EnemySpawner implements Initializer {
         return !battleStage.hasEnemiesOnMap() || level.isCleared();
     }
 
-    public void setActionPath(final Enemy enemy, Vector2 spawn, Vector2 previous) {
+    public void createPath(final Enemy enemy, Vector2 spawn, Vector2 previous) {
         WalkablePath path = level.getMap().normalizePath(previous, spawn);
         enemy.setPath(path);
         Vector2 current = path.peekNextDirection();

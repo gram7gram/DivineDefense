@@ -231,6 +231,10 @@ public abstract class Enemy
         this.path = path;
     }
 
+    public boolean hasPath() {
+        return path != null;
+    }
+
     public void setGroup(EnemyGroup group) {
         this.group = group;
     }
@@ -253,6 +257,12 @@ public abstract class Enemy
 
     public void setParentEnemy(Enemy parent) {
         this.parent = parent;
+    }
+
+    @Override
+    protected void positionChanged() {
+        super.positionChanged();
+        getDirectionHolder().setCurrentPosition(getX(), getY());
     }
 
     @Override

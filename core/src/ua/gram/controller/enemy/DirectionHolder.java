@@ -13,35 +13,39 @@ import ua.gram.model.map.Path;
 public class DirectionHolder implements Resetable {
 
     private final GameActor actor;
-    private final Vector2 previousPosition;
     private final Vector2 originPosition;
     private final Vector2 currentPosition;
-    private final Vector2 currentDirection;
-    private final Vector2 previousDirection;
     private final Vector2 currentPositionIndex;
+    private final Vector2 currentDirection;
+    private final Vector2 previousPosition;
+    private final Vector2 previousDirection;
     private Path.Direction currentDirectionType;
     private Path.Direction previousDirectionType;
 
     public DirectionHolder(GameActor actor) {
         this.actor = actor;
-        currentPosition = Vector2.Zero;
-        previousPosition = Vector2.Zero;
-        originPosition = Vector2.Zero;
-        currentDirection = Vector2.Zero;
-        previousDirection = Vector2.Zero;
-        currentPositionIndex = Vector2.Zero;
+        currentPosition = Vector2.Zero.cpy();
+        currentPositionIndex = Vector2.Zero.cpy();
+        previousPosition = Vector2.Zero.cpy();
+        originPosition = Vector2.Zero.cpy();
+        currentDirection = Vector2.Zero.cpy();
+        previousDirection = Vector2.Zero.cpy();
         validate();
     }
 
     public void validate() {
-        if (currentDirection == Vector2.Zero) return;
-        if (previousDirection == Vector2.Zero) return;
+        Vector2 currentDirectionCopy = currentDirection.cpy();
+        Vector2 previousDirectionCopy = previousDirection.cpy();
 
-        if (Path.getType(currentDirection.x, currentDirection.y) == null) {
-            throw new IllegalArgumentException("Not a direction: [" + currentDirection.x + ":" + currentDirection.y + "]");
+        if (Path.isZero(currentDirectionCopy) || Path.isZero(previousDirectionCopy)) return;
+
+        if (Path.getType(currentDirectionCopy.x, currentDirectionCopy.y) == null) {
+            throw new IllegalArgumentException("Not a valid current direction: "
+                    + Path.toString(currentDirectionCopy));
         }
-        if (Path.getType(previousDirection.x, previousDirection.y) == null) {
-            throw new IllegalArgumentException("Not a direction: [" + previousDirection.x + ":" + previousDirection.y + "]");
+        if (Path.getType(previousDirectionCopy.x, previousDirectionCopy.y) == null) {
+            throw new IllegalArgumentException("Not a valid previous direction: "
+                    + Path.toString(previousDirectionCopy));
         }
         if (currentDirectionType == null) {
             throw new IllegalArgumentException("Current direction type should match direction");
@@ -58,25 +62,40 @@ public class DirectionHolder implements Resetable {
 
     public void setCurrentPosition(float x, float y) {
         validate();
-        currentPosition.set(x, y);
+        synchronized (currentPosition) {
+            currentPosition.set(x, y);
+            validate();
+        }
+
+        Vector2 currentPositionCopy = getCurrentPosition();
+        setCurrentPositionIndex(
+                currentPositionCopy.x / DDGame.TILE_HEIGHT,
+                currentPositionCopy.y / DDGame.TILE_HEIGHT
+        );
+    }
+
+    private void setCurrentPositionIndex(float x, float y) {
         validate();
+
+        synchronized (currentPositionIndex) {
+            currentPositionIndex.set(Math.round(x), Math.round(y));
+            validate();
+        }
     }
 
     public Vector2 getCurrentPositionIndex() {
-        validate();
-        currentPositionIndex.set(
-                Math.round(currentPosition.x / DDGame.TILE_HEIGHT),
-                Math.round(currentPosition.y / DDGame.TILE_HEIGHT));
         validate();
         return currentPositionIndex.cpy();
     }
 
     public Vector2 getOriginPosition() {
         validate();
-        originPosition.set(
-                currentPosition.x + actor.getOriginX(),
-                currentPosition.y + actor.getOriginY());
-        validate();
+        synchronized (originPosition) {
+            originPosition.set(
+                    currentPosition.x + actor.getOriginX(),
+                    currentPosition.y + actor.getOriginY());
+            validate();
+        }
         return originPosition.cpy();
     }
 
@@ -88,11 +107,8 @@ public class DirectionHolder implements Resetable {
     @Override
     public void resetObject() {
         validate();
-        currentDirection.set(0, 0);
-        previousDirection.set(0, 0);
-        originPosition.set(0, 0);
-        previousPosition.set(0, 0);
-        currentPositionIndex.set(0, 0);
+        setCurrentPosition(0, 0);
+        setPreviousPosition(0, 0);
         validate();
     }
 
@@ -107,12 +123,17 @@ public class DirectionHolder implements Resetable {
             throw new IllegalArgumentException("Not a direction: [" + x + ":" + y + "]");
         }
 
-        currentDirection.set(x, y);
-        Vector2 opposite = Path.opposite(x, y);
-        previousDirection.set(opposite.x, opposite.y);
+        synchronized (currentDirection) {
+            currentDirection.set(x, y);
+        }
+
+        Vector2 opposite = Path.opposite(currentDirection);
+        synchronized (previousDirection) {
+            previousDirection.set(opposite.x, opposite.y);
+        }
+
         currentDirectionType = Path.getType(x, y);
         previousDirectionType = Path.getType(opposite.x, opposite.y);
-
         validate();
     }
 
@@ -128,8 +149,10 @@ public class DirectionHolder implements Resetable {
 
     public void setPreviousPosition(float x, float y) {
         validate();
-        previousPosition.set(x, y);
-        validate();
+        synchronized (previousPosition) {
+            previousPosition.set(x, y);
+            validate();
+        }
     }
 
     public void copy(DirectionHolder parentDirectionHolder) {

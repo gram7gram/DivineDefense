@@ -45,31 +45,28 @@ public class SpawnState extends InactiveState {
 
         DirectionHolder directionHolder = enemy.getDirectionHolder();
 
-        directionHolder.setCurrentPosition(
-                spawnIndex.x * DDGame.TILE_HEIGHT,
-                spawnIndex.y * DDGame.TILE_HEIGHT);
+        int currentX = (int) (spawnIndex.x * DDGame.TILE_HEIGHT);
+        int currentY = (int) (spawnIndex.y * DDGame.TILE_HEIGHT);
 
-        Vector2 currentPosition = directionHolder.getCurrentPosition();
-
-        enemy.setPosition(currentPosition.x, currentPosition.y);
+        directionHolder.setCurrentPosition(currentX, currentY);
+        enemy.setPosition(currentX, currentY);
 
         Log.info(enemy + " is spawned at "
-                + Path.toString(directionHolder.getCurrentPositionIndex())
-                + ", " + Path.toString(currentPosition));
+                + Path.toString(directionHolder.getCurrentPositionIndex()));
     }
 
     private void normalSpawn(Enemy enemy) {
         EnemySpawner spawner = enemy.getSpawner();
         Vector2 initial = spawner.getLevel().getPrototype().initialDirection;
-        enemy.getDirectionHolder().setCurrentDirection(initial.x, initial.y);
         Vector2 prev = Path.opposite(initial);
-        spawner.setActionPath(enemy, spawnIndex, prev);
+        spawner.createPath(enemy, spawnIndex, prev);
+        enemy.getDirectionHolder().setCurrentDirection(initial.x, initial.y);
     }
 
     private void minionSpawn(Enemy enemy) {
         EnemySpawner spawner = enemy.getSpawner();
         Vector2 prev = enemy.getDirectionHolder().getPreviousDirection();
-        spawner.setActionPath(enemy, spawnIndex, prev);
+        spawner.createPath(enemy, spawnIndex, prev);
     }
 
     @Override

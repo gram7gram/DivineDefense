@@ -8,7 +8,7 @@ import com.badlogic.gdx.backends.headless.HeadlessApplicationConfiguration;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import ua.gram.DDGame;
-import ua.gram.GameTestCase;
+import ua.gram.test.GameTestCase;
 
 public abstract class HeadlessDesktop extends GameTestCase {
 

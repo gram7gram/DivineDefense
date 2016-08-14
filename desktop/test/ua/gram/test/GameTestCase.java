@@ -1,4 +1,4 @@
-package ua.gram;
+package ua.gram.test;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.headless.HeadlessFiles;
@@ -32,8 +32,6 @@ public class GameTestCase {
         Gdx.net = new HeadlessNet();
         Gdx.input = new MockInput();
         Gdx.gl = Mockito.mock(GL20.class);
-
-
     }
 
 }

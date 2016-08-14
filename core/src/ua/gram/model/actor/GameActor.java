@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import ua.gram.DDGame;
+import ua.gram.controller.Counters;
 import ua.gram.controller.state.StateManager;
 import ua.gram.model.Animator;
 import ua.gram.model.PoolableAnimation;
@@ -12,23 +13,21 @@ import ua.gram.model.Resetable;
 import ua.gram.model.prototype.GameActorPrototype;
 
 public abstract class GameActor<T1, T2, M extends StateManager>
-        extends Actor
-        implements Resetable {
+        extends Actor implements Resetable {
 
     protected final Animator<T1, T2> animator;
-    protected final GameActorPrototype prototype;
     protected final float animationWidth;
     protected final float animationHeight;
-    protected int updateIterationCount;
+    protected final Counters counters;
     private float stateTime;
 
     public GameActor(GameActorPrototype prototype) {
-        this.prototype = prototype;
-        this.setName(prototype.name);
-        this.animationWidth = prototype.width;
-        this.animationHeight = prototype.height;
-        this.setSize(prototype.width, prototype.height);
+        animationWidth = prototype.width;
+        animationHeight = prototype.height;
+        setSize(prototype.width, prototype.height);
+        setName(prototype.name);
         animator = new Animator<T1, T2>();
+        counters = new Counters();
     }
 
     public abstract M getStateManager();
@@ -46,12 +45,14 @@ public abstract class GameActor<T1, T2, M extends StateManager>
     @Override
     public void act(float delta) {
         super.act(delta);
-        if (!DDGame.PAUSE) this.setDebug(DDGame.DEBUG);
+        if (!DDGame.PAUSE) {
+            setDebug(DDGame.DEBUG);
+        }
     }
 
     @Override
     public String toString() {
-        return this.getClass().getSimpleName() + "#" + this.hashCode();
+        return getClass().getSimpleName() + "#" + this.hashCode();
     }
 
     @Override
@@ -60,16 +61,8 @@ public abstract class GameActor<T1, T2, M extends StateManager>
         animator.setCurrentFrame(null);
     }
 
-    public int getUpdateIterationCount() {
-        return updateIterationCount;
-    }
-
-    public void setUpdateIterationCount(int updateIterationCount) {
-        this.updateIterationCount = updateIterationCount;
-    }
-
-    public void addUpdateIterationCount(int updateIterationCount) {
-        this.updateIterationCount += updateIterationCount;
+    public Counters getCounters() {
+        return counters;
     }
 
     public Animator<T1, T2> getAnimator() {
@@ -80,7 +73,4 @@ public abstract class GameActor<T1, T2, M extends StateManager>
         return animator.getPoolable();
     }
 
-    public GameActorPrototype getPrototype() {
-        return prototype;
-    }
 }

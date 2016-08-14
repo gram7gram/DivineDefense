@@ -25,16 +25,20 @@ public class Path {
     }
 
     public static Direction getType(float x, float y) {
-        if (Float.compare(x, EAST.x) == 0 && Float.compare(y, EAST.y) == 0) {
+
+        Vector2 vector = new Vector2(x, y);
+
+        if (Path.compare(vector, EAST)) {
             return Direction.RIGHT;
-        } else if (Float.compare(x, WEST.x) == 0 && Float.compare(y, WEST.y) == 0) {
+        } else if (Path.compare(vector, WEST)) {
             return Direction.LEFT;
-        } else if (Float.compare(x, NORTH.x) == 0 && Float.compare(y, NORTH.y) == 0) {
+        } else if (Path.compare(vector, NORTH)) {
             return Direction.UP;
-        } else if (Float.compare(x, SOUTH.x) == 0 && Float.compare(y, SOUTH.y) == 0) {
+        } else if (Path.compare(vector, SOUTH)) {
             return Direction.DOWN;
-        } else
+        } else {
             return null;
+        }
     }
 
     public static Vector2 getVector(Direction type) {
@@ -53,33 +57,21 @@ public class Path {
     }
 
     public static Vector2 opposite(Vector2 dir) {
-        if (dir == null || dir == Vector2.Zero) return Vector2.Zero;
+        if (dir == null || Path.isZero(dir)) return Vector2.Zero;
 
-        Vector2 dirCopy = dir.cpy();
+        Vector2 vector = dir.cpy();
 
-        if (dirCopy.equals(EAST)) {
+        if (Path.compare(vector, EAST)) {
             return WEST;
-        } else if (dirCopy.equals(WEST)) {
+        } else if (Path.compare(vector, WEST)) {
             return EAST;
-        } else if (dirCopy.equals(NORTH)) {
+        } else if (Path.compare(vector, NORTH)) {
             return SOUTH;
-        } else if (dirCopy.equals(SOUTH)) {
+        } else if (Path.compare(vector, SOUTH)) {
             return NORTH;
-        }
-        return Vector2.Zero;
-    }
-
-    public static Vector2 opposite(float x, float y) {
-        if (Float.compare(x, EAST.x) == 0 && Float.compare(y, EAST.y) == 0) {
-            return WEST;
-        } else if (Float.compare(x, WEST.x) == 0 && Float.compare(y, WEST.y) == 0) {
-            return EAST;
-        } else if (Float.compare(x, NORTH.x) == 0 && Float.compare(y, NORTH.y) == 0) {
-            return SOUTH;
-        } else if (Float.compare(x, SOUTH.x) == 0 && Float.compare(y, SOUTH.y) == 0) {
-            return NORTH;
-        } else
+        } else {
             return Vector2.Zero;
+        }
     }
 
     public static boolean compare(Vector2 vec1, Vector2 vec2) {
@@ -106,6 +98,11 @@ public class Path {
 
     public static String toString(float x, float y) {
         return "[" + x + ":" + y + "]";
+    }
+
+    public static boolean isZero(Vector2 vector) {
+        Vector2 vector2Copy = vector.cpy();
+        return Path.compare(vector2Copy, Vector2.Zero);
     }
 
     public enum Direction {
