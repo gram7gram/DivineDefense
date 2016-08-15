@@ -255,6 +255,10 @@ public abstract class Enemy
         return health > 0;
     }
 
+    public Enemy getParentEnemy() {
+        return parent;
+    }
+
     public void setParentEnemy(Enemy parent) {
         this.parent = parent;
     }
@@ -267,7 +271,6 @@ public abstract class Enemy
 
     @Override
     public boolean remove() {
-        clear();
         reset();
         spawner.free(this);
         return getEnemyGroup().remove();

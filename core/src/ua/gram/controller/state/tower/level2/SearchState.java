@@ -46,9 +46,8 @@ public class SearchState extends IdleState {
                 }
             }
 
-            Log.info(tower + " has found " + targets.size() + " targets in range");
-
             if (!targets.isEmpty()) {
+                Log.info(tower + " has found " + targets.size() + " targets in range");
                 List<Enemy> filteredTargets = tower.getCurrentTowerStrategy().chooseVictims(tower, targets);
                 Log.info(tower + " aims at " + filteredTargets.size()
                         + (filteredTargets.size() == 1 ? " target" : " targets"));

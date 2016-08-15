@@ -60,7 +60,11 @@ public class WalkablePath implements Disposable {
         }
 
         Vector2 nextDirection = directionStack.pop();
-        return nextDirection != null ? nextDirection.cpy() : null;
+        if (Path.getType(nextDirection.x, nextDirection.y) == null) {
+            throw new IllegalArgumentException("Direction stack contains corrupted direction "
+                    + Path.toString(nextDirection));
+        }
+        return nextDirection;
     }
 
     public List<Vector2> getDirections() {
@@ -68,8 +72,12 @@ public class WalkablePath implements Disposable {
     }
 
     public Vector2 peekNextDirection() {
-        Vector2 nextDirection = directionStack.peek();
-        return nextDirection != null ? nextDirection.cpy() : null;
+        Vector2 nextDirection = directionStack.peek().cpy();
+        if (Path.getType(nextDirection.x, nextDirection.y) == null) {
+            throw new IllegalArgumentException("Direction stack contains corrupted direction "
+                    + Path.toString(nextDirection));
+        }
+        return nextDirection;
     }
 
     public void draw(Stage stage) {

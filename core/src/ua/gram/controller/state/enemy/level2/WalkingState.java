@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
 import ua.gram.DDGame;
 import ua.gram.controller.Counters;
+import ua.gram.controller.animation.enemy.EnemyAnimationChanger;
 import ua.gram.controller.enemy.DirectionHolder;
 import ua.gram.controller.state.enemy.EnemyStateManager;
 import ua.gram.controller.state.enemy.level1.Level1State;
@@ -60,9 +61,13 @@ public class WalkingState extends Level2State {
 
         Vector2 dir = enemy.getPath().nextDirection();
 
-        getManager().getAnimationChanger().update(enemy, dir, getType());
+        EnemyAnimationChanger animationChanger = getManager().getAnimationChanger();
 
-        enemy.addAction(moveBy(enemy, dir));
+        enemy.addAction(
+                Actions.sequence(
+                        Actions.run(animationChanger.updateValues(enemy, dir, getType())),
+                        moveBy(enemy, dir))
+        );
     }
 
     private boolean checkFloatPosition(Enemy enemy) {

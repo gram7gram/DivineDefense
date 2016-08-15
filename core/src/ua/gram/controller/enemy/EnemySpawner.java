@@ -114,11 +114,10 @@ public final class EnemySpawner implements Initializer {
         return !battleStage.hasEnemiesOnMap() || level.isCleared();
     }
 
-    public void createPath(final Enemy enemy, Vector2 spawn, Vector2 previous) {
-        WalkablePath path = level.getMap().normalizePath(previous, spawn);
+    public WalkablePath createPath(Enemy enemy, Vector2 spawnPosition, Vector2 previousDirection) {
+        WalkablePath path = level.getMap().normalizePath(previousDirection, spawnPosition);
         enemy.setPath(path);
-        Vector2 current = path.peekNextDirection();
-        enemy.getDirectionHolder().setCurrentDirection(current.x, current.y);
+        return path;
     }
 
     public void setEnemiesToSpawn(String[] types) {

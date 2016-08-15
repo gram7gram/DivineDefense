@@ -24,6 +24,11 @@ public class Path {
         DIRECTIONS.add(WEST);
     }
 
+    public static boolean isValidDirection(Vector2 dir) {
+        Vector2 dirCopy = dir.cpy();
+        return !Path.isZero(dirCopy) && Path.getType(dirCopy.x, dirCopy.y) != null;
+    }
+
     public static Direction getType(float x, float y) {
 
         Vector2 vector = new Vector2(x, y);

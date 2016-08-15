@@ -3,9 +3,11 @@ package ua.gram.controller.state.enemy.level1;
 import com.badlogic.gdx.math.Vector2;
 
 import ua.gram.DDGame;
+import ua.gram.controller.Counters;
 import ua.gram.controller.enemy.DirectionHolder;
 import ua.gram.controller.enemy.EnemySpawner;
 import ua.gram.controller.state.enemy.EnemyStateManager;
+import ua.gram.model.Animator;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.enums.Types;
 import ua.gram.model.map.Path;
@@ -16,6 +18,7 @@ import ua.gram.utils.Log;
  */
 public class SpawnState extends InactiveState {
 
+    private final String SPAWN_STATE_COUNT = "spawn_state_count";
     private Vector2 spawnIndex;
 
     public SpawnState(DDGame game, EnemyStateManager manager) {
@@ -40,7 +43,9 @@ public class SpawnState extends InactiveState {
 
         super.preManage(enemy);
 
-        enemy.setSpawnDurationCount(0);
+        Counters counters = enemy.getCounters();
+        counters.set(SPAWN_STATE_COUNT, 0);
+
         enemy.setVisible(true);
 
         DirectionHolder directionHolder = enemy.getDirectionHolder();
@@ -65,26 +70,44 @@ public class SpawnState extends InactiveState {
 
     private void minionSpawn(Enemy enemy) {
         EnemySpawner spawner = enemy.getSpawner();
-        Vector2 prev = enemy.getDirectionHolder().getPreviousDirection();
+        Enemy summoner = enemy.getParentEnemy();
+        Vector2 prev = summoner.getDirectionHolder().getPreviousDirection();
+
         spawner.createPath(enemy, spawnIndex, prev);
+
+        Vector2 current = summoner.getDirectionHolder().getCurrentDirection();
+        DirectionHolder holder = enemy.getDirectionHolder();
+        Animator<?, Path.Direction> enemyAnimator = enemy.getAnimator();
+
+        holder.setCurrentDirection(current.x, current.y);
+
+        Path.Direction inheritedDirection = summoner.getAnimator().getSecondaryType();
+        enemyAnimator.setSecondaryType(inheritedDirection);
+
+        Log.info("Minion " + enemy + " inherits direction: "
+                + inheritedDirection + " " + Path.toString(current));
     }
 
     @Override
     public void manage(Enemy enemy, float delta) {
         EnemyStateManager manager = enemy.getSpawner().getStateManager();
-        if (enemy.getSpawnDurationCount() >= enemy.getSpawnDuration()) {
+        Counters counters = enemy.getCounters();
+
+        float count = counters.get(SPAWN_STATE_COUNT);
+        if (count >= enemy.getSpawnDuration()) {
+            counters.set(SPAWN_STATE_COUNT, 0);
             manager.swapLevel1State(enemy, manager.getActiveState());
             manager.swapLevel2State(enemy, manager.getWalkingState(enemy));
-            enemy.setSpawnDurationCount(0);
         } else {
-            enemy.addSpawnDurationCount(delta);
+            counters.set(SPAWN_STATE_COUNT, count + delta);
         }
     }
 
     @Override
     public void postManage(Enemy enemy) {
         super.postManage(enemy);
-        enemy.setSpawnDurationCount(0);
+        Counters counters = enemy.getCounters();
+        counters.set(SPAWN_STATE_COUNT, 0);
     }
 
     public void setSpawnIndex(Vector2 spawnIndex) {

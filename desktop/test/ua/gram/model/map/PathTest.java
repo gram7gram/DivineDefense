@@ -36,6 +36,18 @@ public class PathTest extends GameTestCase {
     }
 
     @DataProvider
+    public static Object[][] isValidDirectionProvider() {
+        return new Object[][]{
+                {Path.EAST, true},
+                {Path.WEST, true},
+                {Path.NORTH, true},
+                {Path.EAST, true},
+                {new Vector2(1, 2), false},
+                {Vector2.Zero, false},
+        };
+    }
+
+    @DataProvider
     public static Object[][] getVectorProvider() {
         return new Object[][]{
                 {Path.Direction.LEFT, Path.WEST},
@@ -90,6 +102,15 @@ public class PathTest extends GameTestCase {
         Vector2 vector = new Vector2(x, y);
 
         boolean result = Path.isZero(vector);
+
+        assertEquals("Not an expected result", expected, result);
+    }
+
+    @Test
+    @UseDataProvider("isValidDirectionProvider")
+    public void isValidDirectionTest(Vector2 vector, boolean expected) {
+
+        boolean result = Path.isValidDirection(vector);
 
         assertEquals("Not an expected result", expected, result);
     }

@@ -59,18 +59,25 @@ public class EnemyAnimationChanger implements Runnable {
         }
     }
 
-    private void updateDirection() {
+    protected boolean canUpdateDirection(Vector2 dir) {
+        return dir != null && Path.isValidDirection(dir);
+    }
+
+    protected void updateDirection() {
         DirectionHolder holder = enemy.getDirectionHolder();
-        if (dir != null
-                && !Path.compare(holder.getCurrentDirection(), dir)) {
-            Vector2 newDirection = dir.cpy();
-            synchronized (lock) {
-                holder.setCurrentDirection(newDirection.x, newDirection.y);
+        Animator<?, Path.Direction> animator = enemy.getAnimator();
+        if (canUpdateDirection(dir)) {
+            if (!Path.compare(holder.getCurrentDirection(), dir)) {
+                Vector2 newDirection = dir.cpy();
+                synchronized (lock) {
+                    holder.setCurrentDirection(newDirection.x, newDirection.y);
+                    animator.setSecondaryType(Path.getType(newDirection.x, newDirection.y));
+                }
             }
         }
     }
 
-    private void freeAnimation() {
+    protected void freeAnimation() {
         if (enemy.getPoolableAnimation() == null) return;
 
         EnemyAnimationProvider animationProvider = enemy.getSpawner().getAnimationProvider();
@@ -86,7 +93,7 @@ public class EnemyAnimationChanger implements Runnable {
         }
     }
 
-    private void obtainAnimation() {
+    protected void obtainAnimation() {
         EnemyAnimationProvider animationProvider = enemy.getSpawner().getAnimationProvider();
         Animator<Types.EnemyState, Path.Direction> animator = enemy.getAnimator();
         try {
