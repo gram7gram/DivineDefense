@@ -39,11 +39,14 @@ public class TowerGroup extends ActorGroup<Tower> implements Initializer {
     @Override
     public void init() {
         if (tower.getTargets().isEmpty()) return;
+
         Weapon weapon = tower.getWeapon();
         weapon.setSource(this);
         weapon.setVisible(false);
-        if (!weapon.hasParent())
+
+        if (!weapon.hasParent()) {
             addActor(weapon);
+        }
     }
 
     @Override

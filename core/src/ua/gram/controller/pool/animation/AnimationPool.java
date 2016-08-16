@@ -12,11 +12,14 @@ public class AnimationPool extends Pool<PoolableAnimation> {
 
     private final TextureRegion[] tiles;
     private final String name;
-    private float delay = .1f;
+    private final float DEFAULT_DELAY = .1f;
+    private float delay = DEFAULT_DELAY;
 
     public AnimationPool(TextureRegion[] tiles, String name) {
         super(4);
-        if (tiles == null || tiles[0] == null) throw new NullPointerException("Passed empty tiles to constructor");
+        if (tiles == null || tiles[0] == null) {
+            throw new NullPointerException("Passed empty tiles to constructor");
+        }
         this.tiles = tiles;
         this.name = name;
     }
@@ -28,5 +31,13 @@ public class AnimationPool extends Pool<PoolableAnimation> {
 
     public void setDelay(float delay) {
         this.delay = delay;
+    }
+
+    public void increaseDelay() {
+        delay = DEFAULT_DELAY * 2;
+    }
+
+    public void resetDelay() {
+        delay = DEFAULT_DELAY;
     }
 }

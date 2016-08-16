@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import ua.gram.DDGame;
 import ua.gram.controller.Counters;
+import ua.gram.controller.Flags;
 import ua.gram.controller.state.StateManager;
 import ua.gram.model.Animator;
 import ua.gram.model.PoolableAnimation;
@@ -19,6 +20,7 @@ public abstract class GameActor<T1, T2, M extends StateManager>
     protected final float animationWidth;
     protected final float animationHeight;
     protected final Counters counters;
+    protected final Flags flags;
     private float stateTime;
 
     public GameActor(GameActorPrototype prototype) {
@@ -28,6 +30,7 @@ public abstract class GameActor<T1, T2, M extends StateManager>
         setName(prototype.name);
         animator = new Animator<T1, T2>();
         counters = new Counters();
+        flags = new Flags();
     }
 
     public abstract M getStateManager();
@@ -73,4 +76,7 @@ public abstract class GameActor<T1, T2, M extends StateManager>
         return animator.getPoolable();
     }
 
+    public Flags getFlags() {
+        return flags;
+    }
 }

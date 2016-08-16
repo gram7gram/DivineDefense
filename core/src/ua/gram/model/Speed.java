@@ -18,12 +18,12 @@ public class Speed {
     }
 
     public float increase() {
-        value = defaultSpeed / 2;
+        value = defaultSpeed * 2;
         return value;
     }
 
     public float decrease() {
-        value = defaultSpeed;
+        value = defaultSpeed / 2;
         return value;
     }
 
@@ -33,9 +33,5 @@ public class Speed {
 
     public float getValue() {
         return value;
-    }
-
-    public boolean isIncreased() {
-        return value < defaultSpeed;
     }
 }

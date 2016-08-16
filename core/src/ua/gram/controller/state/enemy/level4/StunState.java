@@ -1,6 +1,9 @@
 package ua.gram.controller.state.enemy.level4;
 
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+
 import ua.gram.DDGame;
+import ua.gram.controller.action.StunAction;
 import ua.gram.controller.state.enemy.EnemyStateManager;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.enums.Types;
@@ -20,23 +23,18 @@ public class StunState extends Level4State {
     }
 
     @Override
-    public void preManage(Enemy enemy) {
+    public void preManage(final Enemy enemy) {
         getManager().getAnimationChanger()
-                .update(enemy, enemy.getDirectionHolder().getCurrentDirection(), getType());
+                .update(enemy, getType());
+
         super.preManage(enemy);
-        enemy.isAffected = true;
-    }
 
-    @Override
-    public void manage(Enemy enemy, float delta) {
-        super.manage(enemy, delta);
-        enemy.getSpeed().decrease();
-    }
-
-    @Override
-    public void postManage(Enemy enemy) {
-        super.postManage(enemy);
-        enemy.isAffected = false;
-        enemy.getSpeed().reset();
+        enemy.addAction(
+                Actions.sequence(
+                        Actions.run(new StunAction(enemy, true)),
+                        Actions.delay(2),
+                        Actions.run(new StunAction(enemy, false))
+                )
+        );
     }
 }

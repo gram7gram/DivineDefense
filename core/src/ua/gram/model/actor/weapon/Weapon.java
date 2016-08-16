@@ -188,7 +188,6 @@ public abstract class Weapon extends Actor implements Resetable, Pool.Poolable {
      * @param victim the enemy to attack
      */
     public void attack(Tower tower, Enemy victim) {
-        victim.isAttacked = true;
         victim.damage(tower.getProperties().getDamage());
     }
 
@@ -198,7 +197,6 @@ public abstract class Weapon extends Actor implements Resetable, Pool.Poolable {
      * @param victim the enemy attacked
      */
     public void postAttack(Tower tower, Enemy victim) {
-        victim.isAttacked = false;
     }
 
     public boolean hasTarget() {

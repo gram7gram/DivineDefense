@@ -44,12 +44,7 @@ public abstract class Enemy
     public float speed;
     public float armor;
     public float spawnDuration;
-    public float spawnDurationCount;
-    public boolean isAttacked;
-    public boolean isAffected;
-    public boolean isDead;
     public boolean isRemoved;
-    public boolean hasReachedCheckpoint;
     protected WalkablePath path;
     protected EnemySpawner spawner;
     private DirectionHolder directionHolder;
@@ -68,9 +63,7 @@ public abstract class Enemy
         defaultHealth = health;
         defaultSpeed = speed;
         defaultArmor = armor;
-        isDead = false;
         isRemoved = false;
-        hasReachedCheckpoint = true;
         stateHolder = new EnemyStateHolder();
         speedManager = new Speed(speed);
     }
@@ -115,28 +108,20 @@ public abstract class Enemy
                 return;
             }
 
-            if (game.getSpeed().isIncreased()) {
-                updateAnimationSpeed();
-            }
-
             if (path != null) {
                 path.draw(getStage());
             }
 
             update(delta);
             getStage().updateActorIndex(getParent());
+
             try {
                 getStateManager().update(this, delta);
-            } catch (GdxRuntimeException e) {
-                Log.exc("Could not update " + this + "'s state", e);
-                this.remove();
+            } catch (Exception e) {
+                Log.exc("Could not update " + this + " state", e);
+                remove();
             }
         }
-    }
-
-    private void updateAnimationSpeed() {
-        float delay = game.getSpeed().getValue() * prototype.frameDuration;
-        spawner.getAnimationProvider().get(prototype, animator).setDelay(delay);
     }
 
     /**
@@ -151,10 +136,7 @@ public abstract class Enemy
         health = prototype.health;
         speed = meddle(prototype.speed);
         armor = prototype.armor;
-        isDead = false;
-        isAttacked = false;
         isRemoved = false;
-        hasReachedCheckpoint = true;
         directionHolder.resetObject();
         if (path != null) {
             path.dispose();
@@ -201,18 +183,6 @@ public abstract class Enemy
 
     public float getSpawnDuration() {
         return spawnDuration;
-    }
-
-    public float getSpawnDurationCount() {
-        return spawnDurationCount;
-    }
-
-    public void setSpawnDurationCount(float spawnDurationCount) {
-        this.spawnDurationCount = spawnDurationCount;
-    }
-
-    public void addSpawnDurationCount(float spawnDurationCount) {
-        this.spawnDurationCount += spawnDurationCount;
     }
 
     public DirectionHolder getDirectionHolder() {

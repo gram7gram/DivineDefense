@@ -2,6 +2,7 @@ package ua.gram.model.actor.weapon;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import ua.gram.controller.stage.BattleStage;
@@ -10,6 +11,7 @@ import ua.gram.controller.weapon.WeaponProvider;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.actor.tower.Tower;
 import ua.gram.model.group.Layer;
+import ua.gram.model.group.TargetPoints;
 import ua.gram.model.prototype.weapon.FreezeWeaponPrototype;
 import ua.gram.model.prototype.weapon.WeaponPrototype;
 import ua.gram.utils.Resources;
@@ -33,13 +35,6 @@ public class FreezeWeapon extends Weapon implements AOEWeapon {
     }
 
     @Override
-    public void postAttack(Tower tower, Enemy victim) {
-        super.postAttack(tower, victim);
-        EnemyStateManager manager = victim.getStateManager();
-        manager.swapLevel4State(victim, null);
-    }
-
-    @Override
     protected Animation createAnimation(Skin skin) {
         FreezeWeaponPrototype proto = getPrototype();
         TextureRegion region = skin.getRegion(proto.region);
@@ -52,9 +47,11 @@ public class FreezeWeapon extends Weapon implements AOEWeapon {
 
     @Override
     public void update(float delta) {
-        this.setPosition(
-                towerGroup.getOriginX() - this.getWidth() / 2f,
-                towerGroup.getOriginY() - this.getHeight() / 2f
+        TargetPoints targets = towerGroup.getTargetPoints();
+        Actor target = targets.getBase();
+        setPosition(
+                target.getX() - this.getWidth() / 2f,
+                target.getY() - this.getHeight() / 2f
         );
     }
 
@@ -62,7 +59,7 @@ public class FreezeWeapon extends Weapon implements AOEWeapon {
     protected void handleIndexes(int targetIndex, int parentIndex) {
         if (currentLayer == null) {
             BattleStage stage = towerGroup.getRootActor().getStage();
-            currentLayer = stage.putOnLayer(this, parentIndex > 0 ? parentIndex - 1 : 0);
+            currentLayer = stage.putOnLayer(this, 0);
             toBack();
         }
     }
@@ -70,7 +67,6 @@ public class FreezeWeapon extends Weapon implements AOEWeapon {
     @Override
     public void resetObject() {
         super.resetObject();
-        //Return Weapon to TowerGroup
         if (getParent() != towerGroup) {
             remove();
             towerGroup.addActor(this);

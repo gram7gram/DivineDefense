@@ -1,6 +1,5 @@
 package ua.gram.model.actor.tower;
 
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.Pool;
@@ -16,7 +15,6 @@ import ua.gram.controller.state.tower.TowerStateHolder;
 import ua.gram.controller.state.tower.TowerStateManager;
 import ua.gram.controller.tower.TowerShop;
 import ua.gram.model.ActiveTarget;
-import ua.gram.model.PoolableAnimation;
 import ua.gram.model.actor.GameActor;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.actor.weapon.Weapon;
@@ -111,14 +109,6 @@ public abstract class Tower
     @Override
     public BattleStage getStage() {
         return (BattleStage) super.getStage();
-    }
-
-    public Animation getAnimation() {
-        return animator.getAnimation();
-    }
-
-    public void setAnimation(PoolableAnimation animation) {
-        animator.setPollable(animation);
     }
 
     public Vector2 getCenterPoint() {

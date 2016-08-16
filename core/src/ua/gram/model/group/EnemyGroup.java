@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 
 import ua.gram.DDGame;
 import ua.gram.controller.state.enemy.EnemyStateHolder;
+import ua.gram.model.Speed;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.actor.misc.HealthBar;
 import ua.gram.utils.Log;
@@ -36,6 +37,7 @@ public class EnemyGroup extends ActorGroup<Enemy> {
                     + "/" + fullAnimationName[fullAnimationName.length - 1];
 
             EnemyStateHolder holder = root.getStateHolder();
+            Speed speed = root.getSpeed();
 
             game.getInfo().draw(batch, holder.getCurrentLevel1State() + "", x, y + 12);
             game.getInfo().draw(batch, holder.getCurrentLevel2State() + "", x, y + 24);
@@ -43,6 +45,7 @@ public class EnemyGroup extends ActorGroup<Enemy> {
             game.getInfo().draw(batch, holder.getCurrentLevel4State() + "", x, y + 48);
             game.getInfo().draw(batch, root.getDirectionHolder().getCurrentDirectionType() + "", x, y + 60);
             game.getInfo().draw(batch, name, x, y + 72);
+            game.getInfo().draw(batch, speed.getValue() + " t/s", x, y + 84);
             game.getInfo().draw(batch, Math.round(root.getX()) + ":" + Math.round(root.getY()),
                     root.getX() - 24,
                     root.getY() - 8);

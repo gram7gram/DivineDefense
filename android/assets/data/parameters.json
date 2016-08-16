@@ -128,8 +128,7 @@
           {
             "index": 1,
             "enemies": [
-              "EnemyRunner",
-              "EnemySummoner"
+              "EnemyRunner"
             ]
           },
           {
@@ -484,7 +483,7 @@
       "name": "EnemyRunner",
       "ability": false,
       "health": 110,
-      "speed": 1,
+      "speed": 1.5,
       "armor": 10,
       "reward": 10,
       "width": 60,
@@ -496,7 +495,7 @@
       "name": "EnemySoldier",
       "ability": false,
       "health": 110,
-      "speed": 0.6,
+      "speed": 0.75,
       "armor": 10,
       "reward": 10,
       "width": 60,
@@ -508,7 +507,7 @@
       "name": "EnemySoldierArmored",
       "ability": false,
       "health": 110,
-      "speed": 1.4,
+      "speed": 0.65,
       "armor": 10,
       "reward": 10,
       "width": 60,
@@ -521,7 +520,7 @@
       "name": "EnemySummoner",
       "ability": true,
       "health": 110,
-      "speed": 3.5,
+      "speed": 0.7,
       "armor": 10,
       "reward": 10,
       "width": 60,
@@ -536,7 +535,7 @@
       "name": "EnemyWarrior",
       "ability": false,
       "health": 110,
-      "speed": 0.1,
+      "speed": 1.1,
       "armor": 10,
       "reward": 10,
       "width": 60,

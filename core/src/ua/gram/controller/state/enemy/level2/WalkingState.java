@@ -129,9 +129,7 @@ public class WalkingState extends Level2State {
 
         if (!voter.isWalkable(indexX, indexY)) {
             Log.crit(enemy + " stepped out of walking bounds at index "
-                    + Path.toString(indexX, indexY)
-                    + Path.toString(positionIndex)
-            );
+                    + Path.toString(indexX, indexY));
             remove(enemy, enemy.getSpawner().getStateManager().getDeadState());
             return;
         }
@@ -155,16 +153,17 @@ public class WalkingState extends Level2State {
     }
 
     protected Action moveBy(Enemy enemy, Vector2 dir) {
-        Vector2 dirCopy = dir.cpy();
         float acceleration = game.getSpeed().getValue();
+        float currentSpeed = enemy.getSpeed().getValue();
 
+        Vector2 dirCopy = dir.cpy();
         int horizontal = (int) (dirCopy.x * DDGame.TILE_HEIGHT);
         int vertical = (int) (dirCopy.y * DDGame.TILE_HEIGHT);
 
         return Actions.moveBy(
-                enemy.speed > 0 ? horizontal : 0,
-                enemy.speed > 0 ? vertical : 0,
-                enemy.speed * acceleration);
+                currentSpeed > 0 ? horizontal : 0,
+                currentSpeed > 0 ? vertical : 0,
+                (1 / currentSpeed) * acceleration);
     }
 
     protected void remove(Enemy enemy) {

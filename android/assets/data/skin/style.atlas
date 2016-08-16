@@ -1287,36 +1287,36 @@ enemies/EnemySoldier/Demon/WALKING/UP
   index: -1
 
 style16.png
-size: 2048,128
+size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 enemies/EnemySoldier/Demon/STUN/DOWN
   rotate: false
-  xy: 1, 1
+  xy: 1, 92
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 enemies/EnemySoldier/Demon/STUN/LEFT
   rotate: false
-  xy: 542, 1
+  xy: 1, 1
   size: 540, 90
   orig: 540, 90
   offset: 0, 0
   index: -1
 enemies/EnemySoldier/Demon/STUN/RIGHT
   rotate: false
-  xy: 1083, 1
-  size: 60, 90
-  orig: 60, 90
+  xy: 542, 92
+  size: 540, 90
+  orig: 540, 90
   offset: 0, 0
   index: -1
 enemies/EnemySoldier/Demon/STUN/UP
   rotate: false
-  xy: 1144, 1
-  size: 60, 90
-  orig: 60, 90
+  xy: 542, 1
+  size: 540, 90
+  orig: 540, 90
   offset: 0, 0
   index: -1
 
@@ -1525,36 +1525,36 @@ enemies/EnemySummoner/Demon/WALKING/UP
   index: -1
 
 style23.png
-size: 64,512
+size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 enemies/EnemySummoner/Demon/STUN/DOWN
   rotate: false
-  xy: 1, 274
-  size: 60, 90
-  orig: 60, 90
+  xy: 1, 92
+  size: 540, 90
+  orig: 540, 90
   offset: 0, 0
   index: -1
 enemies/EnemySummoner/Demon/STUN/LEFT
   rotate: false
-  xy: 1, 183
-  size: 60, 90
-  orig: 60, 90
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
   offset: 0, 0
   index: -1
 enemies/EnemySummoner/Demon/STUN/RIGHT
   rotate: false
-  xy: 1, 92
-  size: 60, 90
-  orig: 60, 90
+  xy: 542, 92
+  size: 540, 90
+  orig: 540, 90
   offset: 0, 0
   index: -1
 enemies/EnemySummoner/Demon/STUN/UP
   rotate: false
-  xy: 1, 1
-  size: 60, 90
-  orig: 60, 90
+  xy: 542, 1
+  size: 540, 90
+  orig: 540, 90
   offset: 0, 0
   index: -1
 
@@ -1729,36 +1729,36 @@ enemies/EnemyWarrior/Demon/WALKING/UP
   index: -1
 
 style29.png
-size: 64,512
+size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 enemies/EnemyWarrior/Demon/STUN/DOWN
   rotate: false
-  xy: 1, 274
-  size: 60, 90
-  orig: 60, 90
+  xy: 1, 92
+  size: 540, 90
+  orig: 540, 90
   offset: 0, 0
   index: -1
 enemies/EnemyWarrior/Demon/STUN/LEFT
   rotate: false
-  xy: 1, 183
-  size: 60, 90
-  orig: 60, 90
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
   offset: 0, 0
   index: -1
 enemies/EnemyWarrior/Demon/STUN/RIGHT
   rotate: false
-  xy: 1, 92
-  size: 60, 90
-  orig: 60, 90
+  xy: 542, 92
+  size: 540, 90
+  orig: 540, 90
   offset: 0, 0
   index: -1
 enemies/EnemyWarrior/Demon/STUN/UP
   rotate: false
-  xy: 1, 1
-  size: 60, 90
-  orig: 60, 90
+  xy: 542, 1
+  size: 540, 90
+  orig: 540, 90
   offset: 0, 0
   index: -1
 
@@ -1933,36 +1933,36 @@ enemies/EnemyRunner/Demon/WALKING/UP
   index: -1
 
 style35.png
-size: 64,512
+size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 enemies/EnemyRunner/Demon/STUN/DOWN
   rotate: false
-  xy: 1, 274
-  size: 60, 90
-  orig: 60, 90
+  xy: 1, 92
+  size: 540, 90
+  orig: 540, 90
   offset: 0, 0
   index: -1
 enemies/EnemyRunner/Demon/STUN/LEFT
   rotate: false
-  xy: 1, 183
-  size: 60, 90
-  orig: 60, 90
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
   offset: 0, 0
   index: -1
 enemies/EnemyRunner/Demon/STUN/RIGHT
   rotate: false
-  xy: 1, 92
-  size: 60, 90
-  orig: 60, 90
+  xy: 542, 92
+  size: 540, 90
+  orig: 540, 90
   offset: 0, 0
   index: -1
 enemies/EnemyRunner/Demon/STUN/UP
   rotate: false
-  xy: 1, 1
-  size: 60, 90
-  orig: 60, 90
+  xy: 542, 1
+  size: 540, 90
+  orig: 540, 90
   offset: 0, 0
   index: -1
 
@@ -2137,36 +2137,36 @@ enemies/EnemySoldierArmored/Demon/WALKING/UP
   index: -1
 
 style41.png
-size: 64,512
+size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 enemies/EnemySoldierArmored/Demon/STUN/DOWN
   rotate: false
-  xy: 1, 274
-  size: 60, 90
-  orig: 60, 90
+  xy: 1, 92
+  size: 540, 90
+  orig: 540, 90
   offset: 0, 0
   index: -1
 enemies/EnemySoldierArmored/Demon/STUN/LEFT
   rotate: false
-  xy: 1, 183
-  size: 60, 90
-  orig: 60, 90
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
   offset: 0, 0
   index: -1
 enemies/EnemySoldierArmored/Demon/STUN/RIGHT
   rotate: false
-  xy: 1, 92
-  size: 60, 90
-  orig: 60, 90
+  xy: 542, 92
+  size: 540, 90
+  orig: 540, 90
   offset: 0, 0
   index: -1
 enemies/EnemySoldierArmored/Demon/STUN/UP
   rotate: false
-  xy: 1, 1
-  size: 60, 90
-  orig: 60, 90
+  xy: 542, 1
+  size: 540, 90
+  orig: 540, 90
   offset: 0, 0
   index: -1
 
