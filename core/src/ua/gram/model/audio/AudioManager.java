@@ -10,6 +10,7 @@ import java.util.TreeSet;
 
 import ua.gram.DDGame;
 import ua.gram.model.prototype.AudioPreferencesPrototype;
+import ua.gram.model.prototype.SoundStatePrototype;
 import ua.gram.utils.Resources;
 
 /**
@@ -17,34 +18,49 @@ import ua.gram.utils.Resources;
  */
 public class AudioManager {
 
+    public static final String BACKGROUND_GLOBAL_MUSIC_KEY = "BACKGROUND_GLOBAL";
+    private final DDGame game;
     private final Resources resources;
     private final AudioPreferencesPrototype prototype;
     private final Map<String, Long> activeSounds;
     private final Set<String> activeMusic;
 
     public AudioManager(DDGame game) {
+        this.game = game;
         resources = game.getResources();
         prototype = game.getPlayerPreferences().audio;
         activeSounds = new HashMap<>();
         activeMusic = new TreeSet<>();
     }
 
-    public void loopMusic(String s) {
-        if (!canPlayMusic()) return;
+    public void startGlobalBackgroundMusic() {
+        SoundStatePrototype prototype = game.getPrototype().ui
+                .getMusicByState(BACKGROUND_GLOBAL_MUSIC_KEY);
+        loopMusic(prototype.sound);
+    }
 
+    public void loopMusic(String s) {
         playMusic(s, true);
     }
 
-    public void playMusic(String s) {
-        if (!canPlayMusic()) return;
+    public void loopSound(String s) {
+        playSound(s, true);
+    }
 
+    public void playMusic(String s) {
         playMusic(s, false);
+    }
+
+    public void playSound(String s) {
+        playSound(s, false);
     }
 
     public void playMusic(String s, boolean loop) {
         if (!canPlayMusic()) return;
 
         Music music = resources.getRegisteredMusic(s);
+        if (music.isPlaying()) return;
+
         music.setLooping(loop);
         music.setVolume(prototype.music.volume);
         music.play();
@@ -54,18 +70,6 @@ public class AudioManager {
                 activeMusic.add(s);
             }
         }
-    }
-
-    public void loopSound(String s) {
-        if (!canPlaySound()) return;
-
-        playSound(s, true);
-    }
-
-    public void playSound(String s) {
-        if (!canPlaySound()) return;
-
-        playSound(s, false);
     }
 
     public void playSound(String s, boolean loop) {
@@ -93,20 +97,22 @@ public class AudioManager {
     public void stopSound(String s) {
         if (!canPlaySound()) return;
 
+        long id = activeSounds.get(s);
         Sound sound = resources.getRegisteredSound(s);
-        sound.stop();
+        sound.stop(id);
     }
 
     public void pauseMusic(String s) {
         if (!canPlayMusic()) return;
 
+        if (!activeMusic.contains(s)) {
+            throw new NullPointerException("Music \"" + "\" was not found in registry");
+        }
+
         Music music = resources.getRegisteredMusic(s);
         music.pause();
 
         synchronized (activeMusic) {
-            if (!activeMusic.contains(s)) {
-                throw new NullPointerException("Music \"" + "\" was not found in registry");
-            }
             activeMusic.remove(s);
         }
     }
@@ -114,35 +120,66 @@ public class AudioManager {
     public void pauseSound(String s) {
         if (!canPlaySound()) return;
 
+        if (!activeSounds.containsKey(s)) {
+            throw new NullPointerException("Sound \"" + "\" was not found in registry");
+        }
+
+        long id = activeSounds.get(s);
+
         Sound sound = resources.getRegisteredSound(s);
-        sound.pause();
+        sound.pause(id);
 
         synchronized (activeSounds) {
-            if (!activeSounds.containsKey(s)) {
-                throw new NullPointerException("Sound \"" + "\" was not found in registry");
-            }
             activeSounds.remove(s);
         }
     }
 
-    private boolean canPlayMusic() {
+    public boolean canPlayMusic() {
         return prototype.music.state;
     }
 
-    private boolean canPlaySound() {
+    public boolean canPlaySound() {
         return prototype.sound.state;
     }
 
-    public boolean toggleSound() {
-        prototype.sound.state = !prototype.sound.state;
+    public boolean toggleSound(boolean state) {
+        prototype.sound.state = state;
+
+        soundStateChanged();
 
         return prototype.sound.state;
+    }
+
+    public boolean toggleMusic(boolean state) {
+        prototype.music.state = state;
+
+        musicStateChanged();
+
+        return prototype.music.state;
     }
 
     public boolean toggleMusic() {
-        prototype.music.state = !prototype.music.state;
+        return toggleMusic(!prototype.music.state);
+    }
 
-        return prototype.music.state;
+    public boolean enableMusic() {
+        return toggleMusic(true);
+    }
+
+    public boolean disableMusic() {
+        return toggleMusic(false);
+    }
+
+    public boolean toggleSound() {
+        return toggleSound(!prototype.sound.state);
+    }
+
+    public boolean enableSound() {
+        return toggleSound(true);
+    }
+
+    public boolean disableSound() {
+        return toggleSound(false);
     }
 
     public void setMusicVolume(float volume) {
@@ -167,33 +204,64 @@ public class AudioManager {
         }
     }
 
-    public boolean isValidVolume(float number) {
+    protected boolean isValidVolume(float number) {
         number = (int) number;
         return number == 0 || number == 1;
     }
 
     protected void soundVolumeChanged() {
-        if (prototype.sound.volume == 0) {
-            activeSounds.clear();
-            return;
-        }
 
         for (String name : activeSounds.keySet()) {
             long id = activeSounds.get(name);
             Sound sound = resources.getRegisteredSound(name);
             sound.setVolume(id, prototype.sound.volume);
         }
+
+        if (prototype.sound.volume == 0) {
+            disableSound();
+        } else {
+            enableSound();
+        }
     }
 
     protected void musicVolumeChanged() {
+        for (String name : activeMusic) {
+            Music music = resources.getRegisteredMusic(name);
+            music.setVolume(prototype.music.volume);
+        }
+
         if (prototype.music.volume == 0) {
-            activeMusic.clear();
+            disableMusic();
+        } else {
+            enableMusic();
+        }
+    }
+
+    protected void soundStateChanged() {
+
+        if (prototype.sound.state) return;
+
+        for (String name : activeSounds.keySet()) {
+            long id = activeSounds.get(name);
+            Sound sound = resources.getRegisteredSound(name);
+            sound.stop(id);
+        }
+
+        activeSounds.clear();
+    }
+
+    protected void musicStateChanged() {
+
+        if (prototype.music.state) {
+            startGlobalBackgroundMusic();
             return;
         }
 
         for (String name : activeMusic) {
             Music music = resources.getRegisteredMusic(name);
-            music.setVolume(prototype.music.volume);
+            music.stop();
         }
+
+        activeMusic.clear();
     }
 }

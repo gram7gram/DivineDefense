@@ -1,16 +1,16 @@
 package ua.gram.controller.enemy;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Disposable;
 
 import ua.gram.DDGame;
-import ua.gram.model.Resetable;
 import ua.gram.model.actor.GameActor;
 import ua.gram.model.map.Path;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class DirectionHolder implements Resetable {
+public class DirectionHolder implements Disposable {
 
     private final GameActor actor;
     private final Vector2 originPosition;
@@ -105,7 +105,7 @@ public class DirectionHolder implements Resetable {
     }
 
     @Override
-    public void resetObject() {
+    public void dispose() {
         validate();
         setCurrentPosition(0, 0);
         setPreviousPosition(0, 0);

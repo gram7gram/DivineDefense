@@ -126,8 +126,8 @@ public final class LaserWeapon extends Weapon {
     }
 
     @Override
-    public void resetObject() {
-        super.resetObject();
+    public void dispose() {
+        super.dispose();
         setSize(0, 0);
         setPosition(0, 0);
         setRotation(0);

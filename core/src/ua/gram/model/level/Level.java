@@ -1,6 +1,7 @@
 package ua.gram.model.level;
 
 import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.utils.Disposable;
 
 import java.util.ArrayList;
 
@@ -11,7 +12,6 @@ import ua.gram.controller.factory.LevelFactory;
 import ua.gram.controller.stage.StageHolder;
 import ua.gram.controller.stage.UIStage;
 import ua.gram.model.Initializer;
-import ua.gram.model.Resetable;
 import ua.gram.model.map.Map;
 import ua.gram.model.prototype.level.LevelPrototype;
 import ua.gram.model.prototype.level.WavePrototype;
@@ -20,7 +20,7 @@ import ua.gram.utils.Log;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class Level implements Initializer, Resetable {
+public class Level implements Initializer, Disposable {
 
     public static int MAX_WAVES;
     protected final DDGame game;
@@ -170,7 +170,7 @@ public class Level implements Initializer, Resetable {
     }
 
     @Override
-    public void resetObject() {
+    public void dispose() {
         isInterrupted = false;
         isCleared = false;
         currentLevel = prototype.level;

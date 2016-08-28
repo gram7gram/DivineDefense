@@ -54,8 +54,8 @@ public class BombWeapon extends Weapon implements AOEWeapon {
     }
 
     @Override
-    public void resetObject() {
-        super.resetObject();
+    public void dispose() {
+        super.dispose();
         setPosition(0, 0);
         currentLayer = null;
     }

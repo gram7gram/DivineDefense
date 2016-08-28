@@ -6,11 +6,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Disposable;
 
 import ua.gram.DDGame;
 import ua.gram.controller.state.tower.TowerStateManager;
 import ua.gram.controller.tower.TowerShop;
-import ua.gram.model.Resetable;
 import ua.gram.model.actor.misc.UpgradeButton;
 import ua.gram.model.actor.tower.Tower;
 import ua.gram.utils.Log;
@@ -18,7 +18,7 @@ import ua.gram.utils.Log;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class TowerControls extends Table implements Resetable {
+public class TowerControls extends Table implements Disposable {
 
     private final Button sellBut;
     private final UpgradeButton upgradeBut;
@@ -51,7 +51,7 @@ public class TowerControls extends Table implements Resetable {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 shop.sell(group);
-                resetObject();
+                dispose();
             }
         });
         upgradeBut.clearListeners();
@@ -67,7 +67,7 @@ public class TowerControls extends Table implements Resetable {
                 } catch (IllegalArgumentException e) {
                     Log.exc("Could not upgrade " + tower, e);
                 } finally {
-                    resetObject();
+                    dispose();
                 }
             }
         });
@@ -119,7 +119,7 @@ public class TowerControls extends Table implements Resetable {
                         Actions.run(new Runnable() {
                             @Override
                             public void run() {
-                                resetObject();
+                                dispose();
                             }
                         })
                 )
@@ -144,7 +144,7 @@ public class TowerControls extends Table implements Resetable {
     }
 
     @Override
-    public void resetObject() {
+    public void dispose() {
         towerGroup = null;
         setVisible(false);
     }

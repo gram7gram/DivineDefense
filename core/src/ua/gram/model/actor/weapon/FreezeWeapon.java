@@ -65,8 +65,8 @@ public class FreezeWeapon extends Weapon implements AOEWeapon {
     }
 
     @Override
-    public void resetObject() {
-        super.resetObject();
+    public void dispose() {
+        super.dispose();
         if (getParent() != towerGroup) {
             remove();
             towerGroup.addActor(this);

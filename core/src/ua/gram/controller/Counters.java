@@ -1,13 +1,13 @@
 package ua.gram.controller;
 
-import java.util.HashMap;
+import com.badlogic.gdx.utils.Disposable;
 
-import ua.gram.model.Resetable;
+import java.util.HashMap;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class Counters implements Resetable {
+public class Counters implements Disposable {
 
     private final HashMap<String, Float> map;
 
@@ -33,7 +33,7 @@ public class Counters implements Resetable {
     }
 
     @Override
-    public void resetObject() {
+    public void dispose() {
         synchronized (map) {
             map.clear();
         }

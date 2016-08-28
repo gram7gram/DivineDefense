@@ -64,7 +64,6 @@
     }
   },
   "player": {
-    "class": "ua.gram.model.prototype.player.PlayerPrototype",
     "health": 1000,
     "coins": 2500,
     "gems": 7,
@@ -796,6 +795,14 @@
     }
   ],
   "ui": {
+    "sounds": [
+    ],
+    "music": [
+      {
+        "state": "BACKGROUND_GLOBAL",
+        "sound": "data/audio/music/overworld.ogg"
+      }
+    ],
     "windows": [
       {
         "class": "ua.gram.model.prototype.ui.window.DefeatWindowPrototype",
@@ -904,36 +911,7 @@
         "style": "window-dark-gold",
         "headerText": "MAIN MENU",
         "headerTextStyle": "header2altwhite",
-        "background": "data/images/misc/background.jpg",
-        "actions": [
-          {
-            "class": "ua.gram.model.prototype.ui.ScreenButtonPrototype",
-            "title": "PLAY",
-            "target": "LevelSelectScreen",
-            "style": "diablo-red",
-            "width": 300,
-            "height": 80,
-            "order": 0
-          },
-          {
-            "class": "ua.gram.model.prototype.ui.ScreenButtonPrototype",
-            "title": "SETTINGS",
-            "target": "SettingsScreen",
-            "style": "diablo-yellow",
-            "width": 300,
-            "height": 80,
-            "order": 1
-          },
-          {
-            "class": "ua.gram.model.prototype.ui.ScreenButtonPrototype",
-            "title": "CREDITS",
-            "target": "CreditsScreen",
-            "style": "diablo-yellow",
-            "width": 300,
-            "height": 80,
-            "order": 2
-          }
-        ]
+        "background": "data/images/misc/background.jpg"
       }
     ]
   },

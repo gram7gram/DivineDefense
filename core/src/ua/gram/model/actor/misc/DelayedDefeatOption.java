@@ -29,7 +29,7 @@ public class DelayedDefeatOption extends DefeatOption {
 
         addActor(countdownLabel);
 
-        resetObject();
+        dispose();
     }
 
     private String getText() {
@@ -50,13 +50,13 @@ public class DelayedDefeatOption extends DefeatOption {
                 }
             }
         } else {
-            resetObject();
+            dispose();
         }
     }
 
     @Override
-    public void resetObject() {
-        super.resetObject();
+    public void dispose() {
+        super.dispose();
         count = prototype.delay;
         countdownLabel.setVisible(true);
     }

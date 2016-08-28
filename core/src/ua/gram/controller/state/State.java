@@ -1,15 +1,15 @@
 package ua.gram.controller.state;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.utils.Disposable;
 
 import ua.gram.DDGame;
-import ua.gram.model.Resetable;
 import ua.gram.utils.Log;
 
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class State<A extends Actor> implements StateInterface<A>, Resetable {
+public class State<A extends Actor> implements StateInterface<A>, Disposable {
 
     protected final DDGame game;
 
@@ -42,7 +42,7 @@ public class State<A extends Actor> implements StateInterface<A>, Resetable {
     }
 
     @Override
-    public void resetObject() {
+    public void dispose() {
 
     }
 }

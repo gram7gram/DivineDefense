@@ -1,9 +1,9 @@
 package ua.gram.model.player;
 
+import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import ua.gram.DDGame;
-import ua.gram.model.Resetable;
 import ua.gram.model.prototype.player.PlayerPreferences;
 import ua.gram.model.prototype.player.PlayerPrototype;
 import ua.gram.model.prototype.progress.ProgressPrototype;
@@ -12,7 +12,7 @@ import ua.gram.utils.Log;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class Player implements Resetable {
+public class Player implements Disposable {
 
     public static String PLAYER_FACTION;
     public static String SYSTEM_FACTION;
@@ -137,7 +137,7 @@ public class Player implements Resetable {
      * NOTE Gems are not reset
      */
     @Override
-    public void resetObject() {
+    public void dispose() {
         coins = prototype.coins;
         restoreHealth();
     }

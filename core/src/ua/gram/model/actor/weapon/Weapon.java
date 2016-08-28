@@ -6,11 +6,11 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Pool;
 
 import ua.gram.DDGame;
 import ua.gram.controller.weapon.WeaponProvider;
-import ua.gram.model.Resetable;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.actor.tower.Tower;
 import ua.gram.model.enums.Types;
@@ -25,7 +25,7 @@ import ua.gram.utils.Resources;
  *
  * @author Gram <gram7gram@gmail.com>
  */
-public abstract class Weapon extends Actor implements Resetable, Pool.Poolable {
+public abstract class Weapon extends Actor implements Disposable, Pool.Poolable {
 
     protected final WeaponPrototype prototype;
     protected final WeaponProvider builder;
@@ -68,7 +68,7 @@ public abstract class Weapon extends Actor implements Resetable, Pool.Poolable {
                 update(delta);
                 setVisible(true);
             } else if (targetGroup != null) {
-                resetObject();
+                dispose();
             }
         }
     }
@@ -137,7 +137,7 @@ public abstract class Weapon extends Actor implements Resetable, Pool.Poolable {
     }
 
     @Override
-    public void resetObject() {
+    public void dispose() {
         remove();
         duration = 0;
         stateTime = 0;
@@ -151,7 +151,7 @@ public abstract class Weapon extends Actor implements Resetable, Pool.Poolable {
 
     @Override
     public void reset() {
-        resetObject();
+        dispose();
     }
 
     public abstract WeaponPrototype getPrototype();

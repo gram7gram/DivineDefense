@@ -38,7 +38,7 @@ public class GameScreen extends AbstractScreen {
 
         DDGame.resumeGame();
         game.getSpeed().reset();
-        game.getPlayer().resetObject();
+        game.getPlayer().dispose();
 
         renderer = new OrthogonalTiledMapRenderer(level.getMap().getTiledMap());
 
@@ -167,7 +167,7 @@ public class GameScreen extends AbstractScreen {
         super.dispose();
         Gdx.input.setInputProcessor(null);
         renderer.dispose();
-        level.resetObject();
+        level.dispose();
     }
 
     public void disableCameraProcessor() {

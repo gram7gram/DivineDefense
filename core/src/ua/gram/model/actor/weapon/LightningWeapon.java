@@ -62,8 +62,8 @@ public class LightningWeapon extends Weapon {
     }
 
     @Override
-    public void resetObject() {
-        super.resetObject();
+    public void dispose() {
+        super.dispose();
         //Return Weapon to TowerGroup
         if (getParent() != towerGroup) {
             remove();

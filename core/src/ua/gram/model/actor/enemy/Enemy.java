@@ -137,13 +137,13 @@ public abstract class Enemy
         speed = meddle(prototype.speed);
         armor = prototype.armor;
         isRemoved = false;
-        directionHolder.resetObject();
+        directionHolder.dispose();
         if (path != null) {
             path.dispose();
         }
         path = null;
         speedManager.reset();
-        resetObject();
+        dispose();
         Log.info(this + " was reset");
     }
 

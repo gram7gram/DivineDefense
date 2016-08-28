@@ -1,6 +1,6 @@
 package ua.gram.utils;
 
-import ua.gram.model.Resetable;
+import com.badlogic.gdx.utils.Disposable;
 
 /**
  * NOTE Do not serialize classes from external libraries
@@ -17,8 +17,8 @@ public class Json extends com.badlogic.gdx.utils.Json {
             writeValue("class", className);
         }
 
-        if (object instanceof Resetable) {
-            ((Resetable) object).resetObject();
+        if (object instanceof Disposable) {
+            ((Disposable) object).dispose();
         }
 
         super.writeFields(object);

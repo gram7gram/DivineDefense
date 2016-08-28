@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.SnapshotArray;
 
 import java.util.ArrayList;
@@ -16,7 +17,6 @@ import ua.gram.DDGame;
 import ua.gram.controller.factory.DefeatOptionFactory;
 import ua.gram.controller.stage.StageHolder;
 import ua.gram.model.Initializer;
-import ua.gram.model.Resetable;
 import ua.gram.model.actor.misc.DefeatOption;
 import ua.gram.model.prototype.ui.DefeatOptionPrototype;
 import ua.gram.model.prototype.ui.window.DefeatWindowPrototype;
@@ -26,7 +26,7 @@ import ua.gram.utils.Log;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class DefeatWindow extends AbstractWindow implements Initializer, Resetable {
+public class DefeatWindow extends AbstractWindow implements Initializer, Disposable {
 
     private final DDGame game;
     private final DefeatWindowPrototype prototype;
@@ -102,7 +102,7 @@ public class DefeatWindow extends AbstractWindow implements Initializer, Resetab
     }
 
     @Override
-    public void resetObject() {
+    public void dispose() {
         resetActors(getChildren());
     }
 
@@ -110,8 +110,8 @@ public class DefeatWindow extends AbstractWindow implements Initializer, Resetab
         for (Actor actor : actors) {
             if (actor instanceof Group) {
                 resetActors(((Group) actor).getChildren());
-            } else if (actor instanceof Resetable) {
-                ((Resetable) actor).resetObject();
+            } else if (actor instanceof Disposable) {
+                ((Disposable) actor).dispose();
             }
         }
     }

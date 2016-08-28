@@ -9,7 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.Align;
 
 import ua.gram.DDGame;
-import ua.gram.utils.Vector4;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -23,7 +22,6 @@ public class WindowGroup extends Group {
     private Button actionRight;
     private Label title;
     private int contentAlign;
-    private Vector4 contentPadding;
 
     public WindowGroup(Skin skin) {
         this(skin, "window-dark-gold");
@@ -42,7 +40,6 @@ public class WindowGroup extends Group {
         content = new Table(skin);
         content.setVisible(true);
         contentAlign = Align.center;
-        contentPadding = new Vector4(10);
         rebuild();
     }
 
@@ -70,10 +67,7 @@ public class WindowGroup extends Group {
 
         layout.add(content)
                 .align(contentAlign)
-                .padLeft(contentPadding.x)
-                .padTop(contentPadding.y)
-                .padRight(contentPadding.z)
-                .padBottom(contentPadding.t)
+                .pad(10)
                 .expand()
                 .colspan(3).row();
 
@@ -91,16 +85,6 @@ public class WindowGroup extends Group {
     public void act(float delta) {
         super.act(delta);
         setDebug(DDGame.DEBUG, true);
-    }
-
-    public void setContentPadding(Vector4 contentPadding) {
-        this.contentPadding = contentPadding;
-        rebuild();
-    }
-
-    public void setContentAlign(int contentAlign) {
-        this.contentAlign = contentAlign;
-        rebuild();
     }
 
     public Table getLayoutTable() {

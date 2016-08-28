@@ -79,7 +79,7 @@ public class LevelLoadingScreen extends AbstractLoadingScreen {
     }
 
     @Override
-    public void onLoad() {
+    public void onLoadingComplete() {
         loadingStage.update(progress);
         Level level = LevelFactory.create(game, prototype);
         game.setScreen(new GameScreen(game, level));

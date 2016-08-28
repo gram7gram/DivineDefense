@@ -9,12 +9,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import ua.gram.DDGame;
-import ua.gram.controller.factory.ScreenFactory;
-import ua.gram.model.prototype.ui.ButtonPrototype;
-import ua.gram.model.prototype.ui.ScreenButtonPrototype;
 import ua.gram.model.prototype.ui.window.MainMenuWindowPrototype;
 import ua.gram.model.prototype.ui.window.WindowPrototype;
-import ua.gram.utils.Vector4;
+import ua.gram.view.screen.CreditsScreen;
+import ua.gram.view.screen.LevelSelectScreen;
+import ua.gram.view.screen.SettingsScreen;
 
 /**
  * @author Gram <gram7gram@gmail.com>
@@ -35,41 +34,53 @@ public class MainMenuWindow extends WindowGroup {
 
         Table buttons = new Table(skin);
 
-        int length = prototype.actions.length;
-        int index = 0;
-        for (ButtonPrototype buttonProto : prototype.orderActions()) {
-
-            if (!(buttonProto instanceof ScreenButtonPrototype))
-                throw new IllegalArgumentException("Button is not instance of ScreenButtonPrototype");
-
-            final ScreenButtonPrototype buttonPrototype = (ScreenButtonPrototype) buttonProto;
-
-            Button button = new TextButton(buttonPrototype.title, skin, buttonPrototype.style);
-            button.addListener(new ClickListener() {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    game.setScreen(ScreenFactory.create(game, buttonPrototype.target));
-                }
-            });
-
-            if (++index < length) {
-                buttons.add(button)
-                        .width(buttonPrototype.width)
-                        .height(buttonPrototype.height)
-                        .padBottom(10).row();
-            } else {
-                buttons.add(button)
-                        .width(buttonPrototype.width)
-                        .height(buttonPrototype.height);
+        Button playButton = new TextButton("PLAY", skin, "diablo-red");
+        playButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(new LevelSelectScreen(game));
             }
-        }
+        });
 
-        float width = (getWidth() - getLayoutTable().getPadLeft() - getLayoutTable().getPadRight()) / 2;
+        Button settingsButton = new TextButton("SETTINGS", skin, "diablo-yellow");
+        settingsButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(new SettingsScreen(game));
+            }
+        });
 
-        table.add(buttons).width(width).center().expand();
-        table.add().width(width).center().expand();
+        Button creditsButton = new TextButton("CREDITS", skin, "diablo-yellow");
+        creditsButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(new CreditsScreen(game));
+            }
+        });
 
-        setContentPadding(new Vector4(0));
+        float width = 300;
+        float height = 80;
+
+        buttons.add(playButton)
+                .width(width)
+                .height(height)
+                .padBottom(10).row();
+
+        buttons.add(settingsButton)
+                .width(width)
+                .height(height)
+                .padBottom(10).row();
+
+        buttons.add(creditsButton)
+                .width(width)
+                .height(height)
+                .padBottom(10);
+
+        float columnWidth = (getWidth() - getLayoutTable().getPadLeft() - getLayoutTable().getPadRight()) / 2;
+
+        table.add(buttons).width(columnWidth).center().expand();
+        table.add().width(columnWidth).center().expand();
+
         setContent(table);
     }
 }

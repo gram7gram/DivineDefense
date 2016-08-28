@@ -8,7 +8,7 @@ import ua.gram.view.screen.MainMenuScreen;
 /**
  * LevelScreen handles resource loading invocation.
  * In 'show' you specify resources to be loaded.
- * In 'onLoad' you specify program logic that will be executed
+ * In 'onLoadingComplete' you specify program logic that will be executed
  */
 public abstract class AbstractLoadingScreen extends AbstractScreen {
 
@@ -33,7 +33,7 @@ public abstract class AbstractLoadingScreen extends AbstractScreen {
         loadingStage.draw();
         if (game.getAssetManager().update()) {
             try {
-                onLoad();
+                onLoadingComplete();
             } catch (Exception e) {
                 game.setScreen(new ErrorScreen(game, "Error at loading", e));
             }
@@ -45,7 +45,7 @@ public abstract class AbstractLoadingScreen extends AbstractScreen {
 
     }
 
-    public void onLoad() {
+    public void onLoadingComplete() {
         loadingStage.update(progress);
         game.setScreen(new MainMenuScreen(game));
     }

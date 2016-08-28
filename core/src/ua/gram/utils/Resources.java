@@ -21,7 +21,6 @@ import ua.gram.model.Initializer;
 public class Resources implements Disposable, Initializer {
 
     public static final String BACKGROUND_TEXTURE = "data/images/misc/background.jpg";
-    public static final String TOWER_SOUNDS_PATH = "data/audio/sounds/tower";
     private final DDGame game;
     private final AssetManager manager;
     private final String root;

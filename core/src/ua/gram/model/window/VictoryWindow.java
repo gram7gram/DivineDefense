@@ -5,10 +5,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Disposable;
 
 import ua.gram.DDGame;
 import ua.gram.controller.listener.NextLevelClickListener;
-import ua.gram.model.Resetable;
 import ua.gram.model.actor.misc.CustomLabel;
 import ua.gram.model.level.Level;
 import ua.gram.model.prototype.ui.window.VictoryWindowPrototype;
@@ -20,7 +20,7 @@ import ua.gram.utils.Log;
  *
  * @author Gram <gram7gram@gmail.com>
  */
-public class VictoryWindow extends AbstractWindow implements Resetable {
+public class VictoryWindow extends AbstractWindow implements Disposable {
 
     private final CustomLabel reward;
     private final DDGame game;
@@ -58,7 +58,7 @@ public class VictoryWindow extends AbstractWindow implements Resetable {
                 .width(120)
                 .height(120);
 
-        resetObject();
+        dispose();
 
         Log.info("VictoryWindow is OK");
     }
@@ -67,11 +67,11 @@ public class VictoryWindow extends AbstractWindow implements Resetable {
     public void setVisible(boolean visible) {
         super.setVisible(visible);
         if (!visible)
-            resetObject();
+            dispose();
     }
 
     @Override
-    public void resetObject() {
+    public void dispose() {
         if (reward != null) {
             int gemsReward = prototype.getReward();
             String text;

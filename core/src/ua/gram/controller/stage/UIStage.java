@@ -163,7 +163,7 @@ public class UIStage extends AbstractStage implements Initializer {
         disableNonUiProcessors();
         hideAllWindows();
         hideUI();
-        defeatWindow.resetObject();
+        defeatWindow.dispose();
         defeatWindow.setVisible(true);
     }
 

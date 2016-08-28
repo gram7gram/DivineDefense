@@ -2,6 +2,7 @@ package ua.gram.model.actor.boss;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.esotericsoftware.spine.AnimationState;
 import com.esotericsoftware.spine.Skeleton;
@@ -11,7 +12,6 @@ import ua.gram.controller.Counters;
 import ua.gram.controller.state.boss.BossStateHolder;
 import ua.gram.controller.state.boss.BossStateManager;
 import ua.gram.model.Initializer;
-import ua.gram.model.Resetable;
 import ua.gram.model.enums.Types;
 import ua.gram.model.level.FinalLevel;
 import ua.gram.model.prototype.boss.BossPrototype;
@@ -20,7 +20,7 @@ import ua.gram.utils.Log;
 /**
  * @author Gram <gram7gram@gmail.com>
  */
-public class Boss extends Actor implements Initializer, Resetable {
+public class Boss extends Actor implements Initializer, Disposable {
 
     protected final DDGame game;
     protected final BossStateManager stateManager;
@@ -40,7 +40,7 @@ public class Boss extends Actor implements Initializer, Resetable {
 
         counters = new Counters();
 
-        resetObject();
+        dispose();
 
         Log.info(getClass().getSimpleName() + " is OK");
     }
@@ -131,8 +131,8 @@ public class Boss extends Actor implements Initializer, Resetable {
     }
 
     @Override
-    public void resetObject() {
-        counters.resetObject();
+    public void dispose() {
+        counters.dispose();
         isDefeated = false;
     }
 

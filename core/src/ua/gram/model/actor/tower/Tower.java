@@ -102,7 +102,7 @@ public abstract class Tower
         currentTowerStrategy = getDefaultStrategy();
         properties.setPropertyPrototype(prototype.getFirstLevelProperty());
         setPosition(0, 0);
-        resetObject();
+        dispose();
         Log.info(this + " was reset");
     }
 

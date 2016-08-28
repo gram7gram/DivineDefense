@@ -34,8 +34,13 @@ public class SettingsWindow extends WindowGroup {
 
         PlayerPreferences preferences = game.getPlayer().getPreferences();
         final AudioPreferencesPrototype audioPreferences = preferences.audio;
+        final AudioManager audioManager = game.getAudioManager();
 
         final Slider soundSlider = new AudioSlider(skin, "default", audioPreferences.sound);
+        final Slider musicSlider = new AudioSlider(skin, "default", audioPreferences.music);
+        final CheckBox soundBox = new CheckBox("", skin, "default");
+        final CheckBox musicBox = new CheckBox("", skin, "default");
+
         soundSlider.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -45,18 +50,17 @@ public class SettingsWindow extends WindowGroup {
             @Override
             public void touchDragged(InputEvent event, float x, float y, int pointer) {
                 super.touchDragged(event, x, y, pointer);
-                AudioManager audioManager = game.getAudioManager();
                 audioManager.setSoundVolume(soundSlider.getValue() / 100);
             }
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 super.touchUp(event, x, y, pointer, button);
+                soundBox.setChecked(audioManager.canPlaySound());
                 Log.info("New sound volume: " + audioPreferences.sound.volume);
             }
         });
 
-        final Slider musicSlider = new AudioSlider(skin, "default", audioPreferences.music);
         musicSlider.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -66,18 +70,17 @@ public class SettingsWindow extends WindowGroup {
             @Override
             public void touchDragged(InputEvent event, float x, float y, int pointer) {
                 super.touchDragged(event, x, y, pointer);
-                AudioManager audioManager = game.getAudioManager();
                 audioManager.setMusicVolume(musicSlider.getValue() / 100);
             }
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 super.touchUp(event, x, y, pointer, button);
+                musicBox.setChecked(audioManager.canPlayMusic());
                 Log.info("New music volume: " + audioPreferences.music.volume);
             }
         });
 
-        CheckBox soundBox = new CheckBox("", skin, "default");
         soundBox.setChecked(audioPreferences.sound.state);
         soundBox.addListener(new ClickListener() {
             @Override
@@ -90,7 +93,6 @@ public class SettingsWindow extends WindowGroup {
             }
         });
 
-        CheckBox musicBox = new CheckBox("", skin, "default");
         musicBox.setChecked(audioPreferences.music.state);
         musicBox.addListener(new ClickListener() {
             @Override
