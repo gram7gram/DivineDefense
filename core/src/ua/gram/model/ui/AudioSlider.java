@@ -15,12 +15,5 @@ public class AudioSlider extends Slider {
 
         setDisabled(!prototype.state);
         setValue(prototype.volume * 100);
-
-//        addListener(new InputListener() {
-//            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-//                event.stop();
-//                return false;
-//            }
-//        });
     }
 }

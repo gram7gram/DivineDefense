@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 
 import ua.gram.DDGame;
 import ua.gram.model.audio.AudioManager;
@@ -33,7 +34,6 @@ public class SettingsWindow extends WindowGroup {
 
         PlayerPreferences preferences = game.getPlayer().getPreferences();
         final AudioPreferencesPrototype audioPreferences = preferences.audio;
-
 
         final Slider soundSlider = new AudioSlider(skin, "default", audioPreferences.sound);
         soundSlider.addListener(new InputListener() {
@@ -103,42 +103,47 @@ public class SettingsWindow extends WindowGroup {
             }
         });
 
-        nested.add(new Label("SOUND", skin, "header2altwhite"))
+        Table soundTable = new Table();
+
+        soundTable.add(new Label("SOUND", skin, "header2altwhite"))
                 .expandX();
-        nested.add(soundBox)
+        soundTable.add(soundBox)
                 .expandX()
                 .row();
 
-        nested.add().padTop(20).row();
+        soundTable.add().padTop(20).row();
 
-        nested.add(new Label("SOUND VOLUME", skin, "header2altwhite"))
+        soundTable.add(new Label("SOUND VOLUME", skin, "header2altwhite"))
                 .expandX()
                 .colspan(2)
                 .row();
-        nested.add(soundSlider)
-                .expandX()
+        soundTable.add(soundSlider)
+                .width(getWidth() * .4f)
                 .pad(10, 0, 10, 0)
                 .colspan(2)
                 .row();
 
-        nested.add().padTop(20).row();
+        Table musicTable = new Table();
 
-        nested.add(new Label("MUSIC", skin, "header2altwhite"))
+        musicTable.add(new Label("MUSIC", skin, "header2altwhite"))
                 .expandX();
-        nested.add(musicBox)
+        musicTable.add(musicBox)
                 .expandX()
                 .row();
 
-        nested.add().padTop(20).row();
+        musicTable.add().padTop(20).row();
 
-        nested.add(new Label("MUSIC VOLUME", skin, "header2altwhite"))
+        musicTable.add(new Label("MUSIC VOLUME", skin, "header2altwhite"))
                 .colspan(2)
                 .expandX()
                 .row();
-        nested.add(musicSlider)
+        musicTable.add(musicSlider)
+                .width(getWidth() * .4f)
                 .pad(10, 0, 10, 0)
-                .expandX()
                 .colspan(2);
+
+        nested.add(soundTable).align(Align.center).width(getWidth() / 2 - 40);
+        nested.add(musicTable).align(Align.center).width(getWidth() / 2 - 40);
 
         Button back = new Button(skin, "right-small");
         back.setVisible(true);

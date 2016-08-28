@@ -78,12 +78,11 @@ public class WindowGroup extends Group {
                 .colspan(3).row();
 
         if (actions != null) {
-
             layout.add().height(size).expandX();
             layout.add(actions).height(size).expandX();
             layout.add().height(size).expandX();
-
         }
+
         addActor(layout);
         layout.toBack();
     }
@@ -117,30 +116,14 @@ public class WindowGroup extends Group {
         rebuild();
     }
 
-    public Table getActionsTable() {
-        return actions;
-    }
-
-    public Button getActionLeft() {
-        return actionLeft;
-    }
-
     public void setActionLeft(Button actionLeft) {
         this.actionLeft = actionLeft;
         rebuild();
     }
 
-    public Button getActionRight() {
-        return actionRight;
-    }
-
     public void setActionRight(Button actionRight) {
         this.actionRight = actionRight;
         rebuild();
-    }
-
-    public Label getTitle() {
-        return title;
     }
 
     public void setTitle(Label title) {
