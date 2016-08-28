@@ -17,6 +17,7 @@ import ua.gram.controller.weapon.WeaponProvider;
 import ua.gram.model.Initializer;
 import ua.gram.model.actor.PositionMarker;
 import ua.gram.model.actor.tower.Tower;
+import ua.gram.model.audio.AudioManager;
 import ua.gram.model.group.TowerControls;
 import ua.gram.model.group.TowerGroup;
 import ua.gram.model.group.TowerShopGroup;
@@ -46,11 +47,13 @@ public class TowerShop implements ShopInterface<TowerGroup>, Initializer {
     private final WeaponProvider weaponProvider;
     private final TowerPrototype[] towerPrototypes;
     private final TowerAnimationChanger animationChanger;
+    private final AudioManager audioManager;
 
     public TowerShop(DDGame game, StageHolder stageHolder, TowerShopConfigPrototype prototype) {
         this.game = game;
         this.prototype = prototype;
         this.stageHolder = stageHolder;
+        audioManager = game.getAudioManager();
 
         Skin skin = game.getResources().getSkin();
 
@@ -215,5 +218,9 @@ public class TowerShop implements ShopInterface<TowerGroup>, Initializer {
 
     public TowerAnimationChanger getAnimationChanger() {
         return animationChanger;
+    }
+
+    public AudioManager getAudioManager() {
+        return audioManager;
     }
 }

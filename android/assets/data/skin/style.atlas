@@ -144,6 +144,26 @@ ui/window/window-simple-with-cap
   index: -1
 
 style4.png
+size: 128,64
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ui/checkbox/off
+  rotate: false
+  xy: 1, 1
+  size: 60, 31
+  orig: 60, 31
+  offset: 0, 0
+  index: -1
+ui/checkbox/on
+  rotate: false
+  xy: 62, 1
+  size: 60, 31
+  orig: 60, 31
+  offset: 0, 0
+  index: -1
+
+style5.png
 size: 2048,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -198,7 +218,43 @@ ui/static/lock
   offset: 0, 0
   index: -1
 
-style5.png
+style6.png
+size: 64,64
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ui/slider/knob
+  rotate: false
+  xy: 1, 7
+  size: 15, 15
+  orig: 15, 15
+  offset: 0, 0
+  index: -1
+ui/slider/knobAfter
+  rotate: false
+  xy: 1, 1
+  size: 5, 5
+  split: 2, 2, 2, 2
+  orig: 5, 5
+  offset: 0, 0
+  index: -1
+ui/slider/knobBefore
+  rotate: false
+  xy: 33, 17
+  size: 5, 5
+  split: 2, 2, 2, 2
+  orig: 5, 5
+  offset: 0, 0
+  index: -1
+ui/slider/knobDisabled
+  rotate: false
+  xy: 17, 7
+  size: 15, 15
+  orig: 15, 15
+  offset: 0, 0
+  index: -1
+
+style7.png
 size: 2048,512
 format: RGBA8888
 filter: Nearest,Nearest
@@ -490,7 +546,7 @@ ui/button/diablo-yellow-pressed
   offset: 0, 0
   index: -1
 
-style6.png
+style8.png
 size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
@@ -552,7 +608,7 @@ ui/button/tower-shop/stun-disabled
   offset: 0, 0
   index: -1
 
-style7.png
+style9.png
 size: 2048,128
 format: RGBA8888
 filter: Nearest,Nearest
@@ -824,7 +880,7 @@ ui/button/dark/60/button-up-clicked
   offset: 0, 0
   index: -1
 
-style8.png
+style10.png
 size: 256,128
 format: RGBA8888
 filter: Nearest,Nearest
@@ -844,7 +900,7 @@ ui/button/dark/120/button-fight-clicked
   offset: 0, 0
   index: -1
 
-style9.png
+style11.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1116,7 +1172,7 @@ ui/button/dark/80/button-up-clicked
   offset: 0, 0
   index: -1
 
-style10.png
+style12.png
 size: 64,64
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1130,7 +1186,7 @@ ui/label/background-0.25
   offset: 0, 0
   index: -1
 
-style11.png
+style13.png
 size: 1024,512
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1157,7 +1213,7 @@ preview/level-3-preview@256
   offset: 0, 0
   index: -1
 
-style12.png
+style14.png
 size: 2048,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1184,7 +1240,7 @@ weapons/STUN_WEAPON
   offset: 0, 0
   index: -1
 
-style13.png
+style15.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1218,7 +1274,7 @@ enemies/EnemySoldier/Demon/FINISH/UP
   offset: 0, 0
   index: -1
 
-style14.png
+style16.png
 size: 2048,128
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1252,7 +1308,7 @@ enemies/EnemySoldier/Demon/IDLE/UP
   offset: 0, 0
   index: -1
 
-style15.png
+style17.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1286,7 +1342,7 @@ enemies/EnemySoldier/Demon/WALKING/UP
   offset: 0, 0
   index: -1
 
-style16.png
+style18.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1320,7 +1376,7 @@ enemies/EnemySoldier/Demon/STUN/UP
   offset: 0, 0
   index: -1
 
-style17.png
+style19.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1354,7 +1410,7 @@ enemies/EnemySoldier/Demon/DEAD/UP
   offset: 0, 0
   index: -1
 
-style18.png
+style20.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1388,7 +1444,7 @@ enemies/EnemySoldier/Demon/SPAWN/UP
   offset: 0, 0
   index: -1
 
-style19.png
+style21.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1422,7 +1478,7 @@ enemies/EnemySummoner/Demon/ABILITY/UP
   offset: 0, 0
   index: -1
 
-style20.png
+style22.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1456,7 +1512,7 @@ enemies/EnemySummoner/Demon/FINISH/UP
   offset: 0, 0
   index: -1
 
-style21.png
+style23.png
 size: 64,512
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1490,7 +1546,7 @@ enemies/EnemySummoner/Demon/IDLE/UP
   offset: 0, 0
   index: -1
 
-style22.png
+style24.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1524,7 +1580,7 @@ enemies/EnemySummoner/Demon/WALKING/UP
   offset: 0, 0
   index: -1
 
-style23.png
+style25.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1558,7 +1614,7 @@ enemies/EnemySummoner/Demon/STUN/UP
   offset: 0, 0
   index: -1
 
-style24.png
+style26.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1592,7 +1648,7 @@ enemies/EnemySummoner/Demon/DEAD/UP
   offset: 0, 0
   index: -1
 
-style25.png
+style27.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1626,7 +1682,7 @@ enemies/EnemySummoner/Demon/SPAWN/UP
   offset: 0, 0
   index: -1
 
-style26.png
+style28.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1660,7 +1716,7 @@ enemies/EnemyWarrior/Demon/FINISH/UP
   offset: 0, 0
   index: -1
 
-style27.png
+style29.png
 size: 64,512
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1694,7 +1750,7 @@ enemies/EnemyWarrior/Demon/IDLE/UP
   offset: 0, 0
   index: -1
 
-style28.png
+style30.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1728,7 +1784,7 @@ enemies/EnemyWarrior/Demon/WALKING/UP
   offset: 0, 0
   index: -1
 
-style29.png
+style31.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1762,7 +1818,7 @@ enemies/EnemyWarrior/Demon/STUN/UP
   offset: 0, 0
   index: -1
 
-style30.png
+style32.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1796,7 +1852,7 @@ enemies/EnemyWarrior/Demon/DEAD/UP
   offset: 0, 0
   index: -1
 
-style31.png
+style33.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1830,7 +1886,7 @@ enemies/EnemyWarrior/Demon/SPAWN/UP
   offset: 0, 0
   index: -1
 
-style32.png
+style34.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1864,7 +1920,7 @@ enemies/EnemyRunner/Demon/FINISH/UP
   offset: 0, 0
   index: -1
 
-style33.png
+style35.png
 size: 64,512
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1898,7 +1954,7 @@ enemies/EnemyRunner/Demon/IDLE/UP
   offset: 0, 0
   index: -1
 
-style34.png
+style36.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1932,7 +1988,7 @@ enemies/EnemyRunner/Demon/WALKING/UP
   offset: 0, 0
   index: -1
 
-style35.png
+style37.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1966,7 +2022,7 @@ enemies/EnemyRunner/Demon/STUN/UP
   offset: 0, 0
   index: -1
 
-style36.png
+style38.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2000,7 +2056,7 @@ enemies/EnemyRunner/Demon/DEAD/UP
   offset: 0, 0
   index: -1
 
-style37.png
+style39.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2034,7 +2090,7 @@ enemies/EnemyRunner/Demon/SPAWN/UP
   offset: 0, 0
   index: -1
 
-style38.png
+style40.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2068,7 +2124,7 @@ enemies/EnemySoldierArmored/Demon/FINISH/UP
   offset: 0, 0
   index: -1
 
-style39.png
+style41.png
 size: 64,512
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2102,7 +2158,7 @@ enemies/EnemySoldierArmored/Demon/IDLE/UP
   offset: 0, 0
   index: -1
 
-style40.png
+style42.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2136,7 +2192,7 @@ enemies/EnemySoldierArmored/Demon/WALKING/UP
   offset: 0, 0
   index: -1
 
-style41.png
+style43.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2170,7 +2226,7 @@ enemies/EnemySoldierArmored/Demon/STUN/UP
   offset: 0, 0
   index: -1
 
-style42.png
+style44.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2204,7 +2260,7 @@ enemies/EnemySoldierArmored/Demon/DEAD/UP
   offset: 0, 0
   index: -1
 
-style43.png
+style45.png
 size: 2048,256
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2238,7 +2294,7 @@ enemies/EnemySoldierArmored/Demon/SPAWN/UP
   offset: 0, 0
   index: -1
 
-style44.png
+style46.png
 size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2271,8 +2327,15 @@ towers/PRIMARY/Angel/Lvl4/SELL
   orig: 540, 90
   offset: 0, 0
   index: -1
+towers/PRIMARY/Angel/Lvl4/UPGRADE
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
 
-style45.png
+style47.png
 size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2305,8 +2368,15 @@ towers/PRIMARY/Angel/Lvl3/SELL
   orig: 540, 90
   offset: 0, 0
   index: -1
+towers/PRIMARY/Angel/Lvl3/UPGRADE
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
 
-style46.png
+style48.png
 size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2339,8 +2409,15 @@ towers/PRIMARY/Angel/Lvl1/SELL
   orig: 540, 90
   offset: 0, 0
   index: -1
+towers/PRIMARY/Angel/Lvl1/UPGRADE
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
 
-style47.png
+style49.png
 size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2373,8 +2450,15 @@ towers/PRIMARY/Angel/Lvl2/SELL
   orig: 540, 90
   offset: 0, 0
   index: -1
+towers/PRIMARY/Angel/Lvl2/UPGRADE
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
 
-style48.png
+style50.png
 size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2407,8 +2491,15 @@ towers/STUN/Angel/Lvl4/SELL
   orig: 540, 90
   offset: 0, 0
   index: -1
+towers/STUN/Angel/Lvl4/UPGRADE
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
 
-style49.png
+style51.png
 size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2441,8 +2532,15 @@ towers/STUN/Angel/Lvl3/SELL
   orig: 540, 90
   offset: 0, 0
   index: -1
+towers/STUN/Angel/Lvl3/UPGRADE
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
 
-style50.png
+style52.png
 size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2475,8 +2573,15 @@ towers/STUN/Angel/Lvl1/SELL
   orig: 540, 90
   offset: 0, 0
   index: -1
+towers/STUN/Angel/Lvl1/UPGRADE
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
 
-style51.png
+style53.png
 size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2509,8 +2614,15 @@ towers/STUN/Angel/Lvl2/SELL
   orig: 540, 90
   offset: 0, 0
   index: -1
+towers/STUN/Angel/Lvl2/UPGRADE
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
 
-style52.png
+style54.png
 size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2543,8 +2655,15 @@ towers/SECONDARY/Angel/Lvl4/SELL
   orig: 540, 90
   offset: 0, 0
   index: -1
+towers/SECONDARY/Angel/Lvl4/UPGRADE
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
 
-style53.png
+style55.png
 size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2577,8 +2696,15 @@ towers/SECONDARY/Angel/Lvl3/SELL
   orig: 540, 90
   offset: 0, 0
   index: -1
+towers/SECONDARY/Angel/Lvl3/UPGRADE
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
 
-style54.png
+style56.png
 size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2611,8 +2737,15 @@ towers/SECONDARY/Angel/Lvl1/SELL
   orig: 540, 90
   offset: 0, 0
   index: -1
+towers/SECONDARY/Angel/Lvl1/UPGRADE
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
 
-style55.png
+style57.png
 size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2645,8 +2778,15 @@ towers/SECONDARY/Angel/Lvl2/SELL
   orig: 540, 90
   offset: 0, 0
   index: -1
+towers/SECONDARY/Angel/Lvl2/UPGRADE
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
 
-style56.png
+style58.png
 size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2679,8 +2819,15 @@ towers/SPECIAL/Angel/Lvl4/SELL
   orig: 540, 90
   offset: 0, 0
   index: -1
+towers/SPECIAL/Angel/Lvl4/UPGRADE
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
 
-style57.png
+style59.png
 size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2713,8 +2860,15 @@ towers/SPECIAL/Angel/Lvl3/SELL
   orig: 540, 90
   offset: 0, 0
   index: -1
+towers/SPECIAL/Angel/Lvl3/UPGRADE
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
 
-style58.png
+style60.png
 size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2747,8 +2901,15 @@ towers/SPECIAL/Angel/Lvl1/SELL
   orig: 540, 90
   offset: 0, 0
   index: -1
+towers/SPECIAL/Angel/Lvl1/UPGRADE
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
 
-style59.png
+style61.png
 size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2775,6 +2936,13 @@ towers/SPECIAL/Angel/Lvl2/IDLE
   offset: 0, 0
   index: -1
 towers/SPECIAL/Angel/Lvl2/SELL
+  rotate: false
+  xy: 1, 1
+  size: 540, 90
+  orig: 540, 90
+  offset: 0, 0
+  index: -1
+towers/SPECIAL/Angel/Lvl2/UPGRADE
   rotate: false
   xy: 1, 1
   size: 540, 90

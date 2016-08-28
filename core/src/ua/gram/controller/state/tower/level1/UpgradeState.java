@@ -5,6 +5,7 @@ import ua.gram.controller.state.tower.TowerStateManager;
 import ua.gram.model.actor.misc.ProgressBar;
 import ua.gram.model.actor.tower.Tower;
 import ua.gram.model.actor.tower.TowerProperties;
+import ua.gram.model.enums.Types;
 import ua.gram.model.prototype.tower.TowerPropertyPrototype;
 import ua.gram.utils.Log;
 
@@ -15,6 +16,12 @@ public class UpgradeState extends InactiveState {
 
     public UpgradeState(DDGame game, TowerStateManager manager) {
         super(game, manager);
+    }
+
+
+    @Override
+    protected Types.TowerState getType() {
+        return Types.TowerState.UPGRADE;
     }
 
     @Override
@@ -34,6 +41,9 @@ public class UpgradeState extends InactiveState {
             throw new IllegalArgumentException("Cannot update to higher value, then expected");
 
         game.getPlayer().chargeCoins(price);
+
+        String sound = actor.getPrototype().getSoundByState(getType().name());
+        actor.getTowerShop().getAudioManager().playSound(sound);
 
         Log.info(actor + " starts upgrading...");
     }

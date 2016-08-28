@@ -2,6 +2,8 @@ package ua.gram.utils;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -19,6 +21,7 @@ import ua.gram.model.Initializer;
 public class Resources implements Disposable, Initializer {
 
     public static final String BACKGROUND_TEXTURE = "data/images/misc/background.jpg";
+    public static final String TOWER_SOUNDS_PATH = "data/audio/sounds/tower";
     private final DDGame game;
     private final AssetManager manager;
     private final String root;
@@ -61,6 +64,7 @@ public class Resources implements Disposable, Initializer {
 
         manager.load(getRootDirectory() + file, Skin.class,
                 new SkinLoader.SkinParameter(getRootDirectory() + atlas));
+        Log.info("Loading skin:" + file);
 
         manager.finishLoading();
 
@@ -75,6 +79,7 @@ public class Resources implements Disposable, Initializer {
         try {
             manager.setLoader(TiledMap.class, new TmxMapLoader());
             manager.load(getRootDirectory() + file, TiledMap.class);
+            Log.info("Loading tiled map:" + file);
         } catch (GdxRuntimeException e) {
             Log.exc("Could not load map for level: " + file, e);
         }
@@ -90,6 +95,25 @@ public class Resources implements Disposable, Initializer {
     public void loadTexture(String file) {
         try {
             manager.load(getRootDirectory() + file, Texture.class);
+            Log.info("Loading texture:" + file);
+        } catch (GdxRuntimeException e) {
+            Log.exc("Not loaded: " + file, e);
+        }
+    }
+
+    public void loadSound(String file) {
+        try {
+            manager.load(getRootDirectory() + file, Sound.class);
+            Log.info("Loading sound:" + file);
+        } catch (GdxRuntimeException e) {
+            Log.exc("Not loaded: " + file, e);
+        }
+    }
+
+    public void loadMusic(String file) {
+        try {
+            manager.load(getRootDirectory() + file, Music.class);
+            Log.info("Loading music:" + file);
         } catch (GdxRuntimeException e) {
             Log.exc("Not loaded: " + file, e);
         }
@@ -109,6 +133,14 @@ public class Resources implements Disposable, Initializer {
 
     public Texture getRegisteredTexture(String file) {
         return manager.get(getRootDirectory() + file, Texture.class);
+    }
+
+    public Sound getRegisteredSound(String file) {
+        return manager.get(getRootDirectory() + file, Sound.class);
+    }
+
+    public Music getRegisteredMusic(String file) {
+        return manager.get(getRootDirectory() + file, Music.class);
     }
 
     @Override

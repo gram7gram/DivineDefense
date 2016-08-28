@@ -4,7 +4,8 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import ua.gram.DDGame;
 import ua.gram.model.Resetable;
-import ua.gram.model.prototype.PlayerPrototype;
+import ua.gram.model.prototype.player.PlayerPreferences;
+import ua.gram.model.prototype.player.PlayerPrototype;
 import ua.gram.model.prototype.progress.ProgressPrototype;
 import ua.gram.utils.Log;
 
@@ -16,7 +17,9 @@ public class Player implements Resetable {
     public static String PLAYER_FACTION;
     public static String SYSTEM_FACTION;
     public static int DEFAULT_HEALTH;
-    public final PlayerPrototype prototype;
+    private final PlayerPrototype prototype;
+    private final PlayerPreferences preferences;
+    private final ProgressPrototype progress;
     private boolean isDefault;
     private int level;
     private int health;
@@ -29,6 +32,9 @@ public class Player implements Resetable {
         coins = prototype.coins;
         gems = prototype.gems;
         health = prototype.health;
+        preferences = prototype.preferences;
+        progress = prototype.progress;
+
         if (prototype.faction != null) {
             setFraction(prototype.faction);
             Log.info("Player faction restored to " + PLAYER_FACTION);
@@ -38,23 +44,27 @@ public class Player implements Resetable {
     public void chargeCoins(int amount) {
         if (coins < amount)
             throw new IllegalArgumentException("Unable to charge " + amount + " coins");
-        Log.info("Player had: " + this.coins + " coins. Now has: " + (coins -= amount));
+        coins -= amount;
+        Log.info("Player is charged " + coins + " coins");
     }
 
     public void chargeGems(int amount) {
         if (gems < amount)
-            throw new IllegalArgumentException("Unable to charge " + amount + " gems");
-        Log.info("Player had: " + this.gems + " gems. Now has: " + (gems -= amount));
+            throw new IllegalArgumentException("Player cannot have less then 0 gems");
+        gems -= amount;
+        Log.info("Player is charged " + gems + " gems");
     }
 
     public void addCoins(int amount) {
         if (coins < 0) throw new IllegalArgumentException("Player cannot have less then 0 coin");
-        Log.info("Player had: " + coins + " coins. Now has: " + (coins += amount));
+        coins += amount;
+        Log.info("Player earned " + coins + " coins");
     }
 
-    public void decreaseHealth() {
+    public void decreaseHealth(float amount) {
         if (health <= 0) throw new IllegalArgumentException("Player cannot have less than 0 life");
-        Log.info("Player received 1 damage! His health is: " + (health -= 1));
+        health -= 1;
+        Log.info("Player received " + amount + " damage! His health is: " + health);
     }
 
     public void restoreHealth() {
@@ -152,10 +162,6 @@ public class Player implements Resetable {
 
     }
 
-    public ProgressPrototype getProgress() {
-        return prototype.progress;
-    }
-
     public int getLastUnlockedLevel() {
         int defaultLevel = 1;
 
@@ -174,5 +180,13 @@ public class Player implements Resetable {
 
     public boolean hasCoins(int price) {
         return coins >= price;
+    }
+
+    public PlayerPreferences getPreferences() {
+        return preferences;
+    }
+
+    public ProgressPrototype getProgress() {
+        return progress;
     }
 }

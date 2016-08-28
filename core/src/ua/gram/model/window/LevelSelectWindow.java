@@ -1,4 +1,4 @@
-package ua.gram.model.group;
+package ua.gram.model.window;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -10,8 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import ua.gram.DDGame;
 import ua.gram.controller.factory.LevelTileFactory;
+import ua.gram.model.group.LevelTile;
 import ua.gram.model.prototype.level.LevelPrototype;
-import ua.gram.model.window.WindowGroup;
 import ua.gram.view.screen.MainMenuScreen;
 
 /**

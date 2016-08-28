@@ -25,6 +25,7 @@ import ua.gram.view.screen.MainMenuScreen;
  * @author Gram <gram7gram@gmail.com>
  */
 public class CreditsWindow extends WindowGroup {
+
     public CreditsWindow(final DDGame game, Skin skin, WindowPrototype proto) {
         super(skin, proto.style);
 
@@ -33,23 +34,17 @@ public class CreditsWindow extends WindowGroup {
 
         CreditsWindowPrototype prototype = (CreditsWindowPrototype) proto;
 
-        Button back = new Button(skin, "right-small");
-        back.setVisible(true);
-        back.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-                game.setScreen(new MainMenuScreen(game));
-            }
-        });
-
         LabelPrototype descriptionPrototype = prototype.content.description;
+        ParticipantPrototype[] prototypes = prototype.content.participants;
+
         CustomLabel description = new CustomLabel(descriptionPrototype.text, skin, descriptionPrototype.style);
         description.setAlignment(Align.left);
         description.setWrap(true);
-        ParticipantPrototype[] prototypes = prototype.content.participants;
+
         Table credits = new Table();
+
         List<String> roles = getUniqueRoles(prototypes);
+
         int count = 0;
         for (String role : roles) {
             List<String> participants = getParticipantsByRole(role, prototypes);
@@ -73,7 +68,6 @@ public class CreditsWindow extends WindowGroup {
                             Actions.moveBy(DDGame.WORLD_WIDTH / 2.5f, 0, .4f)
                     )
             ));
-
         }
 
         Table nested = new Table();
@@ -86,6 +80,16 @@ public class CreditsWindow extends WindowGroup {
         ScrollPane creditsScroll = new ScrollPane(credits);
         creditsScroll.setScrollingDisabled(true, false);
         creditsScroll.setVisible(true);
+
+        Button back = new Button(skin, "right-small");
+        back.setVisible(true);
+        back.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                game.setScreen(new MainMenuScreen(game));
+            }
+        });
 
         setActionRight(back);
         setTitle(new Label(prototype.header.text, skin, prototype.header.style));

@@ -13,6 +13,7 @@ import ua.gram.controller.weapon.WeaponProvider;
 import ua.gram.model.Resetable;
 import ua.gram.model.actor.enemy.Enemy;
 import ua.gram.model.actor.tower.Tower;
+import ua.gram.model.enums.Types;
 import ua.gram.model.group.EnemyGroup;
 import ua.gram.model.group.TowerGroup;
 import ua.gram.model.prototype.weapon.WeaponPrototype;
@@ -188,6 +189,8 @@ public abstract class Weapon extends Actor implements Resetable, Pool.Poolable {
      * @param victim the enemy to attack
      */
     public void attack(Tower tower, Enemy victim) {
+        String sound = tower.getPrototype().getSoundByState(Types.TowerState.ATTACK.name());
+        tower.getTowerShop().getAudioManager().playSound(sound);
         victim.damage(tower.getProperties().getDamage());
     }
 

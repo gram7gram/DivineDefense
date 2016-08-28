@@ -64,16 +64,49 @@
     }
   },
   "player": {
-    "class": "ua.gram.model.prototype.PlayerPrototype",
+    "class": "ua.gram.model.prototype.player.PlayerPrototype",
     "health": 1000,
     "coins": 2500,
     "gems": 7,
-    "faction": null,
     "progress": {
       "level": {
         "lastUnlocked": 1
       }
-    }
+    },
+    "preferences": {
+      "audio": {
+        "sound": {
+          "state": true,
+          "volume": 0.8
+        },
+        "music": {
+          "state": true,
+          "volume": 0.8
+        }
+      }
+    },
+    "sounds": [
+      {
+        "state": "COIN_EARNED",
+        "sound": "data/audio/sounds/ui/coin001.ogg"
+      },
+      {
+        "state": "COIN_SPENT",
+        "sound": "data/audio/sounds/ui/coin002.ogg"
+      },
+      {
+        "state": "GEM_EARNED",
+        "sound": "data/audio/sounds/ui/gem001.ogg"
+      },
+      {
+        "state": "GEM_SPENT",
+        "sound": "data/audio/sounds/ui/gem002.ogg"
+      },
+      {
+        "state": "HEALTH_DECREASED",
+        "sound": "data/audio/sounds/ui/health001.ogg"
+      }
+    ]
   },
   "levelConfig": {
     "commonResources": [
@@ -128,7 +161,14 @@
           {
             "index": 1,
             "enemies": [
-              "EnemyRunner"
+              "EnemyRunner",
+              "EnemySoldier",
+              "EnemySoldier",
+              "EnemySoldier",
+              "EnemySoldier",
+              "EnemySoldier",
+              "EnemySoldier",
+              "EnemySoldier"
             ]
           },
           {
@@ -581,6 +621,16 @@
           "rate": 1.3,
           "cost": 100
         }
+      ],
+      "sounds": [
+        {
+          "state": "ATTACK",
+          "sound": "data/audio/sounds/tower/PRIMARY/ATTACK.wav"
+        },
+        {
+          "state": "UPGRADE",
+          "sound": "data/audio/sounds/tower/PRIMARY/UPGRADE.ogg"
+        }
       ]
     },
     {
@@ -867,12 +917,21 @@
           },
           {
             "class": "ua.gram.model.prototype.ui.ScreenButtonPrototype",
+            "title": "SETTINGS",
+            "target": "SettingsScreen",
+            "style": "diablo-yellow",
+            "width": 300,
+            "height": 80,
+            "order": 1
+          },
+          {
+            "class": "ua.gram.model.prototype.ui.ScreenButtonPrototype",
             "title": "CREDITS",
             "target": "CreditsScreen",
             "style": "diablo-yellow",
             "width": 300,
             "height": 80,
-            "order": 1
+            "order": 2
           }
         ]
       }

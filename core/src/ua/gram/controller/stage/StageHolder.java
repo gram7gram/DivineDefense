@@ -3,13 +3,18 @@ package ua.gram.controller.stage;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 
+import ua.gram.DDGame;
 import ua.gram.controller.listener.BattleStageClickListener;
+import ua.gram.controller.listener.CoinEarnedListener;
+import ua.gram.controller.listener.CoinSpentListener;
+import ua.gram.controller.listener.GemEarnedListener;
+import ua.gram.controller.listener.GemSpentListener;
+import ua.gram.controller.listener.HealthDecreasedListener;
 import ua.gram.controller.listener.LevelFinishedListener;
 import ua.gram.controller.listener.PauseListener;
 import ua.gram.controller.listener.PlayerDefeatedListener;
 import ua.gram.controller.listener.TowerControlsToggleListener;
 import ua.gram.model.Initializer;
-import ua.gram.model.group.TowerControls;
 import ua.gram.utils.Log;
 import ua.gram.view.screen.GameScreen;
 
@@ -18,11 +23,13 @@ import ua.gram.view.screen.GameScreen;
  */
 public class StageHolder implements Initializer {
 
+    private final DDGame game;
     private final UIStage uiStage;
     private final BattleStage battleStage;
     private final GameScreen screen;
 
-    public StageHolder(GameScreen screen, UIStage uiStage, BattleStage battleStage) {
+    public StageHolder(DDGame game, GameScreen screen, UIStage uiStage, BattleStage battleStage) {
+        this.game = game;
         this.screen = screen;
         this.uiStage = uiStage;
         this.battleStage = battleStage;
@@ -32,15 +39,25 @@ public class StageHolder implements Initializer {
     public void init() {
         battleStage.init();
         uiStage.init();
+
         EventListener levelFinished = new PlayerDefeatedListener(this);
         EventListener playerDefeated = new LevelFinishedListener(this);
         EventListener pauseListener = new PauseListener(this);
+        EventListener coinEarnedListener = new CoinEarnedListener(game);
+        EventListener coinSpentListener = new CoinSpentListener(game);
+        EventListener gemSpentListener = new GemSpentListener(game);
+        EventListener gemEarnedListener = new GemEarnedListener(game);
+        EventListener playerDamageListener = new HealthDecreasedListener(game);
         uiStage.addListener(levelFinished);
         uiStage.addListener(playerDefeated);
         uiStage.addListener(pauseListener);
+        uiStage.addListener(coinEarnedListener);
+        uiStage.addListener(coinSpentListener);
+        uiStage.addListener(gemSpentListener);
+        uiStage.addListener(gemEarnedListener);
+        uiStage.addListener(playerDamageListener);
 
-        TowerControls controls = uiStage.getTowerControls();
-        EventListener controlsListener = new TowerControlsToggleListener(controls);
+        EventListener controlsListener = new TowerControlsToggleListener(uiStage.getTowerControls());
         EventListener battleStageClickListener = new BattleStageClickListener(this);
         battleStage.addListener(controlsListener);
         battleStage.addListener(battleStageClickListener);

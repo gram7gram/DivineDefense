@@ -23,7 +23,8 @@ public class LaunchLoadingScreen extends AbstractLoadingScreen {
     @Override
     public void onLoad() {
         if (game.getPlayer().isNewPlayer()) {
-            game.setScreen(new FactionScreen(game));
+            game.setScreen(new SettingsScreen(game));
+//            game.setScreen(new FactionScreen(game));
         } else {
             game.setScreen(new MainMenuScreen(game));
         }

@@ -26,7 +26,7 @@ public class RestartClickListener extends ClickListener {
     public void clicked(InputEvent event, float x, float y) {
         Log.info("Level " + lvl + " will now restart");
         game.getPlayer().restoreHealth();
-        game.getPlayer().decreaseHealth();
+        game.getPlayer().decreaseHealth(1);
         game.getSecurity().save();
         try {
             LevelPrototype prototype = game.getLevelPrototype(lvl);

@@ -17,10 +17,12 @@ import ua.gram.controller.factory.ViewportFactory;
 import ua.gram.controller.security.SecurityManager;
 import ua.gram.model.Initializer;
 import ua.gram.model.Speed;
+import ua.gram.model.audio.AudioManager;
 import ua.gram.model.player.Player;
 import ua.gram.model.prototype.GamePrototype;
 import ua.gram.model.prototype.ParametersPrototype;
 import ua.gram.model.prototype.level.LevelPrototype;
+import ua.gram.model.prototype.player.PlayerPreferences;
 import ua.gram.utils.Log;
 import ua.gram.utils.Resources;
 import ua.gram.utils.StringProcessor;
@@ -74,6 +76,7 @@ public class DDGame<P extends GamePrototype> extends Game implements Initializer
     private Viewport view;
     private Player player;
     private BitmapFont info;
+    private AudioManager audioManager;
 
     public DDGame(SecurityManager security, P prototype) {
         this(security, prototype, "");
@@ -131,6 +134,8 @@ public class DDGame<P extends GamePrototype> extends Game implements Initializer
         initGameValues();
 
         resources = new Resources(this, rootDirectory);
+
+        audioManager = new AudioManager(this);
 
         createCamera();
         createBatch();
@@ -259,6 +264,10 @@ public class DDGame<P extends GamePrototype> extends Game implements Initializer
         return prototype;
     }
 
+    public PlayerPreferences getPlayerPreferences() {
+        return prototype.player.preferences;
+    }
+
     public LevelPrototype getLevelPrototype(int lvl) {
         LevelPrototype[] prototypes = prototype.levelConfig.levels;
 
@@ -284,4 +293,7 @@ public class DDGame<P extends GamePrototype> extends Game implements Initializer
         setPlayer(new Player(prototype.player));
     }
 
+    public AudioManager getAudioManager() {
+        return audioManager;
+    }
 }

@@ -4,8 +4,10 @@ import ua.gram.DDGame;
 import ua.gram.controller.factory.LevelFactory;
 import ua.gram.model.level.Level;
 import ua.gram.model.player.Player;
+import ua.gram.model.prototype.SoundStatePrototype;
 import ua.gram.model.prototype.level.LevelConfigPrototype;
 import ua.gram.model.prototype.level.LevelPrototype;
+import ua.gram.model.prototype.tower.TowerPrototype;
 import ua.gram.utils.Log;
 import ua.gram.utils.Resources;
 import ua.gram.view.AbstractLoadingScreen;
@@ -34,6 +36,7 @@ public class LevelLoadingScreen extends AbstractLoadingScreen {
         super.show();
         loadGlobalResources();
         loadLevelResources();
+        loadTowerResources();
     }
 
     private void loadLevelResources() {
@@ -56,6 +59,23 @@ public class LevelLoadingScreen extends AbstractLoadingScreen {
             resources.loadTexture(resource);
         }
         Log.info("Loaded nessesary " + config.commonResources.length + " resources for the level");
+    }
+
+    private void loadTowerResources() {
+        Resources resources = game.getResources();
+        int resourceCount = 0;
+        for (TowerPrototype towerPrototype : game.getPrototype().towers) {
+            if (towerPrototype.sounds == null) {
+                Log.warn("No sounds available for " + towerPrototype.name);
+                continue;
+            }
+
+            for (SoundStatePrototype soundState : towerPrototype.sounds) {
+                resources.loadSound(soundState.sound);
+                ++resourceCount;
+            }
+        }
+        Log.info("Loaded nessesary " + resourceCount + " resources for the towers");
     }
 
     @Override

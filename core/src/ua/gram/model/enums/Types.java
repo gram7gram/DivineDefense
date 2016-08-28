@@ -27,7 +27,7 @@ public class Types {
     }
 
     public enum TowerState {
-        IDLE, BUILD, ATTACK, SELL
+        IDLE, BUILD, ATTACK, SELL, UPGRADE
     }
 
     public enum EnemyState {

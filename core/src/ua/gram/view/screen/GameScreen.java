@@ -57,7 +57,7 @@ public class GameScreen extends AbstractScreen {
 
         cameraListener = new CameraListener(uiStage);
 
-        stageHolder = new StageHolder(this, uiStage, battleStage);
+        stageHolder = new StageHolder(game, this, uiStage, battleStage);
 
         battleStage.setStageHolder(stageHolder);
         uiStage.setStageHolder(stageHolder);

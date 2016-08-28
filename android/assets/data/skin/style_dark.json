@@ -504,6 +504,21 @@
       "background": "ui/label/background-0.25"
     }
   },
+  "com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle": {
+    "default": {
+      "font": "archery32white",
+      "checkboxOn": "ui/checkbox/on",
+      "checkboxOff": "ui/checkbox/off"
+    }
+  },
+  "com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle": {
+    "default": {
+      "knob": "ui/slider/knob",
+      "knobBefore": "ui/slider/knobBefore",
+      "background": "ui/slider/knobAfter",
+      "disabledKnob": "ui/slider/knobDisabled"
+    }
+  },
   "com.badlogic.gdx.scenes.scene2d.ui.Table": {
     "default": {
       "background": "ui/window/window-pretty"

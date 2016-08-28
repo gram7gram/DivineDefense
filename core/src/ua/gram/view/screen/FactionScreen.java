@@ -35,4 +35,9 @@ public class FactionScreen extends AbstractScreen {
     @Override
     public void renderNoPause(float delta) {
     }
+
+    @Override
+    public void hide() {
+        super.hide();
+    }
 }

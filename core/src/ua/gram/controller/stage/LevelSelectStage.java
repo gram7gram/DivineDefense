@@ -3,8 +3,8 @@ package ua.gram.controller.stage;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import ua.gram.DDGame;
-import ua.gram.model.group.LevelSelectWindow;
 import ua.gram.model.prototype.level.LevelPrototype;
+import ua.gram.model.window.LevelSelectWindow;
 import ua.gram.utils.Log;
 
 /**

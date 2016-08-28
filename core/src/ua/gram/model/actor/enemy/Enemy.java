@@ -241,7 +241,6 @@ public abstract class Enemy
 
     @Override
     public boolean remove() {
-        reset();
         spawner.free(this);
         return getEnemyGroup().remove();
     }

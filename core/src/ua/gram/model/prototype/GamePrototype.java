@@ -3,6 +3,7 @@ package ua.gram.model.prototype;
 import ua.gram.model.prototype.boss.BossPrototype;
 import ua.gram.model.prototype.enemy.EnemyPrototype;
 import ua.gram.model.prototype.level.LevelConfigPrototype;
+import ua.gram.model.prototype.player.PlayerPrototype;
 import ua.gram.model.prototype.tower.TowerPrototype;
 import ua.gram.model.prototype.ui.UIPrototype;
 import ua.gram.model.prototype.weapon.WeaponPrototype;
